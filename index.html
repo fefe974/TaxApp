@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>LedgerLab Classroom</title>
+<meta name="description" content="Interactive Intermediate Accounting lessons: teach, show, and practice the accounting cycle." />
+<meta name="theme-color" content="#00264F" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="LedgerLab" />
+<meta name="mobile-web-app-capable" content="yes" />
 <style>
   :root {
     color-scheme: light dark;
@@ -73,7 +82,8 @@
   #ledgerlab-classroom h3 { font-weight: 500; }
   #ledgerlab-classroom button,
   #ledgerlab-classroom select,
-  #ledgerlab-classroom input { font: inherit; }
+  #ledgerlab-classroom input,
+  #ledgerlab-classroom textarea { font: inherit; }
   #ledgerlab-classroom .ll-shell { display: grid; gap: var(--ll-space); }
   #ledgerlab-classroom .ll-header,
   #ledgerlab-classroom .ll-brand,
@@ -96,8 +106,8 @@
     inline-size: 2.5rem;
     block-size: 2.5rem;
     border-radius: 0.8rem;
-    background: var(--primary);
-    color: var(--primary-foreground);
+    background: var(--ll-accent-strong);
+    color: var(--ll-on-accent);
     font-weight: 500;
   }
   #ledgerlab-classroom .ll-brand-name { font-weight: 500; }
@@ -213,6 +223,30 @@
   }
   #ledgerlab-classroom .ll-case-top { justify-content: space-between; flex-wrap: wrap; }
   #ledgerlab-classroom .ll-tool-body { display: grid; gap: 0.85rem; }
+  #ledgerlab-classroom .ll-worked-example {
+    padding: 0.75rem 0.9rem;
+    border: 1px dashed var(--ll-border);
+    border-radius: 0.7rem;
+    background: var(--ll-surface-muted);
+  }
+  #ledgerlab-classroom .ll-worked-example summary {
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+  }
+  #ledgerlab-classroom .ll-worked-example summary::-webkit-details-marker { display: none; }
+  #ledgerlab-classroom .ll-worked-example summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 0.4rem;
+    transition: transform 150ms ease;
+  }
+  #ledgerlab-classroom .ll-worked-example[open] summary::before { transform: rotate(90deg); }
+  #ledgerlab-classroom .ll-worked-example p {
+    margin-top: 0.6rem;
+    color: var(--ll-muted);
+    font-size: 0.92em;
+  }
   #ledgerlab-classroom .ll-field-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -242,13 +276,44 @@
   #ledgerlab-classroom .ll-feedback {
     display: none;
     gap: 0.35rem;
-    padding: 0.8rem;
+    padding: 0.8rem 0.9rem;
     border-radius: 0.7rem;
-    background: var(--accent);
-    color: var(--accent-foreground);
+    border-left: 0.3rem solid transparent;
   }
   #ledgerlab-classroom .ll-feedback.is-visible { display: grid; }
-  #ledgerlab-classroom .ll-feedback strong { font-weight: 500; }
+  #ledgerlab-classroom .ll-feedback strong {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 500;
+  }
+  #ledgerlab-classroom .ll-feedback-glyph {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.3rem;
+    block-size: 1.3rem;
+    border-radius: 50%;
+    font-size: 0.78em;
+    flex: none;
+  }
+  #ledgerlab-classroom .ll-feedback.is-success {
+    background: var(--ll-success-bg);
+    border-left-color: var(--ll-success);
+    color: var(--ll-ink);
+  }
+  #ledgerlab-classroom .ll-feedback.is-success .ll-feedback-glyph { background: var(--ll-success); color: var(--ll-on-success); }
+  #ledgerlab-classroom .ll-feedback.is-error {
+    background: var(--ll-error-bg);
+    border-left-color: var(--ll-error);
+    color: var(--ll-ink);
+  }
+  #ledgerlab-classroom .ll-feedback.is-error .ll-feedback-glyph { background: var(--ll-error); color: var(--ll-on-error); }
+  #ledgerlab-classroom .ll-feedback.is-info {
+    background: var(--ll-surface-muted);
+    border-left-color: var(--ll-muted);
+    color: var(--ll-ink);
+  }
+  #ledgerlab-classroom .ll-feedback.is-info .ll-feedback-glyph { background: var(--ll-border); color: var(--ll-ink); }
   #ledgerlab-classroom .ll-tool-actions { justify-content: space-between; flex-wrap: wrap; }
   #ledgerlab-classroom .ll-taccounts {
     display: grid;
@@ -266,22 +331,22 @@
   #ledgerlab-classroom .ll-side-buttons .btn { white-space: normal; }
   #ledgerlab-classroom .ll-transaction-stepper { display: grid; gap: 0.65rem; }
   #ledgerlab-classroom .ll-transaction-count { color: var(--muted-foreground); font-size: 0.84em; }
-  #ledgerlab-classroom .ll-sheet-wrap { border: 1px solid var(--border); border-radius: 0.75rem; }
+  #ledgerlab-classroom .ll-sheet-wrap { border: 1px solid var(--border); border-radius: 0.75rem; overflow-x: auto; }
   #ledgerlab-classroom .ll-sheet {
     width: 100%;
+    min-width: 38rem;
     border-collapse: collapse;
-    table-layout: fixed;
     font-variant-numeric: tabular-nums;
   }
   #ledgerlab-classroom .ll-sheet th,
   #ledgerlab-classroom .ll-sheet td {
-    padding: 0.55rem 0.35rem;
+    padding: 0.55rem 0.6rem;
     border-bottom: 1px solid var(--border);
     text-align: right;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
   }
   #ledgerlab-classroom .ll-sheet th:first-child,
-  #ledgerlab-classroom .ll-sheet td:first-child { text-align: left; width: 22%; }
+  #ledgerlab-classroom .ll-sheet td:first-child { text-align: left; }
   #ledgerlab-classroom .ll-sheet th { color: var(--muted-foreground); font-size: 0.76em; font-weight: 500; }
   #ledgerlab-classroom .ll-sheet tbody tr:last-child td { border-bottom: 0; font-weight: 500; }
   #ledgerlab-classroom .ll-balance-line { justify-content: center; flex-wrap: wrap; }
@@ -330,7 +395,7 @@
     border: 1px solid var(--border);
     border-radius: 0.65rem;
   }
-  #ledgerlab-classroom .ll-close-step.is-complete { background: var(--accent); color: var(--accent-foreground); }
+  #ledgerlab-classroom .ll-close-step.is-complete { background: var(--ll-success-bg); color: var(--ll-ink); }
   #ledgerlab-classroom .ll-step-number {
     display: grid;
     place-items: center;
@@ -350,9 +415,9 @@
     gap: 0.8rem;
     align-items: center;
     padding: 0.75rem;
-    border: 1px solid var(--ll-sky);
+    border: 1px solid var(--ll-border);
     border-radius: 0.85rem;
-    background: var(--ll-paper);
+    background: var(--ll-surface);
   }
   #ledgerlab-classroom .ll-lesson-heading { min-width: 0; }
   #ledgerlab-classroom .ll-lesson-heading strong {
@@ -371,9 +436,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.8rem;
     padding: 1rem;
-    border: 1px solid var(--ll-sky);
+    border: 1px solid var(--ll-border);
     border-radius: 0.85rem;
-    background: var(--ll-cloud);
+    background: var(--ll-surface-muted);
   }
   #ledgerlab-classroom .ll-assist-panel.is-open { display: grid; }
   #ledgerlab-classroom .ll-assist-section { display: grid; gap: 0.6rem; }
@@ -382,44 +447,58 @@
     display: grid;
     grid-template-columns: minmax(13.5rem, 17rem) minmax(0, 1fr);
     gap: 0;
-    border: 1px solid var(--ll-sky);
+    border: 1px solid var(--ll-border);
     border-radius: 1.25rem;
     overflow: hidden;
-    background: var(--ll-paper);
+    background: var(--ll-surface);
   }
   #ledgerlab-classroom[data-outline="closed"] .ll-player { grid-template-columns: minmax(0, 1fr); }
   #ledgerlab-classroom[data-outline="closed"] .ll-outline-panel { display: none; }
   #ledgerlab-classroom .ll-outline-panel {
     padding: 1rem;
-    border-right: 1px solid var(--ll-sky);
-    background: var(--ll-cloud);
+    border-right: 1px solid var(--ll-border);
+    background: var(--ll-surface-muted);
   }
-  #ledgerlab-classroom .ll-outline-title { margin-bottom: 0.75rem; }
+  #ledgerlab-classroom .ll-outline-title { margin-bottom: 0.75rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+  #ledgerlab-classroom .ll-outline-close { display: none; }
   #ledgerlab-classroom .ll-player-content { min-width: 0; }
   #ledgerlab-classroom .ll-topic-meta {
     display: block;
     margin-top: 0.12rem;
-    color: var(--ll-quiet);
+    color: var(--ll-muted);
     font-size: 0.72em;
   }
+  #ledgerlab-classroom .ll-view-switch { display: none; }
+  #ledgerlab-classroom .ll-bottom-nav { display: none; }
+  #ledgerlab-classroom .ll-outline-backdrop { display: none; }
 
   /* Simple Light Mode template layer: Helvetica Neue, spacious geometry,
-     navy structure, blue interaction, and restrained teal accents. */
+     navy structure, blue interaction, and restrained teal accents.
+     Tokens are light-dark()-aware so the same rules serve both themes. */
   #ledgerlab-classroom {
-    --ll-navy: #00264F;
-    --ll-blue: #3D8DFF;
-    --ll-teal: #0097A7;
-    --ll-mint: #47E2C2;
-    --ll-sky: #D0EDFA;
-    --ll-paper: #FFFFFF;
-    --ll-cloud: #F7FBFD;
-    --ll-quiet: #557089;
+    color-scheme: light dark;
+    --ll-ink: light-dark(#00264F, #EAF3FF);
+    --ll-on-accent: light-dark(#FFFFFF, #05131F);
+    --ll-accent-strong: light-dark(#00264F, #6FB2FF);
+    --ll-accent: light-dark(#3D8DFF, #6FB2FF);
+    --ll-teal: light-dark(#0097A7, #4FD3E3);
+    --ll-mint: light-dark(#0E8A5F, #47E2C2);
+    --ll-border: light-dark(#D0EDFA, #1C3A52);
+    --ll-surface: light-dark(#FFFFFF, #0E2337);
+    --ll-surface-muted: light-dark(#F7FBFD, #0A1B2B);
+    --ll-muted: light-dark(#557089, #93AFC6);
+    --ll-success: light-dark(#0E8A5F, #4FE3A6);
+    --ll-success-bg: light-dark(#E3FBF1, #0E2E27);
+    --ll-on-success: light-dark(#FFFFFF, #05231C);
+    --ll-error: light-dark(#B3261E, #FF8A80);
+    --ll-error-bg: light-dark(#FDECEA, #3A1613);
+    --ll-on-error: light-dark(#FFFFFF, #3A0906);
     padding: clamp(1rem, 3vw, 2.4rem);
-    color: var(--ll-navy);
-    background: var(--ll-paper);
+    color: var(--ll-ink);
+    background: var(--ll-surface);
     font-family: "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
-    max-height: 88vh;
+    max-height: 88dvh;
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -432,13 +511,7 @@
   #ledgerlab-classroom .ll-shell { max-width: 94rem; margin: 0 auto; gap: clamp(1rem, 2.5vw, 1.8rem); }
   #ledgerlab-classroom .ll-header {
     padding-bottom: 1.1rem;
-    border-bottom: 1px solid var(--ll-sky);
-  }
-  #ledgerlab-classroom .ll-logo {
-    border-radius: 0.35rem;
-    background: var(--ll-navy);
-    color: var(--ll-paper);
-    box-shadow: 0.35rem 0.35rem 0 var(--ll-mint);
+    border-bottom: 1px solid var(--ll-border);
   }
   #ledgerlab-classroom .ll-brand-name { font-size: 1.08em; letter-spacing: -0.01em; }
   #ledgerlab-classroom .ll-overline,
@@ -448,44 +521,49 @@
   #ledgerlab-classroom .ll-source-note,
   #ledgerlab-classroom .ll-transaction-count,
   #ledgerlab-classroom .ll-side-label,
-  #ledgerlab-classroom .text-muted { color: var(--ll-quiet); }
+  #ledgerlab-classroom .text-muted { color: var(--ll-muted); }
   #ledgerlab-classroom .ll-chip {
-    background: var(--ll-cloud);
-    color: var(--ll-navy);
-    border: 1px solid var(--ll-sky);
+    background: var(--ll-surface-muted);
+    color: var(--ll-ink);
+    border: 1px solid var(--ll-border);
   }
-  #ledgerlab-classroom .ll-progress-track { height: 0.25rem; background: var(--ll-sky); }
-  #ledgerlab-classroom .ll-progress-fill { background: var(--ll-blue); }
+  #ledgerlab-classroom .ll-progress-track { height: 0.25rem; background: var(--ll-border); }
+  #ledgerlab-classroom .ll-progress-fill { background: var(--ll-accent); }
   #ledgerlab-classroom .btn {
     appearance: button;
     display: inline-flex;
-    min-height: 28px;
+    min-height: 2.5rem;
     align-items: center;
     justify-content: center;
     gap: 4px;
     margin: 0;
-    padding: 0 8px;
+    padding: 0 0.85rem;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
     user-select: none;
-    border: 1px solid var(--ll-sky);
+    border: 1px solid var(--ll-border);
     border-radius: 999px;
-    background: var(--ll-paper);
-    color: var(--ll-navy);
+    background: var(--ll-surface);
+    color: var(--ll-ink);
     box-shadow: none;
     font: inherit;
   }
-  #ledgerlab-classroom .btn:hover { border-color: var(--ll-blue); }
+  #ledgerlab-classroom .btn:hover { border-color: var(--ll-accent); }
   #ledgerlab-classroom .btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
   #ledgerlab-classroom .btn-primary,
   #ledgerlab-classroom .ll-topic-nav .btn-primary {
-    border-color: var(--ll-navy);
-    background: var(--ll-navy);
-    color: var(--ll-paper);
+    border-color: var(--ll-accent-strong);
+    background: var(--ll-accent-strong);
+    color: var(--ll-on-accent);
   }
   #ledgerlab-classroom .btn:disabled { cursor: not-allowed; opacity: 0.45; }
+  #ledgerlab-classroom .ll-topic-nav .btn-primary .ll-topic-meta,
+  #ledgerlab-classroom .ll-topic-nav .btn-primary .ll-topic-label {
+    color: inherit;
+    opacity: 0.85;
+  }
   #ledgerlab-classroom .ll-topic-nav { grid-template-columns: 1fr; gap: 0.45rem; }
   #ledgerlab-classroom .ll-topic-nav .btn {
     min-height: 3.3rem;
@@ -498,10 +576,10 @@
   #ledgerlab-classroom .ll-topic-nav .btn.is-complete::after {
     content: "✓";
     margin-left: auto;
-    color: var(--ll-teal);
+    color: var(--ll-mint);
     font-weight: 500;
   }
-  #ledgerlab-classroom .ll-topic-nav .btn.btn-primary.is-complete::after { color: var(--ll-mint); }
+  #ledgerlab-classroom .ll-topic-nav .btn.btn-primary.is-complete::after { color: var(--ll-on-accent); }
   #ledgerlab-classroom .ll-topic-number {
     display: inline-grid;
     place-items: center;
@@ -518,7 +596,7 @@
     border: 0;
     border-radius: 0;
     overflow: visible;
-    background: var(--ll-paper);
+    background: var(--ll-surface);
   }
   #ledgerlab-classroom .ll-panel {
     border: 0;
@@ -526,8 +604,8 @@
     background: transparent;
     box-shadow: none;
   }
-  #ledgerlab-classroom article.ll-panel { border-right: 1px solid var(--ll-sky); }
-  #ledgerlab-classroom section.ll-panel { background: var(--ll-cloud); }
+  #ledgerlab-classroom article.ll-panel { border-right: 1px solid var(--ll-border); }
+  #ledgerlab-classroom section.ll-panel { background: var(--ll-surface-muted); }
   #ledgerlab-classroom .ll-panel-inner { gap: 1.35rem; padding: clamp(1.35rem, 3.5vw, 2.7rem); }
   #ledgerlab-classroom .ll-lecture-title {
     max-width: 18ch;
@@ -543,25 +621,25 @@
   }
   #ledgerlab-classroom .ll-lead { max-width: 44rem; font-size: 1.14em; color: var(--ll-teal); }
   #ledgerlab-classroom .ll-lecture-section { max-width: 48rem; gap: 0.4rem; }
-  #ledgerlab-classroom .ll-lecture-section h3 { color: var(--ll-navy); }
+  #ledgerlab-classroom .ll-lecture-section h3 { color: var(--ll-ink); }
   #ledgerlab-classroom .ll-figure {
-    border-color: var(--ll-sky);
+    border-color: var(--ll-border);
     border-radius: 1rem;
-    background: var(--ll-cloud);
+    background: var(--ll-surface-muted);
   }
   #ledgerlab-classroom .ll-node,
   #ledgerlab-classroom .ll-rule {
-    border-color: var(--ll-sky);
-    background: var(--ll-paper);
-    color: var(--ll-navy);
+    border-color: var(--ll-border);
+    background: var(--ll-surface);
+    color: var(--ll-ink);
   }
-  #ledgerlab-classroom .ll-node { border-top: 0.25rem solid var(--ll-blue); }
+  #ledgerlab-classroom .ll-node { border-top: 0.25rem solid var(--ll-accent); }
   #ledgerlab-classroom .ll-controller-note { border-left-color: var(--ll-mint); }
   #ledgerlab-classroom .ll-case {
-    border: 1px solid var(--ll-sky);
+    border: 1px solid var(--ll-border);
     border-radius: 1rem;
-    background: var(--ll-paper);
-    color: var(--ll-navy);
+    background: var(--ll-surface);
+    color: var(--ll-ink);
   }
   #ledgerlab-classroom .form-select,
   #ledgerlab-classroom .form-control {
@@ -570,18 +648,18 @@
     min-height: 2.75rem;
     padding: 0 8px;
     outline: none;
-    border: 1px solid var(--ll-sky);
+    border: 1px solid var(--ll-border);
     border-radius: 0.65rem;
-    background: var(--ll-paper);
-    color: var(--ll-navy);
+    background: var(--ll-surface);
+    color: var(--ll-ink);
     font: inherit;
   }
   #ledgerlab-classroom .form-select {
     appearance: none;
     padding: 0 32px 0 8px;
     background-image:
-      linear-gradient(45deg, transparent 50%, var(--ll-quiet) 50%),
-      linear-gradient(135deg, var(--ll-quiet) 50%, transparent 50%);
+      linear-gradient(45deg, transparent 50%, var(--ll-muted) 50%),
+      linear-gradient(135deg, var(--ll-muted) 50%, transparent 50%);
     background-position:
       calc(100% - 14px) 50%,
       calc(100% - 10px) 50%;
@@ -601,44 +679,86 @@
   #ledgerlab-classroom .ll-account-row,
   #ledgerlab-classroom .ll-statement,
   #ledgerlab-classroom .ll-close-step,
-  #ledgerlab-classroom .ll-mobile-balance { border-color: var(--ll-sky); }
+  #ledgerlab-classroom .ll-mobile-balance { border-color: var(--ll-border); }
   #ledgerlab-classroom .ll-audit-icon {
-    background: var(--ll-sky);
-    color: var(--ll-navy);
-  }
-  #ledgerlab-classroom .ll-feedback {
-    background: color-mix(in srgb, var(--ll-mint) 20%, var(--ll-paper));
-    color: var(--ll-navy);
-    border-left: 0.25rem solid var(--ll-teal);
+    background: var(--ll-border);
+    color: var(--ll-ink);
   }
   #ledgerlab-classroom .ll-taccount-head,
   #ledgerlab-classroom .ll-balance-box,
-  #ledgerlab-classroom .ll-step-number { background: var(--ll-sky); color: var(--ll-navy); }
+  #ledgerlab-classroom .ll-step-number { background: var(--ll-border); color: var(--ll-ink); }
   #ledgerlab-classroom .ll-t-side + .ll-t-side,
   #ledgerlab-classroom .ll-sheet th,
   #ledgerlab-classroom .ll-sheet td,
   #ledgerlab-classroom .ll-account-row,
-  #ledgerlab-classroom .ll-statement-total { border-color: var(--ll-sky); }
-  #ledgerlab-classroom .ll-close-step.is-complete {
-    background: color-mix(in srgb, var(--ll-mint) 18%, var(--ll-paper));
-    color: var(--ll-navy);
-  }
+  #ledgerlab-classroom .ll-statement-total { border-color: var(--ll-border); }
   #ledgerlab-classroom .ll-footer { padding-top: 0.25rem; }
   #ledgerlab-classroom .ll-player-content .ll-footer {
     padding: 1rem clamp(1.35rem, 3.5vw, 2.7rem);
-    border-top: 1px solid var(--ll-sky);
+    border-top: 1px solid var(--ll-border);
   }
-  #ledgerlab-classroom .text-muted { color: var(--ll-quiet); }
+  #ledgerlab-classroom .text-muted { color: var(--ll-muted); }
+
+  /* App-shell chrome: view switch + bottom nav are mobile-only; desktop keeps
+     the two-column lecture/tool layout and inline footer controls. */
+  #ledgerlab-classroom .ll-view-switch {
+    display: none;
+    padding: 0.75rem clamp(1rem, 3vw, 1.5rem) 0;
+    gap: 0.4rem;
+  }
+  #ledgerlab-classroom .ll-view-tab {
+    flex: 1;
+    min-height: 2.5rem;
+    padding: 0 0.6rem;
+    border: 1px solid var(--ll-border);
+    border-radius: 999px;
+    background: var(--ll-surface);
+    color: var(--ll-muted);
+    font-weight: 500;
+    cursor: pointer;
+  }
+  #ledgerlab-classroom .ll-view-tab.is-active {
+    border-color: var(--ll-accent-strong);
+    background: var(--ll-accent-strong);
+    color: var(--ll-on-accent);
+  }
+  #ledgerlab-classroom .ll-view-tab:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
 
   @media (max-width: 820px) {
-    #ledgerlab-classroom { font-size: var(--font-size-base); }
+    #ledgerlab-classroom { font-size: var(--font-size-base); max-height: 92dvh; }
     #ledgerlab-classroom .ll-classroom { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-player { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-outline-panel { border-right: 0; border-bottom: 1px solid var(--ll-sky); }
+    #ledgerlab-classroom .ll-player { grid-template-columns: 1fr; padding-bottom: calc(4.25rem + env(safe-area-inset-bottom)); }
+    #ledgerlab-classroom .ll-outline-panel { border-right: 0; border-bottom: 1px solid var(--ll-border); }
     #ledgerlab-classroom[data-outline="closed"] .ll-outline-panel { display: none; }
+
+    /* Outline becomes a full-screen sheet instead of pushing content down. */
+    #ledgerlab-classroom[data-outline="open"] .ll-outline-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: block;
+      max-height: none;
+      padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+      overflow-y: auto;
+      border-bottom: 0;
+    }
+    #ledgerlab-classroom[data-outline="open"] .ll-outline-backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 59;
+      background: rgb(0 0 0 / 45%);
+    }
+    #ledgerlab-classroom .ll-outline-close {
+      display: inline-flex;
+      min-height: 2.25rem;
+      min-width: 2.25rem;
+      padding: 0;
+      flex: none;
+    }
+
     #ledgerlab-classroom .ll-lesson-header { grid-template-columns: auto minmax(0, 1fr); }
-    #ledgerlab-classroom .ll-lesson-actions { grid-column: 1 / -1; justify-content: stretch; }
-    #ledgerlab-classroom .ll-lesson-actions .btn { flex: 1; }
+    #ledgerlab-classroom .ll-lesson-actions { display: none; }
     #ledgerlab-classroom .ll-assist-panel { grid-template-columns: 1fr; }
     #ledgerlab-classroom .ll-topic-label { display: none; }
     #ledgerlab-classroom .ll-flow { grid-template-columns: 1fr; }
@@ -648,12 +768,9 @@
     #ledgerlab-classroom .ll-statement-preview { grid-template-columns: 1fr; }
     #ledgerlab-classroom .ll-account-row { grid-template-columns: minmax(0, 1fr) auto; }
     #ledgerlab-classroom .ll-account-row select { grid-column: 1 / -1; width: 100%; }
-    #ledgerlab-classroom .ll-sheet .ll-mobile-hide { display: none; }
-    #ledgerlab-classroom .ll-sheet th:first-child,
-    #ledgerlab-classroom .ll-sheet td:first-child { width: 36%; }
     #ledgerlab-classroom article.ll-panel {
       border-right: 0;
-      border-bottom: 1px solid var(--ll-sky);
+      border-bottom: 1px solid var(--ll-border);
     }
     #ledgerlab-classroom .ll-topic-nav .btn { justify-content: center; min-height: 2.8rem; }
     #ledgerlab-classroom .ll-topic-number { margin-right: 0; }
@@ -670,24 +787,79 @@
       justify-content: space-between;
       gap: 0.4rem;
       padding: 0.55rem;
-      border: 1px solid var(--border);
+      border: 1px solid var(--ll-border);
       border-radius: 0.6rem;
       font-size: 0.84em;
+    }
+
+    /* One screen at a time: Learn / Practice acts like two app tabs
+       instead of stacking both full panels for a long double scroll. */
+    #ledgerlab-classroom .ll-view-switch { display: flex; }
+    #ledgerlab-classroom .ll-classroom[data-active-view="lecture"] section.ll-panel { display: none; }
+    #ledgerlab-classroom .ll-classroom[data-active-view="tool"] article.ll-panel { display: none; }
+    #ledgerlab-classroom .ll-player-content .ll-footer { display: none; }
+
+    /* Thumb-reachable primary navigation, native-app style. */
+    #ledgerlab-classroom .ll-bottom-nav {
+      display: flex;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      gap: 0.5rem;
+      padding: 0.6rem clamp(0.75rem, 3vw, 1.5rem) max(0.6rem, env(safe-area-inset-bottom));
+      background: var(--ll-surface);
+      border-top: 1px solid var(--ll-border);
+    }
+    #ledgerlab-classroom .ll-bottom-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.1rem;
+      min-height: 2.75rem;
+      padding: 0.3rem 0.4rem;
+      border: 1px solid var(--ll-border);
+      border-radius: 0.85rem;
+      background: var(--ll-surface);
+      color: var(--ll-ink);
+      font-size: 0.82em;
+      cursor: pointer;
+    }
+    #ledgerlab-classroom .ll-bottom-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    #ledgerlab-classroom .ll-bottom-btn-primary {
+      flex: 1.4;
+      border-color: var(--ll-accent-strong);
+      background: var(--ll-accent-strong);
+      color: var(--ll-on-accent);
+      font-weight: 500;
     }
   }
   @media (max-width: 430px) {
     #ledgerlab-classroom {
-      max-height: 84vh;
+      max-height: 94dvh;
       padding: 0.8rem;
     }
     #ledgerlab-classroom .ll-header-meta .ll-chip:first-child { display: none; }
     #ledgerlab-classroom .ll-rule-grid { grid-template-columns: 1fr; }
     #ledgerlab-classroom .ll-panel-inner { padding: 1rem; }
-    #ledgerlab-classroom .ll-footer .btn { min-width: 0; flex: 1; }
-    #ledgerlab-classroom .ll-lesson-actions .btn:not(.btn-primary) { font-size: 0.84em; }
+    #ledgerlab-classroom .ll-bottom-btn span:last-child { font-size: 0.92em; }
+  }
+  @media (display-mode: standalone) {
+    body { padding: 0; }
+    #app-frame { max-width: none; }
+    #ledgerlab-classroom {
+      max-height: 100dvh;
+      height: 100dvh;
+      border-radius: 0;
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     #ledgerlab-classroom .ll-progress-fill { transition: none; }
+    #ledgerlab-classroom .ll-worked-example summary::before { transition: none; }
   }
 </style>
 </head>
@@ -744,12 +916,20 @@
     </section>
 
     <div class="ll-player">
+      <div class="ll-outline-backdrop" id="ll-outline-backdrop"></div>
       <aside class="ll-outline-panel" aria-label="Course outline">
-        <div class="ll-outline-title"><strong>Chapter 2.1</strong><div class="text-muted">6 modules · applied exercises</div></div>
+        <div class="ll-outline-title">
+          <div><strong>Chapter 2.1</strong><div class="text-muted">6 modules · applied exercises</div></div>
+          <button type="button" class="btn ll-outline-close" id="ll-outline-close" aria-label="Close outline">✕</button>
+        </div>
         <nav class="ll-topic-nav" id="ll-topic-nav" aria-label="Chapter 2.1 topic sequence"></nav>
       </aside>
       <div class="ll-player-content">
-        <main class="ll-classroom">
+        <div class="ll-view-switch" role="tablist" aria-label="Lesson view">
+          <button type="button" class="ll-view-tab is-active" id="ll-view-lecture" data-view="lecture" role="tab" aria-selected="true">Learn</button>
+          <button type="button" class="ll-view-tab" id="ll-view-tool" data-view="tool" role="tab" aria-selected="false">Practice</button>
+        </div>
+        <main class="ll-classroom" id="ll-classroom" data-active-view="lecture">
           <article class="ll-panel" aria-label="Lecture">
             <div class="ll-panel-inner" id="ll-lecture"></div>
           </article>
@@ -763,6 +943,18 @@
         </footer>
       </div>
     </div>
+
+    <nav class="ll-bottom-nav" aria-label="Lesson navigation (mobile)">
+      <button type="button" class="ll-bottom-btn" id="ll-outline-toggle-mobile" aria-label="Open outline">
+        <span aria-hidden="true">☰</span><span>Outline</span>
+      </button>
+      <button type="button" class="ll-bottom-btn" id="ll-prev-mobile">
+        <span aria-hidden="true">←</span><span>Prev</span>
+      </button>
+      <button type="button" class="ll-bottom-btn ll-bottom-btn-primary" id="ll-next-mobile">
+        <span id="ll-next-mobile-label">Continue</span>
+      </button>
+    </nav>
   </div>
 </div>
 </div>
@@ -773,19 +965,46 @@
       var lectureNode = document.getElementById('ll-lecture');
       var toolNode = document.getElementById('ll-worktool');
       var navNode = document.getElementById('ll-topic-nav');
+      var classroomNode = document.getElementById('ll-classroom');
       var progressCopy = document.getElementById('ll-progress-copy');
       var timeCopy = document.getElementById('ll-time-copy');
       var progressFill = document.getElementById('ll-progress-fill');
       var prevButton = document.getElementById('ll-prev');
       var nextButton = document.getElementById('ll-next');
+      var prevButtonMobile = document.getElementById('ll-prev-mobile');
+      var nextButtonMobile = document.getElementById('ll-next-mobile');
+      var nextButtonMobileLabel = document.getElementById('ll-next-mobile-label');
       var currentTitle = document.getElementById('ll-current-title');
       var assistPanel = document.getElementById('ll-assist-panel');
       var noteInput = document.getElementById('ll-note-input');
       var noteStatus = document.getElementById('ll-note-status');
       var coachCopy = document.getElementById('ll-coach-copy');
+      var viewLectureTab = document.getElementById('ll-view-lecture');
+      var viewToolTab = document.getElementById('ll-view-tool');
       var currentTopic = 0;
       var notes = {};
-      var completed = {};
+      var solved = {};
+
+      var STORAGE_KEY = 'ledgerlab-classroom-state-v1';
+
+      function loadState() {
+        try {
+          var raw = window.localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            if (typeof parsed.currentTopic === 'number') currentTopic = parsed.currentTopic;
+            if (parsed.notes && typeof parsed.notes === 'object') notes = parsed.notes;
+            if (parsed.solved && typeof parsed.solved === 'object') solved = parsed.solved;
+          }
+        } catch (err) { /* storage unavailable (private mode, quota) — start fresh */ }
+      }
+
+      function saveState() {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentTopic: currentTopic, notes: notes, solved: solved }));
+        } catch (err) { /* ignore write failures */ }
+      }
 
       var topics = [
         {
@@ -890,8 +1109,24 @@
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
       }
 
-      function feedback(title, detail) {
-        return '<div class="ll-feedback is-visible"><strong>' + title + '</strong><span>' + detail + '</span></div>';
+      var FEEDBACK_GLYPH = { success: '✓', error: '!', info: 'i' };
+      var FEEDBACK_LABEL = { success: 'Correct', error: 'Needs another look', info: 'Not yet' };
+
+      function feedback(type, title, detail) {
+        var glyph = FEEDBACK_GLYPH[type] || FEEDBACK_GLYPH.info;
+        return '<div class="ll-feedback is-visible is-' + type + '" role="status"><strong><span class="ll-feedback-glyph" aria-hidden="true">' + glyph + '</span>' + title + '</strong><span>' + detail + '</span></div>';
+      }
+
+      function markSolved(index) {
+        solved[index] = true;
+        saveState();
+        refreshOutlineState();
+      }
+
+      function refreshOutlineState() {
+        Array.prototype.forEach.call(navNode.children, function (button, index) {
+          button.classList.toggle('is-complete', Boolean(solved[index]));
+        });
       }
 
       function renderLecture(topic) {
@@ -901,8 +1136,14 @@
         lectureNode.innerHTML = '<div class="ll-panel-top"><span class="ll-chip">Lecture</span><span class="ll-eyebrow">Teach the idea first</span></div><h1 class="ll-lecture-title">' + topic.title + '</h1><p class="ll-lead">' + topic.lead + '</p>' + sections + topic.figure + '<div class="ll-controller-note"><strong>Controller lens</strong><span>' + topic.note + '</span></div>';
       }
 
+      function workedExample(html) {
+        return '<details class="ll-worked-example"><summary>Show a worked example</summary>' + html + '</details>';
+      }
+
       function systemTool() {
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">AIS audit trail</span></div><h2 class="ll-tool-title">Process a vendor invoice</h2><div class="ll-case"><div class="ll-case-top"><strong>Northstar Delivery</strong><span class="ll-chip">Invoice V-1048</span></div><p>Office equipment received today. Invoice amount: $3,000. Payment is due in 30 days.</p></div><div class="ll-tool-body"><div class="ll-field-grid"><label class="ll-field"><span class="ll-form-label">Evidence type</span><select class="form-select" id="ll-evidence"><option value="">Choose evidence</option><option value="invoice">Supplier invoice</option><option value="receipt">Customer receipt</option><option value="timesheet">Employee timesheet</option></select></label><label class="ll-field"><span class="ll-form-label">Transaction class</span><select class="form-select" id="ll-class"><option value="">Choose the event</option><option value="purchase">Purchase on account</option><option value="sale">Cash sale</option><option value="investment">Stockholder investment</option></select></label><label class="ll-field"><span class="ll-form-label">Required control</span><select class="form-select" id="ll-control"><option value="">Choose a control</option><option value="approval">Manager approval and invoice match</option><option value="none">No review needed</option><option value="customer">Customer confirmation</option></select></label><label class="ll-field"><span class="ll-form-label">Primary report affected</span><select class="form-select" id="ll-output"><option value="">Choose an output</option><option value="balance">Balance sheet</option><option value="income">Income statement only</option><option value="cashflow">Cash flow only</option></select></label></div><div class="ll-audit-trail"><div class="ll-audit-row"><span class="ll-audit-icon">1</span><div><strong>Capture</strong><div class="text-muted">Validate the source document and approval.</div></div></div><div class="ll-audit-row"><span class="ll-audit-icon">2</span><div><strong>Process</strong><div class="text-muted">Recognize Equipment and Accounts Payable.</div></div></div><div class="ll-audit-row"><span class="ll-audit-icon">3</span><div><strong>Communicate</strong><div class="text-muted">Update assets and liabilities on the balance sheet.</div></div></div></div><div class="ll-tool-actions"><span class="text-muted">Complete the audit trail before processing.</span><button type="button" class="btn btn-primary" id="ll-check-system">Process evidence</button></div><div id="ll-tool-feedback"></div></div>';
+        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">AIS audit trail</span></div><h2 class="ll-tool-title">Process a vendor invoice</h2>' +
+          workedExample('<p><strong>Worked case:</strong> A customer pays Northstar $2,000 cash immediately after a delivery is completed. The source document is a <em>customer receipt</em>, so the transaction class is a <em>cash sale</em>. Because the cash already cleared, no further approval control is required. The revenue just earned is measured on the <em>income statement</em>. Notice the pattern: evidence type tells you who created the document, transaction class tells you what happened, the control depends on what risk remains, and the output depends on which statement measures that kind of change.</p>') +
+          '<div class="ll-case"><div class="ll-case-top"><strong>Northstar Delivery</strong><span class="ll-chip">Invoice V-1048</span></div><p>Office equipment received today. Invoice amount: $3,000. Payment is due in 30 days.</p></div><div class="ll-tool-body"><div class="ll-field-grid"><label class="ll-field"><span class="ll-form-label">Evidence type</span><select class="form-select" id="ll-evidence"><option value="">Choose evidence</option><option value="invoice">Supplier invoice</option><option value="receipt">Customer receipt</option><option value="timesheet">Employee timesheet</option></select></label><label class="ll-field"><span class="ll-form-label">Transaction class</span><select class="form-select" id="ll-class"><option value="">Choose the event</option><option value="purchase">Purchase on account</option><option value="sale">Cash sale</option><option value="investment">Stockholder investment</option></select></label><label class="ll-field"><span class="ll-form-label">Required control</span><select class="form-select" id="ll-control"><option value="">Choose a control</option><option value="approval">Manager approval and invoice match</option><option value="none">No review needed</option><option value="customer">Customer confirmation</option></select></label><label class="ll-field"><span class="ll-form-label">Primary report affected</span><select class="form-select" id="ll-output"><option value="">Choose an output</option><option value="balance">Balance sheet</option><option value="income">Income statement only</option><option value="cashflow">Cash flow only</option></select></label></div><div class="ll-audit-trail"><div class="ll-audit-row"><span class="ll-audit-icon">1</span><div><strong>Capture</strong><div class="text-muted">Validate the source document and approval.</div></div></div><div class="ll-audit-row"><span class="ll-audit-icon">2</span><div><strong>Process</strong><div class="text-muted">Recognize Equipment and Accounts Payable.</div></div></div><div class="ll-audit-row"><span class="ll-audit-icon">3</span><div><strong>Communicate</strong><div class="text-muted">Update assets and liabilities on the balance sheet.</div></div></div></div><div class="ll-tool-actions"><span class="text-muted">Complete the audit trail before processing.</span><button type="button" class="btn btn-primary" id="ll-check-system">Process evidence</button></div><div id="ll-tool-feedback"></div></div>';
       }
 
       function bindSystemTool() {
@@ -910,9 +1151,10 @@
           var values = ['ll-evidence', 'll-class', 'll-control', 'll-output'].map(function (id) { return document.getElementById(id).value; });
           var slot = document.getElementById('ll-tool-feedback');
           if (values.join('|') === 'invoice|purchase|approval|balance') {
-            slot.innerHTML = feedback('Audit trail complete', 'The evidence supports a purchase on account. Equipment and Accounts Payable increase, and the manager approval protects the company before the event enters the records.');
+            slot.innerHTML = feedback('success', 'Audit trail complete', 'The evidence supports a purchase on account. Equipment and Accounts Payable increase, and the manager approval protects the company before the event enters the records.');
+            markSolved(currentTopic);
           } else {
-            slot.innerHTML = feedback('The trail has a weak link', 'Use the business facts: the supplier document is an invoice, cash has not been paid, equipment was received, and the obligation belongs on the balance sheet.');
+            slot.innerHTML = feedback('error', 'The trail has a weak link', 'Use the business facts: the supplier document is an invoice, cash has not been paid, equipment was received, and the obligation belongs on the balance sheet.');
           }
         });
       }
@@ -927,7 +1169,9 @@
         var rows = tasks.map(function (task, index) {
           return '<div class="ll-account-row"><span>' + task[0] + '</span><span class="ll-chip">Task ' + (index + 1) + '</span><select class="form-select ll-owner-select" data-answer="' + task[1] + '" aria-label="Responsibility for ' + task[0] + '"><option value="">Assign responsibility</option><option value="system">System processing</option><option value="judgment">Human judgment</option><option value="shared">Shared: system + human review</option><option value="approval">Authorized manager</option></select></div>';
         }).join('');
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Automation responsibility matrix</span></div><h2 class="ll-tool-title">Configure the invoice workflow</h2><div class="ll-case"><strong>Controller instruction</strong><p>Assign each activity to the party best equipped to perform it. The objective is controlled automation—not maximum automation.</p></div><div class="ll-account-list">' + rows + '</div><div class="ll-tool-actions"><span class="text-muted">Automate routine processing; preserve accountable judgment.</span><button type="button" class="btn btn-primary" id="ll-check-systems">Review workflow</button></div><div id="ll-tool-feedback"></div>';
+        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Automation responsibility matrix</span></div><h2 class="ll-tool-title">Configure the invoice workflow</h2>' +
+          workedExample('<p><strong>Worked case:</strong> "Reconcile the bank statement to the general ledger balance" is assigned <em>Shared: system + human review</em>. The system can pull both balances and flag differences automatically, but a person has to judge whether an unmatched item is a timing difference (like a check still in transit) or a real error worth escalating. Whenever a task combines fast repeatable comparison with a judgment call about risk, it belongs to both.</p>') +
+          '<div class="ll-case"><strong>Controller instruction</strong><p>Assign each activity to the party best equipped to perform it. The objective is controlled automation—not maximum automation.</p></div><div class="ll-account-list">' + rows + '</div><div class="ll-tool-actions"><span class="text-muted">Automate routine processing; preserve accountable judgment.</span><button type="button" class="btn btn-primary" id="ll-check-systems">Review workflow</button></div><div id="ll-tool-feedback"></div>';
       }
 
       function bindSystemsTool() {
@@ -936,15 +1180,18 @@
           var correct = selects.filter(function (select) { return select.value === select.getAttribute('data-answer'); }).length;
           var slot = document.getElementById('ll-tool-feedback');
           if (correct === selects.length) {
-            slot.innerHTML = feedback('Workflow appropriately controlled', 'The system performs repeatable calculations, people authorize transactions and investigate exceptions, and invoice matching combines automation with review.');
+            slot.innerHTML = feedback('success', 'Workflow appropriately controlled', 'The system performs repeatable calculations, people authorize transactions and investigate exceptions, and invoice matching combines automation with review.');
+            markSolved(currentTopic);
           } else {
-            slot.innerHTML = feedback(correct + ' of 4 responsibilities are well assigned', 'Look for tasks that require authorization or professional skepticism. Those should not be delegated entirely to software. Routine calculation belongs with the system.');
+            slot.innerHTML = feedback('error', correct + ' of 4 responsibilities are well assigned', 'Look for tasks that require authorization or professional skepticism. Those should not be delegated entirely to software. Routine calculation belongs with the system.');
           }
         });
       }
 
       function tAccountTool() {
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">T-account workbench</span></div><h2 class="ll-tool-title">Post both sides of a service transaction</h2><div class="ll-case"><div class="ll-case-top"><strong>Transaction</strong><span class="ll-chip">$1,500</span></div><p>Northstar performs delivery services and receives cash immediately.</p></div><div class="ll-taccounts"><section class="ll-taccount"><div class="ll-taccount-head"><strong>Cash</strong><span class="text-muted">Asset</span></div><div class="ll-taccount-sides"><div class="ll-t-side"><span class="ll-side-label">Debit · left</span><span class="ll-posted-amount" id="ll-cash-debit"></span></div><div class="ll-t-side"><span class="ll-side-label">Credit · right</span><span class="ll-posted-amount" id="ll-cash-credit"></span></div></div><div class="ll-side-buttons"><button type="button" class="btn ll-post" data-account="cash" data-side="debit">Post left</button><button type="button" class="btn ll-post" data-account="cash" data-side="credit">Post right</button></div></section><section class="ll-taccount"><div class="ll-taccount-head"><strong>Service Revenue</strong><span class="text-muted">Revenue</span></div><div class="ll-taccount-sides"><div class="ll-t-side"><span class="ll-side-label">Debit · left</span><span class="ll-posted-amount" id="ll-revenue-debit"></span></div><div class="ll-t-side"><span class="ll-side-label">Credit · right</span><span class="ll-posted-amount" id="ll-revenue-credit"></span></div></div><div class="ll-side-buttons"><button type="button" class="btn ll-post" data-account="revenue" data-side="debit">Post left</button><button type="button" class="btn ll-post" data-account="revenue" data-side="credit">Post right</button></div></section></div><div class="ll-balance-line"><span class="ll-balance-box" id="ll-debit-total">Debits $0</span><strong>=</strong><span class="ll-balance-box" id="ll-credit-total">Credits $0</span></div><div class="ll-tool-actions"><span class="text-muted">Classify → decide increase/decrease → choose side.</span><button type="button" class="btn btn-primary" id="ll-check-taccounts">Check posting</button></div><div id="ll-tool-feedback"></div>';
+        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">T-account workbench</span></div><h2 class="ll-tool-title">Post both sides of a service transaction</h2>' +
+          workedExample('<p><strong>Worked case:</strong> Northstar pays $400 cash for office supplies. Supplies is an asset that increased, so it is debited $400. Cash is an asset that decreased, so it is credited $400. Same two questions every time: which account family, then did it go up or down—only then do you pick left or right.</p>') +
+          '<div class="ll-case"><div class="ll-case-top"><strong>Transaction</strong><span class="ll-chip">$1,500</span></div><p>Northstar performs delivery services and receives cash immediately.</p></div><div class="ll-taccounts"><section class="ll-taccount"><div class="ll-taccount-head"><strong>Cash</strong><span class="text-muted">Asset</span></div><div class="ll-taccount-sides"><div class="ll-t-side"><span class="ll-side-label">Debit · left</span><span class="ll-posted-amount" id="ll-cash-debit"></span></div><div class="ll-t-side"><span class="ll-side-label">Credit · right</span><span class="ll-posted-amount" id="ll-cash-credit"></span></div></div><div class="ll-side-buttons"><button type="button" class="btn ll-post" data-account="cash" data-side="debit">Post left</button><button type="button" class="btn ll-post" data-account="cash" data-side="credit">Post right</button></div></section><section class="ll-taccount"><div class="ll-taccount-head"><strong>Service Revenue</strong><span class="text-muted">Revenue</span></div><div class="ll-taccount-sides"><div class="ll-t-side"><span class="ll-side-label">Debit · left</span><span class="ll-posted-amount" id="ll-revenue-debit"></span></div><div class="ll-t-side"><span class="ll-side-label">Credit · right</span><span class="ll-posted-amount" id="ll-revenue-credit"></span></div></div><div class="ll-side-buttons"><button type="button" class="btn ll-post" data-account="revenue" data-side="debit">Post left</button><button type="button" class="btn ll-post" data-account="revenue" data-side="credit">Post right</button></div></section></div><div class="ll-balance-line"><span class="ll-balance-box" id="ll-debit-total">Debits $0</span><strong>=</strong><span class="ll-balance-box" id="ll-credit-total">Credits $0</span></div><div class="ll-tool-actions"><span class="text-muted">Classify → decide increase/decrease → choose side.</span><button type="button" class="btn btn-primary" id="ll-check-taccounts">Check posting</button></div><div id="ll-tool-feedback"></div>';
       }
 
       function bindTAccountTool() {
@@ -966,11 +1213,12 @@
         document.getElementById('ll-check-taccounts').addEventListener('click', function () {
           var slot = document.getElementById('ll-tool-feedback');
           if (postings.cash === 'debit' && postings.revenue === 'credit') {
-            slot.innerHTML = feedback('Posting is correct and balanced', 'Cash is an asset that increased, so it is debited. Revenue increased stockholders’ equity, so Service Revenue is credited.');
+            slot.innerHTML = feedback('success', 'Posting is correct and balanced', 'Cash is an asset that increased, so it is debited. Revenue increased stockholders’ equity, so Service Revenue is credited.');
+            markSolved(currentTopic);
           } else if (postings.cash && postings.revenue) {
-            slot.innerHTML = feedback('The amounts balance only when the sides are correct', 'Cash increased on the debit side. Service Revenue increased on the credit side. Reclassify the accounts before choosing left or right.');
+            slot.innerHTML = feedback('error', 'The amounts balance only when the sides are correct', 'Cash increased on the debit side. Service Revenue increased on the credit side. Reclassify the accounts before choosing left or right.');
           } else {
-            slot.innerHTML = feedback('Post both effects', 'A business transaction has a dual effect. Complete both T-accounts before checking the entry.');
+            slot.innerHTML = feedback('info', 'Post both effects', 'A business transaction has a dual effect. Complete both T-accounts before checking the entry.');
           }
         });
       }
@@ -986,7 +1234,9 @@
       ];
 
       function equationTool() {
-        return '<div class="ll-panel-top"><span class="ll-chip">Flagship workpaper</span><span class="ll-eyebrow">Auto-calculating equation grid</span></div><h2 class="ll-tool-title">Build Northstar’s first-month balances</h2><div class="ll-case"><div class="ll-case-top"><strong id="ll-transaction-label">Transaction 1 of 7</strong><span class="ll-chip" id="ll-transaction-amount">$10,000</span></div><p id="ll-transaction-text">Stockholders invest $10,000 cash for common stock.</p></div><div class="ll-transaction-stepper"><div class="ll-field-grid"><label class="ll-field"><span class="ll-form-label">First account effect</span><select class="form-select" id="ll-effect-one"></select></label><label class="ll-field"><span class="ll-form-label">Second account effect</span><select class="form-select" id="ll-effect-two"></select></label></div><div class="ll-tool-actions"><span class="ll-transaction-count" id="ll-equation-score">0 of 7 transactions analyzed</span><button type="button" class="btn btn-primary" id="ll-add-transaction">Add to workpaper</button></div><div id="ll-tool-feedback"></div></div><div class="ll-sheet-wrap ll-equation-sheet"><table class="ll-sheet" aria-label="Expanded accounting equation balances"><thead><tr><th>Balance</th><th>Cash</th><th class="ll-mobile-hide">A/R</th><th>Equip.</th><th>Liab.</th><th>Stock</th><th>Rev.</th><th>Exp.</th></tr></thead><tbody><tr><td>Running</td><td id="eq-cash">$0</td><td class="ll-mobile-hide" id="eq-receivable">$0</td><td id="eq-equipment">$0</td><td id="eq-liabilities">$0</td><td id="eq-stock">$0</td><td id="eq-revenue">$0</td><td id="eq-expense">$0</td></tr></tbody></table></div><div class="ll-mobile-summary" aria-label="Mobile account balance summary"><div class="ll-mobile-balance"><span>Cash</span><span id="mobile-cash">$0</span></div><div class="ll-mobile-balance"><span>A/R</span><span id="mobile-receivable">$0</span></div><div class="ll-mobile-balance"><span>Equipment</span><span id="mobile-equipment">$0</span></div><div class="ll-mobile-balance"><span>Liabilities</span><span id="mobile-liabilities">$0</span></div><div class="ll-mobile-balance"><span>Common Stock</span><span id="mobile-stock">$0</span></div><div class="ll-mobile-balance"><span>Net income</span><span id="mobile-income">$0</span></div></div><div class="ll-balance-line"><span class="ll-balance-box" id="ll-assets">Assets $0</span><strong>=</strong><span class="ll-balance-box" id="ll-right-side">Liabilities + Equity $0</span></div><div class="ll-source-note">The grid handles arithmetic. The learner makes the accounting classifications.</div>';
+        return '<div class="ll-panel-top"><span class="ll-chip">Flagship workpaper</span><span class="ll-eyebrow">Auto-calculating equation grid</span></div><h2 class="ll-tool-title">Build Northstar’s first-month balances</h2>' +
+          workedExample('<p><strong>Worked case:</strong> Stockholders invest $5,000 cash for common stock. Cash is an asset that increases, so it increases on the left side of the equation. Common Stock is part of stockholders’ equity and also increases, on the right side. Assets go up by $5,000 and the right side goes up by $5,000 — the equation stays balanced by construction, because every transaction has two sides.</p>') +
+          '<div class="ll-case"><div class="ll-case-top"><strong id="ll-transaction-label">Transaction 1 of 7</strong><span class="ll-chip" id="ll-transaction-amount">$10,000</span></div><p id="ll-transaction-text">Stockholders invest $10,000 cash for common stock.</p></div><div class="ll-transaction-stepper"><div class="ll-field-grid"><label class="ll-field"><span class="ll-form-label">First account effect</span><select class="form-select" id="ll-effect-one"></select></label><label class="ll-field"><span class="ll-form-label">Second account effect</span><select class="form-select" id="ll-effect-two"></select></label></div><div class="ll-tool-actions"><span class="ll-transaction-count" id="ll-equation-score">0 of 7 transactions analyzed</span><button type="button" class="btn btn-primary" id="ll-add-transaction">Add to workpaper</button></div><div id="ll-tool-feedback"></div></div><div class="ll-sheet-wrap ll-equation-sheet"><table class="ll-sheet" aria-label="Expanded accounting equation balances"><thead><tr><th>Balance</th><th>Cash</th><th>A/R</th><th>Equip.</th><th>Liab.</th><th>Stock</th><th>Rev.</th><th>Exp.</th></tr></thead><tbody><tr><td>Running</td><td id="eq-cash">$0</td><td id="eq-receivable">$0</td><td id="eq-equipment">$0</td><td id="eq-liabilities">$0</td><td id="eq-stock">$0</td><td id="eq-revenue">$0</td><td id="eq-expense">$0</td></tr></tbody></table></div><div class="ll-mobile-summary" aria-label="Mobile account balance summary"><div class="ll-mobile-balance"><span>Cash</span><span id="mobile-cash">$0</span></div><div class="ll-mobile-balance"><span>A/R</span><span id="mobile-receivable">$0</span></div><div class="ll-mobile-balance"><span>Equipment</span><span id="mobile-equipment">$0</span></div><div class="ll-mobile-balance"><span>Liabilities</span><span id="mobile-liabilities">$0</span></div><div class="ll-mobile-balance"><span>Common Stock</span><span id="mobile-stock">$0</span></div><div class="ll-mobile-balance"><span>Net income</span><span id="mobile-income">$0</span></div></div><div class="ll-balance-line"><span class="ll-balance-box" id="ll-assets">Assets $0</span><strong>=</strong><span class="ll-balance-box" id="ll-right-side">Liabilities + Equity $0</span></div><div class="ll-source-note">The grid handles arithmetic. The learner makes the accounting classifications.</div>';
       }
 
       function bindEquationTool() {
@@ -1029,7 +1279,7 @@
           var transaction = equationTransactions[index];
           var correct = (match(one.value, transaction.first) && match(two.value, transaction.second)) || (match(two.value, transaction.first) && match(one.value, transaction.second));
           if (!correct) {
-            slot.innerHTML = feedback('Re-read the business event', 'Identify what the company received or gave up, then identify the obligation, owner claim, revenue, or expense created by that change.');
+            slot.innerHTML = feedback('error', 'Re-read the business event', 'Identify what the company received or gave up, then identify the obligation, owner claim, revenue, or expense created by that change.');
             return;
           }
           balances[transaction.first[0]] += transaction.amount * transaction.first[1];
@@ -1039,9 +1289,10 @@
           document.getElementById('ll-equation-score').textContent = index + ' of 7 transactions analyzed';
           if (index === equationTransactions.length) {
             document.getElementById('ll-add-transaction').disabled = true;
-            slot.innerHTML = feedback('Workpaper complete', 'Assets are $15,500 and liabilities plus stockholders’ equity are $15,500. You classified every transaction and the system performed the arithmetic.');
+            slot.innerHTML = feedback('success', 'Workpaper complete', 'Assets are $15,500 and liabilities plus stockholders’ equity are $15,500. You classified every transaction and the system performed the arithmetic.');
+            markSolved(currentTopic);
           } else {
-            slot.innerHTML = feedback('Correct—workpaper updated', 'The equation remains balanced. Continue to the next business event.');
+            slot.innerHTML = feedback('success', 'Correct—workpaper updated', 'The equation remains balanced. Continue to the next business event.');
             loadTransaction();
           }
         });
@@ -1062,7 +1313,9 @@
 
       function statementsTool() {
         var rows = statementAccounts.map(function (account, index) { return '<div class="ll-account-row"><span>' + account.name + '</span><span class="ll-amount">' + money(account.amount) + '</span><select class="form-select ll-statement-select" data-index="' + index + '" aria-label="Statement for ' + account.name + '"><option value="">Place on a statement</option><option value="income">Income statement</option><option value="retained">Retained earnings statement</option><option value="balance">Balance sheet</option></select></div>'; }).join('');
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Statement builder</span></div><h2 class="ll-tool-title">Turn Northstar’s balances into reports</h2><div class="ll-case"><strong>Reporting instruction</strong><p>Route each balance to the statement where it is reported. LedgerLab will calculate net income and verify the statement connections.</p></div><div class="ll-account-list">' + rows + '</div><div class="ll-tool-actions"><span class="text-muted">One set of records · three connected outputs</span><button type="button" class="btn btn-primary" id="ll-build-statements">Build statements</button></div><div id="ll-tool-feedback"></div><div class="ll-statement-preview"><section class="ll-statement"><h3>Income Statement</h3><div id="ll-income-preview" class="text-muted">Route revenue and expenses here.</div></section><section class="ll-statement"><h3>Retained Earnings</h3><div id="ll-retained-preview" class="text-muted">Net income will flow here.</div></section><section class="ll-statement"><h3>Balance Sheet</h3><div id="ll-balance-preview" class="text-muted">Route permanent accounts here.</div></section></div>';
+        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Statement builder</span></div><h2 class="ll-tool-title">Turn Northstar’s balances into reports</h2>' +
+          workedExample('<p><strong>Worked case:</strong> Rent Expense of $1,200 goes on the <em>income statement</em>, because expenses measure performance during the period. Contrast that with Common Stock, which stays on the <em>balance sheet</em> because it describes a permanent claim on the company at a point in time, not an activity during the period.</p>') +
+          '<div class="ll-case"><strong>Reporting instruction</strong><p>Route each balance to the statement where it is reported. LedgerLab will calculate net income and verify the statement connections.</p></div><div class="ll-account-list">' + rows + '</div><div class="ll-tool-actions"><span class="text-muted">One set of records · three connected outputs</span><button type="button" class="btn btn-primary" id="ll-build-statements">Build statements</button></div><div id="ll-tool-feedback"></div><div class="ll-statement-preview"><section class="ll-statement"><h3>Income Statement</h3><div id="ll-income-preview" class="text-muted">Route revenue and expenses here.</div></section><section class="ll-statement"><h3>Retained Earnings</h3><div id="ll-retained-preview" class="text-muted">Net income will flow here.</div></section><section class="ll-statement"><h3>Balance Sheet</h3><div id="ll-balance-preview" class="text-muted">Route permanent accounts here.</div></section></div>';
       }
 
       function bindStatementsTool() {
@@ -1071,13 +1324,14 @@
           var errors = statementAccounts.filter(function (account, index) { return selections[index] !== account.answer; });
           var slot = document.getElementById('ll-tool-feedback');
           if (errors.length) {
-            slot.innerHTML = feedback(errors.length + ' balance' + (errors.length === 1 ? '' : 's') + ' need another look', 'Revenues and expenses report performance. Ending retained earnings bridges into stockholders’ equity. Assets, liabilities, and permanent equity belong on the balance sheet.');
+            slot.innerHTML = feedback('error', errors.length + ' balance' + (errors.length === 1 ? '' : 's') + ' need another look', 'Revenues and expenses report performance. Ending retained earnings bridges into stockholders’ equity. Assets, liabilities, and permanent equity belong on the balance sheet.');
             return;
           }
           document.getElementById('ll-income-preview').innerHTML = '<div class="ll-statement-line"><span>Service Revenue</span><span>$3,500</span></div><div class="ll-statement-line"><span>Expenses</span><span>($1,700)</span></div><div class="ll-statement-line ll-statement-total"><span>Net income</span><span>$1,800</span></div>';
           document.getElementById('ll-retained-preview').innerHTML = '<div class="ll-statement-line"><span>Beginning retained earnings</span><span>$0</span></div><div class="ll-statement-line"><span>Net income</span><span>$1,800</span></div><div class="ll-statement-line ll-statement-total"><span>Ending retained earnings</span><span>$1,800</span></div>';
           document.getElementById('ll-balance-preview').innerHTML = '<div class="ll-statement-line"><span>Total assets</span><span>$15,500</span></div><div class="ll-statement-line"><span>Total liabilities</span><span>$3,700</span></div><div class="ll-statement-line"><span>Common stock</span><span>$10,000</span></div><div class="ll-statement-line"><span>Retained earnings</span><span>$1,800</span></div><div class="ll-statement-line ll-statement-total"><span>L + SE</span><span>$15,500</span></div>';
-          slot.innerHTML = feedback('Statements built and connected', 'Net income of $1,800 flows into retained earnings. Ending retained earnings then appears in equity, and the balance sheet balances at $15,500.');
+          slot.innerHTML = feedback('success', 'Statements built and connected', 'Net income of $1,800 flows into retained earnings. Ending retained earnings then appears in equity, and the balance sheet balances at $15,500.');
+          markSolved(currentTopic);
         });
       }
 
@@ -1095,11 +1349,13 @@
 
       function cycleTool() {
         var steps = cycleSteps.map(function (step, index) { return '<div class="ll-close-step" data-step="' + index + '"><span class="ll-step-number">' + (index + 1) + '</span><span>' + step + '</span><button type="button" class="btn ll-complete-step" data-index="' + index + '">' + (index === 0 ? 'Complete' : 'Locked') + '</button></div>'; }).join('');
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Month-end close board</span></div><h2 class="ll-tool-title">Close Northstar’s first accounting period</h2><div class="ll-case"><strong>Controller instruction</strong><p>Complete the accounting cycle in order. Each step unlocks the next deliverable and explains why that deliverable is needed.</p></div><div class="ll-close-board" id="ll-close-board">' + steps + '</div><div class="ll-tool-actions"><span id="ll-cycle-progress" class="text-muted">0 of 9 close steps complete</span><button type="button" class="btn" id="ll-reset-cycle">Reset board</button></div><div id="ll-tool-feedback"></div>';
+        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Month-end close board</span></div><h2 class="ll-tool-title">Close Northstar’s first accounting period</h2>' +
+          workedExample('<p><strong>Worked case:</strong> "Post to the ledger" must come after "Journalize the transactions" because posting only copies amounts that already exist in the journal into the right accounts — there is nothing to copy until the journal entry is written first. Every step in the cycle depends on the output of the step before it, which is why the board locks steps in order instead of letting you jump ahead.</p>') +
+          '<div class="ll-case"><strong>Controller instruction</strong><p>Complete the accounting cycle in order. Each step unlocks the next deliverable and explains why that deliverable is needed.</p></div><div class="ll-close-board" id="ll-close-board">' + steps + '</div><div class="ll-tool-actions"><span id="ll-cycle-progress" class="text-muted">0 of 9 close steps complete</span><button type="button" class="btn" id="ll-reset-cycle">Reset board</button></div><div id="ll-tool-feedback"></div>';
       }
 
       function bindCycleTool() {
-        var completed = 0;
+        var completedSteps = 0;
         var explanations = [
           'The team identifies the accounts and directions affected by each business event.',
           'The journal creates a chronological record with equal debits and credits.',
@@ -1114,23 +1370,26 @@
         function refresh() {
           Array.prototype.forEach.call(toolNode.querySelectorAll('.ll-close-step'), function (row, index) {
             var button = row.querySelector('button');
-            row.classList.toggle('is-complete', index < completed);
-            button.disabled = index !== completed || completed === cycleSteps.length;
-            button.textContent = index < completed ? 'Done' : (index === completed ? 'Complete' : 'Locked');
+            row.classList.toggle('is-complete', index < completedSteps);
+            button.disabled = index !== completedSteps || completedSteps === cycleSteps.length;
+            button.textContent = index < completedSteps ? 'Done' : (index === completedSteps ? 'Complete' : 'Locked');
           });
-          document.getElementById('ll-cycle-progress').textContent = completed + ' of 9 close steps complete';
+          document.getElementById('ll-cycle-progress').textContent = completedSteps + ' of 9 close steps complete';
         }
         toolNode.querySelector('.ll-close-board').addEventListener('click', function (event) {
           var button = event.target.closest('.ll-complete-step');
-          if (!button || Number(button.getAttribute('data-index')) !== completed) return;
+          if (!button || Number(button.getAttribute('data-index')) !== completedSteps) return;
           var slot = document.getElementById('ll-tool-feedback');
-          slot.innerHTML = feedback('Step ' + (completed + 1) + ' complete', explanations[completed]);
-          completed += 1;
+          slot.innerHTML = feedback('success', 'Step ' + (completedSteps + 1) + ' complete', explanations[completedSteps]);
+          completedSteps += 1;
           refresh();
-          if (completed === cycleSteps.length) slot.innerHTML = feedback('Accounting period closed', 'Northstar’s permanent balances are ready to carry forward, and the temporary accounts are ready for the next period.');
+          if (completedSteps === cycleSteps.length) {
+            slot.innerHTML = feedback('success', 'Accounting period closed', 'Northstar’s permanent balances are ready to carry forward, and the temporary accounts are ready for the next period.');
+            markSolved(currentTopic);
+          }
         });
         document.getElementById('ll-reset-cycle').addEventListener('click', function () {
-          completed = 0;
+          completedSteps = 0;
           document.getElementById('ll-tool-feedback').innerHTML = '';
           refresh();
         });
@@ -1146,6 +1405,14 @@
         if (topic.tool === 'cycle') { toolNode.innerHTML = cycleTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindCycleTool(); }
       }
 
+      function setActiveView(view) {
+        classroomNode.setAttribute('data-active-view', view);
+        viewLectureTab.classList.toggle('is-active', view === 'lecture');
+        viewLectureTab.setAttribute('aria-selected', String(view === 'lecture'));
+        viewToolTab.classList.toggle('is-active', view === 'tool');
+        viewToolTab.setAttribute('aria-selected', String(view === 'tool'));
+      }
+
       function render() {
         var topic = topics[currentTopic];
         root.setAttribute('data-topic', String(currentTopic));
@@ -1158,26 +1425,45 @@
         progressFill.style.width = ((currentTopic + 1) / topics.length * 100) + '%';
         renderLecture(topic);
         renderTool(topic);
+        setActiveView('lecture');
+        var isLast = currentTopic === topics.length - 1;
         prevButton.disabled = currentTopic === 0;
-        nextButton.textContent = currentTopic === topics.length - 1 ? 'Finish LO 2.1 ✓' : 'Complete & Continue';
+        prevButtonMobile.disabled = currentTopic === 0;
+        nextButton.textContent = isLast ? 'Finish LO 2.1 ✓' : 'Complete & Continue';
+        nextButtonMobileLabel.textContent = isLast ? 'Finish ✓' : 'Continue';
         Array.prototype.forEach.call(navNode.children, function (button, index) {
           var active = index === currentTopic;
           button.classList.toggle('btn-primary', active);
-          button.classList.toggle('is-complete', Boolean(completed[index]));
+          button.classList.toggle('is-complete', Boolean(solved[index]));
           button.setAttribute('aria-current', active ? 'step' : 'false');
         });
+        saveState();
       }
 
       function scrollLessonTop() {
         if (typeof root.scrollTo === 'function') root.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      function closeOutlineOnSmallScreen() {
-        if (typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 820px)').matches) {
-          root.setAttribute('data-outline', 'closed');
-          document.getElementById('ll-outline-toggle').setAttribute('aria-expanded', 'false');
-        }
+      function isSmallScreen() {
+        return typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 820px)').matches;
       }
+
+      function openOutline() {
+        root.setAttribute('data-outline', 'open');
+        document.getElementById('ll-outline-toggle').setAttribute('aria-expanded', 'true');
+      }
+
+      function closeOutline() {
+        root.setAttribute('data-outline', 'closed');
+        document.getElementById('ll-outline-toggle').setAttribute('aria-expanded', 'false');
+      }
+
+      function toggleOutline() {
+        if (root.getAttribute('data-outline') === 'open') closeOutline(); else openOutline();
+      }
+
+      function goPrev() { if (currentTopic > 0) { currentTopic -= 1; render(); scrollLessonTop(); } }
+      function goNext() { currentTopic = currentTopic < topics.length - 1 ? currentTopic + 1 : 0; render(); scrollLessonTop(); }
 
       topics.forEach(function (topic, index) {
         var button = document.createElement('button');
@@ -1185,17 +1471,25 @@
         button.className = 'btn';
         button.innerHTML = '<span class="ll-topic-number">' + (index + 1) + '</span><span class="ll-topic-label">' + topic.short + '</span><span class="ll-topic-meta">' + topic.time.replace('About ', '') + ' · exercise</span>';
         button.setAttribute('aria-label', 'Open topic ' + (index + 1) + ': ' + topic.title);
-        button.addEventListener('click', function () { currentTopic = index; render(); closeOutlineOnSmallScreen(); scrollLessonTop(); });
+        button.addEventListener('click', function () {
+          currentTopic = index;
+          render();
+          if (isSmallScreen()) closeOutline();
+          scrollLessonTop();
+        });
         navNode.appendChild(button);
       });
 
-      prevButton.addEventListener('click', function () { if (currentTopic > 0) { currentTopic -= 1; render(); scrollLessonTop(); } });
-      nextButton.addEventListener('click', function () { completed[currentTopic] = true; currentTopic = currentTopic < topics.length - 1 ? currentTopic + 1 : 0; render(); scrollLessonTop(); });
-      document.getElementById('ll-outline-toggle').addEventListener('click', function () {
-        var open = root.getAttribute('data-outline') === 'open';
-        root.setAttribute('data-outline', open ? 'closed' : 'open');
-        this.setAttribute('aria-expanded', String(!open));
-      });
+      prevButton.addEventListener('click', goPrev);
+      nextButton.addEventListener('click', goNext);
+      prevButtonMobile.addEventListener('click', goPrev);
+      nextButtonMobile.addEventListener('click', goNext);
+      document.getElementById('ll-outline-toggle').addEventListener('click', toggleOutline);
+      document.getElementById('ll-outline-toggle-mobile').addEventListener('click', toggleOutline);
+      document.getElementById('ll-outline-close').addEventListener('click', closeOutline);
+      document.getElementById('ll-outline-backdrop').addEventListener('click', closeOutline);
+      viewLectureTab.addEventListener('click', function () { setActiveView('lecture'); });
+      viewToolTab.addEventListener('click', function () { setActiveView('tool'); });
       document.getElementById('ll-notes-toggle').addEventListener('click', function () {
         assistPanel.classList.add('is-open');
         this.setAttribute('aria-expanded', 'true');
@@ -1213,9 +1507,20 @@
       document.getElementById('ll-save-note').addEventListener('click', function () {
         notes[currentTopic] = noteInput.value.trim();
         noteStatus.textContent = notes[currentTopic] ? 'Saved with this module.' : 'Note cleared.';
+        saveState();
       });
-      closeOutlineOnSmallScreen();
+
+      loadState();
+      if (currentTopic < 0 || currentTopic >= topics.length) currentTopic = 0;
+      if (isSmallScreen()) closeOutline();
       render();
+      refreshOutlineState();
+
+      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('sw.js').catch(function () { /* offline support is optional */ });
+        });
+      }
     }());
   </script>
 </body>
