@@ -11,7 +11,7 @@ function statusDotColor(status) {
   return '#CBD1CB';
 }
 
-export default function Drawer({ visible, onClose, chapters, onNavigateToLibro }) {
+export default function Drawer({ visible, onClose, chapters, onNavigate }) {
   const anim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function Drawer({ visible, onClose, chapters, onNavigateToLibro }
                 <Pressable
                   key={i}
                   disabled={!cl.interactive}
-                  onPress={() => cl.interactive && onNavigateToLibro()}
+                  onPress={() => cl.interactive && onNavigate(cl.target)}
                   style={styles.classRow}
                 >
                   <View style={[styles.dot, { backgroundColor: statusDotColor(cl.status) }]} />

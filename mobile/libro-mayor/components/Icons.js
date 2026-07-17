@@ -17,6 +17,14 @@ export function IconMenu({ size = 22, color }) {
   );
 }
 
+export function IconChevronLeft({ size = 24, color }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M15 18l-6-6 6-6" {...stroke({ color, strokeWidth: 2 })} />
+    </Svg>
+  );
+}
+
 export function IconClose({ size = 22, color }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
@@ -76,6 +84,22 @@ export function IconChevronDown({ size = 18, color }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       <Path d="M6 9l6 6 6-6" {...stroke({ color, strokeWidth: 2 })} />
+    </Svg>
+  );
+}
+
+export function IconCheck({ size = 15, color }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M5 13l5 5L20 7" {...stroke({ color, strokeWidth: 2.4 })} />
+    </Svg>
+  );
+}
+
+export function IconX({ size = 15, color }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24">
+      <Path d="M6 6l12 12M18 6L6 18" {...stroke({ color, strokeWidth: 2.4 })} />
     </Svg>
   );
 }

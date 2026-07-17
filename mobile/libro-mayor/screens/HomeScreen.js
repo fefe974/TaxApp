@@ -21,7 +21,7 @@ function statusColor(status) {
   return '#9AA29A';
 }
 
-function ChapterCard({ chapter, expanded, onToggle, onClassPress }) {
+function ChapterCard({ chapter, expanded, onToggle, onNavigate }) {
   return (
     <Card>
       <Pressable style={styles.chapterHead} onPress={onToggle}>
@@ -45,7 +45,7 @@ function ChapterCard({ chapter, expanded, onToggle, onClassPress }) {
             <Pressable
               key={i}
               disabled={!cl.interactive}
-              onPress={() => cl.interactive && onClassPress()}
+              onPress={() => cl.interactive && onNavigate(cl.target)}
               style={styles.classRow}
             >
               <View style={[styles.dot, { backgroundColor: statusDotColor(cl.status) }]} />
@@ -64,14 +64,14 @@ function ChapterCard({ chapter, expanded, onToggle, onClassPress }) {
   );
 }
 
-export default function HomeScreen({ chapters, openChap, onToggleChapter, onClassPress, pct }) {
+export default function HomeScreen({ chapters, openChap, onToggleChapter, onNavigate, pct }) {
   return (
     <ScrollView contentContainerStyle={styles.pantalla} showsVerticalScrollIndicator={false}>
       <Eyebrow>Contabilidad · Fundamentos</Eyebrow>
       <Titulo>Continúa aprendiendo</Titulo>
       <Intro>Retoma tu módulo activo o explora el temario del curso.</Intro>
 
-      <Pressable style={styles.resume} onPress={onClassPress}>
+      <Pressable style={styles.resume} onPress={() => onNavigate('libro')}>
         <Text style={styles.resumeEyebrow}>CONTINUAR</Text>
         <Text style={styles.resumeTitle}>Capítulo 2 · El libro mayor</Text>
         <View style={styles.resumeBarRow}>
@@ -90,7 +90,7 @@ export default function HomeScreen({ chapters, openChap, onToggleChapter, onClas
             chapter={ch}
             expanded={openChap === ch.index}
             onToggle={() => onToggleChapter(ch.index)}
-            onClassPress={onClassPress}
+            onNavigate={onNavigate}
           />
         ))}
       </View>
