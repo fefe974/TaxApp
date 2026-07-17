@@ -17,7 +17,6 @@ export const TRANS = [
     desc: 'Se emiten acciones a cambio de $10,000 en efectivo',
     diario: [['Efectivo', 10000, 'cargo'], ['Capital social', 10000, 'abono']],
     mov: { ef: 10000, cs: 10000 },
-    tag: { cs: '' },
   },
   {
     desc: 'Se pagan $800 en efectivo por gastos de renta',
@@ -61,3 +60,67 @@ export const TRANS = [
 ];
 
 export const SALDOS_INICIALES = { ef: 0, cc: 0, eq: 0, np: 0, cp: 0, cs: 0, ur: 0 };
+
+// status: 'listo' (done), 'curso' (in progress), 'proximo' (upcoming).
+// interactive:true marks the one class that actually links into the Libro Mayor screens.
+// Pure data derivation shared by HomeScreen's accordion and the Drawer's flat list —
+// each chapter's completion % blends "listo" classes (full credit) with the one
+// "interactive" class weighted by the journal's own progress (paso/TRANS.length).
+export function computeChapters(pct) {
+  return COURSE.map((ch, i) => {
+    let prog = 0;
+    ch.classes.forEach((cl) => {
+      if (cl.status === 'listo') prog += 1;
+      else if (cl.interactive) prog += pct / 100;
+    });
+    const cPct = Math.round((prog / ch.classes.length) * 100);
+    return {
+      index: i,
+      num: i + 1,
+      code: ch.code,
+      title: ch.title,
+      countText: ch.classes.length + (ch.classes.length === 1 ? ' clase' : ' clases'),
+      pct: cPct,
+      classes: ch.classes,
+    };
+  });
+}
+
+export const COURSE = [
+  {
+    code: 'Capítulo 1',
+    title: 'Introducción a la contabilidad',
+    classes: [
+      { title: 'La empresa y la información financiera', status: 'listo' },
+      { title: 'La ecuación contable básica', status: 'listo' },
+      { title: 'Activos, pasivos y capital', status: 'listo' },
+    ],
+  },
+  {
+    code: 'Capítulo 2',
+    title: 'El libro mayor y la partida doble',
+    classes: [
+      { title: 'El libro mayor y la partida doble', status: 'curso', interactive: true },
+      { title: 'Ejercicios de cargo y abono', status: 'proximo' },
+    ],
+  },
+  {
+    code: 'Capítulo 3',
+    title: 'Ajustes y cierre contable',
+    classes: [
+      { title: 'Asientos de ajuste', status: 'proximo' },
+      { title: 'Depreciación y devengado', status: 'proximo' },
+      { title: 'Cierre del periodo', status: 'proximo' },
+    ],
+  },
+  {
+    code: 'Capítulo 4',
+    title: 'Estados financieros y análisis',
+    classes: [
+      { title: 'Balance general', status: 'proximo' },
+      { title: 'Estado de resultados', status: 'proximo' },
+      { title: 'Flujo de efectivo', status: 'proximo' },
+      { title: 'Razones financieras', status: 'proximo' },
+    ],
+  },
+];

@@ -1,58 +1,50 @@
 import React from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { colors, fonts, spacing } from '../theme';
-import { PaperCard } from '../components/Card';
-import { Ojal, Titulo, TituloEm, Intro, NotaPie, NotaPieB } from '../components/Typography';
+import { Card } from '../components/Card';
+import { Eyebrow, Titulo, Intro, NotaPie, NotaPieB } from '../components/Typography';
 import { IconCostoEfectividad, IconUtilidad, IconFlexibilidad } from '../components/Icons';
 
 const PRINCIPIOS = [
   {
     Icon: IconCostoEfectividad,
     title: 'Costo-efectividad',
-    text: 'El sistema es rentable cuando los beneficios de la información superan el costo de proporcionarla.',
+    text: 'Los beneficios de la información deben superar el costo de producirla.',
   },
   {
     Icon: IconUtilidad,
     title: 'Utilidad',
-    text: 'La información de salida debe ser comprensible, relevante, confiable, oportuna y precisa.',
+    text: 'Información comprensible, relevante, confiable, oportuna y precisa.',
   },
   {
     Icon: IconFlexibilidad,
     title: 'Flexibilidad',
-    text: 'Capacidad de adaptarse a necesidades futuras: crecimiento, regulación y avances tecnológicos.',
+    text: 'Se adapta al crecimiento, la regulación y la tecnología futura.',
   },
 ];
 
 function PrincipioCard({ Icon, title, text }) {
   return (
-    <View style={styles.principio}>
-      <LinearGradient
-        colors={[colors.libro, colors.libro2]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.icono}
-      >
-        <Icon size={19} color={colors.latonClaro} />
-      </LinearGradient>
+    <Card style={styles.principio}>
+      <View style={styles.icono}>
+        <Icon size={18} color={colors.green} />
+      </View>
       <View style={styles.principioTexto}>
         <Text style={styles.principioTitulo}>{title}</Text>
         <Text style={styles.principioDesc}>{text}</Text>
       </View>
-    </View>
+    </Card>
   );
 }
 
 export default function LibroScreen() {
   return (
     <ScrollView contentContainerStyle={styles.pantalla} showsVerticalScrollIndicator={false}>
-      <Ojal>ILUSTRACIONES 2.1 – 2.3</Ojal>
-      <Titulo>
-        La partida doble, <TituloEm>siempre en equilibrio</TituloEm>
-      </Titulo>
-      <Intro>Por cada cargo debe existir un abono. La ecuación fundamental nunca pierde su igualdad.</Intro>
+      <Eyebrow>Ilustraciones 2.1 – 2.3</Eyebrow>
+      <Titulo>La partida doble, siempre en equilibrio</Titulo>
+      <Intro>Por cada cargo existe un abono. La ecuación fundamental nunca pierde su igualdad.</Intro>
 
-      <PaperCard>
+      <Card style={styles.eqCard}>
         <View style={styles.eqHero}>
           <View style={styles.termino}>
             <Text style={styles.terminoB}>Activos</Text>
@@ -70,9 +62,9 @@ export default function LibroScreen() {
           </View>
         </View>
         <View style={styles.dobleRegla} />
-      </PaperCard>
+      </Card>
 
-      <Ojal style={{ marginTop: 26 }}>PRINCIPIOS DEL SISTEMA · ILUSTRACIÓN 2.1</Ojal>
+      <Eyebrow style={{ marginTop: 24, marginBottom: 10 }}>Principios del sistema</Eyebrow>
       <View style={styles.principios}>
         {PRINCIPIOS.map((p) => (
           <PrincipioCard key={p.title} {...p} />
@@ -90,23 +82,27 @@ export default function LibroScreen() {
 const styles = StyleSheet.create({
   pantalla: {
     padding: spacing.xl,
-    paddingTop: spacing.xl,
     paddingBottom: 30,
+  },
+  eqCard: {
+    marginTop: 18,
+    padding: 22,
+    paddingHorizontal: 16,
   },
   eqHero: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    gap: 11,
-    paddingVertical: 8,
+    gap: 13,
   },
   termino: {
     alignItems: 'center',
   },
   terminoB: {
-    fontFamily: fonts.serif,
-    fontSize: 32,
+    fontFamily: fonts.sansBold,
+    fontSize: 22,
+    letterSpacing: -0.3,
     color: colors.texto,
   },
   terminoSpan: {
@@ -117,9 +113,9 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   op: {
-    fontFamily: fonts.serif,
-    fontSize: 27,
-    color: colors.laton,
+    fontFamily: fonts.sansSemiBold,
+    fontSize: 20,
+    color: colors.green,
   },
   dobleRegla: {
     marginTop: 16,
@@ -130,23 +126,19 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.texto,
   },
   principios: {
-    gap: 11,
-    marginTop: 15,
+    gap: 10,
   },
   principio: {
     flexDirection: 'row',
     gap: 13,
     alignItems: 'flex-start',
-    backgroundColor: colors.blanco,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 14,
     padding: 15,
   },
   icono: {
-    width: 41,
-    height: 41,
-    borderRadius: 11,
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    backgroundColor: colors.greenLight,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -154,7 +146,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   principioTitulo: {
-    fontFamily: fonts.sansBold,
+    fontFamily: fonts.sansSemiBold,
     fontSize: 14,
     color: colors.texto,
     marginBottom: 2,

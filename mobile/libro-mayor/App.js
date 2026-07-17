@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -7,18 +7,21 @@ import { useFonts } from 'expo-font';
 import { colors, fontAssets } from './theme';
 import Header from './components/Header';
 import TabBar from './components/TabBar';
+import Drawer from './components/Drawer';
+import HomeScreen from './screens/HomeScreen';
 import LibroScreen from './screens/LibroScreen';
 import ReglasScreen from './screens/ReglasScreen';
 import DiarioScreen from './screens/DiarioScreen';
 import EstadosScreen from './screens/EstadosScreen';
-import { SALDOS_INICIALES, TRANS, fmt } from './data';
+import { SALDOS_INICIALES, TRANS, fmt, computeChapters } from './data';
 
 export default function LibroMayorApp() {
   const [fontsLoaded] = useFonts(fontAssets);
-  const [activeTab, setActiveTab] = useState('libro');
+  const [tab, setTab] = useState('home');
   const [saldos, setSaldos] = useState(SALDOS_INICIALES);
   const [paso, setPaso] = useState(0);
-  const [pulseKey, setPulseKey] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openChap, setOpenChap] = useState(1);
 
   const registrar = useCallback((i) => {
     const t = TRANS[i];
@@ -30,14 +33,24 @@ export default function LibroMayorApp() {
       return next;
     });
     setPaso((p) => p + 1);
-    setPulseKey((k) => k + 1);
   }, []);
 
   const reiniciar = useCallback(() => {
     setSaldos(SALDOS_INICIALES);
     setPaso(0);
-    setPulseKey((k) => k + 1);
   }, []);
+
+  const navigateToLibro = useCallback(() => {
+    setTab('libro');
+    setMenuOpen(false);
+  }, []);
+
+  const toggleChapter = useCallback((index) => {
+    setOpenChap((prev) => (prev === index ? -1 : index));
+  }, []);
+
+  const pct = Math.round((paso / TRANS.length) * 100);
+  const chapters = useMemo(() => computeChapters(pct), [pct]);
 
   if (!fontsLoaded) {
     return <View style={styles.root} />;
@@ -49,18 +62,40 @@ export default function LibroMayorApp() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <View style={styles.root}>
-        <Header activos={fmt(activos)} pasivos={fmt(pasivos)} capital={fmt(capital)} pulseKey={pulseKey} />
+        <Header
+          onMenuPress={() => setMenuOpen(true)}
+          showEquation={tab !== 'home'}
+          activos={fmt(activos)}
+          pasivos={fmt(pasivos)}
+          capital={fmt(capital)}
+        />
         <View style={styles.screenArea}>
-          {activeTab === 'libro' && <LibroScreen />}
-          {activeTab === 'reglas' && <ReglasScreen />}
-          {activeTab === 'diario' && (
+          {tab === 'home' && (
+            <HomeScreen
+              chapters={chapters}
+              openChap={openChap}
+              onToggleChapter={toggleChapter}
+              onClassPress={navigateToLibro}
+              pct={pct}
+            />
+          )}
+          {tab === 'libro' && <LibroScreen />}
+          {tab === 'reglas' && <ReglasScreen />}
+          {tab === 'diario' && (
             <DiarioScreen saldos={saldos} paso={paso} onRegistrar={registrar} onReiniciar={reiniciar} />
           )}
-          {activeTab === 'estados' && <EstadosScreen />}
+          {tab === 'estados' && <EstadosScreen />}
         </View>
-        <TabBar active={activeTab} onChange={setActiveTab} />
+        <TabBar active={tab} onChange={setTab} />
+
+        <Drawer
+          visible={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          chapters={chapters}
+          onNavigateToLibro={navigateToLibro}
+        />
       </View>
     </SafeAreaProvider>
   );
@@ -69,7 +104,7 @@ export default function LibroMayorApp() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.papel,
+    backgroundColor: colors.surface,
   },
   screenArea: {
     flex: 1,

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ScrollView, View, Text, Pressable, Animated, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { colors, fonts, spacing } from '../theme';
-import { Ojal, Titulo, TituloEm, Intro } from '../components/Typography';
+import { colors, fonts, spacing, radius } from '../theme';
+import { Eyebrow, Titulo, Intro } from '../components/Typography';
 import { TRANS, fmt, fmtMov } from '../data';
 
 const COLS = [
@@ -22,7 +21,7 @@ function MayorTable({ saldos, paso }) {
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.mayorScroll}>
       <View style={[styles.mayorTable, { width: TABLE_WIDTH }]}>
-        <LinearGradient colors={[colors.libro, colors.libro2]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.mayorHeadRow}>
+        <View style={styles.mayorHeadRow}>
           {COLS.map((c) => (
             <Text
               key={c.key}
@@ -31,7 +30,7 @@ function MayorTable({ saldos, paso }) {
               {c.label.toUpperCase()}
             </Text>
           ))}
-        </LinearGradient>
+        </View>
 
         {paso === 0 && (
           <View style={styles.mayorEmptyRow}>
@@ -45,7 +44,7 @@ function MayorTable({ saldos, paso }) {
 
         {paso > 0 && (
           <View style={styles.mayorFootRow}>
-            <Text style={[styles.mayorCell, { width: COLS[0].width, textAlign: 'left', fontFamily: fonts.sansSemiBold }]}>
+            <Text style={[styles.mayorCell, { width: COLS[0].width, textAlign: 'left', fontFamily: fonts.sansBold, color: colors.texto }]}>
               Saldos
             </Text>
             {['ef', 'cc', 'eq'].map((k) => (
@@ -69,25 +68,21 @@ function MayorTable({ saldos, paso }) {
 function MayorRow({ t }) {
   const anim = useRef(new Animated.Value(0)).current;
   useEffect(() => {
-    Animated.timing(anim, { toValue: 1, duration: 400, useNativeDriver: true }).start();
+    Animated.timing(anim, { toValue: 1, duration: 300, useNativeDriver: true }).start();
   }, []);
-  const style = {
-    opacity: anim,
-    transform: [{ translateX: anim.interpolate({ inputRange: [0, 1], outputRange: [-9, 0] }) }],
-  };
   const cell = (key, tag) => {
     const v = t.mov[key];
     const w = COLS.find((c) => c.key === key).width;
     if (v === undefined) return <View key={key} style={{ width: w }} />;
     return (
-      <Text key={key} style={[styles.mayorCell, { width: w, color: v > 0 ? colors.haber : colors.debe }]}>
+      <Text key={key} style={[styles.mayorCell, { width: w, color: v > 0 ? colors.green : colors.red }]}>
         {fmtMov(v)}
         {tag || ''}
       </Text>
     );
   };
   return (
-    <Animated.View style={[styles.mayorBodyRow, style]}>
+    <Animated.View style={[styles.mayorBodyRow, { opacity: anim }]}>
       <Text style={[styles.mayorCell, { width: COLS[0].width, textAlign: 'left', color: colors.textoSuave }]}>
         ({TRANS.indexOf(t) + 1})
       </Text>
@@ -123,8 +118,8 @@ function AsientoCard({ t, index, paso, onRegistrar }) {
       <View style={styles.lineas}>
         {t.diario.map(([cta, m, tipo], i) => (
           <View key={i} style={styles.lineaDiario}>
-            <Text style={[styles.lineaCuenta, tipo === 'abono' && styles.lineaCuentaAbono]}>{cta}</Text>
-            <Text style={[styles.lineaMonto, { color: tipo === 'cargo' ? colors.debe : colors.haber }]}>
+            <Text style={styles.lineaCuenta}>{tipo === 'abono' ? '  ' : ''}{cta}</Text>
+            <Text style={[styles.lineaMonto, { color: tipo === 'cargo' ? colors.red : colors.green }]}>
               {tipo === 'cargo' ? 'Cargo' : 'Abono'} ${m.toLocaleString('en-US')}
             </Text>
           </View>
@@ -135,15 +130,9 @@ function AsientoCard({ t, index, paso, onRegistrar }) {
           <Pressable
             disabled={!activo}
             onPress={() => onRegistrar(index)}
-            style={({ pressed }) => [
-              styles.btnRegistrar,
-              !activo && styles.btnRegistrarDisabled,
-              pressed && activo && { transform: [{ scale: 0.95 }] },
-            ]}
+            style={[styles.btnRegistrar, !activo && styles.btnRegistrarDisabled]}
           >
-            <Text style={[styles.btnRegistrarText, !activo && styles.btnRegistrarTextDisabled]}>
-              REGISTRAR ASIENTO
-            </Text>
+            <Text style={styles.btnRegistrarText}>Registrar asiento</Text>
           </Pressable>
         </View>
       )}
@@ -158,13 +147,13 @@ function Comprobacion({ saldos, onReiniciar }) {
   const opacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.parallel([
-      Animated.spring(scale, { toValue: 1, friction: 5, tension: 60, delay: 250, useNativeDriver: true }),
-      Animated.timing(opacity, { toValue: 1, duration: 250, delay: 250, useNativeDriver: true }),
+      Animated.spring(scale, { toValue: 1, friction: 5, tension: 60, delay: 200, useNativeDriver: true }),
+      Animated.timing(opacity, { toValue: 1, duration: 250, delay: 200, useNativeDriver: true }),
     ]).start();
   }, []);
   return (
-    <LinearGradient colors={[colors.libro, colors.libro2, colors.libro]} start={{ x: 0, y: 0 }} end={{ x: 0.7, y: 1 }} style={styles.comprobacion}>
-      <Animated.View style={[styles.estampa, { opacity, transform: [{ rotate: '7deg' }, { scale }] }]}>
+    <View style={styles.comprobacion}>
+      <Animated.View style={[styles.estampa, { opacity, transform: [{ rotate: '6deg' }, { scale }] }]}>
         <Text style={styles.estampaText}>EN EQUILIBRIO</Text>
       </Animated.View>
       <Text style={styles.comprobacionTitulo}>Comprobación del balance</Text>
@@ -177,36 +166,30 @@ function Comprobacion({ saldos, onReiniciar }) {
         <Text style={styles.compFilaValor}>{fmt(pasivosCapital)}</Text>
       </View>
       <View style={[styles.compFila, styles.compFilaTotal]}>
-        <Text style={[styles.compFilaLabel, { color: colors.papel }]}>Total activos = Total pasivos y capital</Text>
-        <Text style={styles.compFilaValor}>✓</Text>
+        <Text style={[styles.compFilaLabel, { color: colors.surface }]}>Total activos = Total pasivos y capital</Text>
+        <Text style={styles.checkMark}>✓</Text>
       </View>
-      <Pressable
-        onPress={onReiniciar}
-        style={({ pressed }) => [styles.btnFantasma, pressed && { backgroundColor: 'rgba(246,242,231,.08)', transform: [{ scale: 0.97 }] }]}
-      >
-        <Text style={styles.btnFantasmaText}>REINICIAR LA PRÁCTICA</Text>
+      <Pressable onPress={onReiniciar} style={styles.btnFantasma}>
+        <Text style={styles.btnFantasmaText}>Reiniciar la práctica</Text>
       </Pressable>
-    </LinearGradient>
+    </View>
   );
 }
 
 export default function DiarioScreen({ saldos, paso, onRegistrar, onReiniciar }) {
   return (
     <ScrollView contentContainerStyle={styles.pantalla} showsVerticalScrollIndicator={false}>
-      <Ojal>PONLO EN PRÁCTICA · PASO A PASO</Ojal>
-      <Titulo>
-        Diario general, <TituloEm>siete operaciones</TituloEm>
-      </Titulo>
+      <Eyebrow>Ponlo en práctica · Paso a paso</Eyebrow>
+      <Titulo>Diario general, siete operaciones</Titulo>
       <Intro>
-        Registra cada asiento en orden. El libro mayor tabular y la ecuación del encabezado se actualizan al
-        instante.
+        Registra cada asiento en orden. El libro mayor y la ecuación del encabezado se actualizan al instante.
       </Intro>
 
-      <Ojal style={{ marginTop: 4 }}>RESUMEN TABULAR</Ojal>
+      <Eyebrow style={{ marginTop: 20, marginBottom: 9 }}>Resumen tabular</Eyebrow>
       <MayorTable saldos={saldos} paso={paso} />
 
-      <Ojal style={{ marginTop: 20 }}>ASIENTOS POR REGISTRAR</Ojal>
-      <View style={{ gap: 12 }}>
+      <Eyebrow style={{ marginTop: 20, marginBottom: 10 }}>Asientos por registrar</Eyebrow>
+      <View style={{ gap: 11 }}>
         {TRANS.map((t, i) => (
           <AsientoCard key={i} t={t} index={i} paso={paso} onRegistrar={onRegistrar} />
         ))}
@@ -229,43 +212,44 @@ const styles = StyleSheet.create({
   mayorTable: {
     marginHorizontal: spacing.xl,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 13,
+    borderColor: colors.border,
+    borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: colors.blanco,
+    backgroundColor: colors.card,
   },
   mayorHeadRow: {
     flexDirection: 'row',
     paddingVertical: 8,
+    backgroundColor: colors.texto,
   },
   mayorHeadCell: {
     fontFamily: fonts.sansSemiBold,
     fontSize: 9.5,
-    letterSpacing: 0.6,
-    color: colors.papel,
+    letterSpacing: 0.5,
+    color: colors.surface,
     paddingHorizontal: 9,
   },
   mayorEmptyRow: {
-    paddingVertical: 16,
+    paddingVertical: 14,
     alignItems: 'center',
   },
   mayorEmptyText: {
     fontFamily: fonts.sans,
     fontSize: 12,
-    color: colors.textoSuave,
+    color: colors.textoFaint,
   },
   mayorBodyRow: {
     flexDirection: 'row',
     paddingVertical: 7,
     borderTopWidth: 1,
-    borderTopColor: colors.papel2,
+    borderTopColor: colors.divider,
   },
   mayorFootRow: {
     flexDirection: 'row',
     paddingVertical: 8,
     borderTopWidth: 2.5,
     borderTopColor: colors.texto,
-    backgroundColor: colors.papel2,
+    backgroundColor: colors.divider,
   },
   mayorCell: {
     fontFamily: fonts.mono,
@@ -275,21 +259,22 @@ const styles = StyleSheet.create({
   },
   mayorFootCell: {
     fontFamily: fonts.monoSemiBold,
+    color: colors.texto,
   },
   igual: {
-    color: colors.latonOscuro,
+    color: '#A5843C',
     fontFamily: fonts.monoSemiBold,
     textAlign: 'center',
   },
   asiento: {
-    backgroundColor: colors.blanco,
+    backgroundColor: colors.card,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 14,
+    borderColor: colors.border,
+    borderRadius: radius.lg,
     overflow: 'hidden',
   },
   asientoRegistrado: {
-    borderColor: 'rgba(28,107,72,.4)',
+    borderColor: 'rgba(11,122,85,.4)',
   },
   asientoBloqueado: {
     opacity: 0.42,
@@ -299,22 +284,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 11,
     padding: 14,
-    paddingBottom: 10,
+    paddingBottom: 9,
   },
   asientoNum: {
-    width: 27,
-    height: 27,
-    borderRadius: 13.5,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     borderWidth: 1.5,
-    borderColor: colors.laton,
-    backgroundColor: 'rgba(165,122,34,.06)',
+    borderColor: colors.green,
     alignItems: 'center',
     justifyContent: 'center',
   },
   asientoNumText: {
     fontFamily: fonts.monoSemiBold,
     fontSize: 11,
-    color: colors.latonOscuro,
+    color: colors.green,
   },
   asientoDesc: {
     flex: 1,
@@ -324,24 +308,24 @@ const styles = StyleSheet.create({
     color: colors.texto,
   },
   selloOk: {
+    marginLeft: 'auto',
     borderWidth: 1.5,
-    borderColor: colors.haber,
-    borderRadius: 5,
-    paddingVertical: 2,
-    paddingHorizontal: 7,
-    transform: [{ rotate: '-4deg' }],
+    borderColor: colors.green,
+    borderRadius: 6,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
   },
   selloOkText: {
     fontFamily: fonts.monoSemiBold,
     fontSize: 9.5,
     letterSpacing: 1,
-    color: colors.haber,
+    color: colors.green,
   },
   lineas: {
-    paddingHorizontal: 15,
-    paddingBottom: 13,
-    paddingLeft: 53,
-    gap: 2.5,
+    paddingHorizontal: 14,
+    paddingBottom: 12,
+    paddingLeft: 51,
+    gap: 3,
   },
   lineaDiario: {
     flexDirection: 'row',
@@ -352,109 +336,109 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.textoSuave,
   },
-  lineaCuentaAbono: {
-    paddingLeft: 16,
-  },
   lineaMonto: {
     fontFamily: fonts.mono,
     fontSize: 12,
+    fontWeight: '500',
   },
   accion: {
     borderTopWidth: 1,
-    borderTopColor: colors.regla,
+    borderTopColor: colors.border,
     borderStyle: 'dashed',
-    padding: 15,
+    padding: 14,
     alignItems: 'flex-end',
   },
   btnRegistrar: {
-    backgroundColor: colors.libro,
-    borderWidth: 1,
-    borderColor: 'rgba(221,178,85,.4)',
-    borderRadius: 10,
+    backgroundColor: colors.green,
+    borderRadius: 9,
     paddingVertical: 9,
-    paddingHorizontal: 19,
+    paddingHorizontal: 18,
   },
   btnRegistrarDisabled: {
-    backgroundColor: '#CDC4A9',
-    borderColor: 'transparent',
+    backgroundColor: '#CBD1CB',
   },
   btnRegistrarText: {
     fontFamily: fonts.sansBold,
     fontSize: 12,
-    letterSpacing: 0.8,
-    color: colors.papel,
-  },
-  btnRegistrarTextDisabled: {
-    color: '#8B8368',
+    letterSpacing: 0.5,
+    color: '#fff',
   },
   comprobacion: {
-    marginTop: 17,
-    borderRadius: 16,
-    padding: 21,
-    paddingHorizontal: 19,
+    marginTop: 16,
+    backgroundColor: colors.texto,
+    borderRadius: radius.xl,
+    padding: 20,
+    paddingHorizontal: 18,
+    position: 'relative',
     overflow: 'hidden',
   },
   estampa: {
     position: 'absolute',
-    right: 15,
-    top: 15,
-    borderWidth: 2.5,
-    borderColor: colors.latonClaro,
+    right: 14,
+    top: 14,
+    borderWidth: 2,
+    borderColor: colors.gold,
     borderRadius: 8,
-    paddingVertical: 7,
-    paddingHorizontal: 11,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
   },
   estampaText: {
     fontFamily: fonts.monoSemiBold,
     fontSize: 11,
-    letterSpacing: 1.6,
-    color: colors.latonClaro,
+    letterSpacing: 1.4,
+    color: colors.gold,
   },
   comprobacionTitulo: {
-    fontFamily: fonts.serif,
-    fontSize: 21,
-    color: colors.papel,
-    marginBottom: 13,
-    maxWidth: '75%',
+    fontFamily: fonts.sansBold,
+    fontSize: 18,
+    letterSpacing: -0.2,
+    color: colors.surface,
+    marginBottom: 12,
+    maxWidth: '72%',
   },
   compFila: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 5.5,
+    paddingVertical: 6,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(246,242,231,.14)',
+    borderBottomColor: 'rgba(245,246,245,.14)',
     gap: 10,
   },
   compFilaLabel: {
     fontFamily: fonts.sans,
     fontSize: 12.5,
-    color: 'rgba(246,242,231,.85)',
+    color: 'rgba(245,246,245,.8)',
     flexShrink: 1,
   },
   compFilaValor: {
     fontFamily: fonts.monoSemiBold,
     fontSize: 12.5,
-    color: colors.papel,
+    color: colors.surface,
   },
   compFilaTotal: {
     borderBottomWidth: 0,
     borderTopWidth: 2,
-    borderTopColor: colors.latonClaro,
+    borderTopColor: colors.gold,
     marginTop: 6,
-    paddingTop: 11,
+    paddingTop: 10,
+  },
+  checkMark: {
+    fontFamily: fonts.sansBold,
+    fontSize: 14,
+    color: colors.greenSoft,
   },
   btnFantasma: {
     marginTop: 15,
     borderWidth: 1.5,
-    borderColor: 'rgba(246,242,231,.3)',
-    borderRadius: 11,
+    borderColor: 'rgba(245,246,245,.28)',
+    borderRadius: 10,
     paddingVertical: 11,
     alignItems: 'center',
   },
   btnFantasmaText: {
     fontFamily: fonts.sansSemiBold,
     fontSize: 12,
-    letterSpacing: 0.6,
-    color: colors.papel,
+    letterSpacing: 0.4,
+    color: colors.surface,
   },
 });

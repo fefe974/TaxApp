@@ -2,21 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { colors, fonts } from '../theme';
 
-export function Ojal({ children, style }) {
-  return (
-    <View style={[styles.ojalRow, style]}>
-      <Text style={styles.ojalText}>{children}</Text>
-      <View style={styles.ojalLine} />
-    </View>
-  );
+export function Eyebrow({ children, style }) {
+  return <Text style={[styles.eyebrow, style]}>{children}</Text>;
 }
 
 export function Titulo({ children }) {
   return <Text style={styles.titulo}>{children}</Text>;
-}
-
-export function TituloEm({ children }) {
-  return <Text style={styles.tituloEm}>{children}</Text>;
 }
 
 export function Intro({ children }) {
@@ -36,47 +27,33 @@ export function NotaPieB({ children }) {
 }
 
 const styles = StyleSheet.create({
-  ojalRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 10,
-  },
-  ojalText: {
+  eyebrow: {
     fontFamily: fonts.sansBold,
     fontSize: 10.5,
-    letterSpacing: 1.6,
-    color: colors.latonOscuro,
-  },
-  ojalLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: colors.laton,
-    opacity: 0.55,
+    letterSpacing: 1.3,
+    textTransform: 'uppercase',
+    color: colors.green,
+    marginBottom: 8,
   },
   titulo: {
-    fontFamily: fonts.serif,
-    fontSize: 29,
-    lineHeight: 32,
+    fontFamily: fonts.sansBold,
+    fontSize: 25,
+    lineHeight: 29,
+    letterSpacing: -0.3,
     color: colors.texto,
-    marginBottom: 7,
-  },
-  tituloEm: {
-    fontFamily: fonts.serifItalic,
-    color: colors.libro2,
   },
   intro: {
     fontFamily: fonts.sans,
     fontSize: 13.5,
     lineHeight: 21,
     color: colors.textoSuave,
-    marginBottom: 19,
+    marginTop: 7,
     maxWidth: 320,
   },
   notaPie: {
-    marginTop: 17,
+    marginTop: 16,
     borderLeftWidth: 2,
-    borderLeftColor: colors.laton,
+    borderLeftColor: colors.green,
     paddingLeft: 12,
   },
   notaPieText: {

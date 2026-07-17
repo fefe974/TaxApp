@@ -1,138 +1,109 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Text, Animated, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, fonts } from '../theme';
-import { CornerBracket } from './Icons';
+import { IconMenu } from './Icons';
 
-export default function Header({ activos, pasivos, capital, pulseKey }) {
+export default function Header({ onMenuPress, showEquation, activos, pasivos, capital }) {
   const insets = useSafeAreaInsets();
-  const pulse = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (pulseKey === 0) return;
-    pulse.setValue(1);
-    Animated.timing(pulse, {
-      toValue: 0,
-      duration: 550,
-      useNativeDriver: false,
-    }).start();
-  }, [pulseKey]);
-
-  const cifraColor = pulse.interpolate({
-    inputRange: [0, 1],
-    outputRange: [colors.papel, colors.latonClaro],
-  });
-
   return (
-    <LinearGradient
-      colors={[colors.libro, colors.libro2, colors.libro]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.7, y: 1 }}
-      style={[styles.header, { paddingTop: insets.top + 18 }]}
-    >
-      <LinearGradient
-        pointerEvents="none"
-        colors={['rgba(255,255,255,.08)', 'transparent']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.8, y: 0.8 }}
-        style={StyleSheet.absoluteFill}
-      />
-
-      <View style={styles.herrajeI} pointerEvents="none">
-        <CornerBracket size={20} />
-      </View>
-      <View style={styles.herrajeD} pointerEvents="none">
-        <CornerBracket size={20} mirrored />
-      </View>
-
-      <View style={styles.marca}>
-        <Text style={styles.h1}>
-          Libro <Text style={styles.h1Italic}>Mayor</Text>
-        </Text>
+    <View style={[styles.header, { paddingTop: insets.top + 18 }]}>
+      <View style={styles.row}>
+        <Pressable onPress={onMenuPress} style={styles.menuBtn} hitSlop={8}>
+          <IconMenu size={22} color={colors.texto} />
+        </Pressable>
+        <View style={styles.logo}>
+          <Text style={styles.logoText}>LM</Text>
+        </View>
+        <View style={styles.titleCol}>
+          <Text style={styles.title}>Libro Mayor</Text>
+          <Text style={styles.subtitle}>Sistema de información contable</Text>
+        </View>
         <Text style={styles.folio}>FOLIO 2.1</Text>
       </View>
-      <Text style={styles.subtitulo}>SISTEMA DE INFORMACIÓN CONTABLE</Text>
 
-      <View style={styles.ecuacion}>
-        <View style={styles.celda}>
-          <Text style={styles.etiqueta}>ACTIVOS</Text>
-          <Animated.Text style={[styles.cifra, { color: cifraColor }]}>{activos}</Animated.Text>
+      {showEquation && (
+        <View style={styles.ecuacion}>
+          <View style={styles.celda}>
+            <Text style={styles.etiqueta}>ACTIVOS</Text>
+            <Text style={styles.cifra}>{activos}</Text>
+          </View>
+          <Text style={styles.signo}>=</Text>
+          <View style={styles.celda}>
+            <Text style={styles.etiqueta}>PASIVOS</Text>
+            <Text style={styles.cifra}>{pasivos}</Text>
+          </View>
+          <Text style={styles.signo}>+</Text>
+          <View style={styles.celda}>
+            <Text style={styles.etiqueta}>CAPITAL</Text>
+            <Text style={styles.cifra}>{capital}</Text>
+          </View>
         </View>
-        <Text style={styles.signo}>=</Text>
-        <View style={styles.celda}>
-          <Text style={styles.etiqueta}>PASIVOS</Text>
-          <Animated.Text style={[styles.cifra, { color: cifraColor }]}>{pasivos}</Animated.Text>
-        </View>
-        <Text style={styles.signo}>+</Text>
-        <View style={styles.celda}>
-          <Text style={styles.etiqueta}>CAPITAL</Text>
-          <Animated.Text style={[styles.cifra, { color: cifraColor }]}>{capital}</Animated.Text>
-        </View>
-      </View>
-
-      <LinearGradient
-        pointerEvents="none"
-        colors={['transparent', colors.latonClaro, colors.latonClaro, 'transparent']}
-        locations={[0, 0.2, 0.8, 1]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.bottomHairline}
-      />
-    </LinearGradient>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: 22,
-    paddingBottom: 18,
-    position: 'relative',
-    overflow: 'hidden',
+    backgroundColor: colors.card,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    paddingHorizontal: 20,
+    paddingBottom: 15,
   },
-  herrajeI: {
-    position: 'absolute',
-    top: 14,
-    left: 14,
-  },
-  herrajeD: {
-    position: 'absolute',
-    top: 14,
-    right: 14,
-  },
-  marca: {
+  row: {
     flexDirection: 'row',
-    alignItems: 'baseline',
-    gap: 10,
+    alignItems: 'center',
+    gap: 11,
   },
-  h1: {
-    fontFamily: fonts.serif,
-    fontSize: 28,
-    color: colors.latonClaro,
+  menuBtn: {
+    marginRight: -2,
   },
-  h1Italic: {
-    fontFamily: fonts.serifItalic,
-    color: colors.latonClaro,
+  logo: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    backgroundColor: colors.green,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontFamily: fonts.monoSemiBold,
+    fontSize: 15,
+    color: '#fff',
+  },
+  titleCol: {
+    justifyContent: 'center',
+  },
+  title: {
+    fontFamily: fonts.sansBold,
+    fontSize: 17,
+    letterSpacing: -0.2,
+    color: colors.texto,
+  },
+  subtitle: {
+    fontFamily: fonts.sansMedium,
+    fontSize: 11,
+    color: colors.textoSuave,
   },
   folio: {
     marginLeft: 'auto',
-    fontFamily: fonts.mono,
-    fontSize: 10.5,
-    letterSpacing: 1.4,
-    color: 'rgba(246,242,231,.55)',
-  },
-  subtitulo: {
-    marginTop: 4,
-    fontFamily: fonts.sansMedium,
-    fontSize: 11.5,
-    letterSpacing: 1.6,
-    color: 'rgba(246,242,231,.6)',
+    fontFamily: fonts.monoMedium,
+    fontSize: 10,
+    letterSpacing: 1,
+    color: colors.textoFaint,
+    backgroundColor: colors.neutralBg,
+    borderRadius: 99,
+    paddingVertical: 4,
+    paddingHorizontal: 9,
+    overflow: 'hidden',
   },
   ecuacion: {
-    marginTop: 17,
-    backgroundColor: 'rgba(9,18,13,.42)',
+    marginTop: 16,
+    backgroundColor: '#F7F9F8',
     borderWidth: 1,
-    borderColor: 'rgba(221,178,85,.32)',
+    borderColor: colors.border,
     borderRadius: 14,
     paddingVertical: 11,
     paddingHorizontal: 12,
@@ -147,26 +118,20 @@ const styles = StyleSheet.create({
   etiqueta: {
     fontFamily: fonts.sansSemiBold,
     fontSize: 9.5,
-    letterSpacing: 1.2,
-    color: 'rgba(246,242,231,.55)',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+    color: colors.textoSuave,
   },
   cifra: {
     fontFamily: fonts.monoSemiBold,
     fontSize: 15,
+    color: colors.texto,
     marginTop: 2,
   },
   signo: {
-    fontFamily: fonts.serif,
-    fontSize: 20,
-    color: colors.latonClaro,
+    fontFamily: fonts.sansBold,
+    fontSize: 15,
+    color: colors.green,
     paddingHorizontal: 2,
-  },
-  bottomHairline: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 3,
-    opacity: 0.9,
   },
 });

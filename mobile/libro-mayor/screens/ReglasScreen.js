@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Pressable, StyleSheet } from 'react-native';
-import { colors, fonts, spacing } from '../theme';
-import { PaperCard } from '../components/Card';
-import { Ojal, Titulo, TituloEm, Intro } from '../components/Typography';
+import { colors, fonts, spacing, radius } from '../theme';
+import { Card } from '../components/Card';
+import { Eyebrow, Titulo, Intro } from '../components/Typography';
 import { CUENTAS } from '../data';
 
 function FichaCuenta({ cuenta, active, onPress }) {
-  const pillColor = cuenta.saldo === 'deudor' ? colors.debe : colors.haber;
-  const pillBg = cuenta.saldo === 'deudor' ? 'rgba(149,53,39,.1)' : 'rgba(28,107,72,.1)';
+  const pillColor = cuenta.saldo === 'deudor' ? colors.red : colors.green;
+  const pillBg = cuenta.saldo === 'deudor' ? 'rgba(178,59,46,.1)' : 'rgba(11,122,85,.1)';
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [
+      style={[
         styles.ficha,
+        { borderColor: active ? colors.green : colors.border },
         active && styles.fichaActiva,
-        pressed && { transform: [{ scale: 0.97 }] },
       ]}
     >
       <Text style={styles.fichaNombre}>{cuenta.n}</Text>
@@ -27,7 +27,7 @@ function FichaCuenta({ cuenta, active, onPress }) {
 
 function CuentaT({ cuenta }) {
   const subeCargo = cuenta.sube === 'cargo';
-  const saldoColor = cuenta.saldo === 'deudor' ? colors.debe : colors.haber;
+  const saldoColor = cuenta.saldo === 'deudor' ? colors.red : colors.green;
   return (
     <View>
       <Text style={styles.cabeza}>{cuenta.n}</Text>
@@ -35,7 +35,7 @@ function CuentaT({ cuenta }) {
         <View style={[styles.lado, styles.ladoIzq]}>
           <Text style={styles.ladoTitulo}>DEBE · CARGO</Text>
           <View style={[styles.masMenos, subeCargo ? styles.sube : styles.baja]}>
-            <Text style={[styles.masMenosTexto, { color: subeCargo ? colors.haber : colors.debe }]}>
+            <Text style={[styles.masMenosTexto, { color: subeCargo ? colors.green : colors.red }]}>
               {subeCargo ? '+' : '−'}
             </Text>
           </View>
@@ -43,7 +43,7 @@ function CuentaT({ cuenta }) {
         <View style={styles.lado}>
           <Text style={styles.ladoTitulo}>HABER · ABONO</Text>
           <View style={[styles.masMenos, subeCargo ? styles.baja : styles.sube]}>
-            <Text style={[styles.masMenosTexto, { color: subeCargo ? colors.debe : colors.haber }]}>
+            <Text style={[styles.masMenosTexto, { color: subeCargo ? colors.red : colors.green }]}>
               {subeCargo ? '−' : '+'}
             </Text>
           </View>
@@ -64,10 +64,8 @@ export default function ReglasScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.pantalla} showsVerticalScrollIndicator={false}>
-      <Ojal>ECUACIÓN AMPLIADA · ILUSTRACIONES 2.2 – 2.3</Ojal>
-      <Titulo>
-        Reglas de cargo <TituloEm>y abono</TituloEm>
-      </Titulo>
+      <Eyebrow>Ecuación ampliada · 2.2 – 2.3</Eyebrow>
+      <Titulo>Reglas de cargo y abono</Titulo>
       <Intro>Toca una cuenta para abrir su cuenta T y ver cómo aumenta, disminuye y cuál es su saldo normal.</Intro>
 
       <View style={styles.fichas}>
@@ -76,9 +74,9 @@ export default function ReglasScreen() {
         ))}
       </View>
 
-      <PaperCard>
+      <Card style={styles.tCard}>
         <CuentaT cuenta={CUENTAS[selected]} />
-      </PaperCard>
+      </Card>
     </ScrollView>
   );
 }
@@ -91,21 +89,24 @@ const styles = StyleSheet.create({
   fichas: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
-    marginBottom: 17,
+    gap: 9,
+    marginVertical: 16,
   },
   ficha: {
     flexBasis: '47%',
     flexGrow: 1,
-    backgroundColor: colors.blanco,
+    backgroundColor: colors.card,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: radius.md,
+    padding: 11,
+    paddingHorizontal: 12,
   },
   fichaActiva: {
-    borderColor: colors.laton,
     borderWidth: 1.5,
+    shadowColor: colors.green,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.16,
+    shadowRadius: 2.5,
   },
   fichaNombre: {
     fontFamily: fonts.sansSemiBold,
@@ -115,18 +116,23 @@ const styles = StyleSheet.create({
   fichaSaldo: {
     fontFamily: fonts.monoMedium,
     fontSize: 9.5,
-    letterSpacing: 0.8,
-    marginTop: 4,
+    letterSpacing: 0.5,
+    marginTop: 5,
     alignSelf: 'flex-start',
-    paddingVertical: 2.5,
-    paddingHorizontal: 7,
+    paddingVertical: 2,
+    paddingHorizontal: 8,
     borderRadius: 99,
     overflow: 'hidden',
   },
+  tCard: {
+    padding: 18,
+    paddingHorizontal: 16,
+  },
   cabeza: {
     textAlign: 'center',
-    fontFamily: fonts.serif,
-    fontSize: 22,
+    fontFamily: fonts.sansBold,
+    fontSize: 19,
+    letterSpacing: -0.2,
     color: colors.texto,
     paddingBottom: 10,
     borderBottomWidth: 2.5,
@@ -134,12 +140,12 @@ const styles = StyleSheet.create({
   },
   cuerpo: {
     flexDirection: 'row',
-    minHeight: 132,
+    minHeight: 130,
   },
   lado: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 13,
+    paddingVertical: 14,
     paddingHorizontal: 10,
   },
   ladoIzq: {
@@ -149,43 +155,45 @@ const styles = StyleSheet.create({
   ladoTitulo: {
     fontFamily: fonts.sansBold,
     fontSize: 10.5,
-    letterSpacing: 1.2,
+    letterSpacing: 1.4,
     color: colors.textoSuave,
-    marginBottom: 10,
+    marginBottom: 12,
   },
   masMenos: {
-    width: 57,
-    height: 57,
-    borderRadius: 28.5,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     alignItems: 'center',
     justifyContent: 'center',
   },
   masMenosTexto: {
-    fontFamily: fonts.serif,
+    fontFamily: fonts.mono,
     fontSize: 34,
     lineHeight: 38,
   },
   sube: {
-    backgroundColor: 'rgba(28,107,72,.12)',
+    backgroundColor: 'rgba(11,122,85,.12)',
     borderWidth: 1.5,
-    borderColor: 'rgba(28,107,72,.35)',
+    borderColor: 'rgba(11,122,85,.35)',
   },
   baja: {
-    backgroundColor: 'rgba(149,53,39,.09)',
+    backgroundColor: 'rgba(178,59,46,.08)',
     borderWidth: 1.5,
-    borderColor: 'rgba(149,53,39,.4)',
+    borderColor: 'rgba(178,59,46,.4)',
     borderStyle: 'dashed',
   },
   pie: {
-    marginTop: 3,
-    paddingTop: 11,
+    paddingTop: 12,
     textAlign: 'center',
     fontFamily: fonts.sans,
     fontSize: 12,
     color: colors.textoSuave,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
   },
   pieB: {
-    fontFamily: fonts.monoSemiBold,
+    fontFamily: fonts.mono,
     fontSize: 11,
+    letterSpacing: 0.5,
   },
 });

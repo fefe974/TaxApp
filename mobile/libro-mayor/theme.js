@@ -1,79 +1,59 @@
 import { Platform } from 'react-native';
 
 export const colors = {
-  tinta: '#0A130E',
-  tinta2: '#0F1E16',
-  libro: '#153426',
-  libro2: '#1D4A36',
-  libro3: '#0D2116',
-  papel: '#F5EFDD',
-  papel2: '#EBDFBD',
-  papel3: '#DECC9C',
-  regla: '#D6C6A0',
-  margen: '#8C3226',
-  laton: '#A57A22',
-  latonClaro: '#DDB255',
-  latonOscuro: '#6E5320',
-  texto: '#1A2620',
-  textoSuave: '#5C6B5A',
-  blanco: '#FBF8EE',
-  debe: '#953527',
-  haber: '#1C6B48',
-  cardBorder: '#E4DAC0',
+  bg: '#E7EAE4',
+  surface: '#F5F6F5',
+  card: '#FFFFFF',
+  border: '#E7EAE7',
+  divider: '#EFF1EF',
+  texto: '#12211A',
+  textoSuave: '#68766F',
+  textoFaint: '#8B968F',
+  neutralBg: '#F0F2F0',
+  green: '#0B7A55',
+  greenDark: '#085C40',
+  greenLight: '#E7F3EE',
+  greenSoft: '#5BD6A6',
+  gold: '#E4C574',
+  goldDark: '#C79A2E',
+  red: '#B23B2E',
+  scrim: 'rgba(18,33,26,.45)',
 };
 
 export const fonts = {
-  serif: 'InstrumentSerif-Regular',
-  serifItalic: 'InstrumentSerif-Italic',
-  sans: 'Archivo-Regular',
-  sansMedium: 'Archivo-Medium',
-  sansSemiBold: 'Archivo-SemiBold',
-  sansBold: 'Archivo-Bold',
+  sans: 'SchibstedGrotesk-Regular',
+  sansMedium: 'SchibstedGrotesk-Medium',
+  sansSemiBold: 'SchibstedGrotesk-SemiBold',
+  sansBold: 'SchibstedGrotesk-Bold',
   mono: 'IBMPlexMono-Regular',
   monoMedium: 'IBMPlexMono-Medium',
   monoSemiBold: 'IBMPlexMono-SemiBold',
 };
 
 export const fontAssets = {
-  'InstrumentSerif-Regular': require('./assets/fonts/InstrumentSerif-Regular.ttf'),
-  'InstrumentSerif-Italic': require('./assets/fonts/InstrumentSerif-Italic.ttf'),
-  'Archivo-Regular': require('./assets/fonts/Archivo-Regular.ttf'),
-  'Archivo-Medium': require('./assets/fonts/Archivo-Medium.ttf'),
-  'Archivo-SemiBold': require('./assets/fonts/Archivo-SemiBold.ttf'),
-  'Archivo-Bold': require('./assets/fonts/Archivo-Bold.ttf'),
+  'SchibstedGrotesk-Regular': require('./assets/fonts/SchibstedGrotesk-Regular.ttf'),
+  'SchibstedGrotesk-Medium': require('./assets/fonts/SchibstedGrotesk-Medium.ttf'),
+  'SchibstedGrotesk-SemiBold': require('./assets/fonts/SchibstedGrotesk-SemiBold.ttf'),
+  'SchibstedGrotesk-Bold': require('./assets/fonts/SchibstedGrotesk-Bold.ttf'),
   'IBMPlexMono-Regular': require('./assets/fonts/IBMPlexMono-Regular.ttf'),
   'IBMPlexMono-Medium': require('./assets/fonts/IBMPlexMono-Medium.ttf'),
   'IBMPlexMono-SemiBold': require('./assets/fonts/IBMPlexMono-SemiBold.ttf'),
 };
 
-// Two-tier elevation system standing in for the CSS --sombra-amb / --sombra-contacto pair.
-export function shadow(tier = 'contact') {
-  const elevated = tier === 'ambient';
+// Single soft elevation used throughout — this design has no ambient/contact
+// two-tier system, just one consistent subtle card shadow.
+export function shadow() {
   return Platform.select({
     ios: {
-      shadowColor: '#060D09',
-      shadowOffset: { width: 0, height: elevated ? 12 : 2 },
-      shadowOpacity: elevated ? 0.3 : 0.15,
-      shadowRadius: elevated ? 18 : 5,
+      shadowColor: '#12211A',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.05,
+      shadowRadius: 3,
     },
-    android: {
-      elevation: elevated ? 9 : 3,
-    },
+    android: { elevation: 2 },
     default: {},
   });
 }
 
-export const radius = {
-  sm: 10,
-  md: 13,
-  lg: 15,
-  xl: 16,
-};
-
-export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 14,
-  lg: 18,
-  xl: 22,
-};
+export const radius = { sm: 10, md: 13, lg: 14, xl: 16 };
+export const spacing = { xs: 4, sm: 8, md: 14, lg: 18, xl: 22 };
