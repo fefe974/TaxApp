@@ -17,34 +17,40 @@ export const TRANS = [
     desc: 'Se emiten acciones a cambio de $10,000 en efectivo',
     diario: [['Efectivo', 10000, 'cargo'], ['Capital social', 10000, 'abono']],
     mov: { ef: 10000, cs: 10000 },
+    hint: 'El efectivo que entra es un Activo. ¿Qué cuenta de Capital aumenta cuando se emiten acciones?',
   },
   {
     desc: 'Se pagan $800 en efectivo por gastos de renta',
     diario: [['Gasto de renta', 800, 'cargo'], ['Efectivo', 800, 'abono']],
     mov: { ef: -800, ur: -800 },
     tag: { ur: ' (Gasto)' },
+    hint: 'Un gasto siempre se carga (Cargo). ¿Qué le pasa al Efectivo cuando se paga algo?',
   },
   {
     desc: 'Se compra equipo por $3,000 a crédito',
     diario: [['Equipo', 3000, 'cargo'], ['Cuentas por pagar', 3000, 'abono']],
     mov: { eq: 3000, cp: 3000 },
+    hint: '"A crédito" significa que no se paga con efectivo — se genera una obligación (Pasivo).',
   },
   {
     desc: 'Se reciben $1,500 en efectivo por ingresos de servicios',
     diario: [['Efectivo', 1500, 'cargo'], ['Ingresos por servicios', 1500, 'abono']],
     mov: { ef: 1500, ur: 1500 },
     tag: { ur: ' (Ingreso)' },
+    hint: 'Recibir efectivo por un servicio genera un Ingreso, y los ingresos aumentan el Capital (Abono).',
   },
   {
     desc: 'Se piden prestados $700 al banco',
     diario: [['Efectivo', 700, 'cargo'], ['Notas por pagar', 700, 'abono']],
     mov: { ef: 700, np: 700 },
+    hint: 'Un préstamo bancario es un Pasivo con un nombre distinto al de "Cuentas por pagar".',
   },
   {
     desc: 'Se prestan servicios y se facturan $2,000 a crédito',
     diario: [['Cuentas por cobrar', 2000, 'cargo'], ['Ingresos por servicios', 2000, 'abono']],
     mov: { cc: 2000, ur: 2000 },
     tag: { ur: ' (Ingreso)' },
+    hint: '"Se facturan" (no se cobra en efectivo) significa que el cliente nos debe: Cuentas por cobrar.',
   },
   {
     desc: 'Se pagan gastos: salarios $500, servicios públicos $300 y publicidad $100',
@@ -56,10 +62,21 @@ export const TRANS = [
     ],
     mov: { ef: -900, ur: -900 },
     tag: { ur: ' (Gastos)' },
+    hint: 'Son tres gastos distintos (los tres se cargan) contra una sola salida de Efectivo.',
   },
 ];
 
 export const SALDOS_INICIALES = { ef: 0, cc: 0, eq: 0, np: 0, cp: 0, cs: 0, ur: 0 };
+
+// Normalized shape for the "Ahora tú" independent practice round: every account name
+// that appears anywhere in TRANS (for distractor chips), and each transaction reduced
+// to { desc, hint, correct: [{ name, side }] } with cargo/abono mapped to debit/credit.
+export const TRANS_ACCOUNT_POOL = [...new Set(TRANS.flatMap((t) => t.diario.map(([name]) => name)))];
+export const TRANS_PRACTICE_ITEMS = TRANS.map((t) => ({
+  desc: t.desc,
+  hint: t.hint,
+  correct: t.diario.map(([name, , tipo]) => ({ name, side: tipo === 'cargo' ? 'debit' : 'credit' })),
+}));
 
 // status: 'listo' (done), 'curso' (in progress), 'proximo' (upcoming, not yet interactive).
 // interactive classes carry a `progressKey` naming which entry in the `progress` map
@@ -363,6 +380,7 @@ export const KLEENE_TRANS = [
       { account: 'cash', side: 'debit', amount: 12000 },
       { account: 'commonStock', side: 'credit', amount: 12000 },
     ],
+    hint: 'Emitir acciones a cambio de efectivo aumenta el Capital Social.',
   },
   {
     date: 'Jul. 1',
@@ -372,6 +390,7 @@ export const KLEENE_TRANS = [
       { account: 'cash', side: 'credit', amount: 2000 },
       { account: 'ap', side: 'credit', amount: 6000 },
     ],
+    hint: 'El camión es Equipment. Una parte se paga con Efectivo y el resto queda a crédito (Accounts Payable) — son tres cuentas, no dos.',
   },
   {
     date: 'Jul. 3',
@@ -380,6 +399,7 @@ export const KLEENE_TRANS = [
       { account: 'supplies', side: 'debit', amount: 900 },
       { account: 'ap', side: 'credit', amount: 900 },
     ],
+    hint: 'Comprar a crédito no afecta el Efectivo — genera una obligación.',
   },
   {
     date: 'Jul. 5',
@@ -388,6 +408,7 @@ export const KLEENE_TRANS = [
       { account: 'prepaidIns', side: 'debit', amount: 1800 },
       { account: 'cash', side: 'credit', amount: 1800 },
     ],
+    hint: 'Pagar por adelantado crea un Activo (Prepaid Insurance), no un gasto todavía.',
   },
   {
     date: 'Jul. 12',
@@ -396,6 +417,7 @@ export const KLEENE_TRANS = [
       { account: 'ar', side: 'debit', amount: 3700 },
       { account: 'serviceRevenue', side: 'credit', amount: 3700 },
     ],
+    hint: 'Facturar a crédito genera Accounts Receivable, no efectivo.',
   },
   {
     date: 'Jul. 18',
@@ -404,6 +426,7 @@ export const KLEENE_TRANS = [
       { account: 'ap', side: 'debit', amount: 1500 },
       { account: 'cash', side: 'credit', amount: 1500 },
     ],
+    hint: 'Pagar una deuda reduce tanto el Efectivo como Accounts Payable.',
   },
   {
     date: 'Jul. 20',
@@ -412,6 +435,7 @@ export const KLEENE_TRANS = [
       { account: 'salariesExp', side: 'debit', amount: 2000 },
       { account: 'cash', side: 'credit', amount: 2000 },
     ],
+    hint: 'Los salarios son un gasto que se paga en efectivo de inmediato.',
   },
   {
     date: 'Jul. 21',
@@ -420,6 +444,7 @@ export const KLEENE_TRANS = [
       { account: 'cash', side: 'debit', amount: 1600 },
       { account: 'ar', side: 'credit', amount: 1600 },
     ],
+    hint: 'Cobrar una cuenta reduce Accounts Receivable y aumenta el Efectivo.',
   },
   {
     date: 'Jul. 25',
@@ -428,6 +453,7 @@ export const KLEENE_TRANS = [
       { account: 'ar', side: 'debit', amount: 2500 },
       { account: 'serviceRevenue', side: 'credit', amount: 2500 },
     ],
+    hint: 'Igual que la operación del día 12: se factura, no se cobra de inmediato.',
   },
   {
     date: 'Jul. 31',
@@ -436,6 +462,7 @@ export const KLEENE_TRANS = [
       { account: 'maintenanceExp', side: 'debit', amount: 290 },
       { account: 'cash', side: 'credit', amount: 290 },
     ],
+    hint: 'Un gasto más, pagado de inmediato en efectivo.',
   },
   {
     date: 'Jul. 31',
@@ -444,5 +471,17 @@ export const KLEENE_TRANS = [
       { account: 'dividends', side: 'debit', amount: 600 },
       { account: 'cash', side: 'credit', amount: 600 },
     ],
+    hint: 'Los dividendos reducen el Capital contable — no son un gasto operativo.',
   },
 ];
+
+// Same normalized shape as TRANS_PRACTICE_ITEMS, for Kleene's "Ahora tú" round.
+export const KLEENE_ACCOUNT_POOL = KLEENE_ACCOUNTS.map((a) => a.name);
+export const KLEENE_PRACTICE_ITEMS = KLEENE_TRANS.map((t) => ({
+  desc: t.desc,
+  hint: t.hint,
+  correct: t.lines.map((l) => ({
+    name: KLEENE_ACCOUNTS.find((a) => a.key === l.account).name,
+    side: l.side,
+  })),
+}));

@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { ScrollView, View, Text, Pressable, Animated, StyleSheet } from 'react-native';
 import { colors, fonts, spacing, radius } from '../theme';
 import { Eyebrow, Titulo, Intro } from '../components/Typography';
-import { TRANS, fmt, fmtMov } from '../data';
+import IndependentPractice from '../components/IndependentPractice';
+import { TRANS, fmt, fmtMov, TRANS_PRACTICE_ITEMS, TRANS_ACCOUNT_POOL } from '../data';
 
 const COLS = [
   { key: 'op', label: 'Op.', width: 44, align: 'left' },
@@ -195,7 +196,20 @@ export default function DiarioScreen({ saldos, paso, onRegistrar, onReiniciar })
         ))}
       </View>
 
-      {paso === TRANS.length && <Comprobacion saldos={saldos} onReiniciar={onReiniciar} />}
+      {paso === TRANS.length && (
+        <>
+          <Comprobacion saldos={saldos} onReiniciar={onReiniciar} />
+
+          <Eyebrow style={{ marginTop: 26, marginBottom: 4 }}>Ahora tú</Eyebrow>
+          <Text style={styles.ahoraTuIntro}>
+            Sin ver la respuesta: arma cada asiento tú mismo. Toca las cuentas que correspondan y marca si son
+            Cargo o Abono.
+          </Text>
+          <View style={{ marginTop: 12 }}>
+            <IndependentPractice items={TRANS_PRACTICE_ITEMS} accountPool={TRANS_ACCOUNT_POOL} />
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 }
@@ -204,6 +218,12 @@ const styles = StyleSheet.create({
   pantalla: {
     padding: spacing.xl,
     paddingBottom: 30,
+  },
+  ahoraTuIntro: {
+    fontFamily: fonts.sans,
+    fontSize: 12.5,
+    lineHeight: 18,
+    color: colors.textoSuave,
   },
   mayorScroll: {
     marginHorizontal: -spacing.xl,

@@ -3,7 +3,8 @@ import { ScrollView, View, Text, Pressable, Animated, StyleSheet } from 'react-n
 import { colors, fonts, spacing, radius } from '../../theme';
 import { Eyebrow, Titulo, Intro } from '../../components/Typography';
 import TrialBalanceTable from '../../components/TrialBalanceTable';
-import { KLEENE_ACCOUNTS, KLEENE_TRANS, fmt } from '../../data';
+import IndependentPractice from '../../components/IndependentPractice';
+import { KLEENE_ACCOUNTS, KLEENE_TRANS, fmt, KLEENE_PRACTICE_ITEMS, KLEENE_ACCOUNT_POOL } from '../../data';
 
 const SHORT_LABEL = {
   cash: 'Cash',
@@ -179,6 +180,15 @@ export default function PracticaKleeneSection({ saldos, paso, onRegistrar, onRei
           <Pressable onPress={onReiniciar} style={styles.btnFantasma}>
             <Text style={styles.btnFantasmaText}>Reiniciar la práctica</Text>
           </Pressable>
+
+          <Eyebrow style={{ marginTop: 26, marginBottom: 4 }}>Ahora tú</Eyebrow>
+          <Text style={styles.ahoraTuIntro}>
+            Sin ver la respuesta: arma cada asiento de Kleene tú mismo. Toca las cuentas que correspondan y marca
+            si son Cargo o Abono.
+          </Text>
+          <View style={{ marginTop: 12 }}>
+            <IndependentPractice items={KLEENE_PRACTICE_ITEMS} accountPool={KLEENE_ACCOUNT_POOL} />
+          </View>
         </>
       ) : (
         <View style={styles.locked}>
@@ -201,6 +211,12 @@ const styles = StyleSheet.create({
     fontSize: 12.5,
     color: colors.textoSuave,
     marginBottom: 10,
+  },
+  ahoraTuIntro: {
+    fontFamily: fonts.sans,
+    fontSize: 12.5,
+    lineHeight: 18,
+    color: colors.textoSuave,
   },
   asientos: {
     gap: 10,
