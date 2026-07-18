@@ -41,6 +41,10 @@
     --credit-line:rgba(178, 90, 21, 0.30);
     --gold:       #b18a3e;   /* hairline accent, used sparingly */
     --teal:       #0f6d63;   /* secondary accent */
+    /* equation element hues (Lesson 2) */
+    --asset:      #5b53b0;  --asset-bg:  rgba(91,83,176,.12);
+    --liab:       #0e8080;  --liab-bg:   rgba(14,128,128,.12);
+    --equity:     #3f8f52;  --equity-bg: rgba(63,143,82,.12);
     --good:       #2f7d4f;
     --good-bg:    rgba(47, 125, 79, 0.12);
     --warn:       #b23a2e;
@@ -79,6 +83,9 @@
       --credit-line:rgba(235, 167, 101, 0.40);
       --gold:       #d8b968;
       --teal:       #46b3a6;
+      --asset:      #a99cf0;  --asset-bg:  rgba(169,156,240,.16);
+      --liab:       #54c9c1;  --liab-bg:   rgba(84,201,193,.16);
+      --equity:     #79c98d;  --equity-bg: rgba(121,201,141,.16);
       --good:       #5cc98a;
       --good-bg:    rgba(92, 201, 138, 0.16);
       --warn:       #f0897d;
@@ -95,6 +102,7 @@
     --debit:#1f6fb2; --debit-bg:rgba(31,111,178,.10); --debit-line:rgba(31,111,178,.32);
     --credit:#b25a15; --credit-bg:rgba(178,90,21,.10); --credit-line:rgba(178,90,21,.30);
     --gold:#b18a3e; --teal:#0f6d63; --good:#2f7d4f; --good-bg:rgba(47,125,79,.12);
+    --asset:#5b53b0; --asset-bg:rgba(91,83,176,.12); --liab:#0e8080; --liab-bg:rgba(14,128,128,.12); --equity:#3f8f52; --equity-bg:rgba(63,143,82,.12);
     --warn:#b23a2e; --warn-bg:rgba(178,58,46,.12);
     --shadow:0 1px 2px rgba(20,40,63,.05),0 8px 24px rgba(20,40,63,.08);
     --shadow-lg:0 2px 6px rgba(20,40,63,.08),0 24px 60px rgba(20,40,63,.18);
@@ -106,6 +114,7 @@
     --debit:#64b0ea; --debit-bg:rgba(100,176,234,.14); --debit-line:rgba(100,176,234,.42);
     --credit:#eba765; --credit-bg:rgba(235,167,101,.14); --credit-line:rgba(235,167,101,.40);
     --gold:#d8b968; --teal:#46b3a6; --good:#5cc98a; --good-bg:rgba(92,201,138,.16);
+    --asset:#a99cf0; --asset-bg:rgba(169,156,240,.16); --liab:#54c9c1; --liab-bg:rgba(84,201,193,.16); --equity:#79c98d; --equity-bg:rgba(121,201,141,.16);
     --warn:#f0897d; --warn-bg:rgba(240,137,125,.16);
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.5);
     --shadow-lg:0 2px 6px rgba(0,0,0,.5),0 28px 64px rgba(0,0,0,.6);
@@ -757,6 +766,152 @@
   :focus-visible { outline: 2px solid var(--debit); outline-offset: 2px; border-radius: 6px; }
 
   .icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
+
+  /* ============================================================
+     LESSON 2 — transition bridge, accounting equation
+     ============================================================ */
+
+  /* ---- Transition bridge screen ---- */
+  .bridge {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 90% 0%, rgba(63,143,82,.18), transparent 55%),
+      radial-gradient(120% 90% at 0% 5%, rgba(31,111,178,.20), transparent 55%),
+      linear-gradient(160deg, #10233a 0%, #142c47 55%, #0d1f34 100%);
+    color: #f2ede2;
+  }
+  .bridge-scroll { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .bridge-scroll::-webkit-scrollbar { width: 0; }
+  .bridge-inner { min-height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 34px 24px calc(28px + env(safe-area-inset-bottom)); gap: 22px; }
+  .bridge-badge {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 9px;
+    padding: 7px 13px 7px 9px; border-radius: 999px;
+    background: rgba(121,201,141,.16); box-shadow: inset 0 0 0 1px rgba(121,201,141,.4);
+    font-size: 12px; font-weight: 700; letter-spacing: .02em; color: #a6e3b8;
+  }
+  .bridge-badge .ck { width: 20px; height: 20px; border-radius: 50%; background: var(--good); color: #06210f; display: grid; place-items: center; font-size: 12px; font-weight: 800; }
+  .bridge-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,220,180,.85); }
+  .bridge h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 7.5vw, 33px); line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
+  .bridge p.lead { font-size: 15px; line-height: 1.6; color: rgba(238,231,218,.88); }
+  .bridge p.lead em { color: #f6efe0; font-style: italic; }
+
+  .morph {
+    border-radius: var(--r-lg); padding: 20px 16px; text-align: center;
+    background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
+  }
+  .morph .row { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; font-family: var(--mono); font-weight: 700; }
+  .morph .from { font-size: 15px; opacity: 0; transform: translateY(6px); transition: opacity .5s ease, transform .5s ease; }
+  .morph .from .d { color: #7db8e6; } .morph .from .c { color: #ecb06a; }
+  .morph .arrow { margin: 12px auto 10px; width: 2px; height: 22px; background: linear-gradient(#ffffff55, #ffffff00); position: relative; opacity: 0; transition: opacity .5s ease .2s; }
+  .morph .arrow::after { content: ""; position: absolute; left: -4px; bottom: -1px; width: 10px; height: 10px; border-right: 2px solid #ffffff77; border-bottom: 2px solid #ffffff77; transform: rotate(45deg); }
+  .morph .to { display: flex; align-items: center; justify-content: center; gap: 7px; flex-wrap: wrap; font-family: var(--serif); font-size: 17px; opacity: 0; transform: translateY(8px) scale(.96); transition: opacity .55s ease .35s, transform .55s cubic-bezier(.22,.61,.36,1) .35s; }
+  .morph.in .from, .morph.in .arrow, .morph.in .to { opacity: 1; transform: none; }
+  .eqp { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 10px; font-family: var(--serif); font-weight: 600; font-size: 14px; }
+  .eqp.a { background: rgba(169,156,240,.20); color: #cfc7fb; box-shadow: inset 0 0 0 1px rgba(169,156,240,.5); }
+  .eqp.l { background: rgba(84,201,193,.20); color: #a9ede8; box-shadow: inset 0 0 0 1px rgba(84,201,193,.5); }
+  .eqp.e { background: rgba(121,201,141,.20); color: #b6e6c4; box-shadow: inset 0 0 0 1px rgba(121,201,141,.5); }
+  .morph .op { opacity: .7; font-family: var(--serif); font-size: 17px; }
+
+  /* ---- Equation pills (in lecture / illustration) ---- */
+  .eqbar { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 14px 0 2px; }
+  .eqchip {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 9px 14px; border-radius: 12px; font-weight: 700; font-size: 13.5px; cursor: default;
+    border: 1.5px solid var(--c-line); background: var(--c-bg); color: var(--c);
+  }
+  .eqchip small { font-size: 10px; font-weight: 700; letter-spacing: .04em; opacity: .8; text-transform: uppercase; }
+  .eqchip.a { --c: var(--asset); --c-bg: var(--asset-bg); --c-line: color-mix(in srgb, var(--asset) 45%, transparent); }
+  .eqchip.l { --c: var(--liab);  --c-bg: var(--liab-bg);  --c-line: color-mix(in srgb, var(--liab) 45%, transparent); }
+  .eqchip.e { --c: var(--equity);--c-bg: var(--equity-bg);--c-line: color-mix(in srgb, var(--equity) 45%, transparent); }
+  .eqop { font-family: var(--serif); font-size: 20px; color: var(--ink-soft); font-weight: 600; }
+
+  /* expanded equation strip (horizontal scroll) */
+  .eqstrip-wrap { margin: 12px -18px 0; padding: 0 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .eqstrip-wrap::-webkit-scrollbar { height: 0; }
+  .eqstrip { display: inline-flex; align-items: stretch; gap: 8px; padding-bottom: 6px; }
+  .eqstrip .grp {
+    display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 14px;
+    border: 1.5px dashed var(--g-line, var(--line));
+  }
+  .eqstrip .grp.se { --g-line: color-mix(in srgb, var(--equity) 40%, transparent); position: relative; }
+  .eqstrip .grp.se::before { content: "Stockholders' Equity"; position: absolute; top: -8px; left: 12px; font-size: 9px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--equity); background: var(--paper); padding: 0 5px; }
+  .mini-acct { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; min-width: 62px; padding: 6px 8px; border-radius: 9px; background: var(--card); border: 1px solid var(--line); }
+  .mini-acct .mn { font-size: 10.5px; font-weight: 700; text-align: center; line-height: 1.15; color: var(--ink); }
+  .mini-acct .dc { display: flex; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+  .mini-acct .dc .pd { color: var(--debit); } .mini-acct .dc .pc { color: var(--credit); }
+  .eqstrip .sep { display: grid; place-items: center; font-family: var(--serif); font-size: 18px; color: var(--ink-soft); padding: 0 2px; }
+
+  /* Illustration 2.3 — per-account rule cards */
+  .eqrule {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow);
+    transition: border-color .18s ease, transform .14s ease;
+  }
+  .eqrule + .eqrule { margin-top: 9px; }
+  .eqrule:hover { transform: translateY(-1px); border-color: var(--er, var(--line)); }
+  .eqrule.a { --er: color-mix(in srgb, var(--asset) 50%, transparent); }
+  .eqrule.l { --er: color-mix(in srgb, var(--liab) 50%, transparent); }
+  .eqrule.e { --er: color-mix(in srgb, var(--equity) 50%, transparent); }
+  .eqrule .er-body { flex: 1 1 auto; min-width: 0; }
+  .eqrule .er-top { display: flex; align-items: center; gap: 8px; }
+  .eqrule .er-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .eqrule .er-grp { font-size: 9.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; }
+  .eqrule.a .er-grp { background: var(--asset-bg); color: var(--asset); }
+  .eqrule.l .er-grp { background: var(--liab-bg); color: var(--liab); }
+  .eqrule.e .er-grp { background: var(--equity-bg); color: var(--equity); }
+  .eqrule .er-note { font-size: 11.5px; color: var(--ink-faint); margin-top: 4px; line-height: 1.4; display: none; }
+  .eqrule.open .er-note { display: block; }
+  .er-dc { flex: 0 0 auto; display: grid; grid-template-columns: 44px 44px; text-align: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .er-dc .cell { padding: 6px 2px; }
+  .er-dc .cell + .cell { border-left: 1px solid var(--line); }
+  .er-dc .cell .h { font-size: 8.5px; font-weight: 800; letter-spacing: .04em; color: var(--ink-faint); }
+  .er-dc .cell .s { font-family: var(--mono); font-size: 14px; font-weight: 800; margin-top: 1px; }
+  .er-dc .cell.d .s { color: var(--debit); } .er-dc .cell.c .s { color: var(--credit); }
+  .er-dc .cell.norm { position: relative; }
+  .er-dc .cell.d.norm { background: var(--debit-bg); } .er-dc .cell.c.norm { background: var(--credit-bg); }
+
+  /* Equation worksheet tool */
+  .eqtool-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .eqtool-head .co { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-faint); }
+  .eqtool-head .co b { color: var(--ink); font-family: var(--serif); font-size: 13.5px; }
+  .eff-rows { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; }
+  .eff-row { display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center; }
+  .eff-row .el { display: flex; flex-direction: column; }
+  .eff-row .el b { font-size: 12.5px; font-weight: 700; }
+  .eff-row.a .el b { color: var(--asset); } .eff-row.l .el b { color: var(--liab); } .eff-row.e .el b { color: var(--equity); }
+  .eff-row .el span { font-size: 9.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
+  .eff-opts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+  .eff-opts button {
+    cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink-soft);
+    border-radius: 9px; padding: 8px 4px; font-size: 11.5px; font-weight: 700; font-family: var(--mono);
+    transition: all .14s ease; white-space: nowrap;
+  }
+  .eff-opts button:hover { border-color: var(--ink-faint); }
+  .eff-opts button.sel { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .eff-opts button.correct { background: var(--good-bg); border-color: var(--good); color: var(--good); }
+  .eff-opts button.wrong { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
+  .eff-opts button .fam-none { font-family: var(--sans); }
+
+  .eq-readout { padding: 10px 14px 14px; }
+  .eq-balance { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 12px; border-radius: var(--r-md); background: var(--card-2); border: 1px solid var(--line); }
+  .eq-cell { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 58px; }
+  .eq-cell .k { font-size: 9.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+  .eq-cell.a .k { color: var(--asset); } .eq-cell.l .k { color: var(--liab); } .eq-cell.e .k { color: var(--equity); }
+  .eq-cell .v { font-family: var(--mono); font-weight: 700; font-size: 14px; color: var(--ink); }
+  .eq-balance .op { font-family: var(--serif); font-size: 18px; color: var(--ink-soft); }
+  .eq-verdict { text-align: center; margin-top: 8px; font-size: 12.5px; font-weight: 700; }
+  .eq-verdict.ok { color: var(--good); } .eq-verdict.no { color: var(--ink-faint); }
+
+  .ws-log { margin-top: 14px; border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--card); }
+  .ws-log .ws-h, .ws-row { display: grid; grid-template-columns: 26px 1fr repeat(3, 52px); gap: 4px; align-items: center; padding: 8px 12px; font-size: 11.5px; }
+  .ws-log .ws-h { background: var(--card-2); border-bottom: 1px solid var(--line); font-weight: 800; letter-spacing: .03em; text-transform: uppercase; font-size: 9.5px; color: var(--ink-faint); }
+  .ws-h .r, .ws-row .r { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .ws-h .ha { color: var(--asset); } .ws-h .hl { color: var(--liab); } .ws-h .he { color: var(--equity); }
+  .ws-row + .ws-row { border-top: 1px solid var(--line-soft); }
+  .ws-row .n { font-family: var(--mono); font-weight: 700; color: var(--ink-faint); }
+  .ws-row .desc { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ws-row .r.a { color: var(--asset); } .ws-row .r.l { color: var(--liab); } .ws-row .r.e { color: var(--equity); }
+  .ws-empty { padding: 18px 14px; text-align: center; font-size: 12px; color: var(--ink-faint); }
 </style>
 
 <div id="fa-app">
@@ -819,14 +974,17 @@
               </span>
             </button>
 
-            <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">2</span>
+            <button class="lesson-card" id="start-lesson2-card">
+              <span class="lnum" style="background:var(--equity-bg);color:var(--equity);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--equity) 40%,transparent);">2</span>
               <span class="lbody">
                 <b>The Accounting Equation</b>
                 <span>Assets = Liabilities + Stockholders' Equity</span>
               </span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+              <span class="pill-mini ready" id="lesson2-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
               <span class="lnum">3</span>
               <span class="lbody">
@@ -863,8 +1021,8 @@
           Course
         </button>
         <div class="foot-spacer"></div>
-        <button class="fa-iconbtn" id="theme-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
-          <svg class="icon" id="theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
         </button>
       </div>
 
@@ -1131,6 +1289,286 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: TRANSITION BRIDGE ============== -->
+    <section class="fa-screen bridge" id="screen-bridge" aria-label="Lesson transition">
+      <div class="bridge-scroll">
+        <div class="bridge-inner">
+          <div class="bridge-badge" id="bridge-badge"><span class="ck">✓</span> Lesson 1 complete</div>
+          <div class="bridge-eyebrow">Lesson 1 → Lesson 2</div>
+          <h1>From two sides<br>to one equation.</h1>
+          <p class="lead">You learned the rule that runs the whole ledger: every transaction records <em>equal debits and credits</em>. Follow that rule to its logical end and something powerful appears.</p>
+
+          <div class="morph" id="bridge-morph">
+            <div class="from"><span class="d">Debits</span> &nbsp;=&nbsp; <span class="c">Credits</span></div>
+            <div class="arrow"></div>
+            <div class="to">
+              <span class="eqp a">Assets</span>
+              <span class="op">=</span>
+              <span class="eqp l">Liabilities</span>
+              <span class="op">+</span>
+              <span class="eqp e">Equity</span>
+            </div>
+          </div>
+
+          <p class="lead">In a double-entry system, for every debit there must be a credit — and vice versa. That is exactly why the books must always balance into the <em>accounting equation</em>. Lesson 2 makes that equation your master control.</p>
+
+          <button class="cta" id="bridge-begin" style="margin-top:6px;">
+            Begin Lesson 2 · The Accounting Equation
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="cta ghost" id="bridge-home" style="margin-top:4px;">Back to course</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: LESSON 2 ============== -->
+    <section class="fa-screen" id="screen-lesson2" aria-label="Lesson 2 — The Accounting Equation">
+      <div class="fa-topbar">
+        <button class="fa-back" id="l2-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Lesson 2 · Unit 1</div>
+        <h1 class="lesson-title">The Accounting Equation</h1>
+        <div class="lesson-meta">Why the books must always balance · ~15 min</div>
+        <div class="prog-wrap">
+          <div class="prog-track"><div class="prog-fill" id="l2-prog-fill"></div></div>
+          <span class="prog-pct" id="l2-prog-pct">0%</span>
+        </div>
+      </div>
+
+      <div class="seg" id="l2-seg" role="tablist" aria-label="Lesson 2 sections">
+        <span class="seg-thumb" id="l2-seg-thumb"></span>
+        <button role="tab" data-view="lecture" class="is-active">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M4 5h16M4 9h16M4 13h10M4 17h10"/></svg>
+          Lecture
+        </button>
+        <button role="tab" data-view="illustration">
+          <svg class="icon ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+          Fig 2.3
+        </button>
+        <button role="tab" data-view="tool">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M9 18h6"/><circle cx="12" cy="12" r="9"/></svg>
+          Equation
+        </button>
+        <button role="tab" data-view="practice">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
+          Practice
+        </button>
+      </div>
+
+      <div class="panes" id="l2-panes">
+
+        <!-- LECTURE -->
+        <div class="pane is-active" id="l2-pane-lecture" role="tabpanel">
+          <p class="lede">Master one equation and you hold the whole of accounting in a single line.</p>
+          <p class="lecture-hook">In a double-entry system, for every debit there must be a credit — and vice versa. Follow that to its conclusion and you arrive at the equation the entire system exists to keep true.</p>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">1</span><span class="eyebrow">The core identity</span></div>
+            <h3>Assets = Liabilities + Stockholders' Equity</h3>
+            <p><b>Assets</b> are the economic resources the company controls. <b>Liabilities</b> are what it owes to creditors. <b>Stockholders' equity</b> is the owners' residual claim — what would be left for owners after every creditor is paid. Because each transaction posts equal debits and credits, the two sides of this equation can never drift out of balance.</p>
+            <div class="eqbar">
+              <span class="eqchip a">Assets<small>resources</small></span>
+              <span class="eqop">=</span>
+              <span class="eqchip l">Liabilities<small>owed</small></span>
+              <span class="eqop">+</span>
+              <span class="eqchip e">Equity<small>owners' claim</small></span>
+            </div>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">2</span><span class="eyebrow">Expand the right side</span></div>
+            <h3>Where stockholders' equity comes from</h3>
+            <p>Equity is not one account. It grows from what owners put in — <b>Common Stock</b> — and from profits the business keeps — <b>Retained Earnings</b>. Retained earnings itself rises with <b>Revenues</b>, and falls with <b>Expenses</b> and <b>Dividends</b>. Expanded, the equation reads:</p>
+            <div class="eqstrip-wrap">
+              <div class="eqstrip">
+                <div class="mini-acct"><span class="mn">Assets</span></div>
+                <span class="sep">=</span>
+                <div class="mini-acct"><span class="mn">Liabilities</span></div>
+                <span class="sep">+</span>
+                <div class="grp se">
+                  <div class="mini-acct"><span class="mn">Common<br>Stock</span></div>
+                  <span class="sep">+</span>
+                  <div class="mini-acct"><span class="mn">Retained<br>Earnings</span></div>
+                  <span class="sep">+</span>
+                  <div class="mini-acct"><span class="mn">Revenues</span></div>
+                  <span class="sep">−</span>
+                  <div class="mini-acct"><span class="mn">Expenses</span></div>
+                  <span class="sep">−</span>
+                  <div class="mini-acct"><span class="mn">Dividends</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">3</span><span class="eyebrow">It all ties back to Lesson 1</span></div>
+            <h3>The debit/credit rules line up with the equation</h3>
+            <p>The left side of the equation — <b>Assets</b> — carries a normal <span class="term-dr">debit</span> balance. The right side — <b>Liabilities, Common Stock, Retained Earnings, and Revenues</b> — carries a normal <span class="term-cr">credit</span> balance. The two accounts that <b>reduce</b> equity, <b>Expenses</b> and <b>Dividends</b>, carry a normal <span class="term-dr">debit</span> balance — which is exactly why they are subtracted in the expanded equation.</p>
+            <div class="rulecard">
+              <div class="rr"><span class="mk l">Dr</span><div>Increase with a <b>debit</b>: Assets, Expenses, Dividends.</div></div>
+              <div class="rr"><span class="mk r">Cr</span><div>Increase with a <b>credit</b>: Liabilities, Common Stock, Retained Earnings, Revenues.</div></div>
+            </div>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">4</span><span class="eyebrow">The equality always holds</span></div>
+            <h3>Every transaction keeps the balance</h3>
+            <p>Each event changes at least two elements, yet <b>A = L + E</b> always survives. Pay $16,000 cash for a delivery van and total assets do not move at all — one asset (Cash) falls while another (Vehicles) rises by the same amount. Sign a note to buy equipment and assets and liabilities rise together. When debits equal credits, the equation balances automatically.</p>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The accounting equation is the master control on the entire ledger. If it will not balance, a debit and a credit somewhere disagree — find that error before you trust a single statement.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ILLUSTRATION 2.3 -->
+        <div class="pane" id="l2-pane-illustration" role="tabpanel">
+          <div class="ill-head">
+            <div class="eyebrow">Illustration 2.3</div>
+            <h2>Expanded Equation &amp; Debit/Credit Rules</h2>
+            <p>The equation, expanded — with the normal (increase) side of every account shaded. Tap any account to see how it behaves.</p>
+          </div>
+
+          <div class="eqstrip-wrap">
+            <div class="eqstrip">
+              <div class="mini-acct"><span class="mn">Assets</span><span class="dc"><span class="pd">Dr+</span><span class="pc">Cr−</span></span></div>
+              <span class="sep">=</span>
+              <div class="mini-acct"><span class="mn">Liabilities</span><span class="dc"><span class="pd">Dr−</span><span class="pc">Cr+</span></span></div>
+              <span class="sep">+</span>
+              <div class="grp se">
+                <div class="mini-acct"><span class="mn">Common<br>Stock</span><span class="dc"><span class="pd">Dr−</span><span class="pc">Cr+</span></span></div>
+                <span class="sep">+</span>
+                <div class="mini-acct"><span class="mn">Retained<br>Earnings</span><span class="dc"><span class="pd">Dr−</span><span class="pc">Cr+</span></span></div>
+                <span class="sep">+</span>
+                <div class="mini-acct"><span class="mn">Revenues</span><span class="dc"><span class="pd">Dr−</span><span class="pc">Cr+</span></span></div>
+                <span class="sep">−</span>
+                <div class="mini-acct"><span class="mn">Expenses</span><span class="dc"><span class="pd">Dr+</span><span class="pc">Cr−</span></span></div>
+                <span class="sep">−</span>
+                <div class="mini-acct"><span class="mn">Dividends</span><span class="dc"><span class="pd">Dr+</span><span class="pc">Cr−</span></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend">
+            <span><span class="sw" style="background:var(--debit)"></span>Dr · debit</span>
+            <span><span class="sw" style="background:var(--credit)"></span>Cr · credit</span>
+          </div>
+
+          <div id="l2-eqrules"></div>
+
+          <div class="ill-note" style="margin-top:14px;">
+            <span class="i">i</span>
+            <div><b>Read the symmetry:</b> assets sit on the left of the equation and increase with debits. Everything on the right increases with credits — <b>except</b> Expenses and Dividends, the two accounts that shrink equity. Those increase with debits, which is why the equation subtracts them.</div>
+          </div>
+        </div>
+
+        <!-- EQUATION ANALYZER TOOL -->
+        <div class="pane" id="l2-pane-tool" role="tabpanel">
+          <div class="tool-head">
+            <span class="badge"><svg class="icon" viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M9 18h6"/></svg></span>
+            <div>
+              <h2>Equation Analyzer</h2>
+              <p>Keep Assets = Liabilities + Equity in balance</p>
+            </div>
+          </div>
+
+          <div class="ledger-paper">
+            <div class="lp-head">
+              <div class="jctr"><span class="jno" id="eq-jno">TXN 1</span></div>
+              <span class="steps" id="eq-steps">1 of 8</span>
+            </div>
+            <div class="lp-txn">
+              <div class="dt"><span id="eq-co">Perez Inc.</span></div>
+              <div class="desc" id="eq-desc">…</div>
+            </div>
+            <div class="lp-instr">Record this transaction's effect on each element of the equation.</div>
+
+            <div class="eff-rows" id="eq-effrows"></div>
+
+            <div class="eq-readout">
+              <div class="eq-balance">
+                <div class="eq-cell a"><span class="k">Assets</span><span class="v num" id="eq-va">$0</span></div>
+                <span class="op">=</span>
+                <div class="eq-cell l"><span class="k">Liab.</span><span class="v num" id="eq-vl">$0</span></div>
+                <span class="op">+</span>
+                <div class="eq-cell e"><span class="k">Equity</span><span class="v num" id="eq-ve">$0</span></div>
+              </div>
+              <div class="eq-verdict no" id="eq-verdict">Set each effect, then post</div>
+            </div>
+          </div>
+
+          <div class="gp-actions">
+            <button class="btn" id="eq-reset">Reset</button>
+            <button class="btn primary" id="eq-post">Post transaction</button>
+          </div>
+          <div class="gp-feedback" id="eq-feedback"></div>
+          <div class="gp-actions" id="eq-next-wrap" style="display:none; margin-top:12px;">
+            <button class="btn primary" id="eq-next">Next transaction →</button>
+          </div>
+
+          <div class="ws-log" id="eq-ws">
+            <div class="ws-h"><span>#</span><span>Transaction</span><span class="r ha">Δ&nbsp;A</span><span class="r hl">Δ&nbsp;L</span><span class="r he">Δ&nbsp;E</span></div>
+            <div class="ws-empty" id="eq-ws-empty">Posted transactions appear here — each one stays in balance.</div>
+          </div>
+        </div>
+
+        <!-- PRACTICE -->
+        <div class="pane" id="l2-pane-practice" role="tabpanel">
+          <div class="tool-head gp-intro">
+            <span class="badge"><svg class="icon" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg></span>
+            <div>
+              <h2>Guided Practice</h2>
+              <p>Trace a transaction through the equation</p>
+            </div>
+          </div>
+
+          <div class="gp-scenario">
+            <div class="dt num" id="l2gp-co">Perez Inc.</div>
+            <div class="txn" id="l2gp-txn">…</div>
+          </div>
+
+          <div class="gp-steps" id="l2gp-steps"></div>
+
+          <div class="gp-step">
+            <div class="gp-q" id="l2gp-q">…</div>
+            <div class="gp-sub" id="l2gp-sub"></div>
+            <div class="gp-opts" id="l2gp-opts"></div>
+            <div class="gp-feedback" id="l2gp-feedback"></div>
+            <div class="gp-entry" id="l2gp-entry"></div>
+            <div class="gp-actions">
+              <button class="btn" id="l2gp-restart" style="display:none;">Try another transaction</button>
+              <button class="btn primary" id="l2gp-continue" disabled>Continue</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lesson-foot">
+        <button class="foot-btn" id="l2-foot-prev" disabled>
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M15 6l-6 6 6 6"/></svg>
+          Prev
+        </button>
+        <button class="foot-btn next" id="l2-foot-next">
+          <span id="l2-foot-next-label">Next: The expanded figure</span>
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -1144,15 +1582,20 @@
 
   /* ---------------- persistent state ---------------- */
   var STORE = 'fa_dc_v1';
-  var state = { theme: null, view: 'lecture', done: { lecture: false, illustration: false, ledger: false, practice: false } };
+  var state = {
+    theme: null, view: 'lecture',
+    done:  { lecture: false, illustration: false, ledger: false, practice: false },
+    done2: { lecture: false, illustration: false, tool: false, practice: false }
+  };
   try {
     var raw = window.localStorage.getItem(STORE);
     if (raw) { var p = JSON.parse(raw); if (p && typeof p === 'object') {
       if (p.theme) state.theme = p.theme;
       if (p.done) state.done = Object.assign(state.done, p.done);
+      if (p.done2) state.done2 = Object.assign(state.done2, p.done2);
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2 })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -1162,22 +1605,22 @@
       document.documentElement.removeAttribute('data-theme');
     }
     var dark = state.theme === 'dark' || (!state.theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    var icon = $('theme-icon');
-    if (icon) {
-      icon.innerHTML = dark
-        ? '<path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/>'
-        : '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/>';
-    }
+    var svg = dark
+      ? '<path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/>'
+      : '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/>';
+    Array.prototype.slice.call(document.querySelectorAll('.theme-icon')).forEach(function (icon) { icon.innerHTML = svg; });
   }
   applyTheme();
-  $('theme-btn').addEventListener('click', function () {
-    var dark = state.theme === 'dark' || (!state.theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    state.theme = dark ? 'light' : 'dark';
-    applyTheme(); save();
+  Array.prototype.slice.call(document.querySelectorAll('.theme-toggle')).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var dark = state.theme === 'dark' || (!state.theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      state.theme = dark ? 'light' : 'dark';
+      applyTheme(); save();
+    });
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -1189,6 +1632,20 @@
   $('start-lesson-card').addEventListener('click', openLesson);
   $('begin-btn').addEventListener('click', openLesson);
   $('lesson-back').addEventListener('click', function () { goScreen('home'); });
+
+  /* ---------------- transition bridge ---------------- */
+  function goBridge() {
+    var l1complete = VIEWS.every(function (v) { return state.done[v]; });
+    var badge = $('bridge-badge');
+    if (l1complete) { badge.style.display = ''; badge.innerHTML = '<span class="ck">✓</span> Lesson 1 complete'; }
+    else { badge.style.display = 'none'; }
+    var morph = $('bridge-morph'); morph.classList.remove('in');
+    goScreen('bridge');
+    setTimeout(function () { morph.classList.add('in'); }, 80);
+  }
+  $('start-lesson2-card').addEventListener('click', goBridge);
+  $('bridge-home').addEventListener('click', function () { goScreen('home'); });
+  $('bridge-begin').addEventListener('click', function () { openLesson2(); });
 
   /* ---------------- lesson sub-view tabs ---------------- */
   var VIEWS = ['lecture', 'illustration', 'ledger', 'practice'];
@@ -1234,7 +1691,7 @@
   $('foot-next').addEventListener('click', function () {
     var idx = VIEWS.indexOf(state.view);
     if (idx < VIEWS.length - 1) setView(VIEWS[idx + 1]);
-    else { markDone('practice'); goScreen('home'); flashComplete(); }
+    else { markDone('practice'); goBridge(); }
   });
   window.addEventListener('resize', moveThumb);
 
@@ -1490,7 +1947,7 @@
     var q = $('gp-q'), sub = $('gp-sub'), opts = $('gp-opts'), cont = $('gp-continue');
     var entry = $('gp-entry'); entry.className = 'gp-entry'; entry.innerHTML = '';
     gpClearFeedback();
-    opts.className = 'gp-opts'; opts.innerHTML = '';
+    opts.className = 'gp-opts'; opts.innerHTML = ''; opts.removeAttribute('data-locked');
     cont.disabled = true; cont.textContent = 'Continue';
     gpRenderSteps();
 
@@ -1646,17 +2103,349 @@
     }
     if (gpStep === 4) {
       if (gpTxnIndex < GP_TXNS.length - 1) { gpTxnIndex++; gpReset(true); panes.practice.scrollTop = 0; }
-      else { markDone('practice'); goScreen('home'); }
+      else { markDone('practice'); goBridge(); }
     }
   });
   $('gp-restart').addEventListener('click', function () { gpTxnIndex = 0; gpReset(true); panes.practice.scrollTop = 0; });
+
+  /* ============================================================
+     LESSON 2 — The Accounting Equation
+     ============================================================ */
+  var L2_VIEWS = ['lecture', 'illustration', 'tool', 'practice'];
+  var L2_NEXT = {
+    lecture: 'Next: The expanded figure',
+    illustration: 'Next: Analyze transactions',
+    tool: 'Next: Guided practice',
+    practice: 'Finish lesson'
+  };
+  var l2seg = $('l2-seg');
+  var l2segBtns = Array.prototype.slice.call(l2seg.querySelectorAll('button'));
+  var l2thumb = $('l2-seg-thumb');
+  var l2view = 'lecture';
+  var l2panes = { lecture: $('l2-pane-lecture'), illustration: $('l2-pane-illustration'), tool: $('l2-pane-tool'), practice: $('l2-pane-practice') };
+
+  function l2MoveThumb() {
+    var a = l2seg.querySelector('button.is-active'); if (!a) return;
+    l2thumb.style.left = a.offsetLeft + 'px'; l2thumb.style.width = a.offsetWidth + 'px';
+  }
+  function l2MarkDone(v) { if (!state.done2[v]) { state.done2[v] = true; save(); } l2UpdateProgress(); l2SegChecks(); }
+  function l2SegChecks() { l2segBtns.forEach(function (b) { b.classList.toggle('done', !!state.done2[b.getAttribute('data-view')]); }); }
+  function l2UpdateProgress() {
+    var n = L2_VIEWS.reduce(function (a, v) { return a + (state.done2[v] ? 1 : 0); }, 0);
+    var pct = Math.round((n / L2_VIEWS.length) * 100);
+    $('l2-prog-fill').style.width = pct + '%';
+    $('l2-prog-pct').textContent = pct + '%';
+    $('lesson2-pill').textContent = pct === 0 ? 'Start' : (pct === 100 ? 'Done' : pct + '%');
+  }
+  function l2SetView(view, immediate) {
+    if (L2_VIEWS.indexOf(view) < 0) view = 'lecture';
+    l2view = view;
+    l2segBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
+    L2_VIEWS.forEach(function (v) { l2panes[v].classList.toggle('is-active', v === view); });
+    l2MoveThumb();
+    if (view === 'lecture' || view === 'illustration') l2MarkDone(view);
+    var idx = L2_VIEWS.indexOf(view);
+    $('l2-foot-prev').disabled = idx === 0;
+    $('l2-foot-next-label').textContent = L2_NEXT[view];
+    l2panes[view].scrollTop = 0;
+    l2SegChecks();
+  }
+  l2segBtns.forEach(function (b) { b.addEventListener('click', function () { l2SetView(b.getAttribute('data-view')); }); });
+  $('l2-foot-prev').addEventListener('click', function () { var i = L2_VIEWS.indexOf(l2view); if (i > 0) l2SetView(L2_VIEWS[i - 1]); });
+  $('l2-foot-next').addEventListener('click', function () {
+    var i = L2_VIEWS.indexOf(l2view);
+    if (i < L2_VIEWS.length - 1) l2SetView(L2_VIEWS[i + 1]);
+    else { l2MarkDone('practice'); goScreen('home'); }
+  });
+  $('l2-back').addEventListener('click', function () { goScreen('home'); });
+  function openLesson2() { goScreen('lesson2'); l2SetView('lecture', true); setTimeout(l2MoveThumb, 60); }
+
+  /* ---- Illustration 2.3 rule cards ---- */
+  var EQ_RULES = [
+    { name: 'Assets', grp: 'a', tag: 'Left of =', dr: '+', cr: '−', normal: 'd', note: 'Resources the company controls. Normal debit balance — increases on the left of the equation.' },
+    { name: 'Liabilities', grp: 'l', tag: 'Right of =', dr: '−', cr: '+', normal: 'c', note: 'Amounts owed to creditors. Normal credit balance — increases on the right.' },
+    { name: 'Common Stock', grp: 'e', tag: "Stockholders' Equity", dr: '−', cr: '+', normal: 'c', note: 'Owner investment in the company. Increases equity on the credit side.' },
+    { name: 'Retained Earnings', grp: 'e', tag: "Stockholders' Equity", dr: '−', cr: '+', normal: 'c', note: 'Accumulated profit kept in the business. Normal credit balance.' },
+    { name: 'Revenues', grp: 'e', tag: "Stockholders' Equity", dr: '−', cr: '+', normal: 'c', note: 'Raise equity through net income. Increase on the credit side.' },
+    { name: 'Expenses', grp: 'e', tag: 'Reduces equity', dr: '+', cr: '−', normal: 'd', note: 'The cost of earning revenue. Because it reduces equity, it increases on the debit side.' },
+    { name: 'Dividends', grp: 'e', tag: 'Reduces equity', dr: '+', cr: '−', normal: 'd', note: 'Distributions to owners — not an expense. Reduces equity, so it increases on the debit side.' }
+  ];
+  (function renderEqRules() {
+    $('l2-eqrules').innerHTML = EQ_RULES.map(function (r) {
+      return '<div class="eqrule ' + r.grp + '">' +
+        '<div class="er-body"><div class="er-top"><span class="er-name">' + r.name + '</span><span class="er-grp">' + r.tag + '</span></div>' +
+        '<div class="er-note">' + r.note + '</div></div>' +
+        '<div class="er-dc"><div class="cell d' + (r.normal === 'd' ? ' norm' : '') + '"><div class="h">DR</div><div class="s">' + r.dr + '</div></div>' +
+        '<div class="cell c' + (r.normal === 'c' ? ' norm' : '') + '"><div class="h">CR</div><div class="s">' + r.cr + '</div></div></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('l2-eqrules').querySelectorAll('.eqrule')).forEach(function (card) {
+      card.addEventListener('click', function () { card.classList.toggle('open'); });
+    });
+  })();
+
+  /* ---- Equation Analyzer tool ---- */
+  var EQ_TXNS = [
+    { desc: 'Owners invest $40,000 cash in exchange for common stock.', amount: 40000, A: 1, L: 0, E: 1, note: 'Cash (asset) rises and Common Stock (equity) rises by the same amount.' },
+    { desc: 'Disburse $600 cash for administrative wages.', amount: 600, A: -1, L: 0, E: -1, note: 'Wages are an expense, which reduces equity; cash falls.' },
+    { desc: 'Purchase office equipment for $5,200, signing a 10% note.', amount: 5200, A: 1, L: 1, E: 0, note: 'Equipment (asset) rises and a note payable (liability) rises. Equity is untouched.' },
+    { desc: 'Receive $4,000 cash for services performed.', amount: 4000, A: 1, L: 0, E: 1, note: 'Service revenue raises equity; cash rises.' },
+    { desc: 'Pay off a short-term liability of $7,000.', amount: 7000, A: -1, L: -1, E: 0, note: 'Cash falls and the liability is settled — both sides drop together.' },
+    { desc: 'Declare a cash dividend of $5,000.', amount: 5000, A: 0, L: 1, E: -1, note: 'A dividend payable (liability) rises and dividends reduce equity. Cash is untouched until the dividend is paid.' },
+    { desc: 'Convert an $80,000 long-term liability into common stock.', amount: 80000, A: 0, L: -1, E: 1, note: 'Debt becomes equity: liabilities fall and common stock rises.' },
+    { desc: 'Pay $16,000 cash for a delivery van.', amount: 16000, A: 0, L: 0, E: 0, note: 'An asset swap — Cash falls $16,000 while Vehicles rise $16,000, so TOTAL assets do not change.' }
+  ];
+  var eqIndex = 0;
+  var eqSel = { A: null, L: null, E: null };
+  var eqLog = [];
+  var EQ_ELS = [['A', 'Assets', 'a'], ['L', 'Liabilities', 'l'], ['E', "Equity", 'e']];
+
+  function signed(n) { if (n === 0) return '—'; return (n > 0 ? '+' : '−') + money(Math.abs(n)); }
+  function eqDelta(key) { var s = eqSel[key]; var a = EQ_TXNS[eqIndex].amount; return s === '+' ? a : (s === '-' ? -a : (s === '0' ? 0 : null)); }
+
+  function eqRender() {
+    var t = EQ_TXNS[eqIndex];
+    eqSel = { A: null, L: null, E: null };
+    $('eq-jno').textContent = 'TXN ' + (eqIndex + 1);
+    $('eq-steps').textContent = (eqIndex + 1) + ' of ' + EQ_TXNS.length;
+    $('eq-desc').textContent = t.desc;
+    $('eq-effrows').innerHTML = EQ_ELS.map(function (el) {
+      var key = el[0];
+      return '<div class="eff-row ' + el[2] + '"><div class="el"><b>' + el[1] + '</b><span>' + ({ A: 'resources', L: 'owed', E: "owners' claim" }[key]) + '</span></div>' +
+        '<div class="eff-opts" data-el="' + key + '">' +
+          '<button data-v="+">+ ' + money(t.amount) + '</button>' +
+          '<button data-v="-">− ' + money(t.amount) + '</button>' +
+          '<button data-v="0"><span class="fam-none">No change</span></button>' +
+        '</div></div>';
+    }).join('');
+    Array.prototype.slice.call($('eq-effrows').querySelectorAll('.eff-opts')).forEach(function (grp) {
+      var key = grp.getAttribute('data-el');
+      Array.prototype.slice.call(grp.querySelectorAll('button')).forEach(function (b) {
+        b.addEventListener('click', function () {
+          eqSel[key] = b.getAttribute('data-v');
+          Array.prototype.slice.call(grp.querySelectorAll('button')).forEach(function (x) { x.classList.remove('sel', 'correct', 'wrong'); });
+          b.classList.add('sel');
+          eqReadout();
+        });
+      });
+    });
+    $('eq-feedback').className = 'gp-feedback'; $('eq-feedback').innerHTML = '';
+    $('eq-next-wrap').style.display = 'none';
+    eqReadout();
+  }
+  function eqReadout() {
+    var dA = eqDelta('A'), dL = eqDelta('L'), dE = eqDelta('E');
+    $('eq-va').textContent = dA === null ? '—' : signed(dA);
+    $('eq-vl').textContent = dL === null ? '—' : signed(dL);
+    $('eq-ve').textContent = dE === null ? '—' : signed(dE);
+    var v = $('eq-verdict');
+    if (dA === null || dL === null || dE === null) { v.className = 'eq-verdict no'; v.textContent = 'Set each effect, then post'; }
+    else if (dA === dL + dE) { v.className = 'eq-verdict ok'; v.innerHTML = '&#9878; Balanced · A = L + E'; }
+    else { v.className = 'eq-verdict no'; v.textContent = 'Not balanced — A must equal L + E'; }
+  }
+  function eqPost() {
+    var t = EQ_TXNS[eqIndex];
+    var fb = $('eq-feedback');
+    if (eqSel.A === null || eqSel.L === null || eqSel.E === null) {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div>Choose an effect for <b>all three</b> elements first — even if the answer is “No change”.</div>';
+      return;
+    }
+    var want = { A: t.A === 0 ? '0' : (t.A > 0 ? '+' : '-'), L: t.L === 0 ? '0' : (t.L > 0 ? '+' : '-'), E: t.E === 0 ? '0' : (t.E > 0 ? '+' : '-') };
+    var right = eqSel.A === want.A && eqSel.L === want.L && eqSel.E === want.E;
+    var dA = eqDelta('A'), dL = eqDelta('L'), dE = eqDelta('E');
+    // annotate buttons
+    EQ_ELS.forEach(function (el) {
+      var grp = $('eq-effrows').querySelector('.eff-opts[data-el="' + el[0] + '"]');
+      Array.prototype.slice.call(grp.querySelectorAll('button')).forEach(function (b) {
+        var val = b.getAttribute('data-v');
+        if (val === want[el[0]]) b.classList.add('correct');
+        else if (val === eqSel[el[0]]) b.classList.add('wrong');
+      });
+    });
+    if (right) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">&#10003;</span><div><b>Correct — the equation stays in balance.</b> ' + t.note + '</div>';
+      eqLog.push({ n: eqIndex + 1, desc: t.desc, dA: t.A * t.amount, dL: t.L * t.amount, dE: t.E * t.amount });
+      eqRenderLog();
+      l2MarkDone('tool');
+      if (eqIndex < EQ_TXNS.length - 1) $('eq-next-wrap').style.display = 'flex';
+      else fb.innerHTML = '<span class="fi">&#10003;</span><div><b>All eight transactions balanced.</b> Every event changed the equation, yet Assets = Liabilities + Equity held every single time.</div>';
+    } else if (dA === dL + dE) {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div><b>Your row balances, but an effect is off.</b> Re-check which elements this transaction actually touches. ' + t.note + '</div>';
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div>Not balanced yet — the change in Assets must equal the change in Liabilities plus Equity. ' + t.note + '</div>';
+    }
+  }
+  function eqRenderLog() {
+    var host = $('eq-ws');
+    var empty = $('eq-ws-empty'); if (empty) empty.style.display = eqLog.length ? 'none' : 'block';
+    Array.prototype.slice.call(host.querySelectorAll('.ws-row')).forEach(function (r) { r.remove(); });
+    eqLog.forEach(function (row) {
+      var el = document.createElement('div'); el.className = 'ws-row';
+      el.innerHTML = '<span class="n">' + row.n + '</span><span class="desc">' + row.desc + '</span>' +
+        '<span class="r a">' + signed(row.dA) + '</span><span class="r l">' + signed(row.dL) + '</span><span class="r e">' + signed(row.dE) + '</span>';
+      host.appendChild(el);
+    });
+  }
+  $('eq-post').addEventListener('click', eqPost);
+  $('eq-reset').addEventListener('click', function () { eqRender(); });
+  $('eq-next').addEventListener('click', function () { if (eqIndex < EQ_TXNS.length - 1) { eqIndex++; eqRender(); l2panes.tool.scrollTop = 0; } });
+
+  /* ---- Lesson 2 guided practice ---- */
+  var L2GP = [
+    {
+      txn: 'Perez Inc. purchases office equipment for $5,200 by signing a 10% promissory note.',
+      changed: ['Assets', 'Liabilities'], amount: 5200,
+      effects: { Assets: 'increase', Liabilities: 'increase', Equity: 'none' },
+      dr: 'Equipment', cr: 'Notes Payable',
+      balance: 'Assets +$5,200 = Liabilities +$5,200 + Equity $0'
+    },
+    {
+      txn: 'Perez Inc. declares a $5,000 cash dividend to its stockholders.',
+      changed: ['Liabilities', 'Stockholders’ Equity'], amount: 5000,
+      effects: { Assets: 'none', Liabilities: 'increase', Equity: 'decrease' },
+      dr: 'Dividends', cr: 'Dividends Payable',
+      balance: 'Assets $0 = Liabilities +$5,000 + Equity −$5,000'
+    }
+  ];
+  var l2gpIndex = 0, l2gpStep = 0, l2gpSub = { dir: 0 };
+  var L2GP_STEPS = ['Elements', 'Direction', 'Balance', 'Record'];
+  var l2gpPicks = [];
+  var L2_ELEMENTS = ['Assets', 'Liabilities', 'Stockholders’ Equity'];
+  function elKey(name) { return name.indexOf('Asset') === 0 ? 'Assets' : (name.indexOf('Liab') === 0 ? 'Liabilities' : 'Equity'); }
+  var l2ChangedList = function (t) { return t.changed.map(function (n) { return elKey(n); }); };
+
+  function l2gpDots() {
+    var host = $('l2gp-steps'); host.innerHTML = '';
+    for (var i = 0; i < L2GP_STEPS.length; i++) { var d = document.createElement('div'); d.className = 'gp-dot' + (i < l2gpStep ? ' done' : (i === l2gpStep ? ' on' : '')); host.appendChild(d); }
+  }
+  function l2gpReset(full) {
+    if (full) { l2gpStep = 0; l2gpPicks = []; l2gpSub = { dir: 0 }; }
+    var t = L2GP[l2gpIndex];
+    $('l2gp-txn').textContent = t.txn;
+    $('l2gp-restart').style.display = 'none';
+    l2gpRender();
+  }
+  function l2gpFbClear() { $('l2gp-feedback').className = 'gp-feedback'; $('l2gp-feedback').innerHTML = ''; }
+
+  function l2gpRender() {
+    var t = L2GP[l2gpIndex];
+    var q = $('l2gp-q'), sub = $('l2gp-sub'), opts = $('l2gp-opts'), cont = $('l2gp-continue'), entry = $('l2gp-entry');
+    entry.className = 'gp-entry'; entry.innerHTML = ''; l2gpFbClear();
+    opts.className = 'gp-opts'; opts.innerHTML = ''; opts.removeAttribute('data-locked'); cont.disabled = true; cont.textContent = 'Continue';
+    l2gpDots();
+
+    if (l2gpStep === 0) {
+      q.textContent = 'Which elements of the equation change?';
+      sub.textContent = 'Select every element this transaction affects.';
+      opts.innerHTML = L2_ELEMENTS.map(function (n) { return '<button class="opt" data-el="' + n + '"><span class="ob"></span>' + n + '</button>'; }).join('');
+      Array.prototype.slice.call(opts.querySelectorAll('.opt')).forEach(function (o) {
+        o.addEventListener('click', function () {
+          var n = o.getAttribute('data-el'); var i = l2gpPicks.indexOf(n);
+          if (i >= 0) { l2gpPicks.splice(i, 1); o.classList.remove('sel'); o.querySelector('.ob').textContent = ''; }
+          else { l2gpPicks.push(n); o.classList.add('sel'); o.querySelector('.ob').textContent = '✓'; }
+          cont.disabled = l2gpPicks.length === 0;
+        });
+      });
+    }
+    else if (l2gpStep === 1) {
+      var changed = l2ChangedList(t);
+      var elName = changed[l2gpSub.dir];
+      var full = elName === 'Equity' ? "Stockholders’ Equity" : elName;
+      q.textContent = 'Did ' + full + ' increase or decrease?';
+      sub.textContent = 'Element ' + (l2gpSub.dir + 1) + ' of ' + changed.length + '.';
+      opts.className = 'gp-opts grid';
+      opts.innerHTML = ['increase', 'decrease'].map(function (d) { return '<button class="opt" data-dir="' + d + '"><span class="ob"></span>' + d.charAt(0).toUpperCase() + d.slice(1) + '</button>'; }).join('');
+      l2bindSingle(opts, function (val, o) {
+        var want = t.effects[elName];
+        var ok = val === want;
+        l2lock(opts, o, ok, function (b) { return b.getAttribute('data-dir') === want; });
+        cont.disabled = false;
+        if (ok) l2fb('good', '<b>' + full + '</b> ' + want + 's in this transaction.');
+        else l2fb('bad', 'Look again — <b>' + full + '</b> ' + want + 's here.');
+      });
+    }
+    else if (l2gpStep === 2) {
+      q.textContent = 'Does the equation still balance?';
+      sub.textContent = 'Check that the change in Assets equals the change in Liabilities plus Equity.';
+      opts.className = 'gp-opts grid';
+      opts.innerHTML = '<button class="opt" data-bal="yes"><span class="ob"></span>Yes, it balances</button><button class="opt" data-bal="no"><span class="ob"></span>No, it is off</button>';
+      l2bindSingle(opts, function (val, o) {
+        var ok = val === 'yes';
+        l2lock(opts, o, ok, function (b) { return b.getAttribute('data-bal') === 'yes'; });
+        cont.disabled = false;
+        if (ok) l2fb('good', '<b>Correct.</b> ' + t.balance + '. The equality always survives.');
+        else l2fb('bad', 'It does balance: ' + t.balance + '. Equal debits and credits guarantee it.');
+      });
+    }
+    else if (l2gpStep === 3) {
+      q.textContent = 'The equation effect &amp; entry';
+      sub.textContent = 'Here is how the analysis records as a balanced journal entry.';
+      opts.innerHTML = '';
+      entry.className = 'gp-entry show';
+      entry.innerHTML = '<div class="ge-title"><span>&#10003;</span> Balanced &amp; recorded</div>' +
+        '<div class="je-head"><span>Account</span><span class="h-d">Debit</span><span class="h-c">Credit</span></div>' +
+        '<div class="je-row"><span class="je-acct">' + t.dr + '</span><span class="je-d">' + money(t.amount) + '</span><span class="je-c"></span></div>' +
+        '<div class="je-row cr"><span class="je-acct">' + t.cr + '</span><span class="je-d"></span><span class="je-c">' + money(t.amount) + '</span></div>' +
+        '<div style="margin-top:10px;font-size:12px;color:var(--ink-soft)">' + t.balance + '</div>';
+      l2fb('good', 'Debit ' + t.dr + ', credit ' + t.cr + ' — and Assets = Liabilities + Equity still holds.');
+      cont.disabled = false;
+      cont.textContent = (l2gpIndex < L2GP.length - 1) ? 'Next transaction →' : 'Finish practice';
+      $('l2gp-restart').style.display = (l2gpIndex < L2GP.length - 1) ? 'none' : 'block';
+      l2MarkDone('practice');
+    }
+  }
+  function l2fb(kind, html) { var el = $('l2gp-feedback'); el.className = 'gp-feedback ' + kind + ' show'; el.innerHTML = '<span class="fi">' + (kind === 'good' ? '&#10003;' : '!') + '</span><div>' + html + '</div>'; }
+  function l2bindSingle(container, handler) {
+    Array.prototype.slice.call(container.querySelectorAll('.opt')).forEach(function (o) {
+      o.addEventListener('click', function () {
+        if (container.getAttribute('data-locked')) return;
+        container.setAttribute('data-locked', '1');
+        handler(o.getAttribute('data-dir') || o.getAttribute('data-bal'), o);
+      });
+    });
+  }
+  function l2lock(container, chosen, ok, isAnswer) {
+    Array.prototype.slice.call(container.querySelectorAll('.opt')).forEach(function (o) {
+      o.classList.add('dim');
+      if (isAnswer(o)) { o.classList.remove('dim'); o.classList.add('correct'); o.querySelector('.ob').textContent = '✓'; }
+    });
+    if (!ok) { chosen.classList.remove('dim'); chosen.classList.add('wrong'); chosen.querySelector('.ob').textContent = '✗'; }
+  }
+  $('l2gp-continue').addEventListener('click', function () {
+    var t = L2GP[l2gpIndex];
+    if (l2gpStep === 0) {
+      var want = l2ChangedList(t).slice().sort().join('|');
+      var got = l2gpPicks.map(elKey).slice().sort().join('|');
+      if (want !== got) { l2fb('bad', 'Not quite — this transaction changes <b>' + t.changed.join('</b> and <b>') + '</b>.'); return; }
+      l2gpStep = 1; l2gpSub = { dir: 0 }; l2gpRender(); return;
+    }
+    if (l2gpStep === 1) {
+      var changed = l2ChangedList(t);
+      if (l2gpSub.dir < changed.length - 1) { l2gpSub.dir++; l2gpRender(); return; }
+      l2gpStep = 2; l2gpRender(); return;
+    }
+    if (l2gpStep === 2) { l2gpStep = 3; l2gpRender(); return; }
+    if (l2gpStep === 3) {
+      if (l2gpIndex < L2GP.length - 1) { l2gpIndex++; l2gpReset(true); l2panes.practice.scrollTop = 0; }
+      else { l2MarkDone('practice'); goScreen('home'); }
+    }
+  });
+  $('l2gp-restart').addEventListener('click', function () { l2gpIndex = 0; l2gpReset(true); l2panes.practice.scrollTop = 0; });
 
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
   updateProgress();
   updateSegChecks();
-  setTimeout(moveThumb, 60);
+  eqRender();
+  eqRenderLog();
+  l2gpReset(true);
+  l2UpdateProgress();
+  l2SegChecks();
+  setTimeout(function () { moveThumb(); l2MoveThumb(); }, 60);
 })();
 </script>
 </body>
