@@ -912,6 +912,72 @@
   .ws-row .desc { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ws-row .r.a { color: var(--asset); } .ws-row .r.l { color: var(--liab); } .ws-row .r.e { color: var(--equity); }
   .ws-empty { padding: 18px 14px; text-align: center; font-size: 12px; color: var(--ink-faint); }
+
+  /* ============================================================
+     LESSON 3 — Financial statements & ownership structure
+     ============================================================ */
+  /* Statement flow cards (Illustration 2.4) */
+  .stmt-flow { display: flex; flex-direction: column; gap: 4px; }
+  .stmt {
+    border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; box-shadow: var(--shadow);
+    background: var(--card);
+  }
+  .stmt-head {
+    background: linear-gradient(150deg, var(--ink), #24425f); color: #f2ede2;
+    text-align: center; font-family: var(--serif); font-weight: 600; font-size: 14px; padding: 9px 12px;
+    letter-spacing: .01em;
+  }
+  .stmt-body { padding: 10px 14px; }
+  .stmt-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 13px; padding: 3px 0; color: var(--ink-soft); }
+  .stmt-line .lbl { min-width: 0; }
+  .stmt-line .amt { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
+  .stmt-line.rule { border-top: 1px solid var(--line); margin-top: 3px; padding-top: 6px; }
+  .stmt-line.total { font-weight: 700; color: var(--ink); }
+  .stmt-line.total .amt { color: var(--ink); }
+  .stmt-line.flowing { background: var(--flow-bg, var(--good-bg)); margin: 2px -8px; padding: 4px 8px; border-radius: 7px; }
+  .stmt-line .tag-flow { font-size: 9px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--teal); margin-left: 6px; }
+  .stmt-line.hl-in { animation: flowpulse 1.4s ease; }
+  @keyframes flowpulse { 0%,100% { background: transparent; } 40% { background: var(--good-bg); } }
+  @media (prefers-reduced-motion: reduce) { .stmt-line.hl-in { animation: none; } }
+  .stmt-conn {
+    align-self: flex-end; display: flex; align-items: center; gap: 6px; padding: 2px 16px 2px 0;
+    font-size: 10.5px; font-weight: 700; color: var(--teal); height: 22px;
+  }
+  .stmt-conn .arm { width: 22px; height: 12px; border-left: 2px solid var(--teal); border-bottom: 2px solid var(--teal); border-radius: 0 0 0 6px; opacity: .7; }
+
+  /* temp / permanent chips + summary */
+  .tp-chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+  .tp-chip.temp { background: var(--credit-bg); color: var(--credit); }
+  .tp-chip.perm { background: color-mix(in srgb, var(--teal) 15%, transparent); color: var(--teal); }
+  .own-note { display:flex; gap:10px; align-items:flex-start; background: var(--card-2); border:1px solid var(--line); border-radius: var(--r-md); padding: 13px 14px; font-size: 13px; line-height:1.5; color: var(--ink-soft); }
+  .own-note b { color: var(--ink); }
+
+  /* Illustration 2.5 table (scrollable) */
+  .eq25-wrap { margin: 4px -18px 0; padding: 0 18px 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .eq25-wrap::-webkit-scrollbar { height: 0; }
+  .eq25 { border-collapse: collapse; min-width: 480px; width: 100%; font-size: 12px; }
+  .eq25 th, .eq25 td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  .eq25 thead th { background: var(--card-2); font-size: 10px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-faint); }
+  .eq25 .grp-pp { color: var(--teal); } .eq25 .grp-corp { color: var(--credit); }
+  .eq25 td .t { color: var(--credit); font-weight: 700; } .eq25 td .p { color: var(--teal); font-weight: 700; }
+  .eq25 .tx { font-weight: 700; color: var(--ink); }
+  .eq25 .imp-inc { color: var(--good); font-weight: 700; } .eq25 .imp-dec { color: var(--warn); font-weight: 700; }
+
+  /* Statement builder tool */
+  .sb-given { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
+  .sb-given .g { background: var(--card-2); border: 1px solid var(--line-soft); border-radius: 10px; padding: 8px 10px; }
+  .sb-given .g .k { font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-faint); }
+  .sb-given .g .v { font-family: var(--mono); font-weight: 700; font-size: 14px; color: var(--ink); margin-top: 2px; }
+  .sb-step { padding: 12px 14px; border-top: 1px solid var(--line-soft); }
+  .sb-q { font-size: 13.5px; font-weight: 650; color: var(--ink); }
+  .sb-formula { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
+  .sb-choices { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px; }
+  .sb-choices button { cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 9px; padding: 9px 4px; font-family: var(--mono); font-weight: 700; font-size: 12.5px; transition: all .14s ease; }
+  .sb-choices button:hover { border-color: var(--ink-faint); }
+  .sb-choices button.correct { background: var(--good-bg); border-color: var(--good); color: var(--good); }
+  .sb-choices button.wrong { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
+  .sb-choices button[disabled] { opacity: .5; cursor: default; }
+  .sb-done { padding: 12px 14px; }
 </style>
 
 <div id="fa-app">
@@ -985,14 +1051,17 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">3</span>
+            <button class="lesson-card" id="start-lesson3-card">
+              <span class="lnum" style="background:var(--teal-bg, color-mix(in srgb,var(--teal) 14%, transparent));color:var(--teal);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--teal) 40%,transparent);">3</span>
               <span class="lbody">
-                <b>Journalizing &amp; Posting</b>
-                <span>From the journal to the ledger</span>
+                <b>Financial Statements</b>
+                <span>How the statements connect &amp; ownership structure</span>
               </span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+              <span class="pill-mini ready" id="lesson3-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
               <span class="lnum">4</span>
               <span class="lbody">
@@ -1294,26 +1363,16 @@
       <div class="bridge-scroll">
         <div class="bridge-inner">
           <div class="bridge-badge" id="bridge-badge"><span class="ck">✓</span> Lesson 1 complete</div>
-          <div class="bridge-eyebrow">Lesson 1 → Lesson 2</div>
-          <h1>From two sides<br>to one equation.</h1>
-          <p class="lead">You learned the rule that runs the whole ledger: every transaction records <em>equal debits and credits</em>. Follow that rule to its logical end and something powerful appears.</p>
+          <div class="bridge-eyebrow" id="bridge-eyebrow">Lesson 1 → Lesson 2</div>
+          <h1 id="bridge-title">From two sides<br>to one equation.</h1>
+          <p class="lead" id="bridge-lead1">…</p>
 
-          <div class="morph" id="bridge-morph">
-            <div class="from"><span class="d">Debits</span> &nbsp;=&nbsp; <span class="c">Credits</span></div>
-            <div class="arrow"></div>
-            <div class="to">
-              <span class="eqp a">Assets</span>
-              <span class="op">=</span>
-              <span class="eqp l">Liabilities</span>
-              <span class="op">+</span>
-              <span class="eqp e">Equity</span>
-            </div>
-          </div>
+          <div class="morph" id="bridge-morph"></div>
 
-          <p class="lead">In a double-entry system, for every debit there must be a credit — and vice versa. That is exactly why the books must always balance into the <em>accounting equation</em>. Lesson 2 makes that equation your master control.</p>
+          <p class="lead" id="bridge-lead2">…</p>
 
           <button class="cta" id="bridge-begin" style="margin-top:6px;">
-            Begin Lesson 2 · The Accounting Equation
+            <span id="bridge-begin-label">Begin Lesson 2</span>
             <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
           <button class="cta ghost" id="bridge-home" style="margin-top:4px;">Back to course</button>
@@ -1569,6 +1628,239 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: LESSON 3 ============== -->
+    <section class="fa-screen" id="screen-lesson3" aria-label="Lesson 3 — Financial Statements">
+      <div class="fa-topbar">
+        <button class="fa-back" id="l3-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Lesson 3 · Unit 1</div>
+        <h1 class="lesson-title">Financial Statements</h1>
+        <div class="lesson-meta">How the statements connect &amp; ownership structure · ~15 min</div>
+        <div class="prog-wrap">
+          <div class="prog-track"><div class="prog-fill" id="l3-prog-fill"></div></div>
+          <span class="prog-pct" id="l3-prog-pct">0%</span>
+        </div>
+      </div>
+
+      <div class="seg" id="l3-seg" role="tablist" aria-label="Lesson 3 sections">
+        <span class="seg-thumb" id="l3-seg-thumb"></span>
+        <button role="tab" data-view="lecture" class="is-active">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M4 5h16M4 9h16M4 13h10M4 17h10"/></svg>
+          Lecture
+        </button>
+        <button role="tab" data-view="illustration">
+          <svg class="icon ic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="5" rx="1"/><rect x="5" y="10" width="14" height="5" rx="1"/><rect x="5" y="17" width="14" height="4" rx="1"/></svg>
+          Fig 2.4
+        </button>
+        <button role="tab" data-view="tool">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4M12 16V8M16 16v-7"/></svg>
+          Builder
+        </button>
+        <button role="tab" data-view="practice">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
+          Practice
+        </button>
+      </div>
+
+      <div class="panes" id="l3-panes">
+
+        <!-- LECTURE -->
+        <div class="pane is-active" id="l3-pane-lecture" role="tabpanel">
+          <p class="lede">Three statements, one story — and a single account stitches them together.</p>
+          <p class="lecture-hook">The income statement, the retained earnings statement, and the balance sheet are not three separate reports. They are three views of the same period, linked by numbers that flow from one into the next.</p>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">1</span><span class="eyebrow">The three connected statements</span></div>
+            <h3>What each statement reports</h3>
+            <p>The <b>income statement</b> reports revenues and expenses; their difference is <b>net income</b> (or net loss). The <b>retained earnings statement</b> reports net income and dividends: <span class="term-dr">Beginning RE + Net income − Dividends = Ending RE</span>. The <b>balance sheet</b>'s stockholders' equity section reports <b>Common Stock</b> and <b>Retained Earnings</b>. Because a company transfers revenues, expenses, and dividends into retained earnings at period-end, a change in any one of the three affects stockholders' equity.</p>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">2</span><span class="eyebrow">Follow the money</span></div>
+            <h3>One number moves through all three</h3>
+            <p><b>Net income</b> from the income statement flows into the retained earnings statement. <b>Ending retained earnings</b> then flows into the equity section of the balance sheet. Common Stock reflects <b>investments by stockholders</b>; Retained Earnings reflects <b>net income retained in the business</b>. See it move on the <em>Fig 2.4</em> tab.</p>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">3</span><span class="eyebrow">Two kinds of account</span></div>
+            <h3>Temporary vs. permanent</h3>
+            <p><b>Revenues, expenses, and dividends</b> are <span class="term-cr">nominal (temporary)</span> accounts — they measure a single period and are closed into a <span class="term-dr">real (permanent)</span> account at period-end. <b>Assets, liabilities, common stock, and retained earnings</b> are permanent accounts whose balances carry into the next period. That is why each period's revenue and expense accounts start again at zero.</p>
+            <div class="rulecard">
+              <div class="rr"><span class="mk r">T</span><div><b>Temporary (nominal):</b> Revenues, Expenses, Dividends — reset each period.</div></div>
+              <div class="rr"><span class="mk l">P</span><div><b>Permanent (real):</b> Assets, Liabilities, Common Stock, Retained Earnings — carry forward.</div></div>
+            </div>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">4</span><span class="eyebrow">Who owns the business?</span></div>
+            <h3>Ownership structure sets the account names</h3>
+            <p>A <b>corporation</b> uses <b>Common Stock</b> (and Paid-in Capital in Excess of Par), <b>Dividends</b>, and <b>Retained Earnings</b>. A <b>proprietorship or partnership</b> uses an <b>Owner's Capital</b> account for investment and an <b>Owner's Drawings</b> account for withdrawals. The economics are identical — only the equity labels change to reflect who owns the company. The <em>Practice</em> tab drills this with Illustration 2.5.</p>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Learn to follow one number as it travels. The net income you compute on the income statement is the same net income that raises retained earnings and reappears in equity on the balance sheet. If those figures do not tie, the statements are not finished.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ILLUSTRATION 2.4 + 2.5 -->
+        <div class="pane" id="l3-pane-illustration" role="tabpanel">
+          <div class="ill-head">
+            <div class="eyebrow">Illustration 2.4</div>
+            <h2>Financial Statements &amp; Ownership Structure</h2>
+            <p>Watch how net income and ending retained earnings flow through the three statements.</p>
+          </div>
+
+          <div class="stmt-flow" id="l3-flow">
+            <div class="stmt">
+              <div class="stmt-head">Income Statement</div>
+              <div class="stmt-body">
+                <div class="stmt-line"><span class="lbl">Revenues</span><span class="amt">$8,500</span></div>
+                <div class="stmt-line"><span class="lbl">Less: Expenses</span><span class="amt">(6,100)</span></div>
+                <div class="stmt-line rule total" data-flow="ni"><span class="lbl">Net income</span><span class="amt">$2,400</span></div>
+              </div>
+            </div>
+            <div class="stmt-conn" data-arm="ni"><span class="arm"></span>Net income</div>
+            <div class="stmt">
+              <div class="stmt-head">Retained Earnings Statement</div>
+              <div class="stmt-body">
+                <div class="stmt-line"><span class="lbl">Beginning retained earnings</span><span class="amt">$5,000</span></div>
+                <div class="stmt-line" data-flow="ni-in"><span class="lbl">Add: Net income</span><span class="amt">2,400</span></div>
+                <div class="stmt-line"><span class="lbl">Less: Dividends</span><span class="amt">(1,000)</span></div>
+                <div class="stmt-line rule total" data-flow="ere"><span class="lbl">Ending retained earnings</span><span class="amt">$6,400</span></div>
+              </div>
+            </div>
+            <div class="stmt-conn" data-arm="ere"><span class="arm"></span>Ending RE</div>
+            <div class="stmt">
+              <div class="stmt-head">Balance Sheet</div>
+              <div class="stmt-body">
+                <div class="stmt-line"><span class="lbl">Assets</span><span class="amt">$21,400</span></div>
+                <div class="stmt-line"><span class="lbl">Liabilities</span><span class="amt">$5,000</span></div>
+                <div class="stmt-line"><span class="lbl">Stockholders' equity</span><span class="amt"></span></div>
+                <div class="stmt-line" style="padding-left:14px"><span class="lbl">Common stock</span><span class="amt">10,000</span></div>
+                <div class="stmt-line" style="padding-left:14px" data-flow="ere-in"><span class="lbl">Retained earnings</span><span class="amt">6,400</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gp-actions" style="margin-top:14px;">
+            <button class="btn primary" id="l3-trace">Trace the flow ▸</button>
+          </div>
+
+          <div class="ill-head" style="margin-top:22px;">
+            <div class="eyebrow">Illustration 2.5</div>
+            <h2 style="font-size:18px;">Effects of Transactions on Equity Accounts</h2>
+            <p>The same equity events, named for each ownership structure and split into temporary vs. permanent accounts.</p>
+          </div>
+          <div class="eq25-wrap">
+            <table class="eq25">
+              <thead>
+                <tr>
+                  <th rowspan="2">Transaction</th>
+                  <th rowspan="2">Impact on equity</th>
+                  <th colspan="2" class="grp-pp">Proprietorship / Partnership</th>
+                  <th colspan="2" class="grp-corp">Corporation</th>
+                </tr>
+                <tr>
+                  <th>Temporary</th><th>Permanent</th><th>Temporary</th><th>Permanent</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="tx">Investment by owner(s)</td><td class="imp-inc">Increase</td><td>—</td><td class="p">Capital</td><td>—</td><td class="p">Common Stock</td></tr>
+                <tr><td class="tx">Revenues recognized</td><td class="imp-inc">Increase</td><td class="t">Revenue</td><td class="p">Capital</td><td class="t">Revenue</td><td class="p">Retained Earnings</td></tr>
+                <tr><td class="tx">Expenses incurred</td><td class="imp-dec">Decrease</td><td class="t">Expense</td><td class="p">Capital</td><td class="t">Expense</td><td class="p">Retained Earnings</td></tr>
+                <tr><td class="tx">Withdrawal by owner(s)</td><td class="imp-dec">Decrease</td><td class="t">Drawings</td><td class="p">Capital</td><td class="t">Dividends</td><td class="p">Retained Earnings</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="own-note" style="margin-top:12px;">
+            <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+            <div>Temporary accounts (<span class="tp-chip temp">Revenue</span> <span class="tp-chip temp">Expense</span> <span class="tp-chip temp">Dividends / Drawings</span>) close at period-end into a permanent account — <b>Retained Earnings</b> for a corporation, <b>Capital</b> for a proprietorship.</div>
+          </div>
+        </div>
+
+        <!-- STATEMENT BUILDER TOOL -->
+        <div class="pane" id="l3-pane-tool" role="tabpanel">
+          <div class="tool-head">
+            <span class="badge"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4M12 16V8M16 16v-7"/></svg></span>
+            <div>
+              <h2>Statement Builder</h2>
+              <p>Move net income through the statements</p>
+            </div>
+          </div>
+
+          <div class="ledger-paper">
+            <div class="lp-head">
+              <div class="jctr"><span class="jno" id="sb-co">—</span></div>
+              <span class="steps" id="sb-steps">Company 1 of 2</span>
+            </div>
+            <div class="sb-given" id="sb-given"></div>
+            <div id="sb-statements"></div>
+            <div class="sb-step" id="sb-step"></div>
+          </div>
+
+          <div class="gp-feedback" id="sb-feedback"></div>
+          <div class="gp-actions" id="sb-next-wrap" style="display:none; margin-top:12px;">
+            <button class="btn primary" id="sb-next">Next company →</button>
+          </div>
+        </div>
+
+        <!-- PRACTICE (Illustration 2.5) -->
+        <div class="pane" id="l3-pane-practice" role="tabpanel">
+          <div class="tool-head gp-intro">
+            <span class="badge"><svg class="icon" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg></span>
+            <div>
+              <h2>Guided Practice</h2>
+              <p>Classify equity events by account &amp; ownership</p>
+            </div>
+          </div>
+
+          <div class="gp-scenario">
+            <div class="dt num">Equity event</div>
+            <div class="txn" id="l3gp-txn">…</div>
+          </div>
+
+          <div class="gp-steps" id="l3gp-steps"></div>
+
+          <div class="gp-step">
+            <div class="gp-q" id="l3gp-q">…</div>
+            <div class="gp-sub" id="l3gp-sub"></div>
+            <div class="gp-opts" id="l3gp-opts"></div>
+            <div class="gp-feedback" id="l3gp-feedback"></div>
+            <div class="gp-entry" id="l3gp-entry"></div>
+            <div class="gp-actions">
+              <button class="btn" id="l3gp-restart" style="display:none;">Start over</button>
+              <button class="btn primary" id="l3gp-continue" disabled>Continue</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lesson-foot">
+        <button class="foot-btn" id="l3-foot-prev" disabled>
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M15 6l-6 6 6 6"/></svg>
+          Prev
+        </button>
+        <button class="foot-btn next" id="l3-foot-next">
+          <span id="l3-foot-next-label">Next: The statement flow</span>
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -1585,7 +1877,8 @@
   var state = {
     theme: null, view: 'lecture',
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
-    done2: { lecture: false, illustration: false, tool: false, practice: false }
+    done2: { lecture: false, illustration: false, tool: false, practice: false },
+    done3: { lecture: false, illustration: false, tool: false, practice: false }
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -1593,9 +1886,10 @@
       if (p.theme) state.theme = p.theme;
       if (p.done) state.done = Object.assign(state.done, p.done);
       if (p.done2) state.done2 = Object.assign(state.done2, p.done2);
+      if (p.done3) state.done3 = Object.assign(state.done3, p.done3);
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2 })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3 })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -1620,7 +1914,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -1633,19 +1927,47 @@
   $('begin-btn').addEventListener('click', openLesson);
   $('lesson-back').addEventListener('click', function () { goScreen('home'); });
 
-  /* ---------------- transition bridge ---------------- */
-  function goBridge() {
-    var l1complete = VIEWS.every(function (v) { return state.done[v]; });
+  /* ---------------- transition bridge (data-driven) ---------------- */
+  var bridgeBegin = function () {};
+  function showBridge(cfg) {
     var badge = $('bridge-badge');
-    if (l1complete) { badge.style.display = ''; badge.innerHTML = '<span class="ck">✓</span> Lesson 1 complete'; }
+    if (cfg.complete) { badge.style.display = ''; badge.innerHTML = '<span class="ck">✓</span> ' + cfg.badge; }
     else { badge.style.display = 'none'; }
+    $('bridge-eyebrow').textContent = cfg.eyebrow;
+    $('bridge-title').innerHTML = cfg.title;
+    $('bridge-lead1').innerHTML = cfg.lead1;
+    $('bridge-morph').innerHTML = cfg.morph;
+    $('bridge-lead2').innerHTML = cfg.lead2;
+    $('bridge-begin-label').textContent = cfg.beginLabel;
+    bridgeBegin = cfg.onBegin;
     var morph = $('bridge-morph'); morph.classList.remove('in');
     goScreen('bridge');
     setTimeout(function () { morph.classList.add('in'); }, 80);
   }
-  $('start-lesson2-card').addEventListener('click', goBridge);
+  function bridgeToL2() {
+    showBridge({
+      complete: VIEWS.every(function (v) { return state.done[v]; }), badge: 'Lesson 1 complete',
+      eyebrow: 'Lesson 1 → Lesson 2', title: 'From two sides<br>to one equation.',
+      lead1: 'You learned the rule that runs the whole ledger: every transaction records <em>equal debits and credits</em>. Follow that rule to its logical end and something powerful appears.',
+      morph: '<div class="from"><span class="d">Debits</span> &nbsp;=&nbsp; <span class="c">Credits</span></div><div class="arrow"></div><div class="to"><span class="eqp a">Assets</span><span class="op">=</span><span class="eqp l">Liabilities</span><span class="op">+</span><span class="eqp e">Equity</span></div>',
+      lead2: 'In a double-entry system, for every debit there must be a credit — and vice versa. That is exactly why the books must always balance into the <em>accounting equation</em>. Lesson 2 makes that equation your master control.',
+      beginLabel: 'Begin Lesson 2 · The Accounting Equation', onBegin: openLesson2
+    });
+  }
+  function bridgeToL3() {
+    showBridge({
+      complete: L2_VIEWS.every(function (v) { return state.done2[v]; }), badge: 'Lesson 2 complete',
+      eyebrow: 'Lesson 2 → Lesson 3', title: 'Where equity<br>comes to life.',
+      lead1: 'You can keep the equation in balance. But equity is never still — <em>revenues, expenses, and dividends</em> move through it every single period.',
+      morph: '<div class="from"><span class="eqp a">Assets</span> <span class="op" style="opacity:.6">=</span> <span class="eqp l">Liab.</span> <span class="op" style="opacity:.6">+</span> <span class="eqp e">Equity</span></div><div class="arrow"></div><div class="to"><span class="eqp l">Income</span><span class="op">→</span><span class="eqp e">Retained&nbsp;Earnings</span><span class="op">→</span><span class="eqp a">Balance&nbsp;Sheet</span></div>',
+      lead2: 'The financial statements tell that story — and they link together through one account, <em>Retained Earnings</em>. Lesson 3 shows exactly how the numbers flow from one statement to the next.',
+      beginLabel: 'Begin Lesson 3 · Financial Statements', onBegin: openLesson3
+    });
+  }
+  $('start-lesson2-card').addEventListener('click', bridgeToL2);
+  $('start-lesson3-card').addEventListener('click', bridgeToL3);
   $('bridge-home').addEventListener('click', function () { goScreen('home'); });
-  $('bridge-begin').addEventListener('click', function () { openLesson2(); });
+  $('bridge-begin').addEventListener('click', function () { bridgeBegin(); });
 
   /* ---------------- lesson sub-view tabs ---------------- */
   var VIEWS = ['lecture', 'illustration', 'ledger', 'practice'];
@@ -1691,7 +2013,7 @@
   $('foot-next').addEventListener('click', function () {
     var idx = VIEWS.indexOf(state.view);
     if (idx < VIEWS.length - 1) setView(VIEWS[idx + 1]);
-    else { markDone('practice'); goBridge(); }
+    else { markDone('practice'); bridgeToL2(); }
   });
   window.addEventListener('resize', moveThumb);
 
@@ -2103,7 +2425,7 @@
     }
     if (gpStep === 4) {
       if (gpTxnIndex < GP_TXNS.length - 1) { gpTxnIndex++; gpReset(true); panes.practice.scrollTop = 0; }
-      else { markDone('practice'); goBridge(); }
+      else { markDone('practice'); bridgeToL2(); }
     }
   });
   $('gp-restart').addEventListener('click', function () { gpTxnIndex = 0; gpReset(true); panes.practice.scrollTop = 0; });
@@ -2155,7 +2477,7 @@
   $('l2-foot-next').addEventListener('click', function () {
     var i = L2_VIEWS.indexOf(l2view);
     if (i < L2_VIEWS.length - 1) l2SetView(L2_VIEWS[i + 1]);
-    else { l2MarkDone('practice'); goScreen('home'); }
+    else { l2MarkDone('practice'); bridgeToL3(); }
   });
   $('l2-back').addEventListener('click', function () { goScreen('home'); });
   function openLesson2() { goScreen('lesson2'); l2SetView('lecture', true); setTimeout(l2MoveThumb, 60); }
@@ -2430,10 +2752,235 @@
     if (l2gpStep === 2) { l2gpStep = 3; l2gpRender(); return; }
     if (l2gpStep === 3) {
       if (l2gpIndex < L2GP.length - 1) { l2gpIndex++; l2gpReset(true); l2panes.practice.scrollTop = 0; }
-      else { l2MarkDone('practice'); goScreen('home'); }
+      else { l2MarkDone('practice'); bridgeToL3(); }
     }
   });
   $('l2gp-restart').addEventListener('click', function () { l2gpIndex = 0; l2gpReset(true); l2panes.practice.scrollTop = 0; });
+
+  /* ============================================================
+     LESSON 3 — Financial Statements & Ownership Structure
+     ============================================================ */
+  var L3_VIEWS = ['lecture', 'illustration', 'tool', 'practice'];
+  var L3_NEXT = { lecture: 'Next: The statement flow', illustration: 'Next: Build the statements', tool: 'Next: Guided practice', practice: 'Finish lesson' };
+  var l3seg = $('l3-seg');
+  var l3segBtns = Array.prototype.slice.call(l3seg.querySelectorAll('button'));
+  var l3thumb = $('l3-seg-thumb');
+  var l3view = 'lecture';
+  var l3panes = { lecture: $('l3-pane-lecture'), illustration: $('l3-pane-illustration'), tool: $('l3-pane-tool'), practice: $('l3-pane-practice') };
+
+  function l3MoveThumb() { var a = l3seg.querySelector('button.is-active'); if (!a) return; l3thumb.style.left = a.offsetLeft + 'px'; l3thumb.style.width = a.offsetWidth + 'px'; }
+  function l3MarkDone(v) { if (!state.done3[v]) { state.done3[v] = true; save(); } l3UpdateProgress(); l3SegChecks(); }
+  function l3SegChecks() { l3segBtns.forEach(function (b) { b.classList.toggle('done', !!state.done3[b.getAttribute('data-view')]); }); }
+  function l3UpdateProgress() {
+    var n = L3_VIEWS.reduce(function (a, v) { return a + (state.done3[v] ? 1 : 0); }, 0);
+    var pct = Math.round((n / L3_VIEWS.length) * 100);
+    $('l3-prog-fill').style.width = pct + '%'; $('l3-prog-pct').textContent = pct + '%';
+    $('lesson3-pill').textContent = pct === 0 ? 'Start' : (pct === 100 ? 'Done' : pct + '%');
+  }
+  function l3SetView(view, immediate) {
+    if (L3_VIEWS.indexOf(view) < 0) view = 'lecture';
+    l3view = view;
+    l3segBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
+    L3_VIEWS.forEach(function (v) { l3panes[v].classList.toggle('is-active', v === view); });
+    l3MoveThumb();
+    if (view === 'lecture' || view === 'illustration') l3MarkDone(view);
+    var idx = L3_VIEWS.indexOf(view);
+    $('l3-foot-prev').disabled = idx === 0;
+    $('l3-foot-next-label').textContent = L3_NEXT[view];
+    l3panes[view].scrollTop = 0;
+    l3SegChecks();
+  }
+  l3segBtns.forEach(function (b) { b.addEventListener('click', function () { l3SetView(b.getAttribute('data-view')); }); });
+  $('l3-foot-prev').addEventListener('click', function () { var i = L3_VIEWS.indexOf(l3view); if (i > 0) l3SetView(L3_VIEWS[i - 1]); });
+  $('l3-foot-next').addEventListener('click', function () {
+    var i = L3_VIEWS.indexOf(l3view);
+    if (i < L3_VIEWS.length - 1) l3SetView(L3_VIEWS[i + 1]);
+    else { l3MarkDone('practice'); goScreen('home'); }
+  });
+  $('l3-back').addEventListener('click', function () { goScreen('home'); });
+  function openLesson3() { goScreen('lesson3'); l3SetView('lecture', true); setTimeout(l3MoveThumb, 60); }
+
+  /* ---- Illustration 2.4: trace the flow ---- */
+  $('l3-trace').addEventListener('click', function () {
+    var flow = $('l3-flow');
+    var order = ['ni', 'ni-in', 'ere', 'ere-in'];
+    order.forEach(function (key, i) {
+      setTimeout(function () {
+        var line = flow.querySelector('[data-flow="' + key + '"]');
+        if (line) { line.classList.remove('hl-in'); void line.offsetWidth; line.classList.add('hl-in'); line.classList.add('flowing'); }
+        var arm = flow.querySelector('.stmt-conn[data-arm="' + key + '"]');
+        if (arm) arm.style.opacity = '1';
+      }, i * 550);
+    });
+    l3MarkDone('illustration');
+  });
+
+  /* ---- Statement Builder tool ---- */
+  var SB = [
+    { co: 'Harbor Co.', rev: 8500, exp: 6100, beg: 5000, div: 1000, cs: 10000 },
+    { co: 'Cedar Labs', rev: 12000, exp: 9500, beg: 3000, div: 500, cs: 8000 }
+  ];
+  var sbIndex = 0, sbStep = 0, sbNI = 0, sbERE = 0;
+  function pick3(correct, a, b) { var arr = [correct, a, b]; /* stable order by value to avoid RNG */ arr.sort(function (x, y) { return x - y; }); return arr; }
+  function sbRender() {
+    var s = SB[sbIndex];
+    sbNI = s.rev - s.exp; sbERE = s.beg + sbNI - s.div;
+    $('sb-co').textContent = s.co;
+    $('sb-steps').textContent = 'Company ' + (sbIndex + 1) + ' of ' + SB.length;
+    $('sb-given').innerHTML =
+      '<div class="g"><div class="k">Revenues</div><div class="v">' + money(s.rev) + '</div></div>' +
+      '<div class="g"><div class="k">Expenses</div><div class="v">' + money(s.exp) + '</div></div>' +
+      '<div class="g"><div class="k">Beginning RE</div><div class="v">' + money(s.beg) + '</div></div>' +
+      '<div class="g"><div class="k">Dividends</div><div class="v">' + money(s.div) + '</div></div>';
+    sbRenderStatements();
+    sbRenderStep();
+    $('sb-feedback').className = 'gp-feedback'; $('sb-feedback').innerHTML = '';
+    $('sb-next-wrap').style.display = 'none';
+  }
+  function sbRenderStatements() {
+    var s = SB[sbIndex];
+    var niCell = sbStep > 0 ? money(sbNI) : '<span style="color:var(--ink-faint)">?</span>';
+    var ereCell = sbStep > 1 ? money(sbERE) : '<span style="color:var(--ink-faint)">?</span>';
+    var eq = s.cs + (sbStep > 1 ? sbERE : 0);
+    $('sb-statements').innerHTML =
+      '<div style="padding:10px 14px 0"><div class="stmt-flow">' +
+        '<div class="stmt"><div class="stmt-head">Income Statement</div><div class="stmt-body">' +
+          '<div class="stmt-line"><span class="lbl">Revenues</span><span class="amt">' + money(s.rev) + '</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Less: Expenses</span><span class="amt">(' + s.exp.toLocaleString() + ')</span></div>' +
+          '<div class="stmt-line rule total ' + (sbStep === 1 ? 'hl-in' : '') + '"><span class="lbl">Net income</span><span class="amt">' + niCell + '</span></div>' +
+        '</div></div>' +
+        '<div class="stmt"><div class="stmt-head">Retained Earnings Statement</div><div class="stmt-body">' +
+          '<div class="stmt-line"><span class="lbl">Beginning RE</span><span class="amt">' + money(s.beg) + '</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Add: Net income</span><span class="amt">' + (sbStep > 0 ? sbNI.toLocaleString() : '—') + '</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Less: Dividends</span><span class="amt">(' + s.div.toLocaleString() + ')</span></div>' +
+          '<div class="stmt-line rule total ' + (sbStep === 2 ? 'hl-in' : '') + '"><span class="lbl">Ending RE</span><span class="amt">' + ereCell + '</span></div>' +
+        '</div></div>' +
+        '<div class="stmt"><div class="stmt-head">Balance Sheet — Equity</div><div class="stmt-body">' +
+          '<div class="stmt-line"><span class="lbl">Common stock</span><span class="amt">' + money(s.cs) + '</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Retained earnings</span><span class="amt">' + ereCell + '</span></div>' +
+          '<div class="stmt-line rule total"><span class="lbl">Total equity</span><span class="amt">' + (sbStep > 1 ? money(eq) : '<span style="color:var(--ink-faint)">?</span>') + '</span></div>' +
+        '</div></div>' +
+      '</div></div>';
+  }
+  function sbRenderStep() {
+    var s = SB[sbIndex];
+    var step = $('sb-step');
+    if (sbStep === 0) {
+      var opts = pick3(sbNI, sbNI + 400, sbNI - 300);
+      step.innerHTML = '<div class="sb-q">Step 1 — Compute Net Income</div><div class="sb-formula">Revenues − Expenses = ' + money(s.rev) + ' − ' + money(s.exp) + '</div><div class="sb-choices" id="sb-choices"></div>';
+      sbChoices(opts, sbNI);
+    } else if (sbStep === 1) {
+      var opts2 = pick3(sbERE, sbERE + 1000, sbERE - 600);
+      step.innerHTML = '<div class="sb-q">Step 2 — Compute Ending Retained Earnings</div><div class="sb-formula">Beginning RE + Net income − Dividends = ' + money(s.beg) + ' + ' + money(sbNI) + ' − ' + money(s.div) + '</div><div class="sb-choices" id="sb-choices"></div>';
+      sbChoices(opts2, sbERE);
+    } else {
+      step.innerHTML = '<div class="sb-done"><div class="ge-title" style="color:var(--good);font-family:var(--serif);font-weight:700;display:flex;gap:7px;align-items:center;"><span>&#10003;</span> The statements tie together</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.5;margin-top:6px;">Net income of <b style="color:var(--ink)">' + money(sbNI) + '</b> raised retained earnings to <b style="color:var(--ink)">' + money(sbERE) + '</b>, which now appears in stockholders\' equity on the balance sheet. One number, three statements.</div></div>';
+    }
+  }
+  function sbChoices(values, correct) {
+    var host = $('sb-choices');
+    host.innerHTML = values.map(function (v) { return '<button data-v="' + v + '">' + money(v) + '</button>'; }).join('');
+    Array.prototype.slice.call(host.querySelectorAll('button')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (host.getAttribute('data-done')) return;
+        var v = parseInt(b.getAttribute('data-v'), 10);
+        var fb = $('sb-feedback');
+        if (v === correct) {
+          host.setAttribute('data-done', '1');
+          Array.prototype.slice.call(host.querySelectorAll('button')).forEach(function (x) { x.disabled = true; if (parseInt(x.getAttribute('data-v'), 10) === correct) x.classList.add('correct'); });
+          fb.className = 'gp-feedback good show';
+          fb.innerHTML = '<span class="fi">&#10003;</span><div>' + (sbStep === 0 ? 'Net income is ' + money(correct) + '. Now carry it into the retained earnings statement.' : 'Ending retained earnings is ' + money(correct) + ' — and it lands in equity on the balance sheet.') + '</div>';
+          sbStep++;
+          sbRenderStatements();
+          setTimeout(function () { sbRenderStep(); if (sbStep >= 2) { l3MarkDone('tool'); if (sbIndex < SB.length - 1) $('sb-next-wrap').style.display = 'flex'; } }, 350);
+        } else {
+          b.classList.add('wrong'); b.disabled = true;
+          fb.className = 'gp-feedback bad show';
+          fb.innerHTML = '<span class="fi">!</span><div>Not quite — check the arithmetic and try another value.</div>';
+        }
+      });
+    });
+  }
+  $('sb-next').addEventListener('click', function () { if (sbIndex < SB.length - 1) { sbIndex++; sbStep = 0; sbRender(); l3panes.tool.scrollTop = 0; } });
+
+  /* ---- Lesson 3 guided practice (Illustration 2.5) ---- */
+  var L3GP = [
+    { txn: 'Investment by the owner(s) in the business.', impact: 'increase', kind: 'permanent', corp: 'Common Stock', prop: 'Capital' },
+    { txn: 'Revenues recognized from providing services.', impact: 'increase', kind: 'temporary', corp: 'Revenue', prop: 'Revenue' },
+    { txn: 'Expenses incurred to operate the business.', impact: 'decrease', kind: 'temporary', corp: 'Expense', prop: 'Expense' },
+    { txn: 'Withdrawal of assets by the owner(s).', impact: 'decrease', kind: 'temporary', corp: 'Dividends', prop: 'Drawings' }
+  ];
+  var l3gpIndex = 0, l3gpStep = 0;
+  var L3GP_STEPS = ['Impact', 'Type', 'Account', 'Recap'];
+  function l3gpDots() { var host = $('l3gp-steps'); host.innerHTML = ''; for (var i = 0; i < L3GP_STEPS.length; i++) { var d = document.createElement('div'); d.className = 'gp-dot' + (i < l3gpStep ? ' done' : (i === l3gpStep ? ' on' : '')); host.appendChild(d); } }
+  function l3gpReset(full) { if (full) { l3gpStep = 0; } var t = L3GP[l3gpIndex]; $('l3gp-txn').textContent = t.txn; $('l3gp-restart').style.display = 'none'; l3gpRender(); }
+  function l3fb(kind, html) { var el = $('l3gp-feedback'); el.className = 'gp-feedback ' + kind + ' show'; el.innerHTML = '<span class="fi">' + (kind === 'good' ? '&#10003;' : '!') + '</span><div>' + html + '</div>'; }
+  function l3bindSingle(container, handler) {
+    Array.prototype.slice.call(container.querySelectorAll('.opt')).forEach(function (o) {
+      o.addEventListener('click', function () { if (container.getAttribute('data-locked')) return; container.setAttribute('data-locked', '1'); handler(o.getAttribute('data-v'), o); });
+    });
+  }
+  function l3lock(container, chosen, ok, isAnswer) {
+    Array.prototype.slice.call(container.querySelectorAll('.opt')).forEach(function (o) { o.classList.add('dim'); if (isAnswer(o)) { o.classList.remove('dim'); o.classList.add('correct'); o.querySelector('.ob').textContent = '✓'; } });
+    if (!ok) { chosen.classList.remove('dim'); chosen.classList.add('wrong'); chosen.querySelector('.ob').textContent = '✗'; }
+  }
+  function l3gpRender() {
+    var t = L3GP[l3gpIndex];
+    var q = $('l3gp-q'), sub = $('l3gp-sub'), opts = $('l3gp-opts'), cont = $('l3gp-continue'), entry = $('l3gp-entry');
+    entry.className = 'gp-entry'; entry.innerHTML = '';
+    $('l3gp-feedback').className = 'gp-feedback'; $('l3gp-feedback').innerHTML = '';
+    opts.className = 'gp-opts'; opts.innerHTML = ''; opts.removeAttribute('data-locked'); cont.disabled = true; cont.textContent = 'Continue';
+    l3gpDots();
+    if (l3gpStep === 0) {
+      q.textContent = 'Does this event increase or decrease equity?';
+      sub.textContent = 'Think about whether owners’ claim on the business goes up or down.';
+      opts.className = 'gp-opts grid';
+      opts.innerHTML = ['increase', 'decrease'].map(function (d) { return '<button class="opt" data-v="' + d + '"><span class="ob"></span>' + d.charAt(0).toUpperCase() + d.slice(1) + '</button>'; }).join('');
+      l3bindSingle(opts, function (val, o) {
+        var ok = val === t.impact; l3lock(opts, o, ok, function (b) { return b.getAttribute('data-v') === t.impact; }); cont.disabled = false;
+        if (ok) l3fb('good', 'Right — equity ' + t.impact + 's.'); else l3fb('bad', 'Look again — this event ' + t.impact + 's equity.');
+      });
+    } else if (l3gpStep === 1) {
+      q.textContent = 'Is it recorded in a temporary or a permanent account?';
+      sub.textContent = 'Temporary (nominal) accounts close each period; permanent (real) accounts carry forward.';
+      opts.className = 'gp-opts grid';
+      opts.innerHTML = ['temporary', 'permanent'].map(function (d) { return '<button class="opt" data-v="' + d + '"><span class="ob"></span>' + d.charAt(0).toUpperCase() + d.slice(1) + '</button>'; }).join('');
+      l3bindSingle(opts, function (val, o) {
+        var ok = val === t.kind; l3lock(opts, o, ok, function (b) { return b.getAttribute('data-v') === t.kind; }); cont.disabled = false;
+        var why = t.kind === 'permanent' ? 'Owner investment goes straight into a permanent equity account.' : 'Revenues, expenses, and withdrawals are temporary — they close into a permanent account at period-end.';
+        if (ok) l3fb('good', '<b>' + t.kind.charAt(0).toUpperCase() + t.kind.slice(1) + '.</b> ' + why); else l3fb('bad', 'It is <b>' + t.kind + '</b>. ' + why);
+      });
+    } else if (l3gpStep === 2) {
+      q.textContent = 'For a corporation, which account is used?';
+      sub.textContent = 'Pick the account a corporation would record this in.';
+      var pool = ['Common Stock', 'Revenue', 'Expense', 'Dividends'];
+      opts.innerHTML = pool.map(function (n) { return '<button class="opt" data-v="' + n + '"><span class="ob"></span>' + n + '</button>'; }).join('');
+      l3bindSingle(opts, function (val, o) {
+        var ok = val === t.corp; l3lock(opts, o, ok, function (b) { return b.getAttribute('data-v') === t.corp; }); cont.disabled = false;
+        if (ok) l3fb('good', 'Yes — a corporation uses <b>' + t.corp + '</b>. A proprietorship would call it <b>' + t.prop + '</b>.'); else l3fb('bad', 'A corporation uses <b>' + t.corp + '</b> (a proprietorship: <b>' + t.prop + '</b>).');
+      });
+    } else if (l3gpStep === 3) {
+      q.textContent = 'How it is recorded';
+      sub.textContent = 'Same economics, different labels by ownership structure.';
+      opts.innerHTML = '';
+      entry.className = 'gp-entry show';
+      entry.innerHTML = '<div class="ge-title" style="color:var(--good);font-family:var(--serif);font-weight:700;display:flex;gap:7px;align-items:center;"><span>&#10003;</span> ' + t.txn + '</div>' +
+        '<div class="je-head"><span>Ownership</span><span class="h-d" style="min-width:96px">Account</span><span class="h-c" style="min-width:70px">Type</span></div>' +
+        '<div class="je-row"><span class="je-acct">Corporation</span><span class="je-d" style="min-width:96px;color:var(--ink)">' + t.corp + '</span><span class="je-c" style="min-width:70px"><span class="tp-chip ' + (t.kind === 'temporary' ? 'temp' : 'perm') + '">' + t.kind + '</span></span></div>' +
+        '<div class="je-row"><span class="je-acct">Proprietor</span><span class="je-d" style="min-width:96px;color:var(--ink)">' + t.prop + '</span><span class="je-c" style="min-width:70px"><span class="tp-chip ' + (t.kind === 'temporary' ? 'temp' : 'perm') + '">' + t.kind + '</span></span></div>';
+      l3fb('good', (t.kind === 'temporary' ? 'This temporary account closes into ' : 'This permanent account is part of ') + 'the equity a corporation calls <b>Retained Earnings</b> and a proprietorship calls <b>Capital</b>.');
+      cont.disabled = false;
+      cont.textContent = (l3gpIndex < L3GP.length - 1) ? 'Next event →' : 'Finish practice';
+      $('l3gp-restart').style.display = (l3gpIndex < L3GP.length - 1) ? 'none' : 'block';
+      l3MarkDone('practice');
+    }
+  }
+  $('l3gp-continue').addEventListener('click', function () {
+    if (l3gpStep < 3) { l3gpStep++; l3gpRender(); return; }
+    if (l3gpIndex < L3GP.length - 1) { l3gpIndex++; l3gpReset(true); l3panes.practice.scrollTop = 0; }
+    else { l3MarkDone('practice'); goScreen('home'); }
+  });
+  $('l3gp-restart').addEventListener('click', function () { l3gpIndex = 0; l3gpReset(true); l3panes.practice.scrollTop = 0; });
 
   /* ---------------- boot ---------------- */
   renderLedger();
@@ -2445,7 +2992,11 @@
   l2gpReset(true);
   l2UpdateProgress();
   l2SegChecks();
-  setTimeout(function () { moveThumb(); l2MoveThumb(); }, 60);
+  sbRender();
+  l3gpReset(true);
+  l3UpdateProgress();
+  l3SegChecks();
+  setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
 </body>
