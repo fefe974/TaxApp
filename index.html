@@ -3,1525 +3,1661 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>LedgerLab Classroom</title>
-<meta name="description" content="Interactive Intermediate Accounting lessons: teach, show, and practice the accounting cycle." />
-<meta name="theme-color" content="#00264F" />
+<title>Financial Accounting — Debits &amp; Credits</title>
+<meta name="description" content="A premium Financial Accounting course. Lesson 1: Debits and Credits — lecture, the double-entry system, a T-account ledger, and guided practice." />
+<meta name="theme-color" content="#0d1b2e" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="LedgerLab" />
+<meta name="apple-mobile-web-app-title" content="Financial Accounting" />
 <meta name="mobile-web-app-capable" content="yes" />
+</head>
+<body>
 <style>
+  /* ============================================================
+     Financial Accounting — Academic Premium design system
+     Grounded in the ledger: navy ink, ivory paper, blue=debit,
+     amber=credit, gold hairlines. Mobile-first (iPhone 13 Pro Max).
+     ============================================================ */
   :root {
     color-scheme: light dark;
-    background-color: transparent;
+    /* Light theme (default) */
+    --paper:      #f4efe3;   /* warm ivory ground */
+    --paper-2:    #efe8d8;   /* slightly deeper ivory */
+    --card:       #fffdf8;   /* near-white card, warm */
+    --card-2:     #faf5ea;   /* secondary card */
+    --ink:        #14283f;   /* primary text, navy */
+    --ink-soft:   #4a5f7a;   /* secondary text */
+    --ink-faint:  #7c8ba0;   /* tertiary / captions */
+    --line:       rgba(20, 40, 63, 0.12);
+    --line-soft:  rgba(20, 40, 63, 0.07);
+    --debit:      #1f6fb2;   /* blue — debit / left */
+    --debit-bg:   rgba(31, 111, 178, 0.10);
+    --debit-line: rgba(31, 111, 178, 0.32);
+    --credit:     #b25a15;   /* amber/terracotta — credit / right */
+    --credit-bg:  rgba(178, 90, 21, 0.10);
+    --credit-line:rgba(178, 90, 21, 0.30);
+    --gold:       #b18a3e;   /* hairline accent, used sparingly */
+    --teal:       #0f6d63;   /* secondary accent */
+    --good:       #2f7d4f;
+    --good-bg:    rgba(47, 125, 79, 0.12);
+    --warn:       #b23a2e;
+    --warn-bg:    rgba(178, 58, 46, 0.12);
+    --shadow:     0 1px 2px rgba(20,40,63,.05), 0 8px 24px rgba(20,40,63,.08);
+    --shadow-lg:  0 2px 6px rgba(20,40,63,.08), 0 24px 60px rgba(20,40,63,.18);
 
-    --background: light-dark(rgb(255 255 255), rgb(24 24 24));
-    --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
-    --card: color-mix(in oklab, var(--foreground) 5%, transparent);
-    --card-foreground: var(--foreground);
-    --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
-    --popover-foreground: var(--foreground);
-    --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
-    --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
-    --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
-    --secondary-foreground: var(--foreground);
-    --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
-    --muted-foreground: light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%));
-    --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
-    --accent-foreground: var(--primary);
-    --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
-    --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
-    --input: light-dark(rgb(26 28 31 / 11.8%), color-mix(in oklab, rgb(0 0 0) 10%, transparent));
-    --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
-    --font-size-base: 14px;
-    --viz-series-1: var(--primary);
+    --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+    --sans:  -apple-system, "SF Pro Text", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono:  "SF Mono", "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
 
-    --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 26px;
+
+    --app-max: 460px;
+    --bar-h: 60px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #0a1420;
+      --paper-2:    #0d1b2b;
+      --card:       #132538;
+      --card-2:     #0f2033;
+      --ink:        #eaf1f8;
+      --ink-soft:   #a9bdd4;
+      --ink-faint:  #7690ac;
+      --line:       rgba(233, 240, 248, 0.13);
+      --line-soft:  rgba(233, 240, 248, 0.07);
+      --debit:      #64b0ea;
+      --debit-bg:   rgba(100, 176, 234, 0.14);
+      --debit-line: rgba(100, 176, 234, 0.42);
+      --credit:     #eba765;
+      --credit-bg:  rgba(235, 167, 101, 0.14);
+      --credit-line:rgba(235, 167, 101, 0.40);
+      --gold:       #d8b968;
+      --teal:       #46b3a6;
+      --good:       #5cc98a;
+      --good-bg:    rgba(92, 201, 138, 0.16);
+      --warn:       #f0897d;
+      --warn-bg:    rgba(240, 137, 125, 0.16);
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.5);
+      --shadow-lg:  0 2px 6px rgba(0,0,0,.5), 0 28px 64px rgba(0,0,0,.6);
+    }
+  }
+  /* Explicit theme toggles win over the media query in both directions */
+  :root[data-theme="light"] {
+    --paper:#f4efe3; --paper-2:#efe8d8; --card:#fffdf8; --card-2:#faf5ea;
+    --ink:#14283f; --ink-soft:#4a5f7a; --ink-faint:#7c8ba0;
+    --line:rgba(20,40,63,.12); --line-soft:rgba(20,40,63,.07);
+    --debit:#1f6fb2; --debit-bg:rgba(31,111,178,.10); --debit-line:rgba(31,111,178,.32);
+    --credit:#b25a15; --credit-bg:rgba(178,90,21,.10); --credit-line:rgba(178,90,21,.30);
+    --gold:#b18a3e; --teal:#0f6d63; --good:#2f7d4f; --good-bg:rgba(47,125,79,.12);
+    --warn:#b23a2e; --warn-bg:rgba(178,58,46,.12);
+    --shadow:0 1px 2px rgba(20,40,63,.05),0 8px 24px rgba(20,40,63,.08);
+    --shadow-lg:0 2px 6px rgba(20,40,63,.08),0 24px 60px rgba(20,40,63,.18);
+  }
+  :root[data-theme="dark"] {
+    --paper:#0a1420; --paper-2:#0d1b2b; --card:#132538; --card-2:#0f2033;
+    --ink:#eaf1f8; --ink-soft:#a9bdd4; --ink-faint:#7690ac;
+    --line:rgba(233,240,248,.13); --line-soft:rgba(233,240,248,.07);
+    --debit:#64b0ea; --debit-bg:rgba(100,176,234,.14); --debit-line:rgba(100,176,234,.42);
+    --credit:#eba765; --credit-bg:rgba(235,167,101,.14); --credit-line:rgba(235,167,101,.40);
+    --gold:#d8b968; --teal:#46b3a6; --good:#5cc98a; --good-bg:rgba(92,201,138,.16);
+    --warn:#f0897d; --warn-bg:rgba(240,137,125,.16);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.5);
+    --shadow-lg:0 2px 6px rgba(0,0,0,.5),0 28px 64px rgba(0,0,0,.6);
   }
 
   * { box-sizing: border-box; }
-
   html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    color: var(--foreground);
-    background: var(--background);
-    font-family: var(--font-sans);
-    font-size: var(--font-size-base);
+    margin: 0; padding: 0; min-height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-
   body {
-    display: flex;
-    justify-content: center;
-    padding: clamp(0.75rem, 2vw, 2rem);
+    display: flex; justify-content: center; align-items: stretch;
+    min-height: 100vh; min-height: 100dvh;
   }
 
-  #app-frame {
+  /* ---- The phone app shell ---------------------------------- */
+  #fa-app {
+    position: relative;
     width: 100%;
-    max-width: 1400px;
-  }
-
-  #ledgerlab-classroom {
-    --ll-space: clamp(0.9rem, 2vw, 1.4rem);
-    width: 100%;
-    color: var(--foreground);
-    background: var(--background);
-    font-size: calc(var(--font-size-base) * 1.06);
-  }
-  #ledgerlab-classroom * { box-sizing: border-box; }
-  #ledgerlab-classroom h1,
-  #ledgerlab-classroom h2,
-  #ledgerlab-classroom h3,
-  #ledgerlab-classroom p { margin: 0; }
-  #ledgerlab-classroom h1,
-  #ledgerlab-classroom h2,
-  #ledgerlab-classroom h3 { font-weight: 500; }
-  #ledgerlab-classroom button,
-  #ledgerlab-classroom select,
-  #ledgerlab-classroom input,
-  #ledgerlab-classroom textarea { font: inherit; }
-  #ledgerlab-classroom .ll-shell { display: grid; gap: var(--ll-space); }
-  #ledgerlab-classroom .ll-header,
-  #ledgerlab-classroom .ll-brand,
-  #ledgerlab-classroom .ll-header-meta,
-  #ledgerlab-classroom .ll-progress-copy,
-  #ledgerlab-classroom .ll-panel-top,
-  #ledgerlab-classroom .ll-tool-actions,
-  #ledgerlab-classroom .ll-footer,
-  #ledgerlab-classroom .ll-balance-line,
-  #ledgerlab-classroom .ll-taccount-head,
-  #ledgerlab-classroom .ll-case-top {
+    max-width: 100%;
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  #ledgerlab-classroom .ll-header { justify-content: space-between; flex-wrap: wrap; }
-  #ledgerlab-classroom .ll-logo {
-    display: grid;
-    place-items: center;
-    inline-size: 2.5rem;
-    block-size: 2.5rem;
-    border-radius: 0.8rem;
-    background: var(--ll-accent-strong);
-    color: var(--ll-on-accent);
-    font-weight: 500;
-  }
-  #ledgerlab-classroom .ll-brand-name { font-weight: 500; }
-  #ledgerlab-classroom .ll-overline,
-  #ledgerlab-classroom .ll-eyebrow {
-    color: var(--muted-foreground);
-    font-size: 0.78em;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  #ledgerlab-classroom .ll-chip {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    padding: 0.3rem 0.65rem;
-    background: var(--muted);
-    color: var(--muted-foreground);
-    font-size: 0.82em;
-  }
-  #ledgerlab-classroom .ll-progress-block { display: grid; gap: 0.5rem; }
-  #ledgerlab-classroom .ll-progress-copy { justify-content: space-between; flex-wrap: wrap; }
-  #ledgerlab-classroom .ll-progress-track {
-    height: 0.45rem;
-    border-radius: 999px;
+    flex-direction: column;
+    height: 100vh; height: 100dvh;
     overflow: hidden;
-    background: var(--muted);
+    background: var(--paper);
   }
-  #ledgerlab-classroom .ll-progress-fill {
-    height: 100%;
-    width: 20%;
-    background: var(--primary);
-    transition: width 180ms ease;
-  }
-  #ledgerlab-classroom .ll-topic-nav {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.45rem;
-  }
-  #ledgerlab-classroom .ll-topic-nav .btn {
-    min-width: 0;
-    white-space: normal;
-    padding-inline: 0.45rem;
-  }
-  #ledgerlab-classroom .ll-topic-number { display: block; font-weight: 500; }
-  #ledgerlab-classroom .ll-topic-label { display: block; margin-top: 0.15rem; font-size: 0.76em; }
-  #ledgerlab-classroom .ll-classroom {
-    display: grid;
-    grid-template-columns: minmax(18rem, 0.94fr) minmax(24rem, 1.06fr);
-    gap: var(--ll-space);
-    align-items: start;
-  }
-  #ledgerlab-classroom .ll-panel { min-width: 0; }
-  #ledgerlab-classroom .ll-panel-inner {
-    display: grid;
-    gap: 1.15rem;
-    padding: clamp(1.05rem, 2.5vw, 1.65rem);
-  }
-  #ledgerlab-classroom .ll-panel-top { justify-content: space-between; align-items: flex-start; }
-  #ledgerlab-classroom .ll-lecture-title { font-size: 1.55em; }
-  #ledgerlab-classroom .ll-tool-title { font-size: 1.35em; }
-  #ledgerlab-classroom .ll-lead { font-size: 1.08em; }
-  #ledgerlab-classroom .ll-lecture-section { display: grid; gap: 0.55rem; }
-  #ledgerlab-classroom .ll-lecture-section h3 { font-size: 1.05em; }
-  #ledgerlab-classroom .ll-figure {
-    display: grid;
-    gap: 0.75rem;
-    padding: 0.95rem;
-    border: 1px solid var(--border);
-    border-radius: 0.8rem;
-    background: color-mix(in srgb, var(--muted) 58%, transparent);
-  }
-  #ledgerlab-classroom .ll-figure-label { color: var(--muted-foreground); font-size: 0.82em; }
-  #ledgerlab-classroom .ll-flow {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr auto 1fr;
-    gap: 0.4rem;
-    align-items: center;
-    text-align: center;
-  }
-  #ledgerlab-classroom .ll-node {
-    padding: 0.65rem 0.4rem;
-    border: 1px solid var(--border);
-    border-radius: 0.65rem;
-    background: var(--card);
-    color: var(--card-foreground);
-  }
-  #ledgerlab-classroom .ll-node small { display: block; color: var(--muted-foreground); margin-top: 0.2rem; }
-  #ledgerlab-classroom .ll-rule-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.55rem;
-  }
-  #ledgerlab-classroom .ll-rule {
-    padding: 0.7rem;
-    border: 1px solid var(--border);
-    border-radius: 0.65rem;
-    background: var(--card);
-    color: var(--card-foreground);
-  }
-  #ledgerlab-classroom .ll-rule strong { display: block; margin-bottom: 0.2rem; font-weight: 500; }
-  #ledgerlab-classroom .ll-controller-note {
-    padding-left: 0.9rem;
-    border-left: 3px solid var(--viz-series-1);
-  }
-  #ledgerlab-classroom .ll-controller-note strong { display: block; margin-bottom: 0.25rem; font-weight: 500; }
-  #ledgerlab-classroom .ll-case {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0.85rem;
-    border-radius: 0.75rem;
-    background: var(--muted);
-    color: var(--foreground);
-  }
-  #ledgerlab-classroom .ll-case-top { justify-content: space-between; flex-wrap: wrap; }
-  #ledgerlab-classroom .ll-tool-body { display: grid; gap: 0.85rem; }
-  #ledgerlab-classroom .ll-worked-example {
-    padding: 0.75rem 0.9rem;
-    border: 1px dashed var(--ll-border);
-    border-radius: 0.7rem;
-    background: var(--ll-surface-muted);
-  }
-  #ledgerlab-classroom .ll-worked-example summary {
-    cursor: pointer;
-    font-weight: 500;
-    list-style: none;
-  }
-  #ledgerlab-classroom .ll-worked-example summary::-webkit-details-marker { display: none; }
-  #ledgerlab-classroom .ll-worked-example summary::before {
-    content: "▸";
-    display: inline-block;
-    margin-right: 0.4rem;
-    transition: transform 150ms ease;
-  }
-  #ledgerlab-classroom .ll-worked-example[open] summary::before { transform: rotate(90deg); }
-  #ledgerlab-classroom .ll-worked-example p {
-    margin-top: 0.6rem;
-    color: var(--ll-muted);
-    font-size: 0.92em;
-  }
-  #ledgerlab-classroom .ll-field-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
-  }
-  #ledgerlab-classroom .ll-field { display: grid; gap: 0.35rem; }
-  #ledgerlab-classroom .ll-form-label { font-size: 0.84em; color: var(--muted-foreground); }
-  #ledgerlab-classroom .ll-audit-trail { display: grid; gap: 0.45rem; }
-  #ledgerlab-classroom .ll-audit-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.65rem;
-    align-items: start;
-    padding: 0.65rem;
-    border: 1px solid var(--border);
-    border-radius: 0.65rem;
-  }
-  #ledgerlab-classroom .ll-audit-icon {
-    display: grid;
-    place-items: center;
-    inline-size: 1.8rem;
-    block-size: 1.8rem;
-    border-radius: 0.55rem;
-    background: var(--accent);
-    color: var(--accent-foreground);
-  }
-  #ledgerlab-classroom .ll-feedback {
-    display: none;
-    gap: 0.35rem;
-    padding: 0.8rem 0.9rem;
-    border-radius: 0.7rem;
-    border-left: 0.3rem solid transparent;
-  }
-  #ledgerlab-classroom .ll-feedback.is-visible { display: grid; }
-  #ledgerlab-classroom .ll-feedback strong {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 500;
-  }
-  #ledgerlab-classroom .ll-feedback-glyph {
-    display: inline-grid;
-    place-items: center;
-    inline-size: 1.3rem;
-    block-size: 1.3rem;
-    border-radius: 50%;
-    font-size: 0.78em;
-    flex: none;
-  }
-  #ledgerlab-classroom .ll-feedback.is-success {
-    background: var(--ll-success-bg);
-    border-left-color: var(--ll-success);
-    color: var(--ll-ink);
-  }
-  #ledgerlab-classroom .ll-feedback.is-success .ll-feedback-glyph { background: var(--ll-success); color: var(--ll-on-success); }
-  #ledgerlab-classroom .ll-feedback.is-error {
-    background: var(--ll-error-bg);
-    border-left-color: var(--ll-error);
-    color: var(--ll-ink);
-  }
-  #ledgerlab-classroom .ll-feedback.is-error .ll-feedback-glyph { background: var(--ll-error); color: var(--ll-on-error); }
-  #ledgerlab-classroom .ll-feedback.is-info {
-    background: var(--ll-surface-muted);
-    border-left-color: var(--ll-muted);
-    color: var(--ll-ink);
-  }
-  #ledgerlab-classroom .ll-feedback.is-info .ll-feedback-glyph { background: var(--ll-border); color: var(--ll-ink); }
-  #ledgerlab-classroom .ll-tool-actions { justify-content: space-between; flex-wrap: wrap; }
-  #ledgerlab-classroom .ll-taccounts {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
-  }
-  #ledgerlab-classroom .ll-taccount { border: 1px solid var(--border); border-radius: 0.75rem; overflow: hidden; }
-  #ledgerlab-classroom .ll-taccount-head { justify-content: space-between; padding: 0.65rem; background: var(--muted); }
-  #ledgerlab-classroom .ll-taccount-sides { display: grid; grid-template-columns: 1fr 1fr; }
-  #ledgerlab-classroom .ll-t-side { display: grid; gap: 0.45rem; padding: 0.7rem; min-height: 5rem; }
-  #ledgerlab-classroom .ll-t-side + .ll-t-side { border-left: 1px solid var(--border); }
-  #ledgerlab-classroom .ll-side-label { color: var(--muted-foreground); font-size: 0.8em; }
-  #ledgerlab-classroom .ll-posted-amount { font-variant-numeric: tabular-nums; font-weight: 500; }
-  #ledgerlab-classroom .ll-side-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
-  #ledgerlab-classroom .ll-side-buttons .btn { white-space: normal; }
-  #ledgerlab-classroom .ll-transaction-stepper { display: grid; gap: 0.65rem; }
-  #ledgerlab-classroom .ll-transaction-count { color: var(--muted-foreground); font-size: 0.84em; }
-  #ledgerlab-classroom .ll-sheet-wrap { border: 1px solid var(--border); border-radius: 0.75rem; overflow-x: auto; }
-  #ledgerlab-classroom .ll-sheet {
-    width: 100%;
-    min-width: 38rem;
-    border-collapse: collapse;
-    font-variant-numeric: tabular-nums;
-  }
-  #ledgerlab-classroom .ll-sheet th,
-  #ledgerlab-classroom .ll-sheet td {
-    padding: 0.55rem 0.6rem;
-    border-bottom: 1px solid var(--border);
-    text-align: right;
-    white-space: nowrap;
-  }
-  #ledgerlab-classroom .ll-sheet th:first-child,
-  #ledgerlab-classroom .ll-sheet td:first-child { text-align: left; }
-  #ledgerlab-classroom .ll-sheet th { color: var(--muted-foreground); font-size: 0.76em; font-weight: 500; }
-  #ledgerlab-classroom .ll-sheet tbody tr:last-child td { border-bottom: 0; font-weight: 500; }
-  #ledgerlab-classroom .ll-balance-line { justify-content: center; flex-wrap: wrap; }
-  #ledgerlab-classroom .ll-balance-box {
-    padding: 0.55rem 0.7rem;
-    border-radius: 0.6rem;
-    background: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-  #ledgerlab-classroom .ll-mobile-summary { display: none; }
-  #ledgerlab-classroom .ll-account-list { display: grid; gap: 0.45rem; }
-  #ledgerlab-classroom .ll-account-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(10rem, 0.9fr);
-    gap: 0.6rem;
-    align-items: center;
-    padding: 0.55rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  #ledgerlab-classroom .ll-account-row:last-child { border-bottom: 0; }
-  #ledgerlab-classroom .ll-amount { font-variant-numeric: tabular-nums; }
-  #ledgerlab-classroom .ll-statement-preview {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.55rem;
-  }
-  #ledgerlab-classroom .ll-statement {
-    display: grid;
-    align-content: start;
-    gap: 0.45rem;
-    padding: 0.7rem;
-    border: 1px solid var(--border);
-    border-radius: 0.65rem;
-    min-height: 8rem;
-  }
-  #ledgerlab-classroom .ll-statement h3 { font-size: 0.95em; }
-  #ledgerlab-classroom .ll-statement-line { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.84em; }
-  #ledgerlab-classroom .ll-statement-total { border-top: 1px solid var(--border); padding-top: 0.35rem; font-weight: 500; }
-  #ledgerlab-classroom .ll-close-board { display: grid; gap: 0.5rem; }
-  #ledgerlab-classroom .ll-close-step {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 0.65rem;
-    align-items: center;
-    padding: 0.65rem;
-    border: 1px solid var(--border);
-    border-radius: 0.65rem;
-  }
-  #ledgerlab-classroom .ll-close-step.is-complete { background: var(--ll-success-bg); color: var(--ll-ink); }
-  #ledgerlab-classroom .ll-step-number {
-    display: grid;
-    place-items: center;
-    inline-size: 1.8rem;
-    block-size: 1.8rem;
-    border-radius: 50%;
-    background: var(--muted);
-    color: var(--muted-foreground);
-    font-size: 0.82em;
-  }
-  #ledgerlab-classroom .ll-source-note { color: var(--muted-foreground); font-size: 0.82em; }
-  #ledgerlab-classroom .ll-footer { justify-content: space-between; }
-  #ledgerlab-classroom .ll-footer .btn { min-width: 8rem; }
-  #ledgerlab-classroom .ll-lesson-header {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 0.8rem;
-    align-items: center;
-    padding: 0.75rem;
-    border: 1px solid var(--ll-border);
-    border-radius: 0.85rem;
-    background: var(--ll-surface);
-  }
-  #ledgerlab-classroom .ll-lesson-heading { min-width: 0; }
-  #ledgerlab-classroom .ll-lesson-heading strong {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  #ledgerlab-classroom .ll-lesson-actions {
-    display: flex;
-    gap: 0.45rem;
-    align-items: center;
-  }
-  #ledgerlab-classroom .ll-assist-panel {
-    display: none;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.8rem;
-    padding: 1rem;
-    border: 1px solid var(--ll-border);
-    border-radius: 0.85rem;
-    background: var(--ll-surface-muted);
-  }
-  #ledgerlab-classroom .ll-assist-panel.is-open { display: grid; }
-  #ledgerlab-classroom .ll-assist-section { display: grid; gap: 0.6rem; }
-  #ledgerlab-classroom .ll-note-input { min-height: 6.5rem; resize: vertical; }
-  #ledgerlab-classroom .ll-player {
-    display: grid;
-    grid-template-columns: minmax(13.5rem, 17rem) minmax(0, 1fr);
-    gap: 0;
-    border: 1px solid var(--ll-border);
-    border-radius: 1.25rem;
-    overflow: hidden;
-    background: var(--ll-surface);
-  }
-  #ledgerlab-classroom[data-outline="closed"] .ll-player { grid-template-columns: minmax(0, 1fr); }
-  #ledgerlab-classroom[data-outline="closed"] .ll-outline-panel { display: none; }
-  #ledgerlab-classroom .ll-outline-panel {
-    padding: 1rem;
-    border-right: 1px solid var(--ll-border);
-    background: var(--ll-surface-muted);
-  }
-  #ledgerlab-classroom .ll-outline-title { margin-bottom: 0.75rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
-  #ledgerlab-classroom .ll-outline-close { display: none; }
-  #ledgerlab-classroom .ll-player-content { min-width: 0; }
-  #ledgerlab-classroom .ll-topic-meta {
-    display: block;
-    margin-top: 0.12rem;
-    color: var(--ll-muted);
-    font-size: 0.72em;
-  }
-  #ledgerlab-classroom .ll-view-switch { display: none; }
-  #ledgerlab-classroom .ll-bottom-nav { display: none; }
-  #ledgerlab-classroom .ll-outline-backdrop { display: none; }
+  #fa-app * { box-sizing: border-box; }
 
-  /* Simple Light Mode template layer: Helvetica Neue, spacious geometry,
-     navy structure, blue interaction, and restrained teal accents.
-     Tokens are light-dark()-aware so the same rules serve both themes. */
-  #ledgerlab-classroom {
-    color-scheme: light dark;
-    --ll-ink: light-dark(#00264F, #EAF3FF);
-    --ll-on-accent: light-dark(#FFFFFF, #05131F);
-    --ll-accent-strong: light-dark(#00264F, #6FB2FF);
-    --ll-accent: light-dark(#3D8DFF, #6FB2FF);
-    --ll-teal: light-dark(#0097A7, #4FD3E3);
-    --ll-mint: light-dark(#0E8A5F, #47E2C2);
-    --ll-border: light-dark(#D0EDFA, #1C3A52);
-    --ll-surface: light-dark(#FFFFFF, #0E2337);
-    --ll-surface-muted: light-dark(#F7FBFD, #0A1B2B);
-    --ll-muted: light-dark(#557089, #93AFC6);
-    --ll-success: light-dark(#0E8A5F, #4FE3A6);
-    --ll-success-bg: light-dark(#E3FBF1, #0E2E27);
-    --ll-on-success: light-dark(#FFFFFF, #05231C);
-    --ll-error: light-dark(#B3261E, #FF8A80);
-    --ll-error-bg: light-dark(#FDECEA, #3A1613);
-    --ll-on-error: light-dark(#FFFFFF, #3A0906);
-    padding: clamp(1rem, 3vw, 2.4rem);
-    color: var(--ll-ink);
-    background: var(--ll-surface);
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.5;
-    max-height: 88dvh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    scrollbar-gutter: stable;
-    border-radius: 1.5rem;
-    box-shadow: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  /* On larger screens: present as a centered device so it reads as
+     the phone app in the chat/desktop preview. */
+  @media (min-width: 540px) {
+    body { padding: 24px; background: #060d16; }
+    @media (prefers-color-scheme: light) {
+      body { background: radial-gradient(120% 120% at 50% 0%, #223a55 0%, #0f1c2c 60%, #060d16 100%); }
+    }
+    #fa-app {
+      max-width: var(--app-max);
+      height: min(920px, calc(100vh - 48px));
+      border-radius: 44px;
+      box-shadow: var(--shadow-lg), 0 0 0 11px #0b1420, 0 0 0 13px #24303f;
+      overflow: hidden;
+    }
+    #fa-app::before { /* camera notch */
+      content: ""; position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 26px; border-radius: 0 0 16px 16px; background: #0b1420; z-index: 60;
+    }
   }
-  #ledgerlab-classroom .ll-shell { max-width: 94rem; margin: 0 auto; gap: clamp(1rem, 2.5vw, 1.8rem); }
-  #ledgerlab-classroom .ll-header {
-    padding-bottom: 1.1rem;
-    border-bottom: 1px solid var(--ll-border);
-  }
-  #ledgerlab-classroom .ll-brand-name { font-size: 1.08em; letter-spacing: -0.01em; }
-  #ledgerlab-classroom .ll-overline,
-  #ledgerlab-classroom .ll-eyebrow,
-  #ledgerlab-classroom .ll-figure-label,
-  #ledgerlab-classroom .ll-form-label,
-  #ledgerlab-classroom .ll-source-note,
-  #ledgerlab-classroom .ll-transaction-count,
-  #ledgerlab-classroom .ll-side-label,
-  #ledgerlab-classroom .text-muted { color: var(--ll-muted); }
-  #ledgerlab-classroom .ll-chip {
-    background: var(--ll-surface-muted);
-    color: var(--ll-ink);
-    border: 1px solid var(--ll-border);
-  }
-  #ledgerlab-classroom .ll-progress-track { height: 0.25rem; background: var(--ll-border); }
-  #ledgerlab-classroom .ll-progress-fill { background: var(--ll-accent); }
-  #ledgerlab-classroom .btn {
-    appearance: button;
-    display: inline-flex;
-    min-height: 2.5rem;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    margin: 0;
-    padding: 0 0.85rem;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    white-space: nowrap;
-    user-select: none;
-    border: 1px solid var(--ll-border);
-    border-radius: 999px;
-    background: var(--ll-surface);
-    color: var(--ll-ink);
-    box-shadow: none;
-    font: inherit;
-  }
-  #ledgerlab-classroom .btn:hover { border-color: var(--ll-accent); }
-  #ledgerlab-classroom .btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
-  #ledgerlab-classroom .btn-primary,
-  #ledgerlab-classroom .ll-topic-nav .btn-primary {
-    border-color: var(--ll-accent-strong);
-    background: var(--ll-accent-strong);
-    color: var(--ll-on-accent);
-  }
-  #ledgerlab-classroom .btn:disabled { cursor: not-allowed; opacity: 0.45; }
-  #ledgerlab-classroom .ll-topic-nav .btn-primary .ll-topic-meta,
-  #ledgerlab-classroom .ll-topic-nav .btn-primary .ll-topic-label {
-    color: inherit;
-    opacity: 0.85;
-  }
-  #ledgerlab-classroom .ll-topic-nav { grid-template-columns: 1fr; gap: 0.45rem; }
-  #ledgerlab-classroom .ll-topic-nav .btn {
-    min-height: 3.3rem;
-    border-radius: 0.65rem;
-    justify-content: flex-start;
-    text-align: left;
-    padding: 0.65rem 0.8rem;
-  }
-  #ledgerlab-classroom .ll-topic-nav .btn.is-complete { border-color: var(--ll-mint); }
-  #ledgerlab-classroom .ll-topic-nav .btn.is-complete::after {
-    content: "✓";
-    margin-left: auto;
-    color: var(--ll-mint);
-    font-weight: 500;
-  }
-  #ledgerlab-classroom .ll-topic-nav .btn.btn-primary.is-complete::after { color: var(--ll-on-accent); }
-  #ledgerlab-classroom .ll-topic-number {
-    display: inline-grid;
-    place-items: center;
-    width: 1.7rem;
-    height: 1.7rem;
-    margin-right: 0.45rem;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    font-size: 0.78em;
-  }
-  #ledgerlab-classroom .ll-topic-label { display: inline; }
-  #ledgerlab-classroom .ll-classroom {
-    gap: 0;
-    border: 0;
-    border-radius: 0;
-    overflow: visible;
-    background: var(--ll-surface);
-  }
-  #ledgerlab-classroom .ll-panel {
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-  #ledgerlab-classroom article.ll-panel { border-right: 1px solid var(--ll-border); }
-  #ledgerlab-classroom section.ll-panel { background: var(--ll-surface-muted); }
-  #ledgerlab-classroom .ll-panel-inner { gap: 1.35rem; padding: clamp(1.35rem, 3.5vw, 2.7rem); }
-  #ledgerlab-classroom .ll-lecture-title {
-    max-width: 18ch;
-    font-size: clamp(2rem, 4.2vw, 3.65rem);
-    line-height: 1.02;
-    letter-spacing: -0.045em;
-  }
-  #ledgerlab-classroom .ll-tool-title {
-    max-width: 24ch;
-    font-size: clamp(1.55rem, 2.6vw, 2.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-  }
-  #ledgerlab-classroom .ll-lead { max-width: 44rem; font-size: 1.14em; color: var(--ll-teal); }
-  #ledgerlab-classroom .ll-lecture-section { max-width: 48rem; gap: 0.4rem; }
-  #ledgerlab-classroom .ll-lecture-section h3 { color: var(--ll-ink); }
-  #ledgerlab-classroom .ll-figure {
-    border-color: var(--ll-border);
-    border-radius: 1rem;
-    background: var(--ll-surface-muted);
-  }
-  #ledgerlab-classroom .ll-node,
-  #ledgerlab-classroom .ll-rule {
-    border-color: var(--ll-border);
-    background: var(--ll-surface);
-    color: var(--ll-ink);
-  }
-  #ledgerlab-classroom .ll-node { border-top: 0.25rem solid var(--ll-accent); }
-  #ledgerlab-classroom .ll-controller-note { border-left-color: var(--ll-mint); }
-  #ledgerlab-classroom .ll-case {
-    border: 1px solid var(--ll-border);
-    border-radius: 1rem;
-    background: var(--ll-surface);
-    color: var(--ll-ink);
-  }
-  #ledgerlab-classroom .form-select,
-  #ledgerlab-classroom .form-control {
-    display: block;
-    width: 100%;
-    min-height: 2.75rem;
-    padding: 0 8px;
-    outline: none;
-    border: 1px solid var(--ll-border);
-    border-radius: 0.65rem;
-    background: var(--ll-surface);
-    color: var(--ll-ink);
-    font: inherit;
-  }
-  #ledgerlab-classroom .form-select {
-    appearance: none;
-    padding: 0 32px 0 8px;
-    background-image:
-      linear-gradient(45deg, transparent 50%, var(--ll-muted) 50%),
-      linear-gradient(135deg, var(--ll-muted) 50%, transparent 50%);
-    background-position:
-      calc(100% - 14px) 50%,
-      calc(100% - 10px) 50%;
-    background-repeat: no-repeat;
-    background-size: 4px 4px;
-    cursor: pointer;
-  }
-  #ledgerlab-classroom .form-control:focus-visible,
-  #ledgerlab-classroom .form-select:focus-visible {
-    border-color: var(--ring);
-    box-shadow: inset 0 0 0 1px var(--ring);
-  }
-  #ledgerlab-classroom textarea.form-control { height: auto; min-height: 72px; padding: 8px 10px; resize: vertical; }
-  #ledgerlab-classroom .ll-audit-row,
-  #ledgerlab-classroom .ll-taccount,
-  #ledgerlab-classroom .ll-sheet-wrap,
-  #ledgerlab-classroom .ll-account-row,
-  #ledgerlab-classroom .ll-statement,
-  #ledgerlab-classroom .ll-close-step,
-  #ledgerlab-classroom .ll-mobile-balance { border-color: var(--ll-border); }
-  #ledgerlab-classroom .ll-audit-icon {
-    background: var(--ll-border);
-    color: var(--ll-ink);
-  }
-  #ledgerlab-classroom .ll-taccount-head,
-  #ledgerlab-classroom .ll-balance-box,
-  #ledgerlab-classroom .ll-step-number { background: var(--ll-border); color: var(--ll-ink); }
-  #ledgerlab-classroom .ll-t-side + .ll-t-side,
-  #ledgerlab-classroom .ll-sheet th,
-  #ledgerlab-classroom .ll-sheet td,
-  #ledgerlab-classroom .ll-account-row,
-  #ledgerlab-classroom .ll-statement-total { border-color: var(--ll-border); }
-  #ledgerlab-classroom .ll-footer { padding-top: 0.25rem; }
-  #ledgerlab-classroom .ll-player-content .ll-footer {
-    padding: 1rem clamp(1.35rem, 3.5vw, 2.7rem);
-    border-top: 1px solid var(--ll-border);
-  }
-  #ledgerlab-classroom .text-muted { color: var(--ll-muted); }
 
-  /* App-shell chrome: view switch + bottom nav are mobile-only; desktop keeps
-     the two-column lecture/tool layout and inline footer controls. */
-  #ledgerlab-classroom .ll-view-switch {
-    display: none;
-    padding: 0.75rem clamp(1rem, 3vw, 1.5rem) 0;
-    gap: 0.4rem;
-  }
-  #ledgerlab-classroom .ll-view-tab {
-    flex: 1;
-    min-height: 2.5rem;
-    padding: 0 0.6rem;
-    border: 1px solid var(--ll-border);
-    border-radius: 999px;
-    background: var(--ll-surface);
-    color: var(--ll-muted);
-    font-weight: 500;
-    cursor: pointer;
-  }
-  #ledgerlab-classroom .ll-view-tab.is-active {
-    border-color: var(--ll-accent-strong);
-    background: var(--ll-accent-strong);
-    color: var(--ll-on-accent);
-  }
-  #ledgerlab-classroom .ll-view-tab:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  h1,h2,h3,h4,p { margin: 0; }
+  button, select, input { font: inherit; color: inherit; }
+  .serif { font-family: var(--serif); }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
-  @media (max-width: 820px) {
-    #ledgerlab-classroom { font-size: var(--font-size-base); max-height: 92dvh; }
-    #ledgerlab-classroom .ll-classroom { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-player { grid-template-columns: 1fr; padding-bottom: calc(4.25rem + env(safe-area-inset-bottom)); }
-    #ledgerlab-classroom .ll-outline-panel { border-right: 0; border-bottom: 1px solid var(--ll-border); }
-    #ledgerlab-classroom[data-outline="closed"] .ll-outline-panel { display: none; }
-
-    /* Outline becomes a full-screen sheet instead of pushing content down. */
-    #ledgerlab-classroom[data-outline="open"] .ll-outline-panel {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      display: block;
-      max-height: none;
-      padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
-      overflow-y: auto;
-      border-bottom: 0;
-    }
-    #ledgerlab-classroom[data-outline="open"] .ll-outline-backdrop {
-      display: block;
-      position: fixed;
-      inset: 0;
-      z-index: 59;
-      background: rgb(0 0 0 / 45%);
-    }
-    #ledgerlab-classroom .ll-outline-close {
-      display: inline-flex;
-      min-height: 2.25rem;
-      min-width: 2.25rem;
-      padding: 0;
-      flex: none;
-    }
-
-    #ledgerlab-classroom .ll-lesson-header { grid-template-columns: auto minmax(0, 1fr); }
-    #ledgerlab-classroom .ll-lesson-actions { display: none; }
-    #ledgerlab-classroom .ll-assist-panel { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-topic-label { display: none; }
-    #ledgerlab-classroom .ll-flow { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-flow-arrow { transform: rotate(90deg); }
-    #ledgerlab-classroom .ll-field-grid,
-    #ledgerlab-classroom .ll-taccounts,
-    #ledgerlab-classroom .ll-statement-preview { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-account-row { grid-template-columns: minmax(0, 1fr) auto; }
-    #ledgerlab-classroom .ll-account-row select { grid-column: 1 / -1; width: 100%; }
-    #ledgerlab-classroom article.ll-panel {
-      border-right: 0;
-      border-bottom: 1px solid var(--ll-border);
-    }
-    #ledgerlab-classroom .ll-topic-nav .btn { justify-content: center; min-height: 2.8rem; }
-    #ledgerlab-classroom .ll-topic-number { margin-right: 0; }
-    #ledgerlab-classroom .ll-topic-label,
-    #ledgerlab-classroom .ll-topic-meta { display: inline; margin-left: 0.35rem; }
-    #ledgerlab-classroom .ll-equation-sheet { display: none; }
-    #ledgerlab-classroom .ll-mobile-summary {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.45rem;
-    }
-    #ledgerlab-classroom .ll-mobile-balance {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.4rem;
-      padding: 0.55rem;
-      border: 1px solid var(--ll-border);
-      border-radius: 0.6rem;
-      font-size: 0.84em;
-    }
-
-    /* One screen at a time: Learn / Practice acts like two app tabs
-       instead of stacking both full panels for a long double scroll. */
-    #ledgerlab-classroom .ll-view-switch { display: flex; }
-    #ledgerlab-classroom .ll-classroom[data-active-view="lecture"] section.ll-panel { display: none; }
-    #ledgerlab-classroom .ll-classroom[data-active-view="tool"] article.ll-panel { display: none; }
-    #ledgerlab-classroom .ll-player-content .ll-footer { display: none; }
-
-    /* Thumb-reachable primary navigation, native-app style. */
-    #ledgerlab-classroom .ll-bottom-nav {
-      display: flex;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 40;
-      gap: 0.5rem;
-      padding: 0.6rem clamp(0.75rem, 3vw, 1.5rem) max(0.6rem, env(safe-area-inset-bottom));
-      background: var(--ll-surface);
-      border-top: 1px solid var(--ll-border);
-    }
-    #ledgerlab-classroom .ll-bottom-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.1rem;
-      min-height: 2.75rem;
-      padding: 0.3rem 0.4rem;
-      border: 1px solid var(--ll-border);
-      border-radius: 0.85rem;
-      background: var(--ll-surface);
-      color: var(--ll-ink);
-      font-size: 0.82em;
-      cursor: pointer;
-    }
-    #ledgerlab-classroom .ll-bottom-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    #ledgerlab-classroom .ll-bottom-btn-primary {
-      flex: 1.4;
-      border-color: var(--ll-accent-strong);
-      background: var(--ll-accent-strong);
-      color: var(--ll-on-accent);
-      font-weight: 500;
-    }
+  .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-faint);
   }
-  @media (max-width: 430px) {
-    #ledgerlab-classroom {
-      max-height: 94dvh;
-      padding: 0.8rem;
-    }
-    #ledgerlab-classroom .ll-header-meta .ll-chip:first-child { display: none; }
-    #ledgerlab-classroom .ll-rule-grid { grid-template-columns: 1fr; }
-    #ledgerlab-classroom .ll-panel-inner { padding: 1rem; }
-    #ledgerlab-classroom .ll-bottom-btn span:last-child { font-size: 0.92em; }
+  .gold-eyebrow { color: var(--gold); }
+
+  /* ---- Top app bar ------------------------------------------ */
+  .fa-topbar {
+    flex: 0 0 auto;
+    display: flex; align-items: center; gap: 12px;
+    padding: max(12px, env(safe-area-inset-top)) 18px 12px;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    backdrop-filter: saturate(1.2) blur(14px);
+    -webkit-backdrop-filter: saturate(1.2) blur(14px);
+    border-bottom: 1px solid var(--line-soft);
+    z-index: 40;
   }
-  @media (display-mode: standalone) {
-    body { padding: 0; }
-    #app-frame { max-width: none; }
-    #ledgerlab-classroom {
-      max-height: 100dvh;
-      height: 100dvh;
-      border-radius: 0;
-      padding-top: max(1rem, env(safe-area-inset-top));
-    }
+  @media (min-width: 540px) { .fa-topbar { padding-top: 30px; } }
+  .fa-crest {
+    flex: 0 0 auto; width: 38px; height: 38px; border-radius: 11px;
+    display: grid; place-items: center;
+    background: linear-gradient(150deg, var(--ink) 0%, #24425f 100%);
+    color: #f4efe3; box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
   }
+  :root[data-theme="dark"] .fa-crest, .fa-crest {
+    color: #f4efe3;
+  }
+  .fa-crest span { font-family: var(--serif); font-size: 19px; font-weight: 600; line-height: 1; }
+  .fa-topbar .fa-course {
+    display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto;
+  }
+  .fa-topbar .fa-course b { font-family: var(--serif); font-size: 15.5px; font-weight: 600; letter-spacing: .01em; }
+  .fa-topbar .fa-course span { font-size: 11.5px; color: var(--ink-faint); }
+  .fa-iconbtn {
+    flex: 0 0 auto; width: 38px; height: 38px; border-radius: 11px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink-soft); cursor: pointer; display: grid; place-items: center;
+    transition: transform .15s ease, background .2s ease, color .2s ease;
+  }
+  .fa-iconbtn:hover { color: var(--ink); }
+  .fa-iconbtn:active { transform: scale(.94); }
+  .fa-back {
+    display: inline-flex; align-items: center; gap: 6px; border: none; background: none;
+    color: var(--ink-soft); cursor: pointer; padding: 6px 4px 6px 0; font-size: 14px; font-weight: 600;
+  }
+  .fa-back:hover { color: var(--ink); }
+
+  /* ---- Scroll region ---------------------------------------- */
+  .fa-scroll {
+    flex: 1 1 auto; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    scroll-behavior: smooth;
+  }
+  .fa-scroll::-webkit-scrollbar { width: 0; height: 0; }
+
+  /* ---- Screen router ---------------------------------------- */
+  .fa-screens { position: relative; height: 100%; }
+  .fa-screen {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    opacity: 0; visibility: hidden; transform: translateX(28px);
+    transition: opacity .32s ease, transform .38s cubic-bezier(.22,.61,.36,1), visibility .38s;
+    pointer-events: none;
+  }
+  .fa-screen.is-active { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+  .fa-screen.is-behind { transform: translateX(-24px); opacity: 0; }
   @media (prefers-reduced-motion: reduce) {
-    #ledgerlab-classroom .ll-progress-fill { transition: none; }
-    #ledgerlab-classroom .ll-worked-example summary::before { transition: none; }
+    .fa-screen { transition: opacity .2s ease; transform: none !important; }
   }
+
+  /* ============================================================
+     HOME / COURSE INTRO
+     ============================================================ */
+  .home-hero {
+    position: relative; overflow: hidden;
+    padding: 30px 22px 30px;
+    background:
+      radial-gradient(130% 90% at 85% -10%, rgba(178,90,21,.16), transparent 55%),
+      radial-gradient(120% 100% at 0% 0%, rgba(31,111,178,.20), transparent 55%),
+      linear-gradient(160deg, #10233a 0%, #16304c 55%, #0e2036 100%);
+    color: #f2ede2;
+  }
+  .home-hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 100% 26px; mask-image: linear-gradient(180deg, transparent, #000 40%, #000 70%, transparent);
+  }
+  .home-hero > * { position: relative; z-index: 1; }
+  .home-hero .eyebrow { color: rgba(240,220,180,.9); }
+  .home-crest {
+    display: inline-flex; align-items: center; gap: 9px; margin-bottom: 18px;
+  }
+  .home-crest .mk {
+    width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+    background: rgba(255,255,255,.10); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+    font-family: var(--serif); font-size: 18px; color: #f6efe0;
+  }
+  .home-crest b { font-size: 13px; letter-spacing: .04em; font-weight: 600; color: #f2ede2; }
+  .home-hero h1 {
+    font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em;
+    font-size: clamp(32px, 9vw, 40px); line-height: 1.04; margin: 8px 0 0; text-wrap: balance;
+  }
+  .home-hero .sub {
+    margin-top: 14px; font-size: 15px; line-height: 1.55; color: rgba(238,231,218,.86); max-width: 34ch;
+  }
+  .home-hero .prof {
+    margin-top: 22px; display: flex; align-items: center; gap: 12px;
+    padding-top: 18px; border-top: 1px solid rgba(255,255,255,.14);
+  }
+  .home-hero .prof .avatar {
+    width: 46px; height: 46px; border-radius: 50%; flex: 0 0 auto;
+    background: linear-gradient(150deg, #d8b968, #b28a3e); color: #201a0c;
+    display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 18px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.3);
+  }
+  .home-hero .prof .who b { display: block; font-size: 14px; color: #f4efe3; font-weight: 600; }
+  .home-hero .prof .who span { font-size: 12px; color: rgba(238,231,218,.7); }
+
+  .home-body { padding: 24px 20px 8px; display: flex; flex-direction: column; gap: 22px; }
+  .whatwhyhow { display: flex; flex-direction: column; gap: 12px; }
+  .wwh-card {
+    position: relative; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r-lg); padding: 16px 16px 16px 18px; box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .wwh-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: var(--rail, var(--debit));
+  }
+  .wwh-tag {
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 8px;
+    font-family: var(--serif); font-size: 12.5px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--rail, var(--debit));
+  }
+  .wwh-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .wwh-card h3 { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+  .wwh-card p { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+
+  .home-lessons { display: flex; flex-direction: column; gap: 12px; }
+  .home-lessons > .head { display: flex; align-items: baseline; justify-content: space-between; }
+  .home-lessons > .head h2 { font-family: var(--serif); font-size: 19px; font-weight: 600; }
+  .lesson-card {
+    display: flex; align-items: center; gap: 14px; text-align: left; width: 100%;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 15px 16px; cursor: pointer; box-shadow: var(--shadow);
+    transition: transform .16s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .lesson-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--debit-line); }
+  .lesson-card:active { transform: translateY(0) scale(.995); }
+  .lesson-card .lnum {
+    flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center;
+    font-family: var(--serif); font-size: 19px; font-weight: 600;
+    background: var(--debit-bg); color: var(--debit); box-shadow: inset 0 0 0 1px var(--debit-line);
+  }
+  .lesson-card.locked { cursor: not-allowed; opacity: .72; }
+  .lesson-card.locked:hover { transform: none; box-shadow: var(--shadow); border-color: var(--line); }
+  .lesson-card.locked .lnum { background: var(--line-soft); color: var(--ink-faint); box-shadow: inset 0 0 0 1px var(--line); }
+  .lesson-card .lbody { flex: 1 1 auto; min-width: 0; }
+  .lesson-card .lbody b { font-family: var(--serif); font-size: 15.5px; font-weight: 600; display: block; }
+  .lesson-card .lbody span { font-size: 12.5px; color: var(--ink-faint); display: block; margin-top: 2px; }
+  .lesson-card .lchev { flex: 0 0 auto; color: var(--ink-faint); }
+  .pill-mini {
+    font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 999px;
+  }
+  .pill-mini.ready { background: var(--good-bg); color: var(--good); }
+  .pill-mini.soon  { background: var(--line-soft); color: var(--ink-faint); }
+
+  .home-foot { padding: 6px 20px 26px; }
+  .cta {
+    width: 100%; border: none; cursor: pointer; border-radius: var(--r-lg);
+    padding: 16px 18px; font-size: 15.5px; font-weight: 650; font-family: var(--sans);
+    color: #f6efe0; background: linear-gradient(150deg, var(--debit), #185a92);
+    box-shadow: 0 10px 24px rgba(31,111,178,.34); letter-spacing: .01em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    transition: transform .16s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(31,111,178,.42); filter: saturate(1.06); }
+  .cta:active { transform: translateY(0) scale(.99); }
+  .cta.ghost {
+    color: var(--ink); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow);
+  }
+  .cta.ghost:hover { box-shadow: var(--shadow-lg); }
+
+  /* ============================================================
+     LESSON WORKSPACE
+     ============================================================ */
+  .lesson-head {
+    flex: 0 0 auto; padding: 4px 18px 12px; background: var(--paper);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .lesson-head .row1 { display: flex; align-items: center; gap: 10px; }
+  .lesson-title { font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin-top: 2px; }
+  .lesson-meta { font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+  .prog-wrap { margin-top: 12px; display: flex; align-items: center; gap: 10px; }
+  .prog-track { flex: 1 1 auto; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .prog-fill {
+    height: 100%; width: 0%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--debit), var(--teal));
+    transition: width .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .prog-pct { font-size: 11.5px; font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; min-width: 34px; text-align: right; }
+
+  /* Segmented tab bar */
+  .seg {
+    flex: 0 0 auto; display: flex; gap: 4px; margin: 12px 14px 0; padding: 4px;
+    background: var(--card-2); border: 1px solid var(--line-soft); border-radius: 14px;
+    position: relative; box-shadow: var(--shadow);
+  }
+  .seg button {
+    flex: 1 1 0; min-width: 0; position: relative; z-index: 1; border: none; background: none; cursor: pointer;
+    padding: 9px 4px; border-radius: 10px; font-size: 12px; font-weight: 650; color: var(--ink-faint);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    transition: color .25s ease;
+  }
+  .seg button .ic { width: 18px; height: 18px; display: block; }
+  .seg button.done::after {
+    content: "✓"; position: absolute; top: 3px; right: 8px; font-size: 9px; font-weight: 800;
+    color: var(--good);
+  }
+  .seg button.is-active { color: var(--ink); }
+  .seg .seg-thumb {
+    position: absolute; z-index: 0; top: 4px; bottom: 4px; border-radius: 10px;
+    background: var(--card); box-shadow: var(--shadow);
+    transition: left .34s cubic-bezier(.22,.61,.36,1), width .34s cubic-bezier(.22,.61,.36,1);
+  }
+  @media (prefers-reduced-motion: reduce) { .seg .seg-thumb { transition: none; } }
+
+  /* Sub-view panes */
+  .panes { position: relative; flex: 1 1 auto; overflow: hidden; }
+  .pane {
+    position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    padding: 18px 18px calc(30px + env(safe-area-inset-bottom));
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: opacity .3s ease, transform .34s cubic-bezier(.22,.61,.36,1), visibility .34s;
+  }
+  .pane::-webkit-scrollbar { width: 0; }
+  .pane.is-active { opacity: 1; visibility: visible; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .pane { transition: opacity .2s ease; transform: none; } }
+
+  /* ---- Lecture ---------------------------------------------- */
+  .lede {
+    font-family: var(--serif); font-size: 18px; line-height: 1.5; color: var(--ink);
+    margin-bottom: 6px; text-wrap: pretty;
+  }
+  .lede .drop::first-letter { }
+  .lecture-hook {
+    border-left: 3px solid var(--gold); padding: 4px 0 4px 14px; margin: 4px 0 20px;
+    font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--ink-soft); font-style: italic;
+  }
+  .lec-sec { margin: 0 0 22px; }
+  .lec-sec .step-ey { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+  .lec-sec .step-ey .no {
+    width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center;
+    background: var(--ink); color: var(--paper); font-size: 11px; font-weight: 800; font-family: var(--mono);
+    flex: 0 0 auto;
+  }
+  .lec-sec h3 { font-family: var(--serif); font-size: 17.5px; font-weight: 600; }
+  .lec-sec p { font-size: 14.5px; line-height: 1.62; color: var(--ink-soft); margin-top: 6px; }
+  .lec-sec p b, .lec-sec p strong { color: var(--ink); font-weight: 650; }
+  .term-dr { color: var(--debit); font-weight: 700; }
+  .term-cr { color: var(--credit); font-weight: 700; }
+
+  .rulecard {
+    margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .rulecard .rr {
+    display: grid; grid-template-columns: 26px 1fr; gap: 11px; align-items: start;
+    padding: 12px 14px; font-size: 13.5px; line-height: 1.5; color: var(--ink-soft);
+  }
+  .rulecard .rr + .rr { border-top: 1px solid var(--line-soft); }
+  .rulecard .rr .mk {
+    width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+    font-weight: 800; font-size: 13px; flex: 0 0 auto;
+  }
+  .rulecard .rr .mk.l { background: var(--debit-bg); color: var(--debit); box-shadow: inset 0 0 0 1px var(--debit-line); }
+  .rulecard .rr .mk.r { background: var(--credit-bg); color: var(--credit); box-shadow: inset 0 0 0 1px var(--credit-line); }
+  .rulecard .rr b { color: var(--ink); }
+
+  /* DEALER mnemonic */
+  .dealer {
+    margin-top: 16px; border-radius: var(--r-lg); padding: 16px; box-shadow: var(--shadow);
+    background:
+      linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--line);
+  }
+  .dealer h4 { font-family: var(--serif); font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .dealer .cap { font-size: 12px; color: var(--ink-faint); margin-bottom: 12px; }
+  .dealer .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dealer .col { border-radius: var(--r-md); padding: 11px 12px; }
+  .dealer .col.d { background: var(--debit-bg); box-shadow: inset 0 0 0 1px var(--debit-line); }
+  .dealer .col.c { background: var(--credit-bg); box-shadow: inset 0 0 0 1px var(--credit-line); }
+  .dealer .col .lab { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+  .dealer .col.d .lab { color: var(--debit); }
+  .dealer .col.c .lab { color: var(--credit); }
+  .dealer .col .it { display: flex; align-items: baseline; gap: 8px; font-size: 13px; padding: 3px 0; color: var(--ink-soft); }
+  .dealer .col .it b { font-family: var(--serif); font-size: 16px; width: 15px; color: var(--ink); }
+  .dealer .col.d .it b { color: var(--debit); }
+  .dealer .col.c .it b { color: var(--credit); }
+
+  .takeaway {
+    margin-top: 18px; display: flex; gap: 12px; align-items: flex-start;
+    background: linear-gradient(150deg, rgba(15,109,99,.10), rgba(15,109,99,.03));
+    border: 1px solid color-mix(in srgb, var(--teal) 32%, transparent);
+    border-radius: var(--r-lg); padding: 15px 16px;
+  }
+  .takeaway .qm { flex: 0 0 auto; color: var(--teal); font-family: var(--serif); font-size: 30px; line-height: .8; }
+  .takeaway h4 { font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--teal); letter-spacing: .02em; margin-bottom: 4px; text-transform: uppercase; }
+  .takeaway p { font-size: 14px; line-height: 1.55; color: var(--ink); font-family: var(--serif); }
+
+  /* ---- Illustration 2.2 ------------------------------------- */
+  .ill-head { margin-bottom: 16px; }
+  .ill-head .eyebrow { color: var(--gold); }
+  .ill-head h2 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin-top: 4px; line-height: 1.15; text-wrap: balance; }
+  .ill-head p { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); margin-top: 8px; }
+
+  .normalbox {
+    border-radius: var(--r-lg); padding: 14px; margin-bottom: 16px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--bx-line); background: var(--card);
+  }
+  .normalbox.debit  { --bx-line: var(--debit-line); }
+  .normalbox.credit { --bx-line: var(--credit-line); }
+  .normalbox .nb-title {
+    text-align: center; font-family: var(--serif); font-weight: 600; font-size: 15.5px; margin-bottom: 3px;
+  }
+  .normalbox.debit  .nb-title .hl { color: var(--debit); }
+  .normalbox.credit .nb-title .hl { color: var(--credit); }
+  .normalbox .nb-cap { text-align: center; font-size: 11px; color: var(--ink-faint); margin-bottom: 12px; }
+
+  .taccount-mini { margin-top: 10px; }
+  .taccount-mini + .taccount-mini { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .tm-name { text-align: center; font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--ink); }
+  .tm-t {
+    display: grid; grid-template-columns: 1fr 1fr; position: relative;
+    border-top: 2px solid var(--ink);
+  }
+  .tm-t::before { /* center rule */
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--ink);
+    transform: translateX(-1px);
+  }
+  .tm-cell {
+    padding: 10px 8px; text-align: center; cursor: pointer; position: relative;
+    transition: background .2s ease;
+  }
+  .tm-cell .side { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+  .tm-cell .val { margin-top: 4px; font-family: var(--mono); font-size: 15px; font-weight: 700; }
+  .tm-cell.debit  .val { color: var(--debit); }
+  .tm-cell.credit .val { color: var(--credit); }
+  .tm-cell .plusminus { font-size: 12px; }
+  .tm-cell.is-normal { background: var(--nb-bg); }
+  .normalbox.debit  .tm-cell.debit.is-normal  { --nb-bg: var(--debit-bg); }
+  .normalbox.credit .tm-cell.credit.is-normal { --nb-bg: var(--credit-bg); }
+  .tm-cell.is-normal::after {
+    content: "NORMAL BALANCE"; position: absolute; left: 0; right: 0; bottom: 3px;
+    font-size: 7.5px; font-weight: 800; letter-spacing: .08em; color: var(--ink-faint);
+  }
+  .tm-cell.tap-hint { animation: tappulse 2.4s ease-in-out infinite; }
+  @keyframes tappulse { 0%,100%{ background: transparent;} 50%{ background: var(--line-soft);} }
+  @media (prefers-reduced-motion: reduce){ .tm-cell.tap-hint { animation: none; } }
+
+  .ill-note {
+    display: flex; gap: 10px; align-items: flex-start; margin-top: 4px;
+    background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r-md);
+    padding: 13px 14px; font-size: 13px; line-height: 1.55; color: var(--ink-soft);
+  }
+  .ill-note b { color: var(--ink); }
+  .ill-note .i { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--gold); color: #201a0c; font-family: var(--serif); font-weight: 700; font-size: 12px; font-style: italic; }
+  .legend { display: flex; gap: 16px; justify-content: center; margin: 2px 0 16px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  .legend .sw { width: 12px; height: 12px; border-radius: 3px; }
+
+  /* ---- T-Account Ledger tool -------------------------------- */
+  .tool-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+  .tool-head .badge {
+    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+    background: var(--ink); color: var(--paper);
+  }
+  .tool-head h2 { font-family: var(--serif); font-size: 18px; font-weight: 600; }
+  .tool-head p { font-size: 12.5px; color: var(--ink-faint); margin-top: 1px; }
+
+  .ledger-paper {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .lp-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 11px 14px; background: var(--card-2); border-bottom: 1px solid var(--line);
+  }
+  .lp-head .jctr { display: flex; align-items: center; gap: 8px; }
+  .lp-head .jno { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink-faint); }
+  .lp-head .steps { font-size: 11px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .lp-txn { padding: 14px; border-bottom: 1px solid var(--line-soft); }
+  .lp-txn .dt { font-family: var(--mono); font-size: 11px; color: var(--credit); font-weight: 700; letter-spacing: .04em; }
+  .lp-txn .desc { font-size: 14.5px; line-height: 1.5; margin-top: 3px; color: var(--ink); font-family: var(--serif); }
+  .lp-txn .amt-chip {
+    display: inline-block; margin-top: 8px; font-family: var(--mono); font-weight: 700; font-size: 13px;
+    padding: 3px 10px; border-radius: 999px; background: var(--line-soft); color: var(--ink);
+  }
+  .lp-instr { padding: 10px 14px 0; font-size: 12px; color: var(--ink-faint); }
+
+  .taccounts { padding: 12px 14px 4px; display: flex; flex-direction: column; gap: 14px; }
+  .taccount {
+    border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--card);
+  }
+  .taccount .ta-name {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 8px 12px; background: var(--card-2); border-bottom: 1px solid var(--line);
+  }
+  .taccount .ta-name b { font-size: 13.5px; font-weight: 700; }
+  .taccount .ta-name .ty {
+    font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 999px; background: var(--line-soft); color: var(--ink-faint);
+  }
+  .taccount .ta-t { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+  .taccount .ta-t::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1.5px; background: var(--ink); opacity: .55;
+  }
+  .ta-side {
+    padding: 6px; text-align: center; cursor: pointer; user-select: none; min-height: 66px;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 5px;
+    transition: background .18s ease;
+  }
+  .ta-side:hover { background: var(--line-soft); }
+  .ta-side .sl { font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+  .ta-side.debit .sl { color: var(--debit); }
+  .ta-side.credit .sl { color: var(--credit); }
+  .ta-post {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 8px;
+    border-radius: 7px; border: 1px dashed var(--line); color: var(--ink-faint); font-size: 16px; line-height: 1;
+    background: transparent; transition: all .16s ease;
+  }
+  .ta-side:hover .ta-post { border-color: var(--ink-faint); color: var(--ink-soft); }
+  .ta-side.filled .ta-post {
+    border-style: solid; font-family: var(--mono); font-weight: 700; font-size: 14px; padding: 0 10px;
+  }
+  .ta-side.debit.filled .ta-post  { background: var(--debit-bg); border-color: var(--debit-line); color: var(--debit); }
+  .ta-side.credit.filled .ta-post { background: var(--credit-bg); border-color: var(--credit-line); color: var(--credit); }
+
+  /* Balance beam */
+  .beam-wrap { padding: 8px 14px 16px; }
+  .beam-scale {
+    position: relative; height: 62px; margin: 6px auto 0; width: 100%;
+  }
+  .beam-bar {
+    position: absolute; top: 20px; left: 8%; right: 8%; height: 8px; border-radius: 6px;
+    background: linear-gradient(90deg, var(--debit), var(--credit));
+    transform-origin: 50% 50%; transform: rotate(var(--tilt, 0deg));
+    transition: transform .55s cubic-bezier(.34,1.4,.5,1);
+  }
+  .beam-pan {
+    position: absolute; top: 24px; width: 20px; height: 20px; margin-left: -10px;
+    border-radius: 50%; transform-origin: 50% -20px; transition: transform .55s cubic-bezier(.34,1.4,.5,1);
+  }
+  .beam-pan.l { left: 8%; background: var(--debit-bg); box-shadow: inset 0 0 0 2px var(--debit); }
+  .beam-pan.r { left: 92%; background: var(--credit-bg); box-shadow: inset 0 0 0 2px var(--credit); }
+  .beam-pan.l { transform: translateY(var(--pan-l, 0px)); }
+  .beam-pan.r { transform: translateY(var(--pan-r, 0px)); }
+  .beam-fulcrum {
+    position: absolute; left: 50%; top: 22px; transform: translateX(-50%);
+    width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent;
+    border-bottom: 26px solid var(--ink-faint); opacity: .8;
+  }
+  .beam-post { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); width: 2px; height: 16px; background: var(--ink-faint); opacity:.5;}
+  .beam-tags { display: flex; justify-content: space-between; margin-top: 2px; }
+  .beam-tags .bt { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .beam-tags .bt .k { font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .beam-tags .bt.d .k { color: var(--debit); }
+  .beam-tags .bt.c .k { color: var(--credit); }
+  .beam-tags .bt .v { font-family: var(--mono); font-weight: 700; font-size: 15px; }
+  .beam-status {
+    text-align: center; margin-top: 8px; font-size: 12.5px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 6px; width: 100%; justify-content: center;
+  }
+  .beam-status.bal { color: var(--good); }
+  .beam-status.unbal { color: var(--ink-faint); }
+
+  /* ---- Guided practice -------------------------------------- */
+  .gp-intro { margin-bottom: 4px; }
+  .gp-scenario {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+    padding: 15px 16px; box-shadow: var(--shadow); margin-bottom: 14px;
+  }
+  .gp-scenario .dt { font-family: var(--mono); font-size: 11px; color: var(--credit); font-weight: 700; }
+  .gp-scenario .txn { font-family: var(--serif); font-size: 16.5px; line-height: 1.45; margin-top: 4px; color: var(--ink); }
+  .gp-steps { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
+  .gp-dot { flex: 1 1 0; height: 5px; border-radius: 999px; background: var(--line); transition: background .3s ease; }
+  .gp-dot.on { background: var(--debit); }
+  .gp-dot.done { background: var(--teal); }
+
+  .gp-step { }
+  .gp-q { font-family: var(--serif); font-size: 16px; font-weight: 600; line-height: 1.4; margin-bottom: 3px; }
+  .gp-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 14px; }
+  .gp-opts { display: flex; flex-direction: column; gap: 9px; }
+  .gp-opts.grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .opt {
+    text-align: left; width: 100%; cursor: pointer; border-radius: var(--r-md);
+    border: 1.5px solid var(--line); background: var(--card); padding: 13px 14px;
+    font-size: 14px; color: var(--ink); box-shadow: var(--shadow);
+    transition: transform .14s ease, border-color .18s ease, background .18s ease;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .opt:hover { border-color: var(--ink-faint); transform: translateY(-1px); }
+  .opt:active { transform: translateY(0) scale(.99); }
+  .opt .ob {
+    flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--line);
+    display: grid; place-items: center; font-size: 12px; font-weight: 800; color: var(--ink-faint);
+  }
+  .opt.sel { border-color: var(--debit); background: var(--debit-bg); }
+  .opt.sel .ob { border-color: var(--debit); background: var(--debit); color: #fff; }
+  .opt.correct { border-color: var(--good); background: var(--good-bg); }
+  .opt.correct .ob { border-color: var(--good); background: var(--good); color: #fff; }
+  .opt.wrong { border-color: var(--warn); background: var(--warn-bg); }
+  .opt.wrong .ob { border-color: var(--warn); background: var(--warn); color: #fff; }
+  .opt.dim { opacity: .5; }
+  .opt.debit-opt .ob { border-color: var(--debit-line); }
+  .opt.credit-opt .ob { border-color: var(--credit-line); }
+
+  .gp-feedback {
+    margin-top: 14px; border-radius: var(--r-md); padding: 13px 14px; font-size: 13.5px; line-height: 1.55;
+    display: none; gap: 10px;
+  }
+  .gp-feedback.show { display: flex; }
+  .gp-feedback .fi { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .gp-feedback.good { background: var(--good-bg); color: var(--ink); border: 1px solid color-mix(in srgb, var(--good) 34%, transparent); }
+  .gp-feedback.good .fi { background: var(--good); color: #fff; }
+  .gp-feedback.bad { background: var(--warn-bg); color: var(--ink); border: 1px solid color-mix(in srgb, var(--warn) 34%, transparent); }
+  .gp-feedback.bad .fi { background: var(--warn); color: #fff; }
+  .gp-feedback b { color: var(--ink); }
+
+  .gp-actions { margin-top: 16px; display: flex; gap: 10px; }
+  .btn {
+    flex: 1 1 0; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: var(--r-md); padding: 13px 14px; font-size: 14px; font-weight: 650; box-shadow: var(--shadow);
+    transition: transform .14s ease, box-shadow .2s ease, opacity .2s;
+  }
+  .btn:hover { box-shadow: var(--shadow-lg); }
+  .btn:active { transform: scale(.98); }
+  .btn.primary { color: #f6efe0; background: linear-gradient(150deg, var(--debit), #185a92); border: none; box-shadow: 0 8px 20px rgba(31,111,178,.3); }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+  .gp-entry {
+    margin-top: 16px; border: 1px solid var(--good); background: var(--good-bg); border-radius: var(--r-md);
+    padding: 14px; display: none;
+  }
+  .gp-entry.show { display: block; animation: rise .4s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: none; } }
+  .gp-entry .ge-title { font-family: var(--serif); font-weight: 700; font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; color: var(--good); }
+  .je-row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: baseline; font-size: 13.5px; padding: 3px 0; }
+  .je-row.cr { padding-left: 20px; }
+  .je-acct { color: var(--ink); }
+  .je-row.cr .je-acct { color: var(--ink-soft); }
+  .je-d, .je-c { font-family: var(--mono); font-weight: 700; min-width: 62px; text-align: right; }
+  .je-d { color: var(--debit); }
+  .je-c { color: var(--credit); }
+  .je-head { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint); border-bottom: 1px solid var(--line); padding-bottom: 5px; margin-bottom: 6px; }
+  .je-head .h-d, .je-head .h-c { min-width: 62px; text-align: right; }
+
+  /* Completion celebration */
+  .done-card {
+    text-align: center; padding: 24px 18px; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r-lg); box-shadow: var(--shadow-lg);
+  }
+  .done-card .medal {
+    width: 60px; height: 60px; margin: 0 auto 14px; border-radius: 50%;
+    background: linear-gradient(150deg, var(--gold), #916d28); color: #fff;
+    display: grid; place-items: center; box-shadow: 0 8px 20px rgba(177,138,62,.4);
+  }
+  .done-card h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; }
+  .done-card p { font-size: 13.5px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+
+  /* Bottom nav bar for lesson */
+  .lesson-foot {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line-soft); background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  }
+  .foot-btn {
+    cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink-soft);
+    border-radius: 12px; padding: 11px 14px; font-size: 13.5px; font-weight: 650; display: inline-flex; align-items: center; gap: 7px;
+    transition: transform .14s ease, color .2s, box-shadow .2s;
+  }
+  .foot-btn:hover { color: var(--ink); box-shadow: var(--shadow); }
+  .foot-btn:active { transform: scale(.97); }
+  .foot-btn[disabled] { opacity: .4; cursor: not-allowed; }
+  .foot-btn.next { flex: 1 1 auto; justify-content: center; color: #f6efe0; background: linear-gradient(150deg, var(--debit), #185a92); border: none; box-shadow: 0 8px 18px rgba(31,111,178,.28); }
+  .foot-spacer { flex: 1 1 auto; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  :focus-visible { outline: 2px solid var(--debit); outline-offset: 2px; border-radius: 6px; }
+
+  .icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
 </style>
-</head>
-<body>
-<div id="app-frame">
-<div id="ledgerlab-classroom" data-topic="0" data-outline="open">
-  <div class="ll-shell">
-    <header class="ll-header">
-      <div class="ll-brand">
-        <div class="ll-logo" aria-hidden="true">L</div>
-        <div>
-          <div class="ll-brand-name">LedgerLab Classroom</div>
-          <div class="ll-overline">Intermediate Accounting · Chapter 2</div>
+
+<div id="fa-app">
+  <div class="fa-screens" id="fa-screens">
+
+    <!-- ============== SCREEN: HOME / COURSE INTRO ============== -->
+    <section class="fa-screen is-active" id="screen-home" aria-label="Course introduction">
+      <div class="fa-scroll">
+        <header class="home-hero">
+          <div class="home-crest">
+            <span class="mk">Σ</span>
+            <b>LEDGER &amp; LEAF · SCHOOL OF ACCOUNTANCY</b>
+          </div>
+          <div class="eyebrow">Financial Accounting · ACC&nbsp;201</div>
+          <h1>The language<br>businesses speak<br>in numbers.</h1>
+          <p class="sub">A guided, semester-style course in financial accounting. We start where every ledger starts — with debits and credits — and build toward reading real financial statements.</p>
+          <div class="prof">
+            <div class="avatar">RM</div>
+            <div class="who">
+              <b>Prof. Ramsey Moreno, CPA</b>
+              <span>Your instructor · Financial Accounting</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="home-body">
+          <div class="whatwhyhow">
+            <div class="wwh-card" style="--rail: var(--debit);">
+              <div class="wwh-tag"><span class="dot"></span>What it is</div>
+              <h3>A system for turning events into information</h3>
+              <p>Financial accounting captures a company's economic events — sales, purchases, borrowing, investing — and reports them in financial statements that outsiders can trust and compare.</p>
+            </div>
+            <div class="wwh-card" style="--rail: var(--credit);">
+              <div class="wwh-tag"><span class="dot"></span>Why it matters</div>
+              <h3>Decisions ride on the numbers</h3>
+              <p>Investors, lenders, and managers all ask the same question in different words: <em>Is this business worth my money?</em> Good accounting gives them an honest, evidence-based answer. Weak accounting misleads — sometimes expensively.</p>
+            </div>
+            <div class="wwh-card" style="--rail: var(--teal);">
+              <div class="wwh-tag"><span class="dot"></span>How it works</div>
+              <h3>Record, classify, verify, report</h3>
+              <p>Every transaction is recorded with a built-in balancing check, grouped into accounts, verified, and then summarized into statements. Master that balancing check — debits and credits — and the rest of the course clicks into place.</p>
+            </div>
+          </div>
+
+          <div class="home-lessons">
+            <div class="head">
+              <h2 class="serif">Course outline</h2>
+              <span class="eyebrow">Unit 1</span>
+            </div>
+
+            <button class="lesson-card" id="start-lesson-card">
+              <span class="lnum">1</span>
+              <span class="lbody">
+                <b>Debits &amp; Credits</b>
+                <span>The double-entry system · lecture, ledger &amp; practice</span>
+              </span>
+              <span class="pill-mini ready" id="lesson1-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">2</span>
+              <span class="lbody">
+                <b>The Accounting Equation</b>
+                <span>Assets = Liabilities + Stockholders' Equity</span>
+              </span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">3</span>
+              <span class="lbody">
+                <b>Journalizing &amp; Posting</b>
+                <span>From the journal to the ledger</span>
+              </span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">4</span>
+              <span class="lbody">
+                <b>The Trial Balance</b>
+                <span>Proving the books before you report</span>
+              </span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-foot">
+          <button class="cta" id="begin-btn">
+            Begin Lesson 1 · Debits &amp; Credits
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
         </div>
       </div>
-      <div class="ll-header-meta">
-        <span class="ll-chip">LO 2.1 only</span>
-        <span class="ll-chip">Teach → Show → Do</span>
-      </div>
-    </header>
-
-    <section class="ll-progress-block" aria-label="Lesson progress">
-      <div class="ll-progress-copy">
-        <span id="ll-progress-copy">Topic 1 of 5</span>
-        <span class="text-muted" id="ll-time-copy">About 10 minutes</span>
-      </div>
-      <div class="ll-progress-track"><div class="ll-progress-fill" id="ll-progress-fill"></div></div>
     </section>
 
-    <section class="ll-lesson-header" aria-label="Course player controls">
-      <button type="button" class="btn" id="ll-outline-toggle" aria-expanded="true">☰ Outline</button>
-      <div class="ll-lesson-heading">
-        <span class="ll-eyebrow">Current module</span>
-        <strong id="ll-current-title">What an accounting information system actually does</strong>
+    <!-- ============== SCREEN: LESSON 1 ============== -->
+    <section class="fa-screen" id="screen-lesson" aria-label="Lesson 1 — Debits and Credits">
+      <div class="fa-topbar">
+        <button class="fa-back" id="lesson-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn" id="theme-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon" id="theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
       </div>
-      <div class="ll-lesson-actions">
-        <button type="button" class="btn" id="ll-notes-toggle" aria-expanded="false">Notes</button>
-        <button type="button" class="btn" id="ll-coach-toggle" aria-expanded="false">Ask coach</button>
-        <button type="button" class="btn btn-primary" id="ll-next">Complete & Continue</button>
-      </div>
-    </section>
 
-    <section class="ll-assist-panel" id="ll-assist-panel" aria-label="Notes and contextual help">
-      <div class="ll-assist-section" id="ll-notes-panel">
-        <strong>Lesson notes</strong>
-        <textarea class="form-control ll-note-input" id="ll-note-input" placeholder="Capture the accounting rule in your own words."></textarea>
-        <div class="ll-tool-actions"><span class="text-muted" id="ll-note-status">Notes stay with this module.</span><button type="button" class="btn" id="ll-save-note">Save note</button></div>
-      </div>
-      <div class="ll-assist-section" id="ll-coach-panel">
-        <strong>Controller coach</strong>
-        <p id="ll-coach-copy">Start with the source evidence, then trace what the system does with it.</p>
-        <div class="ll-tool-actions"><span class="text-muted">Contextual support—not a general chatbot.</span><button type="button" class="btn" id="ll-close-assist">Close</button></div>
-      </div>
-    </section>
-
-    <div class="ll-player">
-      <div class="ll-outline-backdrop" id="ll-outline-backdrop"></div>
-      <aside class="ll-outline-panel" aria-label="Course outline">
-        <div class="ll-outline-title">
-          <div><strong>Chapter 2.1</strong><div class="text-muted">6 modules · applied exercises</div></div>
-          <button type="button" class="btn ll-outline-close" id="ll-outline-close" aria-label="Close outline">✕</button>
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Lesson 1 · Unit 1</div>
+        <h1 class="lesson-title">Debits &amp; Credits</h1>
+        <div class="lesson-meta">The grammar of the double-entry system · ~15 min</div>
+        <div class="prog-wrap">
+          <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+          <span class="prog-pct" id="prog-pct">0%</span>
         </div>
-        <nav class="ll-topic-nav" id="ll-topic-nav" aria-label="Chapter 2.1 topic sequence"></nav>
-      </aside>
-      <div class="ll-player-content">
-        <div class="ll-view-switch" role="tablist" aria-label="Lesson view">
-          <button type="button" class="ll-view-tab is-active" id="ll-view-lecture" data-view="lecture" role="tab" aria-selected="true">Learn</button>
-          <button type="button" class="ll-view-tab" id="ll-view-tool" data-view="tool" role="tab" aria-selected="false">Practice</button>
-        </div>
-        <main class="ll-classroom" id="ll-classroom" data-active-view="lecture">
-          <article class="ll-panel" aria-label="Lecture">
-            <div class="ll-panel-inner" id="ll-lecture"></div>
-          </article>
-          <section class="ll-panel" aria-label="Accounting work tool">
-            <div class="ll-panel-inner" id="ll-worktool"></div>
+      </div>
+
+      <div class="seg" id="seg" role="tablist" aria-label="Lesson sections">
+        <span class="seg-thumb" id="seg-thumb"></span>
+        <button role="tab" data-view="lecture" class="is-active">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M4 5h16M4 9h16M4 13h10M4 17h10"/></svg>
+          Lecture
+        </button>
+        <button role="tab" data-view="illustration">
+          <svg class="icon ic" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="16" rx="1"/><rect x="13" y="4" width="7" height="16" rx="1"/></svg>
+          Fig 2.2
+        </button>
+        <button role="tab" data-view="ledger">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M12 4v16M4 8h16"/><path d="M4 8v10a1 1 0 001 1h14a1 1 0 001-1V8"/></svg>
+          Ledger
+        </button>
+        <button role="tab" data-view="practice">
+          <svg class="icon ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
+          Practice
+        </button>
+      </div>
+
+      <div class="panes" id="panes">
+
+        <!-- LECTURE -->
+        <div class="pane is-active" id="pane-lecture" role="tabpanel">
+          <p class="lede">Before you can read a single financial statement, you have to speak the language of the ledger — and its entire grammar rests on two words.</p>
+          <p class="lecture-hook">"Debit" and "credit" are not about good news or bad news. They are simply directions: left and right. Learn to hear them that way and accounting stops being memorization.</p>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">1</span><span class="eyebrow">The core idea</span></div>
+            <h3>Debit means left. Credit means right.</h3>
+            <p>The terms <span class="term-dr">debit</span> (abbreviated <b>Dr.</b>) and <span class="term-cr">credit</span> (abbreviated <b>Cr.</b>) mean <b>left</b> and <b>right</b>, respectively. They do <b>not</b> mean increase or decrease. They describe <b>where</b> a company records an amount in an account.</p>
+            <div class="rulecard">
+              <div class="rr"><span class="mk l">L</span><div>An entry on the <b>left</b> side of an account is a <span class="term-dr">debit</span> to the account.</div></div>
+              <div class="rr"><span class="mk r">R</span><div>An entry on the <b>right</b> side is a <span class="term-cr">credit</span> to the account.</div></div>
+              <div class="rr"><span class="mk l">▸</span><div>An account shows a <b>debit balance</b> when total debits exceed total credits.</div></div>
+              <div class="rr"><span class="mk r">◂</span><div>An account shows a <b>credit balance</b> when total credits exceed total debits.</div></div>
+            </div>
           </section>
-        </main>
 
-        <footer class="ll-footer">
-          <button type="button" class="btn" id="ll-prev">← Previous module</button>
-        </footer>
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">2</span><span class="eyebrow">Why left and right?</span></div>
+            <h3>A custom that became the rule</h3>
+            <p>There is nothing natural about putting debits on the left. Early bookkeepers could have reversed the sides and everything would work the same. But the convention was adopted — and now it is the <b>rule</b>, applied to <b>every</b> account, much like the custom of driving on the right-hand side of the road. Once everyone agrees on the sides, entries can be combined and checked consistently.</p>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">3</span><span class="eyebrow">The part students trip on</span></div>
+            <h3>Increase or decrease depends on the account</h3>
+            <p>A debit only raises a balance for <b>some</b> accounts. Whether a debit is an increase or a decrease depends entirely on the <b>type of account</b> you are recording in:</p>
+            <div class="rulecard">
+              <div class="rr"><span class="mk l">+</span><div><b>Assets, expenses, and dividends</b> increase with <span class="term-dr">debits</span> (left) and decrease with credits.</div></div>
+              <div class="rr"><span class="mk r">+</span><div><b>Liabilities, revenues, and stockholders' equity</b> (Common Stock, Retained Earnings) increase with <span class="term-cr">credits</span> (right) and decrease with debits.</div></div>
+            </div>
+            <div class="dealer">
+              <h4>Remember it as <span style="font-variant: small-caps; letter-spacing:.03em;">DEALER</span></h4>
+              <div class="cap">The left three grow with debits; the right three grow with credits.</div>
+              <div class="cols">
+                <div class="col d">
+                  <div class="lab">Debit ↑ increases</div>
+                  <div class="it"><b>D</b> Dividends</div>
+                  <div class="it"><b>E</b> Expenses</div>
+                  <div class="it"><b>A</b> Assets</div>
+                </div>
+                <div class="col c">
+                  <div class="lab">Credit ↑ increases</div>
+                  <div class="it"><b>L</b> Liabilities</div>
+                  <div class="it"><b>E</b> Equity</div>
+                  <div class="it"><b>R</b> Revenue</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">4</span><span class="eyebrow">The double-entry system</span></div>
+            <h3>Every transaction has two sides</h3>
+            <p>Because debits sit on the left and credits on the right, each transaction is recorded with <b>equal amounts on both sides</b> — its dual, two-sided effect. Buy equipment with cash and one account is debited while another is credited for the same amount. This universally used approach is <b>double-entry accounting</b>. It records the dual effect of each event and, just as importantly, it offers a means of <b>proving</b> the accuracy of what was recorded.</p>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">5</span><span class="eyebrow">The self-proving check</span></div>
+            <h3>Total debits must equal total credits</h3>
+            <p>If every transaction is recorded with equal debits and credits, then across the entire ledger the <b>sum of all debits must equal the sum of all credits</b>. That equality is the mechanical backbone of the trial balance and the reason the system can catch its own arithmetic errors.</p>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Always classify the account first, decide whether it went up or down, and <em>then</em> — and only then — choose debit or credit. Balancing proves the arithmetic, not the judgment: you can debit the wrong account and still balance.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ILLUSTRATION 2.2 -->
+        <div class="pane" id="pane-illustration" role="tabpanel">
+          <div class="ill-head">
+            <div class="eyebrow">Illustration 2.2</div>
+            <h2>The Double-Entry (Debit &amp; Credit) Accounting System</h2>
+            <p>These are the guidelines for every account. Tap a shaded side to see which entry <b>increases</b> the account — that side is its <b>normal balance</b>.</p>
+          </div>
+
+          <div class="legend">
+            <span><span class="sw" style="background:var(--debit)"></span>Debit · left</span>
+            <span><span class="sw" style="background:var(--credit)"></span>Credit · right</span>
+          </div>
+
+          <div class="normalbox debit">
+            <div class="nb-title">Normal Balance — <span class="hl">Debit</span></div>
+            <div class="nb-cap">These accounts grow on the left</div>
+            <div class="taccount-mini" data-normal="debit">
+              <div class="tm-name">Asset Accounts</div>
+              <div class="tm-t">
+                <div class="tm-cell debit is-normal tap-hint"><div class="side">Debit</div><div class="val"><span class="plusminus">+</span> increase</div></div>
+                <div class="tm-cell credit"><div class="side">Credit</div><div class="val" style="color:var(--ink-faint)"><span class="plusminus">−</span> decrease</div></div>
+              </div>
+            </div>
+            <div class="taccount-mini" data-normal="debit">
+              <div class="tm-name">Expense Accounts</div>
+              <div class="tm-t">
+                <div class="tm-cell debit is-normal"><div class="side">Debit</div><div class="val"><span class="plusminus">+</span> increase</div></div>
+                <div class="tm-cell credit"><div class="side">Credit</div><div class="val" style="color:var(--ink-faint)"><span class="plusminus">−</span> decrease</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="normalbox credit">
+            <div class="nb-title">Normal Balance — <span class="hl">Credit</span></div>
+            <div class="nb-cap">These accounts grow on the right</div>
+            <div class="taccount-mini" data-normal="credit">
+              <div class="tm-name">Liability Accounts</div>
+              <div class="tm-t">
+                <div class="tm-cell debit"><div class="side">Debit</div><div class="val" style="color:var(--ink-faint)"><span class="plusminus">−</span> decrease</div></div>
+                <div class="tm-cell credit is-normal"><div class="side">Credit</div><div class="val"><span class="plusminus">+</span> increase</div></div>
+              </div>
+            </div>
+            <div class="taccount-mini" data-normal="credit">
+              <div class="tm-name">Stockholders' Equity Accounts</div>
+              <div class="tm-t">
+                <div class="tm-cell debit"><div class="side">Debit</div><div class="val" style="color:var(--ink-faint)"><span class="plusminus">−</span> decrease</div></div>
+                <div class="tm-cell credit is-normal"><div class="side">Credit</div><div class="val"><span class="plusminus">+</span> increase</div></div>
+              </div>
+            </div>
+            <div class="taccount-mini" data-normal="credit">
+              <div class="tm-name">Revenue Accounts</div>
+              <div class="tm-t">
+                <div class="tm-cell debit"><div class="side">Debit</div><div class="val" style="color:var(--ink-faint)"><span class="plusminus">−</span> decrease</div></div>
+                <div class="tm-cell credit is-normal"><div class="side">Credit</div><div class="val"><span class="plusminus">+</span> increase</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ill-note">
+            <span class="i">i</span>
+            <div><b>One famous exception to notice:</b> stockholders increase equity accounts like <b>Common Stock</b> and <b>Retained Earnings</b> on the credit side — but <b>Dividends</b> increase on the <b>debit</b> side, because dividends reduce equity. That is exactly why the <b>D</b> in DEALER sits on the debit side.</div>
+          </div>
+        </div>
+
+        <!-- LEDGER TOOL -->
+        <div class="pane" id="pane-ledger" role="tabpanel">
+          <div class="tool-head">
+            <span class="badge"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4v16M4 8h16"/><path d="M4 8v10a1 1 0 001 1h14a1 1 0 001-1V8"/></svg></span>
+            <div>
+              <h2>T-Account Ledger</h2>
+              <p>Post each side of the transaction into the ledger</p>
+            </div>
+          </div>
+
+          <div class="ledger-paper">
+            <div class="lp-head">
+              <div class="jctr">
+                <span class="jno" id="lp-jno">GL-01</span>
+              </div>
+              <span class="steps" id="lp-steps">Entry 1 of 4</span>
+            </div>
+            <div class="lp-txn">
+              <div class="dt" id="lp-date">— · —</div>
+              <div class="desc" id="lp-desc">…</div>
+              <span class="amt-chip num" id="lp-amt">$0</span>
+            </div>
+            <div class="lp-instr">Tap the <span class="term-dr">Debit</span> or <span class="term-cr">Credit</span> side of each account to post the amount. Then check your entry.</div>
+            <div class="taccounts" id="lp-taccounts"></div>
+
+            <div class="beam-wrap">
+              <div class="beam-scale">
+                <div class="beam-post"></div>
+                <div class="beam-bar" id="beam-bar"></div>
+                <div class="beam-pan l" id="beam-pan-l"></div>
+                <div class="beam-pan r" id="beam-pan-r"></div>
+                <div class="beam-fulcrum"></div>
+              </div>
+              <div class="beam-tags">
+                <div class="bt d"><span class="k">Debits</span><span class="v num" id="beam-dr" style="color:var(--debit)">$0</span></div>
+                <div class="bt c"><span class="k">Credits</span><span class="v num" id="beam-cr" style="color:var(--credit)">$0</span></div>
+              </div>
+              <div class="beam-status unbal" id="beam-status">Post both sides to test the balance</div>
+            </div>
+          </div>
+
+          <div class="gp-actions">
+            <button class="btn" id="lp-reset">Reset</button>
+            <button class="btn primary" id="lp-check">Check entry</button>
+          </div>
+          <div class="gp-feedback" id="lp-feedback"></div>
+          <div class="gp-actions" id="lp-next-wrap" style="display:none; margin-top:12px;">
+            <button class="btn primary" id="lp-next">Next transaction →</button>
+          </div>
+        </div>
+
+        <!-- PRACTICE -->
+        <div class="pane" id="pane-practice" role="tabpanel">
+          <div class="tool-head gp-intro">
+            <span class="badge"><svg class="icon" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg></span>
+            <div>
+              <h2>Guided Practice</h2>
+              <p>Analyze a transaction the way a professional does</p>
+            </div>
+          </div>
+
+          <div class="gp-scenario">
+            <div class="dt num" id="gp-date">—</div>
+            <div class="txn" id="gp-txn">…</div>
+          </div>
+
+          <div class="gp-steps" id="gp-steps"></div>
+
+          <div class="gp-step" id="gp-step">
+            <div class="gp-q" id="gp-q">…</div>
+            <div class="gp-sub" id="gp-sub"></div>
+            <div class="gp-opts" id="gp-opts"></div>
+            <div class="gp-feedback" id="gp-feedback"></div>
+            <div class="gp-entry" id="gp-entry"></div>
+            <div class="gp-actions">
+              <button class="btn" id="gp-restart" style="display:none;">Try another transaction</button>
+              <button class="btn primary" id="gp-continue" disabled>Continue</button>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
 
-    <nav class="ll-bottom-nav" aria-label="Lesson navigation (mobile)">
-      <button type="button" class="ll-bottom-btn" id="ll-outline-toggle-mobile" aria-label="Open outline">
-        <span aria-hidden="true">☰</span><span>Outline</span>
-      </button>
-      <button type="button" class="ll-bottom-btn" id="ll-prev-mobile">
-        <span aria-hidden="true">←</span><span>Prev</span>
-      </button>
-      <button type="button" class="ll-bottom-btn ll-bottom-btn-primary" id="ll-next-mobile">
-        <span id="ll-next-mobile-label">Continue</span>
-      </button>
-    </nav>
+      <div class="lesson-foot">
+        <button class="foot-btn" id="foot-prev" disabled>
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M15 6l-6 6 6 6"/></svg>
+          Prev
+        </button>
+        <button class="foot-btn next" id="foot-next">
+          <span id="foot-next-label">Next: The double-entry figure</span>
+          <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
   </div>
 </div>
-</div>
 
-  <script>
-    (function () {
-      var root = document.getElementById('ledgerlab-classroom');
-      var lectureNode = document.getElementById('ll-lecture');
-      var toolNode = document.getElementById('ll-worktool');
-      var navNode = document.getElementById('ll-topic-nav');
-      var classroomNode = document.getElementById('ll-classroom');
-      var progressCopy = document.getElementById('ll-progress-copy');
-      var timeCopy = document.getElementById('ll-time-copy');
-      var progressFill = document.getElementById('ll-progress-fill');
-      var prevButton = document.getElementById('ll-prev');
-      var nextButton = document.getElementById('ll-next');
-      var prevButtonMobile = document.getElementById('ll-prev-mobile');
-      var nextButtonMobile = document.getElementById('ll-next-mobile');
-      var nextButtonMobileLabel = document.getElementById('ll-next-mobile-label');
-      var currentTitle = document.getElementById('ll-current-title');
-      var assistPanel = document.getElementById('ll-assist-panel');
-      var noteInput = document.getElementById('ll-note-input');
-      var noteStatus = document.getElementById('ll-note-status');
-      var coachCopy = document.getElementById('ll-coach-copy');
-      var viewLectureTab = document.getElementById('ll-view-lecture');
-      var viewToolTab = document.getElementById('ll-view-tool');
-      var currentTopic = 0;
-      var notes = {};
-      var solved = {};
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var money = function (n) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+  };
 
-      var STORAGE_KEY = 'ledgerlab-classroom-state-v1';
+  /* ---------------- persistent state ---------------- */
+  var STORE = 'fa_dc_v1';
+  var state = { theme: null, view: 'lecture', done: { lecture: false, illustration: false, ledger: false, practice: false } };
+  try {
+    var raw = window.localStorage.getItem(STORE);
+    if (raw) { var p = JSON.parse(raw); if (p && typeof p === 'object') {
+      if (p.theme) state.theme = p.theme;
+      if (p.done) state.done = Object.assign(state.done, p.done);
+    } }
+  } catch (e) {}
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done })); } catch (e) {} }
 
-      function loadState() {
-        try {
-          var raw = window.localStorage.getItem(STORAGE_KEY);
-          if (!raw) return;
-          var parsed = JSON.parse(raw);
-          if (parsed && typeof parsed === 'object') {
-            if (typeof parsed.currentTopic === 'number') currentTopic = parsed.currentTopic;
-            if (parsed.notes && typeof parsed.notes === 'object') notes = parsed.notes;
-            if (parsed.solved && typeof parsed.solved === 'object') solved = parsed.solved;
-          }
-        } catch (err) { /* storage unavailable (private mode, quota) — start fresh */ }
-      }
+  /* ---------------- theme ---------------- */
+  function applyTheme() {
+    if (state.theme === 'dark' || state.theme === 'light') {
+      document.documentElement.setAttribute('data-theme', state.theme);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    var dark = state.theme === 'dark' || (!state.theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var icon = $('theme-icon');
+    if (icon) {
+      icon.innerHTML = dark
+        ? '<path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/>'
+        : '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/>';
+    }
+  }
+  applyTheme();
+  $('theme-btn').addEventListener('click', function () {
+    var dark = state.theme === 'dark' || (!state.theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    state.theme = dark ? 'light' : 'dark';
+    applyTheme(); save();
+  });
 
-      function saveState() {
-        try {
-          window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentTopic: currentTopic, notes: notes, solved: solved }));
-        } catch (err) { /* ignore write failures */ }
-      }
+  /* ---------------- screen router ---------------- */
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson') };
+  function goScreen(name) {
+    Object.keys(screens).forEach(function (k) {
+      var el = screens[k];
+      if (k === name) { el.classList.add('is-active'); el.classList.remove('is-behind'); }
+      else { el.classList.remove('is-active'); el.classList.add('is-behind'); }
+    });
+  }
+  function openLesson() { goScreen('lesson'); setView(state.view || 'lecture', true); }
+  $('start-lesson-card').addEventListener('click', openLesson);
+  $('begin-btn').addEventListener('click', openLesson);
+  $('lesson-back').addEventListener('click', function () { goScreen('home'); });
 
-      var topics = [
-        {
-          short: 'The system',
-          title: 'What an accounting information system actually does',
-          time: 'About 10 minutes',
-          lead: 'An accounting information system is the complete path that turns business evidence into financial information. Software is only one part of that path.',
-          sections: [
-            ['Start with the business event', 'A sale, purchase, borrowing, investment, or payment happens first. The accountant does not begin with a journal entry; the accountant begins with evidence that the event occurred. Invoices, receipts, contracts, bank records, and time reports create the audit trail.'],
-            ['Process the evidence', 'The system identifies the accounts affected, records the event, groups similar effects in accounts, and checks that the records remain in balance. Records, trial balances, worksheets, and financial statements are outputs of this process—not separate systems.'],
-            ['Judge the quality of the system', 'A strong system produces useful output, adapts when the business changes, includes controls that protect assets and information, and passes a cost-benefit test. More technology is not automatically better if the reports are irrelevant or the controls are weak.'],
-            ['Communicate the result', 'The final purpose of the system is not to accumulate entries. It is to communicate relevant and reliable information to managers, investors, and creditors through financial statements and related reports.']
-          ],
-          figure: '<div class="ll-figure"><div class="ll-figure-label">The information path</div><div class="ll-flow" role="img" aria-label="Evidence flows through accounting records to financial reports"><div class="ll-node">Business evidence<small>invoice · receipt · contract</small></div><span class="ll-flow-arrow">→</span><div class="ll-node">Accounting process<small>record · classify · verify</small></div><span class="ll-flow-arrow">→</span><div class="ll-node">Decision output<small>statements · analysis</small></div></div><div class="ll-rule-grid"><div class="ll-rule"><strong>Useful output</strong>Helps someone make a decision.</div><div class="ll-rule"><strong>Control</strong>Protects assets and information.</div><div class="ll-rule"><strong>Flexibility</strong>Adapts to new volume and needs.</div><div class="ll-rule"><strong>Cost-benefit</strong>Creates more value than cost.</div></div></div>',
-          note: 'The accountant’s job is to preserve the chain from evidence to report. If one link is weak, the final number may look precise and still be wrong.',
-          tool: 'system',
-          source: 'Book alignment: LO 2.1 system principles, computerized systems, and manual systems.'
-        },
-        {
-          short: 'Manual vs. digital',
-          title: 'Understand what software automates—and what still requires judgment',
-          time: 'About 9 minutes',
-          lead: 'Manual and computerized systems use the same accounting logic. Technology changes how quickly information is captured, processed, checked, and reported.',
-          sections: [
-            ['The manual system', 'In a manual system, people examine source documents, write transactions in journals, post amounts to ledger accounts, total the accounts, and prepare trial balances and statements. The visible steps make the logic easier to follow, but the process becomes slow when transaction volume grows.'],
-            ['The computerized system', 'Software can capture bank activity, apply recurring classifications, update ledgers, calculate balances, and generate reports almost instantly. The accounting equation and debit-credit rules do not disappear; they are executed behind the interface.'],
-            ['Automation has limits', 'A system can match an invoice to a purchase order, but a person must design the matching rule and resolve exceptions. Software can generate a trial balance, but an accountant must recognize when an account or period is wrong.'],
-            ['Why students still learn the mechanics', 'Understanding the manual flow lets the learner audit automated output. When the software produces an unreasonable result, the accountant can trace the information backward through source evidence, entries, accounts, and controls.']
-          ],
-          figure: '<div class="ll-figure"><div class="ll-figure-label">Same accounting logic, different execution</div><div class="ll-rule-grid"><div class="ll-rule"><strong>Manual execution</strong>Person captures · records · posts · totals</div><div class="ll-rule"><strong>Computer execution</strong>System captures · updates · calculates · reports</div><div class="ll-rule"><strong>Human judgment</strong>Validate evidence · classify · resolve exceptions</div><div class="ll-rule"><strong>System strength</strong>Speed · consistency · scale · audit trail</div></div></div>',
-          note: 'The safest automation keeps routine processing with the system and accounting judgment with a qualified person.',
-          tool: 'systems',
-          source: 'Book alignment: Computerized Accounting Systems and Manual Accounting Systems.'
-        },
-        {
-          short: 'Debit & credit',
-          title: 'Debits and credits as a system—not a list to memorize',
-          time: 'About 12 minutes',
-          lead: 'Debit means left. Credit means right. Neither word means increase or decrease until you identify the type of account.',
-          sections: [
-            ['Step 1: Name the account family', 'Cash is an asset. Accounts Payable is a liability. Service Revenue is revenue. Rent Expense is an expense. This classification determines the account’s normal side.'],
-            ['Step 2: Decide what happened', 'Ask whether the account increased or decreased. Receiving cash from a customer increases Cash. Earning a service increases Revenue. Paying a supplier decreases Cash and decreases Accounts Payable.'],
-            ['Step 3: Choose the side', 'Assets, expenses, and dividends increase with debits. Liabilities, common stock, retained earnings, and revenues increase with credits. A decrease is recorded on the opposite side.'],
-            ['Why double-entry works', 'Every recorded transaction has equal debit and credit amounts. This equality does not prove that every account choice is correct, but it gives the system an important mechanical check: total debits must equal total credits.']
-          ],
-          figure: '<div class="ll-figure"><div class="ll-figure-label">Normal-balance map</div><div class="ll-rule-grid"><div class="ll-rule"><strong>Debit increases</strong>Assets · Expenses · Dividends</div><div class="ll-rule"><strong>Credit increases</strong>Liabilities · Common Stock · Retained Earnings · Revenues</div><div class="ll-rule"><strong>Debit decreases</strong>Liabilities · Equity · Revenues</div><div class="ll-rule"><strong>Credit decreases</strong>Assets · Expenses · Dividends</div></div></div>',
-          note: 'Always classify first. Students get lost when they try to choose debit or credit before deciding what kind of account changed.',
-          tool: 'taccount',
-          source: 'Book alignment: Illustration 2.2; prepares the learner for BE2.1 without asking for a full journal entry yet.'
-        },
-        {
-          short: 'The equation',
-          title: 'Analyze transactions with the expanded accounting equation',
-          time: 'About 15 minutes',
-          lead: 'The accounting equation is the control structure beneath double-entry: Assets = Liabilities + Stockholders’ Equity.',
-          sections: [
-            ['The basic equation', 'Assets are economic resources controlled by the company. Liabilities are present obligations. Stockholders’ equity is the residual interest after liabilities. A transaction may change two assets, an asset and a liability, or an asset and equity—but the equality must remain.'],
-            ['Expand stockholders’ equity', 'Common Stock represents investments by stockholders. Revenues increase retained earnings through net income. Expenses decrease retained earnings through net income. Dividends decrease retained earnings directly and are not expenses.'],
-            ['Analyze before recording', 'Translate the business sentence into account effects. Buying equipment on account means Equipment increases and Accounts Payable increases. Paying rent means Cash decreases and Expense increases; because expense is subtracted in the expanded equation, the right side falls by the same amount as cash.'],
-            ['Use the workpaper correctly', 'The grid below performs routine arithmetic and tests the equality. Your responsibility is judgment: choose the accounts and the direction of each effect. This is the bridge from understanding a transaction to journalizing it in LO 2.2.']
-          ],
-          figure: '<div class="ll-figure"><div class="ll-figure-label">Expanded equation</div><div class="ll-flow" role="img" aria-label="Assets equal liabilities plus common stock plus revenue less expenses less dividends"><div class="ll-node">Assets</div><span>=</span><div class="ll-node">Liabilities</div><span>+</span><div class="ll-node">Common Stock + Revenue − Expenses − Dividends</div></div></div>',
-          note: 'A balanced workpaper can still contain the wrong accounts. LedgerLab checks both balance and classification.',
-          tool: 'equation',
-          source: 'Book alignment: Illustration 2.3 and Put It into Practice LO 2.1; transaction patterns scaffold E2.1, E2.17, and P2.1.'
-        },
-        {
-          short: 'Statements',
-          title: 'See how accounts flow into connected financial statements',
-          time: 'About 12 minutes',
-          lead: 'The financial statements are connected outputs of one system. Net income links the income statement to retained earnings, and ending retained earnings links to the balance sheet.',
-          sections: [
-            ['Income statement', 'Revenues and expenses describe performance during a period. Their difference is net income or net loss. These are temporary accounts because their activity is transferred to retained earnings at the end of the period.'],
-            ['Retained earnings statement', 'Beginning retained earnings increases by net income and decreases by dividends. Dividends are distributions to owners, not costs of earning revenue. Ending retained earnings becomes part of stockholders’ equity on the balance sheet.'],
-            ['Balance sheet', 'Assets, liabilities, Common Stock, and Retained Earnings describe the company at a point in time. These are permanent accounts because their ending balances carry into the next period.'],
-            ['Ownership structure changes the labels', 'Corporations use Common Stock, Retained Earnings, and Dividends. Proprietorships and partnerships generally use Capital and Drawings. The economic effects are similar, but the equity account names reflect who owns the business.']
-          ],
-          figure: '<div class="ll-figure"><div class="ll-figure-label">Statement connection</div><div class="ll-flow" role="img" aria-label="Income statement flows into retained earnings statement and then the balance sheet"><div class="ll-node">Income statement<small>Revenue − Expense = Net income</small></div><span class="ll-flow-arrow">→</span><div class="ll-node">Retained earnings<small>Beginning + Net income − Dividends</small></div><span class="ll-flow-arrow">→</span><div class="ll-node">Balance sheet<small>Ending retained earnings in equity</small></div></div></div>',
-          note: 'Do not teach each statement as an isolated template. The student should see one number move through the reporting system.',
-          tool: 'statements',
-          source: 'Book alignment: Illustrations 2.4–2.5; uses the reporting relationships later required in E2.11, E2.12, and P2.1.'
-        },
-        {
-          short: 'The cycle',
-          title: 'Use the accounting cycle as the map for the entire chapter',
-          time: 'About 10 minutes',
-          lead: 'The accounting cycle is the repeatable sequence companies use to move from business transactions to financial statements and then prepare for the next period.',
-          sections: [
-            ['Record the period', 'First analyze transactions, journalize them, and post them to accounts. These steps create an organized record of the period’s activity.'],
-            ['Verify and adjust', 'Prepare an unadjusted trial balance, record and post adjustments, and then prepare an adjusted trial balance. Adjustments place revenues and expenses in the correct period and update accounts before reporting.'],
-            ['Report the results', 'Prepare the financial statements from the adjusted trial balance. The statements are the decision output of the system, not the end of the bookkeeping process.'],
-            ['Close and restart', 'Close temporary accounts and prepare a post-closing trial balance. Permanent accounts carry forward; temporary revenue, expense, and dividend accounts begin the next period at zero.']
-          ],
-          figure: '<div class="ll-figure"><div class="ll-figure-label">Nine steps grouped into four working phases</div><div class="ll-flow" role="img" aria-label="Record, verify and adjust, report, then close"><div class="ll-node">Record<small>1 Analyze · 2 Journalize · 3 Post</small></div><span class="ll-flow-arrow">→</span><div class="ll-node">Verify & adjust<small>4 Trial balance · 5 Adjust · 6 Adjusted TB</small></div><span class="ll-flow-arrow">→</span><div class="ll-node">Report & close<small>7 Statements · 8 Close · 9 Post-closing TB</small></div></div></div>',
-          note: 'At LO 2.1, students need the map and the purpose of each phase. Later objectives teach the detailed mechanics inside the map.',
-          tool: 'cycle',
-          source: 'Book alignment: Accounting Cycle; creates the conceptual plan for BE2.1, E2.1, and the complete P2.1 workflow.'
-        }
-      ];
+  /* ---------------- lesson sub-view tabs ---------------- */
+  var VIEWS = ['lecture', 'illustration', 'ledger', 'practice'];
+  var NEXT_LABEL = {
+    lecture: 'Next: The double-entry figure',
+    illustration: 'Next: Post in the ledger',
+    ledger: 'Next: Guided practice',
+    practice: 'Finish lesson'
+  };
+  var seg = $('seg');
+  var segBtns = Array.prototype.slice.call(seg.querySelectorAll('button'));
+  var thumb = $('seg-thumb');
+  var panes = { lecture: $('pane-lecture'), illustration: $('pane-illustration'), ledger: $('pane-ledger'), practice: $('pane-practice') };
 
-      function money(value) {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
-      }
+  function moveThumb() {
+    var active = seg.querySelector('button.is-active');
+    if (!active) return;
+    thumb.style.left = active.offsetLeft + 'px';
+    thumb.style.width = active.offsetWidth + 'px';
+  }
+  function setView(view, immediate) {
+    if (VIEWS.indexOf(view) < 0) view = 'lecture';
+    state.view = view;
+    segBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
+    VIEWS.forEach(function (v) { panes[v].classList.toggle('is-active', v === view); });
+    moveThumb();
+    // mark simple views as visited/done
+    if (view === 'lecture' || view === 'illustration') { markDone(view); }
+    // footer nav state
+    var idx = VIEWS.indexOf(view);
+    $('foot-prev').disabled = idx === 0;
+    $('foot-next-label').textContent = NEXT_LABEL[view];
+    // scroll pane to top
+    panes[view].scrollTop = 0;
+    updateSegChecks();
+  }
+  segBtns.forEach(function (b) {
+    b.addEventListener('click', function () { setView(b.getAttribute('data-view')); });
+  });
+  $('foot-prev').addEventListener('click', function () {
+    var idx = VIEWS.indexOf(state.view); if (idx > 0) setView(VIEWS[idx - 1]);
+  });
+  $('foot-next').addEventListener('click', function () {
+    var idx = VIEWS.indexOf(state.view);
+    if (idx < VIEWS.length - 1) setView(VIEWS[idx + 1]);
+    else { markDone('practice'); goScreen('home'); flashComplete(); }
+  });
+  window.addEventListener('resize', moveThumb);
 
-      var FEEDBACK_GLYPH = { success: '✓', error: '!', info: 'i' };
-      var FEEDBACK_LABEL = { success: 'Correct', error: 'Needs another look', info: 'Not yet' };
+  function updateSegChecks() {
+    segBtns.forEach(function (b) {
+      var v = b.getAttribute('data-view');
+      b.classList.toggle('done', !!state.done[v]);
+    });
+  }
 
-      function feedback(type, title, detail) {
-        var glyph = FEEDBACK_GLYPH[type] || FEEDBACK_GLYPH.info;
-        return '<div class="ll-feedback is-visible is-' + type + '" role="status"><strong><span class="ll-feedback-glyph" aria-hidden="true">' + glyph + '</span>' + title + '</strong><span>' + detail + '</span></div>';
-      }
+  /* ---------------- progress ---------------- */
+  function markDone(view) {
+    if (!state.done[view]) { state.done[view] = true; save(); }
+    updateProgress(); updateSegChecks();
+  }
+  function updateProgress() {
+    var total = VIEWS.length;
+    var n = VIEWS.reduce(function (a, v) { return a + (state.done[v] ? 1 : 0); }, 0);
+    var pct = Math.round((n / total) * 100);
+    $('prog-fill').style.width = pct + '%';
+    $('prog-pct').textContent = pct + '%';
+    $('lesson1-pill').textContent = pct === 0 ? 'Start' : (pct === 100 ? 'Done' : pct + '%');
+    $('lesson1-pill').classList.toggle('ready', true);
+  }
+  function flashComplete() {
+    // subtle: update the pill on home
+    updateProgress();
+  }
 
-      function markSolved(index) {
-        solved[index] = true;
-        saveState();
-        refreshOutlineState();
-      }
-
-      function refreshOutlineState() {
-        Array.prototype.forEach.call(navNode.children, function (button, index) {
-          button.classList.toggle('is-complete', Boolean(solved[index]));
-        });
-      }
-
-      function renderLecture(topic) {
-        var sections = topic.sections.map(function (section) {
-          return '<section class="ll-lecture-section"><h3>' + section[0] + '</h3><p>' + section[1] + '</p></section>';
-        }).join('');
-        lectureNode.innerHTML = '<div class="ll-panel-top"><span class="ll-chip">Lecture</span><span class="ll-eyebrow">Teach the idea first</span></div><h1 class="ll-lecture-title">' + topic.title + '</h1><p class="ll-lead">' + topic.lead + '</p>' + sections + topic.figure + '<div class="ll-controller-note"><strong>Controller lens</strong><span>' + topic.note + '</span></div>';
-      }
-
-      function workedExample(html) {
-        return '<details class="ll-worked-example"><summary>Show a worked example</summary>' + html + '</details>';
-      }
-
-      function systemTool() {
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">AIS audit trail</span></div><h2 class="ll-tool-title">Process a vendor invoice</h2>' +
-          workedExample('<p><strong>Worked case:</strong> A customer pays Northstar $2,000 cash immediately after a delivery is completed. The source document is a <em>customer receipt</em>, so the transaction class is a <em>cash sale</em>. Because the cash already cleared, no further approval control is required. The revenue just earned is measured on the <em>income statement</em>. Notice the pattern: evidence type tells you who created the document, transaction class tells you what happened, the control depends on what risk remains, and the output depends on which statement measures that kind of change.</p>') +
-          '<div class="ll-case"><div class="ll-case-top"><strong>Northstar Delivery</strong><span class="ll-chip">Invoice V-1048</span></div><p>Office equipment received today. Invoice amount: $3,000. Payment is due in 30 days.</p></div><div class="ll-tool-body"><div class="ll-field-grid"><label class="ll-field"><span class="ll-form-label">Evidence type</span><select class="form-select" id="ll-evidence"><option value="">Choose evidence</option><option value="invoice">Supplier invoice</option><option value="receipt">Customer receipt</option><option value="timesheet">Employee timesheet</option></select></label><label class="ll-field"><span class="ll-form-label">Transaction class</span><select class="form-select" id="ll-class"><option value="">Choose the event</option><option value="purchase">Purchase on account</option><option value="sale">Cash sale</option><option value="investment">Stockholder investment</option></select></label><label class="ll-field"><span class="ll-form-label">Required control</span><select class="form-select" id="ll-control"><option value="">Choose a control</option><option value="approval">Manager approval and invoice match</option><option value="none">No review needed</option><option value="customer">Customer confirmation</option></select></label><label class="ll-field"><span class="ll-form-label">Primary report affected</span><select class="form-select" id="ll-output"><option value="">Choose an output</option><option value="balance">Balance sheet</option><option value="income">Income statement only</option><option value="cashflow">Cash flow only</option></select></label></div><div class="ll-audit-trail"><div class="ll-audit-row"><span class="ll-audit-icon">1</span><div><strong>Capture</strong><div class="text-muted">Validate the source document and approval.</div></div></div><div class="ll-audit-row"><span class="ll-audit-icon">2</span><div><strong>Process</strong><div class="text-muted">Recognize Equipment and Accounts Payable.</div></div></div><div class="ll-audit-row"><span class="ll-audit-icon">3</span><div><strong>Communicate</strong><div class="text-muted">Update assets and liabilities on the balance sheet.</div></div></div></div><div class="ll-tool-actions"><span class="text-muted">Complete the audit trail before processing.</span><button type="button" class="btn btn-primary" id="ll-check-system">Process evidence</button></div><div id="ll-tool-feedback"></div></div>';
-      }
-
-      function bindSystemTool() {
-        document.getElementById('ll-check-system').addEventListener('click', function () {
-          var values = ['ll-evidence', 'll-class', 'll-control', 'll-output'].map(function (id) { return document.getElementById(id).value; });
-          var slot = document.getElementById('ll-tool-feedback');
-          if (values.join('|') === 'invoice|purchase|approval|balance') {
-            slot.innerHTML = feedback('success', 'Audit trail complete', 'The evidence supports a purchase on account. Equipment and Accounts Payable increase, and the manager approval protects the company before the event enters the records.');
-            markSolved(currentTopic);
-          } else {
-            slot.innerHTML = feedback('error', 'The trail has a weak link', 'Use the business facts: the supplier document is an invoice, cash has not been paid, equipment was received, and the obligation belongs on the balance sheet.');
-          }
-        });
-      }
-
-      function systemsTool() {
-        var tasks = [
-          ['Approve a $3,000 equipment purchase', 'approval'],
-          ['Match the supplier invoice to the purchase order', 'shared'],
-          ['Calculate updated ledger balances', 'system'],
-          ['Investigate an unusual account classification', 'judgment']
-        ];
-        var rows = tasks.map(function (task, index) {
-          return '<div class="ll-account-row"><span>' + task[0] + '</span><span class="ll-chip">Task ' + (index + 1) + '</span><select class="form-select ll-owner-select" data-answer="' + task[1] + '" aria-label="Responsibility for ' + task[0] + '"><option value="">Assign responsibility</option><option value="system">System processing</option><option value="judgment">Human judgment</option><option value="shared">Shared: system + human review</option><option value="approval">Authorized manager</option></select></div>';
-        }).join('');
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Automation responsibility matrix</span></div><h2 class="ll-tool-title">Configure the invoice workflow</h2>' +
-          workedExample('<p><strong>Worked case:</strong> "Reconcile the bank statement to the general ledger balance" is assigned <em>Shared: system + human review</em>. The system can pull both balances and flag differences automatically, but a person has to judge whether an unmatched item is a timing difference (like a check still in transit) or a real error worth escalating. Whenever a task combines fast repeatable comparison with a judgment call about risk, it belongs to both.</p>') +
-          '<div class="ll-case"><strong>Controller instruction</strong><p>Assign each activity to the party best equipped to perform it. The objective is controlled automation—not maximum automation.</p></div><div class="ll-account-list">' + rows + '</div><div class="ll-tool-actions"><span class="text-muted">Automate routine processing; preserve accountable judgment.</span><button type="button" class="btn btn-primary" id="ll-check-systems">Review workflow</button></div><div id="ll-tool-feedback"></div>';
-      }
-
-      function bindSystemsTool() {
-        document.getElementById('ll-check-systems').addEventListener('click', function () {
-          var selects = Array.prototype.slice.call(toolNode.querySelectorAll('.ll-owner-select'));
-          var correct = selects.filter(function (select) { return select.value === select.getAttribute('data-answer'); }).length;
-          var slot = document.getElementById('ll-tool-feedback');
-          if (correct === selects.length) {
-            slot.innerHTML = feedback('success', 'Workflow appropriately controlled', 'The system performs repeatable calculations, people authorize transactions and investigate exceptions, and invoice matching combines automation with review.');
-            markSolved(currentTopic);
-          } else {
-            slot.innerHTML = feedback('error', correct + ' of 4 responsibilities are well assigned', 'Look for tasks that require authorization or professional skepticism. Those should not be delegated entirely to software. Routine calculation belongs with the system.');
-          }
-        });
-      }
-
-      function tAccountTool() {
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">T-account workbench</span></div><h2 class="ll-tool-title">Post both sides of a service transaction</h2>' +
-          workedExample('<p><strong>Worked case:</strong> Northstar pays $400 cash for office supplies. Supplies is an asset that increased, so it is debited $400. Cash is an asset that decreased, so it is credited $400. Same two questions every time: which account family, then did it go up or down—only then do you pick left or right.</p>') +
-          '<div class="ll-case"><div class="ll-case-top"><strong>Transaction</strong><span class="ll-chip">$1,500</span></div><p>Northstar performs delivery services and receives cash immediately.</p></div><div class="ll-taccounts"><section class="ll-taccount"><div class="ll-taccount-head"><strong>Cash</strong><span class="text-muted">Asset</span></div><div class="ll-taccount-sides"><div class="ll-t-side"><span class="ll-side-label">Debit · left</span><span class="ll-posted-amount" id="ll-cash-debit"></span></div><div class="ll-t-side"><span class="ll-side-label">Credit · right</span><span class="ll-posted-amount" id="ll-cash-credit"></span></div></div><div class="ll-side-buttons"><button type="button" class="btn ll-post" data-account="cash" data-side="debit">Post left</button><button type="button" class="btn ll-post" data-account="cash" data-side="credit">Post right</button></div></section><section class="ll-taccount"><div class="ll-taccount-head"><strong>Service Revenue</strong><span class="text-muted">Revenue</span></div><div class="ll-taccount-sides"><div class="ll-t-side"><span class="ll-side-label">Debit · left</span><span class="ll-posted-amount" id="ll-revenue-debit"></span></div><div class="ll-t-side"><span class="ll-side-label">Credit · right</span><span class="ll-posted-amount" id="ll-revenue-credit"></span></div></div><div class="ll-side-buttons"><button type="button" class="btn ll-post" data-account="revenue" data-side="debit">Post left</button><button type="button" class="btn ll-post" data-account="revenue" data-side="credit">Post right</button></div></section></div><div class="ll-balance-line"><span class="ll-balance-box" id="ll-debit-total">Debits $0</span><strong>=</strong><span class="ll-balance-box" id="ll-credit-total">Credits $0</span></div><div class="ll-tool-actions"><span class="text-muted">Classify → decide increase/decrease → choose side.</span><button type="button" class="btn btn-primary" id="ll-check-taccounts">Check posting</button></div><div id="ll-tool-feedback"></div>';
-      }
-
-      function bindTAccountTool() {
-        var postings = { cash: '', revenue: '' };
-        Array.prototype.forEach.call(toolNode.querySelectorAll('.ll-post'), function (button) {
-          button.addEventListener('click', function () {
-            var account = button.getAttribute('data-account');
-            var side = button.getAttribute('data-side');
-            postings[account] = side;
-            ['debit', 'credit'].forEach(function (candidate) {
-              document.getElementById('ll-' + account + '-' + candidate).textContent = candidate === side ? '$1,500' : '';
-            });
-            var debits = (postings.cash === 'debit' ? 1500 : 0) + (postings.revenue === 'debit' ? 1500 : 0);
-            var credits = (postings.cash === 'credit' ? 1500 : 0) + (postings.revenue === 'credit' ? 1500 : 0);
-            document.getElementById('ll-debit-total').textContent = 'Debits ' + money(debits);
-            document.getElementById('ll-credit-total').textContent = 'Credits ' + money(credits);
-          });
-        });
-        document.getElementById('ll-check-taccounts').addEventListener('click', function () {
-          var slot = document.getElementById('ll-tool-feedback');
-          if (postings.cash === 'debit' && postings.revenue === 'credit') {
-            slot.innerHTML = feedback('success', 'Posting is correct and balanced', 'Cash is an asset that increased, so it is debited. Revenue increased stockholders’ equity, so Service Revenue is credited.');
-            markSolved(currentTopic);
-          } else if (postings.cash && postings.revenue) {
-            slot.innerHTML = feedback('error', 'The amounts balance only when the sides are correct', 'Cash increased on the debit side. Service Revenue increased on the credit side. Reclassify the accounts before choosing left or right.');
-          } else {
-            slot.innerHTML = feedback('info', 'Post both effects', 'A business transaction has a dual effect. Complete both T-accounts before checking the entry.');
-          }
-        });
-      }
-
-      var equationTransactions = [
-        { text: 'Stockholders invest $10,000 cash for common stock.', amount: 10000, first: ['cash', 1], second: ['stock', 1] },
-        { text: 'Pay $800 cash for July rent.', amount: 800, first: ['cash', -1], second: ['expense', 1] },
-        { text: 'Buy $3,000 equipment on account.', amount: 3000, first: ['equipment', 1], second: ['payable', 1] },
-        { text: 'Earn $1,500 delivery revenue for cash.', amount: 1500, first: ['cash', 1], second: ['revenue', 1] },
-        { text: 'Borrow $700 cash by signing a note.', amount: 700, first: ['cash', 1], second: ['note', 1] },
-        { text: 'Earn $2,000 delivery revenue on account.', amount: 2000, first: ['receivable', 1], second: ['revenue', 1] },
-        { text: 'Pay $900 cash for operating expenses.', amount: 900, first: ['cash', -1], second: ['expense', 1] }
-      ];
-
-      function equationTool() {
-        return '<div class="ll-panel-top"><span class="ll-chip">Flagship workpaper</span><span class="ll-eyebrow">Auto-calculating equation grid</span></div><h2 class="ll-tool-title">Build Northstar’s first-month balances</h2>' +
-          workedExample('<p><strong>Worked case:</strong> Stockholders invest $5,000 cash for common stock. Cash is an asset that increases, so it increases on the left side of the equation. Common Stock is part of stockholders’ equity and also increases, on the right side. Assets go up by $5,000 and the right side goes up by $5,000 — the equation stays balanced by construction, because every transaction has two sides.</p>') +
-          '<div class="ll-case"><div class="ll-case-top"><strong id="ll-transaction-label">Transaction 1 of 7</strong><span class="ll-chip" id="ll-transaction-amount">$10,000</span></div><p id="ll-transaction-text">Stockholders invest $10,000 cash for common stock.</p></div><div class="ll-transaction-stepper"><div class="ll-field-grid"><label class="ll-field"><span class="ll-form-label">First account effect</span><select class="form-select" id="ll-effect-one"></select></label><label class="ll-field"><span class="ll-form-label">Second account effect</span><select class="form-select" id="ll-effect-two"></select></label></div><div class="ll-tool-actions"><span class="ll-transaction-count" id="ll-equation-score">0 of 7 transactions analyzed</span><button type="button" class="btn btn-primary" id="ll-add-transaction">Add to workpaper</button></div><div id="ll-tool-feedback"></div></div><div class="ll-sheet-wrap ll-equation-sheet"><table class="ll-sheet" aria-label="Expanded accounting equation balances"><thead><tr><th>Balance</th><th>Cash</th><th>A/R</th><th>Equip.</th><th>Liab.</th><th>Stock</th><th>Rev.</th><th>Exp.</th></tr></thead><tbody><tr><td>Running</td><td id="eq-cash">$0</td><td id="eq-receivable">$0</td><td id="eq-equipment">$0</td><td id="eq-liabilities">$0</td><td id="eq-stock">$0</td><td id="eq-revenue">$0</td><td id="eq-expense">$0</td></tr></tbody></table></div><div class="ll-mobile-summary" aria-label="Mobile account balance summary"><div class="ll-mobile-balance"><span>Cash</span><span id="mobile-cash">$0</span></div><div class="ll-mobile-balance"><span>A/R</span><span id="mobile-receivable">$0</span></div><div class="ll-mobile-balance"><span>Equipment</span><span id="mobile-equipment">$0</span></div><div class="ll-mobile-balance"><span>Liabilities</span><span id="mobile-liabilities">$0</span></div><div class="ll-mobile-balance"><span>Common Stock</span><span id="mobile-stock">$0</span></div><div class="ll-mobile-balance"><span>Net income</span><span id="mobile-income">$0</span></div></div><div class="ll-balance-line"><span class="ll-balance-box" id="ll-assets">Assets $0</span><strong>=</strong><span class="ll-balance-box" id="ll-right-side">Liabilities + Equity $0</span></div><div class="ll-source-note">The grid handles arithmetic. The learner makes the accounting classifications.</div>';
-      }
-
-      function bindEquationTool() {
-        var index = 0;
-        var balances = { cash: 0, receivable: 0, equipment: 0, payable: 0, note: 0, stock: 0, revenue: 0, expense: 0 };
-        var labels = { cash: 'Cash', receivable: 'Accounts Receivable', equipment: 'Equipment', payable: 'Accounts Payable', note: 'Notes Payable', stock: 'Common Stock', revenue: 'Service Revenue', expense: 'Operating Expense' };
-        var effectOptions = '<option value="">Choose an account effect</option>' + Object.keys(labels).map(function (key) { return '<option value="' + key + ':1">' + labels[key] + ' increases</option><option value="' + key + ':-1">' + labels[key] + ' decreases</option>'; }).join('');
-        var one = document.getElementById('ll-effect-one');
-        var two = document.getElementById('ll-effect-two');
-        one.innerHTML = effectOptions;
-        two.innerHTML = effectOptions;
-        function match(value, expected) { return value === expected[0] + ':' + expected[1]; }
-        function updateGrid() {
-          ['cash', 'receivable', 'equipment', 'stock', 'revenue', 'expense'].forEach(function (key) { document.getElementById('eq-' + key).textContent = money(balances[key]); });
-          var liabilities = balances.payable + balances.note;
-          document.getElementById('eq-liabilities').textContent = money(liabilities);
-          var assets = balances.cash + balances.receivable + balances.equipment;
-          var right = liabilities + balances.stock + balances.revenue - balances.expense;
-          document.getElementById('mobile-cash').textContent = money(balances.cash);
-          document.getElementById('mobile-receivable').textContent = money(balances.receivable);
-          document.getElementById('mobile-equipment').textContent = money(balances.equipment);
-          document.getElementById('mobile-liabilities').textContent = money(liabilities);
-          document.getElementById('mobile-stock').textContent = money(balances.stock);
-          document.getElementById('mobile-income').textContent = money(balances.revenue - balances.expense);
-          document.getElementById('ll-assets').textContent = 'Assets ' + money(assets);
-          document.getElementById('ll-right-side').textContent = 'Liabilities + Equity ' + money(right);
-        }
-        function loadTransaction() {
-          if (index >= equationTransactions.length) return;
-          var transaction = equationTransactions[index];
-          document.getElementById('ll-transaction-label').textContent = 'Transaction ' + (index + 1) + ' of ' + equationTransactions.length;
-          document.getElementById('ll-transaction-amount').textContent = money(transaction.amount);
-          document.getElementById('ll-transaction-text').textContent = transaction.text;
-          one.value = '';
-          two.value = '';
-        }
-        document.getElementById('ll-add-transaction').addEventListener('click', function () {
-          var slot = document.getElementById('ll-tool-feedback');
-          if (index >= equationTransactions.length) return;
-          var transaction = equationTransactions[index];
-          var correct = (match(one.value, transaction.first) && match(two.value, transaction.second)) || (match(two.value, transaction.first) && match(one.value, transaction.second));
-          if (!correct) {
-            slot.innerHTML = feedback('error', 'Re-read the business event', 'Identify what the company received or gave up, then identify the obligation, owner claim, revenue, or expense created by that change.');
-            return;
-          }
-          balances[transaction.first[0]] += transaction.amount * transaction.first[1];
-          balances[transaction.second[0]] += transaction.amount * transaction.second[1];
-          index += 1;
-          updateGrid();
-          document.getElementById('ll-equation-score').textContent = index + ' of 7 transactions analyzed';
-          if (index === equationTransactions.length) {
-            document.getElementById('ll-add-transaction').disabled = true;
-            slot.innerHTML = feedback('success', 'Workpaper complete', 'Assets are $15,500 and liabilities plus stockholders’ equity are $15,500. You classified every transaction and the system performed the arithmetic.');
-            markSolved(currentTopic);
-          } else {
-            slot.innerHTML = feedback('success', 'Correct—workpaper updated', 'The equation remains balanced. Continue to the next business event.');
-            loadTransaction();
-          }
-        });
-        loadTransaction();
-        updateGrid();
-      }
-
-      var statementAccounts = [
-        { name: 'Service Revenue', amount: 3500, answer: 'income' },
-        { name: 'Operating Expenses', amount: 1700, answer: 'income' },
-        { name: 'Cash', amount: 10500, answer: 'balance' },
-        { name: 'Accounts Receivable', amount: 2000, answer: 'balance' },
-        { name: 'Equipment', amount: 3000, answer: 'balance' },
-        { name: 'Total Liabilities', amount: 3700, answer: 'balance' },
-        { name: 'Common Stock', amount: 10000, answer: 'balance' },
-        { name: 'Ending Retained Earnings', amount: 1800, answer: 'retained' }
-      ];
-
-      function statementsTool() {
-        var rows = statementAccounts.map(function (account, index) { return '<div class="ll-account-row"><span>' + account.name + '</span><span class="ll-amount">' + money(account.amount) + '</span><select class="form-select ll-statement-select" data-index="' + index + '" aria-label="Statement for ' + account.name + '"><option value="">Place on a statement</option><option value="income">Income statement</option><option value="retained">Retained earnings statement</option><option value="balance">Balance sheet</option></select></div>'; }).join('');
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Statement builder</span></div><h2 class="ll-tool-title">Turn Northstar’s balances into reports</h2>' +
-          workedExample('<p><strong>Worked case:</strong> Rent Expense of $1,200 goes on the <em>income statement</em>, because expenses measure performance during the period. Contrast that with Common Stock, which stays on the <em>balance sheet</em> because it describes a permanent claim on the company at a point in time, not an activity during the period.</p>') +
-          '<div class="ll-case"><strong>Reporting instruction</strong><p>Route each balance to the statement where it is reported. LedgerLab will calculate net income and verify the statement connections.</p></div><div class="ll-account-list">' + rows + '</div><div class="ll-tool-actions"><span class="text-muted">One set of records · three connected outputs</span><button type="button" class="btn btn-primary" id="ll-build-statements">Build statements</button></div><div id="ll-tool-feedback"></div><div class="ll-statement-preview"><section class="ll-statement"><h3>Income Statement</h3><div id="ll-income-preview" class="text-muted">Route revenue and expenses here.</div></section><section class="ll-statement"><h3>Retained Earnings</h3><div id="ll-retained-preview" class="text-muted">Net income will flow here.</div></section><section class="ll-statement"><h3>Balance Sheet</h3><div id="ll-balance-preview" class="text-muted">Route permanent accounts here.</div></section></div>';
-      }
-
-      function bindStatementsTool() {
-        document.getElementById('ll-build-statements').addEventListener('click', function () {
-          var selections = Array.prototype.map.call(toolNode.querySelectorAll('.ll-statement-select'), function (select) { return select.value; });
-          var errors = statementAccounts.filter(function (account, index) { return selections[index] !== account.answer; });
-          var slot = document.getElementById('ll-tool-feedback');
-          if (errors.length) {
-            slot.innerHTML = feedback('error', errors.length + ' balance' + (errors.length === 1 ? '' : 's') + ' need another look', 'Revenues and expenses report performance. Ending retained earnings bridges into stockholders’ equity. Assets, liabilities, and permanent equity belong on the balance sheet.');
-            return;
-          }
-          document.getElementById('ll-income-preview').innerHTML = '<div class="ll-statement-line"><span>Service Revenue</span><span>$3,500</span></div><div class="ll-statement-line"><span>Expenses</span><span>($1,700)</span></div><div class="ll-statement-line ll-statement-total"><span>Net income</span><span>$1,800</span></div>';
-          document.getElementById('ll-retained-preview').innerHTML = '<div class="ll-statement-line"><span>Beginning retained earnings</span><span>$0</span></div><div class="ll-statement-line"><span>Net income</span><span>$1,800</span></div><div class="ll-statement-line ll-statement-total"><span>Ending retained earnings</span><span>$1,800</span></div>';
-          document.getElementById('ll-balance-preview').innerHTML = '<div class="ll-statement-line"><span>Total assets</span><span>$15,500</span></div><div class="ll-statement-line"><span>Total liabilities</span><span>$3,700</span></div><div class="ll-statement-line"><span>Common stock</span><span>$10,000</span></div><div class="ll-statement-line"><span>Retained earnings</span><span>$1,800</span></div><div class="ll-statement-line ll-statement-total"><span>L + SE</span><span>$15,500</span></div>';
-          slot.innerHTML = feedback('success', 'Statements built and connected', 'Net income of $1,800 flows into retained earnings. Ending retained earnings then appears in equity, and the balance sheet balances at $15,500.');
-          markSolved(currentTopic);
-        });
-      }
-
-      var cycleSteps = [
-        'Analyze business transactions',
-        'Journalize the transactions',
-        'Post to the ledger',
-        'Prepare an unadjusted trial balance',
-        'Prepare and post adjusting entries',
-        'Prepare an adjusted trial balance',
-        'Prepare financial statements',
-        'Prepare and post closing entries',
-        'Prepare a post-closing trial balance'
-      ];
-
-      function cycleTool() {
-        var steps = cycleSteps.map(function (step, index) { return '<div class="ll-close-step" data-step="' + index + '"><span class="ll-step-number">' + (index + 1) + '</span><span>' + step + '</span><button type="button" class="btn ll-complete-step" data-index="' + index + '">' + (index === 0 ? 'Complete' : 'Locked') + '</button></div>'; }).join('');
-        return '<div class="ll-panel-top"><span class="ll-chip">Accounting tool</span><span class="ll-eyebrow">Month-end close board</span></div><h2 class="ll-tool-title">Close Northstar’s first accounting period</h2>' +
-          workedExample('<p><strong>Worked case:</strong> "Post to the ledger" must come after "Journalize the transactions" because posting only copies amounts that already exist in the journal into the right accounts — there is nothing to copy until the journal entry is written first. Every step in the cycle depends on the output of the step before it, which is why the board locks steps in order instead of letting you jump ahead.</p>') +
-          '<div class="ll-case"><strong>Controller instruction</strong><p>Complete the accounting cycle in order. Each step unlocks the next deliverable and explains why that deliverable is needed.</p></div><div class="ll-close-board" id="ll-close-board">' + steps + '</div><div class="ll-tool-actions"><span id="ll-cycle-progress" class="text-muted">0 of 9 close steps complete</span><button type="button" class="btn" id="ll-reset-cycle">Reset board</button></div><div id="ll-tool-feedback"></div>';
-      }
-
-      function bindCycleTool() {
-        var completedSteps = 0;
-        var explanations = [
-          'The team identifies the accounts and directions affected by each business event.',
-          'The journal creates a chronological record with equal debits and credits.',
-          'Posting groups the effects by account so balances can be determined.',
-          'The trial balance tests the equality of recorded debit and credit balances.',
-          'Adjustments update accounts for timing and information not yet recorded.',
-          'The adjusted trial balance supplies the final account balances for reporting.',
-          'The statements communicate performance, retained earnings, and financial position.',
-          'Closing transfers temporary results to retained earnings and resets temporary accounts.',
-          'The post-closing trial balance confirms that permanent accounts are ready for the next period.'
-        ];
-        function refresh() {
-          Array.prototype.forEach.call(toolNode.querySelectorAll('.ll-close-step'), function (row, index) {
-            var button = row.querySelector('button');
-            row.classList.toggle('is-complete', index < completedSteps);
-            button.disabled = index !== completedSteps || completedSteps === cycleSteps.length;
-            button.textContent = index < completedSteps ? 'Done' : (index === completedSteps ? 'Complete' : 'Locked');
-          });
-          document.getElementById('ll-cycle-progress').textContent = completedSteps + ' of 9 close steps complete';
-        }
-        toolNode.querySelector('.ll-close-board').addEventListener('click', function (event) {
-          var button = event.target.closest('.ll-complete-step');
-          if (!button || Number(button.getAttribute('data-index')) !== completedSteps) return;
-          var slot = document.getElementById('ll-tool-feedback');
-          slot.innerHTML = feedback('success', 'Step ' + (completedSteps + 1) + ' complete', explanations[completedSteps]);
-          completedSteps += 1;
-          refresh();
-          if (completedSteps === cycleSteps.length) {
-            slot.innerHTML = feedback('success', 'Accounting period closed', 'Northstar’s permanent balances are ready to carry forward, and the temporary accounts are ready for the next period.');
-            markSolved(currentTopic);
-          }
-        });
-        document.getElementById('ll-reset-cycle').addEventListener('click', function () {
-          completedSteps = 0;
-          document.getElementById('ll-tool-feedback').innerHTML = '';
-          refresh();
-        });
-        refresh();
-      }
-
-      function renderTool(topic) {
-        if (topic.tool === 'system') { toolNode.innerHTML = systemTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindSystemTool(); }
-        if (topic.tool === 'systems') { toolNode.innerHTML = systemsTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindSystemsTool(); }
-        if (topic.tool === 'taccount') { toolNode.innerHTML = tAccountTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindTAccountTool(); }
-        if (topic.tool === 'equation') { toolNode.innerHTML = equationTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindEquationTool(); }
-        if (topic.tool === 'statements') { toolNode.innerHTML = statementsTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindStatementsTool(); }
-        if (topic.tool === 'cycle') { toolNode.innerHTML = cycleTool() + '<div class="ll-source-note">' + topic.source + '</div>'; bindCycleTool(); }
-      }
-
-      function setActiveView(view) {
-        classroomNode.setAttribute('data-active-view', view);
-        viewLectureTab.classList.toggle('is-active', view === 'lecture');
-        viewLectureTab.setAttribute('aria-selected', String(view === 'lecture'));
-        viewToolTab.classList.toggle('is-active', view === 'tool');
-        viewToolTab.setAttribute('aria-selected', String(view === 'tool'));
-      }
-
-      function render() {
-        var topic = topics[currentTopic];
-        root.setAttribute('data-topic', String(currentTopic));
-        progressCopy.textContent = 'Topic ' + (currentTopic + 1) + ' of ' + topics.length;
-        timeCopy.textContent = topic.time;
-        currentTitle.textContent = topic.title;
-        coachCopy.textContent = topic.note;
-        noteInput.value = notes[currentTopic] || '';
-        noteStatus.textContent = notes[currentTopic] ? 'Saved with this module.' : 'Notes stay with this module.';
-        progressFill.style.width = ((currentTopic + 1) / topics.length * 100) + '%';
-        renderLecture(topic);
-        renderTool(topic);
-        setActiveView('lecture');
-        var isLast = currentTopic === topics.length - 1;
-        prevButton.disabled = currentTopic === 0;
-        prevButtonMobile.disabled = currentTopic === 0;
-        nextButton.textContent = isLast ? 'Finish LO 2.1 ✓' : 'Complete & Continue';
-        nextButtonMobileLabel.textContent = isLast ? 'Finish ✓' : 'Continue';
-        Array.prototype.forEach.call(navNode.children, function (button, index) {
-          var active = index === currentTopic;
-          button.classList.toggle('btn-primary', active);
-          button.classList.toggle('is-complete', Boolean(solved[index]));
-          button.setAttribute('aria-current', active ? 'step' : 'false');
-        });
-        saveState();
-      }
-
-      function scrollLessonTop() {
-        if (typeof root.scrollTo === 'function') root.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      function isSmallScreen() {
-        return typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 820px)').matches;
-      }
-
-      function openOutline() {
-        root.setAttribute('data-outline', 'open');
-        document.getElementById('ll-outline-toggle').setAttribute('aria-expanded', 'true');
-      }
-
-      function closeOutline() {
-        root.setAttribute('data-outline', 'closed');
-        document.getElementById('ll-outline-toggle').setAttribute('aria-expanded', 'false');
-      }
-
-      function toggleOutline() {
-        if (root.getAttribute('data-outline') === 'open') closeOutline(); else openOutline();
-      }
-
-      function goPrev() { if (currentTopic > 0) { currentTopic -= 1; render(); scrollLessonTop(); } }
-      function goNext() { currentTopic = currentTopic < topics.length - 1 ? currentTopic + 1 : 0; render(); scrollLessonTop(); }
-
-      topics.forEach(function (topic, index) {
-        var button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'btn';
-        button.innerHTML = '<span class="ll-topic-number">' + (index + 1) + '</span><span class="ll-topic-label">' + topic.short + '</span><span class="ll-topic-meta">' + topic.time.replace('About ', '') + ' · exercise</span>';
-        button.setAttribute('aria-label', 'Open topic ' + (index + 1) + ': ' + topic.title);
-        button.addEventListener('click', function () {
-          currentTopic = index;
-          render();
-          if (isSmallScreen()) closeOutline();
-          scrollLessonTop();
-        });
-        navNode.appendChild(button);
+  /* ---------------- Illustration 2.2 interactions ---------------- */
+  Array.prototype.slice.call(document.querySelectorAll('#pane-illustration .taccount-mini')).forEach(function (mini) {
+    var cells = Array.prototype.slice.call(mini.querySelectorAll('.tm-cell'));
+    cells.forEach(function (cell) {
+      cell.addEventListener('click', function () {
+        cells.forEach(function (c) { c.classList.remove('flash'); });
+        // toggle a temporary emphasis + remove the tap hint globally after first use
+        var normal = mini.getAttribute('data-normal');
+        var isNormalCell = cell.classList.contains('is-normal');
+        Array.prototype.slice.call(document.querySelectorAll('.tm-cell.tap-hint')).forEach(function (c) { c.classList.remove('tap-hint'); });
+        cell.style.transition = 'transform .18s ease';
+        cell.style.transform = 'scale(0.97)';
+        setTimeout(function () { cell.style.transform = ''; }, 180);
+        if (isNormalCell) { markDone('illustration'); }
       });
+    });
+  });
 
-      prevButton.addEventListener('click', goPrev);
-      nextButton.addEventListener('click', goNext);
-      prevButtonMobile.addEventListener('click', goPrev);
-      nextButtonMobile.addEventListener('click', goNext);
-      document.getElementById('ll-outline-toggle').addEventListener('click', toggleOutline);
-      document.getElementById('ll-outline-toggle-mobile').addEventListener('click', toggleOutline);
-      document.getElementById('ll-outline-close').addEventListener('click', closeOutline);
-      document.getElementById('ll-outline-backdrop').addEventListener('click', closeOutline);
-      viewLectureTab.addEventListener('click', function () { setActiveView('lecture'); });
-      viewToolTab.addEventListener('click', function () { setActiveView('tool'); });
-      document.getElementById('ll-notes-toggle').addEventListener('click', function () {
-        assistPanel.classList.add('is-open');
-        this.setAttribute('aria-expanded', 'true');
-        noteInput.focus();
-      });
-      document.getElementById('ll-coach-toggle').addEventListener('click', function () {
-        assistPanel.classList.add('is-open');
-        this.setAttribute('aria-expanded', 'true');
-      });
-      document.getElementById('ll-close-assist').addEventListener('click', function () {
-        assistPanel.classList.remove('is-open');
-        document.getElementById('ll-notes-toggle').setAttribute('aria-expanded', 'false');
-        document.getElementById('ll-coach-toggle').setAttribute('aria-expanded', 'false');
-      });
-      document.getElementById('ll-save-note').addEventListener('click', function () {
-        notes[currentTopic] = noteInput.value.trim();
-        noteStatus.textContent = notes[currentTopic] ? 'Saved with this module.' : 'Note cleared.';
-        saveState();
-      });
+  /* ================= T-ACCOUNT LEDGER TOOL ================= */
+  var LEDGER_TXNS = [
+    {
+      jno: 'GL-01', date: 'Jun 1',
+      desc: 'The company issues common stock to owners for $10,000 cash.',
+      amount: 10000,
+      accounts: [
+        { id: 'cash', name: 'Cash', type: 'Asset', side: 'debit' },
+        { id: 'cs', name: 'Common Stock', type: 'Equity', side: 'credit' }
+      ],
+      why: 'Cash (an asset) increased, so it is debited. Common Stock (equity) increased, so it is credited.'
+    },
+    {
+      jno: 'GL-02', date: 'Jun 3',
+      desc: 'Purchased office equipment for $4,000, paying cash.',
+      amount: 4000,
+      accounts: [
+        { id: 'equip', name: 'Equipment', type: 'Asset', side: 'debit' },
+        { id: 'cash', name: 'Cash', type: 'Asset', side: 'credit' }
+      ],
+      why: 'Equipment (asset) increased — debit. Cash (asset) decreased — credit. Two assets moved in opposite directions.'
+    },
+    {
+      jno: 'GL-03', date: 'Jun 9',
+      desc: 'Performed services for a client and received $2,500 in cash.',
+      amount: 2500,
+      accounts: [
+        { id: 'cash', name: 'Cash', type: 'Asset', side: 'debit' },
+        { id: 'rev', name: 'Service Revenue', type: 'Revenue', side: 'credit' }
+      ],
+      why: 'Cash (asset) increased — debit. Service Revenue increased — and revenue increases on the credit side.'
+    },
+    {
+      jno: 'GL-04', date: 'Jun 14',
+      desc: 'Purchased supplies for $600 on account (to pay later).',
+      amount: 600,
+      accounts: [
+        { id: 'sup', name: 'Supplies', type: 'Asset', side: 'debit' },
+        { id: 'ap', name: 'Accounts Payable', type: 'Liability', side: 'credit' }
+      ],
+      why: 'Supplies (asset) increased — debit. Accounts Payable (a liability) increased — and liabilities increase on the credit side.'
+    }
+  ];
+  var lpIndex = 0;
+  var lpPosted = {}; // accountId -> 'debit' | 'credit' | null
 
-      loadState();
-      if (currentTopic < 0 || currentTopic >= topics.length) currentTopic = 0;
-      if (isSmallScreen()) closeOutline();
-      render();
-      refreshOutlineState();
+  function renderLedger() {
+    var t = LEDGER_TXNS[lpIndex];
+    lpPosted = {};
+    $('lp-jno').textContent = t.jno;
+    $('lp-steps').textContent = 'Entry ' + (lpIndex + 1) + ' of ' + LEDGER_TXNS.length;
+    $('lp-date').textContent = t.date;
+    $('lp-desc').textContent = t.desc;
+    $('lp-amt').textContent = money(t.amount);
+    var host = $('lp-taccounts');
+    host.innerHTML = t.accounts.map(function (a) {
+      return '<div class="taccount" data-acct="' + a.id + '">' +
+        '<div class="ta-name"><b>' + a.name + '</b><span class="ty">' + a.type + '</span></div>' +
+        '<div class="ta-t">' +
+          '<div class="ta-side debit" data-acct="' + a.id + '" data-side="debit"><span class="sl">Debit</span><span class="ta-post">+</span></div>' +
+          '<div class="ta-side credit" data-acct="' + a.id + '" data-side="credit"><span class="sl">Credit</span><span class="ta-post">+</span></div>' +
+        '</div></div>';
+    }).join('');
+    Array.prototype.slice.call(host.querySelectorAll('.ta-side')).forEach(function (side) {
+      side.addEventListener('click', function () { postSide(side.getAttribute('data-acct'), side.getAttribute('data-side')); });
+    });
+    $('lp-feedback').className = 'gp-feedback';
+    $('lp-feedback').innerHTML = '';
+    $('lp-next-wrap').style.display = 'none';
+    updateBeam();
+  }
+  function postSide(acct, side) {
+    var t = LEDGER_TXNS[lpIndex];
+    lpPosted[acct] = (lpPosted[acct] === side) ? null : side;
+    var amount = t.amount;
+    var host = $('lp-taccounts');
+    Array.prototype.slice.call(host.querySelectorAll('.taccount[data-acct="' + acct + '"] .ta-side')).forEach(function (s) {
+      var thisSide = s.getAttribute('data-side');
+      var on = lpPosted[acct] === thisSide;
+      s.classList.toggle('filled', on);
+      s.querySelector('.ta-post').textContent = on ? money(amount) : '+';
+    });
+    updateBeam();
+  }
+  function ledgerTotals() {
+    var t = LEDGER_TXNS[lpIndex]; var dr = 0, cr = 0;
+    t.accounts.forEach(function (a) {
+      if (lpPosted[a.id] === 'debit') dr += t.amount;
+      if (lpPosted[a.id] === 'credit') cr += t.amount;
+    });
+    return { dr: dr, cr: cr };
+  }
+  function updateBeam() {
+    var tot = ledgerTotals();
+    $('beam-dr').textContent = money(tot.dr);
+    $('beam-cr').textContent = money(tot.cr);
+    var diff = tot.dr - tot.cr;
+    var max = Math.max(LEDGER_TXNS[lpIndex].amount, 1);
+    var norm = Math.max(-1, Math.min(1, diff / max));
+    var tilt = norm * 9; // degrees (credit side heavier tips right down)
+    var bar = $('beam-bar');
+    bar.style.setProperty('--tilt', (tilt) + 'deg');
+    // pans drop with weight
+    var lDrop = norm < 0 ? Math.min(14, -norm * 14) : 0;
+    var rDrop = norm > 0 ? Math.min(14, norm * 14) : 0;
+    $('beam-pan-l').style.setProperty('--pan-l', lDrop + 'px');
+    $('beam-pan-r').style.setProperty('--pan-r', rDrop + 'px');
+    var st = $('beam-status');
+    var bothPosted = LEDGER_TXNS[lpIndex].accounts.every(function (a) { return !!lpPosted[a.id]; });
+    if (tot.dr === 0 && tot.cr === 0) {
+      st.className = 'beam-status unbal'; st.textContent = 'Post both sides to test the balance';
+    } else if (tot.dr === tot.cr && bothPosted) {
+      st.className = 'beam-status bal'; st.innerHTML = '&#9878; In balance · Debits = Credits';
+    } else {
+      st.className = 'beam-status unbal'; st.textContent = 'Out of balance — keep posting';
+    }
+  }
+  function checkLedger() {
+    var t = LEDGER_TXNS[lpIndex];
+    var allPosted = t.accounts.every(function (a) { return !!lpPosted[a.id]; });
+    var fb = $('lp-feedback');
+    if (!allPosted) {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div>Post <b>both</b> accounts before checking. Every transaction has a dual effect — one debit and one credit.</div>';
+      return;
+    }
+    var correct = t.accounts.every(function (a) { return lpPosted[a.id] === a.side; });
+    var tot = ledgerTotals();
+    if (correct && tot.dr === tot.cr) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">&#10003;</span><div><b>Correct — and it balances.</b> ' + t.why + '</div>';
+      markDone('ledger');
+      if (lpIndex < LEDGER_TXNS.length - 1) {
+        $('lp-next-wrap').style.display = 'flex';
+      } else {
+        $('lp-next-wrap').style.display = 'none';
+        fb.innerHTML = '<span class="fi">&#10003;</span><div><b>All four entries posted correctly.</b> You just kept the ledger in balance across every transaction — that is the double-entry system at work.</div>';
+      }
+    } else if (tot.dr === tot.cr) {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div><b>It balances, but the sides are switched.</b> Balancing proves the arithmetic, not the judgment. Re-check which account increased and use its normal side.</div>';
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div>Not balanced yet. Each account here changes by ' + money(t.amount) + ' — one on the debit side, one on the credit side.</div>';
+    }
+  }
+  $('lp-check').addEventListener('click', checkLedger);
+  $('lp-reset').addEventListener('click', function () { renderLedger(); });
+  $('lp-next').addEventListener('click', function () {
+    if (lpIndex < LEDGER_TXNS.length - 1) { lpIndex++; renderLedger(); panes.ledger.scrollTop = 0; }
+  });
 
-      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('sw.js').catch(function () { /* offline support is optional */ });
+  /* ================= GUIDED PRACTICE ================= */
+  var GP_TXNS = [
+    {
+      date: 'Jul 1',
+      txn: 'The owner invests $15,000 cash into the business in exchange for common stock.',
+      accounts: [
+        { name: 'Cash', family: 'Asset', dir: 'increase', side: 'debit', amount: 15000 },
+        { name: 'Common Stock', family: 'Equity', dir: 'increase', side: 'credit', amount: 15000 }
+      ],
+      pickPool: ['Cash', 'Common Stock', 'Service Revenue', 'Accounts Payable'],
+      correctPicks: ['Cash', 'Common Stock']
+    },
+    {
+      date: 'Jul 8',
+      txn: 'The business pays $900 cash for this month’s office rent.',
+      accounts: [
+        { name: 'Rent Expense', family: 'Expense', dir: 'increase', side: 'debit', amount: 900 },
+        { name: 'Cash', family: 'Asset', dir: 'decrease', side: 'credit', amount: 900 }
+      ],
+      pickPool: ['Rent Expense', 'Cash', 'Common Stock', 'Notes Payable'],
+      correctPicks: ['Rent Expense', 'Cash']
+    }
+  ];
+  var gpTxnIndex = 0;
+  var gpStep = 0;     // 0 identify, 1 classify, 2 direction, 3 side, 4 done
+  var gpChosen = { picks: [], classify: {}, dir: {}, side: {} };
+  var gpStepDefs = ['Identify', 'Classify', 'Direction', 'Debit/Credit', 'Record'];
+
+  function gpRenderSteps() {
+    var host = $('gp-steps'); host.innerHTML = '';
+    for (var i = 0; i < gpStepDefs.length; i++) {
+      var d = document.createElement('div');
+      d.className = 'gp-dot' + (i < gpStep ? ' done' : (i === gpStep ? ' on' : ''));
+      host.appendChild(d);
+    }
+  }
+  function gpReset(full) {
+    if (full) { gpChosen = { picks: [], classify: {}, dir: {}, side: {} }; gpStep = 0; }
+    var t = GP_TXNS[gpTxnIndex];
+    $('gp-date').textContent = t.date;
+    $('gp-txn').textContent = t.txn;
+    $('gp-restart').style.display = 'none';
+    gpRenderSteps();
+    gpRenderStep();
+  }
+  function fb(el, kind, html) {
+    el.className = 'gp-feedback ' + kind + ' show';
+    el.innerHTML = '<span class="fi">' + (kind === 'good' ? '&#10003;' : '!') + '</span><div>' + html + '</div>';
+  }
+  function gpClearFeedback() { $('gp-feedback').className = 'gp-feedback'; $('gp-feedback').innerHTML = ''; }
+
+  function gpRenderStep() {
+    var t = GP_TXNS[gpTxnIndex];
+    var q = $('gp-q'), sub = $('gp-sub'), opts = $('gp-opts'), cont = $('gp-continue');
+    var entry = $('gp-entry'); entry.className = 'gp-entry'; entry.innerHTML = '';
+    gpClearFeedback();
+    opts.className = 'gp-opts'; opts.innerHTML = '';
+    cont.disabled = true; cont.textContent = 'Continue';
+    gpRenderSteps();
+
+    if (gpStep === 0) {
+      q.textContent = 'Which accounts does this transaction affect?';
+      sub.textContent = 'Select the two accounts that change. A transaction always touches at least two.';
+      opts.innerHTML = t.pickPool.map(function (name) {
+        return '<button class="opt" data-name="' + name + '"><span class="ob"></span>' + name + '</button>';
+      }).join('');
+      Array.prototype.slice.call(opts.querySelectorAll('.opt')).forEach(function (o) {
+        o.addEventListener('click', function () {
+          var name = o.getAttribute('data-name');
+          var i = gpChosen.picks.indexOf(name);
+          if (i >= 0) { gpChosen.picks.splice(i, 1); o.classList.remove('sel'); o.querySelector('.ob').textContent = ''; }
+          else if (gpChosen.picks.length < 2) { gpChosen.picks.push(name); o.classList.add('sel'); o.querySelector('.ob').textContent = gpChosen.picks.length; }
+          cont.disabled = gpChosen.picks.length !== 2;
+          renumber();
+        });
+      });
+      function renumber() {
+        Array.prototype.slice.call(opts.querySelectorAll('.opt')).forEach(function (o) {
+          var n = o.getAttribute('data-name'); var idx = gpChosen.picks.indexOf(n);
+          o.querySelector('.ob').textContent = idx >= 0 ? (idx + 1) : '';
         });
       }
-    }());
-  </script>
+    }
+    else if (gpStep === 1) {
+      var acct = t.accounts[gpClassifyIndex()];
+      q.textContent = 'What kind of account is “' + acct.name + '”?';
+      sub.textContent = 'Classify it into an account family. Step ' + (gpClassifyIndex() + 1) + ' of ' + t.accounts.length + '.';
+      var fams = ['Asset', 'Liability', 'Equity', 'Revenue', 'Expense'];
+      opts.className = 'gp-opts grid';
+      opts.innerHTML = fams.map(function (f) { return '<button class="opt" data-fam="' + f + '"><span class="ob"></span>' + f + '</button>'; }).join('');
+      bindSingle(opts, function (val, o) {
+        var ok = val === acct.family;
+        lockOptions(opts, o, ok, function (btn) { return btn.getAttribute('data-fam') === acct.family; });
+        if (ok) { gpChosen.classify[acct.name] = val; fb($('gp-feedback'), 'good', '<b>' + acct.name + '</b> is ' + article(acct.family) + ' <b>' + acct.family + '</b> account.'); cont.disabled = false; }
+        else { fb($('gp-feedback'), 'bad', 'Not quite. Think about what ' + acct.name.toLowerCase() + ' represents to the business, then look at the highlighted answer.'); cont.disabled = false; gpChosen.classify[acct.name] = acct.family; }
+      });
+    }
+    else if (gpStep === 2) {
+      var acctD = t.accounts[gpDirIndex()];
+      q.textContent = 'Did “' + acctD.name + '” increase or decrease?';
+      sub.textContent = 'Read the transaction again and decide the direction. Step ' + (gpDirIndex() + 1) + ' of ' + t.accounts.length + '.';
+      opts.className = 'gp-opts grid';
+      opts.innerHTML = ['increase', 'decrease'].map(function (d) {
+        return '<button class="opt" data-dir="' + d + '"><span class="ob"></span>' + (d.charAt(0).toUpperCase() + d.slice(1)) + '</button>';
+      }).join('');
+      bindSingle(opts, function (val, o) {
+        var ok = val === acctD.dir;
+        lockOptions(opts, o, ok, function (btn) { return btn.getAttribute('data-dir') === acctD.dir; });
+        gpChosen.dir[acctD.name] = acctD.dir;
+        cont.disabled = false;
+        if (ok) fb($('gp-feedback'), 'good', 'Right — <b>' + acctD.name + '</b> ' + acctD.dir + 's here.');
+        else fb($('gp-feedback'), 'bad', 'Look again: in this transaction, <b>' + acctD.name + '</b> ' + acctD.dir + 's.');
+      });
+    }
+    else if (gpStep === 3) {
+      var acctS = t.accounts[gpSideIndex()];
+      var fam = acctS.family, dir = acctS.dir;
+      q.textContent = 'So do we debit or credit “' + acctS.name + '”?';
+      sub.textContent = fam + ' · ' + dir + '. Use Illustration 2.2 to choose the side.';
+      opts.className = 'gp-opts grid';
+      opts.innerHTML =
+        '<button class="opt debit-opt" data-side="debit"><span class="ob"></span>Debit</button>' +
+        '<button class="opt credit-opt" data-side="credit"><span class="ob"></span>Credit</button>';
+      bindSingle(opts, function (val, o) {
+        var ok = val === acctS.side;
+        lockOptions(opts, o, ok, function (btn) { return btn.getAttribute('data-side') === acctS.side; });
+        gpChosen.side[acctS.name] = acctS.side;
+        cont.disabled = false;
+        var reason = normalReason(fam);
+        if (ok) fb($('gp-feedback'), 'good', '<b>' + cap(acctS.side) + '.</b> ' + reason + ' Since it ' + dir + 's, we ' + acctS.side + ' it.');
+        else fb($('gp-feedback'), 'bad', reason + ' Since <b>' + acctS.name + '</b> ' + dir + 's, the correct side is <b>' + acctS.side + '</b>.');
+      });
+    }
+    else if (gpStep === 4) {
+      q.textContent = 'The completed journal entry';
+      sub.textContent = 'You built this from the analysis — debits first, then credits, and it balances.';
+      opts.innerHTML = '';
+      var dr = t.accounts.filter(function (a) { return a.side === 'debit'; });
+      var cr = t.accounts.filter(function (a) { return a.side === 'credit'; });
+      var rows = '<div class="je-head"><span>Account</span><span class="h-d">Debit</span><span class="h-c">Credit</span></div>';
+      dr.forEach(function (a) { rows += '<div class="je-row"><span class="je-acct">' + a.name + '</span><span class="je-d">' + money(a.amount) + '</span><span class="je-c"></span></div>'; });
+      cr.forEach(function (a) { rows += '<div class="je-row cr"><span class="je-acct">' + a.name + '</span><span class="je-d"></span><span class="je-c">' + money(a.amount) + '</span></div>'; });
+      entry.className = 'gp-entry show';
+      entry.innerHTML = '<div class="ge-title"><span>&#10003;</span> Entry recorded &amp; balanced</div>' + rows;
+      fb($('gp-feedback'), 'good', 'Debits ' + money(sum(dr)) + ' = Credits ' + money(sum(cr)) + '. That equality is the proof built into every double-entry transaction.');
+      cont.disabled = false;
+      cont.textContent = (gpTxnIndex < GP_TXNS.length - 1) ? 'Next transaction →' : 'Finish practice';
+      markDone('practice');
+      $('gp-restart').style.display = (gpTxnIndex < GP_TXNS.length - 1) ? 'none' : 'block';
+    }
+  }
+  function sum(list) { return list.reduce(function (a, b) { return a + b.amount; }, 0); }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function article(w) { return /^[AEIOU]/i.test(w) ? 'an' : 'a'; }
+  function normalReason(fam) {
+    if (fam === 'Asset') return 'Assets have a normal debit balance, so they increase with debits.';
+    if (fam === 'Expense') return 'Expenses have a normal debit balance, so they increase with debits.';
+    if (fam === 'Liability') return 'Liabilities have a normal credit balance, so they increase with credits.';
+    if (fam === 'Equity') return 'Equity accounts have a normal credit balance, so they increase with credits.';
+    if (fam === 'Revenue') return 'Revenues have a normal credit balance, so they increase with credits.';
+    return '';
+  }
+  // per-step sub-index counters (which of the 2 accounts we're on)
+  var gpSub = { classify: 0, dir: 0, side: 0 };
+  function gpClassifyIndex() { return gpSub.classify; }
+  function gpDirIndex() { return gpSub.dir; }
+  function gpSideIndex() { return gpSub.side; }
+
+  function bindSingle(container, handler) {
+    Array.prototype.slice.call(container.querySelectorAll('.opt')).forEach(function (o) {
+      o.addEventListener('click', function () {
+        if (container.getAttribute('data-locked')) return;
+        container.setAttribute('data-locked', '1');
+        var val = o.getAttribute('data-fam') || o.getAttribute('data-dir') || o.getAttribute('data-side');
+        handler(val, o);
+      });
+    });
+  }
+  function lockOptions(container, chosen, ok, isAnswer) {
+    Array.prototype.slice.call(container.querySelectorAll('.opt')).forEach(function (o) {
+      o.classList.add('dim');
+      if (isAnswer(o)) { o.classList.remove('dim'); o.classList.add('correct'); o.querySelector('.ob').textContent = '✓'; }
+    });
+    if (!ok) { chosen.classList.remove('dim'); chosen.classList.add('wrong'); chosen.querySelector('.ob').textContent = '✗'; }
+  }
+
+  $('gp-continue').addEventListener('click', function () {
+    var t = GP_TXNS[gpTxnIndex];
+    if (gpStep === 0) {
+      // validate picks — block advancing until the right pair is chosen
+      var ok = (gpChosen.picks.slice().sort().join('|') === t.correctPicks.slice().sort().join('|'));
+      if (!ok) {
+        fb($('gp-feedback'), 'bad', 'Those aren’t the two accounts that change here. Re-read the transaction — the pair you want is <b>' + t.correctPicks.join('</b> and <b>') + '</b>.');
+        return;
+      }
+      gpStep = 1; gpSub = { classify: 0, dir: 0, side: 0 };
+      gpRenderStep(); return;
+    }
+    if (gpStep === 1) {
+      if (gpSub.classify < t.accounts.length - 1) { gpSub.classify++; gpRenderStep(); return; }
+      gpStep = 2; gpRenderStep(); return;
+    }
+    if (gpStep === 2) {
+      if (gpSub.dir < t.accounts.length - 1) { gpSub.dir++; gpRenderStep(); return; }
+      gpStep = 3; gpRenderStep(); return;
+    }
+    if (gpStep === 3) {
+      if (gpSub.side < t.accounts.length - 1) { gpSub.side++; gpRenderStep(); return; }
+      gpStep = 4; gpRenderStep(); return;
+    }
+    if (gpStep === 4) {
+      if (gpTxnIndex < GP_TXNS.length - 1) { gpTxnIndex++; gpReset(true); panes.practice.scrollTop = 0; }
+      else { markDone('practice'); goScreen('home'); }
+    }
+  });
+  $('gp-restart').addEventListener('click', function () { gpTxnIndex = 0; gpReset(true); panes.practice.scrollTop = 0; });
+
+  /* ---------------- boot ---------------- */
+  renderLedger();
+  gpReset(true);
+  updateProgress();
+  updateSegChecks();
+  setTimeout(moveThumb, 60);
+})();
+</script>
 </body>
 </html>
