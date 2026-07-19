@@ -1501,6 +1501,53 @@
   .m2c-tb .tot td.amt { color: var(--warn); }
   .m2c-tb .verdict { text-align: center; margin-top: 8px; font-size: 12.5px; font-weight: 700; }
   .m2c-tb .verdict.ok { color: var(--good); } .m2c-tb .verdict.no { color: var(--ink-faint); }
+
+  /* ============================================================
+     MODULE 3 — Adjusting Entries: introduction
+     ============================================================ */
+  .module-head.m3 .mod-no { background: linear-gradient(150deg, var(--teal), #0b5c54); color: #eafaf7; }
+  .m3-hero {
+    position: relative; overflow: hidden; padding: 26px 20px 22px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(15,109,99,.28), transparent 55%),
+      linear-gradient(160deg, #0c2b28 0%, #10352f 55%, #0a201d 100%);
+    color: #eef5f2;
+  }
+  .m3-hero .eyebrow { color: rgba(210,235,225,.9); }
+  .m3-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 7.5vw, 33px); line-height: 1.1; margin-top: 8px; letter-spacing: -.01em; text-wrap: balance; }
+  .m3-hero .lo-callout { background: rgba(255,255,255,.07); border-left-color: var(--teal); }
+  .m3-hero .lo-callout .lo-badge { background: var(--teal); }
+  .m3-hero .lo-callout .lo-t { color: rgba(210,235,225,.9); }
+
+  .m3-reason { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); padding: 13px 14px; box-shadow: var(--shadow); }
+  .m3-reason + .m3-reason { margin-top: 10px; }
+  .m3-reason .rn { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; background: var(--teal); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .m3-reason .rb b { font-size: 13.5px; color: var(--ink); }
+  .m3-reason .rb p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin-top: 3px; }
+  .m3-reason .rb .ex { font-size: 11.5px; color: var(--teal); font-weight: 600; margin-top: 4px; }
+
+  /* which-reason classifier */
+  .wr-list { display: flex; flex-direction: column; gap: 11px; }
+  .wr-card { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); padding: 12px 14px; }
+  .wr-ev { font-size: 13.5px; font-weight: 650; color: var(--ink); margin-bottom: 9px; }
+  .wr-opts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .wr-opt { cursor: pointer; border: 1.5px solid var(--line); background: var(--card); border-radius: 9px; padding: 9px 4px; font-size: 11.5px; font-weight: 650; color: var(--ink-soft); transition: all .14s ease; }
+  .wr-opt:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .wr-opt.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .wr-opt.no { border-color: var(--warn); background: var(--warn-bg); color: var(--warn); }
+  .wr-opt.reveal { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .wr-why { display: none; margin-top: 9px; font-size: 12px; line-height: 1.45; color: var(--ink-soft); }
+  .wr-card.answered .wr-why { display: block; }
+  .wr-card.answered .wr-why b { color: var(--ink); }
+
+  /* deferrals/accruals preview */
+  .m3-prev { display: flex; flex-direction: column; gap: 10px; }
+  .m3-prevcard { border: 1px solid var(--line); border-left: 4px solid var(--pc, var(--teal)); border-radius: var(--r-md); background: var(--card); padding: 13px 14px; box-shadow: var(--shadow); }
+  .m3-prevcard.def { --pc: var(--asset); } .m3-prevcard.acc { --pc: var(--credit); }
+  .m3-prevcard .h { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .m3-prevcard .h .tag { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 999px; background: color-mix(in srgb, var(--pc) 16%, transparent); color: var(--pc); }
+  .m3-prevcard p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+  .m3-prevcard p b { color: var(--ink); }
 </style>
 
 <div id="fa-app">
@@ -1709,6 +1756,39 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+
+            <div class="module-head m3">
+              <span class="mod-no">3</span>
+              <div class="mod-body"><b>Adjusting Entries</b><span>Learning Objective 3 · deferrals &amp; accruals</span></div>
+            </div>
+            <button class="lesson-card" id="start-m3intro-card" style="border-color: color-mix(in srgb, var(--teal) 34%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--teal) 14%,transparent);color:var(--teal);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--teal) 40%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M12 20v-6M12 8V4M6 20v-4M6 10V4M18 20v-8M18 6V4M3 14h6M3 10h6M9 16h6M15 12h6"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Introduction</b>
+                <span>Why the trial balance isn't ready to report</span>
+              </span>
+              <span class="pill-mini ready" id="m3intro-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">1</span>
+              <span class="lbody"><b>Deferrals</b><span>Prepaid expenses &amp; unearned revenues</span></span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">2</span>
+              <span class="lbody"><b>Accruals</b><span>Accrued revenues &amp; accrued expenses</span></span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">3</span>
+              <span class="lbody"><b>The Adjusted Trial Balance</b><span>Ready to prepare the statements</span></span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
           </div>
         </div>
 
@@ -3354,6 +3434,81 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 3 INTRODUCTION — ADJUSTING ENTRIES ============== -->
+    <section class="fa-screen" id="screen-m3intro" aria-label="Module 3 — Introduction">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m3-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m3-scroll">
+        <header class="m3-hero">
+          <div class="eyebrow">Module 3 · Section 2.3</div>
+          <h1>Adjusting Entries</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">3</span>
+            <div>
+              <div class="lo-t">Learning Objective</div>
+              <div class="lo-d">Identify and prepare adjusting entries.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="cycle-wrap" aria-label="The accounting cycle — adjusting"><div class="cycle" id="m3-cycle"></div></div>
+
+        <div class="m2-body">
+          <section class="m2-sec">
+            <h2>Why adjust at all?</h2>
+            <p><b>Adjusting entries</b> make sure revenues are recorded in the period services are performed and expenses in the period they are incurred — the <b>revenue recognition</b> and <b>expense recognition</b> principles. They let the balance sheet report the right assets, liabilities, and equity at the statement date, and the income statement report the proper revenues and expenses.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Why the trial balance isn't ready</h2>
+            <p>The initial trial balance may not be up to date or complete, for three reasons:</p>
+            <div style="margin-top:12px;">
+              <div class="m3-reason"><span class="rn">1</span><div class="rb"><b>Not recorded daily</b><p>Some events aren't recorded as they happen because it isn't efficient.</p><div class="ex">e.g. supplies used up · salaries earned by employees</div></div></div>
+              <div class="m3-reason"><span class="rn">2</span><div class="rb"><b>Expire with time</b><p>Some costs expire with the passage of time, not through daily transactions.</p><div class="ex">e.g. depreciation · rent · insurance</div></div></div>
+              <div class="m3-reason"><span class="rn">3</span><div class="rb"><b>Unrecorded items</b><p>Some items simply haven't been recorded yet.</p><div class="ex">e.g. a utility bill that arrives next period</div></div></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Which reason needs an adjustment?</h2>
+            <p>Match each event to the reason it slipped through. Tap your answer.</p>
+            <div class="wr-list" id="m3-wr" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m3-wr-done" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Two families of adjustment</h2>
+            <p>Every adjusting entry is either a deferral or an accrual — the two lessons coming next.</p>
+            <div class="m3-prev" style="margin-top:12px;">
+              <div class="m3-prevcard def"><div class="h"><span class="tag">Deferrals</span></div><p>Cash already changed hands, but the revenue or expense belongs to <b>this</b> period. Examples: <b>prepaid expenses</b> and <b>unearned revenues</b>.</p></div>
+              <div class="m3-prevcard acc"><div class="h"><span class="tag">Accruals</span></div><p>The revenue or expense happened, but no cash or entry yet. Examples: <b>accrued revenues</b> and <b>accrued expenses</b>.</p></div>
+            </div>
+          </section>
+
+          <div class="ill-note" style="margin-top:6px;">
+            <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+            <div>Adjustments are prepared <b>every time</b> a company reports — and usually by a skilled accountant. Companies often prepare them after the balance sheet date but <b>date the entries as of the balance sheet date</b>.</div>
+          </div>
+        </div>
+
+        <div class="m2-foot">
+          <div class="m2-next">
+            <div><div class="up">Up next in Module 3</div><b>Deferrals</b> — prepaid expenses &amp; unearned revenues.</div>
+          </div>
+          <button class="cta ghost" id="m3-home">Back to course</button>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -3372,7 +3527,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -3391,9 +3546,10 @@
       if (p.sumDone) state.sumDone = true;
       if (p.tbDone) state.tbDone = true;
       if (p.m2capDone) state.m2capDone = true;
+      if (p.m3IntroDone) state.m3IntroDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -3418,7 +3574,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -3447,7 +3603,8 @@
       { done: function () { return state.rpiDone; }, open: function () { openRpi(); }, label: 'The Recording Process Illustrated' },
       { done: function () { return state.sumDone; }, open: function () { openSum(); }, label: 'Summary: Journalizing & Posting' },
       { done: function () { return state.tbDone; }, open: function () { openTb(); }, label: 'The Trial Balance' },
-      { done: function () { return state.m2capDone; }, open: function () { openM2cap(); }, label: 'the Module 2 Capstone' }
+      { done: function () { return state.m2capDone; }, open: function () { openM2cap(); }, label: 'the Module 2 Capstone' },
+      { done: function () { return state.m3IntroDone; }, open: function () { openM3Intro(); }, label: 'Module 3 · Introduction' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -5386,6 +5543,63 @@
   $('start-m2cap-card').addEventListener('click', openM2cap);
   $('m2c-back').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 3 — Introduction (Adjusting Entries)
+     ============================================================ */
+  var M3_WR = [
+    { ev: 'Supplies were used up during the month.', r: 1, why: 'Using supplies happens continuously — it is not efficient to record each time, so it is adjusted at period-end.' },
+    { ev: 'Employees earned wages that have not been paid.', r: 1, why: 'Wages are earned day by day but recorded when paid, so the earned-but-unpaid amount is adjusted.' },
+    { ev: 'One month of a prepaid insurance policy expired.', r: 2, why: 'Insurance expires with the passage of time, not through a daily transaction.' },
+    { ev: 'The delivery truck depreciated over the month.', r: 2, why: 'Depreciation is the cost of equipment expiring with time.' },
+    { ev: 'A utility bill for the month has not yet arrived.', r: 3, why: 'The cost is real but simply unrecorded until the bill comes next period.' }
+  ];
+  var m3Answered = {};
+  function renderM3wr() {
+    m3Answered = {};
+    $('m3-wr').innerHTML = M3_WR.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div>' +
+        '<div class="wr-opts">' +
+          '<button class="wr-opt" data-r="1">1 · Not daily</button>' +
+          '<button class="wr-opt" data-r="2">2 · Expires</button>' +
+          '<button class="wr-opt" data-r="3">3 · Unrecorded</button>' +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m3-wr').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M3_WR[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var r = parseInt(btn.getAttribute('data-r'), 10);
+          var ok = r === e.r;
+          m3Answered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-r="' + e.r + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>Reason ' + e.r + '.</b> ' + e.why;
+          checkM3wr();
+        });
+      });
+    });
+    $('m3-wr-done').className = 'gp-feedback'; $('m3-wr-done').innerHTML = '';
+  }
+  function checkM3wr() {
+    if (Object.keys(m3Answered).length === M3_WR.length) {
+      var allRight = M3_WR.every(function (e, i) { return m3Answered[i]; });
+      var el = $('m3-wr-done');
+      el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+      el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+        ? '<b>Exactly.</b> Each of these needs an adjusting entry before the statements are right.'
+        : 'Review the three reasons above — every unrecorded or expired item needs an adjustment.') + '</div>';
+      if (!state.m3IntroDone) { state.m3IntroDone = true; save(); updateM3Pill(); }
+    }
+  }
+  function updateM3Pill() { var pill = $('m3intro-pill'); if (pill) pill.textContent = state.m3IntroDone ? 'Done' : 'Start'; }
+  function openM3Intro() { goScreen('m3intro'); $('m3-scroll').scrollTop = 0; }
+  $('start-m3intro-card').addEventListener('click', openM3Intro);
+  $('m3-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -5439,6 +5653,9 @@
   m2cRenderEntry();
   m2cRenderLive();
   updateM2capPill();
+  renderCycleInto('m3-cycle', 4);
+  renderM3wr();
+  updateM3Pill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
