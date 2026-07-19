@@ -1425,6 +1425,38 @@
   .sum-note { margin-top: 14px; display: flex; gap: 10px; align-items: flex-start; background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 13px 14px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
   .sum-note b { color: var(--ink); }
   .sum-note .rf { flex: 0 0 auto; font-family: var(--mono); font-weight: 800; font-size: 11px; padding: 3px 8px; border-radius: 6px; background: var(--debit-bg); color: var(--debit); }
+
+  /* ============================================================
+     MODULE 2 · Lesson 7 — The Trial Balance (Illustration 2.23)
+     ============================================================ */
+  .tb-sheet { border: 1.5px solid color-mix(in srgb, var(--teal) 40%, var(--line)); border-radius: var(--r-lg); background: color-mix(in srgb, var(--teal) 6%, var(--card)); box-shadow: var(--shadow); padding: 16px 14px; }
+  .tb-title { text-align: center; margin-bottom: 12px; }
+  .tb-title b { font-family: var(--serif); font-size: 15.5px; font-weight: 600; display: block; }
+  .tb-title span { font-size: 12px; color: var(--ink-soft); display: block; }
+  .tb-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .tb-table th { font-size: 10px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-faint); padding: 4px 6px; }
+  .tb-table th.amt, .tb-table td.amt { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; width: 84px; }
+  .tb-table td { padding: 4px 6px; color: var(--ink); }
+  .tb-table td.acct { color: var(--ink); }
+  .tb-table td.amt.d { color: var(--debit); } .tb-table td.amt.c { color: var(--credit); }
+  .tb-totrow td { border-top: 2px solid var(--ink); padding-top: 6px; font-weight: 800; }
+  .tb-totrow td.amt { color: var(--warn); position: relative; }
+  .tb-tot { opacity: 0; transition: opacity .45s ease; }
+  .tb-tot.on { opacity: 1; }
+  .tb-tot .dbl { display: inline-block; border-bottom: 3px double currentColor; padding-bottom: 1px; }
+  .tb-prove { text-align: center; margin-top: 10px; font-size: 13px; font-weight: 700; display: none; }
+  .tb-prove.on { display: block; color: var(--good); }
+
+  .tbe-list { display: flex; flex-direction: column; gap: 9px; }
+  .tbe-card { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .tbe-top { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; }
+  .tbe-top .n { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; background: var(--warn-bg); color: var(--warn); display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+  .tbe-top .t { flex: 1 1 auto; font-size: 13px; font-weight: 650; color: var(--ink); }
+  .tbe-top .chev { color: var(--ink-faint); transition: transform .2s ease; }
+  .tbe-card.open .tbe-top .chev { transform: rotate(90deg); }
+  .tbe-why { display: none; padding: 0 14px 12px 46px; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+  .tbe-card.open .tbe-why { display: block; }
+  .tbe-why b { color: var(--good); }
 </style>
 
 <div id="fa-app">
@@ -1609,11 +1641,17 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">7</span>
-              <span class="lbody"><b>The Trial Balance</b><span>Proving the books before you report</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+            <button class="lesson-card" id="start-tb-card">
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">7</span>
+              <span class="lbody">
+                <b>The Trial Balance</b>
+                <span>Proving debits = credits · Illustration 2.23</span>
+              </span>
+              <span class="pill-mini ready" id="tb-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -3113,6 +3151,91 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 · LESSON 7 — THE TRIAL BALANCE ============== -->
+    <section class="fa-screen" id="screen-tb" aria-label="The Trial Balance">
+      <div class="fa-topbar">
+        <button class="fa-back" id="tb-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Module 2 · Lesson 7</div>
+        <h1 class="lesson-title">The Trial Balance</h1>
+        <div class="lesson-meta">Prove that total debits equal total credits · ~9 min</div>
+      </div>
+
+      <div class="fa-scroll" id="tb-scroll">
+        <div class="cycle-wrap" aria-label="The accounting cycle — trial balance"><div class="cycle" id="tb-cycle"></div></div>
+
+        <div style="padding: 14px 18px 8px;">
+          <p class="lede">A <em>trial balance</em> is simply a list of every account and its balance at a point in time.</p>
+          <p class="lecture-hook">Companies prepare one at the end of a period to prove that, after posting, total debits still equal total credits.</p>
+
+          <section class="lec-sec" style="margin-top:20px;">
+            <h3>What it is &amp; what it proves</h3>
+            <p>The trial balance lists accounts <b>in ledger order</b> — debit balances in the left column, credit balances in the right — and the two column <b>totals must agree</b>. That equality is the mathematical proof of double-entry after posting; it also helps <b>surface errors</b> and feeds the financial statements. Three steps:</p>
+            <div class="rulecard">
+              <div class="rr"><span class="mk l">1</span><div>List the account titles and their balances.</div></div>
+              <div class="rr"><span class="mk l">2</span><div>Total the debit and credit columns.</div></div>
+              <div class="rr"><span class="mk l">3</span><div>Prove the equality of the two columns.</div></div>
+            </div>
+          </section>
+
+          <div class="eyebrow" style="color:var(--gold); margin: 22px 0 6px;">Illustration 2.23 · Trial Balance (Unadjusted)</div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-soft);margin-bottom:12px;">Every balance below comes straight from Pioneer's ledger (Lesson 6). Tap <b>Total &amp; prove</b> to sum the columns.</p>
+
+          <div class="tb-sheet">
+            <div class="tb-title"><b>Pioneer Advertising</b><span>Trial Balance</span><span>October 31, 2025</span></div>
+            <table class="tb-table">
+              <thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead>
+              <tbody id="tb-body"></tbody>
+              <tfoot>
+                <tr class="tb-totrow"><td class="acct">&nbsp;</td>
+                  <td class="amt d"><span class="tb-tot" id="tb-totd"><span class="dbl">$287,000</span></span></td>
+                  <td class="amt c"><span class="tb-tot" id="tb-totc"><span class="dbl">$287,000</span></span></td>
+                </tr>
+              </tfoot>
+            </table>
+            <div class="tb-prove" id="tb-prove">&#9878; In balance — $287,000 = $287,000</div>
+            <div class="gp-actions" style="margin-top:12px;">
+              <button class="btn primary" id="tb-total-btn">Total &amp; prove ▸</button>
+            </div>
+          </div>
+
+          <section class="lec-sec" style="margin-top:24px;">
+            <div class="step-ey"><span class="no">!</span><span class="eyebrow">The important limit</span></div>
+            <h3>A balanced trial balance is not proof of correctness</h3>
+            <p>It only proves the columns are <b>equal</b> — not that every transaction was recorded, or recorded correctly. As long as equal debits and credits were posted, the totals agree even with real mistakes. Tap each to see why it still balances:</p>
+          </section>
+          <div class="tbe-list" id="tb-errors"></div>
+
+          <div class="takeaway" style="margin-top:22px;">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Equal columns are necessary, not sufficient. The trial balance catches arithmetic slips — a one-sided posting, a transposed total — but it will happily balance a right amount posted to the wrong account. Judgment still matters.</p>
+            </div>
+          </div>
+
+          <div class="cap-done" id="tb-mod-done" style="display:none; margin: 22px 0 0;">
+            <div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <h3>Module 2 complete</h3>
+            <p>You've analyzed, journalized, posted, and proved the books — the full recording process, end to end.</p>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="tb-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -3131,7 +3254,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -3148,9 +3271,10 @@
       if (p.coaDone) state.coaDone = true;
       if (p.rpiDone) state.rpiDone = true;
       if (p.sumDone) state.sumDone = true;
+      if (p.tbDone) state.tbDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -3175,7 +3299,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -3202,7 +3326,8 @@
       { done: function () { return state.ledgerDone; }, open: function () { openLedger(); }, label: 'The Ledger' },
       { done: function () { return state.coaDone; }, open: function () { openCoa(); }, label: 'Chart of Accounts' },
       { done: function () { return state.rpiDone; }, open: function () { openRpi(); }, label: 'The Recording Process Illustrated' },
-      { done: function () { return state.sumDone; }, open: function () { openSum(); }, label: 'Summary: Journalizing & Posting' }
+      { done: function () { return state.sumDone; }, open: function () { openSum(); }, label: 'Summary: Journalizing & Posting' },
+      { done: function () { return state.tbDone; }, open: function () { openTb(); }, label: 'The Trial Balance' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -4927,6 +5052,60 @@
   $('sum-back').addEventListener('click', function () { goScreen('home'); });
   $('sum-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 · Lesson 7 — The Trial Balance (Illustration 2.23)
+     ============================================================ */
+  var TB_ROWS = [
+    ['Cash', '80,000', ''], ['Accounts Receivable', '72,000', ''], ['Supplies', '25,000', ''],
+    ['Prepaid Insurance', '6,000', ''], ['Equipment', '50,000', ''],
+    ['Notes Payable', '', '50,000'], ['Accounts Payable', '', '25,000'], ['Unearned Service Revenue', '', '12,000'],
+    ['Common Stock', '', '100,000'], ['Dividends', '5,000', ''], ['Service Revenue', '', '100,000'],
+    ['Salaries and Wages Expense', '40,000', ''], ['Rent Expense', '9,000', '']
+  ];
+  (function renderTB() {
+    $('tb-body').innerHTML = TB_ROWS.map(function (r) {
+      return '<tr><td class="acct">' + r[0] + '</td><td class="amt d">' + (r[1] ? (r[0] === 'Cash' ? '$' + r[1] : r[1]) : '') + '</td><td class="amt c">' + (r[2] ? (r[0] === 'Notes Payable' ? '$' + r[2] : r[2]) : '') + '</td></tr>';
+    }).join('');
+  })();
+  var TB_ERRORS = [
+    ['Fails to journalize a transaction', 'The whole entry is missing — both its debit and its credit — so the columns stay equal.'],
+    ['Omits posting a correct journal entry', 'A matching debit and credit are both left unposted, so the totals still agree.'],
+    ['Posts a journal entry twice', 'The extra debit and the extra credit are equal, so they cancel out in the totals.'],
+    ['Uses incorrect accounts', 'The amount lands in the wrong account, but it is still one debit and one equal credit.'],
+    ['Makes offsetting amount errors', 'Both sides are recorded at the same wrong amount, so debits still equal credits.']
+  ];
+  (function renderTBErrors() {
+    $('tb-errors').innerHTML = TB_ERRORS.map(function (e, i) {
+      return '<div class="tbe-card"><div class="tbe-top" role="button" tabindex="0"><span class="n">' + (i + 1) + '</span><span class="t">' + e[0] + '</span>' +
+        '<svg class="icon chev" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg></div>' +
+        '<div class="tbe-why"><b>Still balances.</b> ' + e[1] + '</div></div>';
+    }).join('');
+    Array.prototype.slice.call($('tb-errors').querySelectorAll('.tbe-card')).forEach(function (card) {
+      var top = card.querySelector('.tbe-top');
+      function tog() { card.classList.toggle('open'); }
+      top.addEventListener('click', tog);
+      top.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); tog(); } });
+    });
+  })();
+  $('tb-total-btn').addEventListener('click', function () {
+    $('tb-totd').classList.add('on'); $('tb-totc').classList.add('on'); $('tb-prove').classList.add('on');
+    this.textContent = 'Proved · $287,000 = $287,000';
+    this.disabled = true;
+    if (!state.tbDone) { state.tbDone = true; save(); updateTbPill(); }
+    // Module 2 finale celebration if the whole module is done
+    var m2done = state.mod2Done && state.recProcDone && state.journalDone && state.ledgerDone && state.coaDone && state.rpiDone && state.sumDone && state.tbDone;
+    if (m2done) $('tb-mod-done').style.display = 'block';
+  });
+  function updateTbPill() { var pill = $('tb-pill'); if (pill) pill.textContent = state.tbDone ? 'Done' : 'Start'; }
+  function openTb() {
+    goScreen('tb'); $('tb-scroll').scrollTop = 0;
+    var m2done = state.mod2Done && state.recProcDone && state.journalDone && state.ledgerDone && state.coaDone && state.rpiDone && state.sumDone && state.tbDone;
+    $('tb-mod-done').style.display = m2done ? 'block' : 'none';
+  }
+  $('start-tb-card').addEventListener('click', openTb);
+  $('tb-back').addEventListener('click', function () { goScreen('home'); });
+  $('tb-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -4975,6 +5154,8 @@
   rpiRender();
   updateRpiPill();
   updateSumPill();
+  renderCycleInto('tb-cycle', 3);
+  updateTbPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
