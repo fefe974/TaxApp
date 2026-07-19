@@ -30,7 +30,7 @@
     --card-2:     #faf5ea;   /* secondary card */
     --ink:        #14283f;   /* primary text, navy */
     --ink-soft:   #4a5f7a;   /* secondary text */
-    --ink-faint:  #7c8ba0;   /* tertiary / captions */
+    --ink-faint:  #5f6d80;   /* tertiary / captions (AA-legible on parchment) */
     --line:       rgba(20, 40, 63, 0.12);
     --line-soft:  rgba(20, 40, 63, 0.07);
     --debit:      #1f6fb2;   /* blue — debit / left */
@@ -97,7 +97,7 @@
   /* Explicit theme toggles win over the media query in both directions */
   :root[data-theme="light"] {
     --paper:#f4efe3; --paper-2:#efe8d8; --card:#fffdf8; --card-2:#faf5ea;
-    --ink:#14283f; --ink-soft:#4a5f7a; --ink-faint:#7c8ba0;
+    --ink:#14283f; --ink-soft:#4a5f7a; --ink-faint:#5f6d80;
     --line:rgba(20,40,63,.12); --line-soft:rgba(20,40,63,.07);
     --debit:#1f6fb2; --debit-bg:rgba(31,111,178,.10); --debit-line:rgba(31,111,178,.32);
     --credit:#b25a15; --credit-bg:rgba(178,90,21,.10); --credit-line:rgba(178,90,21,.30);
@@ -1368,6 +1368,20 @@
   .rpi-actions .foot-btn { flex: 1 1 0; justify-content: center; }
   .rpi-none { background: var(--card-2); border: 1px dashed var(--line); border-radius: var(--r-sm); padding: 10px 12px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); display: flex; gap: 10px; align-items: flex-start; }
   .rpi-none .no { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; background: var(--warn); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+
+  /* clickable "Up next" card */
+  button.m2-next { font: inherit; color: var(--ink-soft); width: 100%; text-align: left; cursor: pointer; transition: border-color .18s ease, box-shadow .2s ease, transform .14s ease; }
+  button.m2-next:hover { border-color: var(--debit-line); box-shadow: var(--shadow); }
+  button.m2-next:active { transform: scale(.995); }
+  .m2-next .go-chev { margin-left: auto; color: var(--debit); flex: 0 0 auto; }
+
+  /* extra reduced-motion guards */
+  @media (prefers-reduced-motion: reduce) {
+    .gp-entry.show { animation: none; }
+    .cap-done, .rpi-txn { animation: none; }
+    .morph .from, .morph .arrow, .morph .to { transition: opacity .01s; }
+    .beam-bar, .beam-pan.l, .beam-pan.r { transition: none; }
+  }
 </style>
 
 <div id="fa-app">
@@ -1551,7 +1565,7 @@
 
         <div class="home-foot">
           <button class="cta" id="begin-btn">
-            Begin Lesson 1 · Debits &amp; Credits
+            <span id="begin-label">Begin Lesson 1 · Debits &amp; Credits</span>
             <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
@@ -1572,7 +1586,7 @@
       </div>
 
       <div class="lesson-head">
-        <div class="eyebrow gold-eyebrow">Lesson 1 · Unit 1</div>
+        <div class="eyebrow gold-eyebrow">Module 1 · Lesson 1</div>
         <h1 class="lesson-title">Debits &amp; Credits</h1>
         <div class="lesson-meta">The grammar of the double-entry system · ~15 min</div>
         <div class="prog-wrap">
@@ -1623,7 +1637,7 @@
           <section class="lec-sec">
             <div class="step-ey"><span class="no">2</span><span class="eyebrow">Why left and right?</span></div>
             <h3>A custom that became the rule</h3>
-            <p>There is nothing natural about putting debits on the left. Early bookkeepers could have reversed the sides and everything would work the same. But the convention was adopted — and now it is the <b>rule</b>, applied to <b>every</b> account, much like the custom of driving on the right-hand side of the road. Once everyone agrees on the sides, entries can be combined and checked consistently.</p>
+            <p>There is nothing natural about putting debits on the left — it is an arbitrary convention, like driving on the right-hand side of the road. But it is now the <b>rule</b>, applied to <b>every</b> account, so entries can always be combined and checked the same way.</p>
           </section>
 
           <section class="lec-sec">
@@ -1657,7 +1671,7 @@
           <section class="lec-sec">
             <div class="step-ey"><span class="no">4</span><span class="eyebrow">The double-entry system</span></div>
             <h3>Every transaction has two sides</h3>
-            <p>Because debits sit on the left and credits on the right, each transaction is recorded with <b>equal amounts on both sides</b> — its dual, two-sided effect. Buy equipment with cash and one account is debited while another is credited for the same amount. This universally used approach is <b>double-entry accounting</b>. It records the dual effect of each event and, just as importantly, it offers a means of <b>proving</b> the accuracy of what was recorded.</p>
+            <p>Each transaction is recorded with <b>equal amounts on both sides</b> — debit one account, credit another for the same amount. Buy equipment with cash and Equipment is debited while Cash is credited. This is <b>double-entry accounting</b>, and that built-in equality is also what lets the system <b>prove</b> itself.</p>
           </section>
 
           <section class="lec-sec">
@@ -1870,7 +1884,7 @@
       </div>
 
       <div class="lesson-head">
-        <div class="eyebrow gold-eyebrow">Lesson 2 · Unit 1</div>
+        <div class="eyebrow gold-eyebrow">Module 1 · Lesson 2</div>
         <h1 class="lesson-title">The Accounting Equation</h1>
         <div class="lesson-meta">Why the books must always balance · ~15 min</div>
         <div class="prog-wrap">
@@ -1909,7 +1923,7 @@
           <section class="lec-sec">
             <div class="step-ey"><span class="no">1</span><span class="eyebrow">The core identity</span></div>
             <h3>Assets = Liabilities + Stockholders' Equity</h3>
-            <p><b>Assets</b> are the economic resources the company controls. <b>Liabilities</b> are what it owes to creditors. <b>Stockholders' equity</b> is the owners' residual claim — what would be left for owners after every creditor is paid. Because each transaction posts equal debits and credits, the two sides of this equation can never drift out of balance.</p>
+            <p><b>Assets</b> are the resources the company controls; <b>liabilities</b> are what it owes creditors; <b>stockholders' equity</b> is the owners' residual claim — what is left after creditors are paid. Because every transaction posts equal debits and credits, the two sides can never drift out of balance.</p>
             <div class="eqbar">
               <span class="eqchip a">Assets<small>resources</small></span>
               <span class="eqop">=</span>
@@ -1947,7 +1961,7 @@
           <section class="lec-sec">
             <div class="step-ey"><span class="no">3</span><span class="eyebrow">It all ties back to Lesson 1</span></div>
             <h3>The debit/credit rules line up with the equation</h3>
-            <p>The left side of the equation — <b>Assets</b> — carries a normal <span class="term-dr">debit</span> balance. The right side — <b>Liabilities, Common Stock, Retained Earnings, and Revenues</b> — carries a normal <span class="term-cr">credit</span> balance. The two accounts that <b>reduce</b> equity, <b>Expenses</b> and <b>Dividends</b>, carry a normal <span class="term-dr">debit</span> balance — which is exactly why they are subtracted in the expanded equation.</p>
+            <p>Left of the equation is normal <span class="term-dr">debit</span> (Assets); the right side is normal <span class="term-cr">credit</span> (Liabilities, Common Stock, Retained Earnings, Revenues). The exceptions are <b>Expenses</b> and <b>Dividends</b> — they <b>reduce</b> equity, so they are debit-normal, which is exactly why the expanded equation subtracts them.</p>
             <div class="rulecard">
               <div class="rr"><span class="mk l">Dr</span><div>Increase with a <b>debit</b>: Assets, Expenses, Dividends.</div></div>
               <div class="rr"><span class="mk r">Cr</span><div>Increase with a <b>credit</b>: Liabilities, Common Stock, Retained Earnings, Revenues.</div></div>
@@ -2118,7 +2132,7 @@
       </div>
 
       <div class="lesson-head">
-        <div class="eyebrow gold-eyebrow">Lesson 3 · Unit 1</div>
+        <div class="eyebrow gold-eyebrow">Module 1 · Lesson 3</div>
         <h1 class="lesson-title">Financial Statements</h1>
         <div class="lesson-meta">How the statements connect &amp; ownership structure · ~15 min</div>
         <div class="prog-wrap">
@@ -2157,7 +2171,7 @@
           <section class="lec-sec">
             <div class="step-ey"><span class="no">1</span><span class="eyebrow">The three connected statements</span></div>
             <h3>What each statement reports</h3>
-            <p>The <b>income statement</b> reports revenues and expenses; their difference is <b>net income</b> (or net loss). The <b>retained earnings statement</b> reports net income and dividends: <span class="term-dr">Beginning RE + Net income − Dividends = Ending RE</span>. The <b>balance sheet</b>'s stockholders' equity section reports <b>Common Stock</b> and <b>Retained Earnings</b>. Because a company transfers revenues, expenses, and dividends into retained earnings at period-end, a change in any one of the three affects stockholders' equity.</p>
+            <p>The <b>income statement</b> reports revenues and expenses; their difference is <b>net income</b>. The <b>retained earnings statement</b> runs <span class="term-dr">Beginning RE + Net income − Dividends = Ending RE</span>. The <b>balance sheet</b>'s equity section then reports <b>Common Stock</b> and <b>Retained Earnings</b>.</p>
           </section>
 
           <section class="lec-sec">
@@ -2179,7 +2193,7 @@
           <section class="lec-sec">
             <div class="step-ey"><span class="no">4</span><span class="eyebrow">Who owns the business?</span></div>
             <h3>Ownership structure sets the account names</h3>
-            <p>A <b>corporation</b> uses <b>Common Stock</b> (and Paid-in Capital in Excess of Par), <b>Dividends</b>, and <b>Retained Earnings</b>. A <b>proprietorship or partnership</b> uses an <b>Owner's Capital</b> account for investment and an <b>Owner's Drawings</b> account for withdrawals. The economics are identical — only the equity labels change to reflect who owns the company. The <em>Practice</em> tab drills this with Illustration 2.5.</p>
+            <p>Same economics, different equity labels: a <b>corporation</b> uses Common Stock, Dividends, and Retained Earnings; a <b>proprietorship or partnership</b> uses Owner's Capital and Owner's Drawings. The <em>Practice</em> tab drills the full mapping with Illustration 2.5.</p>
           </section>
 
           <div class="takeaway">
@@ -2480,9 +2494,10 @@
         </div>
 
         <div class="m2-foot">
-          <div class="m2-next">
-            <div><div class="up">Up next in Module 2</div><b>Journalize</b> — record these analyzed transactions in the journal.</div>
-          </div>
+          <button class="m2-next go" id="mod2intro-next">
+            <div><div class="up">Up next in Module 2</div><b>The Recording Process</b> — analyze → journalize → post.</div>
+            <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
           <button class="cta ghost" id="m2-home">Back to course</button>
         </div>
       </div>
@@ -2594,9 +2609,10 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
-            <div class="m2-next">
-              <div><div class="up">Up next in Module 2</div><b>Journalize</b> — the general journal, up close.</div>
-            </div>
+            <button class="m2-next go" id="recproc-next">
+              <div><div class="up">Up next in Module 2</div><b>The Journal</b> — the general journal, up close.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="rp-home">Back to course</button>
           </div>
         </div>
@@ -2692,9 +2708,10 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
-            <div class="m2-next">
-              <div><div class="up">Up next in Module 2</div><b>Post to the Ledger</b> — transferring these entries to the accounts.</div>
-            </div>
+            <button class="m2-next go" id="journal-next">
+              <div><div class="up">Up next in Module 2</div><b>The Ledger</b> — posting entries to the accounts.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="jr-home">Back to course</button>
           </div>
         </div>
@@ -2814,9 +2831,10 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
-            <div class="m2-next">
-              <div><div class="up">Up next in Module 2</div><b>The Trial Balance</b> — proving debits equal credits.</div>
-            </div>
+            <button class="m2-next go" id="ledger-next">
+              <div><div class="up">Up next in Module 2</div><b>Chart of Accounts</b> — account numbers &amp; ranges.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="led-home">Back to course</button>
           </div>
         </div>
@@ -2925,9 +2943,10 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
-            <div class="m2-next">
-              <div><div class="up">Up next in Module 2</div><b>The Trial Balance</b> — proving that total debits equal total credits.</div>
-            </div>
+            <button class="m2-next go" id="coa-next">
+              <div><div class="up">Up next in Module 2</div><b>The Recording Process Illustrated</b> — 10 transactions, fully analyzed.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="coa-home">Back to course</button>
           </div>
         </div>
@@ -3038,16 +3057,39 @@
   /* ---------------- screen router ---------------- */
   var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi') };
   function goScreen(name) {
+    if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
       if (k === name) { el.classList.add('is-active'); el.classList.remove('is-behind'); }
       else { el.classList.remove('is-active'); el.classList.add('is-behind'); }
     });
+    if (name === 'home') updateBeginBtn();
   }
   function openLesson() { goScreen('lesson'); setView(state.view || 'lecture', true); }
   $('start-lesson-card').addEventListener('click', openLesson);
-  $('begin-btn').addEventListener('click', openLesson);
+  var beginAction = openLesson;
+  $('begin-btn').addEventListener('click', function () { beginAction(); });
   $('lesson-back').addEventListener('click', function () { goScreen('home'); });
+  function updateBeginBtn() {
+    var seq = [
+      { done: function () { return VIEWS.every(function (v) { return state.done[v]; }); }, open: openLesson, label: 'Lesson 1 · Debits & Credits' },
+      { done: function () { return L2_VIEWS.every(function (v) { return state.done2[v]; }); }, open: function () { openLesson2(); }, label: 'Lesson 2 · The Accounting Equation' },
+      { done: function () { return L3_VIEWS.every(function (v) { return state.done3[v]; }); }, open: function () { openLesson3(); }, label: 'Lesson 3 · Financial Statements' },
+      { done: function () { return state.capDone; }, open: function () { openCapstone(); }, label: 'the Capstone' },
+      { done: function () { return state.mod2Done; }, open: function () { openMod2Intro(); }, label: 'Module 2 · Introduction' },
+      { done: function () { return state.recProcDone; }, open: function () { openRecProc(); }, label: 'The Recording Process' },
+      { done: function () { return state.journalDone; }, open: function () { openJournal(); }, label: 'The Journal' },
+      { done: function () { return state.ledgerDone; }, open: function () { openLedger(); }, label: 'The Ledger' },
+      { done: function () { return state.coaDone; }, open: function () { openCoa(); }, label: 'Chart of Accounts' },
+      { done: function () { return state.rpiDone; }, open: function () { openRpi(); }, label: 'The Recording Process Illustrated' }
+    ];
+    var first = null;
+    for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
+    var lbl = $('begin-label');
+    if (!first) { beginAction = openLesson; if (lbl) lbl.textContent = 'Review · start from Lesson 1'; return; }
+    beginAction = first.open;
+    if (lbl) lbl.textContent = (first === seq[0] ? 'Begin ' : 'Continue · ') + first.label;
+  }
 
   /* ---------------- transition bridge (data-driven) ---------------- */
   var bridgeBegin = function () {};
@@ -3113,7 +3155,7 @@
   function setView(view, immediate) {
     if (VIEWS.indexOf(view) < 0) view = 'lecture';
     state.view = view;
-    segBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
+    segBtns.forEach(function (b) { var on = b.getAttribute('data-view') === view; b.classList.toggle('is-active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
     VIEWS.forEach(function (v) { panes[v].classList.toggle('is-active', v === view); });
     moveThumb();
     // mark simple views as visited/done
@@ -3249,6 +3291,7 @@
     Array.prototype.slice.call(host.querySelectorAll('.ta-side')).forEach(function (side) {
       side.addEventListener('click', function () { postSide(side.getAttribute('data-acct'), side.getAttribute('data-side')); });
     });
+    if (typeof a11yify === 'function') a11yify(host);
     $('lp-feedback').className = 'gp-feedback';
     $('lp-feedback').innerHTML = '';
     $('lp-next-wrap').style.display = 'none';
@@ -3584,7 +3627,7 @@
   function l2SetView(view, immediate) {
     if (L2_VIEWS.indexOf(view) < 0) view = 'lecture';
     l2view = view;
-    l2segBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
+    l2segBtns.forEach(function (b) { var on = b.getAttribute('data-view') === view; b.classList.toggle('is-active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
     L2_VIEWS.forEach(function (v) { l2panes[v].classList.toggle('is-active', v === view); });
     l2MoveThumb();
     if (view === 'lecture' || view === 'illustration') l2MarkDone(view);
@@ -3902,7 +3945,7 @@
   function l3SetView(view, immediate) {
     if (L3_VIEWS.indexOf(view) < 0) view = 'lecture';
     l3view = view;
-    l3segBtns.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-view') === view); });
+    l3segBtns.forEach(function (b) { var on = b.getAttribute('data-view') === view; b.classList.toggle('is-active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
     L3_VIEWS.forEach(function (v) { l3panes[v].classList.toggle('is-active', v === view); });
     l3MoveThumb();
     if (view === 'lecture' || view === 'illustration') l3MarkDone(view);
@@ -4686,6 +4729,25 @@
   $('rpi-back').addEventListener('click', function () { goScreen('home'); });
   $('rpi-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ---------------- Module 2 "up next" continuity ---------------- */
+  [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
+    var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
+  });
+
+  /* ---------------- accessibility: keyboard support for click-driven controls ---------------- */
+  function a11yify(root) {
+    var sel = '.tm-cell, .ta-side, .led-acct, .eqrule, .coa-row, .coa-chip, #jr-table .cnum, #jr-pills .anno-pill, .ident-card .ic-choice';
+    Array.prototype.slice.call((root || document).querySelectorAll(sel)).forEach(function (el) {
+      if (el.getAttribute('data-a11y')) return;
+      el.setAttribute('data-a11y', '1');
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); el.click(); }
+      });
+    });
+  }
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -4714,6 +4776,8 @@
   updateCoaPill();
   rpiRender();
   updateRpiPill();
+  updateBeginBtn();
+  a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
