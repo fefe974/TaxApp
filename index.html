@@ -1296,6 +1296,36 @@
   .led-order .lo-acct { display: flex; align-items: baseline; gap: 10px; padding: 6px 14px 6px 40px; font-size: 12.5px; color: var(--ink-soft); }
   .led-order .lo-acct .lo-num { font-family: var(--mono); font-weight: 700; color: var(--ink-faint); min-width: 34px; opacity: 0; transition: opacity .35s ease; }
   .led-order.show-nums .lo-acct .lo-num { opacity: 1; }
+
+  /* ============================================================
+     MODULE 2 · Lesson 4 — Chart of Accounts (Illustration 2.10)
+     ============================================================ */
+  .coa-ranges { display: flex; flex-wrap: wrap; gap: 7px; margin: 4px 0 14px; }
+  .coa-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); cursor: pointer; font-size: 11.5px; font-weight: 650; color: var(--ink-soft); box-shadow: var(--shadow); transition: all .14s ease; }
+  .coa-chip .rn { font-family: var(--mono); font-weight: 700; font-size: 10.5px; padding: 1px 6px; border-radius: 5px; background: var(--rc-bg, var(--muted)); color: var(--rc, var(--ink-faint)); }
+  .coa-chip.asset { --rc: var(--asset); --rc-bg: var(--asset-bg); } .coa-chip.liab { --rc: var(--liab); --rc-bg: var(--liab-bg); }
+  .coa-chip.equity { --rc: var(--equity); --rc-bg: var(--equity-bg); } .coa-chip.rev { --rc: var(--credit); --rc-bg: var(--credit-bg); } .coa-chip.exp { --rc: var(--debit); --rc-bg: var(--debit-bg); }
+  .coa-chip:hover { color: var(--ink); }
+  .coa-chip.active { border-color: var(--rc); background: var(--rc-bg); color: var(--ink); }
+
+  .coa { border: 1.5px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); padding: 16px 14px; }
+  .coa-title { text-align: center; margin-bottom: 12px; }
+  .coa-title b { font-family: var(--serif); font-size: 16px; font-weight: 600; display: block; }
+  .coa-title span { font-size: 12px; color: var(--ink-faint); }
+  .coa-grp { margin-top: 12px; }
+  .coa-grp:first-of-type { margin-top: 0; }
+  .coa-gt { text-align: center; font-weight: 700; font-size: 12.5px; padding-bottom: 4px; border-bottom: 1.5px solid var(--gc, var(--ink)); margin-bottom: 4px; color: var(--gc, var(--ink)); }
+  .coa-grp.asset { --gc: var(--asset); } .coa-grp.liab { --gc: var(--liab); } .coa-grp.equity { --gc: var(--equity); } .coa-grp.rev { --gc: var(--credit); } .coa-grp.exp { --gc: var(--debit); }
+  .coa-row { display: flex; align-items: baseline; gap: 10px; padding: 4px 6px; font-size: 12.5px; color: var(--ink); border-radius: 6px; transition: background .18s ease, opacity .18s ease; }
+  .coa-row .cn { font-family: var(--mono); font-weight: 700; color: var(--ink-faint); min-width: 30px; }
+  .coa.dimmed .coa-row:not(.hl) { opacity: .32; }
+  .coa .coa-row.hl { background: color-mix(in srgb, var(--gold) 22%, transparent); }
+  .coa .coa-row.hl .cn { color: var(--ink); }
+  .coa-status { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 10px; min-height: 16px; }
+  .coa-status b { color: var(--ink); }
+
+  .coa-gaps { margin-top: 14px; display: flex; gap: 10px; align-items: flex-start; background: var(--credit-bg); border: 1px dashed var(--credit-line); border-radius: var(--r-md); padding: 13px 14px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+  .coa-gaps b { color: var(--credit); }
 </style>
 
 <div id="fa-app">
@@ -1447,8 +1477,19 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <button class="lesson-card" id="start-coa-card">
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">4</span>
+              <span class="lbody">
+                <b>Chart of Accounts</b>
+                <span>Account numbers &amp; ranges · Illustration 2.10</span>
+              </span>
+              <span class="pill-mini ready" id="coa-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">4</span>
+              <span class="lnum">5</span>
               <span class="lbody"><b>The Trial Balance</b><span>Proving the books before you report</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
@@ -2729,6 +2770,117 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 · LESSON 4 — CHART OF ACCOUNTS ============== -->
+    <section class="fa-screen" id="screen-coa" aria-label="Chart of Accounts">
+      <div class="fa-topbar">
+        <button class="fa-back" id="coa-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Module 2 · Lesson 4</div>
+        <h1 class="lesson-title">Chart of Accounts</h1>
+        <div class="lesson-meta">Account numbers &amp; ranges · ~9 min</div>
+      </div>
+
+      <div class="fa-scroll" id="coa-scroll">
+        <div style="padding: 18px 18px 8px;">
+          <p class="lede">No two companies keep the same set of accounts — the number depends on how much detail management wants.</p>
+          <p class="lecture-hook">A small company might run on 20–30 accounts; a giant like <em>Anheuser-Busch InBev</em> may need thousands to track its worldwide activities.</p>
+
+          <section class="lec-sec" style="margin-top:20px;">
+            <h3>What a chart of accounts is</h3>
+            <p>Most companies keep a <b>chart of accounts</b> — a list of every account and the <b>account number</b> that identifies its location in the ledger. The numbering usually starts with the <b>balance sheet</b> accounts and follows with the <b>income statement</b> accounts.</p>
+          </section>
+
+          <div class="eyebrow" style="color:var(--gold); margin: 20px 0 6px;">Pioneer Advertising · number ranges</div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-soft);margin-bottom:6px;">Tap a range to highlight the accounts it covers in the chart below.</p>
+          <div class="coa-ranges" id="coa-ranges">
+            <button class="coa-chip asset" data-lo="101" data-hi="199"><span class="rn">101–199</span> Assets</button>
+            <button class="coa-chip liab" data-lo="200" data-hi="299"><span class="rn">200–299</span> Liabilities</button>
+            <button class="coa-chip equity" data-lo="300" data-hi="399"><span class="rn">300–399</span> Equity</button>
+            <button class="coa-chip rev" data-lo="400" data-hi="499"><span class="rn">400–499</span> Revenues</button>
+            <button class="coa-chip exp" data-lo="500" data-hi="799"><span class="rn">500–799</span> Expenses</button>
+            <button class="coa-chip rev" data-lo="800" data-hi="899"><span class="rn">800–899</span> Other revenues</button>
+            <button class="coa-chip exp" data-lo="900" data-hi="999"><span class="rn">900–999</span> Other expenses</button>
+          </div>
+
+          <div class="eyebrow" style="color:var(--gold); margin: 4px 0 8px;">Illustration 2.10 · Chart of Accounts</div>
+          <div class="coa" id="coa-chart">
+            <div class="coa-title"><b>Pioneer Advertising</b><span>Chart of Accounts</span></div>
+
+            <div class="coa-grp asset">
+              <div class="coa-gt">Assets</div>
+              <div class="coa-row" data-num="101"><span class="cn">101</span>Cash</div>
+              <div class="coa-row" data-num="112"><span class="cn">112</span>Accounts Receivable</div>
+              <div class="coa-row" data-num="113"><span class="cn">113</span>Allowance for Doubtful Accounts</div>
+              <div class="coa-row" data-num="126"><span class="cn">126</span>Supplies</div>
+              <div class="coa-row" data-num="130"><span class="cn">130</span>Prepaid Insurance</div>
+              <div class="coa-row" data-num="157"><span class="cn">157</span>Equipment</div>
+              <div class="coa-row" data-num="158"><span class="cn">158</span>Accumulated Depreciation—Equipment</div>
+            </div>
+            <div class="coa-grp liab">
+              <div class="coa-gt">Liabilities</div>
+              <div class="coa-row" data-num="200"><span class="cn">200</span>Notes Payable</div>
+              <div class="coa-row" data-num="201"><span class="cn">201</span>Accounts Payable</div>
+              <div class="coa-row" data-num="209"><span class="cn">209</span>Unearned Service Revenue</div>
+              <div class="coa-row" data-num="212"><span class="cn">212</span>Salaries and Wages Payable</div>
+              <div class="coa-row" data-num="230"><span class="cn">230</span>Interest Payable</div>
+            </div>
+            <div class="coa-grp equity">
+              <div class="coa-gt">Stockholders' Equity</div>
+              <div class="coa-row" data-num="311"><span class="cn">311</span>Common Stock</div>
+              <div class="coa-row" data-num="320"><span class="cn">320</span>Retained Earnings</div>
+              <div class="coa-row" data-num="332"><span class="cn">332</span>Dividends</div>
+              <div class="coa-row" data-num="350"><span class="cn">350</span>Income Summary</div>
+            </div>
+            <div class="coa-grp rev">
+              <div class="coa-gt">Revenues</div>
+              <div class="coa-row" data-num="400"><span class="cn">400</span>Service Revenue</div>
+            </div>
+            <div class="coa-grp exp">
+              <div class="coa-gt">Expenses</div>
+              <div class="coa-row" data-num="631"><span class="cn">631</span>Supplies Expense</div>
+              <div class="coa-row" data-num="711"><span class="cn">711</span>Depreciation Expense</div>
+              <div class="coa-row" data-num="722"><span class="cn">722</span>Insurance Expense</div>
+              <div class="coa-row" data-num="726"><span class="cn">726</span>Salaries and Wages Expense</div>
+              <div class="coa-row" data-num="729"><span class="cn">729</span>Rent Expense</div>
+              <div class="coa-row" data-num="732"><span class="cn">732</span>Utilities Expenses</div>
+              <div class="coa-row" data-num="750"><span class="cn">750</span>Bad Debt Expense</div>
+              <div class="coa-row" data-num="905"><span class="cn">905</span>Interest Expense</div>
+            </div>
+          </div>
+          <div class="coa-status" id="coa-status">Tap a number range above to explore the chart.</div>
+
+          <div class="coa-gaps">
+            <span class="i" style="flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--credit);color:#fff;font-weight:800;font-size:12px;">!</span>
+            <div>Notice the <b>gaps</b> — 101 jumps to 112, expenses skip from 750 to 905. Gaps are deliberate: they leave room to <b>insert new accounts</b> as the business grows.</div>
+          </div>
+
+          <div class="takeaway" style="margin-top:22px;">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The account number is an address. Its first digit tells you the account's neighborhood — 1s are assets, 2s liabilities, 3s equity, 4s revenues, 5–9s expenses — so anyone can find and file an account at a glance.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="m2-next">
+              <div><div class="up">Up next in Module 2</div><b>The Trial Balance</b> — proving that total debits equal total credits.</div>
+            </div>
+            <button class="cta ghost" id="coa-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -2747,7 +2899,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -2761,9 +2913,10 @@
       if (p.recProcDone) state.recProcDone = true;
       if (p.journalDone) state.journalDone = true;
       if (p.ledgerDone) state.ledgerDone = true;
+      if (p.coaDone) state.coaDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -2788,7 +2941,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -4270,6 +4423,50 @@
   $('led-back').addEventListener('click', function () { goScreen('home'); });
   $('led-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 · Lesson 4 — Chart of Accounts (Illustration 2.10)
+     ============================================================ */
+  var coaViewed = {};
+  var coaActive = null;
+  function coaClear() {
+    $('coa-chart').classList.remove('dimmed');
+    Array.prototype.slice.call($('coa-chart').querySelectorAll('.coa-row.hl')).forEach(function (r) { r.classList.remove('hl'); });
+    Array.prototype.slice.call($('coa-ranges').querySelectorAll('.coa-chip')).forEach(function (c) { c.classList.remove('active'); });
+    coaActive = null;
+    $('coa-status').innerHTML = 'Tap a number range above to explore the chart.';
+  }
+  Array.prototype.slice.call($('coa-ranges').querySelectorAll('.coa-chip')).forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var lo = parseInt(chip.getAttribute('data-lo'), 10), hi = parseInt(chip.getAttribute('data-hi'), 10);
+      var key = lo + '-' + hi;
+      if (coaActive === key) { coaClear(); return; }
+      coaActive = key;
+      Array.prototype.slice.call($('coa-ranges').querySelectorAll('.coa-chip')).forEach(function (c) { c.classList.toggle('active', c === chip); });
+      var rows = Array.prototype.slice.call($('coa-chart').querySelectorAll('.coa-row'));
+      var n = 0;
+      rows.forEach(function (r) {
+        var num = parseInt(r.getAttribute('data-num'), 10);
+        var inRange = num >= lo && num <= hi;
+        r.classList.toggle('hl', inRange);
+        if (inRange) n++;
+      });
+      $('coa-chart').classList.add('dimmed');
+      var label = chip.textContent.replace(/\s+/g, ' ').trim();
+      if (n === 0) {
+        $('coa-status').innerHTML = 'Pioneer has <b>no accounts</b> numbered ' + lo + '–' + hi + ' yet — the gaps leave room to add them later.';
+      } else {
+        $('coa-status').innerHTML = '<b>' + n + '</b> account' + (n === 1 ? '' : 's') + ' in <b>' + lo + '–' + hi + '</b> · ' + label.replace(lo + '–' + hi, '').trim();
+      }
+      coaViewed[key] = true;
+      if (Object.keys(coaViewed).length >= 4 && !state.coaDone) { state.coaDone = true; save(); updateCoaPill(); }
+    });
+  });
+  function updateCoaPill() { var pill = $('coa-pill'); if (pill) pill.textContent = state.coaDone ? 'Done' : 'Start'; }
+  function openCoa() { coaClear(); goScreen('coa'); $('coa-scroll').scrollTop = 0; }
+  $('start-coa-card').addEventListener('click', openCoa);
+  $('coa-back').addEventListener('click', function () { goScreen('home'); });
+  $('coa-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -4295,6 +4492,7 @@
   updateJournalPill();
   renderCycleInto('led-cycle', 2);
   updateLedgerPill();
+  updateCoaPill();
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
