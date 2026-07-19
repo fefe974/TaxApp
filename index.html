@@ -978,6 +978,101 @@
   .sb-choices button.wrong { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
   .sb-choices button[disabled] { opacity: .5; cursor: default; }
   .sb-done { padding: 12px 14px; }
+
+  /* ============================================================
+     CAPSTONE — Put It Into Practice LO 2.1
+     ============================================================ */
+  .cap-hero {
+    padding: 6px 18px 14px; border-bottom: 1px solid var(--line-soft);
+  }
+  .cap-badge {
+    display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px 5px 8px; border-radius: 999px;
+    background: var(--gold); color: #241a06; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .cap-badge svg { width: 15px; height: 15px; }
+  .cap-hero h1 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin-top: 10px; letter-spacing: -.01em; }
+  .cap-hero p { font-size: 13px; color: var(--ink-soft); margin-top: 5px; line-height: 1.5; }
+
+  .cap-facts { margin: 14px 18px 0; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .cap-facts > summary { cursor: pointer; list-style: none; padding: 12px 14px; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; }
+  .cap-facts > summary::-webkit-details-marker { display: none; }
+  .cap-facts > summary .chev { margin-left: auto; transition: transform .2s ease; color: var(--ink-faint); }
+  .cap-facts[open] > summary .chev { transform: rotate(90deg); }
+  .cap-facts .fbody { padding: 0 14px 12px; }
+  .cap-facts .co { font-family: var(--serif); font-size: 13.5px; color: var(--ink); margin-bottom: 8px; }
+  .cap-facts ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 5px; }
+  .cap-facts li { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+  .cap-facts li b { color: var(--ink); }
+
+  .cap-sec-label { padding: 0 18px; margin: 20px 0 8px; }
+
+  /* the tabular equation summary */
+  .cap-tw { margin: 0 -18px; padding: 0 18px 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cap-tw::-webkit-scrollbar { height: 4px; }
+  .cap-tw::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+  .cap-table { border-collapse: collapse; font-size: 11px; min-width: 660px; font-variant-numeric: tabular-nums; }
+  .cap-table th, .cap-table td { padding: 5px 7px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line-soft); }
+  .cap-table thead th { color: var(--ink-faint); font-weight: 800; font-size: 9.5px; letter-spacing: .02em; text-transform: uppercase; background: var(--card-2); border-bottom: 1px solid var(--line); }
+  .cap-table thead tr.grp th { font-size: 10px; text-align: center; color: var(--ink); border-bottom: 1px solid var(--line); }
+  .cap-table thead tr.grp th.ga { color: var(--asset); } .cap-table thead tr.grp th.gl { color: var(--liab); } .cap-table thead tr.grp th.ge { color: var(--equity); }
+  .cap-table .stk { position: sticky; left: 0; z-index: 2; text-align: center; background: var(--card); border-right: 1px solid var(--line); }
+  .cap-table thead .stk { background: var(--card-2); }
+  .cap-table td.stk { font-family: var(--mono); font-weight: 700; color: var(--ink-faint); }
+  .cap-table .sepL { border-left: 2px solid var(--line); }
+  .cap-table td.pos { color: var(--good); } .cap-table td.neg { color: var(--warn); }
+  .cap-table td.desc { text-align: left; color: var(--ink-soft); position: sticky; right: 0; background: var(--card); border-left: 1px solid var(--line-soft); }
+  .cap-table tr.totals td { border-top: 2px solid var(--ink); border-bottom: none; font-weight: 800; color: var(--ink); padding-top: 7px; }
+  .cap-table tr.totals .stk { background: var(--card); }
+  .cap-empty td { text-align: center; color: var(--ink-faint); font-size: 11.5px; padding: 14px; }
+
+  .cap-bal { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 10px 18px 0; padding: 10px; border-radius: var(--r-md); background: var(--card-2); border: 1px solid var(--line); font-size: 12.5px; }
+  .cap-bal .side { display: inline-flex; align-items: baseline; gap: 6px; }
+  .cap-bal .side .k { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); }
+  .cap-bal .side .v { font-family: var(--mono); font-weight: 700; color: var(--ink); }
+  .cap-bal .eq { font-family: var(--serif); font-size: 16px; color: var(--ink-soft); }
+  .cap-bal .flag { width: 100%; text-align: center; font-weight: 700; font-size: 12px; }
+  .cap-bal .flag.ok { color: var(--good); } .cap-bal .flag.no { color: var(--ink-faint); }
+
+  /* entry panel */
+  .cap-entry { margin: 18px 18px 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .cap-entry .ce-head { padding: 12px 14px; background: var(--card-2); border-bottom: 1px solid var(--line); }
+  .cap-entry .ce-head .step { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--credit); }
+  .cap-entry .ce-head .desc { font-family: var(--serif); font-size: 15px; color: var(--ink); margin-top: 3px; line-height: 1.4; }
+  .cap-entry .ce-tools { display: flex; gap: 8px; padding: 12px 14px 0; }
+  .cap-entry .ce-tools .btn { flex: 1 1 0; padding: 10px; font-size: 13px; }
+  .ce-group { padding: 12px 14px 0; }
+  .ce-group .gh { font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+  .ce-group.a .gh { color: var(--asset); } .ce-group.l .gh { color: var(--liab); } .ce-group.e .gh { color: var(--equity); }
+  .cap-field { display: grid; grid-template-columns: 1fr auto 92px; gap: 8px; align-items: center; padding: 4px 0; }
+  .cap-field .cf-label { font-size: 12.5px; color: var(--ink); }
+  .cap-field .cf-label small { color: var(--ink-faint); }
+  .cf-sign { width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--line); background: var(--card); font-family: var(--mono); font-weight: 800; font-size: 16px; cursor: pointer; color: var(--good); transition: all .14s ease; }
+  .cf-sign.minus { color: var(--warn); }
+  .cf-sign:active { transform: scale(.92); }
+  .cf-amt { height: 34px; border-radius: 9px; border: 1px solid var(--input); background: var(--card); padding: 0 10px; font-family: var(--mono); font-weight: 600; font-size: 13.5px; text-align: right; color: var(--ink); width: 100%; }
+  .cf-amt:focus { outline: 2px solid var(--debit); outline-offset: 1px; }
+  .cap-field.hit .cf-label { font-weight: 700; }
+  .cap-field.hit .cf-label::after { content: " ●"; color: var(--gold); }
+  .cap-entry .ce-post { padding: 12px 14px; }
+  .cap-entry .ce-post .btn { width: 100%; }
+  .cap-hint { margin: 0 14px 12px; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--gold) 14%, transparent); border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent); font-size: 12.5px; line-height: 1.45; color: var(--ink); display: none; }
+  .cap-hint.show { display: block; }
+  .cap-hint b { color: var(--ink); }
+
+  .cap-done { margin: 18px; padding: 20px; text-align: center; border-radius: var(--r-lg); background: var(--card); border: 1px solid var(--good); box-shadow: var(--shadow-lg); }
+  .cap-done .medal { width: 54px; height: 54px; margin: 0 auto 12px; border-radius: 50%; background: linear-gradient(150deg, var(--gold), #916d28); color: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(177,138,62,.4); }
+  .cap-done h3 { font-family: var(--serif); font-size: 19px; font-weight: 600; }
+  .cap-done p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+  .cap-done .btn { margin-top: 14px; }
+
+  /* live statements label */
+  .cap-live-head { padding: 0 18px; margin: 22px 0 4px; display: flex; align-items: baseline; gap: 8px; }
+  .cap-live-head h2 { font-family: var(--serif); font-size: 17px; font-weight: 600; }
+  .cap-live-head .live { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--good); display: inline-flex; align-items: center; gap: 4px; }
+  .cap-live-head .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: livepulse 1.8s ease-in-out infinite; }
+  @keyframes livepulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .cap-live-head .live::before { animation: none; } }
+  .cap-statements { padding: 6px 18px 0; }
 </style>
 
 <div id="fa-app">
@@ -1070,6 +1165,24 @@
               </span>
               <span class="pill-mini soon">Soon</span>
             </div>
+
+            <div class="head" style="margin-top:6px;">
+              <h2 class="serif" style="font-size:15px;color:var(--gold);">Capstone</h2>
+              <span class="eyebrow">Put It Into Practice</span>
+            </div>
+            <button class="lesson-card" id="start-capstone-card" style="border-color: color-mix(in srgb, var(--gold) 40%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--gold) 15%,transparent);color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 45%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6M4 5h2M18 5h2"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Analyze Transactions · LO 2.1</b>
+                <span>Build the equation &amp; live financial statements for Speedy Delivery Inc.</span>
+              </span>
+              <span class="pill-mini ready" id="capstone-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -1861,6 +1974,60 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: CAPSTONE ============== -->
+    <section class="fa-screen" id="screen-capstone" aria-label="Capstone — Put It Into Practice">
+      <div class="fa-topbar">
+        <button class="fa-back" id="cap-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="cap-scroll">
+        <div class="cap-hero">
+          <span class="cap-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+            Put It Into Practice · LO 2.1
+          </span>
+          <h1>Analyze Transactions Using the Accounting Equation</h1>
+          <p>Record each transaction for <b>Speedy Delivery Inc.</b> in the tabular summary. As you post entries, the financial statements build themselves below.</p>
+        </div>
+
+        <details class="cap-facts" open>
+          <summary>The facts &amp; transactions <svg class="icon chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary>
+          <div class="fbody">
+            <div class="co">Speedy Delivery Inc. was incorporated on July 1, 2025. During its first month:</div>
+            <ol>
+              <li><b>Stockholders invested $10,000</b> cash in exchange for common stock.</li>
+              <li><b>Paid $800</b> for July rent.</li>
+              <li><b>Purchased office equipment on account, $3,000.</b></li>
+              <li><b>Performed delivery services</b> for clients for <b>$1,500 cash</b>.</li>
+              <li><b>Borrowed $700 cash</b> from a bank on a note payable.</li>
+              <li><b>Performed delivery services on account, $2,000.</b></li>
+              <li><b>Paid monthly expenses:</b> salaries $500, utilities $300, advertising $100.</li>
+            </ol>
+          </div>
+        </details>
+
+        <div class="cap-sec-label"><span class="eyebrow">Tabular summary · effect on the equation</span></div>
+        <div class="cap-tw"><table class="cap-table" id="cap-table"></table></div>
+        <div class="cap-bal" id="cap-bal"></div>
+
+        <div id="cap-entry-host"></div>
+
+        <div class="cap-live-head">
+          <h2 class="serif">Financial statements</h2>
+          <span class="live">Forming live</span>
+        </div>
+        <div class="cap-statements" id="cap-statements"></div>
+        <div style="height: calc(24px + env(safe-area-inset-bottom));"></div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -1878,7 +2045,8 @@
     theme: null, view: 'lecture',
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
-    done3: { lecture: false, illustration: false, tool: false, practice: false }
+    done3: { lecture: false, illustration: false, tool: false, practice: false },
+    capDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -1887,9 +2055,10 @@
       if (p.done) state.done = Object.assign(state.done, p.done);
       if (p.done2) state.done2 = Object.assign(state.done2, p.done2);
       if (p.done3) state.done3 = Object.assign(state.done3, p.done3);
+      if (p.capDone) state.capDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3 })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -1914,7 +2083,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -2982,6 +3151,230 @@
   });
   $('l3gp-restart').addEventListener('click', function () { l3gpIndex = 0; l3gpReset(true); l3panes.practice.scrollTop = 0; });
 
+  /* ============================================================
+     CAPSTONE — Put It Into Practice LO 2.1 (Speedy Delivery Inc.)
+     ============================================================ */
+  var CAP_ACCTS = [
+    { key: 'cash', label: 'Cash', grp: 'a', col: 'Cash' },
+    { key: 'ar', label: 'Accounts Receivable', grp: 'a', col: 'A/R' },
+    { key: 'equip', label: 'Equipment', grp: 'a', col: 'Equip.' },
+    { key: 'np', label: 'Notes Payable', grp: 'l', col: 'N/P' },
+    { key: 'ap', label: 'Accounts Payable', grp: 'l', col: 'A/P' },
+    { key: 'cs', label: 'Common Stock', grp: 'e', col: 'Com. Stk' },
+    { key: 'rev', label: 'Revenues', grp: 'e', col: 'Rev.' },
+    { key: 'exp', label: 'Expenses', grp: 'e', col: 'Exp.', neg: true },
+    { key: 'div', label: 'Dividends', grp: 'e', col: 'Div.', neg: true }
+  ];
+  var CAP_TX = [
+    { desc: 'Stockholders invested $10,000 cash in exchange for common stock.', tag: 'Issued Stock', sol: { cash: 10000, cs: 10000 } },
+    { desc: 'Paid $800 for July rent.', tag: 'Rent Expense', sol: { cash: -800, exp: -800 } },
+    { desc: 'Purchased office equipment on account, $3,000.', tag: 'Purch. Equip.', sol: { equip: 3000, ap: 3000 } },
+    { desc: 'Performed delivery services for clients for $1,500 cash.', tag: 'Service Revenue', sol: { cash: 1500, rev: 1500 } },
+    { desc: 'Borrowed $700 cash from a bank on a note payable.', tag: 'Borrowing', sol: { cash: 700, np: 700 } },
+    { desc: 'Performed delivery services for a client on account, $2,000.', tag: 'Service Revenue', sol: { ar: 2000, rev: 2000 } },
+    { desc: 'Paid monthly expenses: salaries $500, utilities $300, advertising $100.', tag: 'Expenses', sol: { cash: -900, exp: -900 } }
+  ];
+  var capIndex = 0;
+  var capRows = [];   // { tx, vals }
+  var capFields = {}; // key -> { sign, mag }
+
+  function capColClass(key, v) { return v > 0 ? 'pos' : (v < 0 ? 'neg' : ''); }
+  function capFmt(v) { if (!v) return ''; return (v < 0 ? '(' + Math.abs(v).toLocaleString() + ')' : v.toLocaleString()); }
+  function capTotals() {
+    var t = {}; CAP_ACCTS.forEach(function (a) { t[a.key] = 0; });
+    capRows.forEach(function (r) { CAP_ACCTS.forEach(function (a) { t[a.key] += (r.vals[a.key] || 0); }); });
+    return t;
+  }
+
+  function capRenderTable() {
+    var head = '<thead>' +
+      '<tr class="grp"><th class="stk" rowspan="2">#</th><th class="ga" colspan="3">Assets</th><th class="gl sepL" colspan="2">Liabilities</th><th class="ge sepL" colspan="4">Stockholders’ Equity</th><th rowspan="2">Description</th></tr>' +
+      '<tr>' + CAP_ACCTS.map(function (a, i) { return '<th class="' + (a.key === 'np' || a.key === 'cs' ? 'sepL' : '') + '">' + a.col + (a.neg ? ' (−)' : '') + '</th>'; }).join('') + '</tr></thead>';
+    var body = '';
+    if (!capRows.length) {
+      body = '<tr class="cap-empty"><td colspan="11">No entries yet — record Transaction 1 below to begin the summary.</td></tr>';
+    } else {
+      capRows.forEach(function (r, ri) {
+        body += '<tr><td class="stk">' + (ri + 1) + '</td>' +
+          CAP_ACCTS.map(function (a) { var v = r.vals[a.key] || 0; return '<td class="' + (a.key === 'np' || a.key === 'cs' ? 'sepL ' : '') + capColClass(a.key, v) + '">' + capFmt(v) + '</td>'; }).join('') +
+          '<td class="desc">' + r.tx.tag + '</td></tr>';
+      });
+      var tot = capTotals();
+      body += '<tr class="totals"><td class="stk">=</td>' +
+        CAP_ACCTS.map(function (a) { var v = tot[a.key]; return '<td class="' + (a.key === 'np' || a.key === 'cs' ? 'sepL ' : '') + capColClass(a.key, v) + '">' + (v ? capFmt(v) : '—') + '</td>'; }).join('') +
+        '<td class="desc">Totals</td></tr>';
+    }
+    $('cap-table').innerHTML = head + '<tbody>' + body + '</tbody>';
+    capRenderBalance();
+  }
+  function capRenderBalance() {
+    var t = capTotals();
+    var assets = t.cash + t.ar + t.equip;
+    var liab = t.np + t.ap;
+    var equity = t.cs + t.rev + t.exp + t.div; // exp/div stored negative
+    var bal = assets === (liab + equity);
+    $('cap-bal').innerHTML =
+      '<div class="side"><span class="k">Assets</span><span class="v">' + money(assets) + '</span></div>' +
+      '<span class="eq">=</span>' +
+      '<div class="side"><span class="k">Liabilities</span><span class="v">' + money(liab) + '</span></div>' +
+      '<span class="eq">+</span>' +
+      '<div class="side"><span class="k">Equity</span><span class="v">' + money(equity) + '</span></div>' +
+      '<div class="flag ' + (bal ? 'ok' : 'no') + '">' + (bal ? '⚖ In balance — the equation holds' : 'Out of balance') + '</div>';
+  }
+
+  function capRenderStatements() {
+    var t = capTotals();
+    var rev = t.rev, exp = (-t.exp) || 0, div = (-t.div) || 0; // display positive, avoid -0
+    var ni = rev - exp;
+    var endRE = ni - div; // beginning 0
+    var assets = t.cash + t.ar + t.equip, liab = t.np + t.ap, cs = t.cs;
+    $('cap-statements').innerHTML =
+      '<div class="stmt-flow">' +
+        '<div class="stmt"><div class="stmt-head">Income Statement</div><div class="stmt-body">' +
+          '<div class="stmt-line"><span class="lbl">Revenues</span><span class="amt">' + money(rev) + '</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Less: Expenses</span><span class="amt">(' + exp.toLocaleString() + ')</span></div>' +
+          '<div class="stmt-line rule total"><span class="lbl">Net income</span><span class="amt">' + money(ni) + '</span></div>' +
+        '</div></div>' +
+        '<div class="stmt"><div class="stmt-head">Retained Earnings Statement</div><div class="stmt-body">' +
+          '<div class="stmt-line"><span class="lbl">Beginning retained earnings</span><span class="amt">$0</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Add: Net income</span><span class="amt">' + ni.toLocaleString() + '</span></div>' +
+          '<div class="stmt-line"><span class="lbl">Less: Dividends</span><span class="amt">(' + div.toLocaleString() + ')</span></div>' +
+          '<div class="stmt-line rule total"><span class="lbl">Ending retained earnings</span><span class="amt">' + money(endRE) + '</span></div>' +
+        '</div></div>' +
+        '<div class="stmt"><div class="stmt-head">Balance Sheet</div><div class="stmt-body">' +
+          '<div class="stmt-line"><span class="lbl">Total assets</span><span class="amt">' + money(assets) + '</span></div>' +
+          '<div class="stmt-line rule"><span class="lbl">Liabilities</span><span class="amt">' + money(liab) + '</span></div>' +
+          '<div class="stmt-line" style="padding-left:14px"><span class="lbl">Common stock</span><span class="amt">' + cs.toLocaleString() + '</span></div>' +
+          '<div class="stmt-line" style="padding-left:14px"><span class="lbl">Retained earnings</span><span class="amt">' + endRE.toLocaleString() + '</span></div>' +
+          '<div class="stmt-line rule total"><span class="lbl">Total liabilities &amp; equity</span><span class="amt">' + money(liab + cs + endRE) + '</span></div>' +
+        '</div></div>' +
+      '</div>';
+  }
+
+  function capRenderEntry() {
+    var host = $('cap-entry-host');
+    if (capIndex >= CAP_TX.length) {
+      host.innerHTML = '<div class="cap-done"><div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div>' +
+        '<h3>Summary complete &amp; in balance</h3>' +
+        '<p>All seven transactions are posted: total assets of <b>$15,500</b> equal liabilities plus stockholders’ equity. The three financial statements above were built entirely from your entries.</p>' +
+        '<button class="btn primary" id="cap-restart">Start over</button></div>';
+      $('cap-restart').addEventListener('click', function () { capIndex = 0; capRows = []; capRenderTable(); capRenderStatements(); capRenderEntry(); markCapDone(); $('cap-scroll').scrollTop = 0; });
+      return;
+    }
+    var tx = CAP_TX[capIndex];
+    capFields = {};
+    CAP_ACCTS.forEach(function (a) { capFields[a.key] = { sign: 1, mag: '' }; });
+    var groups = { a: 'Assets', l: 'Liabilities', e: "Stockholders’ Equity" };
+    var groupHtml = ['a', 'l', 'e'].map(function (g) {
+      var rows = CAP_ACCTS.filter(function (a) { return a.grp === g; }).map(function (a) {
+        return '<div class="cap-field" data-key="' + a.key + '"><span class="cf-label">' + a.label + (a.neg ? ' <small>(−)</small>' : '') + '</span>' +
+          '<button class="cf-sign" data-key="' + a.key + '" type="button">+</button>' +
+          '<input class="cf-amt" data-key="' + a.key + '" inputmode="numeric" placeholder="0" aria-label="' + a.label + ' amount"></div>';
+      }).join('');
+      return '<div class="ce-group ' + g + '"><div class="gh">' + groups[g] + '</div>' + rows + '</div>';
+    }).join('');
+    host.innerHTML = '<div class="cap-entry">' +
+      '<div class="ce-head"><div class="step">Transaction ' + (capIndex + 1) + ' of ' + CAP_TX.length + '</div><div class="desc">' + tx.desc + '</div></div>' +
+      '<div class="ce-tools"><button class="btn" id="cap-hint-btn">Hint</button><button class="btn" id="cap-sol-btn">Show solution</button></div>' +
+      '<div class="cap-hint" id="cap-hint"></div>' +
+      groupHtml +
+      '<div class="ce-post"><button class="btn primary" id="cap-post">Post entry</button></div>' +
+      '<div class="gp-feedback" id="cap-feedback" style="margin:0 14px 14px;"></div>' +
+      '</div>';
+    // wire sign toggles
+    Array.prototype.slice.call(host.querySelectorAll('.cf-sign')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.getAttribute('data-key');
+        capFields[k].sign *= -1;
+        b.textContent = capFields[k].sign < 0 ? '−' : '+';
+        b.classList.toggle('minus', capFields[k].sign < 0);
+      });
+    });
+    Array.prototype.slice.call(host.querySelectorAll('.cf-amt')).forEach(function (inp) {
+      inp.addEventListener('input', function () {
+        var k = inp.getAttribute('data-key');
+        capFields[k].mag = inp.value.replace(/[^0-9]/g, '');
+        if (inp.value !== capFields[k].mag) inp.value = capFields[k].mag;
+      });
+    });
+    $('cap-hint-btn').addEventListener('click', capHint);
+    $('cap-sol-btn').addEventListener('click', capShowSolution);
+    $('cap-post').addEventListener('click', capPost);
+  }
+  function capReadEntry() {
+    var vals = {};
+    CAP_ACCTS.forEach(function (a) { var f = capFields[a.key]; var m = parseInt(f.mag, 10); vals[a.key] = m ? f.sign * m : 0; });
+    return vals;
+  }
+  function capHint() {
+    var tx = CAP_TX[capIndex];
+    var names = Object.keys(tx.sol).map(function (k) { return CAP_ACCTS.filter(function (a) { return a.key === k; })[0].label + ' (' + (tx.sol[k] < 0 ? '−' : '+') + money(Math.abs(tx.sol[k])) + ')'; });
+    $('cap-hint').className = 'cap-hint show';
+    $('cap-hint').innerHTML = '<b>This transaction affects ' + Object.keys(tx.sol).length + ' accounts:</b> ' + names.join(', ') + '. Remember: expenses and dividends are entered as negative — they reduce equity.';
+    Array.prototype.slice.call($('cap-entry-host').querySelectorAll('.cap-field')).forEach(function (f) {
+      f.classList.toggle('hit', Object.keys(tx.sol).indexOf(f.getAttribute('data-key')) >= 0);
+    });
+  }
+  function capShowSolution() {
+    var tx = CAP_TX[capIndex];
+    CAP_ACCTS.forEach(function (a) {
+      var v = tx.sol[a.key] || 0;
+      capFields[a.key] = { sign: v < 0 ? -1 : 1, mag: v ? String(Math.abs(v)) : '' };
+      var host = $('cap-entry-host');
+      var inp = host.querySelector('.cf-amt[data-key="' + a.key + '"]');
+      var sgn = host.querySelector('.cf-sign[data-key="' + a.key + '"]');
+      if (inp) inp.value = v ? String(Math.abs(v)) : '';
+      if (sgn) { sgn.textContent = v < 0 ? '−' : '+'; sgn.classList.toggle('minus', v < 0); }
+    });
+    var fb = $('cap-feedback');
+    fb.className = 'gp-feedback bad show';
+    fb.innerHTML = '<span class="fi">i</span><div>Solution filled in. Review how it keeps the equation in balance, then <b>Post entry</b> to record it.</div>';
+  }
+  function capPost() {
+    var tx = CAP_TX[capIndex];
+    var vals = capReadEntry();
+    var fb = $('cap-feedback');
+    var da = vals.cash + vals.ar + vals.equip;
+    var dl = vals.np + vals.ap;
+    var de = vals.cs + vals.rev + vals.exp + vals.div;
+    if (da === 0 && dl === 0 && de === 0) {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">!</span><div>Enter this transaction’s effects first. Use the <b>Hint</b> if you are unsure which accounts change.</div>';
+      return;
+    }
+    var correct = CAP_ACCTS.every(function (a) { return vals[a.key] === (tx.sol[a.key] || 0); });
+    if (!correct) {
+      fb.className = 'gp-feedback bad show';
+      if (da !== dl + de) {
+        fb.innerHTML = '<span class="fi">!</span><div>Not balanced — this row’s change in assets (' + money(da) + ') must equal liabilities + equity (' + money(dl + de) + '). Check your amounts and signs.</div>';
+      } else {
+        fb.innerHTML = '<span class="fi">!</span><div>It balances, but the accounts don’t match this transaction. Try the <b>Hint</b>, or <b>Show solution</b>.</div>';
+      }
+      return;
+    }
+    capRows.push({ tx: tx, vals: vals });
+    capIndex++;
+    capRenderTable();
+    capRenderStatements();
+    capRenderEntry();
+    if (capIndex >= CAP_TX.length) markCapDone();
+    // scroll table into view a touch
+    var tw = document.querySelector('.cap-tw'); if (tw) tw.scrollLeft = 0;
+  }
+  function markCapDone() {
+    if (capIndex >= CAP_TX.length) { if (!state.capDone) { state.capDone = true; save(); } }
+    updateCapPill();
+  }
+  function updateCapPill() {
+    var pill = $('capstone-pill'); if (!pill) return;
+    if (state.capDone) pill.textContent = 'Done';
+    else if (capRows.length > 0) pill.textContent = capRows.length + '/7';
+    else pill.textContent = 'Start';
+  }
+  function openCapstone() { goScreen('capstone'); $('cap-scroll').scrollTop = 0; }
+  $('start-capstone-card').addEventListener('click', openCapstone);
+  $('cap-back').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -2996,6 +3389,10 @@
   l3gpReset(true);
   l3UpdateProgress();
   l3SegChecks();
+  capRenderTable();
+  capRenderStatements();
+  capRenderEntry();
+  updateCapPill();
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
