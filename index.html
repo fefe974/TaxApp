@@ -1694,6 +1694,29 @@
   .dab-dot { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
   .dab-dot.done { background: var(--good); }
   .dab-dot.on { background: var(--teal); }
+
+  /* Module 3 · Lesson 3 — Accruals (reuses .dfl-*, .adzr-*, .dab-* / .bookval) */
+  .dfl-grp.ar { --gc: var(--equity); } .dfl-grp.ae { --gc: var(--liab); }
+  /* interest formula strip (Illustration 2.33 note) */
+  .acr-formula { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--paper); box-shadow: var(--shadow); padding: 14px 12px; margin-top: 12px; overflow-x: auto; }
+  .acr-frow { display: flex; align-items: stretch; justify-content: center; gap: 8px; min-width: min-content; }
+  .acr-fcell { text-align: center; min-width: 74px; }
+  .acr-fcell .lab { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); line-height: 1.25; min-height: 34px; display: grid; align-items: center; }
+  .acr-fcell .val { font-family: var(--mono); font-weight: 800; font-size: 14px; color: var(--ink); margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--line); }
+  .acr-fcell.res .val { color: var(--good); }
+  .acr-fcell.res .lab { color: var(--good); }
+  .acr-fop { display: grid; place-items: center; font-weight: 800; color: var(--ink-faint); font-size: 15px; }
+  .acr-fop.eq { color: var(--ink); }
+  /* accrued-salaries day chips (Illustration 2.34 idea) */
+  .acr-days { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+  .acr-day { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 8px 12px; text-align: center; box-shadow: var(--shadow); }
+  .acr-day.pay { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--card)); }
+  .acr-day.acc { border-color: var(--liab); background: color-mix(in srgb, var(--liab) 12%, var(--card)); }
+  .acr-day .d { font-family: var(--serif); font-weight: 700; font-size: 14px; color: var(--ink); }
+  .acr-day .t { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-top: 2px; }
+  .acr-day.pay .t { color: var(--gold); } .acr-day.acc .t { color: var(--liab); }
+  .acr-day .amt { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+  .acr-daysep { color: var(--ink-faint); font-weight: 800; }
 </style>
 
 <div id="fa-app">
@@ -1936,11 +1959,14 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
+            <button class="lesson-card" id="start-m3acr-card">
               <span class="lnum">3</span>
               <span class="lbody"><b>Accruals</b><span>Accrued revenues &amp; accrued expenses</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+              <span class="pill-mini ready" id="m3acr-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
               <span class="lnum">4</span>
               <span class="lbody"><b>The Adjusted Trial Balance</b><span>Ready to prepare the statements</span></span>
@@ -3931,6 +3957,167 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 3 · LESSON 3 — ADJUSTING ENTRIES FOR ACCRUALS ============== -->
+    <section class="fa-screen" id="screen-m3acr" aria-label="Adjusting Entries for Accruals">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m3a-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m3a-scroll">
+        <header class="m3-hero">
+          <div class="eyebrow">Module 3 · Lesson 3</div>
+          <h1>Adjusting Entries for Accruals</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.3</span>
+            <div>
+              <div class="lo-t">Section</div>
+              <div class="lo-d">Accrued revenues &amp; accrued expenses — cash that hasn't arrived yet.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Accruals are the mirror image of deferrals. Here the revenue or expense has <b>already happened</b>, but no cash has moved and nothing has been recorded — so the adjustment catches up.</p>
+
+          <section class="m2-sec">
+            <h2>Why accruals need adjusting</h2>
+            <p>Before adjustment, a revenue (and its asset) or an expense (and its liability) is <b>understated</b> — the event occurred but no entry captured it. So unlike a deferral, every accrual adjustment <b>increases both</b> a balance-sheet account and an income-statement account.</p>
+            <div class="dfl-rule">
+              <div class="rk up"><div class="t">Balance sheet</div><div class="v">Increase ↑</div><div class="s">the asset or liability</div></div>
+              <div class="rarrow">+</div>
+              <div class="rk up"><div class="t">Income statement</div><div class="v">Increase ↑</div><div class="s">the revenue or expense</div></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.31 · The two accrual patterns</h2>
+            <p>Both sides go <b>up</b> — the balance-sheet account and the income-statement account increase together.</p>
+            <div class="dfl-fig" style="margin-top:12px;">
+              <div class="dfl-cap"><span class="tag">Illustration 2.31</span><span class="t">Adjusting Entries for Accruals</span></div>
+              <div class="dfl-groups">
+                <div class="dfl-grp ar">
+                  <div class="gh">Accrued Revenues</div>
+                  <div class="dfl-pair">
+                    <div class="dfl-acct"><div class="at">Asset</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt dr">Adjusting<br>entry (+)</div></div><div class="col r"><div class="lbl">Credit</div><div class="amt"></div></div></div></div>
+                    <div class="dfl-arrow">→</div>
+                    <div class="dfl-acct rt"><div class="at">Revenue</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt"></div></div><div class="col r"><div class="lbl">Credit</div><div class="amt cr">Adjusting<br>entry (+)</div></div></div></div>
+                  </div>
+                  <div class="dfl-legend">Debit the <b>asset</b> up, credit the <b>revenue</b> up.</div>
+                </div>
+                <div class="dfl-grp ae">
+                  <div class="gh">Accrued Expenses</div>
+                  <div class="dfl-pair">
+                    <div class="dfl-acct"><div class="at">Expense</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt dr">Adjusting<br>entry (+)</div></div><div class="col r"><div class="lbl">Credit</div><div class="amt"></div></div></div></div>
+                    <div class="dfl-arrow">→</div>
+                    <div class="dfl-acct rt"><div class="at">Liability</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt"></div></div><div class="col r"><div class="lbl">Credit</div><div class="amt cr">Adjusting<br>entry (+)</div></div></div></div>
+                  </div>
+                  <div class="dfl-legend">Debit the <b>expense</b> up, credit the <b>liability</b> up.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Accrued revenues</h2>
+            <p>Revenues for services <b>performed but not yet recorded</b> — because time passed (like interest earned on a bank balance) or the work isn't billed yet. The adjustment <b>debits an asset</b> (a receivable) and <b>credits revenue</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Accrued expenses</h2>
+            <p>The opposite side: expenses <b>incurred but not yet paid or recorded</b> — interest, salaries, taxes, rent. The adjustment <b>debits an expense</b> and <b>credits a liability</b>. In fact, one company's accrued expense is another's accrued revenue.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Worked adjustments · Pioneer Advertising, Oct. 31</h2>
+            <p>Tap through the four accrual adjustments Pioneer records for October.</p>
+            <div class="adzr" id="acr" style="margin-top:12px;">
+              <div class="adzr-tabs" role="tablist">
+                <button class="adzr-tab on" role="tab" data-i="0"><span class="k">Accr. rev</span>Unbilled</button>
+                <button class="adzr-tab" role="tab" data-i="1"><span class="k">Accr. exp</span>Interest</button>
+                <button class="adzr-tab" role="tab" data-i="2"><span class="k">Accr. exp</span>Salaries</button>
+                <button class="adzr-tab" role="tab" data-i="3"><span class="k">Accr. exp</span>Bad debts</button>
+              </div>
+              <div class="adzr-body" id="acr-body"></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Computing accrued interest</h2>
+            <p>Interest depends on three things — the note's face value, its annual rate, and how long it's been outstanding (as a fraction of a year).</p>
+            <div class="acr-formula">
+              <div class="acr-frow">
+                <div class="acr-fcell"><div class="lab">Face value of note</div><div class="val">$50,000</div></div>
+                <div class="acr-fop">×</div>
+                <div class="acr-fcell"><div class="lab">Annual interest rate</div><div class="val">.12</div></div>
+                <div class="acr-fop">×</div>
+                <div class="acr-fcell"><div class="lab">Time in terms of one year</div><div class="val">1/12</div></div>
+                <div class="acr-fop eq">=</div>
+                <div class="acr-fcell res"><div class="lab">Interest</div><div class="val">$500</div></div>
+              </div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+              <div>Pioneer credits <b>Interest Payable</b> — not Notes Payable — so the interest owed and the principal owed appear as two separate obligations.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Accrued salaries — counting the days</h2>
+            <p>Pioneer last paid on <b>Oct. 26</b> and won't pay again until <b>Nov. 23</b>. Three working days fall in October after the last payday, so those wages are earned but unpaid at month-end.</p>
+            <div class="acr-days">
+              <div class="acr-day pay"><div class="d">Oct. 26</div><div class="t">Last payday</div></div>
+              <span class="acr-daysep">→</span>
+              <div class="acr-day acc"><div class="d">29</div><div class="t">Accrued</div><div class="amt">$2,000</div></div>
+              <div class="acr-day acc"><div class="d">30</div><div class="t">Accrued</div><div class="amt">$2,000</div></div>
+              <div class="acr-day acc"><div class="d">31</div><div class="t">Accrued</div><div class="amt">$2,000</div></div>
+              <span class="acr-daysep">→</span>
+              <div class="acr-day pay"><div class="d">Nov. 23</div><div class="t">Next payday</div></div>
+            </div>
+            <p style="margin-top:10px;">Three days at $2,000/day = <b>$6,000</b> of accrued salaries — see the <b>Salaries</b> tab above.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>A note on bad debts</h2>
+            <p>GAAP requires estimating the receivables that won't be collected. The adjustment debits <b>Bad Debt Expense</b> and credits <b>Allowance for Doubtful Accounts</b> — a <b>contra asset</b>, like Accumulated Depreciation, that offsets Accounts Receivable so the balance sheet shows its <b>net realizable value</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Post the adjustment</h2>
+            <p>Your turn. For each accrual, choose the account to <b>debit</b> and the account to <b>credit</b>, enter the amount, and post. Remember Illustration 2.31 — both sides increase.</p>
+            <div class="dab" id="abr" style="margin-top:12px;">
+              <div class="dab-eh" id="abr-eh"></div>
+              <div class="dab-body" id="abr-body"></div>
+              <div class="dab-progress" id="abr-progress"></div>
+            </div>
+            <div class="gp-feedback" id="abr-feedback" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Deferrals move cash-first amounts <i>out</i> of balance-sheet accounts; accruals bring event-first amounts <i>in</i>. Both sides of an accrual go up together. With every deferral and accrual posted, the books are finally ready for the <b>adjusted trial balance</b>.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m3acr-next">
+              <div><div class="up">Up next in Module 3</div><b>The Adjusted Trial Balance</b> — ready to prepare the statements.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m3a-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -3949,7 +4136,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -3971,9 +4158,10 @@
       if (p.m3IntroDone) state.m3IntroDone = true;
       if (p.m3TypesDone) state.m3TypesDone = true;
       if (p.m3DefDone) state.m3DefDone = true;
+      if (p.m3AcrDone) state.m3AcrDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -3998,7 +4186,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -4030,7 +4218,8 @@
       { done: function () { return state.m2capDone; }, open: function () { openM2cap(); }, label: 'the Module 2 Capstone' },
       { done: function () { return state.m3IntroDone; }, open: function () { openM3Intro(); }, label: 'Module 3 · Introduction' },
       { done: function () { return state.m3TypesDone; }, open: function () { openM3Types(); }, label: 'Types of Adjusting Entries' },
-      { done: function () { return state.m3DefDone; }, open: function () { openM3Def(); }, label: 'Deferrals' }
+      { done: function () { return state.m3DefDone; }, open: function () { openM3Def(); }, label: 'Deferrals' },
+      { done: function () { return state.m3AcrDone; }, open: function () { openM3Acr(); }, label: 'Accruals' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -6213,7 +6402,135 @@
   $('start-m3def-card').addEventListener('click', openM3Def);
   $('m3d-back').addEventListener('click', function () { goScreen('home'); });
   $('m3d-home').addEventListener('click', function () { goScreen('home'); });
-  $('m3def-next').addEventListener('click', function () { goScreen('home'); });
+  $('m3def-next').addEventListener('click', function () { openM3Acr(); });
+
+  /* ============================================================
+     MODULE 3 — Lesson 3: Adjusting Entries for Accruals
+     ============================================================ */
+  /* --- Worked-adjustment analyzer (Illustrations 2.32–2.36) --- */
+  var ACR_CASES = [
+    {
+      tc: 'var(--equity)', badge: 'Accrued revenue · Unbilled services',
+      scn: 'In October Pioneer performed <b>$2,000</b> of services that were not billed to clients by Oct. 31 — so they are not yet recorded.',
+      eq: { a: { nm: 'Accounts Receivable', v: '+2,000', cls: 'pos' }, l: { nm: 'No change', v: '—', cls: 'zero' }, se: { nm: 'Service Revenue', v: '+2,000', cls: 'pos' } },
+      date: 'Oct. 31', dr: { acct: 'Accounts Receivable', ref: '112', amt: '2,000' }, cr: { acct: 'Service Revenue', ref: '400', amt: '2,000' }, memo: 'To record revenue for services performed',
+      bal: [ { an: 'Accounts Receivable', un: '72,000', adj: '+2,000', fin: '74,000' }, { an: 'Service Revenue', un: '104,000', adj: '+2,000', fin: '106,000' } ],
+      without: 'assets and stockholders’ equity, and revenues and net income, are all understated.'
+    },
+    {
+      tc: 'var(--liab)', badge: 'Accrued expense · Interest',
+      scn: 'Pioneer signed a 3-month, <b>$50,000</b> note payable on Oct. 1 at <b>12%</b> annual interest. One month has accrued: $50,000 × .12 × 1/12 = <b>$500</b>.',
+      eq: { a: { nm: 'No change', v: '—', cls: 'zero' }, l: { nm: 'Interest Payable', v: '+500', cls: 'pos' }, se: { nm: 'Interest Expense', v: '−500', cls: 'neg' } },
+      date: 'Oct. 31', dr: { acct: 'Interest Expense', ref: '905', amt: '500' }, cr: { acct: 'Interest Payable', ref: '230', amt: '500' }, memo: 'To record interest on notes payable',
+      bal: [ { an: 'Interest Expense', un: '0', adj: '+500', fin: '500' }, { an: 'Interest Payable', un: '0', adj: '+500', fin: '500' } ],
+      without: 'liabilities and interest expense are understated, and net income and stockholders’ equity are overstated.'
+    },
+    {
+      tc: 'var(--liab)', badge: 'Accrued expense · Salaries & wages',
+      scn: 'Pioneer last paid on Oct. 26 and pays <b>$2,000</b>/day. Three working days remain (Oct. 29–31): 3 × $2,000 = <b>$6,000</b> earned but unpaid.',
+      eq: { a: { nm: 'No change', v: '—', cls: 'zero' }, l: { nm: 'Salaries & Wages Payable', v: '+6,000', cls: 'pos' }, se: { nm: 'Salaries & Wages Expense', v: '−6,000', cls: 'neg' } },
+      date: 'Oct. 31', dr: { acct: 'Salaries and Wages Expense', ref: '726', amt: '6,000' }, cr: { acct: 'Salaries and Wages Payable', ref: '212', amt: '6,000' }, memo: 'To record accrued salaries',
+      bal: [ { an: 'Salaries & Wages Expense', un: '40,000', adj: '+6,000', fin: '46,000' }, { an: 'Salaries & Wages Payable', un: '0', adj: '+6,000', fin: '6,000' } ],
+      without: 'both Pioneer’s expenses and liabilities are understated by $6,000.'
+    },
+    {
+      tc: 'var(--liab)', badge: 'Contra asset · Bad debts',
+      scn: 'Based on past experience, Pioneer estimates <b>$1,600</b> of October’s receivables will prove uncollectible.',
+      eq: { a: { nm: 'Allowance for Doubtful Accts', v: '−1,600', cls: 'neg' }, l: { nm: 'No change', v: '—', cls: 'zero' }, se: { nm: 'Bad Debt Expense', v: '−1,600', cls: 'neg' } },
+      date: 'Oct. 31', dr: { acct: 'Bad Debt Expense', ref: '750', amt: '1,600' }, cr: { acct: 'Allowance for Doubtful Accounts', ref: '113', amt: '1,600' }, memo: 'To record monthly bad debt expense',
+      bal: [ { an: 'Allowance for Doubtful Accts (contra)', un: '0', adj: '+1,600', fin: '1,600' }, { an: 'Bad Debt Expense', un: '0', adj: '+1,600', fin: '1,600' } ],
+      without: 'receivables would be overstated — they would not reflect their net realizable value.'
+    }
+  ];
+  function renderAcr(i) {
+    var c = ACR_CASES[i];
+    Array.prototype.slice.call($('acr').querySelectorAll('.adzr-tab')).forEach(function (t) {
+      var on = parseInt(t.getAttribute('data-i'), 10) === i;
+      t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    function cell(o) { return '<div class="cell"><div class="h">' + o.h + '</div><div class="nm">' + o.d.nm + '</div><div class="v ' + o.d.cls + '">' + o.d.v + '</div></div>'; }
+    var eq = '<div class="adzr-eq" style="--tc:' + c.tc + '">' +
+      cell({ h: 'Assets', d: c.eq.a }) + '<div class="adzr-op">=</div>' +
+      cell({ h: 'Liabilities', d: c.eq.l }) + '<div class="adzr-op">+</div>' +
+      cell({ h: 'Equity', d: c.eq.se }) + '</div>';
+    var je = '<div class="adzr-je">' +
+      '<div class="jdate">' + c.date + '</div>' +
+      '<div class="je-row"><span class="je-acct">' + c.dr.acct + ' <span class="ref">' + c.dr.ref + '</span></span><span class="je-d">' + c.dr.amt + '</span><span class="je-c"></span></div>' +
+      '<div class="je-row cr"><span class="je-acct">' + c.cr.acct + ' <span class="ref">' + c.cr.ref + '</span></span><span class="je-d"></span><span class="je-c">' + c.cr.amt + '</span></div>' +
+      '<div class="memo">(' + c.memo + ')</div></div>';
+    var bal = '<div class="adzr-bal"><div class="adzr-balrow head"><span>Account</span><span class="num">Unadjusted</span><span class="num">Adjustment</span><span class="num">Adjusted</span></div>' +
+      c.bal.map(function (b) { return '<div class="adzr-balrow"><span class="an">' + b.an + '</span><span class="num">' + b.un + '</span><span class="num adj">' + b.adj + '</span><span class="num fin">' + b.fin + '</span></div>'; }).join('') + '</div>';
+    $('acr-body').innerHTML =
+      '<span class="adzr-badge" style="--tc:' + c.tc + '">' + c.badge + '</span>' +
+      '<div class="adzr-scn">' + c.scn + '</div>' +
+      '<div class="adzr-sub">Equation effect</div>' + eq +
+      '<div class="adzr-sub">Adjusting journal entry</div>' + je +
+      '<div class="adzr-sub">Account balances</div>' + bal +
+      '<div class="adzr-note"><span class="wi">!</span><p><b>Without this entry,</b> ' + c.without + '</p></div>';
+  }
+  Array.prototype.slice.call(document.querySelectorAll('#acr .adzr-tab')).forEach(function (t) {
+    t.addEventListener('click', function () { renderAcr(parseInt(t.getAttribute('data-i'), 10)); });
+  });
+
+  /* --- Guided practice: post the accrual adjustment --- */
+  var ABR_ACCTS = ['— select account —', 'Cash', 'Accounts Receivable', 'Interest Receivable', 'Service Revenue', 'Interest Expense', 'Interest Payable', 'Notes Payable', 'Salaries and Wages Expense', 'Salaries and Wages Payable', 'Bad Debt Expense', 'Allowance for Doubtful Accounts'];
+  var ABR_TX = [
+    { desc: 'Your firm completed <b>$1,500</b> of consulting in October but will not bill the client until November.', drA: 'Accounts Receivable', crA: 'Service Revenue', amt: 1500, hint: 'Services performed but unbilled are accrued revenue. Debit the receivable (asset), credit revenue. Amount = the unbilled work, $1,500.' },
+    { desc: 'A <b>$60,000</b> note payable carries <b>10%</b> annual interest. Record <b>one month</b> of accrued interest.', drA: 'Interest Expense', crA: 'Interest Payable', amt: 500, hint: 'Interest = Face × Rate × Time = $60,000 × .10 × 1/12 = $500. Debit the expense, credit Interest Payable — not Notes Payable.' },
+    { desc: 'Employees earn <b>$3,000</b>/day. <b>Two</b> working days fall after the last payday and before month-end.', drA: 'Salaries and Wages Expense', crA: 'Salaries and Wages Payable', amt: 6000, hint: 'Accrued salaries = days × daily rate = 2 × $3,000 = $6,000. Debit the expense, credit Salaries and Wages Payable.' }
+  ];
+  var abrIndex = 0, abrDone = [];
+  function abrOptions() { return ABR_ACCTS.map(function (a, i) { return '<option value="' + (i === 0 ? '' : a) + '">' + a + '</option>'; }).join(''); }
+  function abrRender() {
+    var t = ABR_TX[abrIndex];
+    $('abr-eh').innerHTML = '<div class="step">Adjustment ' + (abrIndex + 1) + ' of ' + ABR_TX.length + '</div><div class="desc">' + t.desc + '</div>';
+    $('abr-body').innerHTML =
+      '<div class="dab-side d">Debit</div>' +
+      '<div class="dab-line"><select class="dab-sel" id="abr-dr">' + abrOptions() + '</select><input class="dab-amt" id="abr-dr-amt" inputmode="numeric" placeholder="0" aria-label="Debit amount"></div>' +
+      '<div class="dab-side c">Credit</div>' +
+      '<div class="dab-line cr"><select class="dab-sel" id="abr-cr">' + abrOptions() + '</select><input class="dab-amt" id="abr-cr-amt" inputmode="numeric" placeholder="0" aria-label="Credit amount"></div>' +
+      '<div class="dab-tools"><button class="btn" id="abr-hint-btn">Hint</button><button class="btn primary" id="abr-post-btn">Post entry</button></div>' +
+      '<div class="dab-hint" id="abr-hint">' + t.hint + '</div>';
+    $('abr-progress').innerHTML = ABR_TX.map(function (x, i) {
+      return '<div class="dab-dot ' + (abrDone[i] ? 'done' : (i === abrIndex ? 'on' : '')) + '"></div>';
+    }).join('');
+    $('abr-hint-btn').addEventListener('click', function () { $('abr-hint').classList.toggle('show'); });
+    $('abr-post-btn').addEventListener('click', abrPost);
+  }
+  function abrNum(id) { var v = ($(id).value || '').replace(/[^0-9.]/g, ''); return v === '' ? null : Math.round(parseFloat(v)); }
+  function abrPost() {
+    var t = ABR_TX[abrIndex];
+    var dr = $('abr-dr').value, cr = $('abr-cr').value, da = abrNum('abr-dr-amt'), ca = abrNum('abr-cr-amt');
+    var fb = $('abr-feedback');
+    function bad(msg) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + msg + '</div>'; }
+    if (!dr || !cr) { bad('Choose an account for <b>both</b> the debit and the credit.'); return; }
+    if (da == null || ca == null) { bad('Enter the amount on <b>both</b> lines.'); return; }
+    if (da !== ca) { bad('A journal entry must balance — <b>debits must equal credits</b>. Check your amounts.'); return; }
+    var okAcct = (dr === t.drA && cr === t.crA), okAmt = (da === t.amt);
+    if (!okAcct && (dr === t.crA && cr === t.drA)) { bad('Right accounts, wrong sides. For an accrual you <b>debit the asset or expense</b> and <b>credit the revenue or liability</b>.'); return; }
+    if (!okAcct) { bad('Not quite. Re-read the situation and pick the two accounts it affects — the <b>Hint</b> can help.'); return; }
+    if (!okAmt) { bad('Accounts are right — but check the <b>amount</b>. Prorate over the period or count the days.'); return; }
+    abrDone[abrIndex] = true;
+    var allDone = ABR_TX.every(function (x, i) { return abrDone[i]; });
+    if (allDone) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Posted — all three correct.</b> Accruals always raise both sides: debit the asset or expense the books missed, credit the matching revenue or liability.</div>';
+      $('abr-progress').innerHTML = ABR_TX.map(function () { return '<div class="dab-dot done"></div>'; }).join('');
+      if (!state.m3AcrDone) { state.m3AcrDone = true; save(); updateM3AcrPill(); }
+      return;
+    }
+    fb.className = 'gp-feedback good show';
+    fb.innerHTML = '<span class="fi">✓</span><div><b>Correct.</b> On to the next one.</div>';
+    var next = abrIndex; for (var k = 1; k <= ABR_TX.length; k++) { var idx = (abrIndex + k) % ABR_TX.length; if (!abrDone[idx]) { next = idx; break; } }
+    abrIndex = next;
+    setTimeout(function () { abrRender(); a11yify($('abr')); }, 550);
+  }
+  function updateM3AcrPill() { var pill = $('m3acr-pill'); if (pill) pill.textContent = state.m3AcrDone ? 'Done' : 'Start'; }
+  function openM3Acr() { goScreen('m3acr'); $('m3a-scroll').scrollTop = 0; }
+  $('start-m3acr-card').addEventListener('click', openM3Acr);
+  $('m3a-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3a-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3acr-next').addEventListener('click', function () { goScreen('home'); });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -6276,6 +6593,9 @@
   renderAdzr(0);
   dabRender();
   updateM3DefPill();
+  renderAcr(0);
+  abrRender();
+  updateM3AcrPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
