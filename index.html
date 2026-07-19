@@ -1457,6 +1457,50 @@
   .tbe-why { display: none; padding: 0 14px 12px 46px; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
   .tbe-card.open .tbe-why { display: block; }
   .tbe-why b { color: var(--good); }
+
+  /* ============================================================
+     MODULE 2 CAPSTONE — Journalize, Post & Prove (Kleene)
+     ============================================================ */
+  .m2c-entry { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; margin: 0 18px; }
+  .m2c-eh { padding: 12px 14px; background: var(--card-2); border-bottom: 1px solid var(--line); }
+  .m2c-eh .step { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--credit); }
+  .m2c-eh .desc { font-family: var(--serif); font-size: 14.5px; color: var(--ink); margin-top: 3px; line-height: 1.4; }
+  .m2c-jhead { display: grid; grid-template-columns: 1fr 74px 74px; gap: 8px; padding: 10px 14px 0; font-size: 9.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-faint); }
+  .m2c-jhead span:nth-child(2), .m2c-jhead span:nth-child(3) { text-align: right; }
+  .m2c-lines { padding: 6px 14px 0; display: flex; flex-direction: column; gap: 7px; }
+  .m2c-line { display: grid; grid-template-columns: 1fr 74px 74px; gap: 8px; align-items: center; }
+  .m2c-sel { height: 36px; border-radius: 9px; border: 1px solid var(--input); background: var(--card); color: var(--ink); font-size: 12.5px; padding: 0 8px; width: 100%; }
+  .m2c-sel:focus { outline: 2px solid var(--debit); outline-offset: 1px; }
+  .m2c-amt { height: 36px; border-radius: 9px; border: 1px solid var(--input); background: var(--card); font-family: var(--mono); font-weight: 600; font-size: 12.5px; text-align: right; padding: 0 8px; width: 100%; color: var(--ink); }
+  .m2c-amt.d:focus { outline: 2px solid var(--debit); } .m2c-amt.c:focus { outline: 2px solid var(--credit); }
+  .m2c-tools { display: flex; gap: 8px; padding: 12px 14px 0; }
+  .m2c-tools .btn { flex: 1 1 0; padding: 9px; font-size: 12.5px; }
+  .m2c-hint { margin: 10px 14px 0; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--gold) 14%, transparent); border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent); font-size: 12.5px; line-height: 1.45; color: var(--ink); display: none; }
+  .m2c-hint.show { display: block; } .m2c-hint b { color: var(--ink); }
+  .m2c-post { padding: 12px 14px; } .m2c-post .btn { width: 100%; }
+
+  .m2c-live-head { padding: 0 18px; margin: 20px 0 8px; display: flex; align-items: baseline; gap: 8px; }
+  .m2c-live-head h2 { font-family: var(--serif); font-size: 16px; font-weight: 600; }
+  .m2c-live-head .live { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--good); display: inline-flex; align-items: center; gap: 4px; }
+  .m2c-live-head .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: livepulse 1.8s ease-in-out infinite; }
+  .m2c-toggle { display: flex; gap: 4px; padding: 4px; background: var(--card-2); border: 1px solid var(--line-soft); border-radius: 12px; margin: 0 18px 10px; box-shadow: var(--shadow); }
+  .m2c-toggle button { flex: 1 1 0; border: none; background: none; cursor: pointer; padding: 8px 4px; border-radius: 9px; font-size: 12px; font-weight: 650; color: var(--ink-faint); transition: color .2s ease; }
+  .m2c-toggle button.on { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+  .m2c-view { margin: 0 18px; display: none; }
+  .m2c-view.on { display: block; }
+  .m2c-empty { padding: 18px; text-align: center; font-size: 12px; color: var(--ink-faint); border: 1px dashed var(--line); border-radius: var(--r-md); }
+
+  /* live trial balance */
+  .m2c-tb { border: 1.5px solid color-mix(in srgb, var(--teal) 35%, var(--line)); border-radius: var(--r-md); background: color-mix(in srgb, var(--teal) 5%, var(--card)); padding: 14px; box-shadow: var(--shadow); }
+  .m2c-tb table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .m2c-tb th { font-size: 9.5px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-faint); padding: 3px 6px; }
+  .m2c-tb th.amt, .m2c-tb td.amt { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; width: 78px; }
+  .m2c-tb td { padding: 3px 6px; color: var(--ink); }
+  .m2c-tb td.amt.d { color: var(--debit); } .m2c-tb td.amt.c { color: var(--credit); }
+  .m2c-tb .tot td { border-top: 2px solid var(--ink); padding-top: 6px; font-weight: 800; }
+  .m2c-tb .tot td.amt { color: var(--warn); }
+  .m2c-tb .verdict { text-align: center; margin-top: 8px; font-size: 12.5px; font-weight: 700; }
+  .m2c-tb .verdict.ok { color: var(--good); } .m2c-tb .verdict.no { color: var(--ink-faint); }
 </style>
 
 <div id="fa-app">
@@ -1648,6 +1692,19 @@
                 <span>Proving debits = credits · Illustration 2.23</span>
               </span>
               <span class="pill-mini ready" id="tb-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m2cap-card" style="border-color: color-mix(in srgb, var(--gold) 40%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--gold) 15%,transparent);color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 45%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6M4 5h2M18 5h2"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Capstone · Put It Into Practice</b>
+                <span>Journalize, post &amp; prove for Kleene Window Washing · LO 2.2</span>
+              </span>
+              <span class="pill-mini ready" id="m2cap-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -3236,6 +3293,67 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 CAPSTONE — JOURNALIZE, POST & PROVE ============== -->
+    <section class="fa-screen" id="screen-m2cap" aria-label="Module 2 Capstone">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m2c-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m2c-scroll">
+        <div class="cap-hero">
+          <span class="cap-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+            Put It Into Practice · LO 2.2
+          </span>
+          <h1>Journalize, Post &amp; Prepare a Trial Balance</h1>
+          <p><b>Kleene Window Washing Inc.</b> opened on July 1. Journalize each transaction — the ledger and the trial balance build themselves below, and must prove out at July 31.</p>
+        </div>
+
+        <details class="cap-facts" id="m2c-facts">
+          <summary>The transactions &amp; chart of accounts <svg class="icon chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary>
+          <div class="fbody">
+            <ol id="m2c-facts-list"></ol>
+          </div>
+        </details>
+
+        <div class="cap-sec-label"><span class="eyebrow">a · Journalize the transaction</span></div>
+        <div class="m2c-entry" id="m2c-entry-host"></div>
+        <div class="gp-feedback" id="m2c-feedback" style="margin: 12px 18px 0;"></div>
+        <div class="gp-actions" id="m2c-next-wrap" style="display:none; margin: 12px 18px 0;">
+          <button class="btn primary" id="m2c-next">Next transaction →</button>
+        </div>
+
+        <div class="m2c-live-head">
+          <h2 class="serif">b &amp; c · Ledger &amp; trial balance</h2>
+          <span class="live">Building live</span>
+        </div>
+        <div class="m2c-toggle">
+          <button class="on" data-m2v="tb">Trial Balance</button>
+          <button data-m2v="ledger">Ledger</button>
+          <button data-m2v="journal">Journal</button>
+        </div>
+        <div class="m2c-view on" id="m2c-view-tb"></div>
+        <div class="m2c-view" id="m2c-view-ledger"></div>
+        <div class="m2c-view" id="m2c-view-journal"></div>
+
+        <div class="cap-done" id="m2c-done" style="display:none; margin: 20px 18px 0;">
+          <div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>Trial balance proved</h3>
+          <p>All eleven transactions journalized and posted — total debits of <b>$23,600</b> equal total credits. You ran the full recording process end to end.</p>
+          <button class="btn primary" id="m2c-restart" style="margin-top:14px;">Start over</button>
+        </div>
+
+        <div style="height: calc(28px + env(safe-area-inset-bottom));"></div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -3254,7 +3372,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -3272,9 +3390,10 @@
       if (p.rpiDone) state.rpiDone = true;
       if (p.sumDone) state.sumDone = true;
       if (p.tbDone) state.tbDone = true;
+      if (p.m2capDone) state.m2capDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -3299,7 +3418,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -3327,7 +3446,8 @@
       { done: function () { return state.coaDone; }, open: function () { openCoa(); }, label: 'Chart of Accounts' },
       { done: function () { return state.rpiDone; }, open: function () { openRpi(); }, label: 'The Recording Process Illustrated' },
       { done: function () { return state.sumDone; }, open: function () { openSum(); }, label: 'Summary: Journalizing & Posting' },
-      { done: function () { return state.tbDone; }, open: function () { openTb(); }, label: 'The Trial Balance' }
+      { done: function () { return state.tbDone; }, open: function () { openTb(); }, label: 'The Trial Balance' },
+      { done: function () { return state.m2capDone; }, open: function () { openM2cap(); }, label: 'the Module 2 Capstone' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -5106,6 +5226,166 @@
   $('tb-back').addEventListener('click', function () { goScreen('home'); });
   $('tb-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 CAPSTONE — Journalize, Post & Prove (Kleene Window Washing)
+     ============================================================ */
+  var M2C_ACCTS = ['Cash', 'Accounts Receivable', 'Supplies', 'Prepaid Insurance', 'Equipment', 'Accounts Payable', 'Salaries and Wages Payable', 'Common Stock', 'Retained Earnings', 'Dividends', 'Income Summary', 'Service Revenue', 'Maintenance and Repairs Expense', 'Supplies Expense', 'Depreciation Expense', 'Insurance Expense', 'Salaries and Wages Expense'];
+  var M2C_TX = [
+    { date: 'July 1', s: '7/1', desc: 'Issued 12,000 shares of common stock for $12,000 cash.', lines: [{ a: 'Cash', side: 'd', v: 12000 }, { a: 'Common Stock', side: 'c', v: 12000 }] },
+    { date: 'July 1', s: '7/1', desc: 'Purchased a used truck for $8,000, paying $2,000 cash and the balance on account.', lines: [{ a: 'Equipment', side: 'd', v: 8000 }, { a: 'Accounts Payable', side: 'c', v: 6000 }, { a: 'Cash', side: 'c', v: 2000 }] },
+    { date: 'July 3', s: '7/3', desc: 'Purchased cleaning supplies for $900 on account.', lines: [{ a: 'Supplies', side: 'd', v: 900 }, { a: 'Accounts Payable', side: 'c', v: 900 }] },
+    { date: 'July 5', s: '7/5', desc: 'Paid $1,800 cash on a 1-year insurance policy effective July 1.', lines: [{ a: 'Prepaid Insurance', side: 'd', v: 1800 }, { a: 'Cash', side: 'c', v: 1800 }] },
+    { date: 'July 12', s: '7/12', desc: 'Billed customers $3,700 for cleaning services performed.', lines: [{ a: 'Accounts Receivable', side: 'd', v: 3700 }, { a: 'Service Revenue', side: 'c', v: 3700 }] },
+    { date: 'July 18', s: '7/18', desc: 'Paid $1,000 owed on the truck and $500 owed on cleaning supplies.', lines: [{ a: 'Accounts Payable', side: 'd', v: 1500 }, { a: 'Cash', side: 'c', v: 1500 }] },
+    { date: 'July 20', s: '7/20', desc: 'Paid $2,000 cash for employee salaries.', lines: [{ a: 'Salaries and Wages Expense', side: 'd', v: 2000 }, { a: 'Cash', side: 'c', v: 2000 }] },
+    { date: 'July 21', s: '7/21', desc: 'Collected $1,600 cash from customers billed on July 12.', lines: [{ a: 'Cash', side: 'd', v: 1600 }, { a: 'Accounts Receivable', side: 'c', v: 1600 }] },
+    { date: 'July 25', s: '7/25', desc: 'Billed customers $2,500 for cleaning services performed.', lines: [{ a: 'Accounts Receivable', side: 'd', v: 2500 }, { a: 'Service Revenue', side: 'c', v: 2500 }] },
+    { date: 'July 31', s: '7/31', desc: 'Paid $290 for maintenance of the truck during the month.', lines: [{ a: 'Maintenance and Repairs Expense', side: 'd', v: 290 }, { a: 'Cash', side: 'c', v: 290 }] },
+    { date: 'July 31', s: '7/31', desc: 'Declared and paid a $600 cash dividend.', lines: [{ a: 'Dividends', side: 'd', v: 600 }, { a: 'Cash', side: 'c', v: 600 }] }
+  ];
+  var m2cIndex = 0, m2cPosted = [], m2cView = 'tb';
+  var m2fmt = function (n) { return n.toLocaleString('en-US'); };
+
+  (function m2cFacts() {
+    $('m2c-facts-list').innerHTML = M2C_TX.map(function (t) { return '<li><b>' + t.date + '</b> — ' + t.desc + '</li>'; }).join('') +
+      '<li style="list-style:none;margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft);color:var(--ink-faint)">Chart of accounts includes Cash, A/R, Supplies, Prepaid Insurance, Equipment, A/P, Common Stock, Dividends, Service Revenue, and the expense accounts.</li>';
+  })();
+
+  function m2cOptions() { return '<option value="">Account…</option>' + M2C_ACCTS.map(function (a) { return '<option value="' + a + '">' + a + '</option>'; }).join(''); }
+  function m2cRenderEntry() {
+    var host = $('m2c-entry-host');
+    if (m2cIndex >= M2C_TX.length) { host.style.display = 'none'; $('m2c-next-wrap').style.display = 'none'; return; }
+    host.style.display = '';
+    var t = M2C_TX[m2cIndex];
+    var rows = t.lines.map(function () {
+      return '<div class="m2c-line"><select class="m2c-sel">' + m2cOptions() + '</select><input class="m2c-amt d" inputmode="numeric" placeholder="0" aria-label="Debit"><input class="m2c-amt c" inputmode="numeric" placeholder="0" aria-label="Credit"></div>';
+    }).join('');
+    host.innerHTML = '<div class="m2c-eh"><div class="step">Transaction ' + (m2cIndex + 1) + ' of ' + M2C_TX.length + ' · ' + t.date + '</div><div class="desc">' + t.desc + '</div></div>' +
+      '<div class="m2c-jhead"><span>Account</span><span>Debit</span><span>Credit</span></div>' +
+      '<div class="m2c-lines">' + rows + '</div>' +
+      '<div class="m2c-tools"><button class="btn" id="m2c-hint-btn">Hint</button><button class="btn" id="m2c-sol-btn">Show solution</button></div>' +
+      '<div class="m2c-hint" id="m2c-hint"></div>' +
+      '<div class="m2c-post"><button class="btn primary" id="m2c-post">Post entry</button></div>';
+    // amount inputs: strip non-digits
+    Array.prototype.slice.call(host.querySelectorAll('.m2c-amt')).forEach(function (inp) {
+      inp.addEventListener('input', function () { var c = inp.value.replace(/[^0-9]/g, ''); if (c !== inp.value) inp.value = c; });
+    });
+    $('m2c-hint-btn').addEventListener('click', m2cHint);
+    $('m2c-sol-btn').addEventListener('click', m2cShowSolution);
+    $('m2c-post').addEventListener('click', m2cPost);
+    $('m2c-feedback').className = 'gp-feedback'; $('m2c-feedback').innerHTML = '';
+    $('m2c-next-wrap').style.display = 'none';
+  }
+  function m2cReadEntry() {
+    var lines = [];
+    Array.prototype.slice.call($('m2c-entry-host').querySelectorAll('.m2c-line')).forEach(function (row) {
+      var a = row.querySelector('.m2c-sel').value;
+      var d = parseInt(row.querySelector('.m2c-amt.d').value, 10) || 0;
+      var c = parseInt(row.querySelector('.m2c-amt.c').value, 10) || 0;
+      lines.push({ a: a, d: d, c: c });
+    });
+    return lines;
+  }
+  function m2cHint() {
+    var t = M2C_TX[m2cIndex];
+    var accts = t.lines.map(function (l) { return l.a + ' (' + (l.side === 'd' ? 'debit' : 'credit') + ' ' + m2fmt(l.v) + ')'; });
+    $('m2c-hint').className = 'm2c-hint show';
+    $('m2c-hint').innerHTML = '<b>Accounts affected:</b> ' + accts.join(', ') + '. Debits must equal credits.';
+  }
+  function m2cShowSolution() {
+    var t = M2C_TX[m2cIndex];
+    var rows = Array.prototype.slice.call($('m2c-entry-host').querySelectorAll('.m2c-line'));
+    t.lines.forEach(function (l, i) {
+      if (!rows[i]) return;
+      rows[i].querySelector('.m2c-sel').value = l.a;
+      rows[i].querySelector('.m2c-amt.d').value = l.side === 'd' ? String(l.v) : '';
+      rows[i].querySelector('.m2c-amt.c').value = l.side === 'c' ? String(l.v) : '';
+    });
+    var fb = $('m2c-feedback'); fb.className = 'gp-feedback bad show';
+    fb.innerHTML = '<span class="fi">i</span><div>Solution filled in — review how debits equal credits, then <b>Post entry</b>.</div>';
+  }
+  function m2cPost() {
+    var t = M2C_TX[m2cIndex];
+    var lines = m2cReadEntry();
+    var fb = $('m2c-feedback');
+    // each line needs account + exactly one amount
+    var bad = lines.some(function (l) { return !l.a || (l.d > 0) === (l.c > 0); });
+    if (bad) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">!</span><div>Each line needs an <b>account</b> and an amount in <b>either</b> the debit or credit column.</div>'; return; }
+    var totD = lines.reduce(function (a, l) { return a + l.d; }, 0), totC = lines.reduce(function (a, l) { return a + l.c; }, 0);
+    if (totD !== totC) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">!</span><div>The entry does not balance — debits (' + m2fmt(totD) + ') must equal credits (' + m2fmt(totC) + ').</div>'; return; }
+    var entered = lines.map(function (l) { return l.a + '|' + (l.d > 0 ? 'd' : 'c') + '|' + (l.d || l.c); }).sort().join(',');
+    var sol = t.lines.map(function (l) { return l.a + '|' + l.side + '|' + l.v; }).sort().join(',');
+    if (entered !== sol) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">!</span><div>It balances, but the accounts or amounts don’t match this transaction. Try the <b>Hint</b>, or <b>Show solution</b>.</div>'; return; }
+    // correct — post
+    m2cPosted.push({ date: t.date, s: t.s, lines: t.lines.map(function (l) { return { a: l.a, side: l.side, v: l.v }; }) });
+    m2cIndex++;
+    m2cRenderLive();
+    fb.className = 'gp-feedback good show';
+    if (m2cIndex >= M2C_TX.length) {
+      fb.innerHTML = '<span class="fi">&#10003;</span><div><b>Posted.</b> That completes all eleven entries.</div>';
+      m2cRenderEntry();
+      if (!state.m2capDone) { state.m2capDone = true; save(); updateM2capPill(); }
+      $('m2c-done').style.display = 'block';
+    } else {
+      fb.innerHTML = '<span class="fi">&#10003;</span><div><b>Correct — posted to the ledger.</b> Watch the trial balance update below.</div>';
+      $('m2c-next-wrap').style.display = 'flex';
+    }
+  }
+  $('m2c-next').addEventListener('click', function () { m2cRenderEntry(); $('m2c-scroll').scrollTop = Math.max(0, $('m2c-entry-host').offsetTop - 70); });
+
+  function m2cBalances() { var bal = {}; m2cPosted.forEach(function (e) { e.lines.forEach(function (l) { bal[l.a] = (bal[l.a] || 0) + (l.side === 'd' ? l.v : -l.v); }); }); return bal; }
+  function m2cRenderLive() { m2cRenderTB(); m2cRenderLedger(); m2cRenderJournal(); }
+  function m2cRenderTB() {
+    if (!m2cPosted.length) { $('m2c-view-tb').innerHTML = '<div class="m2c-empty">Post your first entry — the trial balance appears here.</div>'; return; }
+    var bal = m2cBalances(), td = 0, tc = 0, rows = '';
+    M2C_ACCTS.forEach(function (a) {
+      var b = bal[a]; if (!b) return;
+      var d = b > 0 ? b : 0, c = b < 0 ? -b : 0; td += d; tc += c;
+      rows += '<tr><td>' + a + '</td><td class="amt d">' + (d ? m2fmt(d) : '') + '</td><td class="amt c">' + (c ? m2fmt(c) : '') + '</td></tr>';
+    });
+    var done = m2cIndex >= M2C_TX.length, ok = td === tc;
+    $('m2c-view-tb').innerHTML = '<div class="m2c-tb"><div style="text-align:center;margin-bottom:8px"><b style="font-family:var(--serif)">Kleene Window Washing Inc.</b><br><span style="font-size:12px;color:var(--ink-soft)">Trial Balance · July 31, 2025</span></div>' +
+      '<table><thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead><tbody>' + rows +
+      '<tr class="tot"><td>' + (done ? 'Total' : '') + '</td><td class="amt d">' + m2fmt(td) + '</td><td class="amt c">' + m2fmt(tc) + '</td></tr></tbody></table>' +
+      '<div class="verdict ' + (ok ? 'ok' : 'no') + '">' + (ok ? '&#9878; In balance · ' + m2fmt(td) + ' = ' + m2fmt(tc) : 'Out of balance') + (done && ok ? ' — proved!' : '') + '</div></div>';
+  }
+  function m2cRenderLedger() {
+    if (!m2cPosted.length) { $('m2c-view-ledger').innerHTML = '<div class="m2c-empty">T-accounts build here as you post.</div>'; return; }
+    var m = {}; m2cPosted.forEach(function (e) { e.lines.forEach(function (l) { if (!m[l.a]) m[l.a] = { d: [], c: [] }; m[l.a][l.side].push([e.s, l.v]); }); });
+    var bal = m2cBalances();
+    var cells = M2C_ACCTS.filter(function (a) { return m[a]; }).map(function (a) {
+      var dr = m[a].d.map(function (x) { return x[0] + '&nbsp;&nbsp;' + m2fmt(x[1]); }).join('<br>');
+      var cr = m[a].c.map(function (x) { return x[0] + '&nbsp;&nbsp;' + m2fmt(x[1]); }).join('<br>');
+      var b = bal[a]; var blabel = b > 0 ? m2fmt(b) : m2fmt(-b);
+      return '<div class="rp-t"><div class="nm">' + a + ' <span style="color:var(--ink-faint);font-family:var(--mono);font-size:10px">bal ' + blabel + '</span></div><div class="grid"><div class="cell d">' + dr + '</div><div class="cell c">' + cr + '</div></div></div>';
+    }).join('');
+    $('m2c-view-ledger').innerHTML = '<div class="rp-panel rp-ledger"><div class="rp-head"><span class="badge">b</span> General Ledger (T-accounts)</div><div class="rp-taccts">' + cells + '</div></div>';
+  }
+  function m2cRenderJournal() {
+    if (!m2cPosted.length) { $('m2c-view-journal').innerHTML = '<div class="m2c-empty">Your journal entries collect here.</div>'; return; }
+    var body = '';
+    m2cPosted.forEach(function (e, ei) {
+      e.lines.forEach(function (l, li) {
+        body += '<tr><td class="dt">' + (li === 0 ? e.s : '') + '</td><td class="acct' + (l.side === 'c' ? ' indent' : '') + '">' + l.a + '</td><td class="amt d">' + (l.side === 'd' ? m2fmt(l.v) : '') + '</td><td class="amt c">' + (l.side === 'c' ? m2fmt(l.v) : '') + '</td></tr>';
+      });
+      if (ei < m2cPosted.length - 1) body += '<tr class="spacer"><td colspan="4"></td></tr>';
+    });
+    $('m2c-view-journal').innerHTML = '<div class="jrn"><div class="jrn-head"><span class="t">General Journal</span><span class="j1">J1</span></div><table class="jrn-table"><thead><tr><th>Date</th><th>Account Titles</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead><tbody>' + body + '</tbody></table></div>';
+  }
+  Array.prototype.slice.call(document.querySelectorAll('.m2c-toggle button')).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var v = btn.getAttribute('data-m2v'); m2cView = v;
+      Array.prototype.slice.call(document.querySelectorAll('.m2c-toggle button')).forEach(function (b) { b.classList.toggle('on', b === btn); });
+      ['tb', 'ledger', 'journal'].forEach(function (k) { $('m2c-view-' + k).classList.toggle('on', k === v); });
+    });
+  });
+  function m2cReset() { m2cIndex = 0; m2cPosted = []; $('m2c-done').style.display = 'none'; m2cRenderEntry(); m2cRenderLive(); }
+  $('m2c-restart').addEventListener('click', function () { m2cReset(); $('m2c-scroll').scrollTop = 0; });
+  function updateM2capPill() { var pill = $('m2cap-pill'); if (pill) pill.textContent = state.m2capDone ? 'Done' : (m2cPosted.length ? m2cPosted.length + '/11' : 'Start'); }
+  function openM2cap() { goScreen('m2cap'); $('m2c-scroll').scrollTop = 0; }
+  $('start-m2cap-card').addEventListener('click', openM2cap);
+  $('m2c-back').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -5156,6 +5436,9 @@
   updateSumPill();
   renderCycleInto('tb-cycle', 3);
   updateTbPill();
+  m2cRenderEntry();
+  m2cRenderLive();
+  updateM2capPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
