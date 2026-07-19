@@ -1261,6 +1261,41 @@
   .anno-explain p { font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
   .anno-explain .empty { font-size: 12.5px; color: var(--ink-faint); font-style: italic; }
   .anno-progress { font-size: 11px; color: var(--ink-faint); margin-top: 10px; text-align: center; }
+
+  /* ============================================================
+     MODULE 2 · Lesson 3 — The Ledger (Illustration 2.9)
+     ============================================================ */
+  .led-groups { display: flex; flex-direction: column; gap: 12px; }
+  .led-card { border: 1.5px solid var(--lc, var(--asset)); border-radius: var(--r-md); overflow: hidden; background: var(--card); box-shadow: var(--shadow); }
+  .led-card.asset { --lc: color-mix(in srgb, var(--asset) 55%, transparent); }
+  .led-card.liab  { --lc: color-mix(in srgb, var(--liab) 55%, transparent); }
+  .led-card.equity{ --lc: color-mix(in srgb, var(--equity) 55%, transparent); }
+  .led-card .lh { text-align: center; font-weight: 700; font-size: 13.5px; padding: 9px 12px; background: var(--lhb); color: var(--lht); }
+  .led-card.asset .lh { --lhb: var(--asset-bg); --lht: var(--asset); }
+  .led-card.liab .lh { --lhb: var(--liab-bg); --lht: var(--liab); }
+  .led-card.equity .lh { --lhb: var(--equity-bg); --lht: var(--equity); }
+  .led-acct { display: flex; align-items: center; gap: 8px; padding: 9px 14px; font-size: 13px; color: var(--ink); cursor: pointer; border-top: 1px solid var(--line-soft); transition: background .15s ease; }
+  .led-acct:first-of-type { border-top: none; }
+  .led-acct:hover { background: var(--line-soft); }
+  .led-acct .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lc); flex: 0 0 auto; }
+  .led-acct .nm { flex: 1 1 auto; }
+  .led-acct .tag { font-size: 9.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; opacity: 0; transform: translateX(4px); transition: opacity .2s ease, transform .2s ease; }
+  .led-acct.open .tag { opacity: 1; transform: none; }
+  .led-acct .tag.dr { background: var(--debit-bg); color: var(--debit); }
+  .led-acct .tag.cr { background: var(--credit-bg); color: var(--credit); }
+  .led-acct .num { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink-faint); opacity: 0; width: 0; overflow: hidden; transition: opacity .3s ease; }
+  .led-card.numbered .led-acct .num { opacity: 1; width: auto; margin-right: 2px; }
+
+  /* order & numbering interactive */
+  .led-order { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; margin-top: 4px; }
+  .led-order .lo-grp { border-top: 1px solid var(--line-soft); }
+  .led-order .lo-grp:first-child { border-top: none; }
+  .led-order .lo-gh { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; background: var(--card-2); }
+  .led-order .lo-gh .seq { width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font-size: 10px; font-family: var(--mono); }
+  .led-order .lo-gh.asset { color: var(--asset); } .led-order .lo-gh.liab { color: var(--liab); } .led-order .lo-gh.equity { color: var(--equity); } .led-order .lo-gh.rev { color: var(--credit); } .led-order .lo-gh.exp { color: var(--debit); }
+  .led-order .lo-acct { display: flex; align-items: baseline; gap: 10px; padding: 6px 14px 6px 40px; font-size: 12.5px; color: var(--ink-soft); }
+  .led-order .lo-acct .lo-num { font-family: var(--mono); font-weight: 700; color: var(--ink-faint); min-width: 34px; opacity: 0; transition: opacity .35s ease; }
+  .led-order.show-nums .lo-acct .lo-num { opacity: 1; }
 </style>
 
 <div id="fa-app">
@@ -1401,11 +1436,17 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">3</span>
-              <span class="lbody"><b>Post to the Ledger</b><span>From the journal to the accounts</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+            <button class="lesson-card" id="start-ledger-card">
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">3</span>
+              <span class="lbody">
+                <b>The Ledger</b>
+                <span>The general ledger &amp; account order · Illustration 2.9</span>
+              </span>
+              <span class="pill-mini ready" id="ledger-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
               <span class="lnum">4</span>
               <span class="lbody"><b>The Trial Balance</b><span>Proving the books before you report</span></span>
@@ -2566,6 +2607,128 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 · LESSON 3 — THE LEDGER ============== -->
+    <section class="fa-screen" id="screen-ledger" aria-label="The Ledger">
+      <div class="fa-topbar">
+        <button class="fa-back" id="led-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Module 2 · Lesson 3</div>
+        <h1 class="lesson-title">The Ledger</h1>
+        <div class="lesson-meta">Post to ledger accounts · the general ledger · ~10 min</div>
+      </div>
+
+      <div class="fa-scroll" id="led-scroll">
+        <div class="cycle-wrap" aria-label="The accounting cycle — posting"><div class="cycle" id="led-cycle"></div></div>
+
+        <div style="padding: 14px 18px 8px;">
+          <p class="lede">The entire group of accounts a company maintains is the <em>ledger</em>.</p>
+          <p class="lecture-hook">The ledger holds the balance in every account and tracks how each balance changes over time.</p>
+
+          <section class="lec-sec" style="margin-top:20px;">
+            <h3>What the ledger does</h3>
+            <div class="rulecard">
+              <div class="rr"><span class="mk l">$</span><div>It provides the <b>balance</b> in each account — Cash shows the cash available; Accounts Payable shows what is owed to creditors.</div></div>
+              <div class="rr"><span class="mk l">↔</span><div>It <b>tracks the changes</b> to those balances as transactions are posted.</div></div>
+              <div class="rr"><span class="mk r">§</span><div>Every company keeps a <b>general ledger</b> — all the asset, liability, and stockholders' equity accounts in one place.</div></div>
+            </div>
+          </section>
+
+          <div class="eyebrow" style="color:var(--gold); margin: 22px 0 6px;">Illustration 2.9 · The General Ledger</div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-soft);margin-bottom:12px;">The general ledger groups every account by type. Tap an account to see its <b>normal balance</b>.</p>
+
+          <div class="led-groups" id="led-groups">
+            <div class="led-card asset">
+              <div class="lh">Asset Accounts</div>
+              <div class="led-acct" data-side="dr"><span class="num">101</span><span class="dot"></span><span class="nm">Cash</span><span class="tag dr">Debit</span></div>
+              <div class="led-acct" data-side="dr"><span class="num">112</span><span class="dot"></span><span class="nm">Accounts Receivable</span><span class="tag dr">Debit</span></div>
+              <div class="led-acct" data-side="dr"><span class="num">126</span><span class="dot"></span><span class="nm">Supplies</span><span class="tag dr">Debit</span></div>
+              <div class="led-acct" data-side="dr"><span class="num">140</span><span class="dot"></span><span class="nm">Land</span><span class="tag dr">Debit</span></div>
+              <div class="led-acct" data-side="dr"><span class="num">157</span><span class="dot"></span><span class="nm">Equipment</span><span class="tag dr">Debit</span></div>
+            </div>
+            <div class="led-card liab">
+              <div class="lh">Liability Accounts</div>
+              <div class="led-acct" data-side="cr"><span class="num">200</span><span class="dot"></span><span class="nm">Notes Payable</span><span class="tag cr">Credit</span></div>
+              <div class="led-acct" data-side="cr"><span class="num">201</span><span class="dot"></span><span class="nm">Accounts Payable</span><span class="tag cr">Credit</span></div>
+              <div class="led-acct" data-side="cr"><span class="num">212</span><span class="dot"></span><span class="nm">Salaries and Wages Payable</span><span class="tag cr">Credit</span></div>
+              <div class="led-acct" data-side="cr"><span class="num">230</span><span class="dot"></span><span class="nm">Interest Payable</span><span class="tag cr">Credit</span></div>
+            </div>
+            <div class="led-card equity">
+              <div class="lh">Stockholders' Equity Accounts</div>
+              <div class="led-acct" data-side="cr"><span class="num">301</span><span class="dot"></span><span class="nm">Common Stock</span><span class="tag cr">Credit</span></div>
+              <div class="led-acct" data-side="cr"><span class="num">320</span><span class="dot"></span><span class="nm">Retained Earnings</span><span class="tag cr">Credit</span></div>
+              <div class="led-acct" data-side="dr"><span class="num">332</span><span class="dot"></span><span class="nm">Dividends</span><span class="tag dr">Debit</span></div>
+              <div class="led-acct" data-side="cr"><span class="num">400</span><span class="dot"></span><span class="nm">Service Revenue</span><span class="tag cr">Credit</span></div>
+              <div class="led-acct" data-side="dr"><span class="num">726</span><span class="dot"></span><span class="nm">Salaries and Wages Expense</span><span class="tag dr">Debit</span></div>
+            </div>
+          </div>
+
+          <section class="lec-sec" style="margin-top:22px;">
+            <h3>How the ledger is ordered</h3>
+            <p>Companies arrange the ledger in the <b>sequence the accounts appear in the financial statements</b> — beginning with the balance sheet: assets, then liabilities, then stockholders' equity, then revenues and expenses. Each account is <b>numbered</b> for easy identification.</p>
+          </section>
+
+          <div class="led-order" id="led-order">
+            <div class="lo-grp">
+              <div class="lo-gh asset"><span class="seq">1</span> Assets</div>
+              <div class="lo-acct"><span class="lo-num">101</span>Cash</div>
+              <div class="lo-acct"><span class="lo-num">112</span>Accounts Receivable</div>
+              <div class="lo-acct"><span class="lo-num">126</span>Supplies</div>
+              <div class="lo-acct"><span class="lo-num">140</span>Land</div>
+              <div class="lo-acct"><span class="lo-num">157</span>Equipment</div>
+            </div>
+            <div class="lo-grp">
+              <div class="lo-gh liab"><span class="seq">2</span> Liabilities</div>
+              <div class="lo-acct"><span class="lo-num">200</span>Notes Payable</div>
+              <div class="lo-acct"><span class="lo-num">201</span>Accounts Payable</div>
+              <div class="lo-acct"><span class="lo-num">230</span>Interest Payable</div>
+            </div>
+            <div class="lo-grp">
+              <div class="lo-gh equity"><span class="seq">3</span> Stockholders' Equity</div>
+              <div class="lo-acct"><span class="lo-num">301</span>Common Stock</div>
+              <div class="lo-acct"><span class="lo-num">320</span>Retained Earnings</div>
+              <div class="lo-acct"><span class="lo-num">332</span>Dividends</div>
+            </div>
+            <div class="lo-grp">
+              <div class="lo-gh rev"><span class="seq">4</span> Revenues</div>
+              <div class="lo-acct"><span class="lo-num">400</span>Service Revenue</div>
+            </div>
+            <div class="lo-grp">
+              <div class="lo-gh exp"><span class="seq">5</span> Expenses</div>
+              <div class="lo-acct"><span class="lo-num">726</span>Salaries and Wages Expense</div>
+            </div>
+          </div>
+          <div class="gp-actions" style="margin-top:12px;">
+            <button class="btn primary" id="led-numbers">Show account numbers</button>
+          </div>
+          <div class="gp-feedback" id="led-feedback" style="margin-top:12px;"></div>
+
+          <div class="takeaway" style="margin-top:22px;">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The journal tells the story transaction by transaction; the ledger gathers everything that ever happened to each account. Ordering the ledger like the statements — and numbering each account — makes the books fast to read and to reference.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="m2-next">
+              <div><div class="up">Up next in Module 2</div><b>The Trial Balance</b> — proving debits equal credits.</div>
+            </div>
+            <button class="cta ghost" id="led-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -2584,7 +2747,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -2597,9 +2760,10 @@
       if (p.mod2Done) state.mod2Done = true;
       if (p.recProcDone) state.recProcDone = true;
       if (p.journalDone) state.journalDone = true;
+      if (p.ledgerDone) state.ledgerDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -2624,7 +2788,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -3924,11 +4088,13 @@
     'Adjusting Entries', 'Adjusted Trial Balance', 'Financial Statements',
     'Closing Entries', 'Post-Closing Trial Balance'
   ];
-  (function renderCycle() {
-    $('m2-cycle').innerHTML = CYCLE_STEPS.map(function (s, i) {
-      return '<div class="cyc-step' + (i === 0 ? ' first is-current' : '') + '">' + s + '</div>';
+  function renderCycleInto(id, current) {
+    var el = $(id); if (!el) return;
+    el.innerHTML = CYCLE_STEPS.map(function (s, i) {
+      return '<div class="cyc-step' + (i === 0 ? ' first' : '') + (i === current ? ' is-current' : '') + '">' + s + '</div>';
     }).join('');
-  })();
+  }
+  renderCycleInto('m2-cycle', 0);
 
   var M2_EVENTS = [
     {
@@ -4081,6 +4247,29 @@
   $('jr-back').addEventListener('click', function () { goScreen('home'); });
   $('jr-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 · Lesson 3 — The Ledger (Illustration 2.9)
+     ============================================================ */
+  Array.prototype.slice.call(document.querySelectorAll('#led-groups .led-acct')).forEach(function (row) {
+    row.addEventListener('click', function () { row.classList.toggle('open'); });
+  });
+  $('led-numbers').addEventListener('click', function () {
+    var order = $('led-order'); var on = order.classList.toggle('show-nums');
+    Array.prototype.slice.call(document.querySelectorAll('#led-groups .led-card')).forEach(function (c) { c.classList.toggle('numbered', on); });
+    this.textContent = on ? 'Hide account numbers' : 'Show account numbers';
+    var fb = $('led-feedback');
+    if (on) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>That is a chart of accounts.</b> Assets first, then liabilities, equity, revenues, and expenses — the same order they appear in the financial statements, each with its own number.</div>';
+      if (!state.ledgerDone) { state.ledgerDone = true; save(); updateLedgerPill(); }
+    } else { fb.className = 'gp-feedback'; fb.innerHTML = ''; }
+  });
+  function updateLedgerPill() { var pill = $('ledger-pill'); if (pill) pill.textContent = state.ledgerDone ? 'Done' : 'Start'; }
+  function openLedger() { goScreen('ledger'); $('led-scroll').scrollTop = 0; }
+  $('start-ledger-card').addEventListener('click', openLedger);
+  $('led-back').addEventListener('click', function () { goScreen('home'); });
+  $('led-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -4104,6 +4293,8 @@
   rpReset();
   updateRecPill();
   updateJournalPill();
+  renderCycleInto('led-cycle', 2);
+  updateLedgerPill();
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
