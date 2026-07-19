@@ -1175,6 +1175,58 @@
   .m2-next { display: flex; align-items: center; gap: 10px; padding: 13px 15px; border-radius: var(--r-md); background: var(--card-2); border: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); }
   .m2-next .up { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint); }
   .m2-next b { color: var(--ink); }
+
+  /* ============================================================
+     MODULE 2 · Lesson 1 — The Recording Process (Illustration 2.7)
+     ============================================================ */
+  .rp-steps { display: flex; align-items: center; gap: 6px; margin: 0 0 14px; }
+  .rp-chip { flex: 1 1 0; display: flex; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); transition: all .25s ease; min-width: 0; }
+  .rp-chip .n { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; background: var(--muted); color: var(--ink-faint); }
+  .rp-chip .t { font-size: 10.5px; font-weight: 700; color: var(--ink-faint); line-height: 1.15; }
+  .rp-chip.active { border-color: var(--debit); background: var(--debit-bg); }
+  .rp-chip.active .n { background: var(--debit); color: #fff; }
+  .rp-chip.active .t { color: var(--debit); }
+  .rp-chip.done .n { background: var(--good); color: #fff; }
+  .rp-chip.done .t { color: var(--ink); }
+
+  .rp-flow { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .rp-panel { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--card); box-shadow: var(--shadow); position: relative; transition: box-shadow .25s ease, transform .25s ease; }
+  .rp-panel.lit { box-shadow: 0 0 0 2px var(--lit, var(--debit)), var(--shadow-lg); }
+  .rp-panel .rp-head { color: #fff; font-weight: 700; font-size: 12.5px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; letter-spacing: .01em; }
+  .rp-panel .rp-head .badge { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.25); display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+  .rp-invoice { --lit: var(--credit); } .rp-invoice .rp-head { background: linear-gradient(150deg, #a63a2b, #7f2c20); }
+  .rp-journal { --lit: var(--debit); } .rp-journal .rp-head { background: linear-gradient(150deg, var(--debit), #185a92); }
+  .rp-ledger { --lit: var(--equity); } .rp-ledger .rp-head { background: linear-gradient(150deg, #2f8f52, #1f6d3c); }
+
+  .rp-inv-body { padding: 12px 14px; }
+  .rp-inv-tag { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .1em; color: #a63a2b; border: 1px solid color-mix(in srgb, #a63a2b 40%, transparent); border-radius: 5px; padding: 2px 7px; margin-bottom: 8px; }
+  .rp-inv-body .ln { font-size: 13px; color: var(--ink-soft); padding: 2px 0; } .rp-inv-body .ln b { color: var(--ink); }
+  .rp-inv-body .desc { font-size: 14px; color: var(--ink); margin-top: 4px; }
+
+  .rp-jtable { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .rp-jtable th { text-align: left; font-size: 9.5px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-faint); padding: 7px 10px; border-bottom: 1px solid var(--line); background: var(--card-2); }
+  .rp-jtable th.amt, .rp-jtable td.amt { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .rp-jtable td { padding: 6px 10px; border-bottom: 1px solid var(--line-soft); color: var(--ink); }
+  .rp-jtable td.dt { font-family: var(--mono); color: var(--credit); font-weight: 700; }
+  .rp-jtable td.acct.indent { padding-left: 26px; color: var(--ink-soft); }
+  .rp-jtable td.amt.d { color: var(--debit); font-weight: 700; } .rp-jtable td.amt.c { color: var(--credit); font-weight: 700; }
+  .rp-reveal { opacity: 0; transition: opacity .4s ease; }
+  .rp-reveal.on { opacity: 1; }
+  .rp-jexpl { padding: 6px 10px 10px; font-size: 11px; color: var(--ink-faint); font-style: italic; }
+
+  .rp-taccts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 14px; }
+  .rp-t { }
+  .rp-t .nm { text-align: center; font-weight: 700; font-size: 12.5px; margin-bottom: 4px; }
+  .rp-t .grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); position: relative; min-height: 40px; }
+  .rp-t .grid::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1.5px; background: var(--ink); opacity: .5; transform: translateX(-1px); }
+  .rp-t .cell { padding: 6px 4px; font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums; text-align: center; }
+  .rp-t .cell.d { color: var(--debit); } .rp-t .cell.c { color: var(--credit); }
+
+  .rp-conn { align-self: center; width: 2px; height: 20px; background: var(--line); position: relative; }
+  .rp-conn::after { content: ""; position: absolute; bottom: -1px; left: -4px; width: 9px; height: 9px; border-right: 2px solid var(--ink-faint); border-bottom: 2px solid var(--ink-faint); transform: rotate(45deg); }
+  .rp-conn.lit { background: var(--debit); } .rp-conn.lit::after { border-color: var(--debit); }
+
+  .rp-actions { display: flex; gap: 10px; margin-top: 16px; }
 </style>
 
 <div id="fa-app">
@@ -1293,18 +1345,29 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <button class="lesson-card" id="start-recproc-card">
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">4</span>
+              <span class="lbody">
+                <b>The Recording Process</b>
+                <span>Analyze → journalize → post · Illustration 2.7</span>
+              </span>
+              <span class="pill-mini ready" id="recproc-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">4</span>
+              <span class="lnum">5</span>
               <span class="lbody"><b>Journalize</b><span>Recording transactions in the journal</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">5</span>
+              <span class="lnum">6</span>
               <span class="lbody"><b>Post to the Ledger</b><span>From the journal to the accounts</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">6</span>
+              <span class="lnum">7</span>
               <span class="lbody"><b>The Trial Balance</b><span>Proving the books before you report</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
@@ -2250,6 +2313,121 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 · LESSON 1 — THE RECORDING PROCESS ============== -->
+    <section class="fa-screen" id="screen-recproc" aria-label="The Recording Process">
+      <div class="fa-topbar">
+        <button class="fa-back" id="rp-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Module 2 · Lesson 1</div>
+        <h1 class="lesson-title">The Recording Process</h1>
+        <div class="lesson-meta">Analyze → journalize → post · ~10 min</div>
+      </div>
+
+      <div class="fa-scroll" id="rp-scroll">
+        <div style="padding: 18px 18px 8px;">
+          <p class="lede">You could enter transactions straight into the accounts — but almost no business does.</p>
+          <p class="lecture-hook">Practically every business follows the same three basic steps, called the <em>recording process</em>. It is an integral part of the accounting cycle.</p>
+
+          <div class="eyebrow" style="color:var(--gold); margin: 18px 0 8px;">Illustration 2.7 · The Recording Process</div>
+
+          <div class="rp-steps" id="rp-chips">
+            <div class="rp-chip" data-step="1"><span class="n">1</span><span class="t">Analyze</span></div>
+            <div class="rp-chip" data-step="2"><span class="n">2</span><span class="t">Journalize</span></div>
+            <div class="rp-chip" data-step="3"><span class="n">3</span><span class="t">Post</span></div>
+          </div>
+
+          <div class="rp-flow">
+            <div class="rp-panel rp-invoice" id="rp-p1">
+              <div class="rp-head"><span class="badge">1</span> Superior Equipment Sales</div>
+              <div class="rp-inv-body">
+                <div class="rp-inv-tag">INVOICE</div>
+                <div class="ln"><b>Bill to:</b> Sierra Corporation</div>
+                <div class="desc">Purchase equipment for <b>$5,000</b></div>
+              </div>
+            </div>
+            <div class="rp-conn" id="rp-c1"></div>
+            <div class="rp-panel rp-journal" id="rp-p2">
+              <div class="rp-head"><span class="badge">2</span> General Journal</div>
+              <table class="rp-jtable">
+                <thead><tr><th>Date</th><th>Account Titles</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead>
+                <tbody>
+                  <tr><td class="dt">Oct. 2</td><td class="acct">Equipment</td><td class="amt d rp-reveal" id="rp-j1">5,000</td><td class="amt"></td></tr>
+                  <tr><td></td><td class="acct indent">Cash</td><td class="amt"></td><td class="amt c rp-reveal" id="rp-j2">5,000</td></tr>
+                </tbody>
+              </table>
+              <div class="rp-jexpl rp-reveal" id="rp-j3">(Purchased equipment for cash)</div>
+            </div>
+            <div class="rp-conn" id="rp-c2"></div>
+            <div class="rp-panel rp-ledger" id="rp-p3">
+              <div class="rp-head"><span class="badge">3</span> General Ledger</div>
+              <div class="rp-taccts">
+                <div class="rp-t">
+                  <div class="nm">Cash</div>
+                  <div class="grid">
+                    <div class="cell d">Oct. 1&nbsp;&nbsp;10,000</div>
+                    <div class="cell c rp-reveal" id="rp-l1">Oct. 2&nbsp;&nbsp;5,000</div>
+                  </div>
+                </div>
+                <div class="rp-t">
+                  <div class="nm">Equipment</div>
+                  <div class="grid">
+                    <div class="cell d rp-reveal" id="rp-l2">Oct. 2&nbsp;&nbsp;5,000</div>
+                    <div class="cell c"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rp-actions">
+            <button class="btn" id="rp-reset">Reset</button>
+            <button class="btn primary" id="rp-trace">▸ Trace the recording process</button>
+          </div>
+          <div class="gp-feedback" id="rp-feedback" style="margin-top:12px;"></div>
+
+          <section class="lec-sec" style="margin-top:24px;">
+            <div class="step-ey"><span class="no">1</span><span class="eyebrow">Analyze the transaction</span></div>
+            <h3>Start with the evidence</h3>
+            <p>A source document — here, an <b>invoice</b> from Superior Equipment Sales — proves the event happened. The accountant analyzes its effect on the accounts. (You practiced this step in the introduction.)</p>
+          </section>
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">2</span><span class="eyebrow">Enter it in the journal</span></div>
+            <h3>Journalize the transaction</h3>
+            <p>The transaction is recorded in the <b>general journal</b> in chronological order — the debit account first (<span class="term-dr">Equipment $5,000</span>), then the credit (<span class="term-cr">Cash $5,000</span>). The journal shows the complete effect of the transaction in one place.</p>
+          </section>
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">3</span><span class="eyebrow">Transfer to the ledger</span></div>
+            <h3>Post to the accounts</h3>
+            <p>Each journal amount is <b>posted</b> to its individual account in the <b>general ledger</b>. Equipment is debited $5,000; Cash is credited $5,000, joining its existing $10,000 debit balance. The ledger gathers everything that ever happened to each account.</p>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>These steps repeat for every transaction. Analysis you already know; the next two lessons take journalizing and posting apart in detail.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="m2-next">
+              <div><div class="up">Up next in Module 2</div><b>Journalize</b> — the general journal, up close.</div>
+            </div>
+            <button class="cta ghost" id="rp-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -2268,7 +2446,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false
+    capDone: false, mod2Done: false, recProcDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -2279,9 +2457,10 @@
       if (p.done3) state.done3 = Object.assign(state.done3, p.done3);
       if (p.capDone) state.capDone = true;
       if (p.mod2Done) state.mod2Done = true;
+      if (p.recProcDone) state.recProcDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -2306,7 +2485,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -3685,6 +3864,45 @@
   $('m2-back').addEventListener('click', function () { goScreen('home'); });
   $('m2-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 · Lesson 1 — The Recording Process (Illustration 2.7)
+     ============================================================ */
+  var rpTimers = [];
+  function rpClearTimers() { rpTimers.forEach(clearTimeout); rpTimers = []; }
+  function rpReset() {
+    rpClearTimers();
+    ['rp-c1', 'rp-c2'].forEach(function (id) { $(id).classList.remove('lit'); });
+    ['rp-p1', 'rp-p2', 'rp-p3'].forEach(function (id) { $(id).classList.remove('lit'); });
+    ['rp-j1', 'rp-j2', 'rp-j3', 'rp-l1', 'rp-l2'].forEach(function (id) { $(id).classList.remove('on'); });
+    Array.prototype.slice.call($('rp-chips').querySelectorAll('.rp-chip')).forEach(function (c) { c.classList.remove('active', 'done'); });
+    $('rp-feedback').className = 'gp-feedback'; $('rp-feedback').innerHTML = '';
+    $('rp-trace').textContent = '▸ Trace the recording process';
+  }
+  function rpChip(step, cls) { var c = $('rp-chips').querySelector('.rp-chip[data-step="' + step + '"]'); if (c) c.classList.add(cls); }
+  function rpTrace() {
+    rpReset();
+    var seq = [
+      function () { rpChip(1, 'active'); $('rp-p1').classList.add('lit'); },
+      function () { rpChip(1, 'done'); rpChip(2, 'active'); $('rp-p1').classList.remove('lit'); $('rp-c1').classList.add('lit'); $('rp-p2').classList.add('lit'); $('rp-j1').classList.add('on'); $('rp-j2').classList.add('on'); $('rp-j3').classList.add('on'); },
+      function () { rpChip(2, 'done'); rpChip(3, 'active'); $('rp-p2').classList.remove('lit'); $('rp-c2').classList.add('lit'); $('rp-p3').classList.add('lit'); $('rp-l1').classList.add('on'); $('rp-l2').classList.add('on'); },
+      function () {
+        rpChip(3, 'done'); $('rp-p3').classList.remove('lit');
+        var fb = $('rp-feedback'); fb.className = 'gp-feedback good show';
+        fb.innerHTML = '<span class="fi">✓</span><div><b>That is the recording process.</b> One event moved from a source document, into the journal, and out to the ledger accounts — analyze, journalize, post.</div>';
+        if (!state.recProcDone) { state.recProcDone = true; save(); updateRecPill(); }
+        $('rp-trace').textContent = '▸ Replay';
+      }
+    ];
+    seq.forEach(function (fn, i) { rpTimers.push(setTimeout(fn, i * 900)); });
+  }
+  function updateRecPill() { var pill = $('recproc-pill'); if (pill) pill.textContent = state.recProcDone ? 'Done' : 'Start'; }
+  $('rp-trace').addEventListener('click', rpTrace);
+  $('rp-reset').addEventListener('click', rpReset);
+  function openRecProc() { rpReset(); goScreen('recproc'); $('rp-scroll').scrollTop = 0; }
+  $('start-recproc-card').addEventListener('click', openRecProc);
+  $('rp-back').addEventListener('click', function () { rpClearTimers(); goScreen('home'); });
+  $('rp-home').addEventListener('click', function () { rpClearTimers(); goScreen('home'); });
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -3705,6 +3923,8 @@
   updateCapPill();
   renderIdent();
   updateMod2Pill();
+  rpReset();
+  updateRecPill();
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
