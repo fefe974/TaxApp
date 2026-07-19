@@ -1548,6 +1548,45 @@
   .m3-prevcard .h .tag { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 999px; background: color-mix(in srgb, var(--pc) 16%, transparent); color: var(--pc); }
   .m3-prevcard p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
   .m3-prevcard p b { color: var(--ink); }
+
+  /* Module 3 · Lesson 1 — Types of Adjusting Entries (Illustration 2.24) */
+  .aet-split { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .aet-splitcard { border: 1px solid var(--line); border-left: 4px solid var(--pc, var(--teal)); border-radius: var(--r-md); background: var(--card); padding: 12px 14px; box-shadow: var(--shadow); }
+  .aet-splitcard.def { --pc: var(--asset); } .aet-splitcard.acc { --pc: var(--credit); }
+  .aet-splitcard .h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .aet-splitcard .h .tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--pc) 16%, transparent); color: var(--pc); }
+  .aet-splitcard .h .order { font-size: 11px; font-weight: 700; color: var(--pc); font-variant-numeric: tabular-nums; }
+  .aet-splitcard p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+  .aet-splitcard p b { color: var(--ink); }
+
+  .aecat-fig { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .aecat-cap { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--teal) 8%, var(--card)); }
+  .aecat-cap .tag { font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+  .aecat-cap .t { font-size: 12.5px; font-weight: 700; color: var(--ink); font-family: var(--serif); }
+  .aecat-root { text-align: center; padding: 15px 14px 2px; }
+  .aecat-root .node { display: inline-block; font-family: var(--serif); font-weight: 650; font-size: 15.5px; color: var(--ink); padding: 8px 20px; border: 1.5px solid var(--ink-faint); border-radius: 999px; background: var(--paper); }
+  .aecat-branches { display: flex; flex-direction: column; gap: 12px; padding: 12px 14px 16px; position: relative; }
+  .aecat-branches::before { content: ""; position: absolute; top: -8px; left: 50%; width: 1.5px; height: 12px; background: var(--ink-faint); transform: translateX(-50%); }
+  .aecat-fam { border: 1px solid var(--line); border-top: 3px solid var(--fc, var(--teal)); border-radius: var(--r-md); background: var(--paper); overflow: hidden; }
+  .aecat-fam.def { --fc: var(--asset); } .aecat-fam.acc { --fc: var(--credit); }
+  .aecat-fam .fhead { padding: 11px 14px 10px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--fc) 7%, var(--card)); }
+  .aecat-fam .fname { display: flex; align-items: center; gap: 9px; }
+  .aecat-fam .fname b { font-family: var(--serif); font-size: 16px; color: var(--ink); }
+  .aecat-fam .fbadge { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--fc) 18%, transparent); color: var(--fc); }
+  .aecat-fam .ftime { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--ink-soft); }
+  .aecat-fam .ftime .chip { padding: 2px 8px; border-radius: 6px; background: color-mix(in srgb, var(--fc) 14%, transparent); color: var(--fc); font-weight: 700; }
+  .aecat-fam .ftime .arw { color: var(--ink-faint); font-weight: 700; }
+  .aecat-subs { display: flex; flex-direction: column; }
+  .aecat-sub { padding: 11px 14px; }
+  .aecat-sub + .aecat-sub { border-top: 1px dashed var(--line); }
+  .aecat-sub .sname { font-weight: 750; font-size: 13.5px; color: var(--fc, var(--teal)); }
+  .aecat-fam.def .aecat-sub .sname { color: var(--asset); }
+  .aecat-fam.acc .aecat-sub .sname { color: var(--credit); }
+  .aecat-sub .sdef { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin-top: 3px; }
+  .aecat-sub .sex { font-size: 11px; color: var(--ink-faint); margin-top: 5px; font-style: italic; }
+
+  /* 4-option classifier (2×2) reuse of wr styling */
+  .wr-opts.q4 { grid-template-columns: 1fr 1fr; }
 </style>
 
 <div id="fa-app">
@@ -1774,18 +1813,26 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
+            <button class="lesson-card" id="start-m3types-card">
               <span class="lnum">1</span>
+              <span class="lbody"><b>Types of Adjusting Entries</b><span>Deferrals &amp; accruals — the four kinds</span></span>
+              <span class="pill-mini ready" id="m3types-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">2</span>
               <span class="lbody"><b>Deferrals</b><span>Prepaid expenses &amp; unearned revenues</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">2</span>
+              <span class="lnum">3</span>
               <span class="lbody"><b>Accruals</b><span>Accrued revenues &amp; accrued expenses</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">3</span>
+              <span class="lnum">4</span>
               <span class="lbody"><b>The Adjusted Trial Balance</b><span>Ready to prepare the statements</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
@@ -3501,10 +3548,132 @@
         </div>
 
         <div class="m2-foot">
-          <div class="m2-next">
-            <div><div class="up">Up next in Module 3</div><b>Deferrals</b> — prepaid expenses &amp; unearned revenues.</div>
-          </div>
+          <button class="m2-next go" id="m3intro-next">
+            <div><div class="up">Up next in Module 3</div><b>Types of Adjusting Entries</b> — deferrals &amp; accruals.</div>
+            <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
           <button class="cta ghost" id="m3-home">Back to course</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 3 · LESSON 1 — TYPES OF ADJUSTING ENTRIES ============== -->
+    <section class="fa-screen" id="screen-m3types" aria-label="Types of Adjusting Entries">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m3t-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m3t-scroll">
+        <header class="m3-hero">
+          <div class="eyebrow">Module 3 · Lesson 1</div>
+          <h1>Types of Adjusting Entries</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.24</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">Categories of adjusting entries — two classes, four kinds.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Every adjusting entry ever written falls into just <b>two classes</b> — and each class has exactly <b>two kinds</b>. Learn these four boxes and you can name any adjustment on sight.</p>
+
+          <section class="m2-sec">
+            <h2>Deferrals vs. accruals — it's all about timing</h2>
+            <p>The only thing that separates the two classes is <b>when the cash moves</b> relative to the revenue or expense it belongs to.</p>
+            <div class="aet-split">
+              <div class="aet-splitcard def">
+                <div class="h"><span class="tag">Deferrals</span><span class="order">Cash&nbsp;→&nbsp;Event</span></div>
+                <p><b>Cash first.</b> You've already paid or been paid; recognition of the expense or revenue is <b>deferred</b> to a later period as the benefit is used up or earned.</p>
+              </div>
+              <div class="aet-splitcard acc">
+                <div class="h"><span class="tag">Accruals</span><span class="order">Event&nbsp;→&nbsp;Cash</span></div>
+                <p><b>Cash later.</b> The service or cost has already happened, but nothing has been recorded and no cash has changed hands yet — so it must be <b>accrued</b> now.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.24 · The four categories</h2>
+            <p>These four kinds cover every adjustment you will ever make.</p>
+            <div class="aecat-fig" style="margin-top:12px;">
+              <div class="aecat-cap"><span class="tag">Illustration 2.24</span><span class="t">Categories of Adjusting Entries</span></div>
+              <div class="aecat-root"><span class="node">Adjusting Entries</span></div>
+              <div class="aecat-branches">
+                <div class="aecat-fam def">
+                  <div class="fhead">
+                    <div class="fname"><b>Deferrals</b><span class="fbadge">Cash first</span></div>
+                    <div class="ftime"><span class="chip">Cash</span><span class="arw">→</span><span>revenue / expense recognized later</span></div>
+                  </div>
+                  <div class="aecat-subs">
+                    <div class="aecat-sub">
+                      <div class="sname">1 · Prepaid expenses</div>
+                      <div class="sdef">Expenses paid in cash before they are used or consumed.</div>
+                      <div class="sex">e.g. supplies · prepaid insurance · rent paid in advance</div>
+                    </div>
+                    <div class="aecat-sub">
+                      <div class="sname">2 · Unearned revenues</div>
+                      <div class="sdef">Cash received before services are performed.</div>
+                      <div class="sex">e.g. a deposit for work not yet done</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="aecat-fam acc">
+                  <div class="fhead">
+                    <div class="fname"><b>Accruals</b><span class="fbadge">Cash later</span></div>
+                    <div class="ftime"><span class="chip">Revenue / expense</span><span class="arw">→</span><span>cash comes later</span></div>
+                  </div>
+                  <div class="aecat-subs">
+                    <div class="aecat-sub">
+                      <div class="sname">1 · Accrued revenues</div>
+                      <div class="sdef">Revenues for services performed but not yet received in cash or recorded.</div>
+                      <div class="sex">e.g. work finished, invoice not yet sent</div>
+                    </div>
+                    <div class="aecat-sub">
+                      <div class="sname">2 · Accrued expenses</div>
+                      <div class="sdef">Expenses incurred but not yet paid in cash or recorded.</div>
+                      <div class="sex">e.g. wages owed · a utility bill not yet received</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+              <div>The worked examples ahead all use the <b>October 31 trial balance of Pioneer Advertising</b>. Pioneer uses a one-month accounting period, so it prepares these adjusting entries monthly, dated <b>October 31</b>.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Name that adjustment</h2>
+            <p>Read each situation and tap the category it belongs to. Watch the cash: paid or received <b>first</b> means a deferral; recorded <b>before</b> the cash means an accrual.</p>
+            <div class="wr-list" id="m3t-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m3t-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Two classes, four kinds. <b>Deferrals</b> defer what cash already settled; <b>accruals</b> catch up on what cash hasn't. The next two lessons take each pair apart with full journal entries.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m3types-next">
+              <div><div class="up">Up next in Module 3</div><b>Deferrals</b> — prepaid expenses &amp; unearned revenues.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m3t-home">Back to course</button>
+          </div>
         </div>
       </div>
     </section>
@@ -3527,7 +3696,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -3547,9 +3716,10 @@
       if (p.tbDone) state.tbDone = true;
       if (p.m2capDone) state.m2capDone = true;
       if (p.m3IntroDone) state.m3IntroDone = true;
+      if (p.m3TypesDone) state.m3TypesDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -3574,7 +3744,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -3604,7 +3774,8 @@
       { done: function () { return state.sumDone; }, open: function () { openSum(); }, label: 'Summary: Journalizing & Posting' },
       { done: function () { return state.tbDone; }, open: function () { openTb(); }, label: 'The Trial Balance' },
       { done: function () { return state.m2capDone; }, open: function () { openM2cap(); }, label: 'the Module 2 Capstone' },
-      { done: function () { return state.m3IntroDone; }, open: function () { openM3Intro(); }, label: 'Module 3 · Introduction' }
+      { done: function () { return state.m3IntroDone; }, open: function () { openM3Intro(); }, label: 'Module 3 · Introduction' },
+      { done: function () { return state.m3TypesDone; }, open: function () { openM3Types(); }, label: 'Types of Adjusting Entries' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -5600,6 +5771,65 @@
   $('m3-back').addEventListener('click', function () { goScreen('home'); });
   $('m3-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 3 — Lesson 1: Types of Adjusting Entries (Illustration 2.24)
+     ============================================================ */
+  var M3T_CATS = { pe: 'Prepaid expense', ur: 'Unearned revenue', ar: 'Accrued revenue', ae: 'Accrued expense' };
+  var M3T_Q = [
+    { ev: 'On Oct. 1 the firm paid $2,400 cash for a one-year insurance policy.', c: 'pe', why: 'Cash was paid up front for a benefit used over time — a prepaid expense (a deferral).' },
+    { ev: 'A client paid $1,200 in advance for advertising you will perform next month.', c: 'ur', why: 'Cash was received before the service is performed — unearned revenue (a deferral).' },
+    { ev: 'Employees have earned $1,200 of wages that will not be paid until next week.', c: 'ae', why: 'The expense was incurred but is not yet paid or recorded — an accrued expense.' },
+    { ev: 'You finished $500 of consulting work but have not yet billed the client.', c: 'ar', why: 'Revenue was earned but not yet received in cash or recorded — an accrued revenue.' },
+    { ev: 'The firm bought $1,000 of supplies; some are still on hand at month-end.', c: 'pe', why: 'Supplies are paid for before being consumed — a prepaid expense; the used part becomes expense at period-end.' }
+  ];
+  var m3tAnswered = {};
+  function renderM3types() {
+    m3tAnswered = {};
+    var order = ['pe', 'ur', 'ar', 'ae'];
+    $('m3t-q').innerHTML = M3T_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div>' +
+        '<div class="wr-opts q4">' +
+          order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M3T_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m3t-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M3T_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var c = btn.getAttribute('data-c');
+          var ok = c === e.c;
+          m3tAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M3T_CATS[e.c] + '.</b> ' + e.why;
+          checkM3types();
+        });
+      });
+    });
+    $('m3t-done').className = 'gp-feedback'; $('m3t-done').innerHTML = '';
+  }
+  function checkM3types() {
+    if (Object.keys(m3tAnswered).length === M3T_Q.length) {
+      var allRight = M3T_Q.every(function (e, i) { return m3tAnswered[i]; });
+      var el = $('m3t-done');
+      el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+      el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+        ? '<b>Well named.</b> Every adjustment is one of these four — deferrals when cash came first, accruals when it hasn\'t.'
+        : 'Re-check the ones you missed: cash paid or received <b>first</b> is a deferral; recorded <b>before</b> the cash is an accrual.') + '</div>';
+      if (!state.m3TypesDone) { state.m3TypesDone = true; save(); updateM3TypesPill(); }
+    }
+  }
+  function updateM3TypesPill() { var pill = $('m3types-pill'); if (pill) pill.textContent = state.m3TypesDone ? 'Done' : 'Start'; }
+  function openM3Types() { goScreen('m3types'); $('m3t-scroll').scrollTop = 0; }
+  $('start-m3types-card').addEventListener('click', openM3Types);
+  $('m3t-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3t-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3intro-next').addEventListener('click', openM3Types);
+  $('m3types-next').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -5656,6 +5886,8 @@
   renderCycleInto('m3-cycle', 4);
   renderM3wr();
   updateM3Pill();
+  renderM3types();
+  updateM3TypesPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
