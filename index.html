@@ -1227,6 +1227,40 @@
   .rp-conn.lit { background: var(--debit); } .rp-conn.lit::after { border-color: var(--debit); }
 
   .rp-actions { display: flex; gap: 10px; margin-top: 16px; }
+
+  /* ============================================================
+     MODULE 2 · Lesson 2 — The Journal (Illustration 2.8)
+     ============================================================ */
+  .jrn { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; box-shadow: var(--shadow); background: var(--card); }
+  .jrn-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: linear-gradient(150deg, var(--debit), #185a92); color: #fff; }
+  .jrn-head .t { font-weight: 700; font-size: 13px; letter-spacing: .01em; }
+  .jrn-head .j1 { font-family: var(--mono); font-weight: 800; font-size: 12px; background: rgba(255,255,255,.2); padding: 2px 8px; border-radius: 6px; }
+  .jrn-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .jrn-table th { font-size: 9px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; color: var(--ink-faint); padding: 6px 8px; border-bottom: 1px solid var(--line); background: var(--card-2); text-align: left; }
+  .jrn-table th.amt, .jrn-table td.amt { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .jrn-table th.ref, .jrn-table td.ref { text-align: center; width: 34px; }
+  .jrn-table td { padding: 5px 8px; color: var(--ink); vertical-align: top; }
+  .jrn-table td.dt { font-family: var(--mono); color: var(--credit); font-weight: 700; white-space: nowrap; }
+  .jrn-table td.yr { font-family: var(--mono); color: var(--ink-faint); padding-bottom: 0; }
+  .jrn-table td.acct.indent { padding-left: 22px; color: var(--ink-soft); }
+  .jrn-table td.expl { font-style: italic; color: var(--ink-faint); font-size: 11px; }
+  .jrn-table td.amt.d { color: var(--debit); font-weight: 700; } .jrn-table td.amt.c { color: var(--credit); font-weight: 700; }
+  .jrn-table tr.spacer td { padding: 4px; border-bottom: 1px dashed var(--line-soft); }
+  .jrn-table td.hl, .jrn-table th.hl { background: color-mix(in srgb, var(--gold) 20%, transparent); transition: background .2s ease; border-radius: 4px; }
+  .cnum { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; font-size: 9.5px; font-weight: 800; color: #fff; cursor: pointer; vertical-align: middle; margin-right: 4px; user-select: none; }
+  .cnum.c1 { background: var(--debit); } .cnum.c2 { background: var(--debit); } .cnum.c3 { background: #9c3fa0; } .cnum.c4 { background: var(--warn); } .cnum.c5 { background: var(--equity); }
+  .cnum.big { width: 18px; height: 18px; font-size: 10.5px; }
+
+  .anno-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+  .anno-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px 7px 7px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); cursor: pointer; font-size: 12px; font-weight: 650; color: var(--ink-soft); box-shadow: var(--shadow); transition: all .14s ease; }
+  .anno-pill:hover { color: var(--ink); }
+  .anno-pill.active { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); color: var(--ink); }
+  .anno-pill.viewed .cnum::after { content: ""; }
+  .anno-explain { margin-top: 12px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 0 var(--r-md) var(--r-md) 0; background: var(--card); padding: 13px 14px; box-shadow: var(--shadow); min-height: 20px; }
+  .anno-explain .ae-h { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; margin-bottom: 5px; }
+  .anno-explain p { font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
+  .anno-explain .empty { font-size: 12.5px; color: var(--ink-faint); font-style: italic; }
+  .anno-progress { font-size: 11px; color: var(--ink-faint); margin-top: 10px; text-align: center; }
 </style>
 
 <div id="fa-app">
@@ -1346,7 +1380,7 @@
               </span>
             </button>
             <button class="lesson-card" id="start-recproc-card">
-              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">4</span>
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">1</span>
               <span class="lbody">
                 <b>The Recording Process</b>
                 <span>Analyze → journalize → post · Illustration 2.7</span>
@@ -1356,18 +1390,24 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <button class="lesson-card" id="start-journal-card">
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">2</span>
+              <span class="lbody">
+                <b>The Journal</b>
+                <span>The book of original entry · Illustration 2.8</span>
+              </span>
+              <span class="pill-mini ready" id="journal-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">5</span>
-              <span class="lbody"><b>Journalize</b><span>Recording transactions in the journal</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
-            <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">6</span>
+              <span class="lnum">3</span>
               <span class="lbody"><b>Post to the Ledger</b><span>From the journal to the accounts</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">7</span>
+              <span class="lnum">4</span>
               <span class="lbody"><b>The Trial Balance</b><span>Proving the books before you report</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
@@ -2428,6 +2468,104 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 · LESSON 2 — THE JOURNAL ============== -->
+    <section class="fa-screen" id="screen-journal" aria-label="The Journal">
+      <div class="fa-topbar">
+        <button class="fa-back" id="jr-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Module 2 · Lesson 2</div>
+        <h1 class="lesson-title">The Journal</h1>
+        <div class="lesson-meta">The book of original entry · journalizing · ~10 min</div>
+      </div>
+
+      <div class="fa-scroll" id="jr-scroll">
+        <div style="padding: 18px 18px 8px;">
+          <p class="lede">Companies record every transaction in chronological order — which is why the journal is called the <em>book of original entry</em>.</p>
+          <p class="lecture-hook">For each transaction, the journal shows the debit and credit effects on specific accounts, all in one place.</p>
+
+          <section class="lec-sec" style="margin-top:20px;">
+            <div class="step-ey"><span class="no">§</span><span class="eyebrow">The general journal</span></div>
+            <h3>Every company keeps one</h3>
+            <p>Companies use various journals, but every company has the most basic form — a <b>general journal</b>. It has spaces for <b>dates</b>, <b>account titles and explanations</b>, <b>references</b>, and <b>two amount columns</b> (debit and credit). Whenever we say "journal," we mean the general journal.</p>
+          </section>
+
+          <section class="lec-sec">
+            <h3>Why the journal matters</h3>
+            <div class="rulecard">
+              <div class="rr"><span class="mk l">1</span><div>It discloses in one place the <b>complete effects of a transaction</b>.</div></div>
+              <div class="rr"><span class="mk l">2</span><div>It provides a <b>chronological record</b> of transactions.</div></div>
+              <div class="rr"><span class="mk l">3</span><div>It helps <b>prevent or locate errors</b> — the debit and credit amounts of each entry can be compared at a glance.</div></div>
+            </div>
+          </section>
+
+          <section class="lec-sec">
+            <div class="step-ey"><span class="no">§</span><span class="eyebrow">Journalizing</span></div>
+            <h3>What a complete entry contains</h3>
+            <p>Entering transaction data in the journal is called <b>journalizing</b>. Companies make a separate entry for each transaction, and a complete entry has three parts:</p>
+            <div class="rulecard">
+              <div class="rr"><span class="mk r">1</span><div>The <b>date</b> of the transaction.</div></div>
+              <div class="rr"><span class="mk r">2</span><div>The <b>accounts and amounts</b> to be debited and credited.</div></div>
+              <div class="rr"><span class="mk r">3</span><div>A brief <b>explanation</b> of the transaction.</div></div>
+            </div>
+          </section>
+
+          <div class="eyebrow" style="color:var(--gold); margin: 22px 0 8px;">Illustration 2.8 · Technique of Journalizing</div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-soft);margin-bottom:12px;">Two transactions on page <b>J1</b>: (1) Sept. 1 — stockholders invest <b>$15,000</b> cash for common stock; and (2) the company buys computer equipment for <b>$7,000</b> cash. Tap a numbered marker to learn each journalizing convention.</p>
+
+          <div class="jrn">
+            <div class="jrn-head"><span class="t">General Journal</span><span class="j1">J1</span></div>
+            <table class="jrn-table" id="jr-table">
+              <thead><tr><th>Date</th><th>Account Titles and Explanation</th><th class="ref">Ref.<span class="cnum c5" data-anno="5" style="margin-left:3px;">5</span></th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead>
+              <tbody>
+                <tr><td class="yr" colspan="5">2025</td></tr>
+                <tr><td class="dt" data-cell="1"><span class="cnum c1" data-anno="1">1</span>Sept. 1</td><td class="acct" data-cell="2"><span class="cnum c2" data-anno="2">2</span>Cash</td><td class="ref" data-cell="5"></td><td class="amt d" data-cell="2b">15,000</td><td class="amt"></td></tr>
+                <tr><td></td><td class="acct indent" data-cell="3"><span class="cnum c3" data-anno="3">3</span>Common Stock</td><td class="ref" data-cell="5b"></td><td class="amt"></td><td class="amt c" data-cell="3b">15,000</td></tr>
+                <tr><td></td><td class="expl" data-cell="4"><span class="cnum c4" data-anno="4">4</span>(Issued common stock for cash)</td><td class="ref"></td><td class="amt"></td><td class="amt"></td></tr>
+                <tr class="spacer"><td colspan="5"></td></tr>
+                <tr><td class="dt">1</td><td class="acct">Equipment</td><td class="ref"></td><td class="amt d">7,000</td><td class="amt"></td></tr>
+                <tr><td></td><td class="acct indent">Cash</td><td class="ref"></td><td class="amt"></td><td class="amt c">7,000</td></tr>
+                <tr><td></td><td class="expl">(Purchase of equipment for cash)</td><td class="ref"></td><td class="amt"></td><td class="amt"></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="anno-pills" id="jr-pills">
+            <button class="anno-pill" data-anno="1"><span class="cnum c1">1</span> Date</button>
+            <button class="anno-pill" data-anno="2"><span class="cnum c2">2</span> Debit first</button>
+            <button class="anno-pill" data-anno="3"><span class="cnum c3">3</span> Credit indented</button>
+            <button class="anno-pill" data-anno="4"><span class="cnum c4">4</span> Explanation</button>
+            <button class="anno-pill" data-anno="5"><span class="cnum c5">5</span> Ref. column</button>
+          </div>
+          <div class="anno-explain" id="jr-explain"><p class="empty">Tap a numbered marker above — on the journal or in the row of chips — to see the rule it illustrates.</p></div>
+          <div class="anno-progress" id="jr-progress">0 of 5 conventions explored</div>
+
+          <div class="takeaway" style="margin-top:22px;">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Debit account first at the left margin; credit account indented on the next line; a short explanation below; leave Ref. blank until you post. Follow that shape every time and your journal reads cleanly.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="m2-next">
+              <div><div class="up">Up next in Module 2</div><b>Post to the Ledger</b> — transferring these entries to the accounts.</div>
+            </div>
+            <button class="cta ghost" id="jr-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -2446,7 +2584,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -2458,9 +2596,10 @@
       if (p.capDone) state.capDone = true;
       if (p.mod2Done) state.mod2Done = true;
       if (p.recProcDone) state.recProcDone = true;
+      if (p.journalDone) state.journalDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -2485,7 +2624,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -3903,6 +4042,45 @@
   $('rp-back').addEventListener('click', function () { rpClearTimers(); goScreen('home'); });
   $('rp-home').addEventListener('click', function () { rpClearTimers(); goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 · Lesson 2 — The Journal (Illustration 2.8 annotations)
+     ============================================================ */
+  var JR_ANNO = {
+    '1': { title: 'The date', cells: ['1'], text: 'The date of the transaction is entered in the Date column. The year and month are written only for the first entry on the page or when they change.' },
+    '2': { title: 'Debit account first', cells: ['2', '2b'], text: 'The debit account title is entered first, at the extreme left margin of the "Account Titles and Explanation" column, and the amount is recorded in the Debit column.' },
+    '3': { title: 'Credit account indented', cells: ['3', '3b'], text: 'The credit account title is indented on the next line, and its amount is recorded in the Credit column. The indentation makes the credit easy to spot.' },
+    '4': { title: 'Brief explanation', cells: ['4'], text: 'A short explanation of the transaction appears on the line below the credit. A blank line is left between entries so the whole journal is easy to read.' },
+    '5': { title: 'The Ref. column', cells: ['5'], text: 'The Ref. (Reference) column is left blank when the entry is journalized. It is filled in later, when the entry is posted to the ledger accounts.' }
+  };
+  var jrViewed = {};
+  function jrHighlight(cells) {
+    Array.prototype.slice.call($('jr-table').querySelectorAll('.hl')).forEach(function (el) { el.classList.remove('hl'); });
+    cells.forEach(function (c) {
+      var el = $('jr-table').querySelector('[data-cell="' + c + '"]');
+      if (el) el.classList.add('hl');
+    });
+    // ref header highlight for anno 5
+    if (cells.indexOf('5') >= 0) { var rh = $('jr-table').querySelector('th.ref'); if (rh) rh.classList.add('hl'); }
+  }
+  function jrSelect(n) {
+    var a = JR_ANNO[n]; if (!a) return;
+    Array.prototype.slice.call($('jr-pills').querySelectorAll('.anno-pill')).forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-anno') === n); });
+    jrHighlight(a.cells);
+    $('jr-explain').innerHTML = '<div class="ae-h"><span class="cnum c' + n + ' big">' + n + '</span>' + a.title + '</div><p>' + a.text + '</p>';
+    if (!jrViewed[n]) { jrViewed[n] = true; }
+    var cnt = Object.keys(jrViewed).length;
+    $('jr-progress').textContent = cnt + ' of 5 conventions explored';
+    if (cnt === 5 && !state.journalDone) { state.journalDone = true; save(); updateJournalPill(); $('jr-progress').textContent = '✓ All 5 conventions explored — nicely done'; }
+  }
+  Array.prototype.slice.call(document.querySelectorAll('#screen-journal [data-anno]')).forEach(function (el) {
+    el.addEventListener('click', function (e) { e.stopPropagation(); jrSelect(el.getAttribute('data-anno')); });
+  });
+  function updateJournalPill() { var pill = $('journal-pill'); if (pill) pill.textContent = state.journalDone ? 'Done' : 'Start'; }
+  function openJournal() { goScreen('journal'); $('jr-scroll').scrollTop = 0; }
+  $('start-journal-card').addEventListener('click', openJournal);
+  $('jr-back').addEventListener('click', function () { goScreen('home'); });
+  $('jr-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -3925,6 +4103,7 @@
   updateMod2Pill();
   rpReset();
   updateRecPill();
+  updateJournalPill();
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
