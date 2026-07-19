@@ -1326,6 +1326,48 @@
 
   .coa-gaps { margin-top: 14px; display: flex; gap: 10px; align-items: flex-start; background: var(--credit-bg); border: 1px dashed var(--credit-line); border-radius: var(--r-md); padding: 13px 14px; font-size: 13px; line-height: 1.5; color: var(--ink); }
   .coa-gaps b { color: var(--credit); }
+
+  /* ============================================================
+     MODULE 2 · Lesson 5 — The Recording Process Illustrated (2.11–2.20)
+     ============================================================ */
+  .rpi-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .rpi-bar .rpi-count { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+  .rpi-track { flex: 1 1 auto; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .rpi-fill { height: 100%; width: 10%; border-radius: 999px; background: linear-gradient(90deg, var(--debit), var(--equity)); transition: width .4s cubic-bezier(.22,.61,.36,1); }
+
+  .rpi-txn { }
+  .rpi-illno { font-size: 10.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--gold); }
+  .rpi-title { font-family: var(--serif); font-size: 18px; font-weight: 600; margin-top: 2px; }
+  .rpi-story { margin-top: 8px; padding: 12px 14px; border-radius: var(--r-md); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); font-size: 14px; line-height: 1.5; color: var(--ink); }
+  .rpi-story .dt { font-family: var(--mono); color: var(--credit); font-weight: 700; }
+
+  .rpi-stage { display: grid; grid-template-columns: 96px 1fr; gap: 10px; margin-top: 12px; align-items: start; }
+  .rpi-stage .lab { font-size: 11px; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; color: var(--stc, var(--ink-soft)); border-left: 3px solid var(--stc, var(--ink)); padding: 6px 0 6px 9px; line-height: 1.2; }
+  .rpi-stage.basic .lab { --stc: var(--ink-soft); }
+  .rpi-stage.eq .lab { --stc: var(--asset); }
+  .rpi-stage.dc .lab { --stc: var(--credit); }
+  .rpi-stage.je .lab { --stc: var(--debit); }
+  .rpi-stage.post .lab { --stc: var(--equity); }
+  .rpi-stage .body { min-width: 0; }
+  .rpi-basic { background: var(--muted); border-radius: var(--r-sm); padding: 10px 12px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+  .rpi-dc { background: var(--credit-bg); border-radius: var(--r-sm); padding: 10px 12px; font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+  .rpi-dc b { color: var(--credit); }
+
+  /* equation analysis mini */
+  .rpi-eq { display: flex; align-items: stretch; flex-wrap: wrap; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+  .rpi-eqcell { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 10px; border-radius: 8px; }
+  .rpi-eqcell .ea { font-size: 11px; font-weight: 700; text-align: center; line-height: 1.15; }
+  .rpi-eqcell .ev { font-family: var(--mono); font-weight: 700; font-size: 12px; }
+  .rpi-eqcell.a { background: var(--asset-bg); } .rpi-eqcell.a .ea { color: var(--asset); }
+  .rpi-eqcell.l { background: var(--liab-bg); } .rpi-eqcell.l .ea { color: var(--liab); }
+  .rpi-eqcell.e { background: var(--equity-bg); } .rpi-eqcell.e .ea { color: var(--equity); }
+  .rpi-eqcell .ev.pos { color: var(--good); } .rpi-eqcell .ev.neg { color: var(--warn); }
+  .rpi-eqop { display: flex; align-items: center; font-family: var(--serif); font-size: 16px; color: var(--ink-faint); }
+
+  .rpi-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .rpi-actions .foot-btn { flex: 1 1 0; justify-content: center; }
+  .rpi-none { background: var(--card-2); border: 1px dashed var(--line); border-radius: var(--r-sm); padding: 10px 12px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); display: flex; gap: 10px; align-items: flex-start; }
+  .rpi-none .no { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; background: var(--warn); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
 </style>
 
 <div id="fa-app">
@@ -1488,8 +1530,19 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <button class="lesson-card" id="start-rpi-card">
+              <span class="lnum" style="background:var(--debit-bg);color:var(--debit);box-shadow:inset 0 0 0 1px var(--debit-line);">5</span>
+              <span class="lbody">
+                <b>The Recording Process Illustrated</b>
+                <span>10 transactions, fully analyzed · Illustrations 2.11–2.20</span>
+              </span>
+              <span class="pill-mini ready" id="rpi-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">5</span>
+              <span class="lnum">6</span>
               <span class="lbody"><b>The Trial Balance</b><span>Proving the books before you report</span></span>
               <span class="pill-mini soon">Soon</span>
             </div>
@@ -2881,6 +2934,47 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 2 · LESSON 5 — RECORDING PROCESS ILLUSTRATED ============== -->
+    <section class="fa-screen" id="screen-rpi" aria-label="The Recording Process Illustrated">
+      <div class="fa-topbar">
+        <button class="fa-back" id="rpi-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="lesson-head">
+        <div class="eyebrow gold-eyebrow">Module 2 · Lesson 5</div>
+        <h1 class="lesson-title">The Recording Process Illustrated</h1>
+        <div class="lesson-meta">Pioneer Advertising · October, transaction by transaction</div>
+      </div>
+
+      <div class="fa-scroll" id="rpi-scroll">
+        <div style="padding: 16px 18px 8px;">
+          <p style="font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin-bottom:14px;">Each of Pioneer's October transactions runs through the same five steps — <b>basic analysis</b>, <b>equation analysis</b>, <b>debit-credit analysis</b>, <b>journal entry</b>, and <b>posting</b>. Step through all ten.</p>
+          <div class="rpi-bar">
+            <span class="rpi-count" id="rpi-count">1 / 10</span>
+            <div class="rpi-track"><div class="rpi-fill" id="rpi-fill"></div></div>
+          </div>
+          <div class="rpi-txn" id="rpi-txn"></div>
+          <div class="rpi-actions">
+            <button class="foot-btn" id="rpi-prev" disabled><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M15 6l-6 6 6 6"/></svg> Prev</button>
+            <button class="foot-btn next" id="rpi-next"><span id="rpi-next-label">Next transaction</span> <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="m2-next">
+              <div><div class="up">Up next in Module 2</div><b>The Trial Balance</b> — proving that total debits equal total credits.</div>
+            </div>
+            <button class="cta ghost" id="rpi-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -2899,7 +2993,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -2914,9 +3008,10 @@
       if (p.journalDone) state.journalDone = true;
       if (p.ledgerDone) state.ledgerDone = true;
       if (p.coaDone) state.coaDone = true;
+      if (p.rpiDone) state.rpiDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -2941,7 +3036,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi') };
   function goScreen(name) {
     Object.keys(screens).forEach(function (k) {
       var el = screens[k];
@@ -4467,6 +4562,130 @@
   $('coa-back').addEventListener('click', function () { goScreen('home'); });
   $('coa-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 2 · Lesson 5 — The Recording Process Illustrated (2.11–2.20)
+     ============================================================ */
+  var RPI = [
+    { ill: '2.11', title: 'Investment of Cash by Stockholders', date: 'Oct. 1',
+      story: 'C. R. Yazici invests $100,000 cash in an advertising company to be known as Pioneer Advertising.',
+      basic: 'The asset Cash increases $100,000; stockholders’ equity (Common Stock) increases $100,000.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '+100,000' }, { g: 'e', acct: 'Common Stock', amt: '+100,000' }],
+      dc: 'Debits increase assets: <b>debit Cash $100,000</b>. Credits increase stockholders’ equity: <b>credit Common Stock $100,000</b>.',
+      je: [{ acct: 'Cash', dr: '100,000' }, { acct: 'Common Stock', cr: '100,000', ind: true }], jexpl: '(Issued common stock for cash)',
+      led: [{ n: 'Cash', no: '101', dr: [['Oct. 1', '100,000']] }, { n: 'Common Stock', no: '311', cr: [['Oct. 1', '100,000']] }] },
+    { ill: '2.12', title: 'Purchase of Office Equipment', date: 'Oct. 1',
+      story: 'Pioneer purchases office equipment costing $50,000 by signing a 3-month, 12%, $50,000 note payable.',
+      basic: 'The asset Equipment increases $50,000; the liability Notes Payable increases $50,000.',
+      eq: [{ g: 'a', acct: 'Equipment', amt: '+50,000' }, { g: 'l', acct: 'Notes Payable', amt: '+50,000' }],
+      dc: 'Debits increase assets: <b>debit Equipment $50,000</b>. Credits increase liabilities: <b>credit Notes Payable $50,000</b>.',
+      je: [{ acct: 'Equipment', dr: '50,000' }, { acct: 'Notes Payable', cr: '50,000', ind: true }], jexpl: '(Issued 3-month, 12% note for office equipment)',
+      led: [{ n: 'Equipment', no: '157', dr: [['Oct. 1', '50,000']] }, { n: 'Notes Payable', no: '200', cr: [['Oct. 1', '50,000']] }] },
+    { ill: '2.13', title: 'Receipt of Cash for Future Service', date: 'Oct. 2',
+      story: 'Pioneer receives a $12,000 cash advance from R. Knox, a client, for advertising services expected to be completed by December 31.',
+      basic: 'The asset Cash increases $12,000; the liability Unearned Service Revenue increases $12,000 because the service has not been performed yet.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '+12,000' }, { g: 'l', acct: 'Unearned Service Revenue', amt: '+12,000' }],
+      dc: 'Debits increase assets: <b>debit Cash $12,000</b>. Credits increase liabilities: <b>credit Unearned Service Revenue $12,000</b>.',
+      je: [{ acct: 'Cash', dr: '12,000' }, { acct: 'Unearned Service Revenue', cr: '12,000', ind: true }], jexpl: '(Received cash from R. Knox for future service)',
+      led: [{ n: 'Cash', no: '101', dr: [['Oct. 2', '12,000']] }, { n: 'Unearned Serv. Rev.', no: '209', cr: [['Oct. 2', '12,000']] }] },
+    { ill: '2.14', title: 'Payment of Monthly Rent', date: 'Oct. 3',
+      story: 'Pioneer pays office rent for October in cash, $9,000.',
+      basic: 'Rent Expense increases $9,000 because the payment pertains only to the current month; the asset Cash decreases $9,000.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '−9,000' }, { g: 'e', acct: 'Rent Expense', amt: '−9,000' }],
+      dc: 'Debits increase expenses: <b>debit Rent Expense $9,000</b>. Credits decrease assets: <b>credit Cash $9,000</b>.',
+      je: [{ acct: 'Rent Expense', dr: '9,000' }, { acct: 'Cash', cr: '9,000', ind: true }], jexpl: '(Paid cash for October rent)',
+      led: [{ n: 'Cash', no: '101', cr: [['Oct. 3', '9,000']] }, { n: 'Rent Expense', no: '729', dr: [['Oct. 3', '9,000']] }] },
+    { ill: '2.15', title: 'Payment for Insurance', date: 'Oct. 4',
+      story: 'Pioneer pays $6,000 for a one-year insurance policy that will expire next year on September 30.',
+      basic: 'The asset Prepaid Insurance increases $6,000 because the payment benefits future periods; the asset Cash decreases $6,000.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '−6,000' }, { g: 'a', acct: 'Prepaid Insurance', amt: '+6,000' }],
+      dc: 'Debits increase assets: <b>debit Prepaid Insurance $6,000</b>. Credits decrease assets: <b>credit Cash $6,000</b>.',
+      je: [{ acct: 'Prepaid Insurance', dr: '6,000' }, { acct: 'Cash', cr: '6,000', ind: true }], jexpl: '(Paid one-year policy; effective October 1)',
+      led: [{ n: 'Cash', no: '101', cr: [['Oct. 4', '6,000']] }, { n: 'Prepaid Insurance', no: '130', dr: [['Oct. 4', '6,000']] }] },
+    { ill: '2.16', title: 'Purchase of Supplies on Credit', date: 'Oct. 5',
+      story: 'Pioneer purchases an estimated three-month supply of advertising materials on account from Aero Supply for $25,000.',
+      basic: 'The asset Supplies increases $25,000; the liability Accounts Payable increases $25,000.',
+      eq: [{ g: 'a', acct: 'Supplies', amt: '+25,000' }, { g: 'l', acct: 'Accounts Payable', amt: '+25,000' }],
+      dc: 'Debits increase assets: <b>debit Supplies $25,000</b>. Credits increase liabilities: <b>credit Accounts Payable $25,000</b>.',
+      je: [{ acct: 'Supplies', dr: '25,000' }, { acct: 'Accounts Payable', cr: '25,000', ind: true }], jexpl: '(Purchased supplies on account from Aero Supply)',
+      led: [{ n: 'Supplies', no: '126', dr: [['Oct. 5', '25,000']] }, { n: 'Accounts Payable', no: '201', cr: [['Oct. 5', '25,000']] }] },
+    { ill: '2.17', title: 'Signing a Contract', date: 'Oct. 9', none: true,
+      story: 'Pioneer signs a contract with a local newspaper for advertising inserts to be distributed starting the last Sunday in November. Payment of $7,000 is due after delivery.',
+      basic: 'A business transaction has not occurred — there is only an agreement to provide services in November. No accounts change, so no journal entry is necessary in October.' },
+    { ill: '2.18', title: 'Payment of Salaries', date: 'Oct. 26',
+      story: 'Pioneer pays employee salaries and wages in cash. The four-week pay period ended Friday, October 26, with salaries and wages of $40,000 being paid.',
+      basic: 'Salaries and Wages Expense increases $40,000; the asset Cash decreases $40,000.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '−40,000' }, { g: 'e', acct: 'Salaries & Wages Exp.', amt: '−40,000' }],
+      dc: 'Debits increase expenses: <b>debit Salaries and Wages Expense $40,000</b>. Credits decrease assets: <b>credit Cash $40,000</b>.',
+      je: [{ acct: 'Salaries and Wages Expense', dr: '40,000' }, { acct: 'Cash', cr: '40,000', ind: true }], jexpl: '(Paid salaries to date)',
+      led: [{ n: 'Cash', no: '101', cr: [['Oct. 26', '40,000']] }, { n: 'Sal. & Wages Exp.', no: '726', dr: [['Oct. 26', '40,000']] }] },
+    { ill: '2.19', title: 'Receipt of Cash for Services Provided', date: 'Oct. 31',
+      story: 'Pioneer receives $28,000 in cash and bills Copa Company $72,000 for $100,000 of advertising services performed in October.',
+      basic: 'Cash increases $28,000; Accounts Receivable increases $72,000; the revenue account Service Revenue increases $100,000.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '+28,000' }, { g: 'a', acct: 'Accounts Receivable', amt: '+72,000' }, { g: 'e', acct: 'Service Revenue', amt: '+100,000' }],
+      dc: 'Debits increase assets: <b>debit Cash $28,000 and Accounts Receivable $72,000</b>. Credits increase revenues: <b>credit Service Revenue $100,000</b>.',
+      je: [{ acct: 'Cash', dr: '28,000' }, { acct: 'Accounts Receivable', dr: '72,000' }, { acct: 'Service Revenue', cr: '100,000', ind: true }], jexpl: '(Recognize revenue for services performed)',
+      led: [{ n: 'Cash', no: '101', dr: [['Oct. 31', '28,000']] }, { n: 'Accounts Receivable', no: '112', dr: [['Oct. 31', '72,000']] }, { n: 'Service Revenue', no: '400', cr: [['Oct. 31', '100,000']] }] },
+    { ill: '2.20', title: 'Declaration and Payment of Dividend', date: 'Oct. 31',
+      story: 'Pioneer’s board of directors declares and pays a $5,000 cash dividend to stockholders.',
+      basic: 'The Dividends account increases $5,000; the asset Cash decreases $5,000.',
+      eq: [{ g: 'a', acct: 'Cash', amt: '−5,000' }, { g: 'e', acct: 'Dividends', amt: '−5,000' }],
+      dc: 'Debits increase dividends: <b>debit Dividends $5,000</b>. Credits decrease assets: <b>credit Cash $5,000</b>.',
+      je: [{ acct: 'Dividends', dr: '5,000' }, { acct: 'Cash', cr: '5,000', ind: true }], jexpl: '(Declared and paid a cash dividend)',
+      led: [{ n: 'Cash', no: '101', cr: [['Oct. 31', '5,000']] }, { n: 'Dividends', no: '332', dr: [['Oct. 31', '5,000']] }] }
+  ];
+  var rpiIndex = 0;
+  function rpiEqHtml(eq) {
+    var a = eq.filter(function (e) { return e.g === 'a'; }), l = eq.filter(function (e) { return e.g === 'l'; }), e2 = eq.filter(function (e) { return e.g === 'e'; });
+    function cell(x) { var neg = x.amt.charAt(0) === '−' || x.amt.charAt(0) === '-'; return '<div class="rpi-eqcell ' + x.g + '"><span class="ea">' + x.acct + '</span><span class="ev ' + (neg ? 'neg' : 'pos') + '">' + x.amt + '</span></div>'; }
+    function group(list) { return list.length ? list.map(cell).join('<div class="rpi-eqop">+</div>') : '<div class="rpi-eqcell" style="opacity:.4">—</div>'; }
+    return '<div class="rpi-eq">' + group(a) + '<div class="rpi-eqop">=</div>' + group(l) + '<div class="rpi-eqop">+</div>' + group(e2) + '</div>';
+  }
+  function rpiJournalHtml(t) {
+    var rows = t.je.map(function (r, i) {
+      return '<tr><td class="dt">' + (i === 0 ? t.date : '') + '</td><td class="acct' + (r.ind ? ' indent' : '') + '">' + r.acct + '</td><td class="amt d">' + (r.dr || '') + '</td><td class="amt c">' + (r.cr || '') + '</td></tr>';
+    }).join('');
+    rows += '<tr><td></td><td class="expl">' + t.jexpl + '</td><td class="amt"></td><td class="amt"></td></tr>';
+    return '<div class="rp-panel rp-journal"><div class="rp-head"><span class="badge">4</span> General Journal</div><table class="rp-jtable"><thead><tr><th>Date</th><th>Account Titles</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+  }
+  function rpiLedgerHtml(t) {
+    var ts = t.led.map(function (a) {
+      var dr = (a.dr || []).map(function (x) { return x[0] + '&nbsp;&nbsp;' + x[1]; }).join('<br>');
+      var cr = (a.cr || []).map(function (x) { return x[0] + '&nbsp;&nbsp;' + x[1]; }).join('<br>');
+      return '<div class="rp-t"><div class="nm">' + a.n + ' <span style="color:var(--ink-faint);font-family:var(--mono);font-size:10px">' + a.no + '</span></div><div class="grid"><div class="cell d">' + dr + '</div><div class="cell c">' + cr + '</div></div></div>';
+    }).join('');
+    return '<div class="rp-panel rp-ledger"><div class="rp-head"><span class="badge">5</span> General Ledger</div><div class="rp-taccts">' + ts + '</div></div>';
+  }
+  function rpiRender() {
+    var t = RPI[rpiIndex];
+    $('rpi-count').textContent = (rpiIndex + 1) + ' / ' + RPI.length;
+    $('rpi-fill').style.width = Math.round(((rpiIndex + 1) / RPI.length) * 100) + '%';
+    var html = '<div class="rpi-illno">Illustration ' + t.ill + '</div><div class="rpi-title">' + t.title + '</div>' +
+      '<div class="rpi-story"><span class="dt">' + t.date + '</span> — ' + t.story + '</div>' +
+      '<div class="rpi-stage basic"><div class="lab">Basic Analysis</div><div class="body"><div class="rpi-basic">' + t.basic + '</div></div></div>';
+    if (t.none) {
+      html += '<div class="rpi-stage"><div class="lab" style="--stc:var(--warn)">Record?</div><div class="body"><div class="rpi-none"><span class="no">✕</span><div>No journal entry — no accounts changed, so nothing is recorded in October.</div></div></div></div>';
+    } else {
+      html += '<div class="rpi-stage eq"><div class="lab">Equation Analysis</div><div class="body">' + rpiEqHtml(t.eq) + '</div></div>' +
+        '<div class="rpi-stage dc"><div class="lab">Debit–Credit Analysis</div><div class="body"><div class="rpi-dc">' + t.dc + '</div></div></div>' +
+        '<div class="rpi-stage je"><div class="lab">Journal Entry</div><div class="body">' + rpiJournalHtml(t) + '</div></div>' +
+        '<div class="rpi-stage post"><div class="lab">Posting to Ledger</div><div class="body">' + rpiLedgerHtml(t) + '</div></div>';
+    }
+    $('rpi-txn').innerHTML = html;
+    $('rpi-prev').disabled = rpiIndex === 0;
+    $('rpi-next-label').textContent = rpiIndex === RPI.length - 1 ? 'Finish' : 'Next transaction';
+    if (rpiIndex === RPI.length - 1 && !state.rpiDone) { state.rpiDone = true; save(); updateRpiPill(); }
+  }
+  function updateRpiPill() { var pill = $('rpi-pill'); if (pill) pill.textContent = state.rpiDone ? 'Done' : (rpiIndex > 0 ? (rpiIndex + 1) + '/10' : 'Start'); }
+  $('rpi-prev').addEventListener('click', function () { if (rpiIndex > 0) { rpiIndex--; rpiRender(); $('rpi-scroll').scrollTop = 0; } });
+  $('rpi-next').addEventListener('click', function () {
+    if (rpiIndex < RPI.length - 1) { rpiIndex++; rpiRender(); $('rpi-scroll').scrollTop = 0; }
+    else { updateRpiPill(); goScreen('home'); }
+  });
+  function openRpi() { goScreen('rpi'); $('rpi-scroll').scrollTop = 0; rpiRender(); }
+  $('start-rpi-card').addEventListener('click', openRpi);
+  $('rpi-back').addEventListener('click', function () { goScreen('home'); });
+  $('rpi-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- boot ---------------- */
   renderLedger();
   gpReset(true);
@@ -4493,6 +4712,8 @@
   renderCycleInto('led-cycle', 2);
   updateLedgerPill();
   updateCoaPill();
+  rpiRender();
+  updateRpiPill();
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
