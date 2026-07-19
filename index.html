@@ -1717,6 +1717,39 @@
   .acr-day.pay .t { color: var(--gold); } .acr-day.acc .t { color: var(--liab); }
   .acr-day .amt { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
   .acr-daysep { color: var(--ink-faint); font-weight: 800; }
+
+  /* Module 3 · Lesson 4 — Adjusted Trial Balance highlight */
+  .atb-table td { transition: background .2s ease, box-shadow .2s ease; }
+  .atb-table.hl tr.adj td { background: color-mix(in srgb, var(--gold) 12%, transparent); }
+  .atb-table.hl tr.adj td.acct { box-shadow: inset 3px 0 0 var(--gold); font-weight: 650; }
+  .atb-tag { display: none; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--gold); margin-left: 6px; vertical-align: middle; }
+  .atb-table.hl tr.adj .atb-tag { display: inline; }
+
+  /* Module 3 Capstone — Kleene adjusted-trial-balance worksheet */
+  .mc-solrow { display: flex; gap: 8px; margin-top: 4px; }
+  .mc-solrow .btn { flex: 1; }
+  .mcw-head { padding: 0 18px; margin: 20px 0 8px; display: flex; align-items: baseline; gap: 8px; }
+  .mcw-head h2 { font-family: var(--serif); font-size: 16px; font-weight: 600; }
+  .mcw-head .live { font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--good); display: inline-flex; align-items: center; gap: 4px; }
+  .mcw-head .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: livepulse 1.8s ease-in-out infinite; }
+  .mcw-scrollhint { font-size: 10.5px; color: var(--ink-faint); margin: 0 18px 6px; display: flex; align-items: center; gap: 5px; }
+  .mcw-wrap { margin: 0 18px; overflow-x: auto; border: 1.5px solid color-mix(in srgb, var(--teal) 30%, var(--line)); border-radius: var(--r-md); background: color-mix(in srgb, var(--teal) 5%, var(--card)); box-shadow: var(--shadow); -webkit-overflow-scrolling: touch; }
+  .mcw { border-collapse: collapse; width: 100%; min-width: 372px; font-size: 10.5px; }
+  .mcw th, .mcw td { padding: 4px 6px; white-space: nowrap; }
+  .mcw thead .grp th { text-align: center; font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-soft); padding-top: 8px; padding-bottom: 2px; }
+  .mcw thead .sub th { text-align: right; font-size: 8px; font-weight: 800; text-transform: uppercase; color: var(--ink-faint); border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+  .mcw thead .sub th.acol { text-align: left; }
+  .mcw td { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+  .mcw td.acol { font-family: inherit; text-align: left; color: var(--ink); font-size: 10px; line-height: 1.2; white-space: normal; min-width: 104px; }
+  .mcw td.d { color: var(--debit); } .mcw td.c { color: var(--credit); }
+  .mcw td.adj.d, .mcw td.adj.c { font-weight: 700; }
+  .mcw td.gsep { border-left: 1px solid color-mix(in srgb, var(--teal) 20%, var(--line)); }
+  .mcw th.gsep { border-left: 1px solid color-mix(in srgb, var(--teal) 20%, var(--line)); }
+  .mcw td.pop { animation: cellpop .45s ease; }
+  @keyframes cellpop { 0% { background: color-mix(in srgb, var(--credit) 28%, transparent); } 100% { background: transparent; } }
+  .mcw tr.tot td { border-top: 2px solid var(--ink); font-weight: 800; padding-top: 6px; }
+  .mcw tr.tot td.d, .mcw tr.tot td.c { color: var(--warn); }
+  .mcw tr.tot.proved td.d, .mcw tr.tot.proved td.c { color: var(--good); }
 </style>
 
 <div id="fa-app">
@@ -1967,11 +2000,24 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
+            <button class="lesson-card" id="start-m3atb-card">
               <span class="lnum">4</span>
               <span class="lbody"><b>The Adjusted Trial Balance</b><span>Ready to prepare the statements</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+              <span class="pill-mini ready" id="m3atb-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card capstone-card" id="start-m3cap-card" style="border-color: color-mix(in srgb, var(--gold) 40%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 45%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+              </span>
+              <span class="lbody"><b>Put It Into Practice</b><span>Capstone · LO 2.3 · adjust &amp; prove the trial balance</span></span>
+              <span class="pill-mini ready" id="m3cap-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -4118,6 +4164,145 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 3 · LESSON 4 — THE ADJUSTED TRIAL BALANCE ============== -->
+    <section class="fa-screen" id="screen-m3atb" aria-label="The Adjusted Trial Balance">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m3b-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m3b-scroll">
+        <header class="m3-hero">
+          <div class="eyebrow">Module 3 · Lesson 4</div>
+          <h1>The Adjusted Trial Balance</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.37</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">Prove the books balance after adjusting — the basis for the statements.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="cycle-wrap" aria-label="The accounting cycle — adjusted trial balance"><div class="cycle" id="m3atb-cycle"></div></div>
+
+        <div class="m2-body">
+          <p class="lede">After every adjusting entry is journalized and posted, you take one more trial balance — the <b>adjusted trial balance</b>. It proves debits still equal credits, now with all adjustments in place.</p>
+
+          <section class="m2-sec">
+            <h2>Why take another trial balance?</h2>
+            <p>The unadjusted trial balance came <i>before</i> the adjusting entries. Now those entries have changed several accounts, so you re-prove the equality. Because it contains <b>every account at its correct, up-to-date balance</b>, the adjusted trial balance is the <b>primary basis for preparing the financial statements</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.37 · Pioneer's adjusted trial balance</h2>
+            <p>Every balance below reflects Module 3's adjustments. Tap <b>Highlight adjusted accounts</b> to see which lines the adjusting entries touched, then <b>Total &amp; prove</b>.</p>
+            <div class="tb-sheet" style="margin-top:12px;">
+              <div class="tb-title"><b>Pioneer Advertising</b><span>Adjusted Trial Balance</span><span>October 31, 2025</span></div>
+              <table class="tb-table atb-table">
+                <thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead>
+                <tbody id="atb-body"></tbody>
+                <tfoot>
+                  <tr class="tb-totrow"><td class="acct">&nbsp;</td>
+                    <td class="amt d"><span class="tb-tot" id="atb-totd"><span class="dbl">$297,500</span></span></td>
+                    <td class="amt c"><span class="tb-tot" id="atb-totc"><span class="dbl">$297,500</span></span></td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="tb-prove" id="atb-prove">&#9878; In balance — $297,500 = $297,500</div>
+              <div class="gp-actions" style="margin-top:12px; display:flex; gap:8px;">
+                <button class="btn" id="atb-hl-btn">Highlight adjusted</button>
+                <button class="btn primary" id="atb-total-btn">Total &amp; prove ▸</button>
+              </div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--gold);color:#2a1e05;">i</span>
+              <div>The highlighted lines are exactly the accounts your deferral and accrual adjustments created or changed — 15 of the 22 rows.</div>
+            </div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The adjusted trial balance is the finish line of the recording work and the starting line for reporting. Assets, liabilities, and equity flow to the balance sheet; revenues and expenses to the income statement. Prove it here, and the statements almost write themselves.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m3atb-next">
+              <div><div class="up">Finish Module 3</div><b>Put It Into Practice</b> — the LO 2.3 capstone.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m3b-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 3 CAPSTONE — ADJUST & PROVE (Kleene, LO 2.3) ============== -->
+    <section class="fa-screen" id="screen-m3cap" aria-label="Module 3 Capstone">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m3c-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m3c-scroll">
+        <div class="cap-hero">
+          <span class="cap-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+            Put It Into Practice · LO 2.3
+          </span>
+          <h1>Prepare Adjusting Entries &amp; Prove the Trial Balance</h1>
+          <p><b>Kleene Window Washing Inc.</b> has an unadjusted trial balance at July 31. Journalize the five adjustments — the worksheet fills in and the <b>adjusted trial balance</b> must prove out at $25,880.</p>
+        </div>
+
+        <details class="cap-facts" id="m3c-facts">
+          <summary>The unadjusted trial balance &amp; the five adjustments <svg class="icon chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary>
+          <div class="fbody">
+            <div class="co">Unadjusted trial balance · July 31, 2025 — totals $23,600 = $23,600</div>
+            <ol id="m3c-facts-list"></ol>
+          </div>
+        </details>
+
+        <div class="cap-sec-label"><span class="eyebrow">a · Journalize the adjustment</span></div>
+        <div class="dab" id="mc-entry">
+          <div class="dab-eh" id="mc-eh"></div>
+          <div class="dab-body" id="mc-body"></div>
+          <div class="dab-progress" id="mc-progress"></div>
+        </div>
+        <div class="gp-feedback" id="mc-feedback" style="margin: 12px 18px 0;"></div>
+
+        <div class="mcw-head">
+          <h2 class="serif">b · Effects on the trial balance</h2>
+          <span class="live">Building live</span>
+        </div>
+        <div class="mcw-scrollhint"><svg class="icon" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Swipe the worksheet to see the adjusted columns</div>
+        <div class="mcw-wrap"><div id="mc-worksheet"></div></div>
+
+        <div class="cap-done" id="m3c-done" style="display:none; margin: 20px 18px 0;">
+          <div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>Adjusted trial balance proved</h3>
+          <p>All five adjustments journalized and posted — the adjusted columns total <b>$25,880 = $25,880</b>. Kleene's books are ready for the financial statements. That completes <b>Module 3</b>.</p>
+          <button class="btn primary" id="m3c-restart" style="margin-top:14px;">Start over</button>
+        </div>
+
+        <div style="height: calc(28px + env(safe-area-inset-bottom));"></div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -4136,7 +4321,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -4159,9 +4344,11 @@
       if (p.m3TypesDone) state.m3TypesDone = true;
       if (p.m3DefDone) state.m3DefDone = true;
       if (p.m3AcrDone) state.m3AcrDone = true;
+      if (p.m3AtbDone) state.m3AtbDone = true;
+      if (p.m3CapDone) state.m3CapDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -4186,7 +4373,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -4219,7 +4406,9 @@
       { done: function () { return state.m3IntroDone; }, open: function () { openM3Intro(); }, label: 'Module 3 · Introduction' },
       { done: function () { return state.m3TypesDone; }, open: function () { openM3Types(); }, label: 'Types of Adjusting Entries' },
       { done: function () { return state.m3DefDone; }, open: function () { openM3Def(); }, label: 'Deferrals' },
-      { done: function () { return state.m3AcrDone; }, open: function () { openM3Acr(); }, label: 'Accruals' }
+      { done: function () { return state.m3AcrDone; }, open: function () { openM3Acr(); }, label: 'Accruals' },
+      { done: function () { return state.m3AtbDone; }, open: function () { openM3Atb(); }, label: 'The Adjusted Trial Balance' },
+      { done: function () { return state.m3CapDone; }, open: function () { openM3Cap(); }, label: 'the Module 3 Capstone' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -6530,7 +6719,199 @@
   $('start-m3acr-card').addEventListener('click', openM3Acr);
   $('m3a-back').addEventListener('click', function () { goScreen('home'); });
   $('m3a-home').addEventListener('click', function () { goScreen('home'); });
-  $('m3acr-next').addEventListener('click', function () { goScreen('home'); });
+  $('m3acr-next').addEventListener('click', function () { openM3Atb(); });
+
+  /* ============================================================
+     MODULE 3 — Lesson 4: The Adjusted Trial Balance (Illustration 2.37)
+     ============================================================ */
+  var ATB_ROWS = [
+    ['Cash', '80,000', '', false], ['Accounts Receivable', '74,000', '', true],
+    ['Allowance for Doubtful Accounts', '', '1,600', true], ['Supplies', '10,000', '', true],
+    ['Prepaid Insurance', '5,500', '', true], ['Equipment', '50,000', '', false],
+    ['Accumulated Depreciation—Equipment', '', '400', true], ['Notes Payable', '', '50,000', false],
+    ['Accounts Payable', '', '25,000', false], ['Interest Payable', '', '500', true],
+    ['Unearned Service Revenue', '', '8,000', true], ['Salaries and Wages Payable', '', '6,000', true],
+    ['Common Stock', '', '100,000', false], ['Dividends', '5,000', '', false],
+    ['Service Revenue', '', '106,000', true], ['Salaries and Wages Expense', '46,000', '', true],
+    ['Supplies Expense', '15,000', '', true], ['Rent Expense', '9,000', '', false],
+    ['Insurance Expense', '500', '', true], ['Interest Expense', '500', '', true],
+    ['Depreciation Expense', '400', '', true], ['Bad Debt Expense', '1,600', '', true]
+  ];
+  (function renderAtb() {
+    var firstD = true, firstC = true;
+    $('atb-body').innerHTML = ATB_ROWS.map(function (r) {
+      var d = '', c = '';
+      if (r[1]) { d = (firstD ? '$' : '') + r[1]; firstD = false; }
+      if (r[2]) { c = (firstC ? '$' : '') + r[2]; firstC = false; }
+      return '<tr class="' + (r[3] ? 'adj' : '') + '"><td class="acct">' + r[0] + (r[3] ? '<span class="atb-tag">adj</span>' : '') + '</td>' +
+        '<td class="amt d">' + d + '</td><td class="amt c">' + c + '</td></tr>';
+    }).join('');
+  })();
+  (function () {
+    var hlOn = false;
+    $('atb-hl-btn').addEventListener('click', function () {
+      hlOn = !hlOn;
+      document.querySelector('.atb-table').classList.toggle('hl', hlOn);
+      this.textContent = hlOn ? 'Hide highlight' : 'Highlight adjusted';
+      this.classList.toggle('primary', false);
+    });
+    $('atb-total-btn').addEventListener('click', function () {
+      $('atb-totd').classList.add('on'); $('atb-totc').classList.add('on'); $('atb-prove').classList.add('on');
+      this.textContent = 'Proved · $297,500 = $297,500';
+      this.disabled = true;
+      if (!state.m3AtbDone) { state.m3AtbDone = true; save(); updateM3AtbPill(); }
+    });
+  })();
+  function updateM3AtbPill() { var pill = $('m3atb-pill'); if (pill) pill.textContent = state.m3AtbDone ? 'Done' : 'Start'; }
+  function openM3Atb() { goScreen('m3atb'); $('m3b-scroll').scrollTop = 0; }
+  $('start-m3atb-card').addEventListener('click', openM3Atb);
+  $('m3b-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3b-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3atb-next').addEventListener('click', function () { openM3Cap(); });
+
+  /* ============================================================
+     MODULE 3 CAPSTONE — Kleene Window Washing · adjust & prove (LO 2.3)
+     ============================================================ */
+  function cma(n) { return (n || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  var MC_ACCTS = ['— select account —', 'Cash', 'Accounts Receivable', 'Supplies', 'Prepaid Insurance', 'Equipment', 'Accumulated Depreciation—Equipment', 'Accounts Payable', 'Salaries and Wages Payable', 'Common Stock', 'Dividends', 'Service Revenue', 'Maintenance and Repairs Expense', 'Supplies Expense', 'Depreciation Expense', 'Insurance Expense', 'Salaries and Wages Expense'];
+  /* [name, short, normal side, unadjusted balance] */
+  var MC_UNADJ = [
+    ['Cash', 'Cash', 'd', 5410],
+    ['Accounts Receivable', 'Accounts Receivable', 'd', 4600],
+    ['Supplies', 'Supplies', 'd', 900],
+    ['Prepaid Insurance', 'Prepaid Insurance', 'd', 1800],
+    ['Equipment', 'Equipment', 'd', 8000],
+    ['Accumulated Depreciation—Equipment', 'Accum. Deprec.—Equip.', 'c', 0],
+    ['Accounts Payable', 'Accounts Payable', 'c', 5400],
+    ['Salaries and Wages Payable', 'Salaries & Wages Pay.', 'c', 0],
+    ['Common Stock', 'Common Stock', 'c', 12000],
+    ['Dividends', 'Dividends', 'd', 600],
+    ['Service Revenue', 'Service Revenue', 'c', 6200],
+    ['Maintenance and Repairs Expense', 'Maint. & Repairs Exp.', 'd', 290],
+    ['Supplies Expense', 'Supplies Expense', 'd', 0],
+    ['Depreciation Expense', 'Depreciation Expense', 'd', 0],
+    ['Insurance Expense', 'Insurance Expense', 'd', 0],
+    ['Salaries and Wages Expense', 'Salaries & Wages Exp.', 'd', 2000]
+  ];
+  var MC_ADJ = [
+    { desc: 'Services performed but unbilled and uncollected at July 31 were <b>$1,700</b>.', dr: 'Accounts Receivable', cr: 'Service Revenue', amt: 1700, hint: 'Unbilled, uncollected services are accrued revenue. Debit Accounts Receivable, credit Service Revenue — $1,700.' },
+    { desc: 'Depreciation on equipment for the month was <b>$180</b>.', dr: 'Depreciation Expense', cr: 'Accumulated Depreciation—Equipment', amt: 180, hint: 'Debit Depreciation Expense, credit the contra-asset Accumulated Depreciation—Equipment — $180.' },
+    { desc: 'One-twelfth of the insurance expired.', dr: 'Insurance Expense', cr: 'Prepaid Insurance', amt: 150, hint: '$1,800 × 1/12 = $150. Debit Insurance Expense, credit Prepaid Insurance.' },
+    { desc: 'A count shows <b>$320</b> of cleaning supplies on hand at July 31.', dr: 'Supplies Expense', cr: 'Supplies', amt: 580, hint: 'Used = $900 on the books − $320 on hand = $580. Debit Supplies Expense, credit Supplies.' },
+    { desc: 'Accrued but unpaid employee salaries were <b>$400</b>.', dr: 'Salaries and Wages Expense', cr: 'Salaries and Wages Payable', amt: 400, hint: 'Accrued salaries: debit Salaries and Wages Expense, credit Salaries and Wages Payable — $400.' }
+  ];
+  var mcIndex = 0, mcApplied = [], mcNewAcct = {};
+  $('m3c-facts-list').innerHTML = MC_ADJ.map(function (a) { return '<li>' + a.desc + '</li>'; }).join('');
+
+  function mcCompute() {
+    return MC_UNADJ.map(function (r) {
+      var name = r[0], adjDr = 0, adjCr = 0;
+      mcApplied.forEach(function (ai) { var a = MC_ADJ[ai]; if (a.dr === name) adjDr += a.amt; if (a.cr === name) adjCr += a.amt; });
+      var bal = r[2] === 'd' ? (r[3] + adjDr - adjCr) : (r[3] + adjCr - adjDr);
+      return { name: name, short: r[1], side: r[2], un: r[3], adjDr: adjDr, adjCr: adjCr, bal: bal };
+    });
+  }
+  function mcRenderWorksheet() {
+    var rows = mcCompute(), totUnD = 0, totUnC = 0, totBalD = 0, totBalC = 0;
+    var body = rows.map(function (x) {
+      var unD = x.side === 'd' && x.un ? cma(x.un) : '', unC = x.side === 'c' && x.un ? cma(x.un) : '';
+      if (x.side === 'd') totUnD += x.un; else totUnC += x.un;
+      var aD = x.adjDr ? cma(x.adjDr) : '', aC = x.adjCr ? cma(x.adjCr) : '';
+      var balD = x.side === 'd' && x.bal ? cma(x.bal) : '', balC = x.side === 'c' && x.bal ? cma(x.bal) : '';
+      if (x.side === 'd') totBalD += x.bal; else totBalC += x.bal;
+      var pop = mcNewAcct[x.name] ? ' pop' : '';
+      return '<tr><td class="acol">' + x.short + '</td>' +
+        '<td class="d">' + unD + '</td><td class="c">' + unC + '</td>' +
+        '<td class="d adj gsep' + pop + '">' + aD + '</td><td class="c adj' + pop + '">' + aC + '</td>' +
+        '<td class="d gsep">' + balD + '</td><td class="c">' + balC + '</td></tr>';
+    }).join('');
+    var proved = mcApplied.length === MC_ADJ.length;
+    var tot = '<tr class="tot' + (proved ? ' proved' : '') + '"><td class="acol"></td>' +
+      '<td class="d">' + cma(totUnD) + '</td><td class="c">' + cma(totUnC) + '</td>' +
+      '<td class="d gsep"></td><td class="c"></td>' +
+      '<td class="d gsep">' + cma(totBalD) + '</td><td class="c">' + cma(totBalC) + '</td></tr>';
+    $('mc-worksheet').innerHTML = '<table class="mcw"><thead>' +
+      '<tr class="grp"><th class="acol"></th><th colspan="2">Unadjusted</th><th colspan="2" class="gsep">Adjustments</th><th colspan="2" class="gsep">Adjusted</th></tr>' +
+      '<tr class="sub"><th class="acol">Account</th><th>Dr</th><th>Cr</th><th class="gsep">Dr</th><th>Cr</th><th class="gsep">Dr</th><th>Cr</th></tr>' +
+      '</thead><tbody>' + body + tot + '</tbody></table>';
+    mcNewAcct = {};
+  }
+  function mcOptions() { return MC_ACCTS.map(function (a, i) { return '<option value="' + (i === 0 ? '' : a) + '">' + a + '</option>'; }).join(''); }
+  function mcRenderEntry() {
+    var t = MC_ADJ[mcIndex];
+    $('mc-eh').innerHTML = '<div class="step">Adjustment ' + (mcIndex + 1) + ' of ' + MC_ADJ.length + '</div><div class="desc">' + t.desc + '</div>';
+    $('mc-body').innerHTML =
+      '<div class="dab-side d">Debit</div>' +
+      '<div class="dab-line"><select class="dab-sel" id="mc-dr">' + mcOptions() + '</select><input class="dab-amt" id="mc-dr-amt" inputmode="numeric" placeholder="0" aria-label="Debit amount"></div>' +
+      '<div class="dab-side c">Credit</div>' +
+      '<div class="dab-line cr"><select class="dab-sel" id="mc-cr">' + mcOptions() + '</select><input class="dab-amt" id="mc-cr-amt" inputmode="numeric" placeholder="0" aria-label="Credit amount"></div>' +
+      '<div class="mc-solrow"><button class="btn" id="mc-hint-btn">Hint</button><button class="btn" id="mc-sol-btn">Show solution</button></div>' +
+      '<div class="dab-tools"><button class="btn primary" id="mc-post-btn">Post adjustment</button></div>' +
+      '<div class="dab-hint" id="mc-hint">' + t.hint + '</div>';
+    $('mc-progress').innerHTML = MC_ADJ.map(function (x, i) {
+      return '<div class="dab-dot ' + (mcApplied.indexOf(i) > -1 ? 'done' : (i === mcIndex ? 'on' : '')) + '"></div>';
+    }).join('');
+    $('mc-hint-btn').addEventListener('click', function () { $('mc-hint').classList.toggle('show'); });
+    $('mc-sol-btn').addEventListener('click', mcSolution);
+    $('mc-post-btn').addEventListener('click', mcPost);
+  }
+  function mcNum(id) { var v = ($(id).value || '').replace(/[^0-9.]/g, ''); return v === '' ? null : Math.round(parseFloat(v)); }
+  function mcApply(i) {
+    if (mcApplied.indexOf(i) === -1) mcApplied.push(i);
+    var a = MC_ADJ[i]; mcNewAcct[a.dr] = true; mcNewAcct[a.cr] = true;
+    mcRenderWorksheet(); updateM3CapPill();
+  }
+  function mcAdvance() {
+    var next = -1;
+    for (var k = 1; k <= MC_ADJ.length; k++) { var idx = (mcIndex + k) % MC_ADJ.length; if (mcApplied.indexOf(idx) === -1) { next = idx; break; } }
+    if (next > -1) { mcIndex = next; mcRenderEntry(); a11yify($('mc-entry')); }
+  }
+  function mcComplete() {
+    if (mcApplied.length !== MC_ADJ.length) return false;
+    $('m3c-done').style.display = 'block';
+    if (!state.m3CapDone) { state.m3CapDone = true; save(); }
+    updateM3CapPill();
+    return true;
+  }
+  function mcPost() {
+    var t = MC_ADJ[mcIndex];
+    var dr = $('mc-dr').value, cr = $('mc-cr').value, da = mcNum('mc-dr-amt'), ca = mcNum('mc-cr-amt');
+    var fb = $('mc-feedback');
+    function bad(msg) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + msg + '</div>'; }
+    if (!dr || !cr) { bad('Choose an account for <b>both</b> the debit and the credit.'); return; }
+    if (da == null || ca == null) { bad('Enter the amount on <b>both</b> lines.'); return; }
+    if (da !== ca) { bad('The entry must balance — <b>debits must equal credits</b>.'); return; }
+    if (!(dr === t.dr && cr === t.cr) && (dr === t.cr && cr === t.dr)) { bad('Right accounts, wrong sides — check which is debited and which is credited.'); return; }
+    if (!(dr === t.dr && cr === t.cr)) { bad('Not the right accounts for this adjustment. Try the <b>Hint</b>, or tap <b>Show solution</b>.'); return; }
+    if (da !== t.amt) { bad('Accounts are right — recheck the <b>amount</b>.'); return; }
+    mcApply(mcIndex);
+    if (mcComplete()) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>All five posted.</b> The adjusted trial balance proves at $25,880 = $25,880.</div>';
+      $('mc-progress').innerHTML = MC_ADJ.map(function () { return '<div class="dab-dot done"></div>'; }).join('');
+      return;
+    }
+    fb.className = 'gp-feedback good show';
+    fb.innerHTML = '<span class="fi">✓</span><div><b>Posted.</b> Watch the worksheet update — on to the next adjustment.</div>';
+    setTimeout(mcAdvance, 560);
+  }
+  function mcSolution() {
+    var t = MC_ADJ[mcIndex];
+    $('mc-dr').value = t.dr; $('mc-cr').value = t.cr;
+    $('mc-dr-amt').value = cma(t.amt); $('mc-cr-amt').value = cma(t.amt);
+    mcPost();
+  }
+  function mcReset() {
+    mcIndex = 0; mcApplied = []; mcNewAcct = {};
+    $('m3c-done').style.display = 'none';
+    $('mc-feedback').className = 'gp-feedback'; $('mc-feedback').innerHTML = '';
+    mcRenderEntry(); mcRenderWorksheet(); updateM3CapPill();
+  }
+  function updateM3CapPill() { var pill = $('m3cap-pill'); if (pill) pill.textContent = state.m3CapDone ? 'Done' : (mcApplied.length ? mcApplied.length + '/5' : 'Start'); }
+  function openM3Cap() { goScreen('m3cap'); $('m3c-scroll').scrollTop = 0; }
+  $('start-m3cap-card').addEventListener('click', openM3Cap);
+  $('m3c-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3c-restart').addEventListener('click', function () { mcReset(); $('m3c-scroll').scrollTop = 0; });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -6596,6 +6977,11 @@
   renderAcr(0);
   abrRender();
   updateM3AcrPill();
+  renderCycleInto('m3atb-cycle', 5);
+  updateM3AtbPill();
+  mcRenderEntry();
+  mcRenderWorksheet();
+  updateM3CapPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
