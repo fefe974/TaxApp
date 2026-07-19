@@ -1587,6 +1587,113 @@
 
   /* 4-option classifier (2×2) reuse of wr styling */
   .wr-opts.q4 { grid-template-columns: 1fr 1fr; }
+
+  /* Module 3 · Lesson 2 — Deferrals */
+  /* Illustration 2.25 — Adjusting Entries for Deferrals (T-flow) */
+  .dfl-fig { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .dfl-cap { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--teal) 8%, var(--card)); }
+  .dfl-cap .tag { font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+  .dfl-cap .t { font-size: 12.5px; font-weight: 700; color: var(--ink); font-family: var(--serif); }
+  .dfl-groups { display: flex; flex-direction: column; gap: 14px; padding: 14px; }
+  .dfl-grp { border: 1px solid var(--line); border-top: 3px solid var(--gc, var(--teal)); border-radius: var(--r-md); background: var(--paper); padding: 12px; }
+  .dfl-grp.pe { --gc: var(--asset); } .dfl-grp.ur { --gc: var(--credit); }
+  .dfl-grp > .gh { font-family: var(--serif); font-weight: 650; font-size: 15px; color: var(--ink); text-align: center; margin-bottom: 10px; }
+  .dfl-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: stretch; }
+  .dfl-acct { border: 1px solid var(--line); border-radius: 10px; background: var(--card); overflow: hidden; }
+  .dfl-acct .at { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 5px 4px; color: #fff; background: var(--gc); }
+  .dfl-acct.rt .at { background: var(--gc); }
+  .dfl-tt { display: grid; grid-template-columns: 1fr 1fr; font-size: 10.5px; min-height: 74px; }
+  .dfl-tt .col { padding: 6px 5px; }
+  .dfl-tt .col.l { border-right: 1.5px solid var(--ink-faint); }
+  .dfl-tt .lbl { font-weight: 800; font-size: 9px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); text-align: center; border-bottom: 1px solid var(--line); padding-bottom: 3px; margin-bottom: 4px; }
+  .dfl-tt .amt { text-align: center; font-weight: 700; line-height: 1.25; }
+  .dfl-tt .amt.dr { color: var(--debit); } .dfl-tt .amt.cr { color: var(--credit); }
+  .dfl-tt .amt.mut { color: var(--ink-soft); font-weight: 600; }
+  .dfl-arrow { display: grid; place-items: center; color: var(--gc); font-weight: 800; font-size: 18px; }
+  .dfl-legend { text-align: center; font-size: 11px; color: var(--ink-soft); margin-top: 9px; }
+  .dfl-legend b { color: var(--gc); }
+
+  /* Deferral rule callout */
+  .dfl-rule { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin-top: 12px; }
+  .dfl-rule .rk { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); padding: 11px 12px; box-shadow: var(--shadow); text-align: center; }
+  .dfl-rule .rk .t { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); }
+  .dfl-rule .rk.dn .v { color: var(--warn); } .dfl-rule .rk.up .v { color: var(--good); }
+  .dfl-rule .rk .v { font-family: var(--serif); font-size: 14px; font-weight: 650; margin-top: 3px; color: var(--ink); }
+  .dfl-rule .rk .s { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
+  .dfl-rule .rarrow { color: var(--ink-faint); font-weight: 800; }
+
+  /* Adjustment Analyzer (tabbed worked illustrations 2.26–2.30) */
+  .adzr { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .adzr-tabs { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--paper); border-bottom: 1px solid var(--line); }
+  .adzr-tab { cursor: pointer; border: none; background: transparent; padding: 10px 4px 9px; font-size: 11px; font-weight: 700; color: var(--ink-soft); border-bottom: 2.5px solid transparent; transition: all .14s ease; line-height: 1.2; }
+  .adzr-tab:hover { color: var(--ink); }
+  .adzr-tab.on { color: var(--tc, var(--teal)); border-bottom-color: var(--tc, var(--teal)); background: var(--card); }
+  .adzr-tab .k { display: block; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; opacity: .75; margin-bottom: 1px; }
+  .adzr-body { padding: 14px; }
+  .adzr-badge { display: inline-block; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: 2px 8px; border-radius: 999px; margin-bottom: 8px; background: color-mix(in srgb, var(--tc, var(--teal)) 16%, transparent); color: var(--tc, var(--teal)); }
+  .adzr-scn { font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
+  .adzr-scn b { color: var(--ink); }
+  .adzr-sub { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 14px 0 7px; }
+  /* equation chips */
+  .adzr-eq { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; }
+  .adzr-eq .cell { flex: 1 1 0; min-width: 82px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); padding: 8px 6px; text-align: center; }
+  .adzr-eq .cell .h { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); }
+  .adzr-eq .cell .nm { font-size: 10.5px; color: var(--ink-soft); margin: 2px 0; line-height: 1.2; }
+  .adzr-eq .cell .v { font-family: var(--mono); font-weight: 800; font-size: 13px; }
+  .adzr-eq .cell .v.neg { color: var(--warn); } .adzr-eq .cell .v.pos { color: var(--good); } .adzr-eq .cell .v.zero { color: var(--ink-faint); }
+  .adzr-op { display: grid; place-items: center; font-weight: 800; color: var(--ink-faint); font-size: 14px; flex: 0 0 auto; }
+  /* journal entry block */
+  .adzr-je { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--paper); padding: 11px 12px; }
+  .adzr-je .jdate { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
+  .adzr-je .memo { font-size: 11.5px; font-style: italic; color: var(--ink-faint); padding-left: 20px; margin-top: 3px; }
+  .adzr-je .ref { font-family: var(--mono); font-size: 10.5px; color: var(--ink-faint); }
+  /* balance strip */
+  .adzr-bal { display: flex; flex-direction: column; gap: 7px; }
+  .adzr-balrow { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 6px; align-items: center; font-size: 11.5px; }
+  .adzr-balrow.head { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); }
+  .adzr-balrow .an { font-weight: 700; color: var(--ink); }
+  .adzr-balrow .num { font-family: var(--mono); font-weight: 700; text-align: right; }
+  .adzr-balrow .num.adj { color: var(--credit); }
+  .adzr-balrow .num.fin { color: var(--ink); }
+  .adzr-note { display: flex; gap: 9px; align-items: flex-start; margin-top: 12px; border: 1px dashed var(--warn); border-radius: var(--r-md); background: var(--warn-bg); padding: 10px 12px; }
+  .adzr-note .wi { flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; background: var(--warn); color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+  .adzr-note p { font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }
+  .adzr-note p b { color: var(--ink); }
+  /* book value mini (Ill 2.29) */
+  .bookval { border: 1px solid var(--good); border-radius: var(--r-md); background: var(--good-bg); padding: 11px 13px; margin-top: 12px; }
+  .bookval .bh { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--good); margin-bottom: 7px; }
+  .bookval .br { display: flex; justify-content: space-between; font-size: 12.5px; padding: 2px 0; }
+  .bookval .br .lab { color: var(--ink-soft); }
+  .bookval .br .val { font-family: var(--mono); font-weight: 700; color: var(--ink); }
+  .bookval .br.total { border-top: 1.5px solid var(--good); margin-top: 5px; padding-top: 6px; }
+  .bookval .br.total .lab { font-weight: 700; color: var(--ink); }
+  .bookval .br.total .val { color: var(--good); font-weight: 800; }
+
+  /* Deferral adjustment builder (guided practice) */
+  .dab { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .dab-eh { padding: 12px 14px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--teal) 7%, var(--card)); }
+  .dab-eh .step { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--teal); }
+  .dab-eh .desc { font-size: 13px; line-height: 1.55; color: var(--ink); margin-top: 4px; }
+  .dab-eh .desc b { color: var(--ink); }
+  .dab-body { padding: 12px 14px; }
+  .dab-jhead { display: grid; grid-template-columns: 1fr 88px; gap: 8px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); padding-bottom: 5px; }
+  .dab-line { display: grid; grid-template-columns: 1fr 88px; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .dab-line.cr { padding-left: 18px; }
+  .dab-line.cr .dab-jhead { grid-template-columns: 1fr 88px; }
+  .dab-sel { width: 100%; font-size: 12.5px; padding: 9px 8px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--card); color: var(--ink); font-family: inherit; -webkit-appearance: none; appearance: none; }
+  .dab-sel:focus { outline: none; border-color: var(--teal); }
+  .dab-amt { width: 100%; font-size: 12.5px; padding: 9px 8px; border: 1.5px solid var(--line); border-radius: 9px; background: var(--card); color: var(--ink); font-family: var(--mono); font-weight: 700; text-align: right; }
+  .dab-amt:focus { outline: none; border-color: var(--teal); }
+  .dab-side { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; }
+  .dab-side.d { color: var(--debit); } .dab-side.c { color: var(--credit); }
+  .dab-tools { display: flex; gap: 8px; margin-top: 4px; }
+  .dab-tools .btn { flex: 1; }
+  .dab-hint { display: none; margin-top: 10px; font-size: 12px; line-height: 1.5; color: var(--ink-soft); border-left: 3px solid var(--gold); padding: 8px 11px; background: color-mix(in srgb, var(--gold) 8%, transparent); border-radius: 0 8px 8px 0; }
+  .dab-hint.show { display: block; }
+  .dab-progress { display: flex; gap: 5px; padding: 0 14px 14px; }
+  .dab-dot { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+  .dab-dot.done { background: var(--good); }
+  .dab-dot.on { background: var(--teal); }
 </style>
 
 <div id="fa-app">
@@ -1821,11 +1928,14 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
+            <button class="lesson-card" id="start-m3def-card">
               <span class="lnum">2</span>
               <span class="lbody"><b>Deferrals</b><span>Prepaid expenses &amp; unearned revenues</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+              <span class="pill-mini ready" id="m3def-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="lesson-card locked" aria-disabled="true">
               <span class="lnum">3</span>
               <span class="lbody"><b>Accruals</b><span>Accrued revenues &amp; accrued expenses</span></span>
@@ -3678,6 +3788,149 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 3 · LESSON 2 — ADJUSTING ENTRIES FOR DEFERRALS ============== -->
+    <section class="fa-screen" id="screen-m3def" aria-label="Adjusting Entries for Deferrals">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m3d-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m3d-scroll">
+        <header class="m3-hero">
+          <div class="eyebrow">Module 3 · Lesson 2</div>
+          <h1>Adjusting Entries for Deferrals</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.3</span>
+            <div>
+              <div class="lo-t">Section</div>
+              <div class="lo-d">Prepaid expenses &amp; unearned revenues — cash that arrived early.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">To <b>defer</b> means to postpone. A deferral is a revenue or expense whose cash already moved — so recognition waits for a later period. Two kinds: <b>prepaid expenses</b> and <b>unearned revenues</b>.</p>
+
+          <section class="m2-sec">
+            <h2>Why deferrals need adjusting</h2>
+            <p>Before adjustment, the asset or liability on the books is <b>overstated</b>, and the related expense or revenue is <b>understated</b> — because time has passed or service has been delivered, but no entry captured it. So every deferral adjustment does the same two things:</p>
+            <div class="dfl-rule">
+              <div class="rk dn"><div class="t">Balance sheet</div><div class="v">Decrease ↓</div><div class="s">the asset or liability</div></div>
+              <div class="rarrow">+</div>
+              <div class="rk up"><div class="t">Income statement</div><div class="v">Increase ↑</div><div class="s">the expense or revenue</div></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.25 · The two deferral patterns</h2>
+            <p>Each pattern moves an amount out of a balance-sheet account and into an income-statement account.</p>
+            <div class="dfl-fig" style="margin-top:12px;">
+              <div class="dfl-cap"><span class="tag">Illustration 2.25</span><span class="t">Adjusting Entries for Deferrals</span></div>
+              <div class="dfl-groups">
+                <div class="dfl-grp pe">
+                  <div class="gh">Prepaid Expenses</div>
+                  <div class="dfl-pair">
+                    <div class="dfl-acct"><div class="at">Asset</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt mut">Unadjusted<br>balance</div></div><div class="col r"><div class="lbl">Credit</div><div class="amt cr">Adjusting<br>entry (−)</div></div></div></div>
+                    <div class="dfl-arrow">→</div>
+                    <div class="dfl-acct rt"><div class="at">Expense</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt dr">Adjusting<br>entry (+)</div></div><div class="col r"><div class="lbl">Credit</div><div class="amt"></div></div></div></div>
+                  </div>
+                  <div class="dfl-legend">Credit the <b>asset</b> down, debit the <b>expense</b> up.</div>
+                </div>
+                <div class="dfl-grp ur">
+                  <div class="gh">Unearned Revenues</div>
+                  <div class="dfl-pair">
+                    <div class="dfl-acct"><div class="at">Liability</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt dr">Adjusting<br>entry (−)</div></div><div class="col r"><div class="lbl">Credit</div><div class="amt mut">Unadjusted<br>balance</div></div></div></div>
+                    <div class="dfl-arrow">→</div>
+                    <div class="dfl-acct rt"><div class="at">Revenue</div><div class="dfl-tt"><div class="col l"><div class="lbl">Debit</div><div class="amt"></div></div><div class="col r"><div class="lbl">Credit</div><div class="amt cr">Adjusting<br>entry (+)</div></div></div></div>
+                  </div>
+                  <div class="dfl-legend">Debit the <b>liability</b> down, credit the <b>revenue</b> up.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Prepaid expenses</h2>
+            <p>Assets paid for and recorded <b>before</b> they're used — insurance, supplies, rent, and long-lived equipment. They expire with time or through use, so at each statement date the adjustment is a <b>debit to an expense</b> and a <b>credit to the asset</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Worked adjustments · Pioneer Advertising, Oct. 31</h2>
+            <p>Tap through the four deferral adjustments Pioneer records for October. Each shows the equation effect, the journal entry, and the resulting balances.</p>
+            <div class="adzr" id="adzr" style="margin-top:12px;">
+              <div class="adzr-tabs" role="tablist">
+                <button class="adzr-tab on" role="tab" data-i="0"><span class="k">Prepaid</span>Supplies</button>
+                <button class="adzr-tab" role="tab" data-i="1"><span class="k">Prepaid</span>Insurance</button>
+                <button class="adzr-tab" role="tab" data-i="2"><span class="k">Prepaid</span>Depreciation</button>
+                <button class="adzr-tab" role="tab" data-i="3"><span class="k">Unearned</span>Revenue</button>
+              </div>
+              <div class="adzr-body" id="adzr-body"></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>A note on depreciation</h2>
+            <p><b>Depreciation</b> spreads a long-lived asset's cost over its useful life. The credit goes to <b>Accumulated Depreciation</b> — a <b>contra asset</b> that offsets Equipment on the balance sheet rather than reducing it directly, so both original cost and expired cost stay visible. The difference is the asset's <b>book value</b>.</p>
+            <div class="bookval">
+              <div class="bh">Illustration 2.29 · Balance sheet presentation</div>
+              <div class="br"><span class="lab">Equipment</span><span class="val">$50,000</span></div>
+              <div class="br"><span class="lab">Less: Accumulated depreciation — equipment</span><span class="val">400</span></div>
+              <div class="br total"><span class="lab">Book value</span><span class="val">$49,600</span></div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+              <div>Book value is <b>not</b> market value — depreciation <i>allocates</i> cost to the periods that used the asset; it doesn't try to track what the asset is worth.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Unearned revenues</h2>
+            <p>The mirror image: cash received <b>before</b> the work is done is a <b>liability</b> (a promise to perform). As the service is delivered, the adjustment <b>debits the liability</b> and <b>credits revenue</b>. Airlines do this with every ticket sold before a flight.</p>
+            <div style="margin-top:12px;">
+              <div class="m3-reason"><span class="rn">1</span><div class="rb"><b>Cash arrives early</b><p>Payment for future service credits an <b>unearned revenue</b> (a liability).</p></div></div>
+              <div class="m3-reason"><span class="rn">2</span><div class="rb"><b>Service is performed</b><p>The company delivers the work over the period.</p></div></div>
+              <div class="m3-reason"><span class="rn">3</span><div class="rb"><b>Recognition waits</b><p>Daily entries would be inefficient, so it's deferred to period-end.</p></div></div>
+              <div class="m3-reason"><span class="rn">4</span><div class="rb"><b>Adjusting entry</b><p>Debit the liability, credit revenue for the amount earned.</p></div></div>
+            </div>
+            <p style="margin-top:12px;">See the <b>Unearned Revenue</b> tab in the analyzer above for Pioneer's $12,000 advance from R. Knox — $4,000 earned in October.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Post the adjustment</h2>
+            <p>Your turn. For each deferral, choose the account to <b>debit</b> and the account to <b>credit</b>, enter the amount, and post. Remember Illustration 2.25.</p>
+            <div class="dab" id="dab" style="margin-top:12px;">
+              <div class="dab-eh" id="dab-eh"></div>
+              <div class="dab-body" id="dab-body"></div>
+              <div class="dab-progress" id="dab-progress"></div>
+            </div>
+            <div class="gp-feedback" id="dab-feedback" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Every deferral pulls an amount from a balance-sheet account into an income-statement account: <b>prepaid expenses</b> become expense as they're used; <b>unearned revenues</b> become revenue as it's earned. Next we flip the timing — accruals, where the cash hasn't arrived yet.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m3def-next">
+              <div><div class="up">Up next in Module 3</div><b>Accruals</b> — accrued revenues &amp; accrued expenses.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m3d-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -3696,7 +3949,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -3717,9 +3970,10 @@
       if (p.m2capDone) state.m2capDone = true;
       if (p.m3IntroDone) state.m3IntroDone = true;
       if (p.m3TypesDone) state.m3TypesDone = true;
+      if (p.m3DefDone) state.m3DefDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -3744,7 +3998,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -3775,7 +4029,8 @@
       { done: function () { return state.tbDone; }, open: function () { openTb(); }, label: 'The Trial Balance' },
       { done: function () { return state.m2capDone; }, open: function () { openM2cap(); }, label: 'the Module 2 Capstone' },
       { done: function () { return state.m3IntroDone; }, open: function () { openM3Intro(); }, label: 'Module 3 · Introduction' },
-      { done: function () { return state.m3TypesDone; }, open: function () { openM3Types(); }, label: 'Types of Adjusting Entries' }
+      { done: function () { return state.m3TypesDone; }, open: function () { openM3Types(); }, label: 'Types of Adjusting Entries' },
+      { done: function () { return state.m3DefDone; }, open: function () { openM3Def(); }, label: 'Deferrals' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -5828,7 +6083,137 @@
   $('m3t-back').addEventListener('click', function () { goScreen('home'); });
   $('m3t-home').addEventListener('click', function () { goScreen('home'); });
   $('m3intro-next').addEventListener('click', openM3Types);
-  $('m3types-next').addEventListener('click', function () { goScreen('home'); });
+  $('m3types-next').addEventListener('click', function () { openM3Def(); });
+
+  /* ============================================================
+     MODULE 3 — Lesson 2: Adjusting Entries for Deferrals
+     ============================================================ */
+  /* --- Worked-adjustment analyzer (Illustrations 2.26–2.30) --- */
+  var DEF_CASES = [
+    {
+      tc: 'var(--asset)', badge: 'Prepaid expense · Supplies',
+      scn: 'Pioneer bought <b>$25,000</b> of advertising supplies on Oct. 5. An Oct. 31 count shows <b>$10,000</b> still on hand — so <b>$15,000</b> was used.',
+      eq: { a: { nm: 'Supplies', v: '−15,000', cls: 'neg' }, l: { nm: 'No change', v: '—', cls: 'zero' }, se: { nm: 'Supplies Expense', v: '−15,000', cls: 'neg' } },
+      date: 'Oct. 31', dr: { acct: 'Supplies Expense', ref: '631', amt: '15,000' }, cr: { acct: 'Supplies', ref: '126', amt: '15,000' }, memo: 'To record supplies used',
+      bal: [ { an: 'Supplies (asset)', un: '25,000', adj: '−15,000', fin: '10,000' }, { an: 'Supplies Expense', un: '0', adj: '+15,000', fin: '15,000' } ],
+      without: 'assets and stockholders’ equity are overstated by $15,000, and net income is overstated by $15,000.'
+    },
+    {
+      tc: 'var(--asset)', badge: 'Prepaid expense · Insurance',
+      scn: 'On Oct. 4 Pioneer paid <b>$6,000</b> for a one-year fire-insurance policy (<b>$500</b> per month). One month has now expired.',
+      eq: { a: { nm: 'Prepaid Insurance', v: '−500', cls: 'neg' }, l: { nm: 'No change', v: '—', cls: 'zero' }, se: { nm: 'Insurance Expense', v: '−500', cls: 'neg' } },
+      date: 'Oct. 31', dr: { acct: 'Insurance Expense', ref: '722', amt: '500' }, cr: { acct: 'Prepaid Insurance', ref: '130', amt: '500' }, memo: 'To record insurance expired',
+      bal: [ { an: 'Prepaid Insurance', un: '6,000', adj: '−500', fin: '5,500' }, { an: 'Insurance Expense', un: '0', adj: '+500', fin: '500' } ],
+      without: 'assets and stockholders’ equity are overstated by $500, and net income is overstated by $500.'
+    },
+    {
+      tc: 'var(--asset)', badge: 'Prepaid expense · Depreciation',
+      scn: 'Office equipment cost <b>$50,000</b> (salvage $2,000, 10-year life) → <b>$4,800</b>/year, or <b>$400</b> of depreciation per month.',
+      eq: { a: { nm: 'Accum. Depreciation', v: '−400', cls: 'neg' }, l: { nm: 'No change', v: '—', cls: 'zero' }, se: { nm: 'Depreciation Expense', v: '−400', cls: 'neg' } },
+      date: 'Oct. 31', dr: { acct: 'Depreciation Expense', ref: '711', amt: '400' }, cr: { acct: 'Accumulated Depreciation—Equipment', ref: '158', amt: '400' }, memo: 'To record monthly depreciation',
+      bal: [ { an: 'Accum. Depreciation (contra)', un: '0', adj: '+400', fin: '400' }, { an: 'Depreciation Expense', un: '0', adj: '+400', fin: '400' } ],
+      without: 'total assets, stockholders’ equity, and net income are overstated, and depreciation expense is understated.'
+    },
+    {
+      tc: 'var(--credit)', badge: 'Unearned revenue · Service',
+      scn: 'On Oct. 2 Pioneer received <b>$12,000</b> from R. Knox for advertising to be finished by Dec. 31. By Oct. 31, <b>$4,000</b> has been earned.',
+      eq: { a: { nm: 'No change', v: '—', cls: 'zero' }, l: { nm: 'Unearned Serv. Revenue', v: '−4,000', cls: 'neg' }, se: { nm: 'Service Revenue', v: '+4,000', cls: 'pos' } },
+      date: 'Oct. 31', dr: { acct: 'Unearned Service Revenue', ref: '209', amt: '4,000' }, cr: { acct: 'Service Revenue', ref: '400', amt: '4,000' }, memo: 'To record revenue for services performed',
+      bal: [ { an: 'Unearned Serv. Revenue', un: '12,000', adj: '−4,000', fin: '8,000' }, { an: 'Service Revenue', un: '100,000', adj: '+4,000', fin: '104,000' } ],
+      without: 'revenues and net income are understated by $4,000, and liabilities are overstated by $4,000.'
+    }
+  ];
+  var adzrIndex = 0;
+  function renderAdzr(i) {
+    adzrIndex = i;
+    var c = DEF_CASES[i];
+    Array.prototype.slice.call($('adzr').querySelectorAll('.adzr-tab')).forEach(function (t) {
+      var on = parseInt(t.getAttribute('data-i'), 10) === i;
+      t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    function cell(o) { return '<div class="cell"><div class="h">' + o.h + '</div><div class="nm">' + o.d.nm + '</div><div class="v ' + o.d.cls + '">' + o.d.v + '</div></div>'; }
+    var eq = '<div class="adzr-eq" style="--tc:' + c.tc + '">' +
+      cell({ h: 'Assets', d: c.eq.a }) + '<div class="adzr-op">=</div>' +
+      cell({ h: 'Liabilities', d: c.eq.l }) + '<div class="adzr-op">+</div>' +
+      cell({ h: 'Equity', d: c.eq.se }) + '</div>';
+    var je = '<div class="adzr-je">' +
+      '<div class="jdate">' + c.date + '</div>' +
+      '<div class="je-row"><span class="je-acct">' + c.dr.acct + ' <span class="ref">' + c.dr.ref + '</span></span><span class="je-d">' + c.dr.amt + '</span><span class="je-c"></span></div>' +
+      '<div class="je-row cr"><span class="je-acct">' + c.cr.acct + ' <span class="ref">' + c.cr.ref + '</span></span><span class="je-d"></span><span class="je-c">' + c.cr.amt + '</span></div>' +
+      '<div class="memo">(' + c.memo + ')</div></div>';
+    var bal = '<div class="adzr-bal"><div class="adzr-balrow head"><span>Account</span><span class="num">Unadjusted</span><span class="num">Adjustment</span><span class="num">Adjusted</span></div>' +
+      c.bal.map(function (b) { return '<div class="adzr-balrow"><span class="an">' + b.an + '</span><span class="num">' + b.un + '</span><span class="num adj">' + b.adj + '</span><span class="num fin">' + b.fin + '</span></div>'; }).join('') + '</div>';
+    $('adzr-body').innerHTML =
+      '<span class="adzr-badge" style="--tc:' + c.tc + '">' + c.badge + '</span>' +
+      '<div class="adzr-scn">' + c.scn + '</div>' +
+      '<div class="adzr-sub">Equation effect</div>' + eq +
+      '<div class="adzr-sub">Adjusting journal entry</div>' + je +
+      '<div class="adzr-sub">Account balances</div>' + bal +
+      '<div class="adzr-note"><span class="wi">!</span><p><b>Without this entry,</b> ' + c.without + '</p></div>';
+  }
+  Array.prototype.slice.call(document.querySelectorAll('#adzr .adzr-tab')).forEach(function (t) {
+    t.addEventListener('click', function () { renderAdzr(parseInt(t.getAttribute('data-i'), 10)); });
+  });
+
+  /* --- Guided practice: post the deferral adjustment --- */
+  var DAB_ACCTS = ['— select account —', 'Cash', 'Supplies', 'Supplies Expense', 'Prepaid Insurance', 'Insurance Expense', 'Prepaid Rent', 'Rent Expense', 'Equipment', 'Depreciation Expense', 'Accumulated Depreciation—Equipment', 'Unearned Service Revenue', 'Service Revenue'];
+  var DAB_TX = [
+    { desc: 'On Oct. 1 the firm paid <b>$3,600</b> for a one-year insurance policy. Record <b>one month</b> of expiration.', drA: 'Insurance Expense', crA: 'Prepaid Insurance', amt: 300, hint: 'Insurance expires with time. Debit the expense, credit the prepaid asset. $3,600 ÷ 12 = $300.' },
+    { desc: 'Equipment costing <b>$24,000</b> has no salvage value and a <b>4-year</b> life. Record <b>one month</b> of depreciation.', drA: 'Depreciation Expense', crA: 'Accumulated Depreciation—Equipment', amt: 500, hint: 'Spread cost over the life: $24,000 ÷ 48 months = $500. The credit goes to the contra-asset, never Equipment itself.' },
+    { desc: 'A client paid <b>$9,000</b> on Oct. 1 for <b>three months</b> of service. One month has now been earned.', drA: 'Unearned Service Revenue', crA: 'Service Revenue', amt: 3000, hint: 'Cash came first, so it was a liability. As you earn it: debit the liability, credit revenue. $9,000 ÷ 3 = $3,000.' }
+  ];
+  var dabIndex = 0, dabDone = [];
+  function dabOptions() { return DAB_ACCTS.map(function (a, i) { return '<option value="' + (i === 0 ? '' : a) + '">' + a + '</option>'; }).join(''); }
+  function dabRender() {
+    var t = DAB_TX[dabIndex];
+    $('dab-eh').innerHTML = '<div class="step">Adjustment ' + (dabIndex + 1) + ' of ' + DAB_TX.length + '</div><div class="desc">' + t.desc + '</div>';
+    $('dab-body').innerHTML =
+      '<div class="dab-side d">Debit</div>' +
+      '<div class="dab-line"><select class="dab-sel" id="dab-dr">' + dabOptions() + '</select><input class="dab-amt" id="dab-dr-amt" inputmode="numeric" placeholder="0" aria-label="Debit amount"></div>' +
+      '<div class="dab-side c">Credit</div>' +
+      '<div class="dab-line cr"><select class="dab-sel" id="dab-cr">' + dabOptions() + '</select><input class="dab-amt" id="dab-cr-amt" inputmode="numeric" placeholder="0" aria-label="Credit amount"></div>' +
+      '<div class="dab-tools"><button class="btn" id="dab-hint-btn">Hint</button><button class="btn primary" id="dab-post-btn">Post entry</button></div>' +
+      '<div class="dab-hint" id="dab-hint">' + t.hint + '</div>';
+    $('dab-progress').innerHTML = DAB_TX.map(function (x, i) {
+      return '<div class="dab-dot ' + (dabDone[i] ? 'done' : (i === dabIndex ? 'on' : '')) + '"></div>';
+    }).join('');
+    $('dab-hint-btn').addEventListener('click', function () { $('dab-hint').classList.toggle('show'); });
+    $('dab-post-btn').addEventListener('click', dabPost);
+  }
+  function dabNum(id) { var v = ($(id).value || '').replace(/[^0-9.]/g, ''); return v === '' ? null : Math.round(parseFloat(v)); }
+  function dabPost() {
+    var t = DAB_TX[dabIndex];
+    var dr = $('dab-dr').value, cr = $('dab-cr').value, da = dabNum('dab-dr-amt'), ca = dabNum('dab-cr-amt');
+    var fb = $('dab-feedback');
+    function bad(msg) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + msg + '</div>'; }
+    if (!dr || !cr) { bad('Choose an account for <b>both</b> the debit and the credit.'); return; }
+    if (da == null || ca == null) { bad('Enter the amount on <b>both</b> lines.'); return; }
+    if (da !== ca) { bad('A journal entry must balance — <b>debits must equal credits</b>. Check your amounts.'); return; }
+    var okAcct = (dr === t.drA && cr === t.crA), okAmt = (da === t.amt);
+    if (!okAcct && (dr === t.crA && cr === t.drA)) { bad('Right accounts, wrong sides. For a deferral you <b>debit the expense or liability</b> and <b>credit the asset or revenue</b>.'); return; }
+    if (!okAcct) { bad('Not quite. Re-read the situation and pick the two accounts it affects — the <b>Hint</b> can help.'); return; }
+    if (!okAmt) { bad('Accounts are right — but check the <b>amount</b>. Prorate the total over the period.'); return; }
+    dabDone[dabIndex] = true;
+    var allDone = DAB_TX.every(function (x, i) { return dabDone[i]; });
+    if (allDone) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Posted — all three correct.</b> You can read any deferral now: debit what the income statement missed, credit the balance-sheet account that was overstated.</div>';
+      $('dab-progress').innerHTML = DAB_TX.map(function () { return '<div class="dab-dot done"></div>'; }).join('');
+      if (!state.m3DefDone) { state.m3DefDone = true; save(); updateM3DefPill(); }
+      return;
+    }
+    fb.className = 'gp-feedback good show';
+    fb.innerHTML = '<span class="fi">✓</span><div><b>Correct.</b> On to the next one.</div>';
+    var next = dabIndex; for (var k = 1; k <= DAB_TX.length; k++) { var idx = (dabIndex + k) % DAB_TX.length; if (!dabDone[idx]) { next = idx; break; } }
+    dabIndex = next;
+    setTimeout(function () { dabRender(); a11yify($('dab')); }, 550);
+  }
+  function updateM3DefPill() { var pill = $('m3def-pill'); if (pill) pill.textContent = state.m3DefDone ? 'Done' : 'Start'; }
+  function openM3Def() { goScreen('m3def'); $('m3d-scroll').scrollTop = 0; }
+  $('start-m3def-card').addEventListener('click', openM3Def);
+  $('m3d-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3d-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3def-next').addEventListener('click', function () { goScreen('home'); });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -5888,6 +6273,9 @@
   updateM3Pill();
   renderM3types();
   updateM3TypesPill();
+  renderAdzr(0);
+  dabRender();
+  updateM3DefPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
