@@ -2292,7 +2292,7 @@
 
             <div class="module-head m5">
               <span class="mod-no">5</span>
-              <div class="mod-body"><b>Financial Statements for a Merchandising Company</b><span>Learning Objective 5 · gross profit &amp; the multiple-step statement</span></div>
+              <div class="mod-body"><b>Financial Statements for a Merchandising Company</b><span>Learning Objectives 5–6 · merchandiser statements &amp; cash vs. accrual</span></div>
             </div>
             <button class="lesson-card" id="start-m5intro-card" style="border-color: color-mix(in srgb, var(--asset) 34%, var(--line));">
               <span class="lnum" style="background:var(--asset-bg);color:var(--asset);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--asset) 40%,transparent);">
@@ -2340,21 +2340,17 @@
               </span>
             </button>
 
-            <div class="module-head m6">
-              <span class="mod-no">6</span>
-              <div class="mod-body"><b>Cash-Basis vs. Accrual-Basis Accounting</b><span>Appendix 2A · Learning Objective 6</span></div>
-            </div>
             <button class="lesson-card" id="start-m6cb-card">
-              <span class="lnum">1</span>
-              <span class="lbody"><b>Cash Basis vs. Accrual Basis</b><span>Same profit, different timing · Illustrations 2A.1–2A.4</span></span>
+              <span class="lnum">5</span>
+              <span class="lbody"><b>Cash Basis vs. Accrual Basis</b><span>Appendix 2A · same profit, different timing</span></span>
               <span class="pill-mini ready" id="m6cb-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
             <button class="lesson-card" id="start-m6cv-card">
-              <span class="lnum">2</span>
-              <span class="lbody"><b>Converting Cash Basis to Accrual</b><span>The conversion worksheet · Illustrations 2A.5–2A.8</span></span>
+              <span class="lnum">6</span>
+              <span class="lbody"><b>Converting Cash Basis to Accrual</b><span>Appendix 2A · the conversion worksheet</span></span>
               <span class="pill-mini ready" id="m6cv-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
@@ -5573,13 +5569,17 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5close-next">
+              <div><div class="up">Up next in Module 5</div><b>Cash Basis vs. Accrual Basis</b> — Appendix 2A.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="m5c-home" style="margin-top:4px;">Back to course</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============== SCREEN: MODULE 6 · LESSON 1 — CASH BASIS vs ACCRUAL BASIS (Appendix 2A) ============== -->
+    <!-- ============== SCREEN: MODULE 5 · LESSON 5 — CASH BASIS vs ACCRUAL BASIS (Appendix 2A) ============== -->
     <section class="fa-screen" id="screen-m6cb" aria-label="Cash Basis vs Accrual Basis">
       <div class="fa-topbar">
         <button class="fa-back" id="m6c-back">
@@ -5594,7 +5594,7 @@
 
       <div class="fa-scroll" id="m6c-scroll">
         <header class="m6-hero">
-          <div class="eyebrow">Appendix 2A · Learning Objective 6</div>
+          <div class="eyebrow">Module 5 · Lesson 5 · Appendix 2A</div>
           <h1>Cash Basis vs. Accrual Basis</h1>
           <div class="lo-callout">
             <span class="lo-badge">6</span>
@@ -5707,7 +5707,7 @@
 
       <div class="fa-scroll" id="m6v-scroll">
         <header class="m6-hero">
-          <div class="eyebrow">Appendix 2A · Lesson 2</div>
+          <div class="eyebrow">Module 5 · Lesson 6 · Appendix 2A</div>
           <h1>Converting Cash Basis to Accrual</h1>
           <div class="lo-callout">
             <span class="lo-badge">2A</span>
@@ -9166,9 +9166,10 @@
   $('start-m5close-card').addEventListener('click', openM5Close);
   $('m5c-back').addEventListener('click', function () { goScreen('home'); });
   $('m5c-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5close-next').addEventListener('click', function () { openM6Cb(); });
 
   /* ============================================================
-     MODULE 6 — Appendix 2A · Lesson 1: Cash Basis vs. Accrual Basis
+     MODULE 5 (Appendix 2A) · Lesson 5: Cash Basis vs. Accrual Basis
      ============================================================ */
   var M6C_Q = [
     { ev: 'Records revenue only when cash is received', c: 'cash', why: 'Cash basis — revenue follows the cash, not the earning.' },
