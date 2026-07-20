@@ -10572,38 +10572,86 @@
       else { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Check the red cells. Net income = revenue − expenses; ending RE = $0 + net income − dividends; total assets must equal total liabilities + equity.</div>'; }
     });
   }
-  /* ---- close (stepper) ---- */
+  /* ---- close (student-entered) ---- */
   var APP1_CLOSE = [
-    { title: 'Close revenue to Income Summary', dr: [{ a: 'Service Revenue', v: '9,620' }], cr: [{ a: 'Income Summary', v: '9,620' }], memo: 'To close revenue', is: { side: 'c', n: '(1)', v: '9,620' } },
-    { title: 'Close expenses to Income Summary', dr: [{ a: 'Income Summary', v: '3,613' }], cr: [{ a: 'Salaries and Wages Expense', v: '1,800' }, { a: 'Rent Expense', v: '680' }, { a: 'Office Expense', v: '515' }, { a: 'Supplies Expense', v: '330' }, { a: 'Depreciation Expense', v: '288' }], memo: 'To close expenses', is: { side: 'd', n: '(2)', v: '3,613' } },
-    { title: 'Close net income to Retained Earnings', dr: [{ a: 'Income Summary', v: '6,007' }], cr: [{ a: 'Retained Earnings', v: '6,007' }], memo: 'To close net income ($9,620 − $3,613)', is: { side: 'd', n: '(3)', v: '6,007' }, re: { side: 'c', n: '(3)', v: '6,007' } },
-    { title: 'Close dividends to Retained Earnings', dr: [{ a: 'Retained Earnings', v: '3,000' }], cr: [{ a: 'Dividends', v: '3,000' }], memo: 'To close dividends', re: { side: 'd', n: '(4)', v: '3,000' } }
+    { title: 'Close revenue to Income Summary', n: '(1)',
+      hint: 'Service Revenue carries a <b>credit</b> balance — debit it to bring it to zero, and credit <b>Income Summary</b>. Debit Service Revenue $9,620; credit Income Summary $9,620.',
+      sol: [{ a: 'Service Revenue', d: 9620, c: 0 }, { a: 'Income Summary', d: 0, c: 9620 }] },
+    { title: 'Close the expense accounts to Income Summary', n: '(2)',
+      hint: 'Each expense carries a <b>debit</b> balance — credit each one to zero it out, and debit <b>Income Summary</b> for the $3,613 total. Tap <b>+ Add line</b> to fit all five expenses: Salaries $1,800, Rent $680, Office $515, Supplies Expense $330, Depreciation $288.',
+      sol: [{ a: 'Income Summary', d: 3613, c: 0 }, { a: 'Salaries and Wages Expense', d: 0, c: 1800 }, { a: 'Rent Expense', d: 0, c: 680 }, { a: 'Office Expense', d: 0, c: 515 }, { a: 'Supplies Expense', d: 0, c: 330 }, { a: 'Depreciation Expense', d: 0, c: 288 }] },
+    { title: 'Close net income to Retained Earnings', n: '(3)',
+      hint: 'After entries (1) and (2), Income Summary shows a <b>$6,007 credit</b> balance — that is net income ($9,620 − $3,613). Debit <b>Income Summary</b> $6,007; credit <b>Retained Earnings</b> $6,007.',
+      sol: [{ a: 'Income Summary', d: 6007, c: 0 }, { a: 'Retained Earnings', d: 0, c: 6007 }] },
+    { title: 'Close dividends to Retained Earnings', n: '(4)',
+      hint: 'Dividends carries a <b>debit</b> balance and closes straight to Retained Earnings — never through Income Summary. Debit <b>Retained Earnings</b> $3,000; credit <b>Dividends</b> $3,000.',
+      sol: [{ a: 'Retained Earnings', d: 3000, c: 0 }, { a: 'Dividends', d: 0, c: 3000 }] }
   ];
-  var app1CStep = -1;
+  var app1CStep = 0, app1ClosePosted = [];
+  function app1EntryCheck(lines, sol) {
+    if (!lines.length) return { ok: false, msg: 'Enter the closing entry — select the accounts and amounts.' };
+    for (var i = 0; i < lines.length; i++) { var l = lines[i]; if (!l.a) return { ok: false, msg: 'Every line needs an account selected.' }; if ((l.d > 0) === (l.c > 0)) return { ok: false, msg: 'Each line takes a debit <b>or</b> a credit — not both, not neither.' }; }
+    var totD = 0, totC = 0; lines.forEach(function (l) { totD += l.d; totC += l.c; });
+    if (totD !== totC) return { ok: false, msg: 'The entry must balance — total debits (' + cma(totD) + ') must equal total credits (' + cma(totC) + ').' };
+    var k = function (l) { return l.a + '|' + (l.d > 0 ? 'D|' + l.d : 'C|' + l.c); };
+    var want = sol.map(k).sort().join(';'), got = lines.map(k).sort().join(';');
+    if (want !== got) return { ok: false, msg: 'Not the right closing entry yet — check which account to debit, which to credit, and the amounts. <b>Hint</b> can help.' };
+    return { ok: true };
+  }
   function app1RenderClose() {
     if (!app1JDone()) { $('app1-close').innerHTML = '<div class="aw-gate">' + LOCK_SVG + '<div>Finish <b>Journalize</b> first, then close the ledger.</div></div>'; return; }
-    $('app1-close').innerHTML = '<div class="clo-stepper" id="app1-cstep"></div><div class="clo-card"><div class="clo-eh" id="app1-ceh"></div><div class="clo-body"><div class="clo-sub">Closing journal entry</div><div id="app1-cje"></div><div class="clo-sub" style="margin-top:14px">Posting to the ledger</div><div class="clo-tacts"><div class="clo-ta is"><div class="tt">Income Summary</div><div class="grid" id="app1-cis"></div></div><div class="clo-ta re"><div class="tt">Retained Earnings</div><div class="grid" id="app1-cre"></div></div></div><div class="clo-actions"><button class="btn" id="app1-creset">Reset</button><button class="btn primary" id="app1-cnext">Next step ▸</button></div></div></div>';
-    app1CStep = -1; app1CloseRender();
-    $('app1-cnext').addEventListener('click', function () {
-      if (app1CStep >= APP1_CLOSE.length - 1) { app1CStep = -1; app1CloseRender(); this.textContent = 'Next step ▸'; return; }
-      app1CStep++; app1CloseRender();
-      if (app1CStep === APP1_CLOSE.length - 1) { this.textContent = 'Start over ↺'; markTab('close'); } else { this.textContent = 'Next step ▸'; }
-    });
-    $('app1-creset').addEventListener('click', function () { app1CStep = -1; app1CloseRender(); $('app1-cnext').textContent = 'Next step ▸'; });
+    $('app1-close').innerHTML = '<div class="aw-hintline">Prepare the four closing entries yourself. Close revenue and expenses into <b>Income Summary</b>, then close Income Summary and Dividends into <b>Retained Earnings</b>. Each entry posts to the ledger below.</div>' +
+      '<div class="clo-stepper" id="app1-cstep"></div><div class="clo-card"><div class="clo-eh" id="app1-ceh"></div><div class="clo-body"><div class="clo-sub">Closing journal entry</div><div id="app1-cbuild"></div><div class="gp-feedback" id="app1-cfb" style="margin-top:10px"></div><div class="clo-sub" style="margin-top:14px">Posting to the ledger</div><div class="clo-tacts"><div class="clo-ta is"><div class="tt">Income Summary</div><div class="grid" id="app1-cis"></div></div><div class="clo-ta re"><div class="tt">Retained Earnings</div><div class="grid" id="app1-cre"></div></div></div></div></div>';
+    app1CStep = 0; app1ClosePosted = [];
+    app1CloseStep();
   }
-  function app1CloseRender() {
-    $('app1-cstep').innerHTML = APP1_CLOSE.map(function (s, i) { return '<div class="cs ' + (i <= app1CStep ? 'done' : (i === app1CStep + 1 ? 'on' : '')) + '"></div>'; }).join('');
-    if (app1CStep < 0) { $('app1-ceh').innerHTML = '<div class="step">Closing entries · Sept. 30</div><div class="desc">Tap <b>Next step</b> to post the first closing entry.</div>'; $('app1-cje').innerHTML = '<div class="clo-je" style="text-align:center;color:var(--ink-faint);font-size:12px;padding:16px 12px">The entry appears here as you step through.</div>'; }
-    else {
-      var s = APP1_CLOSE[app1CStep];
-      $('app1-ceh').innerHTML = '<div class="step">Entry ' + (app1CStep + 1) + ' of 4</div><div class="desc">' + s.title + '</div>';
-      var rows = '<div class="je-head"><span>Account</span><span class="h-d">Debit</span><span class="h-c">Credit</span></div>';
-      s.dr.forEach(function (a) { rows += '<div class="je-row"><span class="je-acct">' + a.a + '</span><span class="je-d">' + a.v + '</span><span class="je-c"></span></div>'; });
-      s.cr.forEach(function (a) { rows += '<div class="je-row cr"><span class="je-acct">' + a.a + '</span><span class="je-d"></span><span class="je-c">' + a.v + '</span></div>'; });
-      $('app1-cje').innerHTML = '<div class="clo-je"><div class="jdate">Sept. 30</div>' + rows + '<div class="memo">(' + s.memo + ')</div></div>';
+  function app1CloseStep() {
+    app1CloseGrid();
+    var eh = $('app1-ceh'), build = $('app1-cbuild'), fb = $('app1-cfb');
+    fb.className = 'gp-feedback'; fb.innerHTML = '';
+    if (app1CStep >= APP1_CLOSE.length) {
+      eh.innerHTML = '<div class="step">Closing complete</div><div class="desc">All four entries posted — the temporary accounts are back to zero.</div>';
+      build.innerHTML = '<div class="clo-je" style="text-align:center;color:var(--good);font-size:12.5px;padding:16px 12px;font-weight:700">&#10003; The ledger is closed. Income Summary is $0 and Retained Earnings carries $3,007 into next period.</div>';
+      return;
     }
+    var s = APP1_CLOSE[app1CStep], opts = app1Opts();
+    var line = '<div class="aw-jl"><select class="aw-sel">' + opts + '</select><input class="aw-amt d" inputmode="numeric" placeholder="0" aria-label="Debit"><input class="aw-amt c" inputmode="numeric" placeholder="0" aria-label="Credit"></div>';
+    eh.innerHTML = '<div class="step">Entry ' + (app1CStep + 1) + ' of ' + APP1_CLOSE.length + '</div><div class="desc">' + s.title + '</div>';
+    build.innerHTML = '<div class="aw-hintline" id="app1-chintbox" style="display:none"><b>Hint.</b> ' + s.hint + '</div>' +
+      '<div class="aw-je"><div class="jeh"><span>Account</span><span>Debit</span><span>Credit</span></div><div class="aw-jelines" id="app1-cjelines">' + line + line + '</div>' +
+      '<div class="aw-jetools"><button class="aw-addln" id="app1-caddln">+ Add line</button><button class="btn" id="app1-chint">Hint</button><button class="btn primary aw-noentry" id="app1-cpost">Post entry</button></div></div>';
+    $('app1-caddln').addEventListener('click', function () {
+      var host = $('app1-cjelines');
+      if (host.children.length < 6) { var d = document.createElement('div'); d.className = 'aw-jl'; d.innerHTML = '<select class="aw-sel">' + opts + '</select><input class="aw-amt d" inputmode="numeric" placeholder="0" aria-label="Debit"><input class="aw-amt c" inputmode="numeric" placeholder="0" aria-label="Credit">'; host.appendChild(d); }
+    });
+    $('app1-chint').addEventListener('click', function () { var h = $('app1-chintbox'); h.style.display = h.style.display === 'none' ? 'block' : 'none'; });
+    $('app1-cpost').addEventListener('click', app1ClosePost);
+  }
+  function app1ClosePost() {
+    var s = APP1_CLOSE[app1CStep], lines = [];
+    Array.prototype.slice.call($('app1-cjelines').querySelectorAll('.aw-jl')).forEach(function (row) {
+      var a = row.querySelector('.aw-sel').value, d = awNum(row.querySelector('.aw-amt.d')), c = awNum(row.querySelector('.aw-amt.c'));
+      if (a || d || c) lines.push({ a: a, d: d, c: c });
+    });
+    var chk = app1EntryCheck(lines, s.sol), fb = $('app1-cfb');
+    if (!chk.ok) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + chk.msg + '</div>'; return; }
+    app1ClosePosted[app1CStep] = lines;
+    fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Posted.</b> ' + s.title + '.</div>';
+    app1CloseGrid();
+    if (app1CStep >= APP1_CLOSE.length - 1) markTab('close');
+    setTimeout(function () { app1CStep++; app1CloseStep(); }, 700);
+  }
+  function app1CloseGrid() {
+    var posted = app1ClosePosted.filter(function (x) { return x !== undefined; }).length;
+    $('app1-cstep').innerHTML = APP1_CLOSE.map(function (s, i) { return '<div class="cs ' + (i < posted ? 'done' : (i === posted ? 'on' : '')) + '"></div>'; }).join('');
     var isL = [], isR = [], reL = [], reR = [];
-    for (var i = 0; i <= app1CStep; i++) { var s2 = APP1_CLOSE[i]; if (s2.is) (s2.is.side === 'd' ? isL : isR).push(s2.is); if (s2.re) (s2.re.side === 'd' ? reL : reR).push(s2.re); }
+    app1ClosePosted.forEach(function (lines, i) {
+      if (!lines) return; var n = APP1_CLOSE[i].n;
+      lines.forEach(function (l) {
+        if (l.a === 'Income Summary') { (l.d > 0 ? isL : isR).push({ n: n, v: cma(l.d > 0 ? l.d : l.c) }); }
+        if (l.a === 'Retained Earnings') { (l.d > 0 ? reL : reR).push({ n: n, v: cma(l.d > 0 ? l.d : l.c) }); }
+      });
+    });
     function grid(L, R, closed, bal) {
       var cl = L.map(function (x) { return '<div class="row"><span class="rn">' + x.n + '</span><span>' + x.v + '</span></div>'; }).join('') || '&nbsp;';
       var cr = R.map(function (x) { return '<div class="row"><span class="rn">' + x.n + '</span><span>' + x.v + '</span></div>'; }).join('') || '&nbsp;';
@@ -10611,8 +10659,9 @@
       if (closed) out += '<div class="balrow zero"><span>Balance</span><span>0</span></div>'; else if (bal != null) out += '<div class="balrow carry"><span>Balance</span><span>' + bal + '</span></div>';
       return out;
     }
-    $('app1-cis').innerHTML = grid(isL, isR, app1CStep >= 2, null);
-    $('app1-cre').innerHTML = grid(reL, reR, false, app1CStep >= 3 ? '3,007' : (app1CStep >= 2 ? '6,007' : null));
+    var isClosed = app1ClosePosted[2] !== undefined;
+    $('app1-cis').innerHTML = grid(isL, isR, isClosed, null);
+    $('app1-cre').innerHTML = grid(reL, reR, false, app1ClosePosted[3] !== undefined ? '3,007' : (app1ClosePosted[2] !== undefined ? '6,007' : null));
   }
   /* ---- post-closing ---- */
   function app1RenderPost() {
