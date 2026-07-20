@@ -1998,6 +1998,37 @@
   .rc-je .je-head { font-size: 9px; }
   .rc-je .je-row { font-size: 12px; }
   .rc-noentry { font-size: 12px; font-style: italic; color: var(--ink-faint); padding: 4px 0; }
+
+  /* Worksheet (Appendix 2C) */
+  .ws-schema { display: flex; flex-direction: column; gap: 7px; }
+  .ws-sc { display: flex; align-items: center; gap: 11px; border: 1px solid var(--line); border-left: 4px solid var(--credit); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); padding: 11px 13px; }
+  .ws-sc .n { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 7px; background: color-mix(in srgb, var(--credit) 14%, transparent); color: var(--credit); display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+  .ws-sc .b { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .ws-sc .b span { display: block; font-size: 11.5px; font-weight: 400; color: var(--ink-soft); margin-top: 2px; }
+  .ws-sc .pair { margin-left: auto; flex: 0 0 auto; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); }
+
+  .ws-toggle { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; padding: 4px; background: var(--card-2, color-mix(in srgb, var(--ink) 4%, var(--card))); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+  .ws-toggle button { border: none; background: none; cursor: pointer; padding: 8px 2px; border-radius: 9px; font-size: 10px; font-weight: 700; color: var(--ink-faint); line-height: 1.15; transition: color .2s ease; }
+  .ws-toggle button .k { display: block; font-size: 8px; font-weight: 800; text-transform: uppercase; opacity: .7; }
+  .ws-toggle button.on { background: var(--card); color: var(--credit); box-shadow: var(--shadow); }
+  .ws-view { display: none; margin-top: 10px; }
+  .ws-view.on { display: block; }
+  .wst-cap { font-size: 11px; color: var(--ink-soft); margin-bottom: 8px; line-height: 1.45; }
+  .wst-cap b { color: var(--ink); }
+  .wst-wrap { border: 1.5px solid color-mix(in srgb, var(--credit) 25%, var(--line)); border-radius: var(--r-md); background: color-mix(in srgb, var(--credit) 4%, var(--card)); box-shadow: var(--shadow); padding: 12px 10px; }
+  .wst { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .wst th { font-size: 9px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; color: var(--ink-faint); padding: 3px 5px; }
+  .wst th.amt, .wst td.amt { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; width: 72px; }
+  .wst td { padding: 2.5px 5px; color: var(--ink); }
+  .wst td.acct { color: var(--ink); line-height: 1.2; }
+  .wst td.amt.d { color: var(--debit); } .wst td.amt.c { color: var(--credit); }
+  .wst .wst-ltr { font-family: var(--mono); font-size: 9px; color: var(--gold); }
+  .wst tr.tot td { border-top: 2px solid var(--ink); padding-top: 5px; font-weight: 800; }
+  .wst tr.tot td.amt { color: var(--warn); }
+  .wst tr.ni td { font-weight: 800; }
+  .wst tr.ni td.amt { color: var(--good); }
+  .wst tr.gt td { border-top: 1.5px solid var(--ink); font-weight: 800; padding-top: 4px; }
+  .wst tr.gt td.amt { color: var(--good); }
 </style>
 
 <div id="fa-app">
@@ -2405,6 +2436,30 @@
               <span class="lnum">9</span>
               <span class="lbody"><b>Reversing Entries — Deferrals</b><span>Appendix 2B · Illustration 2B.2</span></span>
               <span class="pill-mini ready" id="m5rd-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5rs-card">
+              <span class="lnum">10</span>
+              <span class="lbody"><b>Summary of Reversing Entries</b><span>Appendix 2B · the three guidelines</span></span>
+              <span class="pill-mini ready" id="m5rs-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5ws-card">
+              <span class="lnum">11</span>
+              <span class="lbody"><b>Using a Worksheet</b><span>Appendix 2C · LO 8 · the accounting cycle revisited</span></span>
+              <span class="pill-mini ready" id="m5ws-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5wc-card">
+              <span class="lnum">12</span>
+              <span class="lbody"><b>Worksheet Columns</b><span>Appendix 2C · the 10-column worksheet · Illustration 2C.1</span></span>
+              <span class="pill-mini ready" id="m5wc-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -6086,7 +6141,241 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5rd-next">
+              <div><div class="up">Up next · Appendix 2B</div><b>Summary of Reversing Entries</b> — the three guidelines.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="m5rd-home" style="margin-top:4px;">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 10 — SUMMARY OF REVERSING ENTRIES (Appendix 2B) ============== -->
+    <section class="fa-screen" id="screen-m5rs" aria-label="Summary of Reversing Entries">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5rs-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5rs-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Module 5 · Lesson 10 · Appendix 2B</div>
+          <h1>Summary of Reversing Entries</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2B</span>
+            <div>
+              <div class="lo-t">The rules of thumb</div>
+              <div class="lo-d">Which adjusting entries get reversed — and which never do.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Reversing entries are <b>optional</b> — many accountants skip them entirely. But when a company does use them, three simple guidelines decide what gets reversed.</p>
+
+          <section class="m2-sec">
+            <h2>The three guidelines</h2>
+            <div style="margin-top:6px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--good)">1</span><div class="rb"><b>Reverse all accruals</b><p>Every accrued revenue and accrued expense adjusting entry should be reversed.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--good)">2</span><div class="rb"><b>Reverse deferrals booked to expense/revenue</b><p>Reverse a deferral only if the original cash transaction was debited or credited to an <b>expense or revenue</b> account (not a real account).</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--warn)">✗</span><div class="rb"><b>Never reverse depreciation or bad debts</b><p>Adjusting entries for depreciation and bad debt expense are <b>not</b> reversed.</p></div></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Reverse it, or not?</h2>
+            <p>Tap whether each adjusting entry should be reversed.</p>
+            <div class="wr-list" id="m5rs-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m5rs-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Accruals: always reverse. Deferrals: reverse only when you booked them to an expense or revenue account. Depreciation and bad debts: never. And remember — the whole technique is a convenience, not a requirement.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5rs-next">
+              <div><div class="up">Up next · Appendix 2C</div><b>Using a Worksheet</b> — the accounting cycle revisited.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5rs-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 11 — USING A WORKSHEET (Appendix 2C) ============== -->
+    <section class="fa-screen" id="screen-m5ws" aria-label="Using a Worksheet">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5ws-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5ws-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Module 5 · Lesson 11 · Appendix 2C · LO 8</div>
+          <h1>Using a Worksheet</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">8</span>
+            <div>
+              <div class="lo-t">Learning Objective</div>
+              <div class="lo-d">Prepare a 10-column worksheet.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">A <b>worksheet</b> is a multi-column spreadsheet accountants use to pull the end-of-period pieces together — <b>before</b> they journalize and post the adjusting and closing entries. It makes reporting more timely.</p>
+
+          <section class="m2-sec">
+            <h2>What a worksheet is (and isn't)</h2>
+            <p>It's an <b>informal device</b> for accumulating and sorting the information needed for the financial statements — on columnar paper or in a spreadsheet. Completing it gives strong assurance that every end-of-period detail was handled.</p>
+            <div class="clo-caution" style="margin-top:12px; border-left-color: var(--credit);">
+              <span class="cx" style="background:var(--credit)">!</span>
+              <div><b>The worksheet does not replace the financial statements.</b> It's a working tool that <i>feeds</i> the statements — it never <i>becomes</i> them.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>The five column-pairs</h2>
+            <p>A 10-column worksheet has five sections, each with a debit and a credit column. Data flows left to right:</p>
+            <div class="ws-schema" style="margin-top:12px;">
+              <div class="ws-sc"><span class="n">1</span><div class="b">Trial Balance<span>The unadjusted ledger balances.</span></div><span class="pair">Dr · Cr</span></div>
+              <div class="ws-sc"><span class="n">2</span><div class="b">Adjustments<span>The period-end adjusting entries, keyed by letter.</span></div><span class="pair">Dr · Cr</span></div>
+              <div class="ws-sc"><span class="n">3</span><div class="b">Adjusted Trial Balance<span>Balances after combining the first two.</span></div><span class="pair">Dr · Cr</span></div>
+              <div class="ws-sc"><span class="n">4</span><div class="b">Income Statement<span>The revenue and expense accounts.</span></div><span class="pair">Dr · Cr</span></div>
+              <div class="ws-sc"><span class="n">5</span><div class="b">Balance Sheet<span>The asset, liability, and equity accounts.</span></div><span class="pair">Dr · Cr</span></div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--credit);color:#2a1708;">i</span>
+              <div>You'll build exactly this worksheet for Uptown Cabinet in the next lesson — all ten columns.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Worksheet facts</h2>
+            <p>Tap whether each statement is true.</p>
+            <div class="wr-list" id="m5ws-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m5ws-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Think of the worksheet as the accountant's scratchpad for the whole cycle: trial balance in, adjustments applied, adjusted balances sorted into income-statement and balance-sheet columns — all in one place, so the statements almost fall out of it.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5ws-next">
+              <div><div class="up">Up next · Appendix 2C</div><b>Worksheet Columns</b> — build Uptown's 10-column worksheet.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5ws-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 12 — WORKSHEET COLUMNS (Illustration 2C.1) ============== -->
+    <section class="fa-screen" id="screen-m5wc" aria-label="Worksheet Columns">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5wc-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5wc-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Module 5 · Lesson 12 · Appendix 2C</div>
+          <h1>Worksheet Columns</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2C.1</span>
+            <div>
+              <div class="lo-t">Illustration 2C.1</div>
+              <div class="lo-d">Uptown Cabinet's ten-column worksheet, section by section.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Here's Uptown's full worksheet. On a phone, it's easiest to read one section at a time — tap through the five column-pairs and watch each account flow across.</p>
+
+          <section class="m2-sec">
+            <h2>The seven adjustments</h2>
+            <p>These period-end adjustments (keyed <b>a–g</b>) feed the Adjustments columns:</p>
+            <div class="tp-summary" style="grid-template-columns:1fr; margin-top:12px;">
+              <div class="tp-col">
+                <ul>
+                  <li><b>a.</b> Depreciation on equipment (10% × $67,000) — <b>$6,700</b></li>
+                  <li><b>b.</b> Estimated bad debts — <b>$1,000</b></li>
+                  <li><b>c.</b> Insurance expired — <b>$360</b></li>
+                  <li><b>d.</b> Interest accrued on notes receivable — <b>$800</b></li>
+                  <li><b>e.</b> Rent paid in advance (in Rent Expense) — <b>$500</b></li>
+                  <li><b>f.</b> Property taxes accrued — <b>$2,000</b></li>
+                  <li><b>g.</b> Income taxes payable estimated — <b>$3,440</b></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2C.1 · The ten-column worksheet</h2>
+            <div class="ws-toggle" id="wc-toggle">
+              <button class="on" data-wcv="tb"><span class="k">Cols B–C</span>Trial Bal.</button>
+              <button data-wcv="adj"><span class="k">Cols D–E</span>Adjust.</button>
+              <button data-wcv="atb"><span class="k">Cols F–G</span>Adj. TB</button>
+              <button data-wcv="is"><span class="k">Cols H–I</span>Income</button>
+              <button data-wcv="bs"><span class="k">Cols J–K</span>Balance</button>
+            </div>
+            <div class="ws-view on" id="wc-view"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>How the statements fall out</h2>
+            <p>Every debit in the adjusted trial balance extends into either the <b>Income Statement</b> or <b>Balance Sheet</b> debit column (and likewise for credits). The <b>net income</b> is whatever makes each pair balance.</p>
+            <div class="gp-actions" style="margin-top:8px;"><button class="btn primary" id="wc-reveal">Show how net income balances ▸</button></div>
+            <div id="wc-more" style="display:none; margin-top:12px;">
+              <div class="ill-note">
+                <span class="i" style="background:var(--good);color:#06210f;">✓</span>
+                <div>The Income Statement columns total <b>$388,600 Dr</b> and <b>$400,800 Cr</b> — revenues exceed expenses by <b>$12,200</b>, the <b>net income</b>. Adding $12,200 to the debit side balances both Income Statement columns at $400,800, and the same $12,200 appears in the Balance Sheet <b>credit</b> column as the increase in retained earnings — balancing it at <b>$169,040</b>.</div>
+              </div>
+            </div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The worksheet is the whole end-of-period cycle on one page: unadjusted balances, adjustments, adjusted balances, then sorted into the two statements — with net income as the plug that ties the income statement to the balance sheet. From here, the statements you built in Lessons 1–3 write themselves.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="m5wc-home" style="margin-top:4px;">Back to course</button>
           </div>
         </div>
       </div>
@@ -6110,7 +6399,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -6150,9 +6439,12 @@
       if (p.m5WkDone) state.m5WkDone = true;
       if (p.m5RaDone) state.m5RaDone = true;
       if (p.m5RdDone) state.m5RdDone = true;
+      if (p.m5RsDone) state.m5RsDone = true;
+      if (p.m5WsDone) state.m5WsDone = true;
+      if (p.m5WcDone) state.m5WcDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -6177,7 +6469,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -6227,7 +6519,10 @@
       { done: function () { return state.m6CvDone; }, open: function () { openM6Cv(); }, label: 'Converting Cash Basis to Accrual' },
       { done: function () { return state.m5WkDone; }, open: function () { openM5Wk(); }, label: 'Theoretical Weaknesses of the Cash Basis' },
       { done: function () { return state.m5RaDone; }, open: function () { openM5Ra(); }, label: 'Reversing Entries — Accruals' },
-      { done: function () { return state.m5RdDone; }, open: function () { openM5Rd(); }, label: 'Reversing Entries — Deferrals' }
+      { done: function () { return state.m5RdDone; }, open: function () { openM5Rd(); }, label: 'Reversing Entries — Deferrals' },
+      { done: function () { return state.m5RsDone; }, open: function () { openM5Rs(); }, label: 'Summary of Reversing Entries' },
+      { done: function () { return state.m5WsDone; }, open: function () { openM5Ws(); }, label: 'Using a Worksheet' },
+      { done: function () { return state.m5WcDone; }, open: function () { openM5Wc(); }, label: 'Worksheet Columns' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -9676,6 +9971,214 @@
     if (!state.m5RdDone) { state.m5RdDone = true; save(); updateM5RdPill(); }
   });
 
+  /* ============================================================
+     MODULE 5 (Appendix 2B) · Lesson 10: Summary of Reversing Entries
+     ============================================================ */
+  var M5RS_Q = [
+    { ev: 'Accrued salaries and wages', c: 'y', why: 'An accrual — always reversed.' },
+    { ev: 'Accrued interest revenue', c: 'y', why: 'An accrual — always reversed.' },
+    { ev: 'Depreciation expense', c: 'n', why: 'Never reversed.' },
+    { ev: 'Supplies purchase booked to Supplies Expense', c: 'y', why: 'A deferral booked to an expense account — reverse it.' },
+    { ev: 'Bad debt expense', c: 'n', why: 'Never reversed.' },
+    { ev: 'Insurance purchase booked to Prepaid Insurance (asset)', c: 'n', why: 'A deferral booked to a real account — not reversed.' }
+  ];
+  var M5RS_CATS = { y: 'Reverse', n: "Don't" };
+  var m5rsAnswered = {};
+  function renderM5rs() {
+    m5rsAnswered = {};
+    var order = ['y', 'n'];
+    $('m5rs-q').innerHTML = M5RS_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M5RS_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m5rs-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M5RS_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m5rsAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + (e.c === 'y' ? 'Reverse.' : "Don't.") + '</b> ' + e.why;
+          checkM5rs();
+        });
+      });
+    });
+    $('m5rs-done').className = 'gp-feedback'; $('m5rs-done').innerHTML = '';
+  }
+  function checkM5rs() {
+    if (Object.keys(m5rsAnswered).length !== M5RS_Q.length) return;
+    var allRight = M5RS_Q.every(function (e, i) { return m5rsAnswered[i]; });
+    var el = $('m5rs-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Exactly.</b> Accruals always reverse; deferrals reverse only when booked to expense/revenue; depreciation and bad debts never.'
+      : 'Recall: accruals → reverse; deferrals → only if booked to expense/revenue; depreciation &amp; bad debts → never.') + '</div>';
+    if (!state.m5RsDone) { state.m5RsDone = true; save(); updateM5RsPill(); }
+  }
+  function updateM5RsPill() { var pill = $('m5rs-pill'); if (pill) pill.textContent = state.m5RsDone ? 'Done' : 'Start'; }
+  function openM5Rs() { goScreen('m5rs'); $('m5rs-scroll').scrollTop = 0; }
+  $('start-m5rs-card').addEventListener('click', openM5Rs);
+  $('m5rs-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5rs-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5rd-next').addEventListener('click', function () { openM5Rs(); });
+  $('m5rs-next').addEventListener('click', function () { openM5Ws(); });
+
+  /* ============================================================
+     MODULE 5 (Appendix 2C) · Lesson 11: Using a Worksheet
+     ============================================================ */
+  var M5WS_Q = [
+    { ev: 'The worksheet replaces the financial statements', c: 'f', why: 'False — it feeds the statements but never replaces them.' },
+    { ev: 'It lets you prepare statements before posting adjustments', c: 't', why: 'True — that timeliness is the whole point.' },
+    { ev: 'A 10-column worksheet has five debit/credit column-pairs', c: 't', why: 'True — trial balance, adjustments, adjusted TB, income statement, balance sheet.' },
+    { ev: 'It is a formal, required accounting record', c: 'f', why: 'False — it is an informal, optional working device.' }
+  ];
+  var M5WS_CATS = { t: 'True', f: 'False' };
+  var m5wsAnswered = {};
+  function renderM5ws() {
+    m5wsAnswered = {};
+    var order = ['t', 'f'];
+    $('m5ws-q').innerHTML = M5WS_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M5WS_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m5ws-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M5WS_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m5wsAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M5WS_CATS[e.c] + '.</b> ' + e.why;
+          checkM5ws();
+        });
+      });
+    });
+    $('m5ws-done').className = 'gp-feedback'; $('m5ws-done').innerHTML = '';
+  }
+  function checkM5ws() {
+    if (Object.keys(m5wsAnswered).length !== M5WS_Q.length) return;
+    var allRight = M5WS_Q.every(function (e, i) { return m5wsAnswered[i]; });
+    var el = $('m5ws-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Right.</b> A worksheet is an informal, optional tool that speeds reporting — it never replaces the statements.'
+      : 'Remember: informal, optional, five column-pairs, and it feeds — never replaces — the statements.') + '</div>';
+    if (!state.m5WsDone) { state.m5WsDone = true; save(); updateM5WsPill(); }
+  }
+  function updateM5WsPill() { var pill = $('m5ws-pill'); if (pill) pill.textContent = state.m5WsDone ? 'Done' : 'Start'; }
+  function openM5Ws() { goScreen('m5ws'); $('m5ws-scroll').scrollTop = 0; }
+  $('start-m5ws-card').addEventListener('click', openM5Ws);
+  $('m5ws-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5ws-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5ws-next').addEventListener('click', function () { openM5Wc(); });
+
+  /* ============================================================
+     MODULE 5 (Appendix 2C) · Lesson 12: Worksheet Columns (Illustration 2C.1)
+     ============================================================ */
+  /* [name, tbD, tbC, adjD, adjC, adjLtr, stmt] — amounts are numbers, 0 = none */
+  var WS_ROWS = [
+    ['Cash', 1200, 0, 0, 0, '', 'bs'],
+    ['Notes receivable', 16000, 0, 0, 0, '', 'bs'],
+    ['Accounts receivable', 41000, 0, 0, 0, '', 'bs'],
+    ['Allowance for doubtful accounts', 0, 2000, 0, 1000, 'b', 'bs'],
+    ['Inventory', 40000, 0, 0, 0, '', 'bs'],
+    ['Prepaid insurance', 900, 0, 0, 360, 'c', 'bs'],
+    ['Equipment', 67000, 0, 0, 0, '', 'bs'],
+    ['Accumulated depreciation—equipment', 0, 12000, 0, 6700, 'a', 'bs'],
+    ['Notes payable', 0, 20000, 0, 0, '', 'bs'],
+    ['Accounts payable', 0, 13500, 0, 0, '', 'bs'],
+    ['Bonds payable', 0, 30000, 0, 0, '', 'bs'],
+    ['Common stock', 0, 50000, 0, 0, '', 'bs'],
+    ['Retained earnings, Jan. 1', 0, 16200, 0, 0, '', 'bs'],
+    ['Dividends', 2000, 0, 0, 0, '', 'bs'],
+    ['Sales revenue', 0, 400000, 0, 0, '', 'is'],
+    ['Cost of goods sold', 316000, 0, 0, 0, '', 'is'],
+    ['Salaries and wages expense (sales)', 20000, 0, 0, 0, '', 'is'],
+    ['Advertising expense', 10200, 0, 0, 0, '', 'is'],
+    ['Salaries and wages expense (general)', 19000, 0, 0, 0, '', 'is'],
+    ['Telephone and Internet expense', 600, 0, 0, 0, '', 'is'],
+    ['Rent expense', 4800, 0, 0, 500, 'e', 'is'],
+    ['Property tax expense', 3300, 0, 2000, 0, 'f', 'is'],
+    ['Interest expense', 1700, 0, 0, 0, '', 'is'],
+    ['Depreciation expense', 0, 0, 6700, 0, 'a', 'is'],
+    ['Bad debt expense', 0, 0, 1000, 0, 'b', 'is'],
+    ['Insurance expense', 0, 0, 360, 0, 'c', 'is'],
+    ['Interest receivable', 0, 0, 800, 0, 'd', 'bs'],
+    ['Interest revenue', 0, 0, 0, 800, 'd', 'is'],
+    ['Prepaid rent', 0, 0, 500, 0, 'e', 'bs'],
+    ['Property taxes payable', 0, 0, 0, 2000, 'f', 'bs'],
+    ['Income tax expense', 0, 0, 3440, 0, 'g', 'is'],
+    ['Income taxes payable', 0, 0, 0, 3440, 'g', 'bs']
+  ];
+  var WS_TOT = {
+    tb: ['543,700', '543,700'], adj: ['14,800', '14,800'], atb: ['557,640', '557,640'],
+    is: ['388,600', '400,800'], bs: ['169,040', '156,840']
+  };
+  var WS_VIEWS = {
+    tb: { cap: 'Cols B–C — the <b>unadjusted</b> ledger balances at Dec. 31.' },
+    adj: { cap: 'Cols D–E — the seven <b>adjusting entries</b>, keyed by letter (a–g).' },
+    atb: { cap: 'Cols F–G — balances <b>after</b> combining the trial balance and adjustments.' },
+    is: { cap: 'Cols H–I — only the <b>revenue and expense</b> accounts extend here.' },
+    bs: { cap: 'Cols J–K — only the <b>asset, liability, and equity</b> accounts extend here.' }
+  };
+  function money0(n) { return n ? n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''; }
+  function wsCell(row, view) {
+    var tbD = row[1], tbC = row[2], adjD = row[3], adjC = row[4], stmt = row[6];
+    var atbNet = (tbD + adjD) - (tbC + adjC); /* >0 debit, <0 credit */
+    if (view === 'tb') return [money0(tbD), money0(tbC)];
+    if (view === 'adj') return [money0(adjD), money0(adjC)];
+    if (view === 'atb') return atbNet >= 0 ? [money0(atbNet), ''] : ['', money0(-atbNet)];
+    var val = atbNet >= 0 ? [money0(atbNet), ''] : ['', money0(-atbNet)];
+    if (view === 'is') return stmt === 'is' ? val : ['', ''];
+    if (view === 'bs') return stmt === 'bs' ? val : ['', ''];
+    return ['', ''];
+  }
+  var wcView = 'tb';
+  function renderWc() {
+    var v = WS_VIEWS[wcView];
+    var body = WS_ROWS.map(function (r) {
+      var c = wsCell(r, wcView);
+      if (wcView === 'is' && r[6] !== 'is') return '';
+      if (wcView === 'bs' && r[6] !== 'bs') return '';
+      var ltr = (wcView === 'adj' && r[5]) ? '<span class="wst-ltr">(' + r[5] + ')</span> ' : '';
+      return '<tr><td class="acct">' + r[0] + '</td>' +
+        '<td class="amt d">' + (c[0] ? ltr + c[0] : '') + '</td><td class="amt c">' + (c[1] ? ltr + c[1] : '') + '</td></tr>';
+    }).join('');
+    var t = WS_TOT[wcView];
+    var totRow = '<tr class="tot"><td class="acct">Totals</td><td class="amt d">' + t[0] + '</td><td class="amt c">' + t[1] + '</td></tr>';
+    var extra = '';
+    if (wcView === 'is') { extra = '<tr class="ni"><td class="acct">Net income</td><td class="amt d">12,200</td><td class="amt c"></td></tr><tr class="gt"><td class="acct"></td><td class="amt d">400,800</td><td class="amt c">400,800</td></tr>'; }
+    if (wcView === 'bs') { extra = '<tr class="ni"><td class="acct">Net income</td><td class="amt d"></td><td class="amt c">12,200</td></tr><tr class="gt"><td class="acct"></td><td class="amt d">169,040</td><td class="amt c">169,040</td></tr>'; }
+    $('wc-view').innerHTML = '<div class="wst-cap">' + v.cap + '</div><div class="wst-wrap"><table class="wst">' +
+      '<thead><tr><th style="text-align:left">Account</th><th class="amt">Dr</th><th class="amt">Cr</th></tr></thead>' +
+      '<tbody>' + body + totRow + extra + '</tbody></table></div>';
+  }
+  Array.prototype.slice.call(document.querySelectorAll('#wc-toggle button')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.slice.call(document.querySelectorAll('#wc-toggle button')).forEach(function (x) { x.classList.remove('on'); });
+      b.classList.add('on'); wcView = b.getAttribute('data-wcv'); renderWc();
+    });
+  });
+  $('wc-reveal').addEventListener('click', function () {
+    $('wc-more').style.display = 'block'; this.style.display = 'none';
+    if (!state.m5WcDone) { state.m5WcDone = true; save(); updateM5WcPill(); }
+  });
+  function updateM5WcPill() { var pill = $('m5wc-pill'); if (pill) pill.textContent = state.m5WcDone ? 'Done' : 'Start'; }
+  function openM5Wc() { goScreen('m5wc'); $('m5wc-scroll').scrollTop = 0; }
+  $('start-m5wc-card').addEventListener('click', openM5Wc);
+  $('m5wc-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5wc-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -9776,6 +10279,12 @@
   updateM5RaPill();
   renderRevCmp('rd-cmp', RD_STAGES);
   updateM5RdPill();
+  renderM5rs();
+  updateM5RsPill();
+  renderM5ws();
+  updateM5WsPill();
+  renderWc();
+  updateM5WcPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
