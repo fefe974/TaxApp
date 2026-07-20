@@ -2260,47 +2260,6 @@
   .aje-final .fitem:last-child { border-bottom: none; }
   .aje-final .fcode { font-size: 10px; font-weight: 800; color: var(--teal); letter-spacing: .04em; margin-bottom: 5px; }
 
-  /* ===== Excel-skinned schedule ("LedgerSheet") ===== */
-  .xls { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; box-shadow: var(--shadow); background: var(--card); margin-top: 12px; }
-  .xls-ribbon { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: linear-gradient(180deg, #217346, #1a5c38); color: #eafff4; }
-  .xls-ribbon .xi { width: 20px; height: 20px; border-radius: 4px; background: rgba(255,255,255,.16); display: grid; place-items: center; flex: 0 0 auto; }
-  .xls-ribbon .xi svg { width: 13px; height: 13px; }
-  .xls-ribbon .nm { font-size: 12.5px; font-weight: 800; letter-spacing: .01em; }
-  .xls-ribbon .fx-x { margin-left: auto; font-size: 10px; font-weight: 700; color: rgba(234,255,244,.6); font-family: var(--mono); }
-  /* formula bar */
-  .xls-fbar { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); background: var(--paper); }
-  .xls-namebox { flex: 0 0 auto; width: 52px; display: grid; place-items: center; font-family: var(--mono); font-weight: 700; font-size: 11.5px; color: var(--ink); border-right: 1px solid var(--line); }
-  .xls-fx-badge { flex: 0 0 auto; width: 26px; display: grid; place-items: center; font-style: italic; font-family: var(--serif); font-size: 12px; color: var(--ink-faint); border-right: 1px solid var(--line); }
-  .xls-fx { flex: 1; min-width: 0; padding: 7px 9px; font-family: var(--mono); font-size: 12px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .xls-fx.empty { color: var(--ink-faint); }
-  /* grid */
-  .xls-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .xls-table { border-collapse: collapse; width: 100%; font-size: 12px; }
-  .xls-table th, .xls-table td { border: 1px solid color-mix(in srgb, var(--line) 85%, transparent); }
-  .xls-table thead th { background: color-mix(in srgb, var(--ink) 6%, var(--card)); color: var(--ink-faint); font-size: 10px; font-weight: 800; text-align: center; padding: 3px 0; height: 20px; }
-  .xls-table td.rn { background: color-mix(in srgb, var(--ink) 6%, var(--card)); color: var(--ink-faint); font-size: 10px; font-weight: 800; text-align: center; width: 26px; }
-  .xls-table td.ca { padding: 6px 9px; color: var(--ink-soft); line-height: 1.35; }
-  .xls-table td.ca.hd { font-weight: 800; color: var(--ink); background: color-mix(in srgb, var(--teal) 6%, transparent); }
-  .xls-table td.cb { width: 96px; padding: 0; text-align: right; font-family: var(--mono); font-weight: 700; color: var(--ink); background: var(--card); }
-  .xls-table td.cb .disp { padding: 6px 9px; cursor: default; }
-  .xls-table td.cb.calc .disp { color: var(--teal); }
-  .xls-table td.cb.empty .disp { color: var(--ink-faint); }
-  .xls-table td.cb.sel { outline: 2px solid #217346; outline-offset: -2px; }
-  .xls-table td.cb.ok { background: var(--good-bg); } .xls-table td.cb.ok .disp { color: var(--good); }
-  .xls-table td.cb.no { background: var(--warn-bg); } .xls-table td.cb.no .disp { color: var(--warn); }
-  .xls-table td.cb.err .xls-in { color: var(--warn); font-weight: 800; }
-  .xls-in { width: 100%; border: none; background: transparent; text-align: right; font-family: var(--mono); font-weight: 700; font-size: 12px; padding: 6px 9px; color: var(--ink); -webkit-appearance: none; }
-  .xls-in:focus { outline: none; background: color-mix(in srgb, #217346 9%, var(--card)); }
-  .xls-table td.cb.input { background: color-mix(in srgb, #217346 4%, var(--card)); }
-  /* footer toolbar + sheet tab */
-  .xls-foot { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-top: 1px solid var(--line); background: var(--paper); flex-wrap: wrap; }
-  .xls-tab { font-size: 11px; font-weight: 800; color: #217346; background: var(--card); border: 1px solid var(--line); border-bottom: 2px solid #217346; border-radius: 5px 5px 0 0; padding: 4px 12px; }
-  .xls-foot .sp { flex: 1; }
-  .xls-btn { font-size: 11.5px; font-weight: 700; padding: 7px 11px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink-soft); cursor: pointer; }
-  .xls-btn.pri { background: #217346; border-color: #217346; color: #fff; }
-  .xls-btn:disabled { opacity: .6; cursor: default; }
-  .xls-note { font-size: 11.5px; color: var(--ink-faint); margin-top: 9px; line-height: 1.45; }
-  .xls-note b { color: var(--ink-soft); }
 </style>
 
 <div id="fa-app">
@@ -6794,7 +6753,6 @@
         </div>
         <div class="aw-tabs" id="app2-tabs" role="tablist">
           <button class="on" data-a2="brief" role="tab"><span class="sn">✦</span>Brief</button>
-          <button data-a2="book" role="tab"><span class="sn">▦</span>Workbook</button>
           <button data-a2="wp1" role="tab"><span class="sn">1</span>AJE-1</button>
           <button data-a2="wp2" role="tab"><span class="sn">2</span>AJE-2</button>
           <button data-a2="wp3" role="tab"><span class="sn">3</span>AJE-3</button>
@@ -6840,13 +6798,6 @@
               <div class="eng-fact"><div class="k">Workpapers</div><div class="v" id="app2-wpcount">0 / 4 done</div></div>
             </div>
             <button class="cta eng-start" id="app2-begin">Open workpaper AJE-1 ▸</button>
-          </div>
-
-          <!-- Workbook (Excel-skinned schedule, rendered by JS) -->
-          <div class="aw-panel" id="a2-book">
-            <div class="aw-h">Supporting schedules · workbook</div>
-            <div class="aw-sub">Build the four supporting schedules here, the way you would in Excel. Read the figures off the source documents in the AJE tabs and <b>do every computation yourself</b> — type a value or a formula in each cell, using cell references like <b>=B2+B3</b>. Nothing is calculated for you; then check the workbook.</div>
-            <div id="a2-book-host"></div>
           </div>
 
           <!-- AJE workpapers (rendered by JS) -->
@@ -11218,163 +11169,10 @@
     var d = $('app2-complete'); if (!d) return;
     d.innerHTML = '<div class="cap-done" style="margin-top:16px"><div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Workpaper submitted</h3><p>Strong first engagement. All four year-end adjusting entries for Baylor Company are computed, recorded, and signed — <b>$2,120</b> salaries, <b>$94,000</b> rent earned, <b>$4,900</b> advertising, and <b>$4,200</b> interest. Priya has it from here.</p></div>';
   }
-  /* ---- LedgerSheet — a small real spreadsheet engine (cell refs, ranges, functions; no eval) ---- */
-  function xlsEngine(rawByRef) {
-    var FUNCS = {
-      SUM: function (a) { return a.reduce(function (s, x) { return s + x; }, 0); },
-      AVERAGE: function (a) { return a.length ? a.reduce(function (s, x) { return s + x; }, 0) / a.length : 0; },
-      MIN: function (a) { return a.length ? Math.min.apply(null, a) : 0; },
-      MAX: function (a) { return a.length ? Math.max.apply(null, a) : 0; },
-      ROUND: function (a) { var n = a[0] || 0, d = a.length > 1 ? a[1] : 0, f = Math.pow(10, d); return Math.round(n * f) / f; }
-    };
-    function colNum(c) { var n = 0; for (var i = 0; i < c.length; i++) n = n * 26 + (c.charCodeAt(i) - 64); return n; }
-    function numCol(n) { var s = ''; while (n > 0) { s = String.fromCharCode(64 + ((n - 1) % 26 + 1)) + s; n = Math.floor((n - 1) / 26); } return s; }
-    function expand(a, b) {
-      var ma = /^([A-Z]+)(\d+)$/.exec(a), mb = /^([A-Z]+)(\d+)$/.exec(b); if (!ma || !mb) throw 'ERR';
-      var c1 = colNum(ma[1]), c2 = colNum(mb[1]), r1 = +ma[2], r2 = +mb[2], t;
-      if (c1 > c2) { t = c1; c1 = c2; c2 = t; } if (r1 > r2) { t = r1; r1 = r2; r2 = t; }
-      var out = []; for (var c = c1; c <= c2; c++) for (var r = r1; r <= r2; r++) out.push(numCol(c) + r); return out;
-    }
-    function parse(s, resolve) {
-      var i = 0;
-      function skip() { while (s.charAt(i) === ' ') i++; }
-      function expr() { var v = term(); for (;;) { skip(); var c = s.charAt(i); if (c === '+' || c === '-') { i++; var r = term(); v = c === '+' ? v + r : v - r; } else break; } return v; }
-      function term() { var v = factor(); for (;;) { skip(); var c = s.charAt(i); if (c === '*' || c === '/') { i++; var r = factor(); if (c === '*') v = v * r; else { if (r === 0) throw 'DIV0'; v = v / r; } } else break; } return v; }
-      function ident() { var st = i; while (i < s.length && /[A-Za-z]/.test(s.charAt(i))) i++; return s.slice(st, i); }
-      function digits() { var st = i; while (i < s.length && /[0-9]/.test(s.charAt(i))) i++; return s.slice(st, i); }
-      function argList() { var a = []; skip(); if (s.charAt(i) === ')') { i++; return a; } for (;;) { a.push(rangeOrExpr()); skip(); if (s.charAt(i) === ',') { i++; continue; } if (s.charAt(i) === ')') { i++; break; } throw 'ERR'; } return a; }
-      function rangeOrExpr() {
-        skip(); var save = i, id = ident();
-        if (id && /^[A-Za-z]+$/.test(id)) { var d = digits(); if (d) { skip(); if (s.charAt(i) === ':') { i++; skip(); var id2 = ident(), d2 = digits(); if (id2 && d2) return expand((id + d).toUpperCase(), (id2 + d2).toUpperCase()).map(resolve); } } }
-        i = save; return expr();
-      }
-      function factor() {
-        skip(); var c = s.charAt(i);
-        if (c === '+') { i++; return factor(); }
-        if (c === '-') { i++; return -factor(); }
-        if (c === '(') { i++; var v = expr(); skip(); if (s.charAt(i) !== ')') throw 'ERR'; i++; return v; }
-        if (/[A-Za-z]/.test(c)) {
-          var id = ident(); skip();
-          if (s.charAt(i) === '(') { i++; var fn = FUNCS[id.toUpperCase()]; if (!fn) throw 'ERR'; var a = argList(), flat = []; a.forEach(function (x) { if (Array.isArray(x)) flat = flat.concat(x); else flat.push(x); }); return fn(flat); }
-          var d = digits(); if (!d) throw 'ERR'; return resolve((id + d).toUpperCase());
-        }
-        var st = i; while (i < s.length && /[0-9.]/.test(s.charAt(i))) i++; if (i === st) throw 'ERR'; var n = parseFloat(s.slice(st, i)); if (isNaN(n)) throw 'ERR'; return n;
-      }
-      var out = expr(); skip(); if (i < s.length) throw 'ERR'; return out;
-    }
-    var cache = {}, visiting = {};
-    function valueOf(refn) {
-      if (refn in cache) return cache[refn];
-      var raw = rawByRef[refn];
-      if (raw == null || String(raw).trim() === '') { cache[refn] = 0; return 0; }
-      var s = String(raw).trim();
-      if (s.charAt(0) !== '=') { if (!/^-?[0-9]*\.?[0-9]+$/.test(s)) { cache[refn] = { err: '#ERR' }; return cache[refn]; } var n = parseFloat(s); cache[refn] = isNaN(n) ? { err: '#ERR' } : n; return cache[refn]; }
-      if (visiting[refn]) throw 'CIRC';
-      visiting[refn] = true; var v;
-      try { v = parse(s.slice(1), function (r) { var rv = valueOf(r); if (rv && rv.err) throw rv.err; return rv; }); }
-      catch (e) { v = { err: (typeof e === 'string' && e.charAt(0) === '#') ? e : (e === 'CIRC' ? '#CIRC' : (e === 'DIV0' ? '#DIV/0' : '#ERR')) }; }
-      delete visiting[refn]; cache[refn] = v; return v;
-    }
-    return { value: function (r) { visiting = {}; try { return valueOf(r); } catch (e) { return { err: '#ERR' }; } } };
-  }
-  function xlsFmt(x) { if (x == null || isNaN(x)) return ''; var r = Math.round(x * 100) / 100; return Number.isInteger(r) ? cma(r) : String(r); }
-  function xlsCsvCell(v) { v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
-  function sheet(hostId, spec) {
-    var P = spec.id, host = $(hostId), vals = {};
-    function ref(n) { return 'B' + n; }
-    var body = spec.rows.map(function (r) {
-      var b = r.b, R = ref(r.n), aCls = 'ca' + (r.hd ? ' hd' : ''), bHtml;
-      if (b && b.kind === 'input') bHtml = '<td class="cb input" data-ref="' + R + '"><input class="xls-in" id="' + P + '-' + R + '" data-raw="" autocomplete="off" spellcheck="false" aria-label="Cell ' + R + '"></td>';
-      else if (b && b.kind === 'calc') bHtml = '<td class="cb calc" data-ref="' + R + '"><div class="disp"></div></td>';
-      else bHtml = '<td class="cb blank"></td>';
-      return '<tr><td class="rn">' + r.n + '</td><td class="' + aCls + '">' + r.a + '</td>' + bHtml + '</tr>';
-    }).join('');
-    host.innerHTML =
-      '<div class="xls">' +
-        '<div class="xls-ribbon"><span class="xi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></span><span class="nm">' + spec.title + '</span><span class="fx-x">' + (spec.file || 'sheet') + '.xlsx</span></div>' +
-        '<div class="xls-fbar"><div class="xls-namebox" id="' + P + '-nb">—</div><div class="xls-fx-badge">fx</div><div class="xls-fx empty" id="' + P + '-fx">Select a cell</div></div>' +
-        '<div class="xls-scroll"><table class="xls-table"><thead><tr><th></th><th>A</th><th>B</th></tr></thead><tbody>' + body + '</tbody></table></div>' +
-        '<div class="xls-foot"><span class="xls-tab">' + (spec.tab || 'Sheet1') + '</span><span class="sp"></span><button class="xls-btn" id="' + P + '-csv" type="button">&#8681; Download .csv</button><button class="xls-btn pri" id="' + P + '-check" type="button">Check the workbook</button></div>' +
-      '</div>' +
-      '<div class="gp-feedback" id="' + P + '-fb" style="margin-top:12px"></div>' +
-      '<div class="xls-note">A live worksheet — <b>you</b> do the computations. Type a value or a formula in every green cell, and use <b>cell references</b> just like Excel: <b>=B2+B3</b>, <b>=B4/5</b>, <b>=SUM(B12:B13)</b>. Nothing is filled in for you. Tap a cell to see its formula in the bar above.</div>';
-    var rowByRef = {}; spec.rows.forEach(function (r) { if (r.b) rowByRef[ref(r.n)] = r; });
-    function cbTd(R) { return host.querySelector('td.cb[data-ref="' + R + '"]'); }
-    function rawOf(R) { var inp = $(P + '-' + R); return inp ? (inp.getAttribute('data-raw') || '') : ''; }
-    function recompute() {
-      var rawByRef = {}; spec.rows.forEach(function (r) { if (r.b) rawByRef[ref(r.n)] = rawOf(ref(r.n)); });
-      var eng = xlsEngine(rawByRef);
-      spec.rows.forEach(function (r) {
-        if (!r.b) return; var R = ref(r.n), inp = $(P + '-' + R), td = cbTd(R), v = eng.value(R); vals[R] = v;
-        var isErr = !!(v && v.err), blank = String(rawByRef[R]).trim() === '';
-        if (document.activeElement !== inp) inp.value = blank ? '' : (isErr ? v.err : xlsFmt(v));
-        if (td) { td.classList.toggle('err', isErr); td.classList.toggle('empty', blank); }
-      });
-    }
-    function select(R) {
-      Array.prototype.slice.call(host.querySelectorAll('td.cb')).forEach(function (td) { td.classList.toggle('sel', td.getAttribute('data-ref') === R); });
-      $(P + '-nb').textContent = R; var fx = $(P + '-fx'), r = rowByRef[R], raw = (r && r.b) ? rawOf(R) : '';
-      if (raw) { fx.textContent = raw; fx.classList.remove('empty'); } else { fx.textContent = (r && r.b) ? '(empty)' : '—'; fx.classList.add('empty'); }
-    }
-    spec.rows.forEach(function (r) {
-      if (!r.b || r.b.kind !== 'input') return; var R = ref(r.n), inp = $(P + '-' + R);
-      inp.addEventListener('focus', function () { inp.value = inp.getAttribute('data-raw'); select(R); });
-      inp.addEventListener('input', function () { inp.setAttribute('data-raw', inp.value); var td = cbTd(R); if (td) td.classList.remove('ok', 'no'); recompute(); select(R); });
-      inp.addEventListener('blur', function () { recompute(); });
-    });
-    Array.prototype.slice.call(host.querySelectorAll('td.cb.calc')).forEach(function (td) { td.addEventListener('click', function () { select(td.getAttribute('data-ref')); }); });
-    $(P + '-check').addEventListener('click', function () {
-      recompute(); var allOk = true, anyBlank = false, anyErr = false;
-      spec.rows.forEach(function (r) { if (!r.b || r.b.ans == null) return; var R = ref(r.n), td = cbTd(R); if (!td) return; td.classList.remove('ok', 'no'); var v = vals[R];
-        if (v && v.err) { anyErr = true; allOk = false; td.classList.add('no'); return; }
-        if (v == null || isNaN(v) || String(rawOf(R)).trim() === '') { anyBlank = true; allOk = false; td.classList.add('no'); return; }
-        if (Math.round(v) === r.b.ans) td.classList.add('ok'); else { td.classList.add('no'); allOk = false; } });
-      var fb = $(P + '-fb');
-      if (!allOk) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + (anyErr ? 'A formula has an error (see the <b>#</b> cells) — check your cell references and parentheses.' : (anyBlank ? 'Do the computation in every green cell — enter a formula (e.g. <b>=B2+B3</b>) or a value.' : 'Some cells are off — the red ones need another look. Fix your formulas and check again.')) + '</div>'; return; }
-      fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Workbook ties out.</b> Your schedules give $2,120, $94,000, $4,900, and $4,200 — the figures for AJE-1 through AJE-4.</div>';
-      Array.prototype.slice.call(host.querySelectorAll('.xls-in')).forEach(function (inp) { inp.disabled = true; });
-      var cb = $(P + '-check'); cb.disabled = true; cb.textContent = 'Checked ✓';
-      if (spec.onSolved) spec.onSolved();
-    });
-    $(P + '-csv').addEventListener('click', function () {
-      var tmp = document.createElement('div');
-      var lines = spec.rows.map(function (r) { tmp.innerHTML = r.a || ''; var label = (tmp.textContent || '').replace(/\s+/g, ' ').trim(); var R = ref(r.n), amt = (r.b && typeof vals[R] === 'number' && !isNaN(vals[R])) ? Math.round(vals[R] * 100) / 100 : ''; return xlsCsvCell(r.n) + ',' + xlsCsvCell(label) + ',' + xlsCsvCell(amt); });
-      var csv = 'Row,Item,Amount\n' + lines.join('\n'), btn = $(P + '-csv');
-      try { var blob = new Blob([csv], { type: 'text/csv' }), url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = (spec.file || 'sheet') + '.csv'; document.body.appendChild(a); a.click(); setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 0); btn.textContent = 'Saved ✓'; }
-      catch (e) { try { navigator.clipboard.writeText(csv); btn.textContent = 'Copied ✓'; } catch (e2) { btn.textContent = 'Unavailable'; } }
-    });
-    recompute();
-  }
-  function app2RenderBook() {
-    sheet('a2-book-host', {
-      id: 'bk', title: 'Baylor Company — AJE schedules', tab: 'Schedules', file: 'baylor-schedules',
-      rows: [
-        { n: 1, hd: true, a: 'Accrued salaries — AJE-1', b: null },
-        { n: 2, a: 'Clinical staff wages', b: { kind: 'input', ans: 3500 } },
-        { n: 3, a: 'Assistant wages', b: { kind: 'input', ans: 1800 } },
-        { n: 4, a: 'Weekly payroll', b: { kind: 'input', ans: 5300 } },
-        { n: 5, a: 'Daily payroll', b: { kind: 'input', ans: 1060 } },
-        { n: 6, a: 'Salaries to accrue', b: { kind: 'input', ans: 2120 } },
-        { n: 7, hd: true, a: 'Rent earned — AJE-2', b: null },
-        { n: 8, a: 'Group A rent earned', b: { kind: 'input', ans: 60000 } },
-        { n: 9, a: 'Group B rent earned', b: { kind: 'input', ans: 34000 } },
-        { n: 10, a: 'Rent revenue earned', b: { kind: 'input', ans: 94000 } },
-        { n: 11, hd: true, a: 'Advertising used — AJE-3', b: null },
-        { n: 12, a: 'A650 advertising expired', b: { kind: 'input', ans: 4000 } },
-        { n: 13, a: 'B974 advertising expired', b: { kind: 'input', ans: 900 } },
-        { n: 14, a: 'Advertising expense', b: { kind: 'input', ans: 4900 } },
-        { n: 15, hd: true, a: 'Interest accrued — AJE-4', b: null },
-        { n: 16, a: 'Annual interest', b: { kind: 'input', ans: 7200 } },
-        { n: 17, a: 'Months outstanding', b: { kind: 'input', ans: 7 } },
-        { n: 18, a: 'Interest accrued', b: { kind: 'input', ans: 4200 } }
-      ],
-      onSolved: function () { markA2Tab('book'); }
-    });
-  }
   function markA2Tab(v) { var b = document.querySelector('#app2-tabs button[data-a2="' + v + '"]'); if (b) b.classList.add('done'); }
   function app2SetTab(v) {
     Array.prototype.slice.call(document.querySelectorAll('#app2-tabs button')).forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-a2') === v); });
-    ['brief', 'book', 'wp1', 'wp2', 'wp3', 'wp4', 'signoff'].forEach(function (k) { $('a2-' + k).classList.toggle('on', k === v); });
+    ['brief', 'wp1', 'wp2', 'wp3', 'wp4', 'signoff'].forEach(function (k) { $('a2-' + k).classList.toggle('on', k === v); });
     app2Rails(); $('app2-scroll').scrollTop = 0;
   }
   Array.prototype.slice.call(document.querySelectorAll('#app2-tabs button')).forEach(function (b) { b.addEventListener('click', function () { app2SetTab(b.getAttribute('data-a2')); }); });
@@ -11382,7 +11180,6 @@
     if (!app2Init) {
       app2Init = true; app2CalcOk = [false, false, false, false]; app2Posted = [];
       APP2_AJE.forEach(function (wp, i) { app2RenderWp(i); });
-      app2RenderBook();
       app2Rails(); app2WpCount(); app2RenderSignoff(); updateApp2Pill();
     }
     goScreen('app2'); app2SetTab('brief');
