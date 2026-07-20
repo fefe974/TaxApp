@@ -1849,6 +1849,30 @@
   .m4-complete .medal { width: 54px; height: 54px; margin: 0 auto 12px; border-radius: 50%; background: linear-gradient(150deg, var(--equity), #2e6b40); color: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(63,143,82,.4); }
   .m4-complete h3 { font-family: var(--serif); font-size: 19px; font-weight: 600; }
   .m4-complete p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+
+  /* ===== Module 4 Capstone ===== */
+  .kc-part { padding: 0 18px; }
+  .kc-plabel { display: flex; align-items: center; gap: 8px; margin: 4px 0 10px; }
+  .kc-plabel .pn { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; background: var(--gold); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+  .kc-plabel .pt { font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--ink); }
+  .kc-plabel .pdone { margin-left: auto; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--good); display: none; }
+  .kc-plabel.done .pdone { display: inline; }
+  /* statement inputs */
+  .stmt-line.inp { align-items: center; }
+  .stmt-inp { width: 96px; text-align: right; font-family: var(--mono); font-weight: 700; font-size: 13px; padding: 6px 8px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); }
+  .stmt-inp:focus { outline: none; border-color: var(--gold); }
+  .stmt-inp.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .stmt-inp.no { border-color: var(--warn); background: var(--warn-bg); }
+  .stmt-line .pre { font-size: 10px; color: var(--ink-faint); margin-right: 4px; }
+  /* closing tracker */
+  .kc-track { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 13px; }
+  .kc-tcard { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--paper); padding: 11px 12px; text-align: center; }
+  .kc-tcard .h { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); }
+  .kc-tcard .v { font-family: var(--mono); font-weight: 800; font-size: 17px; margin-top: 4px; color: var(--ink); }
+  .kc-tcard.is .v { color: var(--teal); } .kc-tcard.re .v { color: var(--equity); }
+  .kc-tcard .s { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
+  .kc-gate { padding: 20px 16px; text-align: center; border: 1px dashed var(--line); border-radius: var(--r-md); color: var(--ink-faint); font-size: 12.5px; }
+  .kc-gate svg { width: 22px; height: 22px; margin-bottom: 6px; opacity: .7; }
 </style>
 
 <div id="fa-app">
@@ -2155,6 +2179,16 @@
               <span class="lnum">3</span>
               <span class="lbody"><b>The Accounting Cycle Summarized</b><span>All nine steps, start to finish · Illustration 2.43</span></span>
               <span class="pill-mini ready" id="m4cycle-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card capstone-card" id="start-m4cap-card" style="border-color: color-mix(in srgb, var(--gold) 40%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 45%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+              </span>
+              <span class="lbody"><b>Put It Into Practice</b><span>Capstone · LO 2.4 · statements, closing &amp; post-closing</span></span>
+              <span class="pill-mini ready" id="m4cap-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -4789,9 +4823,151 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m4cycle-next">
+              <div><div class="up">One last challenge</div><b>Put It Into Practice</b> — the LO 2.4 capstone.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="m4y-home" style="margin-top:4px;">Back to course</button>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 4 CAPSTONE — COMPLETE THE CLOSING PROCESS (Kleene, LO 2.4) ============== -->
+    <section class="fa-screen" id="screen-m4cap" aria-label="Module 4 Capstone">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m4x-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m4x-scroll">
+        <div class="cap-hero">
+          <span class="cap-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+            Put It Into Practice · LO 2.4
+          </span>
+          <h1>Complete the Closing Process</h1>
+          <p><b>Kleene Window Washing Inc.</b> has its adjusted trial balance at July 31 (from the Module 3 capstone). Finish the cycle: prepare the statements, close the books, and prove the post-closing trial balance.</p>
+        </div>
+
+        <details class="cap-facts" id="m4x-facts">
+          <summary>The adjusted trial balance · July 31 <svg class="icon chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></summary>
+          <div class="fbody">
+            <div class="co">Adjusted trial balance — totals $25,880 = $25,880</div>
+            <ol id="m4x-facts-list"></ol>
+          </div>
+        </details>
+
+        <div class="m2c-toggle" style="margin-top:14px;">
+          <button class="on" data-kcv="stmt">a · Statements</button>
+          <button data-kcv="close">b · Closing</button>
+          <button data-kcv="pctb">c · Post-Closing</button>
+        </div>
+
+        <!-- Part a — Financial Statements -->
+        <div class="m2c-view on" id="kc-view-stmt">
+          <div class="kc-part">
+            <div class="kc-plabel" id="kc-a-label"><span class="pn">a</span><span class="pt">Prepare the financial statements</span><span class="pdone">✓ Done</span></div>
+            <p style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);margin-bottom:12px;">Fill the three key figures — net income, ending retained earnings, and total assets — then check. Follow the money as it flows.</p>
+            <div class="stmt-flow">
+              <div class="stmt is-lbl">
+                <div class="stmt-head">Income Statement · month ended July 31</div>
+                <div class="stmt-body">
+                  <div class="stmt-line"><span class="lbl">Service revenue</span><span class="amt">$7,900</span></div>
+                  <div class="stmt-line"><span class="lbl">Total expenses</span><span class="amt">(3,600)</span></div>
+                  <div class="stmt-line inp total rule"><span class="lbl">Net income</span><span><span class="pre">$</span><input class="stmt-inp" id="kc-ni" inputmode="numeric" placeholder="?" aria-label="Net income"></span></div>
+                </div>
+              </div>
+              <div class="stmt-tie"><span class="ln"></span>Net income flows down<span class="ln"></span></div>
+              <div class="stmt re-lbl">
+                <div class="stmt-head">Retained Earnings Statement</div>
+                <div class="stmt-body">
+                  <div class="stmt-line"><span class="lbl">Retained earnings, July 1</span><span class="amt">$0</span></div>
+                  <div class="stmt-line"><span class="lbl">Add: Net income</span><span class="amt">4,300</span></div>
+                  <div class="stmt-line"><span class="lbl">Less: Dividends</span><span class="amt">(600)</span></div>
+                  <div class="stmt-line inp total rule"><span class="lbl">Retained earnings, July 31</span><span><span class="pre">$</span><input class="stmt-inp" id="kc-re" inputmode="numeric" placeholder="?" aria-label="Ending retained earnings"></span></div>
+                </div>
+              </div>
+              <div class="stmt-tie"><span class="ln"></span>Ending balance flows down<span class="ln"></span></div>
+              <div class="stmt bs-lbl">
+                <div class="stmt-head">Classified Balance Sheet · July 31</div>
+                <div class="stmt-body">
+                  <div class="stmt-line"><span class="lbl">Total current assets</span><span class="amt">$13,680</span></div>
+                  <div class="stmt-line"><span class="lbl">Property, plant &amp; equipment (net)</span><span class="amt">7,820</span></div>
+                  <div class="stmt-line inp total rule"><span class="lbl">Total assets</span><span><span class="pre">$</span><input class="stmt-inp" id="kc-ta" inputmode="numeric" placeholder="?" aria-label="Total assets"></span></div>
+                  <div class="stmt-line rule"><span class="lbl">Total liabilities</span><span class="amt">$5,800</span></div>
+                  <div class="stmt-line"><span class="lbl">Total stockholders' equity</span><span class="amt">15,700</span></div>
+                  <div class="stmt-line total"><span class="lbl">Total liabilities &amp; equity</span><span class="amt">$21,500</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="kc-a-check">Check the statements</button></div>
+            <div class="gp-feedback" id="kc-a-fb" style="margin-top:12px;"></div>
+          </div>
+        </div>
+
+        <!-- Part b — Closing entries -->
+        <div class="m2c-view" id="kc-view-close">
+          <div class="kc-part">
+            <div class="kc-plabel" id="kc-b-label"><span class="pn">b</span><span class="pt">Journalize the closing entries</span><span class="pdone">✓ Done</span></div>
+            <p style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);margin-bottom:4px;">Post the four closing entries. Watch Income Summary fill and empty, and Retained Earnings settle at $3,700.</p>
+          </div>
+          <div class="dab" id="kc-entry" style="margin:12px 18px 0;">
+            <div class="dab-eh" id="kc-eh"></div>
+            <div class="dab-body" id="kc-body"></div>
+            <div class="dab-progress" id="kc-progress"></div>
+          </div>
+          <div class="gp-feedback" id="kc-b-fb" style="margin:12px 18px 0;"></div>
+          <div class="kc-part">
+            <div class="kc-track">
+              <div class="kc-tcard is"><div class="h">Income Summary</div><div class="v" id="kc-is-val">$0</div><div class="s" id="kc-is-note">not yet closed</div></div>
+              <div class="kc-tcard re"><div class="h">Retained Earnings</div><div class="v" id="kc-re-val">$0</div><div class="s" id="kc-re-note">before closing</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part c — Post-closing trial balance -->
+        <div class="m2c-view" id="kc-view-pctb">
+          <div class="kc-part">
+            <div class="kc-plabel" id="kc-c-label"><span class="pn">c</span><span class="pt">Prove the post-closing trial balance</span><span class="pdone">✓ Done</span></div>
+            <div id="kc-pctb-gate" class="kc-gate">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              <div>Finish part <b>b · Closing</b> first — the post-closing trial balance appears once the temporary accounts are closed.</div>
+            </div>
+            <div id="kc-pctb-wrap" style="display:none;">
+              <div class="tb-sheet">
+                <div class="tb-title"><b>Kleene Window Washing Inc.</b><span>Post-Closing Trial Balance</span><span>July 31, 2025</span></div>
+                <table class="tb-table">
+                  <thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead>
+                  <tbody id="kc-pctb-body"></tbody>
+                  <tfoot>
+                    <tr class="tb-totrow"><td class="acct">&nbsp;</td>
+                      <td class="amt d"><span class="tb-tot" id="kc-pctb-totd"><span class="dbl">$21,680</span></span></td>
+                      <td class="amt c"><span class="tb-tot" id="kc-pctb-totc"><span class="dbl">$21,680</span></span></td>
+                    </tr>
+                  </tfoot>
+                </table>
+                <div class="tb-prove" id="kc-pctb-prove">&#9878; In balance — $21,680 = $21,680</div>
+                <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="kc-pctb-btn">Total &amp; prove ▸</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cap-done" id="m4x-done" style="display:none; margin: 20px 18px 0;">
+          <div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3>The cycle is complete</h3>
+          <p>Statements prepared, books closed, and the post-closing trial balance proved at <b>$21,680</b>. You've run Kleene through the full accounting cycle — from adjusted trial balance to a clean start for August. That completes <b>Module 4</b>.</p>
+          <button class="btn primary" id="m4x-restart" style="margin-top:14px;">Start over</button>
+        </div>
+
+        <div style="height: calc(28px + env(safe-area-inset-bottom));"></div>
       </div>
     </section>
 
@@ -4813,7 +4989,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -4842,9 +5018,10 @@
       if (p.m4CloseDone) state.m4CloseDone = true;
       if (p.m4PctbDone) state.m4PctbDone = true;
       if (p.m4CycleDone) state.m4CycleDone = true;
+      if (p.m4CapDone) state.m4CapDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -4869,7 +5046,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -4908,7 +5085,8 @@
       { done: function () { return state.m4IntroDone; }, open: function () { openM4Intro(); }, label: 'Module 4 · Introduction' },
       { done: function () { return state.m4CloseDone; }, open: function () { openM4Close(); }, label: 'The Closing Process' },
       { done: function () { return state.m4PctbDone; }, open: function () { openM4Pctb(); }, label: 'The Post-Closing Trial Balance' },
-      { done: function () { return state.m4CycleDone; }, open: function () { openM4Cycle(); }, label: 'The Accounting Cycle Summarized' }
+      { done: function () { return state.m4CycleDone; }, open: function () { openM4Cycle(); }, label: 'The Accounting Cycle Summarized' },
+      { done: function () { return state.m4CapDone; }, open: function () { openM4Cap(); }, label: 'the Module 4 Capstone' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -7689,6 +7867,189 @@
   $('m4y-back').addEventListener('click', function () { goScreen('home'); });
   $('m4y-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 4 CAPSTONE — Kleene Window Washing · complete the closing process (LO 2.4)
+     ============================================================ */
+  var KC_ADJTB = [
+    ['Cash', '5,410', 'Dr'], ['Accounts Receivable', '6,300', 'Dr'], ['Supplies', '320', 'Dr'],
+    ['Prepaid Insurance', '1,650', 'Dr'], ['Equipment', '8,000', 'Dr'], ['Accumulated Depreciation—Equipment', '180', 'Cr'],
+    ['Accounts Payable', '5,400', 'Cr'], ['Salaries and Wages Payable', '400', 'Cr'], ['Common Stock', '12,000', 'Cr'],
+    ['Dividends', '600', 'Dr'], ['Service Revenue', '7,900', 'Cr'], ['Maintenance and Repairs Expense', '290', 'Dr'],
+    ['Supplies Expense', '580', 'Dr'], ['Depreciation Expense', '180', 'Dr'], ['Insurance Expense', '150', 'Dr'],
+    ['Salaries and Wages Expense', '2,400', 'Dr']
+  ];
+  $('m4x-facts-list').innerHTML = KC_ADJTB.map(function (r) { return '<li>' + r[0] + ' · <b>$' + r[1] + '</b> ' + r[2] + '</li>'; }).join('');
+
+  var kcStmtDone = false, kcCloseDone = false, kcPctbDone = false;
+
+  /* ---- view toggle ---- */
+  Array.prototype.slice.call(document.querySelectorAll('#screen-m4cap .m2c-toggle button')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      Array.prototype.slice.call(document.querySelectorAll('#screen-m4cap .m2c-toggle button')).forEach(function (x) { x.classList.remove('on'); });
+      b.classList.add('on');
+      var v = b.getAttribute('data-kcv');
+      ['stmt', 'close', 'pctb'].forEach(function (k) { $('kc-view-' + k).classList.toggle('on', k === v); });
+    });
+  });
+
+  /* ---- part a: statements ---- */
+  function kcNum(id) { var v = ($(id).value || '').replace(/[^0-9.]/g, ''); return v === '' ? null : Math.round(parseFloat(v)); }
+  $('kc-a-check').addEventListener('click', function () {
+    var targets = { 'kc-ni': 4300, 'kc-re': 3700, 'kc-ta': 21500 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = kcNum(id);
+      el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('kc-a-fb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in all three figures first.</div>'; return; }
+    if (allOk) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Statements complete.</b> Net income $4,300 → retained earnings $3,700; total assets $21,500 = total liabilities &amp; equity. On to closing.</div>';
+      kcStmtDone = true; $('kc-a-label').classList.add('done'); kcCheckComplete();
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Not quite. Net income = $7,900 − $3,600. Ending RE = $0 + net income − $600 dividends. Total assets = $13,680 + $7,820.</div>';
+    }
+  });
+
+  /* ---- part b: closing entries ---- */
+  var KC_ACCTS = ['— select account —', 'Income Summary', 'Service Revenue', 'Retained Earnings', 'Dividends', 'Expense accounts (total)', 'Cash', 'Common Stock'];
+  var KC_CLOSE = [
+    { desc: 'Close the <b>revenue</b> account to Income Summary.', dr: 'Service Revenue', cr: 'Income Summary', amt: 7900, hint: 'Revenue has a credit balance — debit Service Revenue $7,900, credit Income Summary $7,900.' },
+    { desc: 'Close the <b>expense</b> accounts to Income Summary.', dr: 'Income Summary', cr: 'Expense accounts (total)', amt: 3600, hint: 'Debit Income Summary $3,600; credit the expense accounts $3,600 (2,400 + 580 + 290 + 180 + 150).' },
+    { desc: 'Close <b>Income Summary</b> (net income) to Retained Earnings.', dr: 'Income Summary', cr: 'Retained Earnings', amt: 4300, hint: 'Income Summary now holds $4,300 of net income — debit it, credit Retained Earnings $4,300.' },
+    { desc: 'Close <b>Dividends</b> to Retained Earnings.', dr: 'Retained Earnings', cr: 'Dividends', amt: 600, hint: 'Dividends close directly to Retained Earnings — debit Retained Earnings, credit Dividends $600. Never through Income Summary.' }
+  ];
+  var kcIndex = 0, kcApplied = [];
+  function kcOptions() { return KC_ACCTS.map(function (a, i) { return '<option value="' + (i === 0 ? '' : a) + '">' + a + '</option>'; }).join(''); }
+  function kcRenderEntry() {
+    var t = KC_CLOSE[kcIndex];
+    $('kc-eh').innerHTML = '<div class="step">Closing entry ' + (kcIndex + 1) + ' of 4 · July 31</div><div class="desc">' + t.desc + '</div>';
+    $('kc-body').innerHTML =
+      '<div class="dab-side d">Debit</div>' +
+      '<div class="dab-line"><select class="dab-sel" id="kc-dr">' + kcOptions() + '</select><input class="dab-amt" id="kc-dr-amt" inputmode="numeric" placeholder="0" aria-label="Debit amount"></div>' +
+      '<div class="dab-side c">Credit</div>' +
+      '<div class="dab-line cr"><select class="dab-sel" id="kc-cr">' + kcOptions() + '</select><input class="dab-amt" id="kc-cr-amt" inputmode="numeric" placeholder="0" aria-label="Credit amount"></div>' +
+      '<div class="mc-solrow"><button class="btn" id="kc-hint-btn">Hint</button><button class="btn" id="kc-sol-btn">Show solution</button></div>' +
+      '<div class="dab-tools"><button class="btn primary" id="kc-post-btn">Post entry</button></div>' +
+      '<div class="dab-hint" id="kc-hint">' + t.hint + '</div>';
+    $('kc-progress').innerHTML = KC_CLOSE.map(function (x, i) {
+      return '<div class="dab-dot ' + (kcApplied.indexOf(i) > -1 ? 'done' : (i === kcIndex ? 'on' : '')) + '"></div>';
+    }).join('');
+    $('kc-hint-btn').addEventListener('click', function () { $('kc-hint').classList.toggle('show'); });
+    $('kc-sol-btn').addEventListener('click', kcSolution);
+    $('kc-post-btn').addEventListener('click', kcPost);
+  }
+  function kcRenderTracker() {
+    var has = function (i) { return kcApplied.indexOf(i) > -1; };
+    var isBal = (has(0) ? 7900 : 0) - (has(1) ? 3600 : 0) - (has(2) ? 4300 : 0);
+    var reBal = (has(2) ? 4300 : 0) - (has(3) ? 600 : 0);
+    $('kc-is-val').textContent = '$' + isBal.toLocaleString('en-US');
+    $('kc-is-note').textContent = has(2) ? 'closed to zero' : (has(0) ? 'holds net income' : 'not yet closed');
+    $('kc-re-val').textContent = '$' + reBal.toLocaleString('en-US');
+    $('kc-re-note').textContent = has(3) ? 'carried forward' : (has(2) ? 'net income added' : 'before closing');
+  }
+  function kcNumB(id) { var v = ($(id).value || '').replace(/[^0-9.]/g, ''); return v === '' ? null : Math.round(parseFloat(v)); }
+  function kcAdvance() {
+    var next = -1;
+    for (var k = 1; k <= KC_CLOSE.length; k++) { var idx = (kcIndex + k) % KC_CLOSE.length; if (kcApplied.indexOf(idx) === -1) { next = idx; break; } }
+    if (next > -1) { kcIndex = next; kcRenderEntry(); a11yify($('kc-entry')); }
+  }
+  function kcPost() {
+    var t = KC_CLOSE[kcIndex];
+    var dr = $('kc-dr').value, cr = $('kc-cr').value, da = kcNumB('kc-dr-amt'), ca = kcNumB('kc-cr-amt');
+    var fb = $('kc-b-fb');
+    function bad(msg) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + msg + '</div>'; }
+    if (!dr || !cr) { bad('Choose an account for <b>both</b> the debit and the credit.'); return; }
+    if (da == null || ca == null) { bad('Enter the amount on <b>both</b> lines.'); return; }
+    if (da !== ca) { bad('A closing entry must balance — <b>debits must equal credits</b>.'); return; }
+    if (!(dr === t.dr && cr === t.cr) && (dr === t.cr && cr === t.dr)) { bad('Right accounts, wrong sides — check which is debited and which is credited.'); return; }
+    if (!(dr === t.dr && cr === t.cr)) { bad('Not the right accounts for this entry. Try the <b>Hint</b> or <b>Show solution</b>.'); return; }
+    if (da !== t.amt) { bad('Accounts are right — recheck the <b>amount</b>.'); return; }
+    if (kcApplied.indexOf(kcIndex) === -1) kcApplied.push(kcIndex);
+    kcRenderTracker();
+    if (kcApplied.length === KC_CLOSE.length) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>All four closing entries posted.</b> Income Summary is zero and Retained Earnings carries $3,700. The post-closing trial balance is ready in part c.</div>';
+      $('kc-progress').innerHTML = KC_CLOSE.map(function () { return '<div class="dab-dot done"></div>'; }).join('');
+      kcCloseDone = true; $('kc-b-label').classList.add('done');
+      kcRevealPctb(); kcCheckComplete();
+      return;
+    }
+    fb.className = 'gp-feedback good show';
+    fb.innerHTML = '<span class="fi">✓</span><div><b>Posted.</b> On to the next closing entry.</div>';
+    setTimeout(kcAdvance, 560);
+  }
+  function kcSolution() {
+    var t = KC_CLOSE[kcIndex];
+    $('kc-dr').value = t.dr; $('kc-cr').value = t.cr;
+    $('kc-dr-amt').value = t.amt.toLocaleString('en-US'); $('kc-cr-amt').value = t.amt.toLocaleString('en-US');
+    kcPost();
+  }
+
+  /* ---- part c: post-closing trial balance ---- */
+  var KC_PCTB = [
+    ['Cash', '5,410', ''], ['Accounts Receivable', '6,300', ''], ['Supplies', '320', ''],
+    ['Prepaid Insurance', '1,650', ''], ['Equipment', '8,000', ''], ['Accumulated Depreciation—Equipment', '', '180'],
+    ['Accounts Payable', '', '5,400'], ['Salaries and Wages Payable', '', '400'], ['Common Stock', '', '12,000'],
+    ['Retained Earnings', '', '3,700']
+  ];
+  var kcPctbRendered = false;
+  function kcRevealPctb() {
+    $('kc-pctb-gate').style.display = 'none';
+    $('kc-pctb-wrap').style.display = 'block';
+    if (kcPctbRendered) return;
+    var firstD = true, firstC = true;
+    $('kc-pctb-body').innerHTML = KC_PCTB.map(function (r) {
+      var d = '', c = '';
+      if (r[1]) { d = (firstD ? '$' : '') + r[1]; firstD = false; }
+      if (r[2]) { c = (firstC ? '$' : '') + r[2]; firstC = false; }
+      return '<tr><td class="acct">' + r[0] + '</td><td class="amt d">' + d + '</td><td class="amt c">' + c + '</td></tr>';
+    }).join('');
+    kcPctbRendered = true;
+  }
+  $('kc-pctb-btn').addEventListener('click', function () {
+    $('kc-pctb-totd').classList.add('on'); $('kc-pctb-totc').classList.add('on'); $('kc-pctb-prove').classList.add('on');
+    this.textContent = 'Proved · $21,680 = $21,680';
+    this.disabled = true;
+    kcPctbDone = true; $('kc-c-label').classList.add('done'); kcCheckComplete();
+  });
+
+  function kcCheckComplete() {
+    var n = (kcStmtDone ? 1 : 0) + (kcCloseDone ? 1 : 0) + (kcPctbDone ? 1 : 0);
+    updateM4CapPill(n);
+    if (kcStmtDone && kcCloseDone && kcPctbDone) {
+      $('m4x-done').style.display = 'block';
+      if (!state.m4CapDone) { state.m4CapDone = true; save(); updateM4CapPill(3); }
+    }
+  }
+  function updateM4CapPill(n) {
+    var pill = $('m4cap-pill'); if (!pill) return;
+    pill.textContent = state.m4CapDone ? 'Done' : (n ? n + '/3' : 'Start');
+  }
+  function kcReset() {
+    kcStmtDone = false; kcCloseDone = false; kcPctbDone = false; kcIndex = 0; kcApplied = []; kcPctbRendered = false;
+    ['kc-a-label', 'kc-b-label', 'kc-c-label'].forEach(function (id) { $(id).classList.remove('done'); });
+    ['kc-ni', 'kc-re', 'kc-ta'].forEach(function (id) { $(id).value = ''; $(id).classList.remove('ok', 'no'); });
+    $('kc-a-fb').className = 'gp-feedback'; $('kc-a-fb').innerHTML = '';
+    $('kc-b-fb').className = 'gp-feedback'; $('kc-b-fb').innerHTML = '';
+    $('kc-pctb-gate').style.display = ''; $('kc-pctb-wrap').style.display = 'none';
+    $('kc-pctb-btn').disabled = false; $('kc-pctb-btn').textContent = 'Total & prove ▸';
+    $('kc-pctb-totd').classList.remove('on'); $('kc-pctb-totc').classList.remove('on'); $('kc-pctb-prove').classList.remove('on');
+    $('m4x-done').style.display = 'none';
+    kcRenderEntry(); kcRenderTracker(); updateM4CapPill(0);
+    Array.prototype.slice.call(document.querySelectorAll('#screen-m4cap .m2c-toggle button')).forEach(function (x, i) { x.classList.toggle('on', i === 0); });
+    ['stmt', 'close', 'pctb'].forEach(function (k, i) { $('kc-view-' + k).classList.toggle('on', i === 0); });
+  }
+  function openM4Cap() { goScreen('m4cap'); $('m4x-scroll').scrollTop = 0; }
+  $('start-m4cap-card').addEventListener('click', openM4Cap);
+  $('m4x-back').addEventListener('click', function () { goScreen('home'); });
+  $('m4x-restart').addEventListener('click', function () { kcReset(); $('m4x-scroll').scrollTop = 0; });
+  $('m4cycle-next').addEventListener('click', openM4Cap);
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -7769,6 +8130,9 @@
   updateM4PctbPill();
   renderCyc9();
   updateM4CyclePill();
+  kcRenderEntry();
+  kcRenderTracker();
+  updateM4CapPill(0);
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
