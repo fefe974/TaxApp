@@ -1817,6 +1817,38 @@
   .clo-caution .cx { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; background: var(--warn); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
   .clo-caution b { font-size: 13px; color: var(--ink); }
   .clo-caution p { font-size: 12px; line-height: 1.5; color: var(--ink-soft); margin-top: 2px; }
+
+  /* Post-closing: temporary accounts now zero */
+  .pctb-closed { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); padding: 13px 14px; }
+  .pctb-closed .h { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); margin-bottom: 9px; }
+  .pctb-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pctb-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); padding: 4px 10px 4px 8px; font-size: 11.5px; color: var(--ink-soft); }
+  .pctb-chip .z { font-family: var(--mono); font-weight: 800; font-size: 10px; color: var(--good); background: var(--good-bg); border-radius: 999px; padding: 1px 7px; }
+  .pctb-chip s { text-decoration-color: var(--ink-faint); }
+
+  /* Accounting cycle summarized — 9-step accordion */
+  .cyc9 { display: flex; flex-direction: column; gap: 8px; }
+  .cyc9-step { border: 1px solid var(--line); border-left: 4px solid var(--mc, var(--ink)); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .cyc9-step.m1 { --mc: var(--ink); } .cyc9-step.m2 { --mc: var(--debit); } .cyc9-step.m3 { --mc: var(--teal); } .cyc9-step.m4 { --mc: var(--equity); }
+  .cyc9-top { display: flex; align-items: center; gap: 11px; padding: 12px 13px; cursor: pointer; width: 100%; background: none; border: none; text-align: left; }
+  .cyc9-badge { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; background: var(--mc, var(--ink)); color: #fff; display: grid; place-items: center; font-family: var(--serif); font-weight: 700; font-size: 14px; }
+  .cyc9-tt { flex: 1; min-width: 0; }
+  .cyc9-tt b { display: block; font-size: 13.5px; color: var(--ink); font-family: var(--serif); font-weight: 650; line-height: 1.2; }
+  .cyc9-tt .mtag { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--mc, var(--ink)); margin-top: 2px; display: block; }
+  .cyc9-top .chev { flex: 0 0 auto; color: var(--ink-faint); transition: transform .2s ease; }
+  .cyc9-step.open .cyc9-top .chev { transform: rotate(90deg); }
+  .cyc9-detail { max-height: 0; overflow: hidden; transition: max-height .28s ease; }
+  .cyc9-step.open .cyc9-detail { max-height: 320px; }
+  .cyc9-detail .inner { padding: 0 13px 13px 52px; }
+  .cyc9-detail p { font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+  .cyc9-detail p b { color: var(--ink); }
+  .cyc9-goto { margin-top: 9px; display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; color: var(--mc, var(--ink)); background: color-mix(in srgb, var(--mc, var(--ink)) 10%, transparent); border: 1px solid color-mix(in srgb, var(--mc, var(--ink)) 30%, transparent); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .cyc9-loop { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; font-size: 11.5px; font-weight: 700; color: var(--teal); }
+  .cyc9-loop svg { width: 15px; height: 15px; }
+  .m4-complete { text-align: center; padding: 22px 18px; border-radius: var(--r-lg); background: var(--card); border: 1px solid var(--equity); box-shadow: var(--shadow-lg); margin-top: 6px; }
+  .m4-complete .medal { width: 54px; height: 54px; margin: 0 auto 12px; border-radius: 50%; background: linear-gradient(150deg, var(--equity), #2e6b40); color: #fff; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(63,143,82,.4); }
+  .m4-complete h3 { font-family: var(--serif); font-size: 19px; font-weight: 600; }
+  .m4-complete p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
 </style>
 
 <div id="fa-app">
@@ -2111,18 +2143,22 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
+            <button class="lesson-card" id="start-m4pctb-card">
               <span class="lnum">2</span>
               <span class="lbody"><b>The Post-Closing Trial Balance</b><span>Only the permanent accounts remain</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
-            <div class="lesson-card locked" aria-disabled="true">
-              <span class="lnum">
-                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+              <span class="pill-mini ready" id="m4pctb-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
-              <span class="lbody"><b>Put It Into Practice</b><span>Module 4 capstone</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+            </button>
+            <button class="lesson-card" id="start-m4cycle-card">
+              <span class="lnum">3</span>
+              <span class="lbody"><b>The Accounting Cycle Summarized</b><span>All nine steps, start to finish · Illustration 2.43</span></span>
+              <span class="pill-mini ready" id="m4cycle-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -4613,6 +4649,152 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 4 · LESSON 2 — THE POST-CLOSING TRIAL BALANCE ============== -->
+    <section class="fa-screen" id="screen-m4pctb" aria-label="The Post-Closing Trial Balance">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m4p-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m4p-scroll">
+        <header class="m4-hero">
+          <div class="eyebrow">Module 4 · Lesson 2</div>
+          <h1>The Post-Closing Trial Balance</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.42</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">The third trial balance — only the permanent accounts remain.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="cycle-wrap" aria-label="The accounting cycle — post-closing trial balance"><div class="cycle" id="m4p-cycle"></div></div>
+
+        <div class="m2-body">
+          <p class="lede">There are three trial balances in a period: after the regular transactions, after adjusting, and — now — after closing. This last one is the <b>post-closing trial balance</b>.</p>
+
+          <section class="m2-sec">
+            <h2>What it proves — and what remains</h2>
+            <p>Its purpose is to prove the equality of the <b>permanent</b> account balances the company carries into the next period. Because every temporary account was just closed to <b>zero</b>, the post-closing trial balance contains <b>only permanent (real) — balance-sheet — accounts</b>.</p>
+            <div class="pctb-closed" style="margin-top:12px;">
+              <div class="h">These temporary accounts were just closed to zero</div>
+              <div class="pctb-chips">
+                <span class="pctb-chip"><s>Service Revenue</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Salaries &amp; Wages Exp.</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Supplies Expense</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Rent Expense</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Insurance Expense</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Interest Expense</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Depreciation Exp.</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Bad Debt Expense</s><span class="z">0</span></span>
+                <span class="pctb-chip"><s>Dividends</s><span class="z">0</span></span>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.42 · Pioneer's post-closing trial balance</h2>
+            <p>Fourteen permanent accounts, proving out at $219,500 — and notice <b>Retained Earnings</b> now carries the $28,000 the closing entries moved into it.</p>
+            <div class="tb-sheet" style="margin-top:12px;">
+              <div class="tb-title"><b>Pioneer Advertising</b><span>Post-Closing Trial Balance</span><span>October 31, 2025</span></div>
+              <table class="tb-table atb-table">
+                <thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead>
+                <tbody id="pctb-body"></tbody>
+                <tfoot>
+                  <tr class="tb-totrow"><td class="acct">&nbsp;</td>
+                    <td class="amt d"><span class="tb-tot" id="pctb-totd"><span class="dbl">$219,500</span></span></td>
+                    <td class="amt c"><span class="tb-tot" id="pctb-totc"><span class="dbl">$219,500</span></span></td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="tb-prove" id="pctb-prove">&#9878; In balance — $219,500 = $219,500</div>
+              <div class="gp-actions" style="margin-top:12px;">
+                <button class="btn primary" id="pctb-total-btn">Total &amp; prove ▸</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="lec-sec" style="margin-top:22px;">
+            <div class="step-ey"><span class="no">!</span><span class="eyebrow">The same limitation</span></div>
+            <h3>Balanced still isn't proof of correct</h3>
+            <p>A post-closing trial balance shows the closing entries were properly posted and the accounting equation is in balance. But like every trial balance, it can't prove that <b>all</b> transactions were recorded or that the ledger is right — if Pioneer had skipped depreciation, this would still balance while the statements were wrong.</p>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The books are now clean: temporary accounts at zero, permanent balances proven and carried forward. Pioneer is ready to open November with a fresh income statement — and the cycle can begin again.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m4pctb-next">
+              <div><div class="up">Finish Module 4</div><b>The Accounting Cycle Summarized</b> — all nine steps together.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m4p-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 4 · LESSON 3 — THE ACCOUNTING CYCLE SUMMARIZED ============== -->
+    <section class="fa-screen" id="screen-m4cycle" aria-label="The Accounting Cycle Summarized">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m4y-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m4y-scroll">
+        <header class="m4-hero">
+          <div class="eyebrow">Module 4 · Lesson 3</div>
+          <h1>The Accounting Cycle Summarized</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.43</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">The nine required steps, in the order they run each period.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Everything you've built fits one repeating loop. Here are the nine steps of the accounting cycle, start to finish — tap any step to revisit what it does and jump back to its lesson.</p>
+
+          <div class="cyc9" id="cyc9" style="margin-top:6px;"></div>
+
+          <div class="cyc9-loop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-3-6.7M21 3v5h-5"/></svg>
+            Then it all begins again next period
+          </div>
+
+          <div class="m4-complete" id="m4-complete" style="margin-top:20px;">
+            <div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <h3>You've completed the cycle</h3>
+            <p>From analyzing a transaction to proving the post-closing trial balance, you've walked every step of the accounting information system. That's the whole recording-to-reporting loop — the foundation everything else in accounting is built on.</p>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="m4y-home" style="margin-top:4px;">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -4631,7 +4813,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -4658,9 +4840,11 @@
       if (p.m3CapDone) state.m3CapDone = true;
       if (p.m4IntroDone) state.m4IntroDone = true;
       if (p.m4CloseDone) state.m4CloseDone = true;
+      if (p.m4PctbDone) state.m4PctbDone = true;
+      if (p.m4CycleDone) state.m4CycleDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -4685,7 +4869,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -4722,7 +4906,9 @@
       { done: function () { return state.m3AtbDone; }, open: function () { openM3Atb(); }, label: 'The Adjusted Trial Balance' },
       { done: function () { return state.m3CapDone; }, open: function () { openM3Cap(); }, label: 'the Module 3 Capstone' },
       { done: function () { return state.m4IntroDone; }, open: function () { openM4Intro(); }, label: 'Module 4 · Introduction' },
-      { done: function () { return state.m4CloseDone; }, open: function () { openM4Close(); }, label: 'The Closing Process' }
+      { done: function () { return state.m4CloseDone; }, open: function () { openM4Close(); }, label: 'The Closing Process' },
+      { done: function () { return state.m4PctbDone; }, open: function () { openM4Pctb(); }, label: 'The Post-Closing Trial Balance' },
+      { done: function () { return state.m4CycleDone; }, open: function () { openM4Cycle(); }, label: 'The Accounting Cycle Summarized' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -7417,7 +7603,91 @@
   $('start-m4close-card').addEventListener('click', openM4Close);
   $('m4c-back').addEventListener('click', function () { goScreen('home'); });
   $('m4c-home').addEventListener('click', function () { goScreen('home'); });
-  $('m4close-next').addEventListener('click', function () { goScreen('home'); });
+  $('m4close-next').addEventListener('click', function () { openM4Pctb(); });
+
+  /* ============================================================
+     MODULE 4 — Lesson 2: The Post-Closing Trial Balance (Illustration 2.42)
+     ============================================================ */
+  var PCTB_ROWS = [
+    ['Cash', '80,000', ''], ['Accounts Receivable', '74,000', ''],
+    ['Allowance for Doubtful Accounts', '', '1,600'], ['Supplies', '10,000', ''],
+    ['Prepaid Insurance', '5,500', ''], ['Equipment', '50,000', ''],
+    ['Accumulated Depreciation—Equipment', '', '400'], ['Notes Payable', '', '50,000'],
+    ['Accounts Payable', '', '25,000'], ['Unearned Service Revenue', '', '8,000'],
+    ['Salaries and Wages Payable', '', '6,000'], ['Interest Payable', '', '500'],
+    ['Common Stock', '', '100,000'], ['Retained Earnings', '', '28,000']
+  ];
+  (function renderPctb() {
+    var firstD = true, firstC = true;
+    $('pctb-body').innerHTML = PCTB_ROWS.map(function (r) {
+      var d = '', c = '';
+      if (r[1]) { d = (firstD ? '$' : '') + r[1]; firstD = false; }
+      if (r[2]) { c = (firstC ? '$' : '') + r[2]; firstC = false; }
+      var isRE = r[0] === 'Retained Earnings';
+      return '<tr' + (isRE ? ' class="adj"' : '') + '><td class="acct">' + r[0] + (isRE ? '<span class="atb-tag">new</span>' : '') + '</td>' +
+        '<td class="amt d">' + d + '</td><td class="amt c">' + c + '</td></tr>';
+    }).join('');
+    document.querySelector('#screen-m4pctb .atb-table').classList.add('hl');
+  })();
+  $('pctb-total-btn').addEventListener('click', function () {
+    $('pctb-totd').classList.add('on'); $('pctb-totc').classList.add('on'); $('pctb-prove').classList.add('on');
+    this.textContent = 'Proved · $219,500 = $219,500';
+    this.disabled = true;
+    if (!state.m4PctbDone) { state.m4PctbDone = true; save(); updateM4PctbPill(); }
+  });
+  function updateM4PctbPill() { var pill = $('m4pctb-pill'); if (pill) pill.textContent = state.m4PctbDone ? 'Done' : 'Start'; }
+  function openM4Pctb() { goScreen('m4pctb'); $('m4p-scroll').scrollTop = 0; }
+  $('start-m4pctb-card').addEventListener('click', openM4Pctb);
+  $('m4p-back').addEventListener('click', function () { goScreen('home'); });
+  $('m4p-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4pctb-next').addEventListener('click', function () { openM4Cycle(); });
+
+  /* ============================================================
+     MODULE 4 — Lesson 3: The Accounting Cycle Summarized (Illustration 2.43)
+     ============================================================ */
+  var CYC9 = [
+    { m: 'm1', mod: 'Module 1', d: 'Examine each source document and determine how the transaction affects assets, liabilities, and equity.', open: function () { openLesson(); } },
+    { m: 'm2', mod: 'Module 2 · The Journal', d: 'Record every transaction in the general journal in chronological order — debits first, then credits.', open: function () { openJournal(); } },
+    { m: 'm2', mod: 'Module 2 · The Ledger', d: 'Transfer each journal amount to its individual account in the general ledger.', open: function () { openLedger(); } },
+    { m: 'm2', mod: 'Module 2 · The Trial Balance', d: 'List every account balance and prove that total debits equal total credits.', open: function () { openTb(); } },
+    { m: 'm3', mod: 'Module 3 · Adjusting Entries', d: 'Journalize and post deferrals and accruals so revenues and expenses land in the right period.', open: function () { openM3Def(); } },
+    { m: 'm3', mod: 'Module 3 · Adjusted Trial Balance', d: 'Re-prove the equality after adjusting — the primary basis for the financial statements.', open: function () { openM3Atb(); } },
+    { m: 'm4', mod: 'Module 4 · Introduction', d: 'Prepare the income statement, retained earnings statement, and balance sheet from the adjusted trial balance.', open: function () { openM4Intro(); } },
+    { m: 'm4', mod: 'Module 4 · The Closing Process', d: 'Close the temporary accounts to Income Summary and move net income and dividends into Retained Earnings.', open: function () { openM4Close(); } },
+    { m: 'm4', mod: 'Module 4 · Post-Closing Trial Balance', d: 'Prove the permanent accounts are still in balance and ready to carry into the next period.', open: function () { openM4Pctb(); } }
+  ];
+  function renderCyc9() {
+    $('cyc9').innerHTML = CYCLE_STEPS.map(function (title, i) {
+      var s = CYC9[i];
+      return '<div class="cyc9-step ' + s.m + '" data-i="' + i + '">' +
+        '<button class="cyc9-top" aria-expanded="false"><span class="cyc9-badge">' + (i + 1) + '</span>' +
+        '<span class="cyc9-tt"><b>' + title + '</b><span class="mtag">' + s.mod + '</span></span>' +
+        '<svg class="icon chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg></button>' +
+        '<div class="cyc9-detail"><div class="inner"><p>' + s.d + '</p>' +
+        '<button class="cyc9-goto" data-goto="' + i + '">Open lesson <svg class="icon" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>' +
+        '</div></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('cyc9').querySelectorAll('.cyc9-step')).forEach(function (step) {
+      var top = step.querySelector('.cyc9-top');
+      top.addEventListener('click', function () {
+        var open = step.classList.toggle('open');
+        top.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      var goto = step.querySelector('.cyc9-goto');
+      goto.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        CYC9[parseInt(this.getAttribute('data-goto'), 10)].open();
+      });
+    });
+  }
+  function updateM4CyclePill() { var pill = $('m4cycle-pill'); if (pill) pill.textContent = state.m4CycleDone ? 'Done' : 'Start'; }
+  function openM4Cycle() {
+    goScreen('m4cycle'); $('m4y-scroll').scrollTop = 0;
+    if (!state.m4CycleDone) { state.m4CycleDone = true; save(); updateM4CyclePill(); }
+  }
+  $('start-m4cycle-card').addEventListener('click', openM4Cycle);
+  $('m4y-back').addEventListener('click', function () { goScreen('home'); });
+  $('m4y-home').addEventListener('click', function () { goScreen('home'); });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -7495,6 +7765,10 @@
   cloRender();
   renderM4c();
   updateM4ClosePill();
+  renderCycleInto('m4p-cycle', 8);
+  updateM4PctbPill();
+  renderCyc9();
+  updateM4CyclePill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
