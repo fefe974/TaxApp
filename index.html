@@ -6774,7 +6774,7 @@
           <!-- Workbook (Excel-skinned schedule, rendered by JS) -->
           <div class="aw-panel" id="a2-book">
             <div class="aw-h">Supporting schedules · workbook</div>
-            <div class="aw-sub">Before you post the entries, build the four supporting schedules here — the way you would in Excel. Type each driver figure (a number, or a formula like <b>=5*700</b>); the totals roll up automatically. Then check the workbook.</div>
+            <div class="aw-sub">Build the four supporting schedules here, the way you would in Excel. Read the figures off the source documents in the AJE tabs and enter each driver cell — a number, or a formula like <b>=250*4</b>. The totals roll up automatically; then check the workbook.</div>
             <div id="a2-book-host"></div>
           </div>
 
@@ -11112,7 +11112,7 @@
         '<div class="xls-foot"><span class="xls-tab">' + (spec.tab || 'Sheet1') + '</span><span class="sp"></span><button class="xls-btn" id="' + P + '-csv" type="button">&#8681; Download .csv</button><button class="xls-btn pri" id="' + P + '-check" type="button">Check the workbook</button></div>' +
       '</div>' +
       '<div class="gp-feedback" id="' + P + '-fb" style="margin-top:12px"></div>' +
-      '<div class="xls-note">A working schedule — type a number or a simple formula (e.g. <b>=8*500</b>) in the green cells; the totals roll up automatically. Tap a cell to see its formula in the bar above, just like Excel.</div>';
+      '<div class="xls-note">A working schedule — type a number or a simple formula (e.g. <b>=250*4</b>) in the green cells; the totals roll up automatically. Tap a cell to see its formula in the bar above, just like Excel.</div>';
     var rowByRef = {}; spec.rows.forEach(function (r) { if (r.b) rowByRef[ref(r.n)] = r; });
     function g(R) { var v = vals[R]; return (v == null || isNaN(v)) ? 0 : v; }
     function cbTd(R) { return host.querySelector('td.cb[data-ref="' + R + '"]'); }
@@ -11141,7 +11141,7 @@
       recompute(); var allOk = true, anyBlank = false;
       spec.rows.forEach(function (r) { if (!r.b || r.b.ans == null) return; var R = ref(r.n), td = cbTd(R); if (!td) return; td.classList.remove('ok', 'no'); var v = vals[R]; if (v == null || isNaN(v)) { anyBlank = true; allOk = false; td.classList.add('no'); return; } if (Math.round(v) === r.b.ans) td.classList.add('ok'); else { td.classList.add('no'); allOk = false; } });
       var fb = $(P + '-fb');
-      if (!allOk) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + (anyBlank ? 'Fill in every green cell — a number or a formula like <b>=8*500</b>.' : 'Some cells are off — the red ones need another look. The totals recalculate as you fix the drivers.') + '</div>'; return; }
+      if (!allOk) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + (anyBlank ? 'Fill in every green cell — a number or a formula like <b>=250*4</b>.' : 'Some cells are off — the red ones need another look. The totals recalculate as you fix the drivers.') + '</div>'; return; }
       fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Workbook ties out.</b> Your schedules give $2,120, $94,000, $4,900, and $4,200 — the figures for AJE-1 through AJE-4.</div>';
       Array.prototype.slice.call(host.querySelectorAll('.xls-in')).forEach(function (inp) { inp.disabled = true; });
       var cb = $(P + '-check'); cb.disabled = true; cb.textContent = 'Checked ✓';
@@ -11161,23 +11161,23 @@
       id: 'bk', title: 'Baylor Company — AJE schedules', tab: 'Schedules', file: 'baylor-schedules',
       rows: [
         { n: 1, hd: true, a: 'Accrued salaries — AJE-1', b: null },
-        { n: 2, a: 'Clinical staff &mdash; 5 &times; $700', b: { kind: 'input', ans: 3500 } },
-        { n: 3, a: 'Assistants &mdash; 3 &times; $600', b: { kind: 'input', ans: 1800 } },
+        { n: 2, a: 'Clinical staff wages', b: { kind: 'input', ans: 3500 } },
+        { n: 3, a: 'Assistant wages', b: { kind: 'input', ans: 1800 } },
         { n: 4, a: 'Weekly payroll', b: { kind: 'calc', fx: '=B2+B3', ans: 5300, compute: function (g) { return g('B2') + g('B3'); } } },
-        { n: 5, a: 'Daily payroll &mdash; &divide; 5 days', b: { kind: 'calc', fx: '=B4/5', ans: 1060, compute: function (g) { return g('B4') / 5; } } },
-        { n: 6, a: 'Accrual &mdash; &times; 2 days unpaid', b: { kind: 'calc', fx: '=B5*2', ans: 2120, compute: function (g) { return g('B5') * 2; } } },
+        { n: 5, a: 'Daily payroll', b: { kind: 'calc', fx: '=B4/5', ans: 1060, compute: function (g) { return g('B4') / 5; } } },
+        { n: 6, a: 'Salaries to accrue', b: { kind: 'calc', fx: '=B5*2', ans: 2120, compute: function (g) { return g('B5') * 2; } } },
         { n: 7, hd: true, a: 'Rent earned — AJE-2', b: null },
-        { n: 8, a: 'Group A &mdash; 2 mo &times; $6,000 &times; 5', b: { kind: 'input', ans: 60000 } },
-        { n: 9, a: 'Group B &mdash; 1 mo &times; $8,500 &times; 4', b: { kind: 'input', ans: 34000 } },
+        { n: 8, a: 'Group A rent earned', b: { kind: 'input', ans: 60000 } },
+        { n: 9, a: 'Group B rent earned', b: { kind: 'input', ans: 34000 } },
         { n: 10, a: 'Rent revenue earned', b: { kind: 'calc', fx: '=B8+B9', ans: 94000, compute: function (g) { return g('B8') + g('B9'); } } },
         { n: 11, hd: true, a: 'Advertising used — AJE-3', b: null },
-        { n: 12, a: 'A650 &mdash; 8 issues &times; $500', b: { kind: 'input', ans: 4000 } },
-        { n: 13, a: 'B974 &mdash; 3 issues &times; $300', b: { kind: 'input', ans: 900 } },
+        { n: 12, a: 'A650 advertising expired', b: { kind: 'input', ans: 4000 } },
+        { n: 13, a: 'B974 advertising expired', b: { kind: 'input', ans: 900 } },
         { n: 14, a: 'Advertising expense', b: { kind: 'calc', fx: '=B12+B13', ans: 4900, compute: function (g) { return g('B12') + g('B13'); } } },
         { n: 15, hd: true, a: 'Interest accrued — AJE-4', b: null },
-        { n: 16, a: 'Annual interest &mdash; $60,000 &times; 12%', b: { kind: 'input', ans: 7200 } },
-        { n: 17, a: 'Months outstanding (Jun&ndash;Dec)', b: { kind: 'input', ans: 7 } },
-        { n: 18, a: 'Interest accrued &mdash; &times; n&divide;12', b: { kind: 'calc', fx: '=B16*B17/12', ans: 4200, compute: function (g) { return g('B16') * g('B17') / 12; } } }
+        { n: 16, a: 'Annual interest', b: { kind: 'input', ans: 7200 } },
+        { n: 17, a: 'Months outstanding', b: { kind: 'input', ans: 7 } },
+        { n: 18, a: 'Interest accrued', b: { kind: 'calc', fx: '=B16*B17/12', ans: 4200, compute: function (g) { return g('B16') * g('B17') / 12; } } }
       ],
       onSolved: function () { markA2Tab('book'); }
     });
