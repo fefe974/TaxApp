@@ -2290,6 +2290,14 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <button class="lesson-card" id="start-m5close-card">
+              <span class="lnum">4</span>
+              <span class="lbody"><b>Closing Entries</b><span>Closing the merchandiser's books</span></span>
+              <span class="pill-mini ready" id="m5close-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -5417,7 +5425,93 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5bs-next">
+              <div><div class="up">Finish Module 5</div><b>Closing Entries</b> — close the merchandiser's books.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="m5b-home" style="margin-top:4px;">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 4 — CLOSING ENTRIES (Uptown, merchandiser) ============== -->
+    <section class="fa-screen" id="screen-m5close" aria-label="Closing Entries for a Merchandiser">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5c-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5c-scroll">
+        <header class="m5-hero">
+          <div class="eyebrow">Module 5 · Lesson 4</div>
+          <h1>Closing the Merchandiser's Books</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.5</span>
+            <div>
+              <div class="lo-t">Section</div>
+              <div class="lo-d">The same four closing entries — now with more revenues and expenses.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Uptown closes its books exactly like a service company does — four entries through <b>Income Summary</b>. There are just more accounts to sweep up.</p>
+
+          <section class="m2-sec">
+            <h2>What's different for a merchandiser</h2>
+            <div class="m3-prev" style="margin-top:6px;">
+              <div class="m3-prevcard def" style="--pc:var(--asset)"><div class="h"><span class="tag">Revenues</span></div><p>Two revenue accounts close together: <b>Sales Revenue</b> $400,000 and <b>Interest Revenue</b> $800 → $400,800.</p></div>
+              <div class="m3-prevcard acc"><div class="h"><span class="tag">Expenses</span></div><p><b>Cost of Goods Sold</b> $316,000 joins the operating and other expenses — twelve accounts totaling $388,600.</p></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>The four closing entries</h2>
+            <p>Step through Uptown's closing entries. Income Summary nets to $12,200 of income, and Retained Earnings moves from $16,200 to $26,400.</p>
+            <div class="clo-stepper" id="mcl-stepper"></div>
+            <div class="clo-card">
+              <div class="clo-eh" id="mcl-eh"></div>
+              <div class="clo-body">
+                <div class="clo-sub">Closing journal entry</div>
+                <div id="mcl-je"></div>
+                <div class="clo-sub" style="margin-top:14px;">Posting to the ledger</div>
+                <div class="clo-tacts">
+                  <div class="clo-ta is"><div class="tt">Income Summary</div><div class="grid" id="mcl-is"></div></div>
+                  <div class="clo-ta re"><div class="tt">Retained Earnings</div><div class="grid" id="mcl-re"></div></div>
+                </div>
+                <div class="clo-actions">
+                  <button class="btn" id="mcl-reset">Reset</button>
+                  <button class="btn primary" id="mcl-next">Next step ▸</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>How it ties together</h2>
+            <div style="margin-top:6px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">✓</span><div class="rb"><b>Net income matches the income statement</b><p>$400,800 revenues − $388,600 expenses = <b>$12,200</b> — the same net income you computed in Lesson 1.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">✓</span><div class="rb"><b>Retained Earnings matches the statements</b><p>$16,200 beginning + $12,200 − $2,000 dividends = <b>$26,400</b> — exactly the retained earnings on the balance sheet.</p></div></div>
+            </div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Merchandiser or service company, closing works the same way: revenues and expenses flow through Income Summary to Retained Earnings, dividends close straight to Retained Earnings, and every temporary account ends at zero — ready for next year.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="m5c-home" style="margin-top:4px;">Back to course</button>
           </div>
         </div>
       </div>
@@ -5441,7 +5535,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -5475,9 +5569,10 @@
       if (p.m5IsDone) state.m5IsDone = true;
       if (p.m5ReDone) state.m5ReDone = true;
       if (p.m5BsDone) state.m5BsDone = true;
+      if (p.m5CloseDone) state.m5CloseDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -5502,7 +5597,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -5546,7 +5641,8 @@
       { done: function () { return state.m5IntroDone; }, open: function () { openM5Intro(); }, label: 'Module 5 · Introduction' },
       { done: function () { return state.m5IsDone; }, open: function () { openM5Is(); }, label: 'The Income Statement' },
       { done: function () { return state.m5ReDone; }, open: function () { openM5Re(); }, label: 'The Retained Earnings Statement' },
-      { done: function () { return state.m5BsDone; }, open: function () { openM5Bs(); }, label: 'The Classified Balance Sheet' }
+      { done: function () { return state.m5BsDone; }, open: function () { openM5Bs(); }, label: 'The Classified Balance Sheet' },
+      { done: function () { return state.m5CloseDone; }, open: function () { openM5Close(); }, label: 'Closing Entries' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -8701,6 +8797,94 @@
   $('start-m5bs-card').addEventListener('click', openM5Bs);
   $('m5b-back').addEventListener('click', function () { goScreen('home'); });
   $('m5b-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5bs-next').addEventListener('click', function () { openM5Close(); });
+
+  /* ============================================================
+     MODULE 5 — Lesson 4: Closing Entries for a Merchandiser (Uptown)
+     ============================================================ */
+  var MCL_STEPS = [
+    {
+      title: 'Close revenues to Income Summary',
+      dr: [{ a: 'Sales Revenue', v: '400,000' }, { a: 'Interest Revenue', v: '800' }],
+      cr: [{ a: 'Income Summary', v: '400,800' }],
+      memo: 'To close revenues to Income Summary',
+      is: { side: 'c', n: '(1)', v: '400,800' }
+    },
+    {
+      title: 'Close expenses to Income Summary',
+      dr: [{ a: 'Income Summary', v: '388,600' }],
+      cr: [{ a: 'Cost of Goods Sold', v: '316,000' }, { a: 'Salaries and Wages Expense (sales)', v: '20,000' }, { a: 'Advertising Expense', v: '10,200' }, { a: 'Salaries and Wages Expense (general)', v: '19,000' }, { a: 'Depreciation Expense', v: '6,700' }, { a: 'Rent Expense', v: '4,300' }, { a: 'Property Tax Expense', v: '5,300' }, { a: 'Bad Debt Expense', v: '1,000' }, { a: 'Telephone and Internet Expense', v: '600' }, { a: 'Insurance Expense', v: '360' }, { a: 'Interest Expense', v: '1,700' }, { a: 'Income Tax Expense', v: '3,440' }],
+      memo: 'To close expenses to Income Summary',
+      is: { side: 'd', n: '(2)', v: '388,600' }
+    },
+    {
+      title: 'Close net income to Retained Earnings',
+      dr: [{ a: 'Income Summary', v: '12,200' }], cr: [{ a: 'Retained Earnings', v: '12,200' }],
+      memo: 'To close net income ($400,800 − $388,600) to Retained Earnings',
+      is: { side: 'd', n: '(3)', v: '12,200' }, re: { side: 'c', n: '(3)', v: '12,200' }
+    },
+    {
+      title: 'Close Dividends to Retained Earnings',
+      dr: [{ a: 'Retained Earnings', v: '2,000' }], cr: [{ a: 'Dividends', v: '2,000' }],
+      memo: 'To close Dividends to Retained Earnings',
+      re: { side: 'd', n: '(4)', v: '2,000' }
+    }
+  ];
+  var mclStep = -1;
+  function mclRenderStepper() {
+    $('mcl-stepper').innerHTML = MCL_STEPS.map(function (s, i) {
+      return '<div class="cs ' + (i <= mclStep ? 'done' : (i === mclStep + 1 ? 'on' : '')) + '"></div>';
+    }).join('');
+  }
+  function mclRenderEntry() {
+    if (mclStep < 0) {
+      $('mcl-eh').innerHTML = '<div class="step">Closing entries · Dec. 31, 2025</div><div class="desc">Tap <b>Next step</b> to post the first closing entry.</div>';
+      $('mcl-je').innerHTML = '<div class="clo-je" style="text-align:center;color:var(--ink-faint);font-size:12px;padding:16px 12px;">The journal entry appears here as you step through.</div>';
+      return;
+    }
+    var s = MCL_STEPS[mclStep];
+    $('mcl-eh').innerHTML = '<div class="step">Entry ' + (mclStep + 1) + ' of 4</div><div class="desc">' + s.title + '</div>';
+    var rows = '<div class="je-head"><span>Account</span><span class="h-d">Debit</span><span class="h-c">Credit</span></div>';
+    s.dr.forEach(function (a) { rows += '<div class="je-row"><span class="je-acct">' + a.a + '</span><span class="je-d">' + a.v + '</span><span class="je-c"></span></div>'; });
+    s.cr.forEach(function (a) { rows += '<div class="je-row cr"><span class="je-acct">' + a.a + '</span><span class="je-d"></span><span class="je-c">' + a.v + '</span></div>'; });
+    $('mcl-je').innerHTML = '<div class="clo-je"><div class="jdate">Dec. 31</div>' + rows + '<div class="memo">(' + s.memo + ')</div></div>';
+  }
+  function mclRenderTaccts() {
+    var isL = [], isR = [], reL = [], reR = [{ n: 'Bal. 1/1', v: '16,200' }];
+    for (var i = 0; i <= mclStep; i++) {
+      var s = MCL_STEPS[i];
+      if (s.is) { (s.is.side === 'd' ? isL : isR).push(s.is); }
+      if (s.re) { (s.re.side === 'd' ? reL : reR).push(s.re); }
+    }
+    function grid(L, R, closed, bal) {
+      var colL = L.map(function (x) { return '<div class="row"><span class="rn">' + x.n + '</span><span>' + x.v + '</span></div>'; }).join('') || '&nbsp;';
+      var colR = R.map(function (x) { return '<div class="row"><span class="rn">' + x.n + '</span><span>' + x.v + '</span></div>'; }).join('') || '&nbsp;';
+      var out = '<div class="col l">' + colL + '</div><div class="col r">' + colR + '</div>';
+      if (closed) out += '<div class="balrow zero"><span>Balance</span><span>0</span></div>';
+      else if (bal != null) out += '<div class="balrow carry"><span>Balance</span><span>' + bal + '</span></div>';
+      return out;
+    }
+    var isClosed = mclStep >= 2;
+    var reBalVal = mclStep >= 3 ? '26,400' : (mclStep >= 2 ? '28,400' : '16,200');
+    $('mcl-is').innerHTML = grid(isL, isR, isClosed, null);
+    $('mcl-re').innerHTML = grid(reL, reR, false, reBalVal);
+  }
+  function mclRender() { mclRenderStepper(); mclRenderEntry(); mclRenderTaccts(); }
+  $('mcl-next').addEventListener('click', function () {
+    if (mclStep >= MCL_STEPS.length - 1) { mclStep = -1; mclRender(); this.textContent = 'Next step ▸'; return; }
+    mclStep++;
+    mclRender();
+    if (mclStep === MCL_STEPS.length - 1) {
+      this.textContent = 'Start over ↺';
+      if (!state.m5CloseDone) { state.m5CloseDone = true; save(); updateM5ClosePill(); }
+    } else { this.textContent = 'Next step ▸'; }
+  });
+  $('mcl-reset').addEventListener('click', function () { mclStep = -1; mclRender(); $('mcl-next').textContent = 'Next step ▸'; });
+  function updateM5ClosePill() { var pill = $('m5close-pill'); if (pill) pill.textContent = state.m5CloseDone ? 'Done' : 'Start'; }
+  function openM5Close() { goScreen('m5close'); $('m5c-scroll').scrollTop = 0; }
+  $('start-m5close-card').addEventListener('click', openM5Close);
+  $('m5c-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5c-home').addEventListener('click', function () { goScreen('home'); });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -8791,6 +8975,8 @@
   updateM5RePill();
   renderM5b();
   updateM5BsPill();
+  mclRender();
+  updateM5ClosePill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
