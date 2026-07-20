@@ -1,0 +1,10 @@
+{
+  "name": "financial-accounting-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Financial Accounting — a self-contained, offline-capable PWA course app (single index.html).",
+  "scripts": {
+    "serve": "npx --yes serve .",
+    "serve:python": "python3 -m http.server 8080"
+  }
+}

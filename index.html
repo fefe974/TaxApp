@@ -11312,6 +11312,10 @@
   updateApp2Pill();
   updateBeginBtn();
   a11yify(document);
+  /* PWA: register the service worker when served over http(s); no-op under file:// or in the WebView/Artifact */
+  if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+    try { navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
+  }
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
 })();
 </script>
