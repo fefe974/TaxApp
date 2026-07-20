@@ -1928,6 +1928,47 @@
   .mis-inp.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
   .mis-inp.no { border-color: var(--warn); background: var(--warn-bg); }
   .mis-badge { display: inline-block; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--asset); background: var(--asset-bg); border-radius: 999px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
+
+  /* ===== Module 6 — Cash-Basis vs. Accrual-Basis (Appendix 2A) ===== */
+  .module-head.m6 .mod-no { background: linear-gradient(150deg, var(--credit), #7a3d0e); color: #fbeee0; }
+  .m6-hero {
+    position: relative; overflow: hidden; padding: 26px 20px 22px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(178,90,21,.32), transparent 55%),
+      linear-gradient(160deg, #3a2110 0%, #45280f 55%, #2a1708 100%);
+    color: #f6ece1;
+  }
+  .m6-hero .eyebrow { color: rgba(240,222,200,.9); }
+  .m6-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(25px, 7vw, 32px); line-height: 1.12; margin-top: 8px; letter-spacing: -.01em; text-wrap: balance; }
+  .m6-hero .lo-callout { background: rgba(255,255,255,.08); border-left-color: var(--credit); }
+  .m6-hero .lo-callout .lo-badge { background: var(--credit); }
+  .m6-hero .lo-callout .lo-t { color: rgba(240,222,200,.9); }
+
+  /* cash vs accrual monthly compare */
+  .cba-tbl { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .cba-cap { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--credit) 7%, var(--card)); }
+  .cba-cap .tag { font-size: 9.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--credit); }
+  .cba-cap .t { font-size: 12px; font-weight: 700; color: var(--ink); font-family: var(--serif); }
+  .cba-tbl table { width: 100%; border-collapse: collapse; }
+  .cba-tbl th { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); padding: 9px 12px 7px; text-align: right; }
+  .cba-tbl th.mh { text-align: left; }
+  .cba-tbl th.ca { color: var(--teal); } .cba-tbl th.ac { color: var(--asset); }
+  .cba-tbl td { padding: 7px 12px; font-size: 13px; }
+  .cba-tbl td.mo { color: var(--ink); font-weight: 600; }
+  .cba-tbl td.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+  .cba-tbl tr:not(:last-child) td { border-bottom: 1px solid var(--line); }
+  .cba-tbl tr.tot td { font-weight: 800; color: var(--ink); border-top: 2px solid var(--ink); }
+  .cba-tbl tr.tot td.num { color: var(--good); }
+  .cba-tbl .neg { color: var(--warn); }
+
+  /* conversion formula cards */
+  .conv-f { border: 1px solid var(--line); border-left: 4px solid var(--fc, var(--credit)); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); padding: 12px 13px; }
+  .conv-f + .conv-f { margin-top: 10px; }
+  .conv-f .fh { font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .conv-f .fe { font-size: 12px; line-height: 1.6; color: var(--ink-soft); }
+  .conv-f .fe .pos { color: var(--good); font-weight: 700; }
+  .conv-f .fe .neg { color: var(--warn); font-weight: 700; }
+  .conv-f .fe b { color: var(--ink); }
 </style>
 
 <div id="fa-app">
@@ -2294,6 +2335,27 @@
               <span class="lnum">4</span>
               <span class="lbody"><b>Closing Entries</b><span>Closing the merchandiser's books</span></span>
               <span class="pill-mini ready" id="m5close-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+
+            <div class="module-head m6">
+              <span class="mod-no">6</span>
+              <div class="mod-body"><b>Cash-Basis vs. Accrual-Basis Accounting</b><span>Appendix 2A · Learning Objective 6</span></div>
+            </div>
+            <button class="lesson-card" id="start-m6cb-card">
+              <span class="lnum">1</span>
+              <span class="lbody"><b>Cash Basis vs. Accrual Basis</b><span>Same profit, different timing · Illustrations 2A.1–2A.4</span></span>
+              <span class="pill-mini ready" id="m6cb-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m6cv-card">
+              <span class="lnum">2</span>
+              <span class="lbody"><b>Converting Cash Basis to Accrual</b><span>The conversion worksheet · Illustrations 2A.5–2A.8</span></span>
+              <span class="pill-mini ready" id="m6cv-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -5517,6 +5579,221 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 6 · LESSON 1 — CASH BASIS vs ACCRUAL BASIS (Appendix 2A) ============== -->
+    <section class="fa-screen" id="screen-m6cb" aria-label="Cash Basis vs Accrual Basis">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m6c-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m6c-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Appendix 2A · Learning Objective 6</div>
+          <h1>Cash Basis vs. Accrual Basis</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">6</span>
+            <div>
+              <div class="lo-t">Learning Objective</div>
+              <div class="lo-d">Differentiate the cash basis of accounting from the accrual basis.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Most companies use the <b>accrual basis</b> — but some small firms and individuals use the <b>cash basis</b>. The two can report the same total profit while telling very different stories period by period.</p>
+
+          <section class="m2-sec">
+            <h2>Two ways to keep score</h2>
+            <div class="svm" style="margin-top:12px;">
+              <div class="svm-card mer" style="--sc:var(--asset)">
+                <div class="sh"><b>Accrual basis</b><span>GAAP</span></div>
+                <div class="sb">
+                  <div class="svm-line"><span>Revenue when</span><span>earned</span></div>
+                  <div class="svm-line"><span>Expense when</span><span>incurred</span></div>
+                  <div class="svm-line"><span>Follows the recognition principles</span><span>✓</span></div>
+                </div>
+              </div>
+              <div class="svm-card svc">
+                <div class="sh"><b>Cash basis</b><span>Not GAAP</span></div>
+                <div class="sb">
+                  <div class="svm-line"><span>Revenue when</span><span>cash in</span></div>
+                  <div class="svm-line"><span>Expense when</span><span>cash out</span></div>
+                  <div class="svm-line"><span>Ignores the recognition principles</span><span>✗</span></div>
+                </div>
+              </div>
+            </div>
+            <p style="margin-top:12px;">The cash basis ignores two principles — <b>revenue recognition</b> and <b>expense recognition</b> — so its statements are <b>not in conformity with GAAP</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Quality Contractor · one garage, two bases</h2>
+            <p>Quality signs a $22,000 garage job. In <b>January</b> it builds and delivers the garage (and buys $18,000 of supplies on account). In <b>February</b> it collects the $22,000. In <b>March</b> it pays the $18,000. Watch where the profit lands.</p>
+            <div class="cba-tbl" style="margin-top:12px;">
+              <div class="cba-cap"><span class="tag">Ill. 2A.1–2A.2</span><span class="t">Net income by month</span></div>
+              <table>
+                <thead><tr><th class="mh">Month</th><th class="ca">Cash basis</th><th class="ac">Accrual basis</th></tr></thead>
+                <tbody>
+                  <tr><td class="mo">January</td><td class="num">$0</td><td class="num">$4,000</td></tr>
+                  <tr><td class="mo">February</td><td class="num">$22,000</td><td class="num">$0</td></tr>
+                  <tr><td class="mo">March</td><td class="num neg">$(18,000)</td><td class="num">$0</td></tr>
+                  <tr class="tot"><td class="mo">Total</td><td class="num">$4,000</td><td class="num">$4,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--credit);color:#2a1708;">i</span>
+              <div>Same <b>$4,000</b> total — but the accrual basis puts all the profit in <b>January</b>, when the work was actually done. The difference is <b>timing</b>.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Why the cash basis distorts the picture</h2>
+            <p>In January, the cash basis ignores what really happened:</p>
+            <div style="margin-top:10px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">1</span><div class="rb"><b>Understates revenues &amp; assets</b><p>It ignores the $22,000 <b>accounts receivable</b> — a near-term cash inflow.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">2</span><div class="rb"><b>Understates expenses &amp; liabilities</b><p>It ignores the $18,000 <b>accounts payable</b> — a near-term cash outflow.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">3</span><div class="rb"><b>Distorts owners' equity</b><p>It understates equity in January, then overstates it in February — the timing is off every month.</p></div></div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+              <div>The <b>modified cash basis</b> blends the two — cash basis, but with accrual-style treatment of big items (capitalizing/depreciating assets, recording inventory). Doctors, lawyers, accountants, and small retailers often use it.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Cash or accrual?</h2>
+            <p>Tap the basis each statement describes.</p>
+            <div class="wr-list" id="m6c-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m6c-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Cash accounting answers "did money move?" Accrual accounting answers "did we earn it or owe it?" Over a long enough span they agree — but only accrual tells you how a business performed in <i>this</i> period, which is why GAAP requires it.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m6cb-next">
+              <div><div class="up">Up next in Appendix 2A</div><b>Converting Cash Basis to Accrual</b> — the conversion worksheet.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m6c-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 6 · LESSON 2 — CONVERSION CASH TO ACCRUAL (Appendix 2A) ============== -->
+    <section class="fa-screen" id="screen-m6cv" aria-label="Converting Cash Basis to Accrual">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m6v-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m6v-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Appendix 2A · Lesson 2</div>
+          <h1>Converting Cash Basis to Accrual</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2A</span>
+            <div>
+              <div class="lo-t">Illustrations 2A.5–2A.8</div>
+              <div class="lo-d">Adjust cash figures for the changes in receivables, payables, and prepayments.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede"><b>Dr. Diane Windsor</b> keeps her books on the cash basis, but investors want accrual numbers. In 2025 she received <b>$300,000</b> from patients and paid <b>$170,000</b> of expenses — a $130,000 cash excess. Let's convert.</p>
+
+          <section class="m2-sec">
+            <h2>What changed during the year</h2>
+            <div class="cba-tbl" style="margin-top:12px;">
+              <div class="cba-cap"><span class="tag">Illustration 2A.5</span><span class="t">Dr. Windsor's balances</span></div>
+              <table>
+                <thead><tr><th class="mh">Account</th><th>Jan. 1</th><th>Dec. 31</th></tr></thead>
+                <tbody>
+                  <tr><td class="mo">Accounts receivable</td><td class="num">$12,000</td><td class="num">$9,000</td></tr>
+                  <tr><td class="mo">Unearned service revenue</td><td class="num">$0</td><td class="num">4,000</td></tr>
+                  <tr><td class="mo">Accrued liabilities</td><td class="num">2,000</td><td class="num">5,500</td></tr>
+                  <tr><td class="mo">Prepaid expenses</td><td class="num">1,800</td><td class="num">2,700</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>The two conversion rules</h2>
+            <div class="conv-f" style="--fc:var(--good)">
+              <div class="fh">Cash receipts → Service revenue</div>
+              <div class="fe">Cash receipts <span class="neg">− beginning A/R</span> <span class="pos">+ ending A/R</span> <span class="pos">+ beginning unearned</span> <span class="neg">− ending unearned</span> = <b>accrual revenue</b></div>
+            </div>
+            <div class="conv-f" style="--fc:var(--warn)">
+              <div class="fh">Cash paid → Operating expenses</div>
+              <div class="fe">Cash paid <span class="pos">+ beginning prepaid</span> <span class="neg">− ending prepaid</span> <span class="neg">− beginning accrued liab.</span> <span class="pos">+ ending accrued liab.</span> = <b>accrual expense</b></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2A.8 · The conversion worksheet</h2>
+            <p>Apply the adjustments and compute the <b>three highlighted figures</b>.</p>
+            <div class="mis" id="mcv" style="margin-top:12px;">
+              <div class="mis-title"><b>Diane Windsor, D.D.S.</b><span>Cash Basis → Accrual Basis</span><span>For the Year 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row sec"><span class="l">Collections from customers</span><span class="c1"></span><span class="c2">$300,000</span></div>
+                <div class="mis-row ind1"><span class="l">− Accounts receivable, Jan. 1</span><span class="c1">(12,000)</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">+ Accounts receivable, Dec. 31</span><span class="c1">9,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1 rule"><span class="l">− Unearned service revenue, Dec. 31</span><span class="c1">(4,000)</span><span class="c2"></span></div>
+                <div class="mis-row key"><span class="l">Service revenue (accrual)<span class="mis-badge">a</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mcv-rev" inputmode="numeric" placeholder="?" aria-label="Service revenue accrual"></span></div>
+                <div class="mis-row sec"><span class="l">Disbursements for expenses</span><span class="c1"></span><span class="c2">170,000</span></div>
+                <div class="mis-row ind1"><span class="l">+ Prepaid expenses, Jan. 1</span><span class="c1">1,800</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">− Prepaid expenses, Dec. 31</span><span class="c1">(2,700)</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">− Accrued liabilities, Jan. 1</span><span class="c1">(2,000)</span><span class="c2"></span></div>
+                <div class="mis-row ind1 rule"><span class="l">+ Accrued liabilities, Dec. 31</span><span class="c1">5,500</span><span class="c2"></span></div>
+                <div class="mis-row key"><span class="l">Operating expenses (accrual)<span class="mis-badge">b</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mcv-exp" inputmode="numeric" placeholder="?" aria-label="Operating expenses accrual"></span></div>
+                <div class="mis-row sub"><span class="l">Excess of collections over disbursements (cash)</span><span class="c1"></span><span class="c2">130,000</span></div>
+                <div class="mis-row grand"><span class="l">Net income (accrual)<span class="mis-badge">c</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mcv-ni" inputmode="numeric" placeholder="?" aria-label="Net income accrual"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="mcv-check">Check the conversion</button></div>
+            <div class="gp-feedback" id="mcv-fb" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="ill-note" style="margin-top:4px;">
+            <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+            <div>In any cash-to-accrual conversion, <b>depreciation or amortization</b> is an additional expense to subtract in arriving at accrual net income.</div>
+          </div>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Converting is just undoing cash timing: add what you earned but haven't collected, remove what you collected but haven't earned — and mirror it for expenses. The receivables, payables, and prepayments are the bridge between the two bases.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="m6v-home" style="margin-top:4px;">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -5535,7 +5812,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -5570,9 +5847,11 @@
       if (p.m5ReDone) state.m5ReDone = true;
       if (p.m5BsDone) state.m5BsDone = true;
       if (p.m5CloseDone) state.m5CloseDone = true;
+      if (p.m6CbDone) state.m6CbDone = true;
+      if (p.m6CvDone) state.m6CvDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -5597,7 +5876,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -5642,7 +5921,9 @@
       { done: function () { return state.m5IsDone; }, open: function () { openM5Is(); }, label: 'The Income Statement' },
       { done: function () { return state.m5ReDone; }, open: function () { openM5Re(); }, label: 'The Retained Earnings Statement' },
       { done: function () { return state.m5BsDone; }, open: function () { openM5Bs(); }, label: 'The Classified Balance Sheet' },
-      { done: function () { return state.m5CloseDone; }, open: function () { openM5Close(); }, label: 'Closing Entries' }
+      { done: function () { return state.m5CloseDone; }, open: function () { openM5Close(); }, label: 'Closing Entries' },
+      { done: function () { return state.m6CbDone; }, open: function () { openM6Cb(); }, label: 'Cash Basis vs. Accrual Basis' },
+      { done: function () { return state.m6CvDone; }, open: function () { openM6Cv(); }, label: 'Converting Cash Basis to Accrual' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -8886,6 +9167,91 @@
   $('m5c-back').addEventListener('click', function () { goScreen('home'); });
   $('m5c-home').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     MODULE 6 — Appendix 2A · Lesson 1: Cash Basis vs. Accrual Basis
+     ============================================================ */
+  var M6C_Q = [
+    { ev: 'Records revenue only when cash is received', c: 'cash', why: 'Cash basis — revenue follows the cash, not the earning.' },
+    { ev: 'Recognizes expenses in the period they are incurred', c: 'accr', why: 'Accrual basis — expense recognition principle.' },
+    { ev: 'Is not in conformity with GAAP', c: 'cash', why: 'Cash basis — it ignores the recognition principles.' },
+    { ev: 'Reports the garage profit in January, when it was built', c: 'accr', why: 'Accrual basis — revenue recognized when earned.' },
+    { ev: 'Ignores the $22,000 receivable outstanding in January', c: 'cash', why: 'Cash basis — no cash yet, so nothing is recorded.' },
+    { ev: 'Follows the revenue and expense recognition principles', c: 'accr', why: 'Accrual basis — the GAAP method.' }
+  ];
+  var M6C_CATS = { cash: 'Cash', accr: 'Accrual' };
+  var m6cAnswered = {};
+  function renderM6c() {
+    m6cAnswered = {};
+    var order = ['cash', 'accr'];
+    $('m6c-q').innerHTML = M6C_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M6C_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m6c-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M6C_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m6cAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M6C_CATS[e.c] + '.</b> ' + e.why;
+          checkM6c();
+        });
+      });
+    });
+    $('m6c-done').className = 'gp-feedback'; $('m6c-done').innerHTML = '';
+  }
+  function checkM6c() {
+    if (Object.keys(m6cAnswered).length !== M6C_Q.length) return;
+    var allRight = M6C_Q.every(function (e, i) { return m6cAnswered[i]; });
+    var el = $('m6c-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Exactly.</b> Cash basis follows the money; accrual basis follows the earning and incurring — and only accrual is GAAP.'
+      : 'Remember: cash basis = when cash moves; accrual basis = when earned/incurred (the GAAP method).') + '</div>';
+    if (!state.m6CbDone) { state.m6CbDone = true; save(); updateM6CbPill(); }
+  }
+  function updateM6CbPill() { var pill = $('m6cb-pill'); if (pill) pill.textContent = state.m6CbDone ? 'Done' : 'Start'; }
+  function openM6Cb() { goScreen('m6cb'); $('m6c-scroll').scrollTop = 0; }
+  $('start-m6cb-card').addEventListener('click', openM6Cb);
+  $('m6c-back').addEventListener('click', function () { goScreen('home'); });
+  $('m6c-home').addEventListener('click', function () { goScreen('home'); });
+  $('m6cb-next').addEventListener('click', function () { openM6Cv(); });
+
+  /* ============================================================
+     MODULE 6 — Appendix 2A · Lesson 2: Converting Cash Basis to Accrual (Windsor)
+     ============================================================ */
+  $('mcv-check').addEventListener('click', function () {
+    var targets = { 'mcv-rev': 293000, 'mcv-exp': 172600, 'mcv-ni': 120400 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = m5Num(id);
+      el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('mcv-fb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in all three figures first.</div>'; return; }
+    if (allOk) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Converted.</b> $300,000 − 12,000 + 9,000 − 4,000 = <b>$293,000</b> revenue; $170,000 + 1,800 − 2,700 − 2,000 + 5,500 = <b>$172,600</b> expenses; net income on the accrual basis is <b>$120,400</b>.</div>';
+      if (!state.m6CvDone) { state.m6CvDone = true; save(); updateM6CvPill(); }
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Check your work. Revenue = $300,000 − beg A/R + end A/R − end unearned. Expenses = $170,000 + beg prepaid − end prepaid − beg accrued + end accrued. Net income = revenue − expenses.</div>';
+    }
+  });
+  function updateM6CvPill() { var pill = $('m6cv-pill'); if (pill) pill.textContent = state.m6CvDone ? 'Done' : 'Start'; }
+  function openM6Cv() { goScreen('m6cv'); $('m6v-scroll').scrollTop = 0; }
+  $('start-m6cv-card').addEventListener('click', openM6Cv);
+  $('m6v-back').addEventListener('click', function () { goScreen('home'); });
+  $('m6v-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -8977,6 +9343,9 @@
   updateM5BsPill();
   mclRender();
   updateM5ClosePill();
+  renderM6c();
+  updateM6CbPill();
+  updateM6CvPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
