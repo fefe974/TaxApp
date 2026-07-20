@@ -1873,6 +1873,61 @@
   .kc-tcard .s { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
   .kc-gate { padding: 20px 16px; text-align: center; border: 1px dashed var(--line); border-radius: var(--r-md); color: var(--ink-faint); font-size: 12.5px; }
   .kc-gate svg { width: 22px; height: 22px; margin-bottom: 6px; opacity: .7; }
+
+  /* ===== Module 5 — Financial Statements for a Merchandising Company ===== */
+  .module-head.m5 .mod-no { background: linear-gradient(150deg, var(--asset), #3f379a); color: #f0edff; }
+  .m5-hero {
+    position: relative; overflow: hidden; padding: 26px 20px 22px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(91,83,176,.34), transparent 55%),
+      linear-gradient(160deg, #241f4d 0%, #2b2559 55%, #1a1638 100%);
+    color: #efedf9;
+  }
+  .m5-hero .eyebrow { color: rgba(220,216,245,.9); }
+  .m5-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 6.8vw, 31px); line-height: 1.12; margin-top: 8px; letter-spacing: -.01em; text-wrap: balance; }
+  .m5-hero .lo-callout { background: rgba(255,255,255,.08); border-left-color: var(--asset); }
+  .m5-hero .lo-callout .lo-badge { background: var(--asset); }
+  .m5-hero .lo-callout .lo-t { color: rgba(220,216,245,.9); }
+
+  /* service vs merchandising compare */
+  .svm { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .svm-card { border: 1px solid var(--line); border-top: 3px solid var(--sc, var(--teal)); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .svm-card.svc { --sc: var(--teal); } .svm-card.mer { --sc: var(--asset); }
+  .svm-card .sh { padding: 9px 11px 8px; border-bottom: 1px solid var(--line); }
+  .svm-card .sh b { font-size: 12.5px; color: var(--ink); font-family: var(--serif); }
+  .svm-card .sh span { display: block; font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--sc); margin-top: 2px; }
+  .svm-card .sb { padding: 10px 11px; }
+  .svm-line { display: flex; justify-content: space-between; gap: 6px; font-size: 11px; padding: 2px 0; color: var(--ink-soft); font-family: var(--mono); }
+  .svm-line.new { color: var(--asset); font-weight: 700; }
+  .svm-line.tot { border-top: 1px solid var(--line); margin-top: 3px; padding-top: 4px; font-weight: 800; color: var(--ink); }
+  .svm-line .op { color: var(--ink-faint); }
+
+  /* multiple-step income statement (Illustration 2.44) */
+  .mis { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .mis-title { text-align: center; padding: 13px 12px 11px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--asset) 6%, var(--card)); }
+  .mis-title b { display: block; font-family: var(--serif); font-size: 15px; font-weight: 650; color: var(--ink); }
+  .mis-title span { display: block; font-size: 11.5px; color: var(--ink-soft); }
+  .mis-body { padding: 10px 13px 13px; }
+  .mis-row { display: grid; grid-template-columns: 1fr 66px 70px; gap: 6px; align-items: baseline; padding: 3px 0; font-size: 12.5px; }
+  .mis-row .l { color: var(--ink-soft); min-width: 0; }
+  .mis-row .c1, .mis-row .c2 { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+  .mis-row.ind1 .l { padding-left: 12px; }
+  .mis-row.ind2 .l { padding-left: 24px; }
+  .mis-row.sec .l { font-weight: 700; color: var(--ink); }
+  .mis-row.sub .c1 { border-top: 1px solid var(--ink-faint); padding-top: 3px; font-weight: 700; }
+  .mis-row.sub .l { color: var(--ink-soft); }
+  .mis-row.key { font-weight: 800; }
+  .mis-row.key .l { color: var(--ink); }
+  .mis-row.key .c2 { color: var(--asset); border-top: 1px solid var(--line); padding-top: 3px; }
+  .mis-row.rule .c2 { border-top: 1px solid var(--ink-faint); padding-top: 3px; }
+  .mis-row.grand { font-weight: 800; }
+  .mis-row.grand .l { color: var(--asset); font-family: var(--serif); font-size: 14px; }
+  .mis-row.grand .c2 { color: var(--asset); border-top: 3px double var(--asset); padding-top: 4px; }
+  .mis-inp { width: 66px; text-align: right; font-family: var(--mono); font-weight: 700; font-size: 12px; padding: 4px 6px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--card); color: var(--ink); }
+  .mis-inp:focus { outline: none; border-color: var(--asset); }
+  .mis-inp.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .mis-inp.no { border-color: var(--warn); background: var(--warn-bg); }
+  .mis-badge { display: inline-block; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--asset); background: var(--asset-bg); border-radius: 999px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
 </style>
 
 <div id="fa-app">
@@ -2193,6 +2248,37 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+
+            <div class="module-head m5">
+              <span class="mod-no">5</span>
+              <div class="mod-body"><b>Financial Statements for a Merchandising Company</b><span>Learning Objective 5 · gross profit &amp; the multiple-step statement</span></div>
+            </div>
+            <button class="lesson-card" id="start-m5intro-card" style="border-color: color-mix(in srgb, var(--asset) 34%, var(--line));">
+              <span class="lnum" style="background:var(--asset-bg);color:var(--asset);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--asset) 40%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M3 3h18v4H3zM6 7v14M18 7v14M6 21h12M9 11h6M9 15h6"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Introduction</b>
+                <span>How a merchandiser's statements differ from a service firm's</span>
+              </span>
+              <span class="pill-mini ready" id="m5intro-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5is-card">
+              <span class="lnum">1</span>
+              <span class="lbody"><b>The Income Statement</b><span>Multiple-step: gross profit to net income · Illustration 2.44</span></span>
+              <span class="pill-mini ready" id="m5is-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">2</span>
+              <span class="lbody"><b>Retained Earnings &amp; Balance Sheet</b><span>The rest of the merchandiser's statements</span></span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
           </div>
         </div>
 
@@ -4971,6 +5057,189 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 5 INTRODUCTION — MERCHANDISING STATEMENTS ============== -->
+    <section class="fa-screen" id="screen-m5intro" aria-label="Module 5 — Introduction">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5i-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5i-scroll">
+        <header class="m5-hero">
+          <div class="eyebrow">Module 5 · Section 2.5</div>
+          <h1>Financial Statements for a Merchandising Company</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">5</span>
+            <div>
+              <div class="lo-t">Learning Objective</div>
+              <div class="lo-d">Prepare financial statements for a merchandising company.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Everything so far used <b>Pioneer Advertising</b> — a <b>service</b> company. Now meet <b>Uptown Cabinet Corp.</b>, a <b>merchandising</b> company that buys and sells goods. Its statements gain a whole new layer.</p>
+
+          <section class="m2-sec">
+            <h2>Service vs. merchandiser</h2>
+            <p>A service firm earns revenue by performing services. A merchandiser earns revenue by <b>selling inventory</b> — so it must also report the <b>cost of the goods it sold</b>, and a new subtotal appears: <b>gross profit</b>.</p>
+            <div class="svm" style="margin-top:12px;">
+              <div class="svm-card svc">
+                <div class="sh"><b>Service</b><span>Single-step</span></div>
+                <div class="sb">
+                  <div class="svm-line"><span>Revenues</span><span>106,000</span></div>
+                  <div class="svm-line"><span class="op">− Expenses</span><span>73,000</span></div>
+                  <div class="svm-line tot"><span>Net income</span><span>33,000</span></div>
+                </div>
+              </div>
+              <div class="svm-card mer">
+                <div class="sh"><b>Merchandiser</b><span>Multiple-step</span></div>
+                <div class="sb">
+                  <div class="svm-line new"><span>Net sales</span><span>400,000</span></div>
+                  <div class="svm-line new"><span class="op">− Cost of goods sold</span><span>316,000</span></div>
+                  <div class="svm-line tot new"><span>Gross profit</span><span>84,000</span></div>
+                  <div class="svm-line"><span class="op">− Oper. expenses</span><span>67,460</span></div>
+                  <div class="svm-line"><span>… to net income</span><span>12,200</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>The multiple-step idea</h2>
+            <p>A merchandiser's income statement is <b>multiple-step</b> — it reports several meaningful subtotals on the way to net income, instead of one big subtraction:</p>
+            <div style="margin-top:12px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">1</span><div class="rb"><b>Gross profit</b><p>Net sales − cost of goods sold.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">2</span><div class="rb"><b>Income from operations</b><p>Gross profit − selling and administrative expenses.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">3</span><div class="rb"><b>Income before income taxes</b><p>Adjusted for other revenues/gains and other expenses/losses.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">4</span><div class="rb"><b>Net income</b><p>Income before taxes − income tax.</p></div></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>New for a merchandiser?</h2>
+            <p>Tap each line: is it <b>new</b> for a merchandising company, or the <b>same</b> as a service firm's statement?</p>
+            <div class="wr-list" id="m5i-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m5i-done" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Three statements ahead</h2>
+            <p>From Uptown's adjusted trial balance come three statements — starting with the income statement.</p>
+            <div class="m3-prev" style="margin-top:12px;">
+              <div class="m3-prevcard def" style="--pc:var(--asset)"><div class="h"><span class="tag">Next</span></div><p><b>The income statement</b> — the multiple-step format, gross profit through net income (Illustration 2.44).</p></div>
+              <div class="m3-prevcard acc"><div class="h"><span class="tag">Then</span></div><p><b>Retained earnings statement &amp; the balance sheet</b> — the rest of the merchandiser's picture.</p></div>
+            </div>
+          </section>
+
+          <div class="m2-foot">
+            <button class="m2-next go" id="m5intro-next">
+              <div><div class="up">Up next in Module 5</div><b>The Income Statement</b> — the multiple-step format.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5i-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 1 — THE INCOME STATEMENT ============== -->
+    <section class="fa-screen" id="screen-m5is" aria-label="The Income Statement">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5s-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5s-scroll">
+        <header class="m5-hero">
+          <div class="eyebrow">Module 5 · Lesson 1</div>
+          <h1>The Multiple-Step Income Statement</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.44</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">Gross profit, income from operations, and net income — step by step.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">A merchandiser's income statement classifies amounts into meaningful subtotals — <b>gross profit</b>, <b>income from operations</b>, <b>income before taxes</b>, and finally <b>net income</b>.</p>
+
+          <section class="m2-sec">
+            <h2>How to read it, top to bottom</h2>
+            <p>Start with <b>net sales</b>, subtract <b>cost of goods sold</b> for gross profit, subtract <b>operating expenses</b> (selling + administrative) for income from operations, adjust for <b>other</b> revenues and expenses, then subtract <b>income tax</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.44 · Build the statement</h2>
+            <p>Uptown's line items are filled in. Compute the <b>four subtotals</b> (highlighted) and check your work.</p>
+            <div class="mis" id="mis" style="margin-top:12px;">
+              <div class="mis-title"><b>Uptown Cabinet Corp.</b><span>Income Statement</span><span>For the Year Ended December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row"><span class="l">Net sales</span><span class="c1"></span><span class="c2">$400,000</span></div>
+                <div class="mis-row rule"><span class="l">Cost of goods sold</span><span class="c1"></span><span class="c2">316,000</span></div>
+                <div class="mis-row key"><span class="l">Gross profit on sales<span class="mis-badge">a</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mis-gp" inputmode="numeric" placeholder="?" aria-label="Gross profit"></span></div>
+                <div class="mis-row sec"><span class="l">Selling expenses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Salaries and wages expense (sales)</span><span class="c1">20,000</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Advertising expense</span><span class="c1">10,200</span><span class="c2"></span></div>
+                <div class="mis-row ind1 sub"><span class="l">Total selling expenses</span><span class="c1">30,200</span><span class="c2"></span></div>
+                <div class="mis-row sec"><span class="l">Administrative expenses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Salaries and wages expense (general)</span><span class="c1">19,000</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Depreciation expense—equipment</span><span class="c1">6,700</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Property tax expense</span><span class="c1">5,300</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Rent expense</span><span class="c1">4,300</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Bad debt expense</span><span class="c1">1,000</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Telephone and Internet expense</span><span class="c1">600</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Insurance expense</span><span class="c1">360</span><span class="c2"></span></div>
+                <div class="mis-row ind1 sub"><span class="l">Total administrative expenses</span><span class="c1">37,260</span><span class="c2"></span></div>
+                <div class="mis-row ind1 sub"><span class="l">Total selling &amp; administrative</span><span class="c1"></span><span class="c2">67,460</span></div>
+                <div class="mis-row key"><span class="l">Income from operations<span class="mis-badge">b</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mis-ifo" inputmode="numeric" placeholder="?" aria-label="Income from operations"></span></div>
+                <div class="mis-row sec"><span class="l">Other revenues and gains</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2 rule"><span class="l">Interest revenue</span><span class="c1"></span><span class="c2">800</span></div>
+                <div class="mis-row sub"><span class="l"></span><span class="c1"></span><span class="c2">17,340</span></div>
+                <div class="mis-row sec"><span class="l">Other expenses and losses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2 rule"><span class="l">Interest expense</span><span class="c1"></span><span class="c2">1,700</span></div>
+                <div class="mis-row key"><span class="l">Income before income taxes<span class="mis-badge">c</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mis-ibt" inputmode="numeric" placeholder="?" aria-label="Income before taxes"></span></div>
+                <div class="mis-row ind1 rule"><span class="l">Income tax</span><span class="c1"></span><span class="c2">3,440</span></div>
+                <div class="mis-row grand"><span class="l">Net income<span class="mis-badge">d</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mis-ni" inputmode="numeric" placeholder="?" aria-label="Net income"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="mis-check">Check the subtotals</button></div>
+            <div class="gp-feedback" id="mis-fb" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The single-step statement asks one question — revenues minus expenses. The multiple-step statement answers four: how profitable are the goods (gross profit), the core business (income from operations), the whole entity before tax, and finally the bottom line. Each subtotal tells a manager something different.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5is-next">
+              <div><div class="up">Coming next in Module 5</div><b>Retained Earnings &amp; the Balance Sheet</b> — the merchandiser's other statements.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5s-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -4989,7 +5258,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -5019,9 +5288,11 @@
       if (p.m4PctbDone) state.m4PctbDone = true;
       if (p.m4CycleDone) state.m4CycleDone = true;
       if (p.m4CapDone) state.m4CapDone = true;
+      if (p.m5IntroDone) state.m5IntroDone = true;
+      if (p.m5IsDone) state.m5IsDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -5046,7 +5317,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -5086,7 +5357,9 @@
       { done: function () { return state.m4CloseDone; }, open: function () { openM4Close(); }, label: 'The Closing Process' },
       { done: function () { return state.m4PctbDone; }, open: function () { openM4Pctb(); }, label: 'The Post-Closing Trial Balance' },
       { done: function () { return state.m4CycleDone; }, open: function () { openM4Cycle(); }, label: 'The Accounting Cycle Summarized' },
-      { done: function () { return state.m4CapDone; }, open: function () { openM4Cap(); }, label: 'the Module 4 Capstone' }
+      { done: function () { return state.m4CapDone; }, open: function () { openM4Cap(); }, label: 'the Module 4 Capstone' },
+      { done: function () { return state.m5IntroDone; }, open: function () { openM5Intro(); }, label: 'Module 5 · Introduction' },
+      { done: function () { return state.m5IsDone; }, open: function () { openM5Is(); }, label: 'The Income Statement' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -8050,6 +8323,93 @@
   $('m4x-restart').addEventListener('click', function () { kcReset(); $('m4x-scroll').scrollTop = 0; });
   $('m4cycle-next').addEventListener('click', openM4Cap);
 
+  /* ============================================================
+     MODULE 5 — Introduction: Merchandising statements
+     ============================================================ */
+  var M5I_Q = [
+    { ev: 'Cost of goods sold', c: 'n', why: 'New — a merchandiser reports the cost of the inventory it sold.' },
+    { ev: 'Gross profit on sales', c: 'n', why: 'New — net sales minus cost of goods sold, a merchandiser subtotal.' },
+    { ev: 'Rent expense', c: 's', why: 'Same — an operating expense both types of company report.' },
+    { ev: 'Income from operations', c: 'n', why: 'New — the multiple-step subtotal after operating expenses.' },
+    { ev: 'Interest revenue', c: 's', why: 'Same — reported under other revenues by either company.' },
+    { ev: 'Salaries and wages expense', c: 's', why: 'Same — a service firm has these too (here split sales vs general).' }
+  ];
+  var M5I_CATS = { n: 'New', s: 'Same' };
+  var m5iAnswered = {};
+  function renderM5i() {
+    m5iAnswered = {};
+    var order = ['n', 's'];
+    $('m5i-q').innerHTML = M5I_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M5I_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m5i-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M5I_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m5iAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M5I_CATS[e.c] + '.</b> ' + e.why;
+          checkM5i();
+        });
+      });
+    });
+    $('m5i-done').className = 'gp-feedback'; $('m5i-done').innerHTML = '';
+  }
+  function checkM5i() {
+    if (Object.keys(m5iAnswered).length !== M5I_Q.length) return;
+    var allRight = M5I_Q.every(function (e, i) { return m5iAnswered[i]; });
+    var el = $('m5i-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Right.</b> Cost of goods sold, gross profit, and income from operations are what a merchandiser adds — the operating expenses carry over from what you already know.'
+      : 'Cost of goods sold, gross profit, and income from operations are the new merchandiser lines; the expenses are the same.') + '</div>';
+    if (!state.m5IntroDone) { state.m5IntroDone = true; save(); updateM5IntroPill(); }
+  }
+  function updateM5IntroPill() { var pill = $('m5intro-pill'); if (pill) pill.textContent = state.m5IntroDone ? 'Done' : 'Start'; }
+  function openM5Intro() { goScreen('m5intro'); $('m5i-scroll').scrollTop = 0; }
+  $('start-m5intro-card').addEventListener('click', openM5Intro);
+  $('m5i-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5i-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5intro-next').addEventListener('click', function () { openM5Is(); });
+
+  /* ============================================================
+     MODULE 5 — Lesson 1: The Multiple-Step Income Statement (Illustration 2.44)
+     ============================================================ */
+  function m5Num(id) { var v = ($(id).value || '').replace(/[^0-9.]/g, ''); return v === '' ? null : Math.round(parseFloat(v)); }
+  $('mis-check').addEventListener('click', function () {
+    var targets = { 'mis-gp': 84000, 'mis-ifo': 16540, 'mis-ibt': 15640, 'mis-ni': 12200 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = m5Num(id);
+      el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('mis-fb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in all four subtotals first.</div>'; return; }
+    if (allOk) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Every subtotal checks out.</b> $400,000 − $316,000 = $84,000 gross profit; − $67,460 = $16,540 from operations; + $800 − $1,700 = $15,640 before tax; − $3,440 = <b>$12,200</b> net income.</div>';
+      if (!state.m5IsDone) { state.m5IsDone = true; save(); updateM5IsPill(); }
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Not all correct yet. Gross profit = net sales − COGS. Income from operations = gross profit − $67,460. Before tax = + $800 − $1,700. Net income = − $3,440 tax.</div>';
+    }
+  });
+  function updateM5IsPill() { var pill = $('m5is-pill'); if (pill) pill.textContent = state.m5IsDone ? 'Done' : 'Start'; }
+  function openM5Is() { goScreen('m5is'); $('m5s-scroll').scrollTop = 0; }
+  $('start-m5is-card').addEventListener('click', openM5Is);
+  $('m5s-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5s-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5is-next').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -8133,6 +8493,9 @@
   kcRenderEntry();
   kcRenderTracker();
   updateM4CapPill(0);
+  renderM5i();
+  updateM5IntroPill();
+  updateM5IsPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
