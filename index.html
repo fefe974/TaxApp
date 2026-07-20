@@ -167,6 +167,20 @@
     }
   }
 
+  /* On desktops: a real app window — no phone bezel, wider, full height. */
+  @media (min-width: 1024px) {
+    body { padding: 40px; }
+    #fa-app {
+      max-width: 880px;
+      width: 100%;
+      height: min(1060px, calc(100vh - 80px));
+      border-radius: 20px;
+      box-shadow: 0 34px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.07);
+    }
+    #fa-app::before { display: none; }       /* no camera notch on desktop */
+    .fa-topbar { padding-top: 16px; }
+  }
+
   h1,h2,h3,h4,p { margin: 0; }
   button, select, input { font: inherit; color: inherit; }
   .serif { font-family: var(--serif); }
