@@ -1750,6 +1750,73 @@
   .mcw tr.tot td { border-top: 2px solid var(--ink); font-weight: 800; padding-top: 6px; }
   .mcw tr.tot td.d, .mcw tr.tot td.c { color: var(--warn); }
   .mcw tr.tot.proved td.d, .mcw tr.tot.proved td.c { color: var(--good); }
+
+  /* ===== Module 4 — Preparing Financial Statements & Closing ===== */
+  .module-head.m4 .mod-no { background: linear-gradient(150deg, var(--equity), #2e6b40); color: #eafaf0; }
+  .m4-hero {
+    position: relative; overflow: hidden; padding: 26px 20px 22px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(63,143,82,.30), transparent 55%),
+      linear-gradient(160deg, #123524 0%, #17402c 55%, #0d2519 100%);
+    color: #eef6f0;
+  }
+  .m4-hero .eyebrow { color: rgba(210,235,220,.9); }
+  .m4-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 7.5vw, 33px); line-height: 1.1; margin-top: 8px; letter-spacing: -.01em; text-wrap: balance; }
+  .m4-hero .lo-callout { background: rgba(255,255,255,.07); border-left-color: var(--equity); }
+  .m4-hero .lo-callout .lo-badge { background: var(--equity); }
+  .m4-hero .lo-callout .lo-t { color: rgba(210,235,220,.9); }
+
+  /* three-statement labels */
+  .stmt.is-lbl .stmt-head { background: linear-gradient(150deg, #1c4a6e, #123651); }
+  .stmt.re-lbl .stmt-head { background: linear-gradient(150deg, var(--teal), #0b5c54); }
+  .stmt.bs-lbl .stmt-head { background: linear-gradient(150deg, var(--equity), #2e6b40); }
+  .stmt-tie { display: flex; align-items: center; gap: 8px; justify-content: center; font-size: 11px; font-weight: 700; color: var(--teal); padding: 4px 0; }
+  .stmt-tie .ln { flex: 0 0 auto; width: 14px; height: 2px; background: var(--teal); }
+
+  /* temporary / permanent summary columns */
+  .tp-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tp-col { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); padding: 12px; box-shadow: var(--shadow); }
+  .tp-h { display: flex; flex-direction: column; gap: 5px; margin-bottom: 9px; }
+  .tp-h span { font-size: 11px; color: var(--ink-faint); font-weight: 600; }
+  .tp-col ul { margin: 0; padding-left: 17px; display: flex; flex-direction: column; gap: 4px; }
+  .tp-col li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.35; }
+
+  /* closing-entry stepper + Income Summary T-accounts (Illustration 2.41) */
+  .clo-stepper { display: flex; gap: 5px; margin-bottom: 12px; }
+  .clo-stepper .cs { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+  .clo-stepper .cs.done { background: var(--equity); }
+  .clo-stepper .cs.on { background: var(--teal); }
+  .clo-card { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .clo-eh { padding: 12px 14px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--equity) 7%, var(--card)); }
+  .clo-eh .step { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--equity); }
+  .clo-eh .desc { font-family: var(--serif); font-size: 15px; color: var(--ink); margin-top: 3px; }
+  .clo-body { padding: 13px 14px; }
+  .clo-sub { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin: 0 0 7px; }
+  .clo-je { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--paper); padding: 11px 12px; }
+  .clo-je .jdate { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
+  .clo-je .memo { font-size: 11.5px; font-style: italic; color: var(--ink-faint); padding-left: 20px; margin-top: 4px; }
+  .clo-tacts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 13px; }
+  .clo-ta { border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; background: var(--card); }
+  .clo-ta .tt { text-align: center; font-family: var(--serif); font-weight: 650; font-size: 12.5px; color: #fff; padding: 6px 4px; background: var(--tac, var(--ink)); }
+  .clo-ta.is .tt { background: linear-gradient(150deg, var(--teal), #0b5c54); }
+  .clo-ta.re .tt { background: linear-gradient(150deg, var(--equity), #2e6b40); }
+  .clo-ta .grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 64px; font-size: 11px; }
+  .clo-ta .col { padding: 6px 7px; }
+  .clo-ta .col.l { border-right: 1.5px solid var(--ink-faint); }
+  .clo-ta .row { display: flex; justify-content: space-between; gap: 4px; font-family: var(--mono); padding: 1px 0; }
+  .clo-ta .row .rn { color: var(--ink-faint); font-size: 9.5px; }
+  .clo-ta .col.l .row { color: var(--debit); } .clo-ta .col.r .row { color: var(--credit); }
+  .clo-ta .balrow { grid-column: 1 / -1; border-top: 1.5px solid var(--ink); padding: 5px 7px; display: flex; justify-content: space-between; font-family: var(--mono); font-weight: 800; font-size: 11.5px; }
+  .clo-ta .balrow.zero { color: var(--good); } .clo-ta .balrow.carry { color: var(--ink); }
+  .clo-actions { display: flex; gap: 8px; margin-top: 13px; }
+  .clo-actions .btn { flex: 1; }
+
+  /* cautions */
+  .clo-caution { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-left: 4px solid var(--warn); border-radius: var(--r-md); background: var(--card); padding: 11px 13px; box-shadow: var(--shadow); }
+  .clo-caution + .clo-caution { margin-top: 10px; }
+  .clo-caution .cx { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; background: var(--warn); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .clo-caution b { font-size: 13px; color: var(--ink); }
+  .clo-caution p { font-size: 12px; line-height: 1.5; color: var(--ink-soft); margin-top: 2px; }
 </style>
 
 <div id="fa-app">
@@ -2018,6 +2085,44 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+
+            <div class="module-head m4">
+              <span class="mod-no">4</span>
+              <div class="mod-body"><b>Preparing Financial Statements</b><span>Learning Objective 4 · statements &amp; the closing process</span></div>
+            </div>
+            <button class="lesson-card" id="start-m4intro-card" style="border-color: color-mix(in srgb, var(--equity) 34%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--equity) 14%,transparent);color:var(--equity);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--equity) 40%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M4 5h16M4 5v14M4 19h16M8 9h8M8 13h5"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Introduction</b>
+                <span>From the adjusted trial balance to three statements</span>
+              </span>
+              <span class="pill-mini ready" id="m4intro-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m4close-card">
+              <span class="lnum">1</span>
+              <span class="lbody"><b>The Closing Process</b><span>Temporary accounts, Income Summary &amp; closing entries</span></span>
+              <span class="pill-mini ready" id="m4close-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">2</span>
+              <span class="lbody"><b>The Post-Closing Trial Balance</b><span>Only the permanent accounts remain</span></span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
+            <div class="lesson-card locked" aria-disabled="true">
+              <span class="lnum">
+                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v4a6 6 0 01-12 0zM8 21h8M12 15v6"/></svg>
+              </span>
+              <span class="lbody"><b>Put It Into Practice</b><span>Module 4 capstone</span></span>
+              <span class="pill-mini soon">Soon</span>
+            </div>
           </div>
         </div>
 
@@ -4303,6 +4408,211 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 4 INTRODUCTION — PREPARING FINANCIAL STATEMENTS ============== -->
+    <section class="fa-screen" id="screen-m4intro" aria-label="Module 4 — Introduction">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m4i-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m4i-scroll">
+        <header class="m4-hero">
+          <div class="eyebrow">Module 4 · Section 2.4</div>
+          <h1>Preparing Financial Statements</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">4</span>
+            <div>
+              <div class="lo-t">Learning Objective</div>
+              <div class="lo-d">Prepare financial statements from the adjusted trial balance, and prepare closing entries.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="cycle-wrap" aria-label="The accounting cycle — prepare financial statements"><div class="cycle" id="m4i-cycle"></div></div>
+
+        <div class="m2-body">
+          <p class="lede">You built the adjusted trial balance in Module 3. Now it pays off: with every account at its correct balance, the three financial statements come <b>directly</b> from it.</p>
+
+          <section class="m2-sec">
+            <h2>One number, three statements</h2>
+            <p>The revenue and expense accounts become the <b>income statement</b>. Its <b>net income</b> flows into the <b>retained earnings statement</b>, whose <b>ending balance</b> flows into the equity section of the <b>balance sheet</b>. Follow the $33,000 and the $28,000 as they travel.</p>
+            <div class="stmt-flow" style="margin-top:12px;">
+              <div class="stmt is-lbl">
+                <div class="stmt-head">Income Statement · month ended Oct. 31</div>
+                <div class="stmt-body">
+                  <div class="stmt-line"><span class="lbl">Service revenue</span><span class="amt">$106,000</span></div>
+                  <div class="stmt-line"><span class="lbl">Total expenses</span><span class="amt">(73,000)</span></div>
+                  <div class="stmt-line total rule"><span class="lbl">Net income</span><span class="amt">$33,000</span></div>
+                </div>
+              </div>
+              <div class="stmt-tie"><span class="ln"></span>Net income flows down<span class="ln"></span></div>
+              <div class="stmt re-lbl">
+                <div class="stmt-head">Retained Earnings Statement</div>
+                <div class="stmt-body">
+                  <div class="stmt-line"><span class="lbl">Retained earnings, Oct. 1</span><span class="amt">$0</span></div>
+                  <div class="stmt-line"><span class="lbl">Add: Net income</span><span class="amt">33,000</span></div>
+                  <div class="stmt-line"><span class="lbl">Less: Dividends</span><span class="amt">(5,000)</span></div>
+                  <div class="stmt-line total rule"><span class="lbl">Retained earnings, Oct. 31</span><span class="amt">$28,000</span></div>
+                </div>
+              </div>
+              <div class="stmt-tie"><span class="ln"></span>Ending balance flows down<span class="ln"></span></div>
+              <div class="stmt bs-lbl">
+                <div class="stmt-head">Balance Sheet · Oct. 31</div>
+                <div class="stmt-body">
+                  <div class="stmt-line"><span class="lbl">Total assets</span><span class="amt">$217,500</span></div>
+                  <div class="stmt-line rule"><span class="lbl">Total liabilities</span><span class="amt">$89,500</span></div>
+                  <div class="stmt-line"><span class="lbl">Common stock</span><span class="amt">100,000</span></div>
+                  <div class="stmt-line"><span class="lbl">Retained earnings</span><span class="amt">28,000</span></div>
+                  <div class="stmt-line total rule"><span class="lbl">Total liabilities &amp; equity</span><span class="amt">$217,500</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--equity);color:#06210f;">i</span>
+              <div>Total assets <b>$217,500</b> equal total liabilities plus equity <b>$217,500</b> — the balance sheet balances because the adjusted trial balance did.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Which statement does it belong on?</h2>
+            <p>Each adjusted-trial-balance account lands on exactly one statement. Tap where each belongs.</p>
+            <div class="wr-list" id="m4i-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m4i-done" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>What's left in the cycle</h2>
+            <p>The statements are done — but the books aren't ready for next month. Two steps remain, both coming up in this module.</p>
+            <div class="m3-prev" style="margin-top:12px;">
+              <div class="m3-prevcard def"><div class="h"><span class="tag">Next</span></div><p><b>Closing entries</b> reset the temporary accounts (revenues, expenses, dividends) to zero and move the results into Retained Earnings.</p></div>
+              <div class="m3-prevcard acc"><div class="h"><span class="tag">Then</span></div><p><b>The post-closing trial balance</b> proves the permanent accounts are still in balance and ready for the new period.</p></div>
+            </div>
+          </section>
+
+          <div class="m2-foot">
+            <button class="m2-next go" id="m4intro-next">
+              <div><div class="up">Up next in Module 4</div><b>The Closing Process</b> — temporary accounts &amp; closing entries.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m4i-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 4 · LESSON 1 — THE CLOSING PROCESS ============== -->
+    <section class="fa-screen" id="screen-m4close" aria-label="The Closing Process">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m4c-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m4c-scroll">
+        <header class="m4-hero">
+          <div class="eyebrow">Module 4 · Lesson 1</div>
+          <h1>The Closing Process</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.4</span>
+            <div>
+              <div class="lo-t">Section</div>
+              <div class="lo-d">Reset the temporary accounts and carry the results into equity.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="cycle-wrap" aria-label="The accounting cycle — closing entries"><div class="cycle" id="m4c-cycle"></div></div>
+
+        <div class="m2-body">
+          <p class="lede">At period-end, some accounts must start the next period at <b>zero</b> — and some must carry their balances forward. The closing process sorts them out.</p>
+
+          <section class="m2-sec">
+            <h2>Temporary vs. permanent accounts</h2>
+            <p>The <b>closing process</b> reduces the balances of <b>temporary (nominal)</b> accounts to zero to get ready for next period. <b>Permanent (real)</b> accounts carry forward.</p>
+            <div class="tp-summary" style="margin-top:12px;">
+              <div class="tp-col">
+                <div class="tp-h"><span class="tp-chip temp">Temporary</span><span>closed to zero</span></div>
+                <ul><li>Revenues</li><li>Expenses</li><li>Dividends</li></ul>
+              </div>
+              <div class="tp-col">
+                <div class="tp-h"><span class="tp-chip perm">Permanent</span><span>carried forward</span></div>
+                <ul><li>Assets</li><li>Liabilities</li><li>Equity (Common Stock &amp; Retained Earnings)</li></ul>
+              </div>
+            </div>
+            <p style="margin-top:12px;">Closing transfers all revenue and expense balances to a clearing account called <b>Income Summary</b>, used <b>only</b> at period-end. Its balance is the net income (or loss), which then moves to <b>Retained Earnings</b>.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.40 &amp; 2.41 · The four closing entries</h2>
+            <p>Step through the four entries. Watch Income Summary fill and empty, and Retained Earnings settle at $28,000.</p>
+            <div class="clo-stepper" id="clo-stepper"></div>
+            <div class="clo-card">
+              <div class="clo-eh" id="clo-eh"></div>
+              <div class="clo-body">
+                <div class="clo-sub">Closing journal entry</div>
+                <div id="clo-je"></div>
+                <div class="clo-sub" style="margin-top:14px;">Posting to the ledger</div>
+                <div class="clo-tacts">
+                  <div class="clo-ta is"><div class="tt">Income Summary</div><div class="grid" id="clo-is"></div></div>
+                  <div class="clo-ta re"><div class="tt">Retained Earnings</div><div class="grid" id="clo-re"></div></div>
+                </div>
+                <div class="clo-actions">
+                  <button class="btn" id="clo-reset">Reset</button>
+                  <button class="btn primary" id="clo-next">Next step ▸</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Two cautions</h2>
+            <div class="clo-caution">
+              <span class="cx">1</span>
+              <div><b>Don't double the balances.</b> Revenues have a normal credit balance, so to zero them you <b>debit revenue</b> and credit Income Summary — never the reverse, which would double them.</div>
+            </div>
+            <div class="clo-caution">
+              <span class="cx">2</span>
+              <div><b>Don't close Dividends through Income Summary.</b> Dividends aren't expenses and don't affect net income. Close them <b>directly to Retained Earnings</b> as a distribution to owners.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Close it or keep it?</h2>
+            <p>After closing, every temporary account is zero and ready to reuse. Tap each account: does it get <b>closed</b>, or does it <b>carry forward</b>?</p>
+            <div class="wr-list" id="m4c-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m4c-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Temporary accounts measure <i>this</i> period, so they reset to zero; permanent accounts describe the business itself, so they roll forward. Income Summary is just a holding pen — revenues in, expenses out, net income to Retained Earnings, then gone.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m4close-next">
+              <div><div class="up">Coming next in Module 4</div><b>The Post-Closing Trial Balance</b> — only the permanent accounts remain.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m4c-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -4321,7 +4631,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -4346,9 +4656,11 @@
       if (p.m3AcrDone) state.m3AcrDone = true;
       if (p.m3AtbDone) state.m3AtbDone = true;
       if (p.m3CapDone) state.m3CapDone = true;
+      if (p.m4IntroDone) state.m4IntroDone = true;
+      if (p.m4CloseDone) state.m4CloseDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -4373,7 +4685,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -4408,7 +4720,9 @@
       { done: function () { return state.m3DefDone; }, open: function () { openM3Def(); }, label: 'Deferrals' },
       { done: function () { return state.m3AcrDone; }, open: function () { openM3Acr(); }, label: 'Accruals' },
       { done: function () { return state.m3AtbDone; }, open: function () { openM3Atb(); }, label: 'The Adjusted Trial Balance' },
-      { done: function () { return state.m3CapDone; }, open: function () { openM3Cap(); }, label: 'the Module 3 Capstone' }
+      { done: function () { return state.m3CapDone; }, open: function () { openM3Cap(); }, label: 'the Module 3 Capstone' },
+      { done: function () { return state.m4IntroDone; }, open: function () { openM4Intro(); }, label: 'Module 4 · Introduction' },
+      { done: function () { return state.m4CloseDone; }, open: function () { openM4Close(); }, label: 'The Closing Process' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -6913,6 +7227,198 @@
   $('m3c-back').addEventListener('click', function () { goScreen('home'); });
   $('m3c-restart').addEventListener('click', function () { mcReset(); $('m3c-scroll').scrollTop = 0; });
 
+  /* ============================================================
+     MODULE 4 — Introduction: Preparing Financial Statements
+     ============================================================ */
+  var M4I_Q = [
+    { ev: 'Service Revenue', c: 'is', why: 'Revenues are reported on the income statement.' },
+    { ev: 'Salaries and Wages Expense', c: 'is', why: 'Expenses are reported on the income statement.' },
+    { ev: 'Equipment', c: 'bs', why: 'Assets appear on the balance sheet.' },
+    { ev: 'Dividends', c: 're', why: 'Dividends are subtracted on the retained earnings statement.' },
+    { ev: 'Accounts Payable', c: 'bs', why: 'Liabilities appear on the balance sheet.' },
+    { ev: 'Common Stock', c: 'bs', why: 'Stockholders’ equity appears on the balance sheet.' }
+  ];
+  var M4I_CATS = { is: 'Income stmt', re: 'Retained earn.', bs: 'Balance sheet' };
+  var m4iAnswered = {};
+  function renderM4i() {
+    m4iAnswered = {};
+    var order = ['is', 're', 'bs'];
+    $('m4i-q').innerHTML = M4I_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M4I_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m4i-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M4I_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m4iAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M4I_CATS[e.c] + '.</b> ' + e.why;
+          checkM4i();
+        });
+      });
+    });
+    $('m4i-done').className = 'gp-feedback'; $('m4i-done').innerHTML = '';
+  }
+  function checkM4i() {
+    if (Object.keys(m4iAnswered).length !== M4I_Q.length) return;
+    var allRight = M4I_Q.every(function (e, i) { return m4iAnswered[i]; });
+    var el = $('m4i-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Exactly.</b> Revenues and expenses → income statement; dividends → retained earnings statement; assets, liabilities, and equity → balance sheet.'
+      : 'Review the three statements above — each account belongs to just one.') + '</div>';
+    if (!state.m4IntroDone) { state.m4IntroDone = true; save(); updateM4IntroPill(); }
+  }
+  function updateM4IntroPill() { var pill = $('m4intro-pill'); if (pill) pill.textContent = state.m4IntroDone ? 'Done' : 'Start'; }
+  function openM4Intro() { goScreen('m4intro'); $('m4i-scroll').scrollTop = 0; }
+  $('start-m4intro-card').addEventListener('click', openM4Intro);
+  $('m4i-back').addEventListener('click', function () { goScreen('home'); });
+  $('m4i-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4intro-next').addEventListener('click', function () { openM4Close(); });
+
+  /* ============================================================
+     MODULE 4 — Lesson 1: The Closing Process (Illustrations 2.40–2.41)
+     ============================================================ */
+  var CLOSE_STEPS = [
+    {
+      title: 'Close revenues to Income Summary',
+      dr: [{ a: 'Service Revenue', v: '106,000' }], cr: [{ a: 'Income Summary', v: '106,000' }],
+      memo: 'To close revenue account',
+      is: { side: 'c', n: '(1)', v: '106,000' }
+    },
+    {
+      title: 'Close expenses to Income Summary',
+      dr: [{ a: 'Income Summary', v: '73,000' }],
+      cr: [{ a: 'Supplies Expense', v: '15,000' }, { a: 'Depreciation Expense', v: '400' }, { a: 'Insurance Expense', v: '500' }, { a: 'Salaries and Wages Expense', v: '46,000' }, { a: 'Rent Expense', v: '9,000' }, { a: 'Interest Expense', v: '500' }, { a: 'Bad Debt Expense', v: '1,600' }],
+      memo: 'To close expense accounts',
+      is: { side: 'd', n: '(2)', v: '73,000' }
+    },
+    {
+      title: 'Close net income to Retained Earnings',
+      dr: [{ a: 'Income Summary', v: '33,000' }], cr: [{ a: 'Retained Earnings', v: '33,000' }],
+      memo: 'To close net income ($106,000 − $73,000) to retained earnings',
+      is: { side: 'd', n: '(3)', v: '33,000' }, re: { side: 'c', n: '(3)', v: '33,000' }, isClose: true
+    },
+    {
+      title: 'Close dividends to Retained Earnings',
+      dr: [{ a: 'Retained Earnings', v: '5,000' }], cr: [{ a: 'Dividends', v: '5,000' }],
+      memo: 'To close dividends to retained earnings',
+      re: { side: 'd', n: '(4)', v: '5,000' }, reBal: true
+    }
+  ];
+  var cloStep = -1; /* -1 = nothing posted yet */
+  function cloRenderStepper() {
+    $('clo-stepper').innerHTML = CLOSE_STEPS.map(function (s, i) {
+      return '<div class="cs ' + (i <= cloStep ? 'done' : (i === cloStep + 1 ? 'on' : '')) + '"></div>';
+    }).join('');
+  }
+  function cloRenderEntry() {
+    if (cloStep < 0) {
+      $('clo-eh').innerHTML = '<div class="step">Closing entries · Oct. 31</div><div class="desc">Tap <b>Next step</b> to post the first closing entry.</div>';
+      $('clo-je').innerHTML = '<div class="clo-je" style="text-align:center;color:var(--ink-faint);font-size:12px;padding:16px 12px;">The journal entry appears here as you step through.</div>';
+      return;
+    }
+    var s = CLOSE_STEPS[cloStep];
+    $('clo-eh').innerHTML = '<div class="step">Entry ' + (cloStep + 1) + ' of 4</div><div class="desc">' + s.title + '</div>';
+    var rows = '<div class="je-head"><span>Account</span><span class="h-d">Debit</span><span class="h-c">Credit</span></div>';
+    s.dr.forEach(function (a) { rows += '<div class="je-row"><span class="je-acct">' + a.a + '</span><span class="je-d">' + a.v + '</span><span class="je-c"></span></div>'; });
+    s.cr.forEach(function (a) { rows += '<div class="je-row cr"><span class="je-acct">' + a.a + '</span><span class="je-d"></span><span class="je-c">' + a.v + '</span></div>'; });
+    $('clo-je').innerHTML = '<div class="clo-je"><div class="jdate">Oct. 31</div>' + rows + '<div class="memo">(' + s.memo + ')</div></div>';
+  }
+  function cloRenderTaccts() {
+    /* accumulate postings up to cloStep */
+    var isL = [], isR = [], reL = [], reR = [];
+    for (var i = 0; i <= cloStep; i++) {
+      var s = CLOSE_STEPS[i];
+      if (s.is) { (s.is.side === 'd' ? isL : isR).push(s.is); }
+      if (s.re) { (s.re.side === 'd' ? reL : reR).push(s.re); }
+    }
+    function grid(L, R, closed, bal) {
+      var colL = L.map(function (x) { return '<div class="row"><span class="rn">' + x.n + '</span><span>' + x.v + '</span></div>'; }).join('') || '&nbsp;';
+      var colR = R.map(function (x) { return '<div class="row"><span class="rn">' + x.n + '</span><span>' + x.v + '</span></div>'; }).join('') || '&nbsp;';
+      var out = '<div class="col l">' + colL + '</div><div class="col r">' + colR + '</div>';
+      if (closed) out += '<div class="balrow zero"><span>Balance</span><span>0</span></div>';
+      else if (bal != null) out += '<div class="balrow carry"><span>Balance</span><span>' + bal + '</span></div>';
+      return out;
+    }
+    var isClosed = cloStep >= 2; /* Income Summary zeroed after entry 3 */
+    var reBalVal = cloStep >= 3 ? '28,000' : (cloStep >= 2 ? '33,000' : null);
+    $('clo-is').innerHTML = grid(isL, isR, isClosed, null);
+    $('clo-re').innerHTML = grid(reL, reR, false, reBalVal);
+  }
+  function cloRender() { cloRenderStepper(); cloRenderEntry(); cloRenderTaccts(); }
+  $('clo-next').addEventListener('click', function () {
+    if (cloStep >= CLOSE_STEPS.length - 1) { cloStep = -1; cloRender(); this.textContent = 'Next step ▸'; return; }
+    cloStep++;
+    cloRender();
+    if (cloStep === CLOSE_STEPS.length - 1) {
+      this.textContent = 'Start over ↺';
+      if (!state.m4CloseDone) { state.m4CloseDone = true; save(); updateM4ClosePill(); }
+    } else { this.textContent = 'Next step ▸'; }
+  });
+  $('clo-reset').addEventListener('click', function () { cloStep = -1; cloRender(); $('clo-next').textContent = 'Next step ▸'; });
+
+  /* close-it-or-keep-it classifier */
+  var M4C_Q = [
+    { ev: 'Service Revenue', c: 't', why: 'A revenue — temporary, closed to Income Summary.' },
+    { ev: 'Cash', c: 'p', why: 'An asset — permanent, carried forward.' },
+    { ev: 'Salaries and Wages Expense', c: 't', why: 'An expense — temporary, closed to Income Summary.' },
+    { ev: 'Retained Earnings', c: 'p', why: 'Stockholders’ equity — permanent, carried forward.' },
+    { ev: 'Dividends', c: 't', why: 'Temporary — closed directly to Retained Earnings.' },
+    { ev: 'Accounts Payable', c: 'p', why: 'A liability — permanent, carried forward.' }
+  ];
+  var M4C_CATS = { t: 'Close it', p: 'Keep it' };
+  var m4cAnswered = {};
+  function renderM4c() {
+    m4cAnswered = {};
+    var order = ['t', 'p'];
+    $('m4c-q').innerHTML = M4C_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M4C_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m4c-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M4C_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m4cAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M4C_CATS[e.c] + '.</b> ' + e.why;
+          checkM4c();
+        });
+      });
+    });
+    $('m4c-done').className = 'gp-feedback'; $('m4c-done').innerHTML = '';
+  }
+  function checkM4c() {
+    if (Object.keys(m4cAnswered).length !== M4C_Q.length) return;
+    var allRight = M4C_Q.every(function (e, i) { return m4cAnswered[i]; });
+    var el = $('m4c-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Well sorted.</b> Revenues, expenses, and dividends close; assets, liabilities, and equity carry forward.'
+      : 'Remember: only revenues, expenses, and dividends are temporary — everything else is permanent.') + '</div>';
+    if (!state.m4CloseDone) { state.m4CloseDone = true; save(); updateM4ClosePill(); }
+  }
+  function updateM4ClosePill() { var pill = $('m4close-pill'); if (pill) pill.textContent = state.m4CloseDone ? 'Done' : 'Start'; }
+  function openM4Close() { goScreen('m4close'); $('m4c-scroll').scrollTop = 0; }
+  $('start-m4close-card').addEventListener('click', openM4Close);
+  $('m4c-back').addEventListener('click', function () { goScreen('home'); });
+  $('m4c-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4close-next').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -6982,6 +7488,13 @@
   mcRenderEntry();
   mcRenderWorksheet();
   updateM3CapPill();
+  renderCycleInto('m4i-cycle', 6);
+  renderM4i();
+  updateM4IntroPill();
+  renderCycleInto('m4c-cycle', 7);
+  cloRender();
+  renderM4c();
+  updateM4ClosePill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
