@@ -10874,9 +10874,9 @@
       sub: 'Baylor runs payroll every Friday for that week. December 31 lands mid-week, so two days are earned but unpaid. Work out the accrual from the payroll register.',
       doc: '<div class="wp-doc"><div class="wh"><span class="tag">Payroll</span><span class="ti">Weekly Payroll Register</span><span class="rf">PR&#8209;52</span></div><div class="wbody"><table><thead><tr><th>Pay group</th><th>Employees</th><th>Rate / week</th></tr></thead><tbody><tr><td>Clinical staff</td><td>5</td><td>$700</td></tr><tr><td>Assistants</td><td>3</td><td>$600</td></tr></tbody></table><div class="note flag">Payroll is paid every <b>Friday</b> for that week (Mon&ndash;Fri, 5 working days). <b>Dec 31 is a Tuesday.</b> Employees worked Mon Dec 30 and Tue Dec 31 but won&rsquo;t be paid until Fri Jan 2. No weekend work.</div></div></div>',
       steps: [
-        { label: 'Total weekly payroll &nbsp;(5&#215;$700)&#160;+&#160;(3&#215;$600)', ans: 5300, pf: '$', aria: 'Total weekly payroll' },
-        { label: 'Daily payroll &nbsp;($5,300&#160;&#247;&#160;5 days)', ans: 1060, pf: '$', aria: 'Daily payroll' },
-        { label: 'Days worked but unpaid &nbsp;(Mon&#160;+&#160;Tue)', ans: 2, sf: 'days', aria: 'Days unpaid' },
+        { label: 'Total weekly payroll', ans: 5300, pf: '$', aria: 'Total weekly payroll' },
+        { label: 'Daily payroll', ans: 1060, pf: '$', aria: 'Daily payroll' },
+        { label: 'Days worked but unpaid at year-end', ans: 2, sf: 'days', aria: 'Days unpaid' },
         { label: 'Salaries &amp; wages to accrue', ans: 2120, pf: '$', key: true, aria: 'Salaries to accrue' }
       ],
       sol: [{ a: 'Salaries and Wages Expense', d: 2120, c: 0 }, { a: 'Salaries and Wages Payable', d: 0, c: 2120 }],
@@ -10885,10 +10885,10 @@
     {
       code: 'AJE-2', tab: 'wp2', title: 'Rent revenue earned',
       sub: 'Baylor subleases space and collected every lease in advance — $384,000 sits in Unearned Rent Revenue. Recognize only the portion earned by year-end.',
-      doc: '<div class="wp-doc"><div class="wh"><span class="tag">Leases</span><span class="ti">Sublease Rent Schedule</span><span class="rf">RENT&#8209;01</span></div><div class="wbody"><table><thead><tr><th>Cohort</th><th>Start</th><th>Term</th><th>Rent / mo</th><th>Leases</th></tr></thead><tbody><tr><td>Group A</td><td>Nov 1</td><td>6 mo</td><td>$6,000</td><td>5</td></tr><tr><td>Group B</td><td>Dec 1</td><td>6 mo</td><td>$8,500</td><td>4</td></tr></tbody></table><div class="note">All rent was collected up front and recorded in <b>Unearned Rent Revenue, $384,000</b>. Each tenant also paid a <b>$5,000 non&#8209;refundable security deposit</b> &mdash; held separately, not part of rent.</div><div class="note flag">Recognize only the rent <b>earned</b> by Dec 31: Group A has earned Nov + Dec; Group B has earned Dec.</div></div></div>',
+      doc: '<div class="wp-doc"><div class="wh"><span class="tag">Leases</span><span class="ti">Sublease Rent Schedule</span><span class="rf">RENT&#8209;01</span></div><div class="wbody"><table><thead><tr><th>Cohort</th><th>Start</th><th>Term</th><th>Rent / mo</th><th>Leases</th></tr></thead><tbody><tr><td>Group A</td><td>Nov 1</td><td>6 mo</td><td>$6,000</td><td>5</td></tr><tr><td>Group B</td><td>Dec 1</td><td>6 mo</td><td>$8,500</td><td>4</td></tr></tbody></table><div class="note">All rent was collected up front and recorded in <b>Unearned Rent Revenue, $384,000</b>. Each tenant also paid a <b>$5,000 non&#8209;refundable security deposit</b> &mdash; held separately, not part of rent.</div><div class="note flag">Recognize only the rent that has been <b>earned</b> as of Dec 31 &mdash; work out how many months each cohort&rsquo;s leases have been running.</div></div></div>',
       steps: [
-        { label: 'Group A earned &nbsp;(2 mo&#160;&#215;&#160;$6,000&#160;&#215;&#160;5)', ans: 60000, pf: '$', aria: 'Group A earned' },
-        { label: 'Group B earned &nbsp;(1 mo&#160;&#215;&#160;$8,500&#160;&#215;&#160;4)', ans: 34000, pf: '$', aria: 'Group B earned' },
+        { label: 'Group A rent earned', ans: 60000, pf: '$', aria: 'Group A earned' },
+        { label: 'Group B rent earned', ans: 34000, pf: '$', aria: 'Group B earned' },
         { label: 'Rent revenue earned to date', ans: 94000, pf: '$', key: true, aria: 'Rent earned' }
       ],
       sol: [{ a: 'Unearned Rent Revenue', d: 94000, c: 0 }, { a: 'Rent Revenue', d: 0, c: 94000 }],
@@ -10899,10 +10899,10 @@
       sub: 'Prepaid Advertising of $13,200 covers two magazine contracts billed by the issue. Expense the ads that have already run through Dec 31.',
       doc: '<div class="wp-doc"><div class="wh"><span class="tag">Contracts</span><span class="ti">Prepaid Advertising Contracts</span><span class="rf">ADV&#8209;01</span></div><div class="wbody"><table><thead><tr><th>Contract</th><th>Signed</th><th>Prepaid</th><th>Issues</th></tr></thead><tbody><tr><td>A650</td><td>May 1</td><td>$6,000</td><td>12</td></tr><tr><td>B974</td><td>Oct 1</td><td>$7,200</td><td>24</td></tr></tbody></table><div class="note flag">Each contract runs one ad per month, and <b>the first ad runs in the month the contract is signed</b>. Prepaid Advertising = <b>$13,200</b>. Expense every issue that has run through Dec&nbsp;31.</div></div></div>',
       steps: [
-        { label: 'A650 cost per issue &nbsp;($6,000&#160;&#247;&#160;12)', ans: 500, pf: '$', aria: 'A650 per issue' },
-        { label: 'A650 expired &nbsp;($500&#160;&#215;&#160;8 issues, May&ndash;Dec)', ans: 4000, pf: '$', aria: 'A650 expired' },
-        { label: 'B974 cost per issue &nbsp;($7,200&#160;&#247;&#160;24)', ans: 300, pf: '$', aria: 'B974 per issue' },
-        { label: 'B974 expired &nbsp;($300&#160;&#215;&#160;3 issues, Oct&ndash;Dec)', ans: 900, pf: '$', aria: 'B974 expired' },
+        { label: 'A650 cost per issue', ans: 500, pf: '$', aria: 'A650 per issue' },
+        { label: 'A650 expired at Dec 31', ans: 4000, pf: '$', aria: 'A650 expired' },
+        { label: 'B974 cost per issue', ans: 300, pf: '$', aria: 'B974 per issue' },
+        { label: 'B974 expired at Dec 31', ans: 900, pf: '$', aria: 'B974 expired' },
         { label: 'Advertising expense', ans: 4900, pf: '$', key: true, aria: 'Advertising expense' }
       ],
       sol: [{ a: 'Advertising Expense', d: 4900, c: 0 }, { a: 'Prepaid Advertising', d: 0, c: 4900 }],
@@ -10913,8 +10913,8 @@
       sub: 'A $60,000 note payable dated June 1 carries 12% annual interest, still unpaid at year-end. Accrue the interest owed at Dec 31.',
       doc: '<div class="wp-doc"><div class="wh"><span class="tag">Note</span><span class="ti">Promissory Note</span><span class="rf">NP&#8209;01</span></div><div class="wp-note-face"><div class="nt-title">Promissory Note</div><div class="nt-line"><span>Principal</span><b>$60,000</b></div><div class="nt-line"><span>Annual interest rate</span><b>12%</b></div><div class="nt-line"><span>Date of note</span><b>June 1, 2025</b></div><div class="nt-line"><span>Term</span><b>1 year</b></div></div><div class="wbody"><div class="note flag">No interest has been recorded yet. Accrue the interest owed from the note date through <b>Dec&nbsp;31, 2025</b>.</div></div></div>',
       steps: [
-        { label: 'Months outstanding &nbsp;(Jun 1 &#8594; Dec 31)', ans: 7, sf: 'months', aria: 'Months outstanding' },
-        { label: 'Interest to accrue &nbsp;($60,000&#160;&#215;&#160;12%&#160;&#215;&#160;7&#247;12)', ans: 4200, pf: '$', key: true, aria: 'Interest to accrue' }
+        { label: 'Months outstanding', ans: 7, sf: 'months', aria: 'Months outstanding' },
+        { label: 'Interest to accrue', ans: 4200, pf: '$', key: true, aria: 'Interest to accrue' }
       ],
       sol: [{ a: 'Interest Expense', d: 4200, c: 0 }, { a: 'Interest Payable', d: 0, c: 4200 }],
       hint: 'Interest = principal &#215; rate &#215; time. The note is 7 months old at Dec&nbsp;31: $60,000 &#215; 12% &#215; 7/12 = $4,200. Debit <b>Interest Expense</b> $4,200; credit <b>Interest Payable</b> $4,200.'
