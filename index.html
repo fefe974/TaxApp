@@ -1969,6 +1969,35 @@
   .conv-f .fe .pos { color: var(--good); font-weight: 700; }
   .conv-f .fe .neg { color: var(--warn); font-weight: 700; }
   .conv-f .fe b { color: var(--ink); }
+
+  /* Theoretical weaknesses — merit cards */
+  .merit { display: flex; gap: 11px; align-items: flex-start; border: 1px solid var(--line); border-left: 4px solid var(--credit); border-radius: var(--r-md); background: var(--card); padding: 13px 14px; box-shadow: var(--shadow); }
+  .merit + .merit { margin-top: 10px; }
+  .merit .mi { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; background: color-mix(in srgb, var(--credit) 14%, transparent); color: var(--credit); display: grid; place-items: center; }
+  .merit .mi svg { width: 17px; height: 17px; }
+  .merit b { font-size: 13.5px; color: var(--ink); }
+  .merit p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin-top: 3px; }
+
+  /* reversing-entries comparison (Illustrations 2B.1 / 2B.2) */
+  .rc { display: flex; flex-direction: column; gap: 9px; }
+  .rc-stage { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
+  .rc-stage.diff { border-left: 4px solid var(--gold); }
+  .rc-sh { display: flex; align-items: baseline; gap: 8px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: var(--card-2, color-mix(in srgb, var(--ink) 3%, var(--card))); }
+  .rc-sh b { font-size: 12.5px; color: var(--ink); font-family: var(--serif); }
+  .rc-sh span { font-size: 10.5px; color: var(--ink-faint); font-weight: 600; }
+  .rc-sh .rc-tag { margin-left: auto; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; padding: 2px 8px; border-radius: 999px; }
+  .rc-sh .rc-tag.same { color: var(--good); background: var(--good-bg); }
+  .rc-sh .rc-tag.diff { color: var(--gold); background: color-mix(in srgb, var(--gold) 14%, transparent); }
+  .rc-body { padding: 10px 13px; }
+  .rc-methods { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .rc-m { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .rc-m.no { background: color-mix(in srgb, var(--warn) 5%, var(--card)); }
+  .rc-m.yes { background: color-mix(in srgb, var(--good) 6%, var(--card)); }
+  .rc-ml { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 5px; }
+  .rc-m.no .rc-ml { color: var(--warn); } .rc-m.yes .rc-ml { color: var(--good); }
+  .rc-je .je-head { font-size: 9px; }
+  .rc-je .je-row { font-size: 12px; }
+  .rc-noentry { font-size: 12px; font-style: italic; color: var(--ink-faint); padding: 4px 0; }
 </style>
 
 <div id="fa-app">
@@ -2352,6 +2381,30 @@
               <span class="lnum">6</span>
               <span class="lbody"><b>Converting Cash Basis to Accrual</b><span>Appendix 2A · the conversion worksheet</span></span>
               <span class="pill-mini ready" id="m6cv-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5wk-card">
+              <span class="lnum">7</span>
+              <span class="lbody"><b>Theoretical Weaknesses of the Cash Basis</b><span>Appendix 2A · why accrual wins</span></span>
+              <span class="pill-mini ready" id="m5wk-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5ra-card">
+              <span class="lnum">8</span>
+              <span class="lbody"><b>Reversing Entries — Accruals</b><span>Appendix 2B · Illustration 2B.1</span></span>
+              <span class="pill-mini ready" id="m5ra-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5rd-card">
+              <span class="lnum">9</span>
+              <span class="lbody"><b>Reversing Entries — Deferrals</b><span>Appendix 2B · Illustration 2B.2</span></span>
+              <span class="pill-mini ready" id="m5rd-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -5788,7 +5841,252 @@
           </div>
 
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m6cv-next">
+              <div><div class="up">Up next in Module 5</div><b>Theoretical Weaknesses of the Cash Basis</b> — why accrual wins.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
             <button class="cta ghost" id="m6v-home" style="margin-top:4px;">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 7 — THEORETICAL WEAKNESSES OF THE CASH BASIS (Appendix 2A) ============== -->
+    <section class="fa-screen" id="screen-m5wk" aria-label="Theoretical Weaknesses of the Cash Basis">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5w-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5w-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Module 5 · Lesson 7 · Appendix 2A</div>
+          <h1>Theoretical Weaknesses of the Cash Basis</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">?</span>
+            <div>
+              <div class="lo-t">The big question</div>
+              <div class="lo-d">"Cash is king" — so why does GAAP require the accrual basis?</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">The cash basis reports exactly when cash comes in and goes out — concrete, tangible. Many people say <i>"cash is the real bottom line."</i> So what's the merit of accrual accounting?</p>
+
+          <section class="m2-sec">
+            <h2>Two reasons accrual wins</h2>
+            <div class="merit">
+              <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span>
+              <div><b>The economy runs on credit</b><p>Today's economy is driven far more by <b>credit transactions</b> than by cash. Only the accrual basis recognizes all aspects of the credit phenomenon — the sale made on account, the expense incurred but unpaid.</p></div>
+            </div>
+            <div class="merit">
+              <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span>
+              <div><b>Decision-makers want to predict cash flows</b><p>Investors and creditors seek <b>timely information about future cash flows</b>. Accrual accounting reports the cash inflows and outflows tied to earnings as soon as they can be estimated with reasonable certainty.</p></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Receivables &amp; payables are forecasters</h2>
+            <p>A receivable predicts a future cash <b>inflow</b>; a payable predicts a future cash <b>outflow</b>. By recording transactions <b>when they occur</b> — not when the cash finally moves — accrual-basis accounting actually helps you <b>predict</b> future cash flows better than the cash basis does.</p>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--credit);color:#2a1708;">i</span>
+              <div>Ironically, the basis that ignores today's cash timing (accrual) is the one that best forecasts <b>tomorrow's</b> cash.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Cash appeal, or accrual advantage?</h2>
+            <p>Tap what each statement is really pointing to.</p>
+            <div class="wr-list" id="m5w-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m5w-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Cash <i>is</i> king — which is exactly why accrual accounting matters. Because it captures receivables and payables the moment they arise, the accrual basis gives investors the earliest, clearest read on the cash a business will actually generate.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5wk-next">
+              <div><div class="up">Up next · Appendix 2B</div><b>Reversing Entries — Accruals</b> — simplifying the next period.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5w-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 8 — REVERSING ENTRIES: ACCRUALS (Appendix 2B) ============== -->
+    <section class="fa-screen" id="screen-m5ra" aria-label="Reversing Entries — Accruals">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5ra-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5ra-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Module 5 · Lesson 8 · Appendix 2B · LO 7</div>
+          <h1>Reversing Entries — Accruals</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2B.1</span>
+            <div>
+              <div class="lo-t">Learning Objective 7</div>
+              <div class="lo-d">Identify adjusting entries that may be reversed.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">A <b>reversing entry</b> is an optional entry made at the start of the next period that <b>undoes</b> an adjusting entry — simplifying the routine recording that follows. It never changes the prior period's statements.</p>
+
+          <section class="m2-sec">
+            <h2>The salaries example</h2>
+            <div style="margin-top:6px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">1</span><div class="rb"><b>Oct. 24 · initial entry</b><p>Paid <b>$4,000</b> of salaries for Oct. 10–24.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">2</span><div class="rb"><b>Oct. 31 · adjusting entry</b><p>Accrued <b>$1,200</b> of salaries for Oct. 25–31, to be paid Nov. 8.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">3</span><div class="rb"><b>Nov. 8 · payday</b><p>Paid <b>$2,500</b> — $1,200 for the accrued days, $1,300 for Nov. 1–8.</p></div></div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2B.1 · With and without reversing</h2>
+            <p>The first three entries are the same either way. The <b>reversing</b> and <b>next payday</b> entries differ — that's where reversing pays off.</p>
+            <div class="rc" id="ra-cmp" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>How the ledger resolves</h2>
+            <p>With the Nov. 1 reversing entry, the company simply <b>debits the whole $2,500</b> payment to Salaries and Wages Expense on payday — no need to remember the accrued payable. Tap to see the accounts settle.</p>
+            <div class="gp-actions" style="margin-top:8px;"><button class="btn primary" id="ra-reveal">Reveal the ledger result ▸</button></div>
+            <div id="ra-tacts" style="display:none; margin-top:12px;">
+              <div class="clo-tacts">
+                <div class="clo-ta re" style="--tac:var(--credit)"><div class="tt" style="background:linear-gradient(150deg,var(--credit),#7a3d0e)">Salaries &amp; Wages Expense</div><div class="grid">
+                  <div class="col l"><div class="row"><span class="rn">11/8</span><span>2,500</span></div></div>
+                  <div class="col r"><div class="row"><span class="rn">11/1</span><span>1,200</span></div></div>
+                  <div class="balrow carry"><span>Balance</span><span>1,300 Dr</span></div>
+                </div></div>
+                <div class="clo-ta is" style="--tac:var(--teal)"><div class="tt" style="background:linear-gradient(150deg,var(--teal),#0b5c54)">Salaries &amp; Wages Payable</div><div class="grid">
+                  <div class="col l"><div class="row"><span class="rn">11/1</span><span>1,200</span></div></div>
+                  <div class="col r"><div class="row"><span class="rn">10/31</span><span>1,200</span></div></div>
+                  <div class="balrow zero"><span>Balance</span><span>0</span></div>
+                </div></div>
+              </div>
+              <div class="ill-note" style="margin-top:12px;">
+                <span class="i" style="background:var(--good);color:#06210f;">✓</span>
+                <div>The reversing entry gives Salaries Expense a temporary $1,200 <b>credit</b>; the $2,500 payday debit absorbs it, leaving the correct <b>$1,300</b> of November expense — and the payable is back to zero.</div>
+              </div>
+            </div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Reversing entries let the bookkeeper record every payday the <b>same simple way</b> — debit the expense, credit cash — without checking for accruals. The prior adjustment still did its job; reversing just clears the path for the routine that follows.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5ra-next">
+              <div><div class="up">Up next · Appendix 2B</div><b>Reversing Entries — Deferrals</b> — the supplies case.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5ra-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 9 — REVERSING ENTRIES: DEFERRALS (Appendix 2B) ============== -->
+    <section class="fa-screen" id="screen-m5rd" aria-label="Reversing Entries — Deferrals">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5rd-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5rd-scroll">
+        <header class="m6-hero">
+          <div class="eyebrow">Module 5 · Lesson 9 · Appendix 2B</div>
+          <h1>Reversing Entries — Deferrals</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2B.2</span>
+            <div>
+              <div class="lo-t">Illustration 2B.2</div>
+              <div class="lo-d">When deferrals are booked to expense or revenue accounts.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Usually deferrals go into <b>real accounts</b> (Supplies, Prepaid Insurance). But a company may instead record a deferral straight into an <b>expense or revenue</b> account — and then it can reverse too.</p>
+
+          <section class="m2-sec">
+            <h2>The supplies example</h2>
+            <div style="margin-top:6px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">1</span><div class="rb"><b>Dec. 10 · initial entry</b><p>Purchased <b>$20,000</b> of office supplies with cash.</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--credit)">2</span><div class="rb"><b>Dec. 31 · adjusting entry</b><p>Counted <b>$5,000</b> of supplies still on hand (so $15,000 was used).</p></div></div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--teal);color:#04211d;">i</span>
+              <div>Either way, after adjusting: <b>Supplies</b> (asset) shows <b>$5,000</b> and <b>Supplies Expense</b> shows <b>$15,000</b>. The path differs, the result doesn't.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2B.2 · With and without reversing</h2>
+            <p>When the purchase is booked to <b>Supplies Expense</b> (the "with reversing" path), a Jan. 1 reversing entry returns the unused $5,000 to the expense account so next period starts clean.</p>
+            <div class="rc" id="rd-cmp" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Why real accounts are the default</h2>
+            <p>Tap to see why most companies skip reversing for deferrals.</p>
+            <div class="gp-actions" style="margin-top:8px;"><button class="btn primary" id="rd-reveal">Show the reasoning ▸</button></div>
+            <div id="rd-more" style="display:none; margin-top:12px;">
+              <div class="merit">
+                <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></span>
+                <div><b>Real accounts, no reversing needed</b><p>Deferrals are generally entered in <b>asset and liability</b> accounts — ideal for costs apportioned over several periods (supplies, parts inventory). Reversing becomes unnecessary.</p></div>
+              </div>
+              <div class="merit">
+                <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                <div><b>Nominal accounts add consistency</b><p>For items unlikely to span periods, booking straight to expense/revenue is efficient — the bookkeeper expenses invoices by default (except capital assets) and lets the period-end adjustment sort it out.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Reversing entries are a convenience, not a requirement. Whether you book a deferral to a real account or an expense account, the adjusting entry lands both the asset and the expense at their correct amounts. Reversing just decides how tidy the <i>next</i> period's routine will be.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="m5rd-home" style="margin-top:4px;">Back to course</button>
           </div>
         </div>
       </div>
@@ -5812,7 +6110,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -5849,9 +6147,12 @@
       if (p.m5CloseDone) state.m5CloseDone = true;
       if (p.m6CbDone) state.m6CbDone = true;
       if (p.m6CvDone) state.m6CvDone = true;
+      if (p.m5WkDone) state.m5WkDone = true;
+      if (p.m5RaDone) state.m5RaDone = true;
+      if (p.m5RdDone) state.m5RdDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -5876,7 +6177,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -5923,7 +6224,10 @@
       { done: function () { return state.m5BsDone; }, open: function () { openM5Bs(); }, label: 'The Classified Balance Sheet' },
       { done: function () { return state.m5CloseDone; }, open: function () { openM5Close(); }, label: 'Closing Entries' },
       { done: function () { return state.m6CbDone; }, open: function () { openM6Cb(); }, label: 'Cash Basis vs. Accrual Basis' },
-      { done: function () { return state.m6CvDone; }, open: function () { openM6Cv(); }, label: 'Converting Cash Basis to Accrual' }
+      { done: function () { return state.m6CvDone; }, open: function () { openM6Cv(); }, label: 'Converting Cash Basis to Accrual' },
+      { done: function () { return state.m5WkDone; }, open: function () { openM5Wk(); }, label: 'Theoretical Weaknesses of the Cash Basis' },
+      { done: function () { return state.m5RaDone; }, open: function () { openM5Ra(); }, label: 'Reversing Entries — Accruals' },
+      { done: function () { return state.m5RdDone; }, open: function () { openM5Rd(); }, label: 'Reversing Entries — Deferrals' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -9252,6 +9556,125 @@
   $('start-m6cv-card').addEventListener('click', openM6Cv);
   $('m6v-back').addEventListener('click', function () { goScreen('home'); });
   $('m6v-home').addEventListener('click', function () { goScreen('home'); });
+  $('m6cv-next').addEventListener('click', function () { openM5Wk(); });
+
+  /* ============================================================
+     MODULE 5 (Appendix 2A) · Lesson 7: Theoretical Weaknesses of the Cash Basis
+     ============================================================ */
+  var M5W_Q = [
+    { ev: '"Cash is the real bottom line."', c: 'cash', why: 'The intuitive appeal of the cash basis.' },
+    { ev: 'The economy is driven by credit transactions', c: 'accr', why: 'An accrual advantage — it captures credit sales and unpaid expenses.' },
+    { ev: 'Receivables and payables forecast future cash flows', c: 'accr', why: 'An accrual advantage — it predicts tomorrow’s cash.' },
+    { ev: 'Reports exactly when cash moves', c: 'cash', why: 'The cash basis’s concrete appeal.' },
+    { ev: 'Gives investors the earliest read on earnings', c: 'accr', why: 'An accrual advantage — timely information for decisions.' }
+  ];
+  var M5W_CATS = { cash: 'Cash appeal', accr: 'Accrual edge' };
+  var m5wAnswered = {};
+  function renderM5w() {
+    m5wAnswered = {};
+    var order = ['cash', 'accr'];
+    $('m5w-q').innerHTML = M5W_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M5W_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m5w-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M5W_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m5wAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M5W_CATS[e.c] + '.</b> ' + e.why;
+          checkM5w();
+        });
+      });
+    });
+    $('m5w-done').className = 'gp-feedback'; $('m5w-done').innerHTML = '';
+  }
+  function checkM5w() {
+    if (Object.keys(m5wAnswered).length !== M5W_Q.length) return;
+    var allRight = M5W_Q.every(function (e, i) { return m5wAnswered[i]; });
+    var el = $('m5w-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Exactly.</b> Cash accounting feels concrete, but accrual accounting — through receivables and payables — is what actually forecasts future cash.'
+      : 'The cash basis appeals to "when did money move?"; accrual’s edge is credit and forecasting future cash.') + '</div>';
+    if (!state.m5WkDone) { state.m5WkDone = true; save(); updateM5WkPill(); }
+  }
+  function updateM5WkPill() { var pill = $('m5wk-pill'); if (pill) pill.textContent = state.m5WkDone ? 'Done' : 'Start'; }
+  function openM5Wk() { goScreen('m5wk'); $('m5w-scroll').scrollTop = 0; }
+  $('start-m5wk-card').addEventListener('click', openM5Wk);
+  $('m5w-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5w-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5wk-next').addEventListener('click', function () { openM5Ra(); });
+
+  /* ============================================================
+     MODULE 5 (Appendix 2B) · Lessons 8–9: Reversing entries
+     ============================================================ */
+  function revJe(je) {
+    if (!je) return '<div class="rc-noentry">No entry is made</div>';
+    var h = '<div class="rc-je"><div class="je-head"><span>Account</span><span class="h-d">Dr</span><span class="h-c">Cr</span></div>';
+    je.dr.forEach(function (x) { h += '<div class="je-row"><span class="je-acct">' + x.a + '</span><span class="je-d">' + x.v + '</span><span class="je-c"></span></div>'; });
+    je.cr.forEach(function (x) { h += '<div class="je-row cr"><span class="je-acct">' + x.a + '</span><span class="je-d"></span><span class="je-c">' + x.v + '</span></div>'; });
+    return h + '</div>';
+  }
+  function renderRevCmp(id, stages) {
+    $(id).innerHTML = stages.map(function (s) {
+      var body;
+      if (s.same) {
+        body = revJe(s.je);
+      } else {
+        body = '<div class="rc-methods">' +
+          '<div class="rc-m no"><div class="rc-ml">Without reversing</div>' + revJe(s.without) + '</div>' +
+          '<div class="rc-m yes"><div class="rc-ml">With reversing</div>' + revJe(s.with) + '</div>' +
+          '</div>';
+      }
+      return '<div class="rc-stage' + (s.same ? '' : ' diff') + '"><div class="rc-sh"><b>' + s.name + '</b><span>' + s.date + '</span>' +
+        '<span class="rc-tag ' + (s.same ? 'same' : 'diff') + '">' + (s.same ? 'Same either way' : 'Differs') + '</span></div>' +
+        '<div class="rc-body">' + body + '</div></div>';
+    }).join('');
+  }
+  var RA_STAGES = [
+    { name: 'Initial salary entry', date: 'Oct. 24', same: true, je: { dr: [{ a: 'Salaries and Wages Expense', v: '4,000' }], cr: [{ a: 'Cash', v: '4,000' }] } },
+    { name: 'Adjusting entry', date: 'Oct. 31', same: true, je: { dr: [{ a: 'Salaries and Wages Expense', v: '1,200' }], cr: [{ a: 'Salaries and Wages Payable', v: '1,200' }] } },
+    { name: 'Closing entry', date: 'Oct. 31', same: true, je: { dr: [{ a: 'Income Summary', v: '5,200' }], cr: [{ a: 'Salaries and Wages Expense', v: '5,200' }] } },
+    { name: 'Reversing entry', date: 'Nov. 1', same: false, without: null, with: { dr: [{ a: 'Salaries and Wages Payable', v: '1,200' }], cr: [{ a: 'Salaries and Wages Expense', v: '1,200' }] } },
+    { name: 'Subsequent salary entry', date: 'Nov. 8', same: false, without: { dr: [{ a: 'Salaries and Wages Payable', v: '1,200' }, { a: 'Salaries and Wages Expense', v: '1,300' }], cr: [{ a: 'Cash', v: '2,500' }] }, with: { dr: [{ a: 'Salaries and Wages Expense', v: '2,500' }], cr: [{ a: 'Cash', v: '2,500' }] } }
+  ];
+  var RD_STAGES = [
+    { name: 'Initial purchase of supplies', date: 'Dec. 10', same: false, without: { dr: [{ a: 'Supplies', v: '20,000' }], cr: [{ a: 'Cash', v: '20,000' }] }, with: { dr: [{ a: 'Supplies Expense', v: '20,000' }], cr: [{ a: 'Cash', v: '20,000' }] } },
+    { name: 'Adjusting entry', date: 'Dec. 31', same: false, without: { dr: [{ a: 'Supplies Expense', v: '15,000' }], cr: [{ a: 'Supplies', v: '15,000' }] }, with: { dr: [{ a: 'Supplies', v: '5,000' }], cr: [{ a: 'Supplies Expense', v: '5,000' }] } },
+    { name: 'Closing entry', date: 'Dec. 31', same: true, je: { dr: [{ a: 'Income Summary', v: '15,000' }], cr: [{ a: 'Supplies Expense', v: '15,000' }] } },
+    { name: 'Reversing entry', date: 'Jan. 1', same: false, without: null, with: { dr: [{ a: 'Supplies Expense', v: '5,000' }], cr: [{ a: 'Supplies', v: '5,000' }] } }
+  ];
+
+  /* Lesson 8 — accruals */
+  function updateM5RaPill() { var pill = $('m5ra-pill'); if (pill) pill.textContent = state.m5RaDone ? 'Done' : 'Start'; }
+  function openM5Ra() { goScreen('m5ra'); $('m5ra-scroll').scrollTop = 0; }
+  $('start-m5ra-card').addEventListener('click', openM5Ra);
+  $('m5ra-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5ra-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5ra-next').addEventListener('click', function () { openM5Rd(); });
+  $('ra-reveal').addEventListener('click', function () {
+    $('ra-tacts').style.display = 'block'; this.style.display = 'none';
+    if (!state.m5RaDone) { state.m5RaDone = true; save(); updateM5RaPill(); }
+  });
+
+  /* Lesson 9 — deferrals */
+  function updateM5RdPill() { var pill = $('m5rd-pill'); if (pill) pill.textContent = state.m5RdDone ? 'Done' : 'Start'; }
+  function openM5Rd() { goScreen('m5rd'); $('m5rd-scroll').scrollTop = 0; }
+  $('start-m5rd-card').addEventListener('click', openM5Rd);
+  $('m5rd-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5rd-home').addEventListener('click', function () { goScreen('home'); });
+  $('rd-reveal').addEventListener('click', function () {
+    $('rd-more').style.display = 'block'; this.style.display = 'none';
+    if (!state.m5RdDone) { state.m5RdDone = true; save(); updateM5RdPill(); }
+  });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -9347,6 +9770,12 @@
   renderM6c();
   updateM6CbPill();
   updateM6CvPill();
+  renderM5w();
+  updateM5WkPill();
+  renderRevCmp('ra-cmp', RA_STAGES);
+  updateM5RaPill();
+  renderRevCmp('rd-cmp', RD_STAGES);
+  updateM5RdPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
