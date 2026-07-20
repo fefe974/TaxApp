@@ -2233,6 +2233,7 @@
   .xls-table td.cb.sel { outline: 2px solid #217346; outline-offset: -2px; }
   .xls-table td.cb.ok { background: var(--good-bg); } .xls-table td.cb.ok .disp { color: var(--good); }
   .xls-table td.cb.no { background: var(--warn-bg); } .xls-table td.cb.no .disp { color: var(--warn); }
+  .xls-table td.cb.err .xls-in { color: var(--warn); font-weight: 800; }
   .xls-in { width: 100%; border: none; background: transparent; text-align: right; font-family: var(--mono); font-weight: 700; font-size: 12px; padding: 6px 9px; color: var(--ink); -webkit-appearance: none; }
   .xls-in:focus { outline: none; background: color-mix(in srgb, #217346 9%, var(--card)); }
   .xls-table td.cb.input { background: color-mix(in srgb, #217346 4%, var(--card)); }
@@ -6774,7 +6775,7 @@
           <!-- Workbook (Excel-skinned schedule, rendered by JS) -->
           <div class="aw-panel" id="a2-book">
             <div class="aw-h">Supporting schedules · workbook</div>
-            <div class="aw-sub">Build the four supporting schedules here, the way you would in Excel. Read the figures off the source documents in the AJE tabs and enter each driver cell — a number, or a formula like <b>=250*4</b>. The totals roll up automatically; then check the workbook.</div>
+            <div class="aw-sub">Build the four supporting schedules here, the way you would in Excel. Read the figures off the source documents in the AJE tabs and <b>do every computation yourself</b> — type a value or a formula in each cell, using cell references like <b>=B2+B3</b>. Nothing is calculated for you; then check the workbook.</div>
             <div id="a2-book-host"></div>
           </div>
 
@@ -11077,20 +11078,64 @@
     var d = $('app2-complete'); if (!d) return;
     d.innerHTML = '<div class="cap-done" style="margin-top:16px"><div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Workpaper submitted</h3><p>Strong first engagement. All four year-end adjusting entries for Baylor Company are computed, recorded, and signed — <b>$2,120</b> salaries, <b>$94,000</b> rent earned, <b>$4,900</b> advertising, and <b>$4,200</b> interest. Priya has it from here.</p></div>';
   }
-  /* ---- Excel-skinned schedule ("LedgerSheet") — deterministic, no formula engine ---- */
-  function xlsParse(s) {
-    var i = 0;
-    function skip() { while (s.charAt(i) === ' ') i++; }
-    function expr() { var v = term(); for (;;) { skip(); var c = s.charAt(i); if (c === '+' || c === '-') { i++; var r = term(); v = c === '+' ? v + r : v - r; } else break; } return v; }
-    function term() { var v = factor(); for (;;) { skip(); var c = s.charAt(i); if (c === '*' || c === '/') { i++; var r = factor(); if (c === '*') v = v * r; else { if (r === 0) throw 0; v = v / r; } } else break; } return v; }
-    function factor() { skip(); var c = s.charAt(i); if (c === '+') { i++; return factor(); } if (c === '-') { i++; return -factor(); } if (c === '(') { i++; var v = expr(); skip(); if (s.charAt(i) !== ')') throw 0; i++; return v; } var st = i; while (i < s.length && /[0-9.]/.test(s.charAt(i))) i++; if (i === st) throw 0; var n = parseFloat(s.slice(st, i)); if (isNaN(n)) throw 0; return n; }
-    var v = expr(); skip(); if (i < s.length) throw 0; return v;
-  }
-  function xlsEval(raw) {
-    if (raw == null) return NaN; var s = String(raw).trim(); if (s === '') return NaN;
-    if (s.charAt(0) === '=') s = s.slice(1).trim(); if (s === '') return NaN;
-    if (!/^[0-9.+\-*/() ]+$/.test(s)) return null;
-    try { return xlsParse(s); } catch (e) { return null; }
+  /* ---- LedgerSheet — a small real spreadsheet engine (cell refs, ranges, functions; no eval) ---- */
+  function xlsEngine(rawByRef) {
+    var FUNCS = {
+      SUM: function (a) { return a.reduce(function (s, x) { return s + x; }, 0); },
+      AVERAGE: function (a) { return a.length ? a.reduce(function (s, x) { return s + x; }, 0) / a.length : 0; },
+      MIN: function (a) { return a.length ? Math.min.apply(null, a) : 0; },
+      MAX: function (a) { return a.length ? Math.max.apply(null, a) : 0; },
+      ROUND: function (a) { var n = a[0] || 0, d = a.length > 1 ? a[1] : 0, f = Math.pow(10, d); return Math.round(n * f) / f; }
+    };
+    function colNum(c) { var n = 0; for (var i = 0; i < c.length; i++) n = n * 26 + (c.charCodeAt(i) - 64); return n; }
+    function numCol(n) { var s = ''; while (n > 0) { s = String.fromCharCode(64 + ((n - 1) % 26 + 1)) + s; n = Math.floor((n - 1) / 26); } return s; }
+    function expand(a, b) {
+      var ma = /^([A-Z]+)(\d+)$/.exec(a), mb = /^([A-Z]+)(\d+)$/.exec(b); if (!ma || !mb) throw 'ERR';
+      var c1 = colNum(ma[1]), c2 = colNum(mb[1]), r1 = +ma[2], r2 = +mb[2], t;
+      if (c1 > c2) { t = c1; c1 = c2; c2 = t; } if (r1 > r2) { t = r1; r1 = r2; r2 = t; }
+      var out = []; for (var c = c1; c <= c2; c++) for (var r = r1; r <= r2; r++) out.push(numCol(c) + r); return out;
+    }
+    function parse(s, resolve) {
+      var i = 0;
+      function skip() { while (s.charAt(i) === ' ') i++; }
+      function expr() { var v = term(); for (;;) { skip(); var c = s.charAt(i); if (c === '+' || c === '-') { i++; var r = term(); v = c === '+' ? v + r : v - r; } else break; } return v; }
+      function term() { var v = factor(); for (;;) { skip(); var c = s.charAt(i); if (c === '*' || c === '/') { i++; var r = factor(); if (c === '*') v = v * r; else { if (r === 0) throw 'DIV0'; v = v / r; } } else break; } return v; }
+      function ident() { var st = i; while (i < s.length && /[A-Za-z]/.test(s.charAt(i))) i++; return s.slice(st, i); }
+      function digits() { var st = i; while (i < s.length && /[0-9]/.test(s.charAt(i))) i++; return s.slice(st, i); }
+      function argList() { var a = []; skip(); if (s.charAt(i) === ')') { i++; return a; } for (;;) { a.push(rangeOrExpr()); skip(); if (s.charAt(i) === ',') { i++; continue; } if (s.charAt(i) === ')') { i++; break; } throw 'ERR'; } return a; }
+      function rangeOrExpr() {
+        skip(); var save = i, id = ident();
+        if (id && /^[A-Za-z]+$/.test(id)) { var d = digits(); if (d) { skip(); if (s.charAt(i) === ':') { i++; skip(); var id2 = ident(), d2 = digits(); if (id2 && d2) return expand((id + d).toUpperCase(), (id2 + d2).toUpperCase()).map(resolve); } } }
+        i = save; return expr();
+      }
+      function factor() {
+        skip(); var c = s.charAt(i);
+        if (c === '+') { i++; return factor(); }
+        if (c === '-') { i++; return -factor(); }
+        if (c === '(') { i++; var v = expr(); skip(); if (s.charAt(i) !== ')') throw 'ERR'; i++; return v; }
+        if (/[A-Za-z]/.test(c)) {
+          var id = ident(); skip();
+          if (s.charAt(i) === '(') { i++; var fn = FUNCS[id.toUpperCase()]; if (!fn) throw 'ERR'; var a = argList(), flat = []; a.forEach(function (x) { if (Array.isArray(x)) flat = flat.concat(x); else flat.push(x); }); return fn(flat); }
+          var d = digits(); if (!d) throw 'ERR'; return resolve((id + d).toUpperCase());
+        }
+        var st = i; while (i < s.length && /[0-9.]/.test(s.charAt(i))) i++; if (i === st) throw 'ERR'; var n = parseFloat(s.slice(st, i)); if (isNaN(n)) throw 'ERR'; return n;
+      }
+      var out = expr(); skip(); if (i < s.length) throw 'ERR'; return out;
+    }
+    var cache = {}, visiting = {};
+    function valueOf(refn) {
+      if (refn in cache) return cache[refn];
+      var raw = rawByRef[refn];
+      if (raw == null || String(raw).trim() === '') { cache[refn] = 0; return 0; }
+      var s = String(raw).trim();
+      if (s.charAt(0) !== '=') { if (!/^-?[0-9]*\.?[0-9]+$/.test(s)) { cache[refn] = { err: '#ERR' }; return cache[refn]; } var n = parseFloat(s); cache[refn] = isNaN(n) ? { err: '#ERR' } : n; return cache[refn]; }
+      if (visiting[refn]) throw 'CIRC';
+      visiting[refn] = true; var v;
+      try { v = parse(s.slice(1), function (r) { var rv = valueOf(r); if (rv && rv.err) throw rv.err; return rv; }); }
+      catch (e) { v = { err: (typeof e === 'string' && e.charAt(0) === '#') ? e : (e === 'CIRC' ? '#CIRC' : (e === 'DIV0' ? '#DIV/0' : '#ERR')) }; }
+      delete visiting[refn]; cache[refn] = v; return v;
+    }
+    return { value: function (r) { visiting = {}; try { return valueOf(r); } catch (e) { return { err: '#ERR' }; } } };
   }
   function xlsFmt(x) { if (x == null || isNaN(x)) return ''; var r = Math.round(x * 100) / 100; return Number.isInteger(r) ? cma(r) : String(r); }
   function xlsCsvCell(v) { v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
@@ -11112,23 +11157,24 @@
         '<div class="xls-foot"><span class="xls-tab">' + (spec.tab || 'Sheet1') + '</span><span class="sp"></span><button class="xls-btn" id="' + P + '-csv" type="button">&#8681; Download .csv</button><button class="xls-btn pri" id="' + P + '-check" type="button">Check the workbook</button></div>' +
       '</div>' +
       '<div class="gp-feedback" id="' + P + '-fb" style="margin-top:12px"></div>' +
-      '<div class="xls-note">A working schedule — type a number or a simple formula (e.g. <b>=250*4</b>) in the green cells; the totals roll up automatically. Tap a cell to see its formula in the bar above, just like Excel.</div>';
+      '<div class="xls-note">A live worksheet — <b>you</b> do the computations. Type a value or a formula in every green cell, and use <b>cell references</b> just like Excel: <b>=B2+B3</b>, <b>=B4/5</b>, <b>=SUM(B12:B13)</b>. Nothing is filled in for you. Tap a cell to see its formula in the bar above.</div>';
     var rowByRef = {}; spec.rows.forEach(function (r) { if (r.b) rowByRef[ref(r.n)] = r; });
-    function g(R) { var v = vals[R]; return (v == null || isNaN(v)) ? 0 : v; }
     function cbTd(R) { return host.querySelector('td.cb[data-ref="' + R + '"]'); }
+    function rawOf(R) { var inp = $(P + '-' + R); return inp ? (inp.getAttribute('data-raw') || '') : ''; }
     function recompute() {
+      var rawByRef = {}; spec.rows.forEach(function (r) { if (r.b) rawByRef[ref(r.n)] = rawOf(ref(r.n)); });
+      var eng = xlsEngine(rawByRef);
       spec.rows.forEach(function (r) {
-        if (!r.b) return; var R = ref(r.n);
-        if (r.b.kind === 'input') { var inp = $(P + '-' + R); var v = xlsEval(inp.getAttribute('data-raw')); vals[R] = (v == null) ? NaN : v; if (document.activeElement !== inp) inp.value = xlsFmt(vals[R]); }
-        else if (r.b.kind === 'calc') { vals[R] = r.b.compute(g); }
+        if (!r.b) return; var R = ref(r.n), inp = $(P + '-' + R), td = cbTd(R), v = eng.value(R); vals[R] = v;
+        var isErr = !!(v && v.err), blank = String(rawByRef[R]).trim() === '';
+        if (document.activeElement !== inp) inp.value = blank ? '' : (isErr ? v.err : xlsFmt(v));
+        if (td) { td.classList.toggle('err', isErr); td.classList.toggle('empty', blank); }
       });
-      spec.rows.forEach(function (r) { if (r.b && r.b.kind === 'calc') { var R = ref(r.n), td = cbTd(R); if (td) { td.querySelector('.disp').textContent = xlsFmt(vals[R]); td.classList.toggle('empty', vals[R] == null || isNaN(vals[R])); } } });
     }
     function select(R) {
       Array.prototype.slice.call(host.querySelectorAll('td.cb')).forEach(function (td) { td.classList.toggle('sel', td.getAttribute('data-ref') === R); });
-      $(P + '-nb').textContent = R; var fx = $(P + '-fx'), r = rowByRef[R], expr = '';
-      if (r) { if (r.b.kind === 'input') expr = $(P + '-' + R).getAttribute('data-raw') || ''; else if (r.b.kind === 'calc') expr = r.b.fx || ''; }
-      if (expr) { fx.textContent = expr; fx.classList.remove('empty'); } else { fx.textContent = (r && r.b.kind === 'input') ? '(empty)' : '—'; fx.classList.add('empty'); }
+      $(P + '-nb').textContent = R; var fx = $(P + '-fx'), r = rowByRef[R], raw = (r && r.b) ? rawOf(R) : '';
+      if (raw) { fx.textContent = raw; fx.classList.remove('empty'); } else { fx.textContent = (r && r.b) ? '(empty)' : '—'; fx.classList.add('empty'); }
     }
     spec.rows.forEach(function (r) {
       if (!r.b || r.b.kind !== 'input') return; var R = ref(r.n), inp = $(P + '-' + R);
@@ -11138,10 +11184,13 @@
     });
     Array.prototype.slice.call(host.querySelectorAll('td.cb.calc')).forEach(function (td) { td.addEventListener('click', function () { select(td.getAttribute('data-ref')); }); });
     $(P + '-check').addEventListener('click', function () {
-      recompute(); var allOk = true, anyBlank = false;
-      spec.rows.forEach(function (r) { if (!r.b || r.b.ans == null) return; var R = ref(r.n), td = cbTd(R); if (!td) return; td.classList.remove('ok', 'no'); var v = vals[R]; if (v == null || isNaN(v)) { anyBlank = true; allOk = false; td.classList.add('no'); return; } if (Math.round(v) === r.b.ans) td.classList.add('ok'); else { td.classList.add('no'); allOk = false; } });
+      recompute(); var allOk = true, anyBlank = false, anyErr = false;
+      spec.rows.forEach(function (r) { if (!r.b || r.b.ans == null) return; var R = ref(r.n), td = cbTd(R); if (!td) return; td.classList.remove('ok', 'no'); var v = vals[R];
+        if (v && v.err) { anyErr = true; allOk = false; td.classList.add('no'); return; }
+        if (v == null || isNaN(v) || String(rawOf(R)).trim() === '') { anyBlank = true; allOk = false; td.classList.add('no'); return; }
+        if (Math.round(v) === r.b.ans) td.classList.add('ok'); else { td.classList.add('no'); allOk = false; } });
       var fb = $(P + '-fb');
-      if (!allOk) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + (anyBlank ? 'Fill in every green cell — a number or a formula like <b>=250*4</b>.' : 'Some cells are off — the red ones need another look. The totals recalculate as you fix the drivers.') + '</div>'; return; }
+      if (!allOk) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + (anyErr ? 'A formula has an error (see the <b>#</b> cells) — check your cell references and parentheses.' : (anyBlank ? 'Do the computation in every green cell — enter a formula (e.g. <b>=B2+B3</b>) or a value.' : 'Some cells are off — the red ones need another look. Fix your formulas and check again.')) + '</div>'; return; }
       fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Workbook ties out.</b> Your schedules give $2,120, $94,000, $4,900, and $4,200 — the figures for AJE-1 through AJE-4.</div>';
       Array.prototype.slice.call(host.querySelectorAll('.xls-in')).forEach(function (inp) { inp.disabled = true; });
       var cb = $(P + '-check'); cb.disabled = true; cb.textContent = 'Checked ✓';
@@ -11149,7 +11198,7 @@
     });
     $(P + '-csv').addEventListener('click', function () {
       var tmp = document.createElement('div');
-      var lines = spec.rows.map(function (r) { tmp.innerHTML = r.a || ''; var label = (tmp.textContent || '').replace(/\s+/g, ' ').trim(); var R = ref(r.n), amt = (r.b && (r.b.kind === 'input' || r.b.kind === 'calc') && vals[R] != null && !isNaN(vals[R])) ? Math.round(vals[R] * 100) / 100 : ''; return xlsCsvCell(r.n) + ',' + xlsCsvCell(label) + ',' + xlsCsvCell(amt); });
+      var lines = spec.rows.map(function (r) { tmp.innerHTML = r.a || ''; var label = (tmp.textContent || '').replace(/\s+/g, ' ').trim(); var R = ref(r.n), amt = (r.b && typeof vals[R] === 'number' && !isNaN(vals[R])) ? Math.round(vals[R] * 100) / 100 : ''; return xlsCsvCell(r.n) + ',' + xlsCsvCell(label) + ',' + xlsCsvCell(amt); });
       var csv = 'Row,Item,Amount\n' + lines.join('\n'), btn = $(P + '-csv');
       try { var blob = new Blob([csv], { type: 'text/csv' }), url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = (spec.file || 'sheet') + '.csv'; document.body.appendChild(a); a.click(); setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 0); btn.textContent = 'Saved ✓'; }
       catch (e) { try { navigator.clipboard.writeText(csv); btn.textContent = 'Copied ✓'; } catch (e2) { btn.textContent = 'Unavailable'; } }
@@ -11163,21 +11212,21 @@
         { n: 1, hd: true, a: 'Accrued salaries — AJE-1', b: null },
         { n: 2, a: 'Clinical staff wages', b: { kind: 'input', ans: 3500 } },
         { n: 3, a: 'Assistant wages', b: { kind: 'input', ans: 1800 } },
-        { n: 4, a: 'Weekly payroll', b: { kind: 'calc', fx: '=B2+B3', ans: 5300, compute: function (g) { return g('B2') + g('B3'); } } },
-        { n: 5, a: 'Daily payroll', b: { kind: 'calc', fx: '=B4/5', ans: 1060, compute: function (g) { return g('B4') / 5; } } },
-        { n: 6, a: 'Salaries to accrue', b: { kind: 'calc', fx: '=B5*2', ans: 2120, compute: function (g) { return g('B5') * 2; } } },
+        { n: 4, a: 'Weekly payroll', b: { kind: 'input', ans: 5300 } },
+        { n: 5, a: 'Daily payroll', b: { kind: 'input', ans: 1060 } },
+        { n: 6, a: 'Salaries to accrue', b: { kind: 'input', ans: 2120 } },
         { n: 7, hd: true, a: 'Rent earned — AJE-2', b: null },
         { n: 8, a: 'Group A rent earned', b: { kind: 'input', ans: 60000 } },
         { n: 9, a: 'Group B rent earned', b: { kind: 'input', ans: 34000 } },
-        { n: 10, a: 'Rent revenue earned', b: { kind: 'calc', fx: '=B8+B9', ans: 94000, compute: function (g) { return g('B8') + g('B9'); } } },
+        { n: 10, a: 'Rent revenue earned', b: { kind: 'input', ans: 94000 } },
         { n: 11, hd: true, a: 'Advertising used — AJE-3', b: null },
         { n: 12, a: 'A650 advertising expired', b: { kind: 'input', ans: 4000 } },
         { n: 13, a: 'B974 advertising expired', b: { kind: 'input', ans: 900 } },
-        { n: 14, a: 'Advertising expense', b: { kind: 'calc', fx: '=B12+B13', ans: 4900, compute: function (g) { return g('B12') + g('B13'); } } },
+        { n: 14, a: 'Advertising expense', b: { kind: 'input', ans: 4900 } },
         { n: 15, hd: true, a: 'Interest accrued — AJE-4', b: null },
         { n: 16, a: 'Annual interest', b: { kind: 'input', ans: 7200 } },
         { n: 17, a: 'Months outstanding', b: { kind: 'input', ans: 7 } },
-        { n: 18, a: 'Interest accrued', b: { kind: 'calc', fx: '=B16*B17/12', ans: 4200, compute: function (g) { return g('B16') * g('B17') / 12; } } }
+        { n: 18, a: 'Interest accrued', b: { kind: 'input', ans: 4200 } }
       ],
       onSolved: function () { markA2Tab('book'); }
     });
