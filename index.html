@@ -2274,11 +2274,22 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
-            <div class="lesson-card locked" aria-disabled="true">
+            <button class="lesson-card" id="start-m5re-card">
               <span class="lnum">2</span>
-              <span class="lbody"><b>Retained Earnings &amp; Balance Sheet</b><span>The rest of the merchandiser's statements</span></span>
-              <span class="pill-mini soon">Soon</span>
-            </div>
+              <span class="lbody"><b>The Retained Earnings Statement</b><span>Beginning to ending retained earnings · Illustration 2.45</span></span>
+              <span class="pill-mini ready" id="m5re-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-m5bs-card">
+              <span class="lnum">3</span>
+              <span class="lbody"><b>The Classified Balance Sheet</b><span>Current &amp; long-term sections · Illustration 2.46</span></span>
+              <span class="pill-mini ready" id="m5bs-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -5240,6 +5251,178 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: MODULE 5 · LESSON 2 — RETAINED EARNINGS STATEMENT ============== -->
+    <section class="fa-screen" id="screen-m5re" aria-label="The Retained Earnings Statement">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5r-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5r-scroll">
+        <header class="m5-hero">
+          <div class="eyebrow">Module 5 · Lesson 2</div>
+          <h1>The Retained Earnings Statement</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.45</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">Reconciling retained earnings from the start of the year to the end.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">A corporation can <b>keep</b> its net income in the business or <b>pay it out</b> as dividends. The retained earnings statement reconciles the account from the beginning of the year to the end.</p>
+
+          <section class="m2-sec">
+            <h2>The reconciliation</h2>
+            <p>Uptown started the year with $16,200 of retained earnings, added the year's <b>net income</b> (the $12,200 from the income statement), and subtracted <b>dividends</b>. Compute the two subtotals.</p>
+            <div class="mis" id="mre" style="margin-top:12px;">
+              <div class="mis-title"><b>Uptown Cabinet Corp.</b><span>Retained Earnings Statement</span><span>For the Year Ended December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row"><span class="l">Retained earnings, January 1</span><span class="c1"></span><span class="c2">$16,200</span></div>
+                <div class="mis-row rule"><span class="l">Add: Net income</span><span class="c1"></span><span class="c2">12,200</span></div>
+                <div class="mis-row sub"><span class="l"></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mre-sub" inputmode="numeric" placeholder="?" aria-label="Subtotal"></span></div>
+                <div class="mis-row rule"><span class="l">Less: Dividends</span><span class="c1"></span><span class="c2">2,000</span></div>
+                <div class="mis-row grand"><span class="l">Retained earnings, Dec. 31</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mre-end" inputmode="numeric" placeholder="?" aria-label="Ending retained earnings"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="mre-check">Check the figures</button></div>
+            <div class="gp-feedback" id="mre-fb" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Where the numbers connect</h2>
+            <div style="margin-top:6px;">
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">←</span><div class="rb"><b>Net income comes in</b><p>The <b>$12,200</b> added here is the bottom line of the income statement (Lesson 1).</p></div></div>
+              <div class="m3-reason"><span class="rn" style="background:var(--asset)">→</span><div class="rb"><b>Ending balance flows out</b><p>The <b>$26,400</b> ending retained earnings carries to the equity section of the balance sheet (next lesson).</p></div></div>
+            </div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>Retained earnings is a running story: it starts where last period ended, grows by profits earned, and shrinks by dividends paid. It's the bridge that links the income statement to the balance sheet.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="m2-next go" id="m5re-next">
+              <div><div class="up">Up next in Module 5</div><b>The Classified Balance Sheet</b> — where ending retained earnings lands.</div>
+              <svg class="icon go-chev" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <button class="cta ghost" id="m5r-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: MODULE 5 · LESSON 3 — CLASSIFIED BALANCE SHEET ============== -->
+    <section class="fa-screen" id="screen-m5bs" aria-label="The Classified Balance Sheet">
+      <div class="fa-topbar">
+        <button class="fa-back" id="m5b-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="m5b-scroll">
+        <header class="m5-hero">
+          <div class="eyebrow">Module 5 · Lesson 3</div>
+          <h1>The Classified Balance Sheet</h1>
+          <div class="lo-callout">
+            <span class="lo-badge">2.46</span>
+            <div>
+              <div class="lo-t">Illustration</div>
+              <div class="lo-d">Grouping assets, liabilities, and equity into meaningful sections.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">The balance sheet shows the company's financial condition at a point in time. A <b>classified</b> balance sheet groups items so readers can judge liquidity and structure at a glance.</p>
+
+          <section class="m2-sec">
+            <h2>The sections</h2>
+            <p><b>Current assets</b> convert to cash or get used up soon (here: receivables net of the allowance, inventory, prepaids). <b>Property, plant &amp; equipment</b> is shown at cost less accumulated depreciation. Liabilities split into <b>current</b> and <b>long-term</b>. <b>Stockholders' equity</b> is common stock plus retained earnings.</p>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Illustration 2.46 · Build the balance sheet</h2>
+            <p>Uptown's line items are filled in. Compute the <b>four highlighted totals</b> — and confirm total assets equal total liabilities &amp; equity.</p>
+            <div class="mis" id="mbs" style="margin-top:12px;">
+              <div class="mis-title"><b>Uptown Cabinet Corp.</b><span>Balance Sheet</span><span>As of December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row sec"><span class="l">Assets</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row sec"><span class="l">Current assets</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Cash</span><span class="c1"></span><span class="c2">$1,200</span></div>
+                <div class="mis-row ind1"><span class="l">Notes receivable</span><span class="c1">16,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Accounts receivable</span><span class="c1">41,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Interest receivable</span><span class="c1">800</span><span class="c2"></span></div>
+                <div class="mis-row ind1 sub"><span class="l"></span><span class="c1">57,800</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Less: Allowance for doubtful accounts</span><span class="c1">3,000</span><span class="c2">54,800</span></div>
+                <div class="mis-row ind1"><span class="l">Inventory</span><span class="c1"></span><span class="c2">40,000</span></div>
+                <div class="mis-row ind1"><span class="l">Prepaid insurance</span><span class="c1"></span><span class="c2">540</span></div>
+                <div class="mis-row ind1"><span class="l">Prepaid rent</span><span class="c1"></span><span class="c2">500</span></div>
+                <div class="mis-row ind1 key"><span class="l">Total current assets<span class="mis-badge">a</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mbs-tca" inputmode="numeric" placeholder="?" aria-label="Total current assets"></span></div>
+                <div class="mis-row sec"><span class="l">Property, plant &amp; equipment</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Equipment</span><span class="c1">67,000</span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Less: Accumulated depreciation</span><span class="c1">18,700</span><span class="c2">48,300</span></div>
+                <div class="mis-row key"><span class="l">Total assets<span class="mis-badge">b</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mbs-ta" inputmode="numeric" placeholder="?" aria-label="Total assets"></span></div>
+                <div class="mis-row sec"><span class="l">Liabilities &amp; Stockholders' Equity</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row sec"><span class="l">Current liabilities</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Notes payable</span><span class="c1">20,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Accounts payable</span><span class="c1">13,500</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Property taxes payable</span><span class="c1">2,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Income taxes payable</span><span class="c1">3,440</span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total current liabilities<span class="mis-badge">c</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mbs-tcl" inputmode="numeric" placeholder="?" aria-label="Total current liabilities"></span></div>
+                <div class="mis-row sec"><span class="l">Long-term liabilities</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Bonds payable, due 2033</span><span class="c1"></span><span class="c2">30,000</span></div>
+                <div class="mis-row ind1 sub"><span class="l">Total liabilities</span><span class="c1"></span><span class="c2">68,940</span></div>
+                <div class="mis-row sec"><span class="l">Stockholders' equity</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Common stock ($5 par, 10,000 shares)</span><span class="c1">50,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Retained earnings</span><span class="c1">26,400</span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total stockholders' equity<span class="mis-badge">d</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="mbs-tse" inputmode="numeric" placeholder="?" aria-label="Total stockholders equity"></span></div>
+                <div class="mis-row grand"><span class="l">Total liabilities &amp; equity</span><span class="c1"></span><span class="c2">$145,340</span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="mbs-check">Check the totals</button></div>
+            <div class="gp-feedback" id="mbs-fb" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Current or long-term?</h2>
+            <p>Classifying items is the heart of a classified balance sheet. Tap where each belongs.</p>
+            <div class="wr-list" id="m5b-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="m5b-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>A classified balance sheet is about grouping: what's liquid vs. long-lived, what's due soon vs. later, what owners invested vs. what the business earned and kept. The receivables net of the allowance and equipment net of depreciation both report <b>realizable</b> value — and it all ties to <b>$145,340</b>.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <button class="cta ghost" id="m5b-home" style="margin-top:4px;">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -5258,7 +5441,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -5290,9 +5473,11 @@
       if (p.m4CapDone) state.m4CapDone = true;
       if (p.m5IntroDone) state.m5IntroDone = true;
       if (p.m5IsDone) state.m5IsDone = true;
+      if (p.m5ReDone) state.m5ReDone = true;
+      if (p.m5BsDone) state.m5BsDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -5317,7 +5502,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -5359,7 +5544,9 @@
       { done: function () { return state.m4CycleDone; }, open: function () { openM4Cycle(); }, label: 'The Accounting Cycle Summarized' },
       { done: function () { return state.m4CapDone; }, open: function () { openM4Cap(); }, label: 'the Module 4 Capstone' },
       { done: function () { return state.m5IntroDone; }, open: function () { openM5Intro(); }, label: 'Module 5 · Introduction' },
-      { done: function () { return state.m5IsDone; }, open: function () { openM5Is(); }, label: 'The Income Statement' }
+      { done: function () { return state.m5IsDone; }, open: function () { openM5Is(); }, label: 'The Income Statement' },
+      { done: function () { return state.m5ReDone; }, open: function () { openM5Re(); }, label: 'The Retained Earnings Statement' },
+      { done: function () { return state.m5BsDone; }, open: function () { openM5Bs(); }, label: 'The Classified Balance Sheet' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -8408,7 +8595,112 @@
   $('start-m5is-card').addEventListener('click', openM5Is);
   $('m5s-back').addEventListener('click', function () { goScreen('home'); });
   $('m5s-home').addEventListener('click', function () { goScreen('home'); });
-  $('m5is-next').addEventListener('click', function () { goScreen('home'); });
+  $('m5is-next').addEventListener('click', function () { openM5Re(); });
+
+  /* ============================================================
+     MODULE 5 — Lesson 2: The Retained Earnings Statement (Illustration 2.45)
+     ============================================================ */
+  $('mre-check').addEventListener('click', function () {
+    var targets = { 'mre-sub': 28400, 'mre-end': 26400 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = m5Num(id);
+      el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('mre-fb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in both figures first.</div>'; return; }
+    if (allOk) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Reconciled.</b> $16,200 + $12,200 = $28,400; − $2,000 dividends = <b>$26,400</b> ending retained earnings — the figure that carries to the balance sheet.</div>';
+      if (!state.m5ReDone) { state.m5ReDone = true; save(); updateM5RePill(); }
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Not quite. Subtotal = $16,200 beginning + $12,200 net income. Ending = that subtotal − $2,000 dividends.</div>';
+    }
+  });
+  function updateM5RePill() { var pill = $('m5re-pill'); if (pill) pill.textContent = state.m5ReDone ? 'Done' : 'Start'; }
+  function openM5Re() { goScreen('m5re'); $('m5r-scroll').scrollTop = 0; }
+  $('start-m5re-card').addEventListener('click', openM5Re);
+  $('m5r-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5r-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5re-next').addEventListener('click', function () { openM5Bs(); });
+
+  /* ============================================================
+     MODULE 5 — Lesson 3: The Classified Balance Sheet (Illustration 2.46)
+     ============================================================ */
+  $('mbs-check').addEventListener('click', function () {
+    var targets = { 'mbs-tca': 97040, 'mbs-ta': 145340, 'mbs-tcl': 38940, 'mbs-tse': 76400 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = m5Num(id);
+      el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('mbs-fb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in all four totals first.</div>'; return; }
+    if (allOk) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>It balances.</b> Total assets <b>$145,340</b> = total liabilities $68,940 + total stockholders’ equity $76,400. The classified balance sheet is complete.</div>';
+      if (!state.m5BsDone) { state.m5BsDone = true; save(); updateM5BsPill(); }
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Check your subtotals. Current assets: $1,200 + $54,800 net receivables + $40,000 + $540 + $500. Total assets adds the $48,300 of equipment. Equity = $50,000 + $26,400.</div>';
+    }
+  });
+  var M5B_Q = [
+    { ev: 'Inventory', c: 'ca', why: 'Current asset — sold and converted to cash within the year.' },
+    { ev: 'Bonds payable, due 2033', c: 'lt', why: 'Long-term liability — not due for many years.' },
+    { ev: 'Accounts payable', c: 'cl', why: 'Current liability — due within the year.' },
+    { ev: 'Prepaid rent', c: 'ca', why: 'Current asset — a prepayment used up soon.' },
+    { ev: 'Retained earnings', c: 'se', why: 'Stockholders’ equity — earnings kept in the business.' },
+    { ev: 'Income taxes payable', c: 'cl', why: 'Current liability — owed and payable within the year.' }
+  ];
+  var M5B_CATS = { ca: 'Curr. asset', cl: 'Curr. liab.', lt: 'Long-term', se: 'Equity' };
+  var m5bAnswered = {};
+  function renderM5b() {
+    m5bAnswered = {};
+    var order = ['ca', 'cl', 'lt', 'se'];
+    $('m5b-q').innerHTML = M5B_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + M5B_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('m5b-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = M5B_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          m5bAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + M5B_CATS[e.c] + '.</b> ' + e.why;
+          checkM5b();
+        });
+      });
+    });
+    $('m5b-done').className = 'gp-feedback'; $('m5b-done').innerHTML = '';
+  }
+  function checkM5b() {
+    if (Object.keys(m5bAnswered).length !== M5B_Q.length) return;
+    var allRight = M5B_Q.every(function (e, i) { return m5bAnswered[i]; });
+    var el = $('m5b-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Well classified.</b> Due-soon items are current; the 2033 bonds are long-term; owners’ stake is equity.'
+      : 'Current = within a year; long-term = beyond a year; equity = common stock and retained earnings.') + '</div>';
+    if (!state.m5BsDone) { state.m5BsDone = true; save(); updateM5BsPill(); }
+  }
+  function updateM5BsPill() { var pill = $('m5bs-pill'); if (pill) pill.textContent = state.m5BsDone ? 'Done' : 'Start'; }
+  function openM5Bs() { goScreen('m5bs'); $('m5b-scroll').scrollTop = 0; }
+  $('start-m5bs-card').addEventListener('click', openM5Bs);
+  $('m5b-back').addEventListener('click', function () { goScreen('home'); });
+  $('m5b-home').addEventListener('click', function () { goScreen('home'); });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -8496,6 +8788,9 @@
   renderM5i();
   updateM5IntroPill();
   updateM5IsPill();
+  updateM5RePill();
+  renderM5b();
+  updateM5BsPill();
   updateBeginBtn();
   a11yify(document);
   setTimeout(function () { moveThumb(); l2MoveThumb(); l3MoveThumb(); }, 60);
