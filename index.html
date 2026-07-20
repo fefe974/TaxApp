@@ -2120,6 +2120,14 @@
   .aw-gate { padding: 22px 16px; text-align: center; border: 1px dashed var(--line); border-radius: var(--r-md); color: var(--ink-faint); font-size: 12.5px; }
   .aw-gate svg { width: 24px; height: 24px; margin-bottom: 7px; opacity: .7; }
   .aw-foot { height: calc(30px + env(safe-area-inset-bottom)); }
+  /* trial-balance / statement entry inputs */
+  .tb-inp { width: 80px; text-align: right; font-family: var(--mono); font-weight: 700; font-size: 12px; padding: 5px 6px; border: 1.5px solid var(--line); border-radius: 7px; background: var(--card); color: var(--ink); }
+  .tb-inp:focus { outline: none; border-color: var(--gold); }
+  .tb-inp.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .tb-inp.no { border-color: var(--warn); background: var(--warn-bg); }
+  .tb-table td.amt.inp { padding: 2px 6px; }
+  .aw-hintline { font-size: 11.5px; color: var(--ink-faint); margin: 4px 0 10px; line-height: 1.45; }
+  .aw-hintline b { color: var(--ink-soft); }
 </style>
 
 <div id="fa-app">
@@ -10480,48 +10488,88 @@
   }
   /* ---- trial balance ---- */
   function app1Bal() { var b = {}; APP1_TX.forEach(function (t, i) { var ls = app1Posted[i]; if (!ls) return; ls.forEach(function (l) { b[l.a] = (b[l.a] || 0) + l.d - l.c; }); }); return b; }
+  var APP1_TB_ROWS = [
+    ['Cash', 12133, 0], ['Accounts Receivable', 6950, 0], ['Supplies', 612, 0], ['Equipment', 17280, 0],
+    ['Accumulated Depreciation—Equipment', 0, 288], ['Accounts Payable', 0, 13680], ['Common Stock', 0, 20000],
+    ['Dividends', 3000, 0], ['Service Revenue', 0, 9620], ['Rent Expense', 680, 0], ['Office Expense', 515, 0],
+    ['Salaries and Wages Expense', 1800, 0], ['Supplies Expense', 330, 0], ['Depreciation Expense', 288, 0]
+  ];
+  var APP1_POST_ROWS = [
+    ['Cash', 12133, 0], ['Accounts Receivable', 6950, 0], ['Supplies', 612, 0], ['Equipment', 17280, 0],
+    ['Accumulated Depreciation—Equipment', 0, 288], ['Accounts Payable', 0, 13680], ['Common Stock', 0, 20000], ['Retained Earnings', 0, 3007]
+  ];
+  /* reusable: student prepares a trial balance by entering each account balance, then proves */
+  function app1TBEntry(hostId, name, rows, total, hint, onDone) {
+    var body = rows.map(function (r, i) {
+      return '<tr><td class="acct">' + r[0] + '</td>' +
+        '<td class="amt inp"><input class="tb-inp" data-i="' + i + '" data-s="d" inputmode="numeric" placeholder="—" aria-label="' + r[0] + ' debit"></td>' +
+        '<td class="amt inp"><input class="tb-inp" data-i="' + i + '" data-s="c" inputmode="numeric" placeholder="—" aria-label="' + r[0] + ' credit"></td></tr>';
+    }).join('');
+    $(hostId).innerHTML = '<div class="aw-hintline">' + hint + '</div><div class="tb-sheet"><div class="tb-title"><b>Yasunari Kawabata, D.D.S.</b><span>' + name + '</span><span>September 30, 2025</span></div>' +
+      '<table class="tb-table"><thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead><tbody>' + body +
+      '<tr class="tb-totrow"><td class="acct">&nbsp;</td><td class="amt d"><span class="tb-tot" id="' + hostId + '-td"><span class="dbl">$' + total + '</span></span></td><td class="amt c"><span class="tb-tot" id="' + hostId + '-tc"><span class="dbl">$' + total + '</span></span></td></tr>' +
+      '</tbody></table><div class="tb-prove" id="' + hostId + '-prove">&#9878; In balance — $' + total + ' = $' + total + '</div>' +
+      '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="' + hostId + '-provebtn">Check &amp; prove ▸</button></div>' +
+      '<div class="gp-feedback" id="' + hostId + '-fb" style="margin-top:12px"></div></div>';
+    $(hostId + '-provebtn').addEventListener('click', function () {
+      var allOk = true, anyBlank = false;
+      Array.prototype.slice.call($(hostId).querySelectorAll('.tb-inp')).forEach(function (inp) {
+        var i = parseInt(inp.getAttribute('data-i'), 10), s = inp.getAttribute('data-s');
+        var correct = s === 'd' ? rows[i][1] : rows[i][2];
+        inp.classList.remove('ok', 'no');
+        var raw = (inp.value || '').replace(/[^0-9.]/g, '');
+        if (correct > 0) {
+          if (raw === '') { anyBlank = true; allOk = false; }
+          else if (Math.round(parseFloat(raw)) === correct) inp.classList.add('ok');
+          else { inp.classList.add('no'); allOk = false; }
+        } else if (raw !== '') { inp.classList.add('no'); allOk = false; }
+      });
+      var fb = $(hostId + '-fb');
+      if (!allOk) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + (anyBlank ? 'Enter each account’s balance in its <b>one</b> correct column.' : 'Some balances are off — the red cells need another look. Each account has a balance on only one side.') + '</div>'; return; }
+      $(hostId + '-td').classList.add('on'); $(hostId + '-tc').classList.add('on'); $(hostId + '-prove').classList.add('on');
+      this.textContent = 'Proved · $' + total + ' = $' + total; this.disabled = true;
+      Array.prototype.slice.call($(hostId).querySelectorAll('.tb-inp')).forEach(function (inp) { inp.disabled = true; });
+      fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Balanced.</b> Total debits equal total credits at $' + total + '.</div>';
+      if (onDone) onDone();
+    });
+  }
   function app1RenderTB() {
-    if (!app1JDone()) { $('app1-tb').innerHTML = '<div class="aw-gate">' + LOCK_SVG + '<div>Finish <b>Journalize</b> first — the trial balance totals your posted entries.</div></div>'; return; }
-    var b = app1Bal(), rows = '', totD = 0, totC = 0;
-    APP1_ACCTS.slice(1).forEach(function (a) { var v = b[a]; if (!v) return; var d = v > 0 ? v : 0, c = v < 0 ? -v : 0; totD += d; totC += c; rows += '<tr><td class="acct">' + a + '</td><td class="amt d">' + (d ? cma(d) : '') + '</td><td class="amt c">' + (c ? cma(c) : '') + '</td></tr>'; });
-    $('app1-tb').innerHTML = '<div class="tb-sheet"><div class="tb-title"><b>Yasunari Kawabata, D.D.S.</b><span>Trial Balance</span><span>September 30, 2025</span></div>' +
-      '<table class="tb-table"><thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead><tbody>' + rows +
-      '<tr class="tb-totrow"><td class="acct">&nbsp;</td><td class="amt d"><span class="tb-tot" id="app1-tbd"><span class="dbl">$43,588</span></span></td><td class="amt c"><span class="tb-tot" id="app1-tbc"><span class="dbl">$43,588</span></span></td></tr>' +
-      '</tbody></table><div class="tb-prove" id="app1-tbprove">&#9878; In balance — $43,588 = $43,588</div>' +
-      '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="app1-tbbtn">Total &amp; prove ▸</button></div></div>';
-    $('app1-tbbtn').addEventListener('click', function () { $('app1-tbd').classList.add('on'); $('app1-tbc').classList.add('on'); $('app1-tbprove').classList.add('on'); this.textContent = 'Proved · $43,588 = $43,588'; this.disabled = true; });
+    if (!app1JDone()) { $('app1-tb').innerHTML = '<div class="aw-gate">' + LOCK_SVG + '<div>Finish <b>Journalize</b> first — then prepare the trial balance from your ledger.</div></div>'; return; }
+    app1TBEntry('app1-tb', 'Trial Balance', APP1_TB_ROWS, '43,588', 'Enter the ending balance of each ledger account in the correct column, then total and prove.', function () { markTab('tb'); });
   }
   /* ---- statements ---- */
   function app1RenderStmt() {
-    if (!app1JDone()) { $('app1-stmt').innerHTML = '<div class="aw-gate">' + LOCK_SVG + '<div>Finish <b>Journalize</b> first — the statements draw on your adjusted balances.</div></div>'; return; }
+    if (!app1JDone()) { $('app1-stmt').innerHTML = '<div class="aw-gate">' + LOCK_SVG + '<div>Finish <b>Journalize</b> first — then prepare the statements from your balances.</div></div>'; return; }
     function stmt(title, sub, rows) { return '<div class="mis" style="margin-top:12px"><div class="mis-title"><b>Yasunari Kawabata, D.D.S.</b><span>' + title + '</span><span>' + sub + '</span></div><div class="mis-body">' + rows + '</div></div>'; }
-    $('app1-stmt').innerHTML =
+    function irow(cls, label, id, aria) { return '<div class="mis-row ' + cls + '"><span class="l">' + label + '</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="' + id + '" inputmode="numeric" placeholder="?" aria-label="' + aria + '"></span></div>'; }
+    $('app1-stmt').innerHTML = '<div class="aw-hintline">Enter every figure yourself, then check. Amounts flow from the ledger balances you posted — net income carries into retained earnings, and ending retained earnings into equity.</div>' +
       stmt('Income Statement', 'For the Month Ended September 30, 2025',
-        '<div class="mis-row"><span class="l">Service revenue</span><span class="c1"></span><span class="c2">$9,620</span></div>' +
-        '<div class="mis-row rule"><span class="l">Total expenses</span><span class="c1"></span><span class="c2">(3,613)</span></div>' +
-        '<div class="mis-row key"><span class="l">Net income</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="app1-ni" inputmode="numeric" placeholder="?" aria-label="Net income"></span></div>') +
+        irow('', 'Service revenue', 'app1-sr', 'Service revenue') +
+        irow('rule', 'Total expenses', 'app1-te', 'Total expenses') +
+        irow('key', 'Net income', 'app1-ni', 'Net income')) +
       stmt('Retained Earnings Statement', 'For the Month Ended September 30, 2025',
         '<div class="mis-row"><span class="l">Retained earnings, Sept. 1</span><span class="c1"></span><span class="c2">$0</span></div>' +
-        '<div class="mis-row"><span class="l">Add: Net income</span><span class="c1"></span><span class="c2">6,007</span></div>' +
-        '<div class="mis-row rule"><span class="l">Less: Dividends</span><span class="c1"></span><span class="c2">(3,000)</span></div>' +
-        '<div class="mis-row key"><span class="l">Retained earnings, Sept. 30</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="app1-re" inputmode="numeric" placeholder="?" aria-label="Ending retained earnings"></span></div>') +
+        irow('', 'Add: Net income', 'app1-rni', 'Net income added') +
+        irow('rule', 'Less: Dividends', 'app1-div', 'Dividends') +
+        irow('key', 'Retained earnings, Sept. 30', 'app1-re', 'Ending retained earnings')) +
       stmt('Balance Sheet (unclassified)', 'September 30, 2025',
-        '<div class="mis-row"><span class="l">Cash</span><span class="c1"></span><span class="c2">$12,133</span></div>' +
-        '<div class="mis-row"><span class="l">Accounts receivable</span><span class="c1"></span><span class="c2">6,950</span></div>' +
-        '<div class="mis-row"><span class="l">Supplies</span><span class="c1"></span><span class="c2">612</span></div>' +
-        '<div class="mis-row"><span class="l">Equipment, net of $288 depreciation</span><span class="c1"></span><span class="c2">16,992</span></div>' +
-        '<div class="mis-row key rule"><span class="l">Total assets</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="app1-ta" inputmode="numeric" placeholder="?" aria-label="Total assets"></span></div>' +
-        '<div class="mis-row sec" style="margin-top:4px"><span class="l">Total liabilities</span><span class="c1"></span><span class="c2">$13,680</span></div>' +
-        '<div class="mis-row"><span class="l">Total stockholders\' equity</span><span class="c1"></span><span class="c2">23,007</span></div>' +
-        '<div class="mis-row sub"><span class="l">Total liabilities &amp; equity</span><span class="c1"></span><span class="c2">36,687</span></div>') +
+        irow('', 'Cash', 'app1-cash', 'Cash') +
+        irow('', 'Accounts receivable', 'app1-ar', 'Accounts receivable') +
+        irow('', 'Supplies', 'app1-sup', 'Supplies') +
+        irow('', 'Equipment, net of $288 depreciation', 'app1-eq', 'Equipment net') +
+        irow('key rule', 'Total assets', 'app1-ta', 'Total assets') +
+        irow('sec', 'Total liabilities', 'app1-tl', 'Total liabilities') +
+        irow('', 'Total stockholders\' equity', 'app1-tse', 'Total stockholders equity') +
+        irow('sub', 'Total liabilities &amp; equity', 'app1-tle', 'Total liabilities and equity')) +
       '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="app1-stmtbtn">Check the statements</button></div><div class="gp-feedback" id="app1-stmtfb" style="margin-top:12px"></div>';
+    var T = { 'app1-sr': 9620, 'app1-te': 3613, 'app1-ni': 6007, 'app1-rni': 6007, 'app1-div': 3000, 'app1-re': 3007, 'app1-cash': 12133, 'app1-ar': 6950, 'app1-sup': 612, 'app1-eq': 16992, 'app1-ta': 36687, 'app1-tl': 13680, 'app1-tse': 23007, 'app1-tle': 36687 };
     $('app1-stmtbtn').addEventListener('click', function () {
-      var t = { 'app1-ni': 6007, 'app1-re': 3007, 'app1-ta': 36687 }, ok = true, blank = false;
-      Object.keys(t).forEach(function (id) { var el = $(id), v = awNum(el); el.classList.remove('ok', 'no'); if (!el.value) { blank = true; ok = false; return; } if (v === t[id]) el.classList.add('ok'); else { el.classList.add('no'); ok = false; } });
+      var ok = true, blank = false;
+      Object.keys(T).forEach(function (id) { var el = $(id); el.classList.remove('ok', 'no'); if (!el.value) { blank = true; ok = false; return; } if (awNum(el) === T[id]) el.classList.add('ok'); else { el.classList.add('no'); ok = false; } });
       var fb = $('app1-stmtfb');
-      if (blank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in all three figures.</div>'; return; }
-      if (ok) { fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Statements complete.</b> Net income $6,007 → retained earnings $3,007; total assets $36,687 = total liabilities &amp; equity. Now close the ledger.</div>'; markTab('stmt'); }
-      else { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Net income = $9,620 − $3,613. Ending RE = $0 + net income − $3,000. Total assets = $12,133 + $6,950 + $612 + $16,992.</div>'; }
+      if (blank && ok === false && Object.keys(T).every(function (id) { return !$(id).value; })) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in the statement figures, then check.</div>'; return; }
+      if (ok) { fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Statements complete.</b> Net income $6,007 → ending retained earnings $3,007; total assets $36,687 = total liabilities &amp; equity. Now close the ledger.</div>'; markTab('stmt'); }
+      else { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Check the red cells. Net income = revenue − expenses; ending RE = $0 + net income − dividends; total assets must equal total liabilities + equity.</div>'; }
     });
   }
   /* ---- close (stepper) ---- */
@@ -10569,19 +10617,11 @@
   /* ---- post-closing ---- */
   function app1RenderPost() {
     if (!app1JDone()) { $('app1-post').innerHTML = '<div class="aw-gate">' + LOCK_SVG + '<div>Finish <b>Journalize</b> first — the post-closing trial balance comes last.</div></div>'; return; }
-    var rows = [['Cash', '12,133', ''], ['Accounts Receivable', '6,950', ''], ['Supplies', '612', ''], ['Equipment', '17,280', ''], ['Accumulated Depreciation—Equipment', '', '288'], ['Accounts Payable', '', '13,680'], ['Common Stock', '', '20,000'], ['Retained Earnings', '', '3,007']];
-    var fd = true, fc = true;
-    var body = rows.map(function (r) { var d = r[1] ? ((fd ? '$' : '') + r[1]) : '', c = r[2] ? ((fc ? '$' : '') + r[2]) : ''; if (r[1]) fd = false; if (r[2]) fc = false; return '<tr><td class="acct">' + r[0] + '</td><td class="amt d">' + d + '</td><td class="amt c">' + c + '</td></tr>'; }).join('');
-    $('app1-post').innerHTML = '<div class="tb-sheet"><div class="tb-title"><b>Yasunari Kawabata, D.D.S.</b><span>Post-Closing Trial Balance</span><span>September 30, 2025</span></div>' +
-      '<table class="tb-table"><thead><tr><th style="text-align:left">Account</th><th class="amt">Debit</th><th class="amt">Credit</th></tr></thead><tbody>' + body +
-      '<tr class="tb-totrow"><td class="acct">&nbsp;</td><td class="amt d"><span class="tb-tot" id="app1-pd"><span class="dbl">$36,975</span></span></td><td class="amt c"><span class="tb-tot" id="app1-pc"><span class="dbl">$36,975</span></span></td></tr>' +
-      '</tbody></table><div class="tb-prove" id="app1-pprove">&#9878; In balance — $36,975 = $36,975</div>' +
-      '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="app1-pbtn">Total &amp; prove ▸</button></div></div>' +
-      '<div class="cap-done" id="app1-done" style="display:none;margin-top:18px"><div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Problem 2.1 complete</h3><p>You ran Kawabata, D.D.S. through the full cycle — journalizing, the trial balance, the statements, closing, and a proven post-closing trial balance of <b>$36,975</b>. Nicely done.</p></div>';
-    $('app1-pbtn').addEventListener('click', function () {
-      $('app1-pd').classList.add('on'); $('app1-pc').classList.add('on'); $('app1-pprove').classList.add('on');
-      this.textContent = 'Proved · $36,975 = $36,975'; this.disabled = true;
-      $('app1-done').style.display = 'block'; markTab('post');
+    app1TBEntry('app1-post', 'Post-Closing Trial Balance', APP1_POST_ROWS, '36,975', 'After closing, only the <b>permanent</b> accounts remain. Enter each balance — note Retained Earnings now carries $3,007.', function () {
+      var d = document.createElement('div'); d.className = 'cap-done'; d.style.marginTop = '18px';
+      d.innerHTML = '<div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Problem 2.1 complete</h3><p>You ran Kawabata, D.D.S. through the full cycle — journalizing, the trial balance, the statements, closing, and a proven post-closing trial balance of <b>$36,975</b>. Nicely done.</p>';
+      $('app1-post').appendChild(d);
+      markTab('post');
       if (!state.app1Done) { state.app1Done = true; save(); }
       updateApp1Pill();
     });
