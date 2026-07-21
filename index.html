@@ -11349,36 +11349,46 @@
     function grow(cls, label, val) { return '<div class="mis-row ' + cls + '"><span class="l">' + label + '</span><span class="c1"></span><span class="c2">' + val + '</span></div>'; }
     $('a3-stmt').innerHTML =
       '<div class="aw-h">b · Financial statements</div>' +
-      '<div class="aw-sub">Prepare the three statements from the <b>adjusted</b> trial balance. Given account balances are shown; enter each <b>computed</b> figure (subtotals, net income, totals), then check.</div>' +
+      '<div class="aw-sub">Prepare the three statements from the <b>adjusted</b> trial balance. Enter <b>every</b> figure yourself — pull the account balances from the Trial Balance tab and compute the subtotals, net income, and totals — then check.</div>' +
       stmt('Income Statement', 'For the Year Ended December 31, 2025',
         irow('', 'Service revenue', 'app3-sr', 'Service revenue') +
         grow('sec', 'Expenses', '') +
-        grow('ind1', 'Salaries and wages expense', '11,300') + grow('ind1', 'Supplies expense', '5,400') +
-        grow('ind1', 'Depreciation expense', '5,000') + grow('ind1', 'Rent expense', '4,000') +
-        grow('ind1', 'Insurance expense', '850') + grow('ind1', 'Interest expense', '500') +
+        irow('ind1', 'Salaries and wages expense', 'app3-e1', 'Salaries and wages expense') +
+        irow('ind1', 'Supplies expense', 'app3-e2', 'Supplies expense') +
+        irow('ind1', 'Depreciation expense', 'app3-e3', 'Depreciation expense') +
+        irow('ind1', 'Rent expense', 'app3-e4', 'Rent expense') +
+        irow('ind1', 'Insurance expense', 'app3-e5', 'Insurance expense') +
+        irow('ind1', 'Interest expense', 'app3-e6', 'Interest expense') +
         irow('key rule', 'Total expenses', 'app3-te', 'Total expenses') +
         irow('grand', 'Net income', 'app3-ni', 'Net income')) +
       stmt('Retained Earnings Statement', 'For the Year Ended December 31, 2025',
-        grow('', 'Retained earnings, January 1', '3,500') +
+        irow('', 'Retained earnings, January 1', 'app3-rbeg', 'Beginning retained earnings') +
         irow('', 'Add: Net income', 'app3-reni', 'Net income added') +
         irow('key rule', 'Retained earnings, December 31', 'app3-reend', 'Ending retained earnings')) +
       stmt('Balance Sheet (unclassified)', 'December 31, 2025',
         grow('sec', 'Assets', '') +
-        grow('ind1', 'Cash', '11,000') + grow('ind1', 'Accounts receivable', '23,500') + grow('ind1', 'Supplies', '3,000') +
-        grow('ind1', 'Prepaid insurance', '2,500') + grow('ind1', 'Equipment', '60,000') + grow('ind1', 'Less: Accumulated depreciation', '(33,000)') +
+        irow('ind1', 'Cash', 'app3-cash', 'Cash') +
+        irow('ind1', 'Accounts receivable', 'app3-ar', 'Accounts receivable') +
+        irow('ind1', 'Supplies', 'app3-sup', 'Supplies') +
+        irow('ind1', 'Prepaid insurance', 'app3-pins', 'Prepaid insurance') +
+        irow('ind1', 'Equipment', 'app3-equip', 'Equipment') +
+        irow('ind1', 'Less: Accumulated depreciation', 'app3-accdep', 'Accumulated depreciation') +
         irow('', 'Equipment, net', 'app3-eqnet', 'Equipment net') +
         irow('key rule', 'Total assets', 'app3-ta', 'Total assets') +
         grow('sec', 'Liabilities', '') +
-        grow('ind1', 'Accounts payable', '5,000') + grow('ind1', 'Interest payable', '150') + grow('ind1', 'Notes payable', '5,000') +
-        grow('ind1', 'Unearned service revenue', '5,600') + grow('ind1', 'Salaries and wages payable', '1,300') +
+        irow('ind1', 'Accounts payable', 'app3-ap', 'Accounts payable') +
+        irow('ind1', 'Interest payable', 'app3-intpay', 'Interest payable') +
+        irow('ind1', 'Notes payable', 'app3-notes', 'Notes payable') +
+        irow('ind1', 'Unearned service revenue', 'app3-unearned', 'Unearned service revenue') +
+        irow('ind1', 'Salaries and wages payable', 'app3-salpay', 'Salaries and wages payable') +
         irow('key rule', 'Total liabilities', 'app3-tl', 'Total liabilities') +
         grow('sec', 'Stockholders’ equity', '') +
-        grow('ind1', 'Common stock', '10,000') +
+        irow('ind1', 'Common stock', 'app3-cs', 'Common stock') +
         irow('', 'Retained earnings', 'app3-req', 'Retained earnings') +
         irow('key rule', 'Total stockholders’ equity', 'app3-tse', 'Total stockholders equity') +
         irow('grand', 'Total liabilities and equity', 'app3-tle', 'Total liabilities and equity')) +
       '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="app3-stmtbtn">Check the statements</button></div><div class="gp-feedback" id="app3-stmtfb" style="margin-top:12px"></div>';
-    var T = { 'app3-sr': 63500, 'app3-te': 27050, 'app3-ni': 36450, 'app3-reni': 36450, 'app3-reend': 39950, 'app3-eqnet': 27000, 'app3-ta': 67000, 'app3-tl': 17050, 'app3-req': 39950, 'app3-tse': 49950, 'app3-tle': 67000 };
+    var T = { 'app3-sr': 63500, 'app3-e1': 11300, 'app3-e2': 5400, 'app3-e3': 5000, 'app3-e4': 4000, 'app3-e5': 850, 'app3-e6': 500, 'app3-te': 27050, 'app3-ni': 36450, 'app3-rbeg': 3500, 'app3-reni': 36450, 'app3-reend': 39950, 'app3-cash': 11000, 'app3-ar': 23500, 'app3-sup': 3000, 'app3-pins': 2500, 'app3-equip': 60000, 'app3-accdep': 33000, 'app3-eqnet': 27000, 'app3-ta': 67000, 'app3-ap': 5000, 'app3-intpay': 150, 'app3-notes': 5000, 'app3-unearned': 5600, 'app3-salpay': 1300, 'app3-tl': 17050, 'app3-cs': 10000, 'app3-req': 39950, 'app3-tse': 49950, 'app3-tle': 67000 };
     $('app3-stmtbtn').addEventListener('click', function () {
       var ok = true; Object.keys(T).forEach(function (id) { var el = $(id); el.classList.remove('ok', 'no'); if (!el.value) { ok = false; return; } if (awNum(el) === T[id]) el.classList.add('ok'); else { el.classList.add('no'); ok = false; } });
       var fb = $('app3-stmtfb');
