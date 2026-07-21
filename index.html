@@ -213,13 +213,18 @@
 
     /* content: readable column for lessons; full width for the labs; dashboard for home */
     .fa-screen .fa-scroll { padding-left: 44px; padding-right: 44px; }
-    .fa-screen:not(#screen-home):not(#screen-app1):not(#screen-app2):not(#screen-app3) .fa-scroll > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+    .fa-screen:not(#screen-home):not(#screen-course1):not(#screen-course2):not(#screen-app1):not(#screen-app2):not(#screen-app3) .fa-scroll > * { max-width: 900px; margin-left: auto; margin-right: auto; }
     #screen-app1 .fa-scroll, #screen-app2 .fa-scroll, #screen-app3 .fa-scroll { padding-left: 0; padding-right: 0; }
 
-    #screen-home .fa-scroll > * { max-width: 1140px; margin-left: auto; margin-right: auto; }
-    #screen-home .whatwhyhow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    #screen-home .home-lessons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; align-items: start; }
-    #screen-home .home-lessons > .head, #screen-home .home-lessons > .module-head, #screen-home .home-lessons > .home-group, #screen-home .home-foot { grid-column: 1 / -1; }
+    #screen-home .fa-scroll > * { max-width: 980px; margin-left: auto; margin-right: auto; }
+    #screen-home .cat-list { flex-direction: row; align-items: stretch; gap: 20px; }
+    #screen-home .cat-card { flex: 1 1 0; flex-direction: column; padding: 22px 20px; }
+    #screen-home .cat-card .lchev { align-self: flex-end; }
+    #screen-course1 .fa-scroll > *, #screen-course2 .fa-scroll > * { max-width: 1140px; margin-left: auto; margin-right: auto; }
+    #screen-course1 .whatwhyhow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    #screen-course1 .home-lessons, #screen-course2 .home-lessons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; align-items: start; }
+    #screen-course1 .home-lessons > .head, #screen-course1 .home-lessons > .module-head, #screen-course1 .home-lessons > .home-group, #screen-course1 .home-foot,
+    #screen-course2 .home-lessons > .head, #screen-course2 .home-lessons > .module-head, #screen-course2 .home-lessons > .ill-note { grid-column: 1 / -1; }
   }
 
   h1,h2,h3,h4,p { margin: 0; }
@@ -2287,6 +2292,31 @@
   .course-head h3 { font-family: var(--serif); font-size: 19px; font-weight: 650; line-height: 1.25; margin-top: 5px; }
   .course-head p { font-size: 12px; color: rgba(238,244,251,.82); margin-top: 6px; line-height: 1.5; }
   .module-head.c2 .mod-no { background: linear-gradient(150deg, #1d5a8f, #12365c); color: #dcecfa; }
+  /* course catalog (home) */
+  .cat-list { display: flex; flex-direction: column; gap: 14px; }
+  .cat-card {
+    display: flex; align-items: stretch; gap: 13px; width: 100%; text-align: left; cursor: pointer;
+    border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card);
+    box-shadow: var(--shadow); padding: 16px 15px; transition: transform .15s ease, box-shadow .2s ease;
+  }
+  .cat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .cat-card:active { transform: scale(.985); }
+  .cat-no { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-family: var(--serif); font-weight: 700; font-size: 22px; align-self: flex-start; }
+  .cat-card.c1 .cat-no { background: linear-gradient(150deg, var(--ink), #24425f); color: #f4efe3; }
+  .cat-card.c2 .cat-no { background: linear-gradient(150deg, #1d5a8f, #12365c); color: #dcecfa; }
+  .cat-card.c1 { border-top: 3px solid var(--gold); }
+  .cat-card.c2 { border-top: 3px solid #1d5a8f; }
+  .cat-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .cat-kicker { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-faint); }
+  .cat-body b { font-family: var(--serif); font-size: 16.5px; font-weight: 650; color: var(--ink); line-height: 1.25; }
+  .cat-sub { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .cat-progress { display: block; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-top: 7px; }
+  .cat-progress i { display: block; height: 100%; border-radius: 3px; width: 0; transition: width .5s ease; }
+  .cat-card.c1 .cat-progress i { background: linear-gradient(90deg, var(--gold), var(--good)); }
+  .cat-card.c2 .cat-progress i { background: linear-gradient(90deg, #1d5a8f, #57b98c); }
+  .cat-meta { font-size: 11px; color: var(--ink-faint); margin-top: 3px; }
+  .cat-card .lchev { align-self: center; }
+  .cat-foot-note { text-align: center; font-size: 11.5px; color: var(--ink-faint); margin-top: 18px; }
   .c2-hero {
     position: relative; padding: 30px 22px 26px;
     background: linear-gradient(160deg, #0e2a47 0%, #17466e 55%, #1d5a8f 100%);
@@ -2338,8 +2368,60 @@
   </header>
   <div class="fa-screens" id="fa-screens">
 
-    <!-- ============== SCREEN: HOME / COURSE INTRO ============== -->
-    <section class="fa-screen is-active" id="screen-home" aria-label="Course introduction">
+    <!-- ============== SCREEN: HOME — COURSE CATALOG ============== -->
+    <section class="fa-screen is-active" id="screen-home" aria-label="Course catalog">
+      <div class="fa-scroll" id="cat-scroll">
+        <header class="home-hero cat-hero">
+          <div class="home-crest">
+            <span class="mk">Σ</span>
+            <b>LEDGER &amp; LEAF · SCHOOL OF ACCOUNTANCY</b>
+          </div>
+          <div class="eyebrow">Accounting · Two-Course Sequence</div>
+          <h1>Pick up where<br>the ledger left off.</h1>
+          <p class="sub">A guided accounting curriculum, taught the way a professor would. Choose your course — your progress is saved in both.</p>
+        </header>
+        <div class="home-body">
+          <div class="cat-list">
+            <button class="cat-card c1" id="cat-course1">
+              <span class="cat-no">1</span>
+              <span class="cat-body">
+                <span class="cat-kicker">Course 1 · Financial Accounting</span>
+                <b>The Language Businesses Speak in Numbers</b>
+                <span class="cat-sub">Debits &amp; credits → the full accounting cycle → financial statements, plus the Application Lab.</span>
+                <span class="cat-progress"><i id="cat-c1-bar"></i></span>
+                <span class="cat-meta" id="cat-c1-meta"></span>
+              </span>
+              <span class="lchev" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </button>
+            <button class="cat-card c2" id="cat-course2">
+              <span class="cat-no">2</span>
+              <span class="cat-body">
+                <span class="cat-kicker">Course 2 · Intermediate Reporting</span>
+                <b>Income Statement, Related Information &amp; Revenue Recognition</b>
+                <span class="cat-sub">How income is measured, presented, and when revenue may be recognized — the statement the market watches.</span>
+                <span class="cat-progress"><i id="cat-c2-bar"></i></span>
+                <span class="cat-meta" id="cat-c2-meta"></span>
+              </span>
+              <span class="lchev" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span>
+            </button>
+          </div>
+          <div class="cat-foot-note">Prof. Ramsey Moreno, CPA · Your instructor across both courses</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: COURSE 1 — OUTLINE ============== -->
+    <section class="fa-screen" id="screen-course1" aria-label="Course 1 — outline">
+      <div class="fa-topbar">
+        <button class="fa-back" id="course1-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Courses
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
       <div class="fa-scroll">
         <header class="home-hero">
           <div class="home-crest">
@@ -2804,15 +2886,49 @@
               </span>
             </button>
 
-            <div class="course-head">
-              <div class="ch-eyebrow">Course 2 · Intermediate Financial Reporting</div>
-              <h3>Income Statement, Related Information &amp; Revenue Recognition</h3>
-              <p>Course 1 taught you how the numbers get recorded. Course 2 goes deeper into the statement investors watch most — how income is measured, presented, and when revenue may be recognized.</p>
-            </div>
+          </div>
+        </div>
 
+        <div class="home-foot">
+          <button class="cta" id="begin-btn">
+            <span id="begin-label">Begin Lesson 1 · Debits &amp; Credits</span>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: COURSE 2 — OUTLINE ============== -->
+    <section class="fa-screen" id="screen-course2" aria-label="Course 2 — outline">
+      <div class="fa-topbar">
+        <button class="fa-back" id="course2-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Courses
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+      <div class="fa-scroll">
+        <header class="c2-hero">
+          <div class="eyebrow">Course 2 · Intermediate Financial Reporting</div>
+          <h1>Income Statement, Related Information &amp; Revenue Recognition</h1>
+          <div class="c2-rule"></div>
+          <div class="lo-callout">
+            <span class="lo-badge">Σ</span>
+            <div>
+              <div class="lo-t">This course</div>
+              <div class="lo-d">How income is measured, presented, and when revenue may be recognized — the statement the market watches most.</div>
+            </div>
+          </div>
+        </header>
+        <div class="home-body">
+          <div class="home-lessons">
+            <div class="head"><h2 class="serif">Course outline</h2></div>
             <div class="module-head c2">
               <span class="mod-no"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span>
-              <div class="mod-body"><b>Course 2 · Overview</b><span>What the income statement is — and why the market watches it</span></div>
+              <div class="mod-body"><b>Overview</b><span>What the income statement is — and why the market watches it</span></div>
             </div>
             <button class="lesson-card" id="start-c2intro-card">
               <span class="lnum" style="background:color-mix(in srgb,#1d5a8f 15%,transparent);color:#1d5a8f;box-shadow:inset 0 0 0 1px color-mix(in srgb,#1d5a8f 42%,transparent);">
@@ -2827,14 +2943,11 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <div class="ill-note" style="margin-top:8px;">
+              <span class="i" style="background:#1d5a8f;color:#dcecfa;">→</span>
+              <div><b>More lessons on the way</b> — the elements of the income statement arrive next.</div>
+            </div>
           </div>
-        </div>
-
-        <div class="home-foot">
-          <button class="cta" id="begin-btn">
-            <span id="begin-label">Begin Lesson 1 · Debits &amp; Credits</span>
-            <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
         </div>
       </div>
     </section>
@@ -7131,7 +7244,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro') };
+  var screens = { home: $('screen-home'), course1: $('screen-course1'), course2: $('screen-course2'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -7139,7 +7252,8 @@
       if (k === name) { el.classList.add('is-active'); el.classList.remove('is-behind'); }
       else { el.classList.remove('is-active'); el.classList.add('is-behind'); }
     });
-    if (name === 'home') updateBeginBtn();
+    if (name === 'course1') updateBeginBtn();
+    if (name === 'home') renderCatalog();
     setWebActive(name);
   }
   /* ---------------- web-app sidebar (desktop shell) ---------------- */
@@ -7147,7 +7261,9 @@
   function buildWebNav() {
     var list = $('wn-list'); if (!list) return;
     var NAV = [
-      { m: 'Overview', items: [['Course home', function () { goScreen('home'); }, 'home']] },
+      { m: 'Overview', items: [
+        ['Course catalog', function () { goScreen('home'); }, 'home'],
+        ['Course 1 · Home', function () { goScreen('course1'); }, 'course1']] },
       { m: 'Module 1 · Foundations', items: [
         ['Debits & Credits', openLesson, 'lesson'],
         ['The Accounting Equation', function () { openLesson2(); }, 'lesson2'],
@@ -7195,6 +7311,7 @@
         ['Problem 2.2 · Mason Advertising', function () { openApp3(); }, 'app3'],
         ['Problem 2.3 · Baylor Company', function () { openApp2(); }, 'app2']] },
       { m: 'Course 2 · Income Statement & Revenue', items: [
+        ['Course 2 · Home', function () { goScreen('course2'); }, 'course2'],
         ['Course Introduction', function () { openC2Intro(); }, 'c2intro']] }
     ];
     var html = '', flat = [];
@@ -7218,7 +7335,7 @@
   $('start-lesson-card').addEventListener('click', openLesson);
   var beginAction = openLesson;
   $('begin-btn').addEventListener('click', function () { beginAction(); });
-  $('lesson-back').addEventListener('click', function () { goScreen('home'); });
+  $('lesson-back').addEventListener('click', function () { goScreen('course1'); });
   function updateBeginBtn() {
     var seq = [
       { done: function () { return VIEWS.every(function (v) { return state.done[v]; }); }, open: openLesson, label: 'Lesson 1 · Debits & Credits' },
@@ -7307,7 +7424,7 @@
   }
   $('start-lesson2-card').addEventListener('click', bridgeToL2);
   $('start-lesson3-card').addEventListener('click', bridgeToL3);
-  $('bridge-home').addEventListener('click', function () { goScreen('home'); });
+  $('bridge-home').addEventListener('click', function () { goScreen('course1'); });
   $('bridge-begin').addEventListener('click', function () { bridgeBegin(); });
 
   /* ---------------- lesson sub-view tabs ---------------- */
@@ -7821,7 +7938,7 @@
     if (i < L2_VIEWS.length - 1) l2SetView(L2_VIEWS[i + 1]);
     else { l2MarkDone('practice'); bridgeToL3(); }
   });
-  $('l2-back').addEventListener('click', function () { goScreen('home'); });
+  $('l2-back').addEventListener('click', function () { goScreen('course1'); });
   function openLesson2() { goScreen('lesson2'); l2SetView('lecture', true); setTimeout(l2MoveThumb, 60); }
 
   /* ---- Illustration 2.3 rule cards ---- */
@@ -8137,9 +8254,9 @@
   $('l3-foot-next').addEventListener('click', function () {
     var i = L3_VIEWS.indexOf(l3view);
     if (i < L3_VIEWS.length - 1) l3SetView(L3_VIEWS[i + 1]);
-    else { l3MarkDone('practice'); goScreen('home'); }
+    else { l3MarkDone('practice'); goScreen('course1'); }
   });
-  $('l3-back').addEventListener('click', function () { goScreen('home'); });
+  $('l3-back').addEventListener('click', function () { goScreen('course1'); });
   function openLesson3() { goScreen('lesson3'); l3SetView('lecture', true); setTimeout(l3MoveThumb, 60); }
 
   /* ---- Illustration 2.4: trace the flow ---- */
@@ -8320,7 +8437,7 @@
   $('l3gp-continue').addEventListener('click', function () {
     if (l3gpStep < 3) { l3gpStep++; l3gpRender(); return; }
     if (l3gpIndex < L3GP.length - 1) { l3gpIndex++; l3gpReset(true); l3panes.practice.scrollTop = 0; }
-    else { l3MarkDone('practice'); goScreen('home'); }
+    else { l3MarkDone('practice'); goScreen('course1'); }
   });
   $('l3gp-restart').addEventListener('click', function () { l3gpIndex = 0; l3gpReset(true); l3panes.practice.scrollTop = 0; });
 
@@ -8548,7 +8665,7 @@
   }
   function openCapstone() { goScreen('capstone'); $('cap-scroll').scrollTop = 0; }
   $('start-capstone-card').addEventListener('click', openCapstone);
-  $('cap-back').addEventListener('click', function () { goScreen('home'); });
+  $('cap-back').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 — Introduction (Analyze & Record Business Transactions)
@@ -8636,8 +8753,8 @@
   }
   function openMod2Intro() { goScreen('mod2intro'); $('m2-scroll').scrollTop = 0; }
   $('start-mod2intro-card').addEventListener('click', openMod2Intro);
-  $('m2-back').addEventListener('click', function () { goScreen('home'); });
-  $('m2-home').addEventListener('click', function () { goScreen('home'); });
+  $('m2-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m2-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 1 — The Recording Process (Illustration 2.7)
@@ -8675,8 +8792,8 @@
   $('rp-reset').addEventListener('click', rpReset);
   function openRecProc() { rpReset(); goScreen('recproc'); $('rp-scroll').scrollTop = 0; }
   $('start-recproc-card').addEventListener('click', openRecProc);
-  $('rp-back').addEventListener('click', function () { rpClearTimers(); goScreen('home'); });
-  $('rp-home').addEventListener('click', function () { rpClearTimers(); goScreen('home'); });
+  $('rp-back').addEventListener('click', function () { rpClearTimers(); goScreen('course1'); });
+  $('rp-home').addEventListener('click', function () { rpClearTimers(); goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 2 — The Journal (Illustration 2.8 annotations)
@@ -8714,8 +8831,8 @@
   function updateJournalPill() { var pill = $('journal-pill'); if (pill) pill.textContent = state.journalDone ? 'Done' : 'Start'; }
   function openJournal() { goScreen('journal'); $('jr-scroll').scrollTop = 0; }
   $('start-journal-card').addEventListener('click', openJournal);
-  $('jr-back').addEventListener('click', function () { goScreen('home'); });
-  $('jr-home').addEventListener('click', function () { goScreen('home'); });
+  $('jr-back').addEventListener('click', function () { goScreen('course1'); });
+  $('jr-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 3 — The Ledger (Illustration 2.9)
@@ -8737,8 +8854,8 @@
   function updateLedgerPill() { var pill = $('ledger-pill'); if (pill) pill.textContent = state.ledgerDone ? 'Done' : 'Start'; }
   function openLedger() { goScreen('ledger'); $('led-scroll').scrollTop = 0; }
   $('start-ledger-card').addEventListener('click', openLedger);
-  $('led-back').addEventListener('click', function () { goScreen('home'); });
-  $('led-home').addEventListener('click', function () { goScreen('home'); });
+  $('led-back').addEventListener('click', function () { goScreen('course1'); });
+  $('led-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 4 — Chart of Accounts (Illustration 2.10)
@@ -8781,8 +8898,8 @@
   function updateCoaPill() { var pill = $('coa-pill'); if (pill) pill.textContent = state.coaDone ? 'Done' : 'Start'; }
   function openCoa() { coaClear(); goScreen('coa'); $('coa-scroll').scrollTop = 0; }
   $('start-coa-card').addEventListener('click', openCoa);
-  $('coa-back').addEventListener('click', function () { goScreen('home'); });
-  $('coa-home').addEventListener('click', function () { goScreen('home'); });
+  $('coa-back').addEventListener('click', function () { goScreen('course1'); });
+  $('coa-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 5 — The Recording Process Illustrated (2.11–2.20)
@@ -8901,12 +9018,12 @@
   $('rpi-prev').addEventListener('click', function () { if (rpiIndex > 0) { rpiIndex--; rpiRender(); $('rpi-scroll').scrollTop = 0; } });
   $('rpi-next').addEventListener('click', function () {
     if (rpiIndex < RPI.length - 1) { rpiIndex++; rpiRender(); $('rpi-scroll').scrollTop = 0; }
-    else { updateRpiPill(); goScreen('home'); }
+    else { updateRpiPill(); goScreen('course1'); }
   });
   function openRpi() { goScreen('rpi'); $('rpi-scroll').scrollTop = 0; rpiRender(); }
   $('start-rpi-card').addEventListener('click', openRpi);
-  $('rpi-back').addEventListener('click', function () { goScreen('home'); });
-  $('rpi-home').addEventListener('click', function () { goScreen('home'); });
+  $('rpi-back').addEventListener('click', function () { goScreen('course1'); });
+  $('rpi-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 6 — Summary of Journalizing & Posting (2.21, 2.22)
@@ -8980,8 +9097,8 @@
   function updateSumPill() { var pill = $('sum-pill'); if (pill) pill.textContent = state.sumDone ? 'Done' : 'Start'; }
   function openSum() { goScreen('sum'); $('sum-scroll').scrollTop = 0; }
   $('start-sum-card').addEventListener('click', openSum);
-  $('sum-back').addEventListener('click', function () { goScreen('home'); });
-  $('sum-home').addEventListener('click', function () { goScreen('home'); });
+  $('sum-back').addEventListener('click', function () { goScreen('course1'); });
+  $('sum-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 · Lesson 7 — The Trial Balance (Illustration 2.23)
@@ -9034,8 +9151,8 @@
     $('tb-mod-done').style.display = m2done ? 'block' : 'none';
   }
   $('start-tb-card').addEventListener('click', openTb);
-  $('tb-back').addEventListener('click', function () { goScreen('home'); });
-  $('tb-home').addEventListener('click', function () { goScreen('home'); });
+  $('tb-back').addEventListener('click', function () { goScreen('course1'); });
+  $('tb-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 2 CAPSTONE — Journalize, Post & Prove (Kleene Window Washing)
@@ -9195,7 +9312,7 @@
   function updateM2capPill() { var pill = $('m2cap-pill'); if (pill) pill.textContent = state.m2capDone ? 'Done' : (m2cPosted.length ? m2cPosted.length + '/11' : 'Start'); }
   function openM2cap() { goScreen('m2cap'); $('m2c-scroll').scrollTop = 0; }
   $('start-m2cap-card').addEventListener('click', openM2cap);
-  $('m2c-back').addEventListener('click', function () { goScreen('home'); });
+  $('m2c-back').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 3 — Introduction (Adjusting Entries)
@@ -9251,8 +9368,8 @@
   function updateM3Pill() { var pill = $('m3intro-pill'); if (pill) pill.textContent = state.m3IntroDone ? 'Done' : 'Start'; }
   function openM3Intro() { goScreen('m3intro'); $('m3-scroll').scrollTop = 0; }
   $('start-m3intro-card').addEventListener('click', openM3Intro);
-  $('m3-back').addEventListener('click', function () { goScreen('home'); });
-  $('m3-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m3-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 3 — Lesson 1: Types of Adjusting Entries (Illustration 2.24)
@@ -9308,8 +9425,8 @@
   function updateM3TypesPill() { var pill = $('m3types-pill'); if (pill) pill.textContent = state.m3TypesDone ? 'Done' : 'Start'; }
   function openM3Types() { goScreen('m3types'); $('m3t-scroll').scrollTop = 0; }
   $('start-m3types-card').addEventListener('click', openM3Types);
-  $('m3t-back').addEventListener('click', function () { goScreen('home'); });
-  $('m3t-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3t-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m3t-home').addEventListener('click', function () { goScreen('course1'); });
   $('m3intro-next').addEventListener('click', openM3Types);
   $('m3types-next').addEventListener('click', function () { openM3Def(); });
 
@@ -9439,8 +9556,8 @@
   function updateM3DefPill() { var pill = $('m3def-pill'); if (pill) pill.textContent = state.m3DefDone ? 'Done' : 'Start'; }
   function openM3Def() { goScreen('m3def'); $('m3d-scroll').scrollTop = 0; }
   $('start-m3def-card').addEventListener('click', openM3Def);
-  $('m3d-back').addEventListener('click', function () { goScreen('home'); });
-  $('m3d-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3d-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m3d-home').addEventListener('click', function () { goScreen('course1'); });
   $('m3def-next').addEventListener('click', function () { openM3Acr(); });
 
   /* ============================================================
@@ -9567,8 +9684,8 @@
   function updateM3AcrPill() { var pill = $('m3acr-pill'); if (pill) pill.textContent = state.m3AcrDone ? 'Done' : 'Start'; }
   function openM3Acr() { goScreen('m3acr'); $('m3a-scroll').scrollTop = 0; }
   $('start-m3acr-card').addEventListener('click', openM3Acr);
-  $('m3a-back').addEventListener('click', function () { goScreen('home'); });
-  $('m3a-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3a-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m3a-home').addEventListener('click', function () { goScreen('course1'); });
   $('m3acr-next').addEventListener('click', function () { openM3Atb(); });
 
   /* ============================================================
@@ -9615,8 +9732,8 @@
   function updateM3AtbPill() { var pill = $('m3atb-pill'); if (pill) pill.textContent = state.m3AtbDone ? 'Done' : 'Start'; }
   function openM3Atb() { goScreen('m3atb'); $('m3b-scroll').scrollTop = 0; }
   $('start-m3atb-card').addEventListener('click', openM3Atb);
-  $('m3b-back').addEventListener('click', function () { goScreen('home'); });
-  $('m3b-home').addEventListener('click', function () { goScreen('home'); });
+  $('m3b-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m3b-home').addEventListener('click', function () { goScreen('course1'); });
   $('m3atb-next').addEventListener('click', function () { openM3Cap(); });
 
   /* ============================================================
@@ -9760,7 +9877,7 @@
   function updateM3CapPill() { var pill = $('m3cap-pill'); if (pill) pill.textContent = state.m3CapDone ? 'Done' : (mcApplied.length ? mcApplied.length + '/5' : 'Start'); }
   function openM3Cap() { goScreen('m3cap'); $('m3c-scroll').scrollTop = 0; }
   $('start-m3cap-card').addEventListener('click', openM3Cap);
-  $('m3c-back').addEventListener('click', function () { goScreen('home'); });
+  $('m3c-back').addEventListener('click', function () { goScreen('course1'); });
   $('m3c-restart').addEventListener('click', function () { mcReset(); $('m3c-scroll').scrollTop = 0; });
 
   /* ============================================================
@@ -9815,8 +9932,8 @@
   function updateM4IntroPill() { var pill = $('m4intro-pill'); if (pill) pill.textContent = state.m4IntroDone ? 'Done' : 'Start'; }
   function openM4Intro() { goScreen('m4intro'); $('m4i-scroll').scrollTop = 0; }
   $('start-m4intro-card').addEventListener('click', openM4Intro);
-  $('m4i-back').addEventListener('click', function () { goScreen('home'); });
-  $('m4i-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4i-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m4i-home').addEventListener('click', function () { goScreen('course1'); });
   $('m4intro-next').addEventListener('click', function () { openM4Close(); });
 
   /* ============================================================
@@ -9951,8 +10068,8 @@
   function updateM4ClosePill() { var pill = $('m4close-pill'); if (pill) pill.textContent = state.m4CloseDone ? 'Done' : 'Start'; }
   function openM4Close() { goScreen('m4close'); $('m4c-scroll').scrollTop = 0; }
   $('start-m4close-card').addEventListener('click', openM4Close);
-  $('m4c-back').addEventListener('click', function () { goScreen('home'); });
-  $('m4c-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4c-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m4c-home').addEventListener('click', function () { goScreen('course1'); });
   $('m4close-next').addEventListener('click', function () { openM4Pctb(); });
 
   /* ============================================================
@@ -9988,8 +10105,8 @@
   function updateM4PctbPill() { var pill = $('m4pctb-pill'); if (pill) pill.textContent = state.m4PctbDone ? 'Done' : 'Start'; }
   function openM4Pctb() { goScreen('m4pctb'); $('m4p-scroll').scrollTop = 0; }
   $('start-m4pctb-card').addEventListener('click', openM4Pctb);
-  $('m4p-back').addEventListener('click', function () { goScreen('home'); });
-  $('m4p-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4p-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m4p-home').addEventListener('click', function () { goScreen('course1'); });
   $('m4pctb-next').addEventListener('click', function () { openM4Cycle(); });
 
   /* ============================================================
@@ -10036,8 +10153,8 @@
     if (!state.m4CycleDone) { state.m4CycleDone = true; save(); updateM4CyclePill(); }
   }
   $('start-m4cycle-card').addEventListener('click', openM4Cycle);
-  $('m4y-back').addEventListener('click', function () { goScreen('home'); });
-  $('m4y-home').addEventListener('click', function () { goScreen('home'); });
+  $('m4y-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m4y-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      MODULE 4 CAPSTONE — Kleene Window Washing · complete the closing process (LO 2.4)
@@ -10218,7 +10335,7 @@
   }
   function openM4Cap() { goScreen('m4cap'); $('m4x-scroll').scrollTop = 0; }
   $('start-m4cap-card').addEventListener('click', openM4Cap);
-  $('m4x-back').addEventListener('click', function () { goScreen('home'); });
+  $('m4x-back').addEventListener('click', function () { goScreen('course1'); });
   $('m4x-restart').addEventListener('click', function () { kcReset(); $('m4x-scroll').scrollTop = 0; });
   $('m4cycle-next').addEventListener('click', openM4Cap);
 
@@ -10274,8 +10391,8 @@
   function updateM5IntroPill() { var pill = $('m5intro-pill'); if (pill) pill.textContent = state.m5IntroDone ? 'Done' : 'Start'; }
   function openM5Intro() { goScreen('m5intro'); $('m5i-scroll').scrollTop = 0; }
   $('start-m5intro-card').addEventListener('click', openM5Intro);
-  $('m5i-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5i-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5i-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5i-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5intro-next').addEventListener('click', function () { openM5Is(); });
 
   /* ============================================================
@@ -10305,8 +10422,8 @@
   function updateM5IsPill() { var pill = $('m5is-pill'); if (pill) pill.textContent = state.m5IsDone ? 'Done' : 'Start'; }
   function openM5Is() { goScreen('m5is'); $('m5s-scroll').scrollTop = 0; }
   $('start-m5is-card').addEventListener('click', openM5Is);
-  $('m5s-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5s-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5s-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5s-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5is-next').addEventListener('click', function () { openM5Re(); });
 
   /* ============================================================
@@ -10335,8 +10452,8 @@
   function updateM5RePill() { var pill = $('m5re-pill'); if (pill) pill.textContent = state.m5ReDone ? 'Done' : 'Start'; }
   function openM5Re() { goScreen('m5re'); $('m5r-scroll').scrollTop = 0; }
   $('start-m5re-card').addEventListener('click', openM5Re);
-  $('m5r-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5r-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5r-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5r-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5re-next').addEventListener('click', function () { openM5Bs(); });
 
   /* ============================================================
@@ -10411,8 +10528,8 @@
   function updateM5BsPill() { var pill = $('m5bs-pill'); if (pill) pill.textContent = state.m5BsDone ? 'Done' : 'Start'; }
   function openM5Bs() { goScreen('m5bs'); $('m5b-scroll').scrollTop = 0; }
   $('start-m5bs-card').addEventListener('click', openM5Bs);
-  $('m5b-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5b-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5b-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5b-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5bs-next').addEventListener('click', function () { openM5Close(); });
 
   /* ============================================================
@@ -10499,8 +10616,8 @@
   function updateM5ClosePill() { var pill = $('m5close-pill'); if (pill) pill.textContent = state.m5CloseDone ? 'Done' : 'Start'; }
   function openM5Close() { goScreen('m5close'); $('m5c-scroll').scrollTop = 0; }
   $('start-m5close-card').addEventListener('click', openM5Close);
-  $('m5c-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5c-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5c-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5c-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5close-next').addEventListener('click', function () { openM6Cb(); });
 
   /* ============================================================
@@ -10555,8 +10672,8 @@
   function updateM6CbPill() { var pill = $('m6cb-pill'); if (pill) pill.textContent = state.m6CbDone ? 'Done' : 'Start'; }
   function openM6Cb() { goScreen('m6cb'); $('m6c-scroll').scrollTop = 0; }
   $('start-m6cb-card').addEventListener('click', openM6Cb);
-  $('m6c-back').addEventListener('click', function () { goScreen('home'); });
-  $('m6c-home').addEventListener('click', function () { goScreen('home'); });
+  $('m6c-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m6c-home').addEventListener('click', function () { goScreen('course1'); });
   $('m6cb-next').addEventListener('click', function () { openM6Cv(); });
 
   /* ============================================================
@@ -10585,8 +10702,8 @@
   function updateM6CvPill() { var pill = $('m6cv-pill'); if (pill) pill.textContent = state.m6CvDone ? 'Done' : 'Start'; }
   function openM6Cv() { goScreen('m6cv'); $('m6v-scroll').scrollTop = 0; }
   $('start-m6cv-card').addEventListener('click', openM6Cv);
-  $('m6v-back').addEventListener('click', function () { goScreen('home'); });
-  $('m6v-home').addEventListener('click', function () { goScreen('home'); });
+  $('m6v-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m6v-home').addEventListener('click', function () { goScreen('course1'); });
   $('m6cv-next').addEventListener('click', function () { openM5Wk(); });
 
   /* ============================================================
@@ -10640,8 +10757,8 @@
   function updateM5WkPill() { var pill = $('m5wk-pill'); if (pill) pill.textContent = state.m5WkDone ? 'Done' : 'Start'; }
   function openM5Wk() { goScreen('m5wk'); $('m5w-scroll').scrollTop = 0; }
   $('start-m5wk-card').addEventListener('click', openM5Wk);
-  $('m5w-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5w-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5w-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5w-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5wk-next').addEventListener('click', function () { openM5Ra(); });
 
   /* ============================================================
@@ -10688,8 +10805,8 @@
   function updateM5RaPill() { var pill = $('m5ra-pill'); if (pill) pill.textContent = state.m5RaDone ? 'Done' : 'Start'; }
   function openM5Ra() { goScreen('m5ra'); $('m5ra-scroll').scrollTop = 0; }
   $('start-m5ra-card').addEventListener('click', openM5Ra);
-  $('m5ra-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5ra-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5ra-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5ra-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5ra-next').addEventListener('click', function () { openM5Rd(); });
   $('ra-reveal').addEventListener('click', function () {
     $('ra-tacts').style.display = 'block'; this.style.display = 'none';
@@ -10700,8 +10817,8 @@
   function updateM5RdPill() { var pill = $('m5rd-pill'); if (pill) pill.textContent = state.m5RdDone ? 'Done' : 'Start'; }
   function openM5Rd() { goScreen('m5rd'); $('m5rd-scroll').scrollTop = 0; }
   $('start-m5rd-card').addEventListener('click', openM5Rd);
-  $('m5rd-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5rd-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5rd-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5rd-home').addEventListener('click', function () { goScreen('course1'); });
   $('rd-reveal').addEventListener('click', function () {
     $('rd-more').style.display = 'block'; this.style.display = 'none';
     if (!state.m5RdDone) { state.m5RdDone = true; save(); updateM5RdPill(); }
@@ -10759,8 +10876,8 @@
   function updateM5RsPill() { var pill = $('m5rs-pill'); if (pill) pill.textContent = state.m5RsDone ? 'Done' : 'Start'; }
   function openM5Rs() { goScreen('m5rs'); $('m5rs-scroll').scrollTop = 0; }
   $('start-m5rs-card').addEventListener('click', openM5Rs);
-  $('m5rs-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5rs-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5rs-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5rs-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5rd-next').addEventListener('click', function () { openM5Rs(); });
   $('m5rs-next').addEventListener('click', function () { openM5Ws(); });
 
@@ -10814,8 +10931,8 @@
   function updateM5WsPill() { var pill = $('m5ws-pill'); if (pill) pill.textContent = state.m5WsDone ? 'Done' : 'Start'; }
   function openM5Ws() { goScreen('m5ws'); $('m5ws-scroll').scrollTop = 0; }
   $('start-m5ws-card').addEventListener('click', openM5Ws);
-  $('m5ws-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5ws-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5ws-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5ws-home').addEventListener('click', function () { goScreen('course1'); });
   $('m5ws-next').addEventListener('click', function () { openM5Wc(); });
 
   /* ============================================================
@@ -10912,8 +11029,8 @@
   function updateM5WcPill() { var pill = $('m5wc-pill'); if (pill) pill.textContent = state.m5WcDone ? 'Done' : 'Start'; }
   function openM5Wc() { goScreen('m5wc'); $('m5wc-scroll').scrollTop = 0; }
   $('start-m5wc-card').addEventListener('click', openM5Wc);
-  $('m5wc-back').addEventListener('click', function () { goScreen('home'); });
-  $('m5wc-home').addEventListener('click', function () { goScreen('home'); });
+  $('m5wc-back').addEventListener('click', function () { goScreen('course1'); });
+  $('m5wc-home').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      APPLICATION LAB · Problem 2.1 — Kawabata, D.D.S.
@@ -11234,7 +11351,7 @@
     goScreen('app1'); app1SetTab('journal');
   }
   $('start-app1-card').addEventListener('click', openApp1);
-  $('app1-back').addEventListener('click', function () { goScreen('home'); });
+  $('app1-back').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      APPLICATION LAB · Problem 2.3 — Baylor Company (internship)
@@ -11417,7 +11534,7 @@
     goScreen('app2'); app2SetTab('brief');
   }
   $('start-app2-card').addEventListener('click', openApp2);
-  $('app2-back').addEventListener('click', function () { goScreen('home'); });
+  $('app2-back').addEventListener('click', function () { goScreen('course1'); });
   $('app2-begin').addEventListener('click', function () { app2SetTab('wp1'); });
 
   /* ============================================================
@@ -11605,7 +11722,7 @@
     goScreen('app3'); app3SetTab('tb');
   }
   $('start-app3-card').addEventListener('click', openApp3);
-  $('app3-back').addEventListener('click', function () { goScreen('home'); });
+  $('app3-back').addEventListener('click', function () { goScreen('course1'); });
 
   /* ============================================================
      COURSE 2 · Introduction — Income Statement, Related Information & Revenue Recognition
@@ -11668,10 +11785,30 @@
     }
     chip('c2i-chip-spx', 'hl-spx'); chip('c2i-chip-earn', 'hl-earn');
   })();
+  /* ---- course catalog (home) ---- */
+  var CAT_C1_FLAGS = ['capDone', 'mod2Done', 'recProcDone', 'journalDone', 'ledgerDone', 'coaDone', 'rpiDone', 'sumDone', 'tbDone', 'm2capDone', 'm3IntroDone', 'm3TypesDone', 'm3DefDone', 'm3AcrDone', 'm3AtbDone', 'm3CapDone', 'm4IntroDone', 'm4CloseDone', 'm4PctbDone', 'm4CycleDone', 'm4CapDone', 'm5IntroDone', 'm5IsDone', 'm5ReDone', 'm5BsDone', 'm5CloseDone', 'm6CbDone', 'm6CvDone', 'm5WkDone', 'm5RaDone', 'm5RdDone', 'm5RsDone', 'm5WsDone', 'm5WcDone', 'app1Done', 'app2Done', 'app3Done'];
+  var CAT_C2_FLAGS = ['c2IntroDone'];
+  function catCount(flags) {
+    var n = flags.filter(function (k) { return !!state[k]; }).length;
+    // the three intro lessons use per-view maps
+    return n;
+  }
+  function renderCatalog() {
+    var c1extra = [state.done && VIEWS.every(function (v) { return state.done[v]; }), state.done2 && L2_VIEWS.every(function (v) { return state.done2[v]; }), state.done3 && L3_VIEWS.every(function (v) { return state.done3[v]; })].filter(Boolean).length;
+    var c1n = catCount(CAT_C1_FLAGS) + c1extra, c1t = CAT_C1_FLAGS.length + 3;
+    var c2n = catCount(CAT_C2_FLAGS), c2t = CAT_C2_FLAGS.length;
+    var b1 = $('cat-c1-bar'), b2 = $('cat-c2-bar');
+    if (b1) { b1.style.width = Math.round(c1n / c1t * 100) + '%'; $('cat-c1-meta').textContent = c1n ? c1n + ' of ' + c1t + ' lessons complete' : '5 modules · Application Lab · ' + c1t + ' lessons'; }
+    if (b2) { b2.style.width = Math.round(c2n / c2t * 100) + '%'; $('cat-c2-meta').textContent = c2n >= c2t ? 'Overview complete · more lessons coming' : 'New · start with the course introduction'; }
+  }
+  $('cat-course1').addEventListener('click', function () { goScreen('course1'); });
+  $('cat-course2').addEventListener('click', function () { goScreen('course2'); });
+  $('course1-back').addEventListener('click', function () { goScreen('home'); });
+  $('course2-back').addEventListener('click', function () { goScreen('home'); });
   function openC2Intro() { goScreen('c2intro'); $('c2i-scroll').scrollTop = 0; }
   $('start-c2intro-card').addEventListener('click', openC2Intro);
-  $('c2i-back').addEventListener('click', function () { goScreen('home'); });
-  $('c2i-home').addEventListener('click', function () { goScreen('home'); });
+  $('c2i-back').addEventListener('click', function () { goScreen('course2'); });
+  $('c2i-home').addEventListener('click', function () { goScreen('course2'); });
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
@@ -11784,6 +11921,7 @@
   updateApp3Pill();
   renderC2i();
   updateC2IntroPill();
+  renderCatalog();
   updateBeginBtn();
   buildWebNav();
   setWebActive('home');
