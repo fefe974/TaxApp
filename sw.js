@@ -1,4 +1,4 @@
-const CACHE_NAME = 'financial-accounting-v5';
+const CACHE_NAME = 'financial-accounting-v6';
 const APP_SHELL = [
   './',
   './index.html',

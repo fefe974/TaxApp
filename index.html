@@ -213,8 +213,8 @@
 
     /* content: readable column for lessons; full width for the labs; dashboard for home */
     .fa-screen .fa-scroll { padding-left: 44px; padding-right: 44px; }
-    .fa-screen:not(#screen-home):not(#screen-app1):not(#screen-app2) .fa-scroll > * { max-width: 900px; margin-left: auto; margin-right: auto; }
-    #screen-app1 .fa-scroll, #screen-app2 .fa-scroll { padding-left: 0; padding-right: 0; }
+    .fa-screen:not(#screen-home):not(#screen-app1):not(#screen-app2):not(#screen-app3) .fa-scroll > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+    #screen-app1 .fa-scroll, #screen-app2 .fa-scroll, #screen-app3 .fa-scroll { padding-left: 0; padding-right: 0; }
 
     #screen-home .fa-scroll > * { max-width: 1140px; margin-left: auto; margin-right: auto; }
     #screen-home .whatwhyhow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -2191,6 +2191,22 @@
   #screen-app2 .aw-tabs button.on .sn { background: var(--teal); color: #eafffb; }
   #screen-app2 .aw-client .av { background: color-mix(in srgb, var(--teal) 16%, transparent); color: var(--teal); }
   #screen-app2 .aw-prog .bar i { background: linear-gradient(90deg, var(--teal), var(--good)); }
+  /* App Lab · Problem 2.2 (Mason) — violet accent + trial-balance reference */
+  #screen-app3 .fa-scroll { background: var(--paper-2, color-mix(in srgb, var(--ink) 5%, var(--paper))); }
+  #screen-app3 .aw-app .lg { background: linear-gradient(150deg, var(--asset), #3f379a); color: #f0edff; border-radius: 6px; }
+  #screen-app3 .aw-tabs button.on { border-bottom-color: var(--asset); }
+  #screen-app3 .aw-tabs button.on .sn { background: var(--asset); color: #f0edff; }
+  #screen-app3 .aw-client .av { background: color-mix(in srgb, var(--asset) 16%, transparent); color: var(--asset); }
+  #screen-app3 .aw-prog .bar i { background: linear-gradient(90deg, var(--asset), var(--good)); }
+  .tb-ref-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); margin-top: 12px; }
+  .tb-ref { width: 100%; border-collapse: collapse; font-size: 11.5px; min-width: 380px; }
+  .tb-ref caption { caption-side: top; padding: 11px 12px 8px; font-family: var(--serif); font-weight: 700; color: var(--ink); font-size: 13px; text-align: center; }
+  .tb-ref th { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); padding: 5px 8px; border-bottom: 1.5px solid var(--line); text-align: right; }
+  .tb-ref th:first-child { text-align: left; }
+  .tb-ref th.grp { text-align: center; border-bottom: none; padding-bottom: 1px; color: var(--asset); }
+  .tb-ref td { padding: 3px 8px; font-family: var(--mono); text-align: right; color: var(--ink); border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent); white-space: nowrap; }
+  .tb-ref td:first-child { text-align: left; font-family: inherit; color: var(--ink-soft); white-space: normal; }
+  .tb-ref tbody tr:last-child td, .tb-ref tr.tot td { border-top: 1.5px solid var(--line); border-bottom: 3px double var(--line); font-weight: 800; color: var(--ink); }
   /* assignment memo (manager's brief) */
   .eng-memo { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; }
   .eng-memo .mh { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: color-mix(in srgb, var(--teal) 9%, var(--card)); border-bottom: 1px solid var(--line); }
@@ -2721,6 +2737,16 @@
               </span>
               <span class="lbody"><b>Problem 2.1 · Kawabata, D.D.S.</b><span>LO 2, 4 · journalize, prove &amp; report a full month</span></span>
               <span class="pill-mini ready" id="app1-pill">Open</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card lab-card" id="start-app3-card" style="border-color: color-mix(in srgb, var(--asset) 40%, var(--line));">
+              <span class="lnum" style="background:color-mix(in srgb,var(--asset) 14%,transparent);color:var(--asset);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--asset) 45%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v6H4zM4 14h16v6H4zM8 4v16"/></svg>
+              </span>
+              <span class="lbody"><b>Problem 2.2 · Mason Advertising</b><span>LO 3, 4 · adjusting entries, statements &amp; analysis</span></span>
+              <span class="pill-mini ready" id="app3-pill">Open</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -6813,6 +6839,42 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: APPLICATION LAB · PROBLEM 2.2 — MASON ADVERTISING ============== -->
+    <section class="fa-screen" id="screen-app3" aria-label="Application Lab — Problem 2.2">
+      <div class="aw-chrome">
+        <div class="aw-bar">
+          <button class="fa-back" id="app3-back" style="color:#e9eef6;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14)">
+            <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M15 6l-6 6 6 6"/></svg>
+            Course
+          </button>
+          <div class="aw-app"><span class="lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 10h16M4 15h10"/></svg></span>LedgerLab <span class="ver">Year-End</span></div>
+          <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme" style="color:#e9eef6;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14)">
+            <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+          </button>
+        </div>
+        <div class="aw-tabs" id="app3-tabs" role="tablist">
+          <button class="on" data-a3="tb" role="tab"><span class="sn">▦</span>Trial Balance</button>
+          <button data-a3="adj" role="tab"><span class="sn">a</span>Adjusting</button>
+          <button data-a3="stmt" role="tab"><span class="sn">b</span>Statements</button>
+          <button data-a3="anal" role="tab"><span class="sn">c</span>Analysis</button>
+        </div>
+      </div>
+      <div class="fa-scroll" id="app3-scroll">
+        <div class="aw-client">
+          <span class="av">MA</span>
+          <div class="ci"><b>Mason Advertising</b><span>Advertising agency · founded January 2018</span></div>
+          <div class="per">Year-end<b>Dec 31, 2025</b></div>
+        </div>
+        <div class="aw-body">
+          <div class="aw-panel on" id="a3-tb"></div>
+          <div class="aw-panel" id="a3-adj"></div>
+          <div class="aw-panel" id="a3-stmt"></div>
+          <div class="aw-panel" id="a3-anal"></div>
+        </div>
+        <div class="aw-foot"></div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -6831,7 +6893,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -6876,9 +6938,10 @@
       if (p.m5WcDone) state.m5WcDone = true;
       if (p.app1Done) state.app1Done = true;
       if (p.app2Done) state.app2Done = true;
+      if (p.app3Done) state.app3Done = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -6903,7 +6966,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -6964,6 +7027,7 @@
         ['Worksheet Columns', function () { openM5Wc(); }, 'm5wc']] },
       { m: 'Application Lab', items: [
         ['Problem 2.1 · Kawabata, D.D.S.', function () { openApp1(); }, 'app1'],
+        ['Problem 2.2 · Mason Advertising', function () { openApp3(); }, 'app3'],
         ['Problem 2.3 · Baylor Company', function () { openApp2(); }, 'app2']] }
     ];
     var html = '', flat = [];
@@ -11188,6 +11252,183 @@
   $('app2-back').addEventListener('click', function () { goScreen('home'); });
   $('app2-begin').addEventListener('click', function () { app2SetTab('wp1'); });
 
+  /* ============================================================
+     APPLICATION LAB · Problem 2.2 — Mason Advertising
+     ============================================================ */
+  var APP3_ACCTS = ['— select account —', 'Cash', 'Accounts Receivable', 'Supplies', 'Prepaid Insurance', 'Equipment', 'Accumulated Depreciation—Equipment', 'Accounts Payable', 'Interest Payable', 'Notes Payable', 'Unearned Service Revenue', 'Salaries and Wages Payable', 'Common Stock', 'Retained Earnings', 'Service Revenue', 'Salaries and Wages Expense', 'Insurance Expense', 'Interest Expense', 'Depreciation Expense', 'Supplies Expense', 'Rent Expense'];
+  var APP3_TB = [
+    ['Cash', 11000, 0, 11000, 0], ['Accounts Receivable', 20000, 0, 23500, 0], ['Supplies', 8400, 0, 3000, 0],
+    ['Prepaid Insurance', 3350, 0, 2500, 0], ['Equipment', 60000, 0, 60000, 0], ['Accumulated Depreciation—Equipment', 0, 28000, 0, 33000],
+    ['Accounts Payable', 0, 5000, 0, 5000], ['Interest Payable', 0, 0, 0, 150], ['Notes Payable', 0, 5000, 0, 5000],
+    ['Unearned Service Revenue', 0, 7000, 0, 5600], ['Salaries and Wages Payable', 0, 0, 0, 1300], ['Common Stock', 0, 10000, 0, 10000],
+    ['Retained Earnings', 0, 3500, 0, 3500], ['Service Revenue', 0, 58600, 0, 63500], ['Salaries and Wages Expense', 10000, 0, 11300, 0],
+    ['Insurance Expense', 0, 0, 850, 0], ['Interest Expense', 350, 0, 500, 0], ['Depreciation Expense', 0, 0, 5000, 0],
+    ['Supplies Expense', 0, 0, 5400, 0], ['Rent Expense', 4000, 0, 4000, 0]
+  ];
+  var APP3_ADJ = [
+    { n: 1, clue: 'Accounts Receivable rose from $20,000 to $23,500 — services were performed but not yet billed or recorded.', sol: [{ a: 'Accounts Receivable', d: 3500, c: 0 }, { a: 'Service Revenue', d: 0, c: 3500 }], hint: 'Accrued revenue: debit <b>Accounts Receivable</b> $3,500 ($23,500 − $20,000); credit <b>Service Revenue</b> $3,500.' },
+    { n: 2, clue: 'Supplies fell from $8,400 to $3,000 — supplies were used up during the year.', sol: [{ a: 'Supplies Expense', d: 5400, c: 0 }, { a: 'Supplies', d: 0, c: 5400 }], hint: 'Used-up asset: debit <b>Supplies Expense</b> $5,400; credit <b>Supplies</b> $5,400.' },
+    { n: 3, clue: 'Prepaid Insurance fell from $3,350 to $2,500 — a portion of the coverage expired.', sol: [{ a: 'Insurance Expense', d: 850, c: 0 }, { a: 'Prepaid Insurance', d: 0, c: 850 }], hint: 'Expired prepaid: debit <b>Insurance Expense</b> $850; credit <b>Prepaid Insurance</b> $850.' },
+    { n: 4, clue: 'Accumulated Depreciation—Equipment rose from $28,000 to $33,000 — record the year’s depreciation.', sol: [{ a: 'Depreciation Expense', d: 5000, c: 0 }, { a: 'Accumulated Depreciation—Equipment', d: 0, c: 5000 }], hint: 'Debit <b>Depreciation Expense</b> $5,000; credit <b>Accumulated Depreciation—Equipment</b> $5,000.' },
+    { n: 5, clue: 'Interest Payable rose from $0 to $150 — interest accrued on the note payable.', sol: [{ a: 'Interest Expense', d: 150, c: 0 }, { a: 'Interest Payable', d: 0, c: 150 }], hint: 'Accrued interest: debit <b>Interest Expense</b> $150; credit <b>Interest Payable</b> $150.' },
+    { n: 6, clue: 'Unearned Service Revenue fell from $7,000 to $5,600 — part of the advance was earned.', sol: [{ a: 'Unearned Service Revenue', d: 1400, c: 0 }, { a: 'Service Revenue', d: 0, c: 1400 }], hint: 'Earned deferred revenue: debit <b>Unearned Service Revenue</b> $1,400; credit <b>Service Revenue</b> $1,400.' },
+    { n: 7, clue: 'Salaries and Wages Payable rose from $0 to $1,300 — wages earned but unpaid at year-end.', sol: [{ a: 'Salaries and Wages Expense', d: 1300, c: 0 }, { a: 'Salaries and Wages Payable', d: 0, c: 1300 }], hint: 'Accrued salaries: debit <b>Salaries and Wages Expense</b> $1,300; credit <b>Salaries and Wages Payable</b> $1,300.' }
+  ];
+  var app3Init = false, app3Ix = 0, app3Posted = [], app3StmtDone = false, app3AnalDone = false;
+  function app3Opts() { return APP3_ACCTS.map(function (a, i) { return '<option value="' + (i === 0 ? '' : a) + '">' + a + '</option>'; }).join(''); }
+  function app3AdjDone() { return APP3_ADJ.every(function (x, i) { return app3Posted[i] !== undefined; }); }
+  function markA3Tab(v) { var b = document.querySelector('#app3-tabs button[data-a3="' + v + '"]'); if (b) b.classList.add('done'); }
+  function app3RenderTB() {
+    function amt(v) { return v > 0 ? cma(v) : ''; }
+    var rows = APP3_TB.map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + amt(r[1]) + '</td><td>' + amt(r[2]) + '</td><td>' + amt(r[3]) + '</td><td>' + amt(r[4]) + '</td></tr>'; }).join('');
+    $('a3-tb').innerHTML =
+      '<div class="aw-h">Trial balance — given</div>' +
+      '<div class="aw-sub">Mason’s unadjusted and adjusted trial balances at December 31, 2025. Compare the two pairs of columns to find the seven adjusting entries, then build the statements from the <b>adjusted</b> figures.</div>' +
+      '<div class="tb-ref-wrap"><table class="tb-ref"><caption>Mason Advertising · Trial Balance · December 31, 2025</caption>' +
+      '<thead><tr><th rowspan="2">Account</th><th colspan="2" class="grp">Unadjusted</th><th colspan="2" class="grp">Adjusted</th></tr>' +
+      '<tr><th>Dr.</th><th>Cr.</th><th>Dr.</th><th>Cr.</th></tr></thead><tbody>' + rows +
+      '<tr class="tot"><td>Totals</td><td>117,100</td><td>117,100</td><td>127,050</td><td>127,050</td></tr>' +
+      '</tbody></table></div>' +
+      '<button class="cta eng-start" id="app3-tb-next" style="margin-top:14px">Start part a · adjusting entries ▸</button>';
+    $('app3-tb-next').addEventListener('click', function () { app3SetTab('adj'); });
+  }
+  function app3RenderAdjShell() {
+    $('a3-adj').innerHTML =
+      '<div class="aw-h">a · Journalize the adjusting entries</div>' +
+      '<div class="aw-sub">Compare the unadjusted and adjusted columns on the <b>Trial Balance</b> tab to see what changed, then record each of the seven annual adjusting entries. (Omit explanations.)</div>' +
+      '<div class="aw-prog"><span id="app3-prog-txt">0 of 7</span><span class="bar"><i id="app3-prog-bar" style="width:0"></i></span></div>' +
+      '<div id="app3-adj-host"></div>' +
+      '<div class="aw-log" id="app3-log-wrap" style="display:none;"><div class="lh">Posted adjusting entries · general journal</div><div id="app3-log"></div></div>';
+  }
+  function app3RenderAdj() {
+    var host = $('app3-adj-host');
+    if (app3AdjDone()) {
+      host.innerHTML = '<div class="aw-done-banner"><b>All seven adjusting entries posted ✓</b><p>Move to the <b>Statements</b> tab and prepare the financial statements from the adjusted balances.</p></div><button class="btn primary" style="width:100%;margin-top:10px" id="app3-adj-next">Go to Statements ▸</button>';
+      $('app3-adj-next').addEventListener('click', function () { app3SetTab('stmt'); });
+      markA3Tab('adj'); return;
+    }
+    var adj = APP3_ADJ[app3Ix], li = '<select class="aw-sel">' + app3Opts() + '</select><input class="aw-amt d" inputmode="numeric" placeholder="0" aria-label="Debit"><input class="aw-amt c" inputmode="numeric" placeholder="0" aria-label="Credit">';
+    host.innerHTML =
+      '<div class="aw-doc"><div class="dh"><span class="badge adj">Adjustment ' + adj.n + ' of 7</span><span class="dt">Dec 31</span></div><div class="db"><div class="party">Clue from the trial balance</div><div class="memo">' + adj.clue + '</div></div></div>' +
+      '<div class="aw-je"><div class="jeh"><span>Account</span><span>Debit</span><span>Credit</span></div><div class="aw-jelines" id="app3-jelines"><div class="aw-jl">' + li + '</div><div class="aw-jl">' + li + '</div></div>' +
+      '<div class="aw-jetools"><button class="aw-addln" id="app3-addln">+ Add line</button><button class="btn" id="app3-hint-btn">Hint</button><button class="btn primary aw-noentry" id="app3-post-btn">Record entry</button></div></div>' +
+      '<div class="aw-sheet hint" id="app3-hint"><b>Hint.</b> ' + adj.hint + '</div>' +
+      '<div class="gp-feedback" id="app3-fb" style="margin-top:12px"></div>';
+    $('app3-addln').addEventListener('click', function () { var h = $('app3-jelines'); if (h.children.length < 4) { var d = document.createElement('div'); d.className = 'aw-jl'; d.innerHTML = li; h.appendChild(d); } });
+    $('app3-hint-btn').addEventListener('click', function () { $('app3-hint').classList.toggle('show'); });
+    $('app3-post-btn').addEventListener('click', app3AdjPost);
+  }
+  function app3AdjPost() {
+    var adj = APP3_ADJ[app3Ix], lines = [];
+    Array.prototype.slice.call($('app3-jelines').querySelectorAll('.aw-jl')).forEach(function (row) {
+      var a = row.querySelector('.aw-sel').value, d = awNum(row.querySelector('.aw-amt.d')), c = awNum(row.querySelector('.aw-amt.c'));
+      if (a || d || c) lines.push({ a: a, d: d, c: c });
+    });
+    var chk = app2EntryCheck(lines, adj.sol), fb = $('app3-fb');
+    if (!chk.ok) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + chk.msg + '</div>'; return; }
+    app3Posted[app3Ix] = lines; app3RenderLog(); app3Prog(); updateApp3Pill();
+    if (app3AdjDone()) { app3RenderStmt(); app3RenderAdj(); return; }
+    var next = app3Ix; for (var k = 1; k <= APP3_ADJ.length; k++) { var idx = (app3Ix + k) % APP3_ADJ.length; if (app3Posted[idx] === undefined) { next = idx; break; } }
+    fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Posted.</b> Recorded to the general journal.</div>';
+    setTimeout(function () { app3Ix = next; app3RenderAdj(); }, 600);
+  }
+  function app3RenderLog() {
+    var any = app3Posted.some(function (x) { return x !== undefined; });
+    $('app3-log-wrap').style.display = any ? 'block' : 'none';
+    $('app3-log').innerHTML = APP3_ADJ.map(function (t, i) {
+      var ls = app3Posted[i]; if (!ls) return '';
+      var rows = ls.map(function (l) { return '<div class="je-row' + (l.c > 0 ? ' cr' : '') + '"><span class="je-acct">' + l.a + '</span><span class="je-d">' + (l.d ? cma(l.d) : '') + '</span><span class="je-c">' + (l.c ? cma(l.c) : '') + '</span></div>'; }).join('');
+      return '<div class="aw-logitem"><div class="lt"><span>Adjustment ' + t.n + '</span><span class="ok">✓ posted</span></div>' + rows + '</div>';
+    }).join('');
+  }
+  function app3Prog() { var n = app3Posted.filter(function (x) { return x !== undefined; }).length; if ($('app3-prog-txt')) { $('app3-prog-txt').textContent = n + ' of 7'; $('app3-prog-bar').style.width = Math.round(n / 7 * 100) + '%'; } }
+  function app3RenderStmt() {
+    if (!app3AdjDone()) { $('a3-stmt').innerHTML = '<div class="aw-h">b · Financial statements</div><div class="aw-sub">Prepare the statements from the adjusted balances.</div><div class="aw-gate">' + LOCK_SVG + '<div>Journalize the seven adjusting entries first (part a).</div></div>'; return; }
+    function stmt(title, sub, rows) { return '<div class="mis" style="margin-top:12px"><div class="mis-title"><b>Mason Advertising</b><span>' + title + '</span><span>' + sub + '</span></div><div class="mis-body">' + rows + '</div></div>'; }
+    function irow(cls, label, id, aria) { return '<div class="mis-row ' + cls + '"><span class="l">' + label + '</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="' + id + '" inputmode="numeric" placeholder="?" aria-label="' + aria + '"></span></div>'; }
+    function grow(cls, label, val) { return '<div class="mis-row ' + cls + '"><span class="l">' + label + '</span><span class="c1"></span><span class="c2">' + val + '</span></div>'; }
+    $('a3-stmt').innerHTML =
+      '<div class="aw-h">b · Financial statements</div>' +
+      '<div class="aw-sub">Prepare the three statements from the <b>adjusted</b> trial balance. Given account balances are shown; enter each <b>computed</b> figure (subtotals, net income, totals), then check.</div>' +
+      stmt('Income Statement', 'For the Year Ended December 31, 2025',
+        irow('', 'Service revenue', 'app3-sr', 'Service revenue') +
+        grow('sec', 'Expenses', '') +
+        grow('ind1', 'Salaries and wages expense', '11,300') + grow('ind1', 'Supplies expense', '5,400') +
+        grow('ind1', 'Depreciation expense', '5,000') + grow('ind1', 'Rent expense', '4,000') +
+        grow('ind1', 'Insurance expense', '850') + grow('ind1', 'Interest expense', '500') +
+        irow('key rule', 'Total expenses', 'app3-te', 'Total expenses') +
+        irow('grand', 'Net income', 'app3-ni', 'Net income')) +
+      stmt('Retained Earnings Statement', 'For the Year Ended December 31, 2025',
+        grow('', 'Retained earnings, January 1', '3,500') +
+        irow('', 'Add: Net income', 'app3-reni', 'Net income added') +
+        irow('key rule', 'Retained earnings, December 31', 'app3-reend', 'Ending retained earnings')) +
+      stmt('Balance Sheet (unclassified)', 'December 31, 2025',
+        grow('sec', 'Assets', '') +
+        grow('ind1', 'Cash', '11,000') + grow('ind1', 'Accounts receivable', '23,500') + grow('ind1', 'Supplies', '3,000') +
+        grow('ind1', 'Prepaid insurance', '2,500') + grow('ind1', 'Equipment', '60,000') + grow('ind1', 'Less: Accumulated depreciation', '(33,000)') +
+        irow('', 'Equipment, net', 'app3-eqnet', 'Equipment net') +
+        irow('key rule', 'Total assets', 'app3-ta', 'Total assets') +
+        grow('sec', 'Liabilities', '') +
+        grow('ind1', 'Accounts payable', '5,000') + grow('ind1', 'Interest payable', '150') + grow('ind1', 'Notes payable', '5,000') +
+        grow('ind1', 'Unearned service revenue', '5,600') + grow('ind1', 'Salaries and wages payable', '1,300') +
+        irow('key rule', 'Total liabilities', 'app3-tl', 'Total liabilities') +
+        grow('sec', 'Stockholders’ equity', '') +
+        grow('ind1', 'Common stock', '10,000') +
+        irow('', 'Retained earnings', 'app3-req', 'Retained earnings') +
+        irow('key rule', 'Total stockholders’ equity', 'app3-tse', 'Total stockholders equity') +
+        irow('grand', 'Total liabilities and equity', 'app3-tle', 'Total liabilities and equity')) +
+      '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="app3-stmtbtn">Check the statements</button></div><div class="gp-feedback" id="app3-stmtfb" style="margin-top:12px"></div>';
+    var T = { 'app3-sr': 63500, 'app3-te': 27050, 'app3-ni': 36450, 'app3-reni': 36450, 'app3-reend': 39950, 'app3-eqnet': 27000, 'app3-ta': 67000, 'app3-tl': 17050, 'app3-req': 39950, 'app3-tse': 49950, 'app3-tle': 67000 };
+    $('app3-stmtbtn').addEventListener('click', function () {
+      var ok = true; Object.keys(T).forEach(function (id) { var el = $(id); el.classList.remove('ok', 'no'); if (!el.value) { ok = false; return; } if (awNum(el) === T[id]) el.classList.add('ok'); else { el.classList.add('no'); ok = false; } });
+      var fb = $('app3-stmtfb');
+      if (Object.keys(T).every(function (id) { return !$(id).value; })) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in the computed figures, then check.</div>'; return; }
+      if (ok) { fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Statements complete.</b> Net income $36,450 → ending retained earnings $39,950; total assets $67,000 = total liabilities &amp; equity. Now answer part c.</div>'; app3StmtDone = true; markA3Tab('stmt'); app3CheckComplete(); }
+      else { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Check the red cells. Total expenses = the six expenses summed; net income = revenue − expenses; ending RE = $3,500 + net income; total assets must equal total liabilities + equity.</div>'; }
+    });
+  }
+  function app3RenderAnal() {
+    $('a3-anal').innerHTML =
+      '<div class="aw-h">c · Analysis</div>' +
+      '<div class="aw-sub">Two follow-up questions from the partner. Use the adjusted figures.</div>' +
+      '<div class="mis" style="margin-top:12px"><div class="mis-body">' +
+      '<div style="font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:9px"><b>1.</b> The <b>Notes Payable</b> is $5,000 and $150 of interest accrued this year. If the note has been outstanding <b>3 months</b>, what is the <b>annual interest rate</b> on the note?</div>' +
+      '<div class="wp-crow key"><div class="cl">Annual interest rate</div><div class="wp-cinp"><input class="wp-calc-inp" id="app3-q1" inputmode="numeric" placeholder="?" aria-label="Annual interest rate"><span class="sf">%</span></div></div>' +
+      '<div style="font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin:16px 0 9px"><b>2.</b> Salaries and Wages Expense for the year is $11,300 and the Dec 31, 2025 payable is $1,300. If the company <b>paid $12,500</b> in salaries and wages during 2025, what was the <b>Salaries and Wages Payable balance on December 31, 2024</b>?</div>' +
+      '<div class="wp-crow key"><div class="cl">Salaries &amp; Wages Payable, Dec 31, 2024</div><div class="wp-cinp"><span class="pf">$</span><input class="wp-calc-inp" id="app3-q2" inputmode="numeric" placeholder="?" aria-label="Beginning payable"></div></div>' +
+      '</div></div>' +
+      '<div class="gp-actions" style="margin-top:12px"><button class="btn primary" id="app3-analbtn">Check answers</button></div><div class="gp-feedback" id="app3-analfb" style="margin-top:12px"></div><div id="app3-complete"></div>';
+    $('app3-analbtn').addEventListener('click', function () {
+      var q1 = $('app3-q1'), q2 = $('app3-q2'); q1.classList.remove('ok', 'no'); q2.classList.remove('ok', 'no');
+      var ok = true;
+      if (awNum(q1) === 12) q1.classList.add('ok'); else { q1.classList.add('no'); ok = false; }
+      if (awNum(q2) === 2500) q2.classList.add('ok'); else { q2.classList.add('no'); ok = false; }
+      var fb = $('app3-analfb');
+      if (!q1.value && !q2.value) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Enter both answers, then check.</div>'; return; }
+      if (ok) { fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div><b>Correct.</b> The note bears <b>12%</b> — $150 = $5,000 × r × 3/12. And Salaries &amp; Wages Payable began the year at <b>$2,500</b> — $1,300 ending + $12,500 paid − $11,300 expense.</div>'; app3AnalDone = true; markA3Tab('anal'); app3CheckComplete(); }
+      else { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Not quite. Q1: interest = principal × rate × time, so rate = $150 ÷ ($5,000 × 3/12). Q2: beginning payable = ending + cash paid − expense.</div>'; }
+    });
+    if (state.app3Done) app3ShowComplete();
+  }
+  function app3CheckComplete() { if (app3AdjDone() && app3StmtDone && app3AnalDone) { if (!state.app3Done) { state.app3Done = true; save(); } updateApp3Pill(); app3ShowComplete(); } }
+  function app3ShowComplete() { var d = $('app3-complete'); if (!d) return; d.innerHTML = '<div class="cap-done" style="margin-top:16px"><div class="medal"><svg class="icon" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M20 6L9 17l-5-5"/></svg></div><h3>Problem 2.2 complete</h3><p>You ran Mason Advertising end to end — seven adjusting entries, an income statement (net income <b>$36,450</b>), a retained earnings statement (ending <b>$39,950</b>), an unclassified balance sheet balancing at <b>$67,000</b>, and both analysis answers. Nicely done.</p></div>'; }
+  function app3SetTab(v) {
+    Array.prototype.slice.call(document.querySelectorAll('#app3-tabs button')).forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-a3') === v); });
+    ['tb', 'adj', 'stmt', 'anal'].forEach(function (k) { $('a3-' + k).classList.toggle('on', k === v); });
+    $('app3-scroll').scrollTop = 0;
+  }
+  Array.prototype.slice.call(document.querySelectorAll('#app3-tabs button')).forEach(function (b) { b.addEventListener('click', function () { app3SetTab(b.getAttribute('data-a3')); }); });
+  function updateApp3Pill() { var pill = $('app3-pill'); if (!pill) return; var n = app3Posted.filter(function (x) { return x !== undefined; }).length; pill.textContent = state.app3Done ? 'Done' : (n ? n + '/7' : 'Open'); }
+  function openApp3() {
+    if (!app3Init) {
+      app3Init = true; app3Ix = 0; app3Posted = []; app3StmtDone = false; app3AnalDone = false;
+      app3RenderTB(); app3RenderAdjShell(); app3RenderAdj(); app3RenderStmt(); app3RenderAnal(); app3Prog(); app3RenderLog(); updateApp3Pill();
+    }
+    goScreen('app3'); app3SetTab('tb');
+  }
+  $('start-app3-card').addEventListener('click', openApp3);
+  $('app3-back').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -11296,6 +11537,7 @@
   updateM5WcPill();
   updateApp1Pill();
   updateApp2Pill();
+  updateApp3Pill();
   updateBeginBtn();
   buildWebNav();
   setWebActive('home');
