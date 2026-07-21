@@ -1987,6 +1987,12 @@
   .mis-inp:focus { outline: none; border-color: var(--asset); }
   .mis-inp.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
   .mis-inp.no { border-color: var(--warn); background: var(--warn-bg); }
+  .pf-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .pf-row { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; padding: 8px 13px; font-size: 12.5px; border-bottom: 1px solid var(--line); }
+  .pf-row span:first-child { color: var(--ink-soft); }
+  .pf-row .mono { font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+  .pf-row:nth-child(odd) { border-right: 1px solid var(--line); }
+  @media (max-width: 520px) { .pf-grid { grid-template-columns: 1fr; } .pf-row:nth-child(odd) { border-right: none; } }
   .mis-badge { display: inline-block; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--asset); background: var(--asset-bg); border-radius: 999px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
 
   /* ===== Module 6 — Cash-Basis vs. Accrual-Basis (Appendix 2A) ===== */
@@ -2976,6 +2982,19 @@
                 <span>Build a multiple-step statement · elements, sections &amp; EPS</span>
               </span>
               <span class="pill-mini ready" id="c2m1c-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+            <button class="lesson-card" id="start-c2m1p-card">
+              <span class="lnum" style="background:color-mix(in srgb,#57b98c 18%,transparent);color:#2e8f63;box-shadow:inset 0 0 0 1px color-mix(in srgb,#57b98c 46%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:17px;height:17px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Put It Into Practice · Shark Inc.</b>
+                <span>Prepare both statements start to finish — you enter everything</span>
+              </span>
+              <span class="pill-mini ready" id="c2m1p-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -7548,9 +7567,134 @@
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
             <div class="ill-note">
               <span class="i" style="background:#1d5a8f;color:#dcecfa;">→</span>
-              <div><b>Up next in Course 2:</b> reporting irregular items and other related information on the income statement — send the next lecture when you're ready.</div>
+              <div><b>Put it into practice:</b> prepare both statements for Shark Inc. from a raw list of accounts — start to finish.</div>
             </div>
+            <button class="cta" id="c2m1c-next" style="background:#1d5a8f;">Next · Put It Into Practice</button>
             <button class="cta ghost" id="c2m1c-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: C2 · M1 · Put It Into Practice — Shark Inc. ============== -->
+    <section class="fa-screen" id="screen-c2m1p" aria-label="Course 2 · Module 1 · Put It Into Practice — Shark Inc.">
+      <div class="fa-topbar">
+        <button class="fa-back" id="c2m1p-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="c2m1p-scroll">
+        <header class="c2-hero">
+          <div class="eyebrow">Course 2 · Module 1 · Put It Into Practice</div>
+          <h1>Prepare the Income Statements</h1>
+          <div class="c2-rule"></div>
+          <div class="lo-callout">
+            <span class="lo-badge">▶</span>
+            <div>
+              <div class="lo-t">LO 3.1 · Shark Inc.</div>
+              <div class="lo-d">Prepare a multiple-step and a single-step income statement from the account balances below. You enter every figure.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <section class="m2-sec">
+            <h2>Facts</h2>
+            <p>The following information relates to <b>Shark Inc.</b> The tax rate is <b>30%</b> and the weighted-average number of common shares outstanding is <b>100,000</b>, for the year ended December 31, 2025.</p>
+            <div class="mini-build" style="margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;">
+              <div class="pf-grid">
+                <div class="pf-row"><span>Loss related to fire damage</span><span class="mono">$500,000</span></div>
+                <div class="pf-row"><span>Income taxes payable</span><span class="mono">$32,000</span></div>
+                <div class="pf-row"><span>General and administrative expense</span><span class="mono">200,000</span></div>
+                <div class="pf-row"><span>Selling expense</span><span class="mono">25,000</span></div>
+                <div class="pf-row"><span>Sales revenue</span><span class="mono">4,000,000</span></div>
+                <div class="pf-row"><span>Sales discounts</span><span class="mono">6,000</span></div>
+                <div class="pf-row"><span>Cash</span><span class="mono">40,000</span></div>
+                <div class="pf-row"><span>Warranty liability</span><span class="mono">9,000</span></div>
+                <div class="pf-row"><span>Interest expense</span><span class="mono">10,000</span></div>
+                <div class="pf-row"><span>Interest revenue</span><span class="mono">11,000</span></div>
+                <div class="pf-row"><span>Accounts payable</span><span class="mono">30,000</span></div>
+                <div class="pf-row"><span>Accounts receivable</span><span class="mono">14,000</span></div>
+                <div class="pf-row"><span>Sales returns and allowances</span><span class="mono">5,000</span></div>
+                <div class="pf-row"><span>Retained earnings</span><span class="mono">45,000</span></div>
+                <div class="pf-row"><span>Gain on sale of equipment</span><span class="mono">8,000</span></div>
+                <div class="pf-row"><span>Cost of goods sold</span><span class="mono">2,220,000</span></div>
+              </div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">!</span><div>Not every account belongs on the income statement — a few are assets, liabilities, or equity. Use only what belongs, and enter each figure yourself.</div></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>a. Multiple-step income statement</h2>
+            <div class="mis" style="margin-top:12px;">
+              <div class="mis-title"><b>Shark Inc.</b><span>Income Statement</span><span>For the Year Ended December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row sec"><span class="l">Sales</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Sales revenue</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msr" inputmode="numeric" placeholder="?" aria-label="Sales revenue"></span></div>
+                <div class="mis-row ind2"><span class="l">Less: Sales discounts</span><span class="c1"><input class="mis-inp" id="p-msd" inputmode="numeric" placeholder="?" aria-label="Sales discounts"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Sales returns and allowances</span><span class="c1"><input class="mis-inp" id="p-msra" inputmode="numeric" placeholder="?" aria-label="Sales returns and allowances"></span><span class="c2"></span></div>
+                <div class="mis-row key"><span class="l">Net sales</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msns" inputmode="numeric" placeholder="?" aria-label="Net sales"></span></div>
+                <div class="mis-row"><span class="l">Cost of goods sold</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-mscogs" inputmode="numeric" placeholder="?" aria-label="Cost of goods sold"></span></div>
+                <div class="mis-row key"><span class="l">Gross profit</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msgp" inputmode="numeric" placeholder="?" aria-label="Gross profit"></span></div>
+                <div class="mis-row sec"><span class="l">Operating expenses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Selling expenses</span><span class="c1"><input class="mis-inp" id="p-mssell" inputmode="numeric" placeholder="?" aria-label="Selling expenses"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">General and administrative expenses</span><span class="c1"><input class="mis-inp" id="p-msga" inputmode="numeric" placeholder="?" aria-label="General and administrative expenses"></span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total operating expenses</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msoe" inputmode="numeric" placeholder="?" aria-label="Total operating expenses"></span></div>
+                <div class="mis-row key"><span class="l">Income from operations</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msifo" inputmode="numeric" placeholder="?" aria-label="Income from operations"></span></div>
+                <div class="mis-row sec"><span class="l">Other revenues and gains</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Interest revenue</span><span class="c1"><input class="mis-inp" id="p-msir" inputmode="numeric" placeholder="?" aria-label="Interest revenue"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Gain on sale of equipment</span><span class="c1"><input class="mis-inp" id="p-msgain" inputmode="numeric" placeholder="?" aria-label="Gain on sale of equipment"></span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total other revenues and gains</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msorg" inputmode="numeric" placeholder="?" aria-label="Total other revenues and gains"></span></div>
+                <div class="mis-row key"><span class="l">Subtotal</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-mssub" inputmode="numeric" placeholder="?" aria-label="Subtotal"></span></div>
+                <div class="mis-row sec"><span class="l">Other expenses and losses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Interest expense</span><span class="c1"><input class="mis-inp" id="p-msie" inputmode="numeric" placeholder="?" aria-label="Interest expense"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Loss on fire</span><span class="c1"><input class="mis-inp" id="p-mslf" inputmode="numeric" placeholder="?" aria-label="Loss on fire"></span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total other expenses and losses</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msoel" inputmode="numeric" placeholder="?" aria-label="Total other expenses and losses"></span></div>
+                <div class="mis-row key"><span class="l">Income before income tax</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msibt" inputmode="numeric" placeholder="?" aria-label="Income before income tax"></span></div>
+                <div class="mis-row"><span class="l">Income tax (30%)</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-mstax" inputmode="numeric" placeholder="?" aria-label="Income tax"></span></div>
+                <div class="mis-row grand"><span class="l">Net income</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-msni" inputmode="numeric" placeholder="?" aria-label="Net income"></span></div>
+                <div class="mis-row key"><span class="l">Earnings per common share (÷ 100,000)</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-mseps" inputmode="decimal" placeholder="?" aria-label="Earnings per share"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="p-msbtn">Check part a</button></div>
+            <div class="gp-feedback" id="p-msfb" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>b. Single-step income statement</h2>
+            <div class="mis" style="margin-top:12px;">
+              <div class="mis-title"><b>Shark Inc.</b><span>Income Statement (single-step)</span><span>For the Year Ended December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row sec"><span class="l">Revenues</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Net sales</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-ssns" inputmode="numeric" placeholder="?" aria-label="Net sales"></span></div>
+                <div class="mis-row ind1"><span class="l">Interest revenue</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-ssir" inputmode="numeric" placeholder="?" aria-label="Interest revenue"></span></div>
+                <div class="mis-row ind1"><span class="l">Gain on sale of equipment</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-ssgain" inputmode="numeric" placeholder="?" aria-label="Gain on sale of equipment"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total revenues</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sstr" inputmode="numeric" placeholder="?" aria-label="Total revenues"></span></div>
+                <div class="mis-row sec"><span class="l">Expenses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Cost of goods sold</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sscogs" inputmode="numeric" placeholder="?" aria-label="Cost of goods sold"></span></div>
+                <div class="mis-row ind1"><span class="l">Selling expenses</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sssell" inputmode="numeric" placeholder="?" aria-label="Selling expenses"></span></div>
+                <div class="mis-row ind1"><span class="l">General and administrative expenses</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-ssga" inputmode="numeric" placeholder="?" aria-label="General and administrative expenses"></span></div>
+                <div class="mis-row ind1"><span class="l">Interest expense</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-ssie" inputmode="numeric" placeholder="?" aria-label="Interest expense"></span></div>
+                <div class="mis-row ind1"><span class="l">Loss on fire</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sslf" inputmode="numeric" placeholder="?" aria-label="Loss on fire"></span></div>
+                <div class="mis-row ind1"><span class="l">Income tax (30%)</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sstax" inputmode="numeric" placeholder="?" aria-label="Income tax"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total expenses</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sste" inputmode="numeric" placeholder="?" aria-label="Total expenses"></span></div>
+                <div class="mis-row grand"><span class="l">Net income</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-ssni" inputmode="numeric" placeholder="?" aria-label="Net income"></span></div>
+                <div class="mis-row key"><span class="l">Earnings per common share (÷ 100,000)</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sseps" inputmode="decimal" placeholder="?" aria-label="Earnings per share"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="p-ssbtn">Check part b</button></div>
+            <div class="gp-feedback" id="p-ssfb" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="gp-feedback" id="c2m1p-done" style="margin-bottom:12px;"></div>
+            <button class="cta ghost" id="c2m1p-home">Back to course</button>
           </div>
         </div>
       </div>
@@ -7574,7 +7718,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false, c2IntroDone: false, c2m1UDone: false, c2m1LDone: false, c2m1CDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false, c2IntroDone: false, c2m1UDone: false, c2m1LDone: false, c2m1CDone: false, c2m1PDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -7624,9 +7768,10 @@
       if (p.c2m1UDone) state.c2m1UDone = true;
       if (p.c2m1LDone) state.c2m1LDone = true;
       if (p.c2m1CDone) state.c2m1CDone = true;
+      if (p.c2m1PDone) state.c2m1PDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done, c2IntroDone: state.c2IntroDone, c2m1UDone: state.c2m1UDone, c2m1LDone: state.c2m1LDone, c2m1CDone: state.c2m1CDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done, c2IntroDone: state.c2IntroDone, c2m1UDone: state.c2m1UDone, c2m1LDone: state.c2m1LDone, c2m1CDone: state.c2m1CDone, c2m1PDone: state.c2m1PDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -7651,7 +7796,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), course1: $('screen-course1'), course2: $('screen-course2'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro'), c2m1u: $('screen-c2m1u'), c2m1l: $('screen-c2m1l'), c2m1c: $('screen-c2m1c') };
+  var screens = { home: $('screen-home'), course1: $('screen-course1'), course2: $('screen-course2'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro'), c2m1u: $('screen-c2m1u'), c2m1l: $('screen-c2m1l'), c2m1c: $('screen-c2m1c'), c2m1p: $('screen-c2m1p') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -7722,7 +7867,8 @@
         ['Course Introduction', function () { openC2Intro(); }, 'c2intro'],
         ['Usefulness of the Income Statement', function () { openC2m1u(); }, 'c2m1u'],
         ['Limitations of the Income Statement', function () { openC2m1l(); }, 'c2m1l'],
-        ['Content of the Income Statement', function () { openC2m1c(); }, 'c2m1c']] }
+        ['Content of the Income Statement', function () { openC2m1c(); }, 'c2m1c'],
+        ['Put It Into Practice · Shark Inc.', function () { openC2m1p(); }, 'c2m1p']] }
     ];
     var html = '', flat = [];
     NAV.forEach(function (grp) {
@@ -7788,7 +7934,8 @@
       { done: function () { return state.c2IntroDone; }, open: function () { openC2Intro(); }, label: 'Course 2 · Introduction' },
       { done: function () { return state.c2m1UDone; }, open: function () { openC2m1u(); }, label: 'Usefulness of the Income Statement' },
       { done: function () { return state.c2m1LDone; }, open: function () { openC2m1l(); }, label: 'Limitations of the Income Statement' },
-      { done: function () { return state.c2m1CDone; }, open: function () { openC2m1c(); }, label: 'Content of the Income Statement' }
+      { done: function () { return state.c2m1CDone; }, open: function () { openC2m1c(); }, label: 'Content of the Income Statement' },
+      { done: function () { return state.c2m1PDone; }, open: function () { openC2m1p(); }, label: 'Put It Into Practice · Shark Inc.' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -12200,7 +12347,7 @@
   })();
   /* ---- course catalog (home) ---- */
   var CAT_C1_FLAGS = ['capDone', 'mod2Done', 'recProcDone', 'journalDone', 'ledgerDone', 'coaDone', 'rpiDone', 'sumDone', 'tbDone', 'm2capDone', 'm3IntroDone', 'm3TypesDone', 'm3DefDone', 'm3AcrDone', 'm3AtbDone', 'm3CapDone', 'm4IntroDone', 'm4CloseDone', 'm4PctbDone', 'm4CycleDone', 'm4CapDone', 'm5IntroDone', 'm5IsDone', 'm5ReDone', 'm5BsDone', 'm5CloseDone', 'm6CbDone', 'm6CvDone', 'm5WkDone', 'm5RaDone', 'm5RdDone', 'm5RsDone', 'm5WsDone', 'm5WcDone', 'app1Done', 'app2Done', 'app3Done'];
-  var CAT_C2_FLAGS = ['c2IntroDone', 'c2m1UDone', 'c2m1LDone', 'c2m1CDone'];
+  var CAT_C2_FLAGS = ['c2IntroDone', 'c2m1UDone', 'c2m1LDone', 'c2m1CDone', 'c2m1PDone'];
   function catCount(flags) {
     var n = flags.filter(function (k) { return !!state[k]; }).length;
     // the three intro lessons use per-view maps
@@ -12293,6 +12440,7 @@
     var u = $('c2m1u-pill'); if (u) { u.textContent = state.c2m1UDone ? 'Done' : 'Start'; u.classList.toggle('done', !!state.c2m1UDone); }
     var l = $('c2m1l-pill'); if (l) { l.textContent = state.c2m1LDone ? 'Done' : 'Start'; l.classList.toggle('done', !!state.c2m1LDone); }
     var c = $('c2m1c-pill'); if (c) { c.textContent = state.c2m1CDone ? 'Done' : 'Start'; c.classList.toggle('done', !!state.c2m1CDone); }
+    var pp = $('c2m1p-pill'); if (pp) { pp.textContent = state.c2m1PDone ? 'Done' : 'Start'; pp.classList.toggle('done', !!state.c2m1PDone); }
   }
   function openC2m1u() { goScreen('c2m1u'); $('c2m1u-scroll').scrollTop = 0; renderC2m1u(); }
   function openC2m1l() { goScreen('c2m1l'); $('c2m1l-scroll').scrollTop = 0; renderC2m1l(); }
@@ -12413,6 +12561,54 @@
   $('c2m1c-back').addEventListener('click', function () { goScreen('course2'); });
   $('c2m1c-home').addEventListener('click', function () { goScreen('course2'); });
   $('c2m1l-next').addEventListener('click', openC2m1c);
+
+  /* ---- Put It Into Practice: Shark Inc. (LO 3.1) ---- */
+  var c2m1pMsOk = false, c2m1pSsOk = false;
+  function maybeDoneC2m1p() {
+    if (c2m1pMsOk && c2m1pSsOk) {
+      var d = $('c2m1p-done'); d.className = 'gp-feedback good show';
+      d.innerHTML = '<span class="fi">✓</span><div><b>Both statements complete.</b> Multiple-step and single-step arrive at the same <b>$737,100</b> net income and <b>$7.37</b> EPS — you built them from raw accounts, start to finish.</div>';
+      if (!state.c2m1PDone) { state.c2m1PDone = true; save(); updateC2m1Pills(); renderCatalog(); }
+    }
+  }
+  function c2m1pCheck(intTargets, epsId, epsVal, fbId, okSetter, okMsg, badMsg) {
+    var allOk = true, anyBlank = false;
+    Object.keys(intTargets).forEach(function (id) {
+      var el = $(id), val = m5Num(id); el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === intTargets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var epsEl = $(epsId), ev = fNum(epsId); epsEl.classList.remove('ok', 'no');
+    if (ev == null) { anyBlank = true; allOk = false; }
+    else if (Math.abs(ev - epsVal) <= 0.01) epsEl.classList.add('ok'); else { epsEl.classList.add('no'); allOk = false; }
+    var fb = $(fbId);
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in every line before checking.</div>'; okSetter(false); return; }
+    if (allOk) { fb.className = 'gp-feedback good show'; fb.innerHTML = '<span class="fi">✓</span><div>' + okMsg + '</div>'; okSetter(true); maybeDoneC2m1p(); }
+    else { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>' + badMsg + '</div>'; okSetter(false); }
+  }
+  $('p-msbtn').addEventListener('click', function () {
+    c2m1pCheck({
+      'p-msr': 4000000, 'p-msd': 6000, 'p-msra': 5000, 'p-msns': 3989000, 'p-mscogs': 2220000, 'p-msgp': 1769000,
+      'p-mssell': 25000, 'p-msga': 200000, 'p-msoe': 225000, 'p-msifo': 1544000,
+      'p-msir': 11000, 'p-msgain': 8000, 'p-msorg': 19000, 'p-mssub': 1563000,
+      'p-msie': 10000, 'p-mslf': 500000, 'p-msoel': 510000, 'p-msibt': 1053000, 'p-mstax': 315900, 'p-msni': 737100
+    }, 'p-mseps', 7.37, 'p-msfb', function (v) { c2m1pMsOk = v; },
+      '<b>Part a is correct.</b> Net sales $3,989,000 − COGS = $1,769,000 gross profit; − $225,000 operating expenses = $1,544,000; + $19,000 − $510,000 = $1,053,000 before tax; × 30% tax = $315,900; net income <b>$737,100</b>; ÷ 100,000 = <b>$7.37</b>.',
+      'Not all correct. Skip the balance-sheet accounts. Net sales = sales revenue − discounts − returns; gross profit − operating expenses = income from operations; add other revenues/gains, subtract other expenses/losses; tax is 30% of income before tax.');
+  });
+  $('p-ssbtn').addEventListener('click', function () {
+    c2m1pCheck({
+      'p-ssns': 3989000, 'p-ssir': 11000, 'p-ssgain': 8000, 'p-sstr': 4008000,
+      'p-sscogs': 2220000, 'p-sssell': 25000, 'p-ssga': 200000, 'p-ssie': 10000, 'p-sslf': 500000, 'p-sstax': 315900, 'p-sste': 3270900, 'p-ssni': 737100
+    }, 'p-sseps', 7.37, 'p-ssfb', function (v) { c2m1pSsOk = v; },
+      '<b>Part b is correct.</b> Total revenues $4,008,000 − total expenses $3,270,900 = <b>$737,100</b> — the same bottom line and the same <b>$7.37</b> EPS as the multiple-step form.',
+      'Not all correct. Total revenues = net sales + interest revenue + gain on sale. Total expenses = every expense including income tax. Net income = the difference.');
+  });
+  function openC2m1p() { goScreen('c2m1p'); $('c2m1p-scroll').scrollTop = 0; }
+  $('start-c2m1p-card').addEventListener('click', openC2m1p);
+  $('c2m1p-back').addEventListener('click', function () { goScreen('course2'); });
+  $('c2m1p-home').addEventListener('click', function () { goScreen('course2'); });
+  $('c2m1c-next').addEventListener('click', openC2m1p);
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
