@@ -2969,6 +2969,17 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
             </button>
+            <button class="lesson-card" id="start-c2m1c-card">
+              <span class="lnum" style="background:color-mix(in srgb,#1d5a8f 15%,transparent);color:#1d5a8f;box-shadow:inset 0 0 0 1px color-mix(in srgb,#1d5a8f 42%,transparent);">3</span>
+              <span class="lbody">
+                <b>Content of the Income Statement</b>
+                <span>Build a multiple-step statement · elements, sections &amp; EPS</span>
+              </span>
+              <span class="pill-mini ready" id="c2m1c-pill">Start</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
             <div class="ill-note" style="margin-top:8px;">
               <span class="i" style="background:#1d5a8f;color:#dcecfa;">→</span>
               <div><b>More lessons on the way</b> — the elements of the income statement, then revenue recognition, arrive next.</div>
@@ -7344,9 +7355,213 @@
           <div class="m2-foot" style="padding-left:0;padding-right:0;">
             <div class="ill-note">
               <span class="i" style="background:#1d5a8f;color:#dcecfa;">→</span>
-              <div><b>Up next in Course 2:</b> the elements of the income statement — how the statement is actually built.</div>
+              <div><b>Up next:</b> the <b>content</b> of the income statement — build a multiple-step statement line by line.</div>
             </div>
+            <button class="cta" id="c2m1l-next" style="background:#1d5a8f;">Next · Content of the Income Statement</button>
             <button class="cta ghost" id="c2m1l-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SCREEN: C2 · M1 · L3 — Content of the Income Statement ============== -->
+    <section class="fa-screen" id="screen-c2m1c" aria-label="Course 2 · Module 1 · Content of the Income Statement">
+      <div class="fa-topbar">
+        <button class="fa-back" id="c2m1c-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="c2m1c-scroll">
+        <header class="c2-hero">
+          <div class="eyebrow">Course 2 · Module 1 · Lesson 3</div>
+          <h1>Content of the Income Statement</h1>
+          <div class="c2-rule"></div>
+          <div class="lo-callout">
+            <span class="lo-badge">Σ</span>
+            <div>
+              <div class="lo-t">Build it yourself</div>
+              <div class="lo-d">Net income results from revenue, expense, gain, and loss transactions. Here you'll assemble a full multiple-step statement — and compute every subtotal.</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">The income statement summarizes revenue, expense, gain, and loss transactions using the <b>transaction approach</b> — it focuses on the income-related activities that actually occurred during the period.</p>
+          <div class="ill-note" style="margin-top:12px;">
+            <span class="i" style="background:#1d5a8f;color:#dcecfa;">i</span>
+            <div>The alternative, the <b>capital-maintenance approach</b>, measures income only as the change in equity (after adjusting for owner investments and dividends). Its drawback: the individual components of income aren't visible. The IRS uses it as a "net worth check."</div>
+          </div>
+
+          <section class="m2-sec">
+            <h2>The four elements</h2>
+            <p>Every line on the statement is one of four elements. Note the split: <b>revenues and expenses</b> come from the company's <b>ongoing major or central operations</b>; <b>gains and losses</b> come from <b>peripheral or incidental</b> transactions.</p>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--credit);color:#eaffea;">R</span>
+              <div><b>Revenues</b> — inflows or enhancements of assets (or settlements of liabilities) from delivering goods, rendering services, or other <b>ongoing major or central</b> operations.</div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--debit);color:#eaf3ff;">E</span>
+              <div><b>Expenses</b> — outflows or using-up of assets (or incurrences of liabilities) from those same <b>ongoing major or central</b> operations.</div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--credit);color:#eaffea;">G</span>
+              <div><b>Gains</b> — increases in equity from <b>peripheral or incidental</b> transactions — <i>except</i> those from revenues or owner investments.</div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--debit);color:#eaf3ff;">L</span>
+              <div><b>Losses</b> — decreases in equity from <b>peripheral or incidental</b> transactions — <i>except</i> those from expenses or owner distributions.</div>
+            </div>
+            <p style="margin-top:12px;">Tap the element each item represents.</p>
+            <div class="wr-list" id="c2m1c-el" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="c2m1c-eldone" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>The multiple-step statement</h2>
+            <p>A <b>multiple-step</b> statement shows the steps to net income — net sales, gross profit, income from operations, income before tax, and net income — separating <b>operating</b> from <b>non-operating</b> activity. Cabrera Company's line items are given; <b>compute every highlighted subtotal</b> and check your work.</p>
+            <div class="mis" id="c2m1c-mis" style="margin-top:12px;">
+              <div class="mis-title"><b>Cabrera Company</b><span>Income Statement</span><span>For the Year Ended December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row sec"><span class="l">Sales</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Sales revenue</span><span class="c1"></span><span class="c2">$3,053,081</span></div>
+                <div class="mis-row ind2"><span class="l">Less: Sales discounts</span><span class="c1">24,241</span><span class="c2"></span></div>
+                <div class="mis-row ind2 rule"><span class="l">Sales returns and allowances</span><span class="c1">56,427</span><span class="c2"></span></div>
+                <div class="mis-row key"><span class="l">Net sales<span class="mis-badge">a</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-ns" inputmode="numeric" placeholder="?" aria-label="Net sales"></span></div>
+                <div class="mis-row rule"><span class="l">Cost of goods sold</span><span class="c1"></span><span class="c2">1,982,541</span></div>
+                <div class="mis-row key"><span class="l">Gross profit<span class="mis-badge">b</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-gp" inputmode="numeric" placeholder="?" aria-label="Gross profit"></span></div>
+                <div class="mis-row sec"><span class="l">Operating expenses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Selling expenses</span><span class="c1">453,028</span><span class="c2"></span></div>
+                <div class="mis-row ind2 sub"><span class="l">General and administrative expenses</span><span class="c1">350,771</span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total operating expenses<span class="mis-badge">c</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-oe" inputmode="numeric" placeholder="?" aria-label="Total operating expenses"></span></div>
+                <div class="mis-row key"><span class="l">Income from operations<span class="mis-badge">d</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-ifo" inputmode="numeric" placeholder="?" aria-label="Income from operations"></span></div>
+                <div class="mis-row sec"><span class="l">Other revenues and gains</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Dividend revenue</span><span class="c1">98,500</span><span class="c2"></span></div>
+                <div class="mis-row ind2 sub"><span class="l">Gain on sale of equipment</span><span class="c1">72,910</span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total other revenues and gains<span class="mis-badge">e</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-org" inputmode="numeric" placeholder="?" aria-label="Total other revenues and gains"></span></div>
+                <div class="mis-row key"><span class="l">Subtotal<span class="mis-badge">f</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-st" inputmode="numeric" placeholder="?" aria-label="Subtotal after other revenues and gains"></span></div>
+                <div class="mis-row sec"><span class="l">Other expenses and losses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind2"><span class="l">Interest on bonds and notes</span><span class="c1">96,060</span><span class="c2"></span></div>
+                <div class="mis-row ind2 sub"><span class="l">Loss on flood</span><span class="c1">30,000</span><span class="c2"></span></div>
+                <div class="mis-row ind1 key"><span class="l">Total other expenses and losses<span class="mis-badge">g</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-oel" inputmode="numeric" placeholder="?" aria-label="Total other expenses and losses"></span></div>
+                <div class="mis-row key"><span class="l">Income before income tax<span class="mis-badge">h</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-ibt" inputmode="numeric" placeholder="?" aria-label="Income before income tax"></span></div>
+                <div class="mis-row ind1 rule"><span class="l">Income tax</span><span class="c1"></span><span class="c2">66,934</span></div>
+                <div class="mis-row grand"><span class="l">Net income<span class="mis-badge">i</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-ni" inputmode="numeric" placeholder="?" aria-label="Net income"></span></div>
+                <div class="mis-row key"><span class="l">Earnings per share ($ ÷ 100,000)<span class="mis-badge">j</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-eps" inputmode="decimal" placeholder="?" aria-label="Earnings per share"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="c2m1c-stmtbtn">Check my statement</button></div>
+            <div class="gp-feedback" id="c2m1c-stmtfb" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Reading the statement</h2>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">↑</span><div><b>Net sales</b> — the "top line." Stable, recurring revenue is what makes a company profitable in the long run.</div></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">%</span><div><b>Gross profit</b> — net sales − cost of goods sold. It's the <i>merchandising</i> profit, <b>not</b> overall profitability (operating expenses aren't deducted yet). Managers track its trend against prior years and the industry.</div></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">⚙</span><div><b>Income from operations</b> — the company's <b>core earnings</b>. Separating it from incidental items shows which results are likely to recur.</div></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">≠</span><div><b>Operating expenses</b> split into <b>selling</b> ($453,028) and <b>general &amp; administrative</b> ($350,771). Significant items like R&amp;D or restructuring are often broken out as their own line.</div></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Operating vs. non-operating</h2>
+            <p>Non-operating activities are revenues, expenses, gains, and losses <b>unrelated to the company's main line of business</b>. Tap where each item belongs on Cabrera's statement.</p>
+            <div class="wr-list" id="c2m1c-on" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="c2m1c-ondone" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Unusual or infrequent items</h2>
+            <p>Some gains and losses are flagged as <b>unusual, infrequent, or both</b> — and get extra disclosure in the notes.</p>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:var(--debit);color:#eaf3ff;">U</span><div><b>Unusual</b> — a high degree of abnormality, clearly unrelated to (or only incidentally related to) the ordinary activities of the company.</div></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:var(--debit);color:#eaf3ff;">I</span><div><b>Infrequency of occurrence</b> — not reasonably expected to recur in the foreseeable future, given the environment in which the company operates.</div></div>
+            <div class="mini-build" style="margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;">
+              <div style="padding:10px 14px;font-weight:700;background:color-mix(in srgb,var(--debit) 10%,transparent);border-bottom:1px solid var(--line);">Common unusual / infrequent items</div>
+              <div style="padding:6px 14px;font-size:13px;line-height:1.9;">
+                Write-downs (impairments) of receivables, inventory, PP&amp;E, goodwill or intangibles ·
+                Restructuring charges (layoffs, plant closings) ·
+                Gains/losses on sale or abandonment of PP&amp;E ·
+                Effects of a strike ·
+                Gains/losses on extinguishment of debt ·
+                Gains/losses on sale of investment securities
+              </div>
+            </div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">?</span><div>Revenue vs. gain depends on the company's usual activities: when <b>McDonald's</b> sells a hamburger it records <b>revenue</b>; when it sells <b>land</b>, the excess over book value is a <b>gain</b> — selling land isn't its regular business.</div></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Earnings per share</h2>
+            <p>Companies must disclose EPS <b>on the face of the income statement</b>. It measures the dollars earned by each share of common stock.</p>
+            <div class="eq-card" style="margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;background:color-mix(in srgb,#1d5a8f 6%,var(--card));">
+              <div style="font-weight:800;color:#1d5a8f;margin-bottom:8px;">Earnings per Share (EPS)</div>
+              <div style="font-size:13px;">Net income − Preferred dividends</div>
+              <div style="border-top:2px solid var(--ink);margin:5px auto;width:82%;"></div>
+              <div style="font-size:13px;">Weighted-Average Number of Common Shares Outstanding</div>
+            </div>
+
+            <p style="margin-top:14px;"><b>Weighted-average shares.</b> Suppose Cabrera had 100,000 shares from January and issued another 100,000 on July 1. Weight each block by the fraction of the year it was outstanding, then compute basic EPS on $164,489 of net income.</p>
+            <div class="ge-quiz" style="margin-top:12px;display:grid;gap:10px;">
+              <div class="ge-q"><label for="c2m1c-w1">Jan–Jun: 100,000 × 6/12 =</label><input class="mis-inp" id="c2m1c-w1" inputmode="numeric" placeholder="?" style="width:96px;" aria-label="Weighted shares Jan-Jun"></div>
+              <div class="ge-q"><label for="c2m1c-w2">Jul–Dec: 200,000 × 6/12 =</label><input class="mis-inp" id="c2m1c-w2" inputmode="numeric" placeholder="?" style="width:96px;" aria-label="Weighted shares Jul-Dec"></div>
+              <div class="ge-q"><label for="c2m1c-wt">Weighted-average shares =</label><input class="mis-inp" id="c2m1c-wt" inputmode="numeric" placeholder="?" style="width:96px;" aria-label="Weighted-average shares"></div>
+              <div class="ge-q"><label for="c2m1c-be">Basic EPS = 164,489 ÷ weighted avg =</label><input class="mis-inp" id="c2m1c-be" inputmode="decimal" placeholder="?" style="width:96px;" aria-label="Basic EPS on weighted average"></div>
+            </div>
+
+            <p style="margin-top:14px;"><b>Example 3.1 — Lancer Inc.</b> Net income $350,000; preferred dividends $50,000; weighted-average common shares 100,000. Compute Lancer's EPS.</p>
+            <div class="ge-quiz" style="margin-top:12px;display:grid;gap:10px;">
+              <div class="ge-q"><label for="c2m1c-le">Lancer EPS = (350,000 − 50,000) ÷ 100,000 =</label><input class="mis-inp" id="c2m1c-le" inputmode="decimal" placeholder="?" style="width:96px;" aria-label="Lancer EPS"></div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="c2m1c-epsbtn">Check EPS</button></div>
+            <div class="gp-feedback" id="c2m1c-epsfb" style="margin-top:12px;"></div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>The single-step format</h2>
+            <p>Companies use one of <b>two</b> forms. The <b>single-step</b> statement takes just one step — <b>total expenses subtracted from total revenues</b> — with everything sorted into two groups: <b>revenues</b> (operating and non-operating) and <b>expenses</b> (including income tax). Build Cabrera's single-step statement and confirm the bottom line.</p>
+            <div class="mis" id="c2m1c-ss" style="margin-top:12px;">
+              <div class="mis-title"><b>Cabrera Company</b><span>Income Statement (single-step)</span><span>For the Year Ended December 31, 2025</span></div>
+              <div class="mis-body">
+                <div class="mis-row sec"><span class="l">Revenues</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Net sales</span><span class="c1"></span><span class="c2">$2,972,413</span></div>
+                <div class="mis-row ind1"><span class="l">Dividend revenue</span><span class="c1"></span><span class="c2">98,500</span></div>
+                <div class="mis-row ind1 rule"><span class="l">Gain on sale of equipment</span><span class="c1"></span><span class="c2">72,910</span></div>
+                <div class="mis-row ind1 key"><span class="l">Total revenues<span class="mis-badge">a</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-tr" inputmode="numeric" placeholder="?" aria-label="Total revenues"></span></div>
+                <div class="mis-row sec"><span class="l">Expenses</span><span class="c1"></span><span class="c2"></span></div>
+                <div class="mis-row ind1"><span class="l">Cost of goods sold</span><span class="c1"></span><span class="c2">1,982,541</span></div>
+                <div class="mis-row ind1"><span class="l">Selling expenses</span><span class="c1"></span><span class="c2">453,028</span></div>
+                <div class="mis-row ind1"><span class="l">Administrative expenses</span><span class="c1"></span><span class="c2">350,771</span></div>
+                <div class="mis-row ind1"><span class="l">Interest expense on bonds and notes</span><span class="c1"></span><span class="c2">96,060</span></div>
+                <div class="mis-row ind1"><span class="l">Loss on flood</span><span class="c1"></span><span class="c2">30,000</span></div>
+                <div class="mis-row ind1 rule"><span class="l">Income tax</span><span class="c1"></span><span class="c2">66,934</span></div>
+                <div class="mis-row ind1 key"><span class="l">Total expenses<span class="mis-badge">b</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-te" inputmode="numeric" placeholder="?" aria-label="Total expenses"></span></div>
+                <div class="mis-row grand"><span class="l">Net income<span class="mis-badge">c</span></span><span class="c1"></span><span class="c2"><input class="mis-inp" id="c2m1c-ssni" inputmode="numeric" placeholder="?" aria-label="Net income single-step"></span></div>
+              </div>
+            </div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="c2m1c-ssbtn">Check the single-step</button></div>
+            <div class="gp-feedback" id="c2m1c-ssfb" style="margin-top:12px;"></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:var(--credit);color:#eaffea;">=</span><div><b>Same bottom line.</b> Net income is <b>$164,489</b> either way. The single-step form is simple and reflects that no profit exists until revenues exceed expenses — but the <b>SEC requires public companies to use the multiple-step format</b>, separating operating from non-operating income.</div></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">◱</span><div><b>Analytics in Action.</b> Because public companies tag their statements in <b>XBRL</b>, users can pull the data into <b>dashboards</b> — revenue vs. plan, net-income trend, profit-margin lines — to track trends and flag irregularities at a glance.</div></div>
+            <div class="ill-note" style="margin-top:12px;"><span class="i" style="background:#1d5a8f;color:#dcecfa;">”</span><div><b>Top line or bottom line?</b> When <b>Chipotle</b> posted solid earnings but <i>missed its revenue target</i>, the stock fell 21% in a day — because earnings can be propped up by cutting costs, but that can't last forever. So watch the <b>top line</b>, not just the bottom line.</div></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The multiple-step statement is a story told in subtotals: net sales → gross profit → operating income → income before tax → net income. Each step separates the recurring core from the incidental, and EPS translates the bottom line into a per-share number the market can compare.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="ill-note">
+              <span class="i" style="background:#1d5a8f;color:#dcecfa;">→</span>
+              <div><b>Up next in Course 2:</b> reporting irregular items and other related information on the income statement — send the next lecture when you're ready.</div>
+            </div>
+            <button class="cta ghost" id="c2m1c-home">Back to course</button>
           </div>
         </div>
       </div>
@@ -7370,7 +7585,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false, c2IntroDone: false, c2m1UDone: false, c2m1LDone: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false, c2IntroDone: false, c2m1UDone: false, c2m1LDone: false, c2m1CDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -7419,9 +7634,10 @@
       if (p.c2IntroDone) state.c2IntroDone = true;
       if (p.c2m1UDone) state.c2m1UDone = true;
       if (p.c2m1LDone) state.c2m1LDone = true;
+      if (p.c2m1CDone) state.c2m1CDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done, c2IntroDone: state.c2IntroDone, c2m1UDone: state.c2m1UDone, c2m1LDone: state.c2m1LDone })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done, c2IntroDone: state.c2IntroDone, c2m1UDone: state.c2m1UDone, c2m1LDone: state.c2m1LDone, c2m1CDone: state.c2m1CDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -7446,7 +7662,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), course1: $('screen-course1'), course2: $('screen-course2'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro'), c2m1u: $('screen-c2m1u'), c2m1l: $('screen-c2m1l') };
+  var screens = { home: $('screen-home'), course1: $('screen-course1'), course2: $('screen-course2'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro'), c2m1u: $('screen-c2m1u'), c2m1l: $('screen-c2m1l'), c2m1c: $('screen-c2m1c') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -7516,7 +7732,8 @@
         ['Course 2 · Home', function () { goScreen('course2'); }, 'course2'],
         ['Course Introduction', function () { openC2Intro(); }, 'c2intro'],
         ['Usefulness of the Income Statement', function () { openC2m1u(); }, 'c2m1u'],
-        ['Limitations of the Income Statement', function () { openC2m1l(); }, 'c2m1l']] }
+        ['Limitations of the Income Statement', function () { openC2m1l(); }, 'c2m1l'],
+        ['Content of the Income Statement', function () { openC2m1c(); }, 'c2m1c']] }
     ];
     var html = '', flat = [];
     NAV.forEach(function (grp) {
@@ -7581,7 +7798,8 @@
       { done: function () { return state.m5WcDone; }, open: function () { openM5Wc(); }, label: 'Worksheet Columns' },
       { done: function () { return state.c2IntroDone; }, open: function () { openC2Intro(); }, label: 'Course 2 · Introduction' },
       { done: function () { return state.c2m1UDone; }, open: function () { openC2m1u(); }, label: 'Usefulness of the Income Statement' },
-      { done: function () { return state.c2m1LDone; }, open: function () { openC2m1l(); }, label: 'Limitations of the Income Statement' }
+      { done: function () { return state.c2m1LDone; }, open: function () { openC2m1l(); }, label: 'Limitations of the Income Statement' },
+      { done: function () { return state.c2m1CDone; }, open: function () { openC2m1c(); }, label: 'Content of the Income Statement' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -11993,7 +12211,7 @@
   })();
   /* ---- course catalog (home) ---- */
   var CAT_C1_FLAGS = ['capDone', 'mod2Done', 'recProcDone', 'journalDone', 'ledgerDone', 'coaDone', 'rpiDone', 'sumDone', 'tbDone', 'm2capDone', 'm3IntroDone', 'm3TypesDone', 'm3DefDone', 'm3AcrDone', 'm3AtbDone', 'm3CapDone', 'm4IntroDone', 'm4CloseDone', 'm4PctbDone', 'm4CycleDone', 'm4CapDone', 'm5IntroDone', 'm5IsDone', 'm5ReDone', 'm5BsDone', 'm5CloseDone', 'm6CbDone', 'm6CvDone', 'm5WkDone', 'm5RaDone', 'm5RdDone', 'm5RsDone', 'm5WsDone', 'm5WcDone', 'app1Done', 'app2Done', 'app3Done'];
-  var CAT_C2_FLAGS = ['c2IntroDone', 'c2m1UDone', 'c2m1LDone'];
+  var CAT_C2_FLAGS = ['c2IntroDone', 'c2m1UDone', 'c2m1LDone', 'c2m1CDone'];
   function catCount(flags) {
     var n = flags.filter(function (k) { return !!state[k]; }).length;
     // the three intro lessons use per-view maps
@@ -12053,7 +12271,7 @@
       var el = $(doneId);
       el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
       el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight ? goodMsg : badMsg) + '</div>';
-      if (allRight && !state[flagKey]) { state[flagKey] = true; save(); updateC2m1Pills(); renderCatalog(); }
+      if (allRight && flagKey && !state[flagKey]) { state[flagKey] = true; save(); updateC2m1Pills(); renderCatalog(); }
     }
     return render;
   }
@@ -12085,6 +12303,7 @@
   function updateC2m1Pills() {
     var u = $('c2m1u-pill'); if (u) { u.textContent = state.c2m1UDone ? 'Done' : 'Start'; u.classList.toggle('done', !!state.c2m1UDone); }
     var l = $('c2m1l-pill'); if (l) { l.textContent = state.c2m1LDone ? 'Done' : 'Start'; l.classList.toggle('done', !!state.c2m1LDone); }
+    var c = $('c2m1c-pill'); if (c) { c.textContent = state.c2m1CDone ? 'Done' : 'Start'; c.classList.toggle('done', !!state.c2m1CDone); }
   }
   function openC2m1u() { goScreen('c2m1u'); $('c2m1u-scroll').scrollTop = 0; renderC2m1u(); }
   function openC2m1l() { goScreen('c2m1l'); $('c2m1l-scroll').scrollTop = 0; renderC2m1l(); }
@@ -12095,6 +12314,116 @@
   $('c2m1u-next').addEventListener('click', openC2m1l);
   $('c2m1l-back').addEventListener('click', function () { goScreen('course2'); });
   $('c2m1l-home').addEventListener('click', function () { goScreen('course2'); });
+
+  /* ---- Lesson 3: Content of the Income Statement ---- */
+  var C2M1C_EL_CATS = { rev: 'Revenue', exp: 'Expense', gain: 'Gain', loss: 'Loss' };
+  var C2M1C_EL_Q = [
+    { ev: 'An outdoor-apparel company records the sale of jackets to customers.', c: 'rev', why: 'Inflow from ongoing central operations — a revenue.' },
+    { ev: 'The cost of the salaries paid to the sales staff for the period.', c: 'exp', why: 'Using-up of assets in ongoing central operations — an expense.' },
+    { ev: 'The company sells a warehouse it no longer needs for more than its book value.', c: 'gain', why: 'An increase in equity from a peripheral transaction — a gain, not revenue.' },
+    { ev: 'A flood destroys inventory, reducing equity.', c: 'loss', why: 'A decrease in equity from a peripheral/incidental event — a loss.' },
+    { ev: 'Dividend earned on an investment the company holds.', c: 'rev', why: 'Investment income is a revenue (reported as non-operating, but still a revenue element).' },
+    { ev: 'Interest owed on the company’s bonds and notes.', c: 'exp', why: 'Cost of financing — an expense element.' }
+  ];
+  var renderC2m1cEl = makeClassifier('c2m1c-el', 'c2m1c-eldone', C2M1C_EL_Q, C2M1C_EL_CATS, ['rev', 'exp', 'gain', 'loss'], null,
+    '<b>Nicely sorted.</b> Revenues and expenses come from ongoing central operations; gains and losses come from peripheral or incidental transactions.',
+    'Ask two questions: is it <i>central</i> to the business (revenue/expense) or <i>peripheral</i> (gain/loss)? And does it <i>increase</i> equity (revenue/gain) or <i>decrease</i> it (expense/loss)?');
+
+  var C2M1C_ON_CATS = { op: 'Operating', non: 'Non-operating' };
+  var C2M1C_ON_Q = [
+    { ev: 'Net sales', c: 'op', why: 'The core revenue of the business — operating.' },
+    { ev: 'Cost of goods sold', c: 'op', why: 'Directly tied to the main line of business — operating.' },
+    { ev: 'Selling expenses', c: 'op', why: 'Part of running core operations — operating.' },
+    { ev: 'Dividend revenue', c: 'non', why: 'Income from investments, not the main line — non-operating.' },
+    { ev: 'Gain on sale of equipment', c: 'non', why: 'Incidental to selling apparel — non-operating.' },
+    { ev: 'Interest on bonds and notes', c: 'non', why: 'A financing cost, unrelated to operations — non-operating.' },
+    { ev: 'Loss on flood', c: 'non', why: 'Unusual/infrequent event outside operations — non-operating.' }
+  ];
+  var renderC2m1cOn = makeClassifier('c2m1c-on', 'c2m1c-ondone', C2M1C_ON_Q, C2M1C_ON_CATS, ['op', 'non'], null,
+    '<b>Exactly.</b> Sales, COGS, and operating expenses are operating; investment income, gains/losses on assets, interest, and the flood loss are all non-operating.',
+    'Ask: is this part of Cabrera’s <i>main line of business</i> (operating) or incidental to it — investing, financing, or a one-time event (non-operating)?');
+
+  function fNum(id) { var v = ($(id).value || '').replace(/[^0-9.\-]/g, ''); return v === '' ? null : parseFloat(v); }
+  var c2m1cStmtOk = false, c2m1cEpsOk = false;
+  function maybeDoneC2m1c() {
+    if (c2m1cStmtOk && c2m1cEpsOk && !state.c2m1CDone) { state.c2m1CDone = true; save(); updateC2m1Pills(); renderCatalog(); }
+  }
+
+  $('c2m1c-stmtbtn').addEventListener('click', function () {
+    var targets = { 'c2m1c-ns': 2972413, 'c2m1c-gp': 989872, 'c2m1c-oe': 803799, 'c2m1c-ifo': 186073, 'c2m1c-org': 171410, 'c2m1c-st': 357483, 'c2m1c-oel': 126060, 'c2m1c-ibt': 231423, 'c2m1c-ni': 164489 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = m5Num(id); el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var epsEl = $('c2m1c-eps'), epsVal = fNum('c2m1c-eps'); epsEl.classList.remove('ok', 'no');
+    if (epsVal == null) { anyBlank = true; allOk = false; }
+    else if (Math.abs(epsVal - 1.64) <= 0.01) epsEl.classList.add('ok'); else { epsEl.classList.add('no'); allOk = false; }
+    var fb = $('c2m1c-stmtfb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in every highlighted subtotal first.</div>'; return; }
+    if (allOk) {
+      c2m1cStmtOk = true;
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>The whole statement checks out.</b> Net sales $2,972,413 − COGS = $989,872 gross profit; − $803,799 operating expenses = $186,073 from operations; + $171,410 − $126,060 = $231,423 before tax; − $66,934 tax = <b>$164,489</b> net income; ÷ 100,000 shares = <b>$1.64</b> EPS.</div>';
+      maybeDoneC2m1c();
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Not all correct yet. Work top-down: net sales − COGS = gross profit; − total operating expenses = income from operations; + other revenues/gains − other expenses/losses = income before tax; − income tax = net income; ÷ 100,000 = EPS.</div>';
+    }
+  });
+
+  $('c2m1c-epsbtn').addEventListener('click', function () {
+    var intT = { 'c2m1c-w1': 50000, 'c2m1c-w2': 100000, 'c2m1c-wt': 150000 };
+    var fltT = { 'c2m1c-be': 1.10, 'c2m1c-le': 3 };
+    var allOk = true, anyBlank = false;
+    Object.keys(intT).forEach(function (id) {
+      var el = $(id), val = m5Num(id); el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === intT[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    Object.keys(fltT).forEach(function (id) {
+      var el = $(id), val = fNum(id); el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (Math.abs(val - fltT[id]) <= 0.01) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('c2m1c-epsfb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in all four weighting boxes and Lancer’s EPS first.</div>'; return; }
+    if (allOk) {
+      c2m1cEpsOk = true;
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Right.</b> 50,000 + 100,000 = <b>150,000</b> weighted-average shares → $164,489 ÷ 150,000 = <b>$1.10</b> basic EPS. And Lancer: ($350,000 − $50,000) ÷ 100,000 = <b>$3</b> — preferred dividends come out first.</div>';
+      maybeDoneC2m1c();
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Not yet. Weight each block by its fraction of the year, add them for the weighted average, then divide net income by that. For Lancer, subtract preferred dividends from net income first.</div>';
+    }
+  });
+
+  $('c2m1c-ssbtn').addEventListener('click', function () {
+    var targets = { 'c2m1c-tr': 3143823, 'c2m1c-te': 2979334, 'c2m1c-ssni': 164489 };
+    var allOk = true, anyBlank = false;
+    Object.keys(targets).forEach(function (id) {
+      var el = $(id), val = m5Num(id); el.classList.remove('ok', 'no');
+      if (val == null) { anyBlank = true; allOk = false; return; }
+      if (val === targets[id]) el.classList.add('ok'); else { el.classList.add('no'); allOk = false; }
+    });
+    var fb = $('c2m1c-ssfb');
+    if (anyBlank) { fb.className = 'gp-feedback bad show'; fb.innerHTML = '<span class="fi">i</span><div>Fill in total revenues, total expenses, and net income first.</div>'; return; }
+    if (allOk) {
+      fb.className = 'gp-feedback good show';
+      fb.innerHTML = '<span class="fi">✓</span><div><b>Same answer, one step.</b> $3,143,823 total revenues − $2,979,334 total expenses = <b>$164,489</b> — identical to the multiple-step net income.</div>';
+    } else {
+      fb.className = 'gp-feedback bad show';
+      fb.innerHTML = '<span class="fi">i</span><div>Not yet. Total revenues = net sales + dividend revenue + gain on sale. Total expenses = every expense including income tax. Net income = the difference.</div>';
+    }
+  });
+
+  function openC2m1c() { goScreen('c2m1c'); $('c2m1c-scroll').scrollTop = 0; renderC2m1cEl(); renderC2m1cOn(); }
+  $('start-c2m1c-card').addEventListener('click', openC2m1c);
+  $('c2m1c-back').addEventListener('click', function () { goScreen('course2'); });
+  $('c2m1c-home').addEventListener('click', function () { goScreen('course2'); });
+  $('c2m1l-next').addEventListener('click', openC2m1c);
 
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
