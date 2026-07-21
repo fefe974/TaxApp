@@ -2276,6 +2276,48 @@
   .aje-final .fitem:last-child { border-bottom: none; }
   .aje-final .fcode { font-size: 10px; font-weight: 800; color: var(--teal); letter-spacing: .04em; margin-bottom: 5px; }
 
+  /* ===== Course 2 — Income Statement, Related Information & Revenue Recognition ===== */
+  .course-head {
+    margin: 26px 0 10px; padding: 18px 18px 16px; border-radius: var(--r-lg);
+    background: linear-gradient(135deg, #12365c 0%, #1d5a8f 58%, #1a7a63 125%);
+    color: #eef4fb; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+  }
+  .course-head::after { content: ""; position: absolute; inset: 0; background: radial-gradient(90% 140% at 100% 0%, rgba(255,255,255,.14), transparent 55%); pointer-events: none; }
+  .course-head .ch-eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #a9d3f2; }
+  .course-head h3 { font-family: var(--serif); font-size: 19px; font-weight: 650; line-height: 1.25; margin-top: 5px; }
+  .course-head p { font-size: 12px; color: rgba(238,244,251,.82); margin-top: 6px; line-height: 1.5; }
+  .module-head.c2 .mod-no { background: linear-gradient(150deg, #1d5a8f, #12365c); color: #dcecfa; }
+  .c2-hero {
+    position: relative; padding: 30px 22px 26px;
+    background: linear-gradient(160deg, #0e2a47 0%, #17466e 55%, #1d5a8f 100%);
+    color: #eef4fb; overflow: hidden;
+  }
+  .c2-hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 85% -10%, rgba(93,187,150,.28), transparent 55%); pointer-events: none; }
+  .c2-hero .eyebrow { color: #a9d3f2; position: relative; z-index: 1; }
+  .c2-hero h1 { position: relative; z-index: 1; font-family: var(--serif); font-size: 27px; line-height: 1.16; font-weight: 650; margin-top: 8px; }
+  .c2-hero .c2-rule { position: relative; z-index: 1; width: 64px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, #57b98c, #a9d3f2); margin-top: 12px; }
+  .c2-hero .lo-callout { position: relative; z-index: 1; }
+  /* S&P chart figure */
+  .spx { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); box-shadow: var(--shadow); overflow: hidden; margin-top: 12px; }
+  .spx .sx-head { padding: 11px 13px 9px; border-bottom: 1px solid var(--line); }
+  .spx .sx-head b { font-family: var(--serif); font-size: 13.5px; color: var(--ink); }
+  .spx .sx-head span { display: block; font-size: 11px; color: var(--ink-faint); margin-top: 1px; }
+  .spx svg { display: block; width: 100%; height: auto; }
+  .spx .grid-l { stroke: color-mix(in srgb, var(--line) 70%, transparent); stroke-width: 1; }
+  .spx .ax { font-size: 8.5px; fill: var(--ink-faint); font-family: var(--mono); }
+  .spx path { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: opacity .25s ease, stroke-width .25s ease; }
+  .spx .ln-spx { stroke: var(--credit); }
+  .spx .ln-earn { stroke: var(--debit); }
+  .spx.hl-spx .ln-earn, .spx.hl-earn .ln-spx { opacity: .18; }
+  .spx.hl-spx .ln-spx, .spx.hl-earn .ln-earn { stroke-width: 3.2; }
+  .spx .sx-legend { display: flex; gap: 8px; padding: 10px 13px 12px; flex-wrap: wrap; }
+  .spx .sx-chip { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 12px; font-size: 11.5px; font-weight: 700; color: var(--ink-soft); cursor: pointer; }
+  .spx .sx-chip .sw { width: 14px; height: 3px; border-radius: 2px; }
+  .spx .sx-chip.spxc .sw { background: var(--credit); } .spx .sx-chip.earnc .sw { background: var(--debit); }
+  .spx .sx-chip.on { border-color: var(--ink-soft); color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, var(--card)); }
+  .spx .sx-note { padding: 0 13px 12px; font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; }
+  .spx .sx-note b { color: var(--ink); }
+
 </style>
 
 <div id="fa-app">
@@ -2757,6 +2799,30 @@
               </span>
               <span class="lbody"><b>Problem 2.3 · Baylor Company</b><span>LO 3 · your first internship — year-end adjusting entries</span></span>
               <span class="pill-mini ready" id="app2-pill">Open</span>
+              <span class="lchev" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </span>
+            </button>
+
+            <div class="course-head">
+              <div class="ch-eyebrow">Course 2 · Intermediate Financial Reporting</div>
+              <h3>Income Statement, Related Information &amp; Revenue Recognition</h3>
+              <p>Course 1 taught you how the numbers get recorded. Course 2 goes deeper into the statement investors watch most — how income is measured, presented, and when revenue may be recognized.</p>
+            </div>
+
+            <div class="module-head c2">
+              <span class="mod-no"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span>
+              <div class="mod-body"><b>Course 2 · Overview</b><span>What the income statement is — and why the market watches it</span></div>
+            </div>
+            <button class="lesson-card" id="start-c2intro-card">
+              <span class="lnum" style="background:color-mix(in srgb,#1d5a8f 15%,transparent);color:#1d5a8f;box-shadow:inset 0 0 0 1px color-mix(in srgb,#1d5a8f 42%,transparent);">
+                <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/></svg>
+              </span>
+              <span class="lbody">
+                <b>Course Introduction</b>
+                <span>What · Why · How — income, earnings &amp; the market</span>
+              </span>
+              <span class="pill-mini ready" id="c2intro-pill">Start</span>
               <span class="lchev" aria-hidden="true">
                 <svg class="icon" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
               </span>
@@ -6875,6 +6941,104 @@
       </div>
     </section>
 
+    <!-- ============== SCREEN: COURSE 2 · INTRODUCTION ============== -->
+    <section class="fa-screen" id="screen-c2intro" aria-label="Course 2 — Introduction">
+      <div class="fa-topbar">
+        <button class="fa-back" id="c2i-back">
+          <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15 6l-6 6 6 6"/></svg>
+          Course
+        </button>
+        <div class="foot-spacer"></div>
+        <button class="fa-iconbtn theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg class="icon theme-icon" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="fa-scroll" id="c2i-scroll">
+        <header class="c2-hero">
+          <div class="eyebrow">Course 2 · Overview · Chapter 3</div>
+          <h1>Income Statement, Related Information &amp; Revenue Recognition</h1>
+          <div class="c2-rule"></div>
+          <div class="lo-callout">
+            <span class="lo-badge">?</span>
+            <div>
+              <div class="lo-t">The big question</div>
+              <div class="lo-d">Net income is the most-watched number in business. What exactly does it measure — and why does the market move on it?</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="m2-body">
+          <p class="lede">Welcome to Course 2. In Course 1 you learned <i>how</i> the numbers get recorded. Now we zoom in on the statement those numbers feed — the <b>income statement</b> — and the rules for measuring, presenting, and recognizing income.</p>
+
+          <section class="m2-sec">
+            <h2>What is the income statement?</h2>
+            <p>One of the <b>primary financial statements</b>. It measures a company's financial results — its <b>profitability</b> — <b>over a period of time</b>. The bottom line, <b>net income</b>, is measured as:</p>
+            <div class="ill-note" style="margin-top:12px;">
+              <span class="i" style="background:var(--debit);color:#eaf3ff;">=</span>
+              <div><b>Net income</b> = all <b>revenues and gains</b> in a period − the <b>expenses and losses</b> incurred to generate those revenues. The higher the net income, the more positive the assessment of performance for the period.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>Why the market watches it</h2>
+            <p>The objective of financial reporting is information that helps <b>predict future cash flows</b>. Revenues and expenses capture the effects of past transactions — and past results are often the best guide to future operating results. Watch how closely earnings and stock prices have tracked each other:</p>
+            <div class="spx" id="c2i-spx">
+              <div class="sx-head"><b>S&amp;P 500 Returns and Earnings</b><span>Three decades, indexed · income moves in tandem with stock returns</span></div>
+              <svg viewBox="0 0 320 170" role="img" aria-label="Chart of S&P 500 index versus aggregate earnings, 1988 to 2018, moving together">
+                <line class="grid-l" x1="30" y1="140" x2="305" y2="140"/>
+                <line class="grid-l" x1="30" y1="108" x2="305" y2="108"/>
+                <line class="grid-l" x1="30" y1="76" x2="305" y2="76"/>
+                <line class="grid-l" x1="30" y1="44" x2="305" y2="44"/>
+                <line class="grid-l" x1="30" y1="12" x2="305" y2="12"/>
+                <text class="ax" x="30" y="152" text-anchor="middle">'88</text>
+                <text class="ax" x="66" y="152" text-anchor="middle">'92</text>
+                <text class="ax" x="103" y="152" text-anchor="middle">'96</text>
+                <text class="ax" x="140" y="152" text-anchor="middle">'00</text>
+                <text class="ax" x="177" y="152" text-anchor="middle">'04</text>
+                <text class="ax" x="213" y="152" text-anchor="middle">'08</text>
+                <text class="ax" x="250" y="152" text-anchor="middle">'12</text>
+                <text class="ax" x="287" y="152" text-anchor="middle">'16</text>
+                <text class="ax" x="14" y="16">S&amp;P</text>
+                <text class="ax" x="305" y="16" text-anchor="end">EPS</text>
+                <path class="ln-spx" d="M30,126 L48,123 L67,119 L85,117 L103,108 L122,85 L140,67 L158,95 L177,84 L195,70 L213,95 L222,103 L232,82 L250,70 L268,43 L287,35 L305,12"/>
+                <path class="ln-earn" d="M30,121 L48,122 L67,119 L85,111 L103,105 L122,105 L140,97 L158,105 L177,87 L195,71 L213,89 L222,108 L232,79 L250,63 L268,50 L287,60 L305,22"/>
+              </svg>
+              <div class="sx-legend">
+                <button class="sx-chip spxc" id="c2i-chip-spx" type="button"><span class="sw"></span>S&amp;P 500</button>
+                <button class="sx-chip earnc" id="c2i-chip-earn" type="button"><span class="sw"></span>Aggregate earnings</button>
+              </div>
+              <div class="sx-note">Tap a series to isolate it. Both dip together in <b>2008</b> and climb together after — <b>the income number captures the same information about future cash flows that prices capture</b>. That's why reported income meets the objective of financial reporting.</div>
+            </div>
+          </section>
+
+          <section class="m2-sec">
+            <h2>How it's made useful</h2>
+            <p>Companies report revenues, expenses, gains, and losses <b>consistently over time</b> and in a way that can be <b>compared</b> across companies. Generally they prepare a <b>multiple-step</b> income statement that highlights key relationships (like sales vs. cost of goods sold) — and they <b>separate non-recurring gains and losses</b>, because one-time items are less predictive of the future.</p>
+            <p style="margin-top:10px;">Which of these belongs in the recurring core of the statement — and which is a one-time item a reader should set aside?</p>
+            <div class="wr-list" id="c2i-q" style="margin-top:12px;"></div>
+            <div class="gp-feedback" id="c2i-done" style="margin-top:12px;"></div>
+          </section>
+
+          <div class="takeaway">
+            <span class="qm">”</span>
+            <div>
+              <h4>Professor's takeaway</h4>
+              <p>The income statement is a <b>forecasting machine</b>: recurring revenues and expenses predict tomorrow's cash flows, so we present them front and center — and we quarantine the one-time noise. Everything in Course 2 builds on that idea.</p>
+            </div>
+          </div>
+
+          <div class="m2-foot" style="padding-left:0;padding-right:0;">
+            <div class="ill-note">
+              <span class="i" style="background:#1d5a8f;color:#dcecfa;">→</span>
+              <div><b>Up next in Course 2:</b> the elements of the income statement — send the first lecture when you're ready.</div>
+            </div>
+            <button class="cta ghost" id="c2i-home">Back to course</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -6893,7 +7057,7 @@
     done:  { lecture: false, illustration: false, ledger: false, practice: false },
     done2: { lecture: false, illustration: false, tool: false, practice: false },
     done3: { lecture: false, illustration: false, tool: false, practice: false },
-    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false
+    capDone: false, mod2Done: false, recProcDone: false, journalDone: false, ledgerDone: false, coaDone: false, rpiDone: false, sumDone: false, tbDone: false, m2capDone: false, m3IntroDone: false, m3TypesDone: false, m3DefDone: false, m3AcrDone: false, m3AtbDone: false, m3CapDone: false, m4IntroDone: false, m4CloseDone: false, m4PctbDone: false, m4CycleDone: false, m4CapDone: false, m5IntroDone: false, m5IsDone: false, m5ReDone: false, m5BsDone: false, m5CloseDone: false, m6CbDone: false, m6CvDone: false, m5WkDone: false, m5RaDone: false, m5RdDone: false, m5RsDone: false, m5WsDone: false, m5WcDone: false, app1Done: false, app2Done: false, app3Done: false, c2IntroDone: false
   };
   try {
     var raw = window.localStorage.getItem(STORE);
@@ -6939,9 +7103,10 @@
       if (p.app1Done) state.app1Done = true;
       if (p.app2Done) state.app2Done = true;
       if (p.app3Done) state.app3Done = true;
+      if (p.c2IntroDone) state.c2IntroDone = true;
     } }
   } catch (e) {}
-  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done })); } catch (e) {} }
+  function save() { try { window.localStorage.setItem(STORE, JSON.stringify({ theme: state.theme, done: state.done, done2: state.done2, done3: state.done3, capDone: state.capDone, mod2Done: state.mod2Done, recProcDone: state.recProcDone, journalDone: state.journalDone, ledgerDone: state.ledgerDone, coaDone: state.coaDone, rpiDone: state.rpiDone, sumDone: state.sumDone, tbDone: state.tbDone, m2capDone: state.m2capDone, m3IntroDone: state.m3IntroDone, m3TypesDone: state.m3TypesDone, m3DefDone: state.m3DefDone, m3AcrDone: state.m3AcrDone, m3AtbDone: state.m3AtbDone, m3CapDone: state.m3CapDone, m4IntroDone: state.m4IntroDone, m4CloseDone: state.m4CloseDone, m4PctbDone: state.m4PctbDone, m4CycleDone: state.m4CycleDone, m4CapDone: state.m4CapDone, m5IntroDone: state.m5IntroDone, m5IsDone: state.m5IsDone, m5ReDone: state.m5ReDone, m5BsDone: state.m5BsDone, m5CloseDone: state.m5CloseDone, m6CbDone: state.m6CbDone, m6CvDone: state.m6CvDone, m5WkDone: state.m5WkDone, m5RaDone: state.m5RaDone, m5RdDone: state.m5RdDone, m5RsDone: state.m5RsDone, m5WsDone: state.m5WsDone, m5WcDone: state.m5WcDone, app1Done: state.app1Done, app2Done: state.app2Done, app3Done: state.app3Done, c2IntroDone: state.c2IntroDone })); } catch (e) {} }
 
   /* ---------------- theme ---------------- */
   function applyTheme() {
@@ -6966,7 +7131,7 @@
   });
 
   /* ---------------- screen router ---------------- */
-  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3') };
+  var screens = { home: $('screen-home'), lesson: $('screen-lesson'), bridge: $('screen-bridge'), lesson2: $('screen-lesson2'), lesson3: $('screen-lesson3'), capstone: $('screen-capstone'), mod2intro: $('screen-mod2intro'), recproc: $('screen-recproc'), journal: $('screen-journal'), ledger: $('screen-ledger'), coa: $('screen-coa'), rpi: $('screen-rpi'), sum: $('screen-sum'), tb: $('screen-tb'), m2cap: $('screen-m2cap'), m3intro: $('screen-m3intro'), m3types: $('screen-m3types'), m3def: $('screen-m3def'), m3acr: $('screen-m3acr'), m3atb: $('screen-m3atb'), m3cap: $('screen-m3cap'), m4intro: $('screen-m4intro'), m4close: $('screen-m4close'), m4pctb: $('screen-m4pctb'), m4cycle: $('screen-m4cycle'), m4cap: $('screen-m4cap'), m5intro: $('screen-m5intro'), m5is: $('screen-m5is'), m5re: $('screen-m5re'), m5bs: $('screen-m5bs'), m5close: $('screen-m5close'), m6cb: $('screen-m6cb'), m6cv: $('screen-m6cv'), m5wk: $('screen-m5wk'), m5ra: $('screen-m5ra'), m5rd: $('screen-m5rd'), m5rs: $('screen-m5rs'), m5ws: $('screen-m5ws'), m5wc: $('screen-m5wc'), app1: $('screen-app1'), app2: $('screen-app2'), app3: $('screen-app3'), c2intro: $('screen-c2intro') };
   function goScreen(name) {
     if (!screens[name]) { return; }
     Object.keys(screens).forEach(function (k) {
@@ -7028,7 +7193,9 @@
       { m: 'Application Lab', items: [
         ['Problem 2.1 · Kawabata, D.D.S.', function () { openApp1(); }, 'app1'],
         ['Problem 2.2 · Mason Advertising', function () { openApp3(); }, 'app3'],
-        ['Problem 2.3 · Baylor Company', function () { openApp2(); }, 'app2']] }
+        ['Problem 2.3 · Baylor Company', function () { openApp2(); }, 'app2']] },
+      { m: 'Course 2 · Income Statement & Revenue', items: [
+        ['Course Introduction', function () { openC2Intro(); }, 'c2intro']] }
     ];
     var html = '', flat = [];
     NAV.forEach(function (grp) {
@@ -7090,7 +7257,8 @@
       { done: function () { return state.m5RdDone; }, open: function () { openM5Rd(); }, label: 'Reversing Entries — Deferrals' },
       { done: function () { return state.m5RsDone; }, open: function () { openM5Rs(); }, label: 'Summary of Reversing Entries' },
       { done: function () { return state.m5WsDone; }, open: function () { openM5Ws(); }, label: 'Using a Worksheet' },
-      { done: function () { return state.m5WcDone; }, open: function () { openM5Wc(); }, label: 'Worksheet Columns' }
+      { done: function () { return state.m5WcDone; }, open: function () { openM5Wc(); }, label: 'Worksheet Columns' },
+      { done: function () { return state.c2IntroDone; }, open: function () { openC2Intro(); }, label: 'Course 2 · Introduction' }
     ];
     var first = null;
     for (var i = 0; i < seq.length; i++) { if (!seq[i].done()) { first = seq[i]; break; } }
@@ -11439,6 +11607,72 @@
   $('start-app3-card').addEventListener('click', openApp3);
   $('app3-back').addEventListener('click', function () { goScreen('home'); });
 
+  /* ============================================================
+     COURSE 2 · Introduction — Income Statement, Related Information & Revenue Recognition
+     ============================================================ */
+  var C2I_Q = [
+    { ev: 'Sales revenue from the company’s main product line', c: 'rec', why: 'The recurring core — it repeats every period and predicts future results.' },
+    { ev: 'Loss from a hurricane damaging a warehouse', c: 'non', why: 'A one-time event — reported separately because it tells you little about next year.' },
+    { ev: 'Cost of goods sold', c: 'rec', why: 'Recurring — it moves with sales and anchors the sales–COGS relationship a multiple-step statement highlights.' },
+    { ev: 'Gain on the one-time sale of a subsidiary', c: 'non', why: 'Non-recurring — a real gain, but not a predictor of future operating income.' },
+    { ev: 'Salaries for the sales staff', c: 'rec', why: 'Recurring operating expense — part of the predictable engine of the business.' }
+  ];
+  var C2I_CATS = { rec: 'Recurring', non: 'Non-recurring' };
+  var c2iAnswered = {};
+  function renderC2i() {
+    c2iAnswered = {};
+    var order = ['rec', 'non'];
+    $('c2i-q').innerHTML = C2I_Q.map(function (e, i) {
+      return '<div class="wr-card" data-i="' + i + '"><div class="wr-ev">' + e.ev + '</div><div class="wr-opts q4">' +
+        order.map(function (k) { return '<button class="wr-opt" data-c="' + k + '">' + C2I_CATS[k] + '</button>'; }).join('') +
+        '</div><div class="wr-why"></div></div>';
+    }).join('');
+    Array.prototype.slice.call($('c2i-q').querySelectorAll('.wr-card')).forEach(function (card) {
+      var i = parseInt(card.getAttribute('data-i'), 10), e = C2I_Q[i];
+      Array.prototype.slice.call(card.querySelectorAll('.wr-opt')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (card.getAttribute('data-locked')) return;
+          card.setAttribute('data-locked', '1');
+          var ok = btn.getAttribute('data-c') === e.c;
+          c2iAnswered[i] = ok;
+          btn.classList.add(ok ? 'ok' : 'no');
+          if (!ok) { var right = card.querySelector('.wr-opt[data-c="' + e.c + '"]'); if (right) right.classList.add('reveal'); }
+          card.classList.add('answered');
+          card.querySelector('.wr-why').innerHTML = '<b>' + C2I_CATS[e.c] + '.</b> ' + e.why;
+          checkC2i();
+        });
+      });
+    });
+    $('c2i-done').className = 'gp-feedback'; $('c2i-done').innerHTML = '';
+  }
+  function checkC2i() {
+    if (Object.keys(c2iAnswered).length !== C2I_Q.length) return;
+    var allRight = C2I_Q.every(function (e, i) { return c2iAnswered[i]; });
+    var el = $('c2i-done');
+    el.className = 'gp-feedback ' + (allRight ? 'good' : 'bad') + ' show';
+    el.innerHTML = '<span class="fi">' + (allRight ? '✓' : 'i') + '</span><div>' + (allRight
+      ? '<b>Exactly.</b> Recurring items are the forecasting engine of the statement; non-recurring gains and losses are set apart because they are less predictive. You’re ready for Course 2.'
+      : 'Ask: <i>will this happen again next period?</i> Repeating revenues and expenses are recurring; one-time gains and losses are separated because they don’t forecast the future.') + '</div>';
+    if (!state.c2IntroDone) { state.c2IntroDone = true; save(); updateC2IntroPill(); }
+  }
+  function updateC2IntroPill() { var p = $('c2intro-pill'); if (p) { p.textContent = state.c2IntroDone ? 'Done' : 'Start'; p.classList.toggle('done', !!state.c2IntroDone); } }
+  (function () {
+    var box = $('c2i-spx');
+    function chip(id, cls) {
+      $(id).addEventListener('click', function () {
+        var on = box.classList.contains(cls);
+        box.classList.remove('hl-spx', 'hl-earn');
+        $('c2i-chip-spx').classList.remove('on'); $('c2i-chip-earn').classList.remove('on');
+        if (!on) { box.classList.add(cls); this.classList.add('on'); }
+      });
+    }
+    chip('c2i-chip-spx', 'hl-spx'); chip('c2i-chip-earn', 'hl-earn');
+  })();
+  function openC2Intro() { goScreen('c2intro'); $('c2i-scroll').scrollTop = 0; }
+  $('start-c2intro-card').addEventListener('click', openC2Intro);
+  $('c2i-back').addEventListener('click', function () { goScreen('home'); });
+  $('c2i-home').addEventListener('click', function () { goScreen('home'); });
+
   /* ---------------- Module 2 "up next" continuity ---------------- */
   [['mod2intro-next', openRecProc], ['recproc-next', openJournal], ['journal-next', openLedger], ['ledger-next', openCoa], ['coa-next', openRpi]].forEach(function (pair) {
     var el = $(pair[0]); if (el) el.addEventListener('click', pair[1]);
@@ -11548,6 +11782,8 @@
   updateApp1Pill();
   updateApp2Pill();
   updateApp3Pill();
+  renderC2i();
+  updateC2IntroPill();
   updateBeginBtn();
   buildWebNav();
   setWebActive('home');
