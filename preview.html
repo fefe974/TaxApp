@@ -4,26 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>LedgerLab · Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  html,body{margin:0;height:100%;background:#0B1A29}
-  .view{display:none;position:fixed;inset:0}
-  .view.on{display:block}
-  iframe{border:0;width:100%;height:100%;display:block}
-</style>
-</head>
-<body>
-<div class="view on" id="view-intro"><iframe title="intro" srcdoc="<!DOCTYPE html>
-<html lang=&quot;en&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot; />
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, viewport-fit=cover&quot; />
-<title>LedgerLab · Course Introduction</title>
-<meta name=&quot;theme-color&quot; content=&quot;#0C1D2E&quot; />
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
-<link href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
-<style>
-:root{
+html,body{margin:0;height:100%;background:#0B1A29}
+.slot{position:fixed;inset:0;overflow:auto;display:none}
+.slot.on{display:block}
+.approot{min-height:100%}
+
+/* ===== intro ===== */
+#app-intro{
   --lienzo:#0B1A29;
   --cabecera-1:#122B42;
   --cabecera-2:#1A3A57;
@@ -46,1430 +36,1383 @@
   --texto-suave:#5B6B7B;
   --sombra:0 1px 3px rgba(16,35,55,.08), 0 8px 24px rgba(16,35,55,.07);
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{
+#app-intro *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#app-intro,#app-intro{height:100%}
+#app-intro{
   background:var(--lienzo);
   font-family:'IBM Plex Sans',system-ui,sans-serif;
   color:var(--texto);
   display:flex;justify-content:center;
   background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,173,.28), transparent 60%);
 }
-.telefono{
+#app-intro .telefono{
   width:100%;max-width:430px;min-height:100dvh;
   background:var(--fondo);
   display:flex;flex-direction:column;
   position:relative;overflow:hidden;
   box-shadow:0 0 80px rgba(0,0,0,.5);
 }
-@media(min-width:480px){
-  .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
+@media(min-width:480px){#app-intro .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
 }
-
-/* ---------- cabecera ---------- */
-header.app{
+#app-intro header.app{
   background:linear-gradient(160deg,var(--cabecera-1) 0%, var(--cabecera-2) 100%);
   color:#fff;
   padding:22px 22px 18px;
   position:relative;
   flex-shrink:0;
 }
-header.app::after{
-  content:&quot;&quot;;position:absolute;left:0;right:0;bottom:0;height:2px;
+#app-intro header.app::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--acento-claro) 20%,var(--acento-claro) 80%,transparent);
   opacity:.8;
 }
-.marca{display:flex;align-items:baseline;gap:10px}
-.marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em}
-.marca h1 em{color:var(--acento-claro);font-style:normal}
-.folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
-.subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
-
-/* ---------- barra de ecuación ---------- */
-.ecuacion-viva{
+#app-intro .marca{display:flex;align-items:baseline;gap:10px}
+#app-intro .marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em}
+#app-intro .marca h1 em{color:var(--acento-claro);font-style:normal}
+#app-intro .folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
+#app-intro .subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+#app-intro .ecuacion-viva{
   margin-top:16px;background:rgba(255,255,255,.06);
   border:1px solid rgba(143,193,234,.28);
   border-radius:10px;padding:10px 12px;
   display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;
 }
-.ecuacion-viva .celda{text-align:center}
-.ecuacion-viva .etiqueta{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
-.ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
-.ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento-claro)}
-
-/* ---------- contenido ---------- */
-main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
-.pantalla{display:none;padding:20px 18px 28px;animation:aparecer .3s ease both}
-.pantalla.activa{display:block}
+#app-intro .ecuacion-viva .celda{text-align:center}
+#app-intro .ecuacion-viva .etiqueta{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+#app-intro .ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
+#app-intro .ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento-claro)}
+#app-intro main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+#app-intro .pantalla{display:none;padding:20px 18px 28px;animation:aparecer .3s ease both}
+#app-intro .pantalla.activa{display:block}
 @keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-.ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.ojal::after{content:&quot;&quot;;flex:1;height:1px;background:var(--borde)}
-h2.titulo{font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px}
-h2.titulo em{font-style:normal;color:var(--acento)}
-p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:16px;max-width:38ch}
-
-/* ---------- paneles tipo software ---------- */
-.panel{
+#app-intro .ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+#app-intro .ojal::after{content:"";flex:1;height:1px;background:var(--borde)}
+#app-intro h2.titulo{font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px}
+#app-intro h2.titulo em{font-style:normal;color:var(--acento)}
+#app-intro p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:16px;max-width:38ch}
+#app-intro .panel{
   background:var(--panel);border:1px solid var(--borde);border-radius:10px;
   box-shadow:var(--sombra);overflow:hidden;
 }
-.panel-tit{
+#app-intro .panel-tit{
   display:flex;align-items:center;gap:8px;
   background:var(--panel-2);border-bottom:1px solid var(--borde-suave);
   padding:8px 12px;font-size:9.5px;letter-spacing:.1em;font-weight:700;
   color:var(--texto-suave);text-transform:uppercase;
 }
-.panel-tit .chip{
+#app-intro .panel-tit .chip{
   margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;
   padding:2px 8px;border-radius:999px;letter-spacing:.06em;
   background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde);
 }
-.panel-cuerpo{padding:14px}
-
-/* ecuación héroe */
-.eq-hero{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px 0 2px}
-.eq-hero .termino{text-align:center}
-.eq-hero .termino b{font-size:19px;font-weight:700;display:block;line-height:1.15;letter-spacing:-.01em}
-.eq-hero .termino span{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
-.eq-hero .op{font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--acento);font-weight:600}
-.doble-regla{margin:12px 0 0;border-top:2px solid var(--texto);border-bottom:1px solid var(--texto);height:4px}
-
-/* ---------- tarjetas de principios ---------- */
-.principios{display:flex;flex-direction:column;gap:9px;margin-top:12px}
-.principio{
+#app-intro .panel-cuerpo{padding:14px}
+#app-intro .eq-hero{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px 0 2px}
+#app-intro .eq-hero .termino{text-align:center}
+#app-intro .eq-hero .termino b{font-size:19px;font-weight:700;display:block;line-height:1.15;letter-spacing:-.01em}
+#app-intro .eq-hero .termino span{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+#app-intro .eq-hero .op{font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--acento);font-weight:600}
+#app-intro .doble-regla{margin:12px 0 0;border-top:2px solid var(--texto);border-bottom:1px solid var(--texto);height:4px}
+#app-intro .principios{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+#app-intro .principio{
   background:var(--panel);border:1px solid var(--borde);border-radius:10px;
   padding:13px 14px;display:flex;gap:12px;align-items:flex-start;
   box-shadow:0 1px 3px rgba(16,35,55,.06);
 }
-.principio .icono{
+#app-intro .principio .icono{
   width:38px;height:38px;border-radius:9px;flex-shrink:0;
   background:var(--acento-tinte);border:1px solid var(--acento-borde);
   display:flex;align-items:center;justify-content:center;color:var(--acento);
 }
-.principio h3{font-size:13.5px;font-weight:700;margin-bottom:2px}
-.principio p{font-size:12.5px;line-height:1.5;color:var(--texto-suave)}
-
-.nota-pie{
+#app-intro .principio h3{font-size:13.5px;font-weight:700;margin-bottom:2px}
+#app-intro .principio p{font-size:12.5px;line-height:1.5;color:var(--texto-suave)}
+#app-intro .nota-pie{
   margin-top:14px;font-size:12px;color:#33506B;line-height:1.55;
   background:var(--acento-tinte);border:1px solid var(--acento-borde);
   border-radius:9px;padding:10px 12px;
 }
-.nota-pie b{color:var(--texto)}
-
-/* ---------- módulos (asientos) ---------- */
-.asiento{
+#app-intro .nota-pie b{color:var(--texto)}
+#app-intro .asiento{
   background:var(--panel);border:1px solid var(--borde);border-radius:10px;
   margin-bottom:10px;overflow:hidden;transition:opacity .3s, border-color .3s;
   box-shadow:0 1px 3px rgba(16,35,55,.06);
 }
-.asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
-.asiento .num{
+#app-intro .asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
+#app-intro .asiento .num{
   font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
   padding:3px 8px;border-radius:6px;flex-shrink:0;
   background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde);
 }
-.asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
-.asiento .lineas{padding:0 13px 11px 13px}
-.asiento .lineas p{font-size:12px;line-height:1.5;color:var(--texto-suave)}
-.asiento .accion{border-top:1px solid var(--borde-suave);padding:9px 13px;display:flex;justify-content:flex-end}
-.btn-registrar{
+#app-intro .asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
+#app-intro .asiento .lineas{padding:0 13px 11px 13px}
+#app-intro .asiento .lineas p{font-size:12px;line-height:1.5;color:var(--texto-suave)}
+#app-intro .asiento .accion{border-top:1px solid var(--borde-suave);padding:9px 13px;display:flex;justify-content:flex-end}
+#app-intro .btn-registrar{
   font-family:inherit;font-size:12.5px;font-weight:600;
   background:var(--acento);color:#fff;border:none;border-radius:8px;
   padding:9px 18px;cursor:pointer;transition:transform .15s, background .2s;
 }
-.btn-registrar:active{transform:scale(.97)}
-.asiento .sello-ok{
+#app-intro .btn-registrar:active{transform:scale(.97)}
+#app-intro .asiento .sello-ok{
   display:inline-block;margin-left:auto;flex-shrink:0;
   font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;font-weight:600;
   color:var(--haber);background:var(--haber-tinte);border:1px solid var(--haber-borde);
   border-radius:999px;padding:3px 9px;
 }
-.asiento.bloqueado{opacity:.5;pointer-events:none}
-.asiento.bloqueado .sello-ok{color:var(--texto-suave);background:var(--panel-2);border-color:var(--borde)}
-
-/* ---------- tarjeta resumen ---------- */
-.comprobacion{
+#app-intro .asiento.bloqueado{opacity:.5;pointer-events:none}
+#app-intro .asiento.bloqueado .sello-ok{color:var(--texto-suave);background:var(--panel-2);border-color:var(--borde)}
+#app-intro .comprobacion{
   margin-top:16px;background:linear-gradient(160deg,var(--cabecera-1),var(--cabecera-2));
   color:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;
   animation:aparecer .35s ease both;
 }
-.comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
-.comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-.comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
-.comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
-.estampa{
+#app-intro .comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
+#app-intro .comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+#app-intro .comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
+#app-intro .comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
+#app-intro .estampa{
   position:absolute;right:14px;top:14px;
   font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;font-weight:600;
   color:#7ED9A7;background:rgba(30,122,77,.28);border:1px solid rgba(126,217,167,.45);
   border-radius:999px;padding:5px 10px;
 }
-
-/* ---------- barra de pestañas ---------- */
-nav.pestanas{
+#app-intro nav.pestanas{
   flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);
   background:var(--lienzo);padding:8px 10px calc(10px + env(safe-area-inset-bottom));
   border-top:1px solid rgba(143,193,234,.2);
 }
-.pestana{
+#app-intro .pestana{
   font-family:inherit;background:none;border:none;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;gap:4px;
   padding:7px 4px;border-radius:10px;color:rgba(255,255,255,.42);
   font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
   transition:color .2s, background .2s;
 }
-.pestana svg{width:21px;height:21px}
-.pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
-
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+#app-intro .pestana svg{width:21px;height:21px}
+#app-intro .pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
+@media (prefers-reduced-motion:reduce){#app-intro *,#app-intro *::before,#app-intro *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+
+/* ===== l21 ===== */
+#app-l21{
+  --lienzo:#0B1A29;--cabecera-1:#122B42;--cabecera-2:#1A3A57;--fondo:#F2F5F8;--panel:#FFFFFF;--panel-2:#F4F7FA;
+  --borde:#D8E0E9;--borde-suave:#E1E8EF;--acento:#2F6FAD;--acento-claro:#8FC1EA;--acento-tinte:#EAF2FA;--acento-borde:#C6DCEF;
+  --debe:#A93226;--debe-tinte:#FBEAE7;--debe-borde:#F0C9C3;--haber:#1E7A4D;--haber-tinte:#E7F4EC;--haber-borde:#BFE3CD;
+  --texto:#16283A;--texto-suave:#5B6B7B;--sombra:0 1px 3px rgba(16,35,55,.08), 0 8px 24px rgba(16,35,55,.07);
+}
+#app-l21 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#app-l21,#app-l21{height:100%}
+#app-l21{background:var(--lienzo);font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--texto);display:flex;justify-content:center;background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,173,.28), transparent 60%)}
+#app-l21 .telefono{width:100%;max-width:430px;min-height:100dvh;background:var(--fondo);display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.5)}
+@media(min-width:480px){#app-l21 .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
+}
+#app-l21 header.app{background:linear-gradient(160deg,var(--cabecera-1) 0%, var(--cabecera-2) 100%);color:#fff;padding:22px 22px 18px;position:relative;flex-shrink:0}
+#app-l21 header.app::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--acento-claro) 20%,var(--acento-claro) 80%,transparent);opacity:.8}
+#app-l21 .marca{display:flex;align-items:baseline;gap:10px}
+#app-l21 .marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em;cursor:pointer}
+#app-l21 .marca h1 em{color:var(--acento-claro);font-style:normal}
+#app-l21 .folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
+#app-l21 .subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+#app-l21 .ecuacion-viva{margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(143,193,234,.28);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px}
+#app-l21 .ecuacion-viva .celda{text-align:center}
+#app-l21 .ecuacion-viva .etiqueta{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+#app-l21 .ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;transition:color .3s}
+#app-l21 .ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento-claro)}
+#app-l21 .ecuacion-viva.parpadeo .cifra{color:var(--acento-claro)}
+#app-l21 .ecuacion-viva.rota .cifra{color:#F0A9A0}
+#app-l21 main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+#app-l21 .pantalla{display:none;padding:20px 18px 30px;animation:aparecer .3s ease both}
+#app-l21 .pantalla.activa{display:block}
+@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#app-l21 .ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+#app-l21 .ojal .num-c{font-family:'IBM Plex Mono',monospace;color:var(--acento);background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:5px;padding:2px 7px}
+#app-l21 .ojal::after{content:"";flex:1;height:1px;background:var(--borde)}
+#app-l21 h2.titulo{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.18;margin-bottom:6px}
+#app-l21 h2.titulo em{font-style:normal;color:var(--acento)}
+#app-l21 p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:6px;max-width:38ch}
+#app-l21 .parte-eti{display:flex;align-items:center;gap:9px;margin:24px 0 11px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--texto-suave)}
+#app-l21 .parte-eti .paso{width:22px;height:22px;border-radius:6px;background:var(--acento);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;flex-shrink:0}
+#app-l21 .parte-eti.ilu .paso{background:#5B6B7B}
+#app-l21 .parte-eti.tool .paso{background:var(--haber)}
+#app-l21 .parte-eti::after{content:"";flex:1;height:1px;background:var(--borde)}
+#app-l21 .explicacion{font-size:13.5px;line-height:1.6;color:#2A3E50}
+#app-l21 .explicacion p + p{margin-top:9px}
+#app-l21 .lista-def{list-style:none;margin:11px 0 0;display:flex;flex-direction:column;gap:8px}
+#app-l21 .lista-def li{position:relative;padding-left:20px;font-size:13px;line-height:1.5;color:#2A3E50}
+#app-l21 .lista-def li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--acento)}
+#app-l21 .lista-def li b{color:var(--texto)}
+#app-l21 .clave{margin-top:12px;font-size:12.5px;color:#33506B;line-height:1.55;background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:9px;padding:10px 12px}
+#app-l21 .clave b{color:var(--texto)}
+#app-l21 .panel{background:var(--panel);border:1px solid var(--borde);border-radius:10px;box-shadow:var(--sombra);overflow:hidden}
+#app-l21 .panel-tit{display:flex;align-items:center;gap:8px;background:var(--panel-2);border-bottom:1px solid var(--borde-suave);padding:8px 12px;font-size:9.5px;letter-spacing:.1em;font-weight:700;color:var(--texto-suave);text-transform:uppercase}
+#app-l21 .panel-tit .chip{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px;letter-spacing:.06em;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
+#app-l21 .panel-tit .chip.fig{background:#EEF1F4;color:#5B6B7B;border-color:var(--borde)}
+#app-l21 .panel-cuerpo{padding:14px}
+#app-l21 .cuentaT .cabezaT{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--borde-suave)}
+#app-l21 .cuentaT .cabezaT b{font-size:13.5px;font-weight:700}
+#app-l21 .cuentaT .codigo{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;color:var(--texto-suave);background:var(--panel-2);border:1px solid var(--borde-suave);border-radius:6px;padding:2px 7px}
+#app-l21 .cuentaT .colsCab{display:grid;grid-template-columns:1fr 1fr;background:var(--panel-2);border-bottom:1px solid var(--borde-suave)}
+#app-l21 .cuentaT .colsCab div{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;font-weight:600;text-transform:uppercase;color:var(--texto-suave);text-align:center;padding:6px 4px}
+#app-l21 .cuentaT .colsCab div:first-child{border-right:1px solid var(--borde-suave);color:var(--debe)}
+#app-l21 .cuentaT .colsCab div:last-child{color:var(--haber)}
+#app-l21 .cuentaT .cuerpoT{display:grid;grid-template-columns:1fr 1fr;min-height:96px}
+#app-l21 .cuentaT .lado{padding:14px 10px;text-align:center}
+#app-l21 .cuentaT .lado:first-child{border-right:1px solid var(--borde-suave)}
+#app-l21 .cuentaT .pieT{border-top:1px solid var(--borde-suave);background:var(--panel-2);padding:8px 12px;text-align:center;font-size:11.5px;color:var(--texto-suave)}
+#app-l21 .cuentaT .pieT b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.04em}
+#app-l21 .montos{list-style:none;min-height:40px}
+#app-l21 .montos li{font-family:'IBM Plex Mono',monospace;font-size:12px;font-variant-numeric:tabular-nums;padding:1.5px 0;animation:aparecer .25s ease both}
+#app-l21 .insignia{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:7px 11px;border-radius:7px}
+#app-l21 .insignia.neutra{background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
+#app-l21 .ilus22{display:flex;flex-direction:column;gap:12px}
+#app-l21 .caja-nb{border:1.5px solid;border-radius:10px;padding:12px}
+#app-l21 .caja-nb.debe-caja{border-color:var(--debe-borde);background:var(--debe-tinte)}
+#app-l21 .caja-nb.haber-caja{border-color:var(--haber-borde);background:var(--haber-tinte)}
+#app-l21 .nb-tit{font-size:12px;font-weight:700;text-align:center;margin-bottom:10px}
+#app-l21 .nb-cuenta{background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:9px 11px;margin-bottom:8px}
+#app-l21 .nb-cuenta:last-child{margin-bottom:0}
+#app-l21 .nb-nombre{font-size:12px;font-weight:600;margin-bottom:6px}
+#app-l21 .nb-t{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--borde-suave);border-radius:6px;overflow:hidden}
+#app-l21 .nb-col{padding:5px 6px;text-align:center}
+#app-l21 .nb-col:first-child{border-right:1px solid var(--borde-suave)}
+#app-l21 .nb-h{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.04em}
+#app-l21 .nb-s{display:block;font-size:10px;color:var(--texto-suave);margin-top:1px}
+#app-l21 .de-flujo{display:flex;flex-direction:column;align-items:center;gap:9px}
+#app-l21 .de-caja{background:var(--panel-2);border:1px solid var(--borde);border-radius:8px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600;width:100%}
+#app-l21 .de-caja small{display:block;font-weight:400;color:var(--texto-suave);font-size:11px;margin-top:2px}
+#app-l21 .de-flecha{color:var(--acento);font-size:13px}
+#app-l21 .de-entradas{width:100%;border:1px solid var(--borde);border-radius:8px;overflow:hidden}
+#app-l21 .de-linea{display:grid;grid-template-columns:1fr auto;padding:8px 12px;font-size:12px}
+#app-l21 .de-linea span:last-child{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+#app-l21 .de-linea.cargo{color:var(--debe)}
+#app-l21 .de-linea.abono{padding-left:26px;color:var(--haber);border-top:1px solid var(--borde-suave)}
+#app-l21 .de-balance{width:100%;background:var(--haber-tinte);border:1px solid var(--haber-borde);color:var(--haber);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:600;text-align:center;font-family:'IBM Plex Mono',monospace}
+#app-l21 .respuestas{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:4px 13px 13px}
+#app-l21 .btn-lado{font-family:inherit;font-size:12.5px;font-weight:600;background:var(--panel);border-radius:8px;padding:11px 8px;cursor:pointer;transition:transform .15s}
+#app-l21 .btn-lado:active{transform:scale(.97)}
+#app-l21 .btn-lado.debe{border:1px solid var(--debe-borde);color:var(--debe)}
+#app-l21 .btn-lado.haber{border:1px solid var(--haber-borde);color:var(--haber)}
+#app-l21 .btn-lado span{display:block;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);margin-top:2px;font-weight:600}
+#app-l21 .btn-fantasma{width:100%;font-family:inherit;font-size:12px;font-weight:600;background:transparent;border:1px solid var(--borde);color:var(--texto-suave);border-radius:8px;padding:9px;cursor:pointer}
+#app-l21 .marcador{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--texto-suave);text-transform:uppercase;margin:12px 2px;display:flex;justify-content:space-between}
+#app-l21 .asiento{background:var(--panel);border:1px solid var(--borde);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(16,35,55,.06);transition:opacity .3s, border-color .3s}
+#app-l21 .asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
+#app-l21 .asiento .num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
+#app-l21 .asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
+#app-l21 .asiento .lineas{padding:2px 13px 8px}
+#app-l21 .linea-diario{display:grid;grid-template-columns:1fr 74px 74px;gap:6px;align-items:baseline;font-size:12px;padding:3px 0}
+#app-l21 .linea-diario.cab{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-suave);font-weight:600;border-bottom:1px solid var(--borde-suave);padding-bottom:5px;margin-bottom:2px}
+#app-l21 .linea-diario.cab span:nth-child(2),#app-l21 .linea-diario.cab span:nth-child(3){text-align:right}
+#app-l21 .linea-diario .cuenta{color:var(--texto)}
+#app-l21 .linea-diario .cuenta.abono{padding-left:16px;color:var(--texto-suave)}
+#app-l21 .linea-diario .monto{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
+#app-l21 .linea-diario .monto.cargo{color:var(--debe)}
+#app-l21 .linea-diario .monto.abono{color:var(--haber)}
+#app-l21 .asiento .accion{border-top:1px solid var(--borde-suave);padding:9px 13px;display:flex;justify-content:flex-end}
+#app-l21 .btn-registrar{font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;transition:transform .15s}
+#app-l21 .btn-registrar:active{transform:scale(.97)}
+#app-l21 .btn-registrar:disabled{background:#B9C6D2;cursor:default}
+#app-l21 .asiento.registrado{border-color:var(--haber-borde)}
+#app-l21 .asiento.registrado .accion{display:none}
+#app-l21 .asiento .sello-ok{display:none}
+#app-l21 .asiento.registrado .sello-ok{display:inline-block;margin-left:auto;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;font-weight:600;color:var(--haber);background:var(--haber-tinte);border:1px solid var(--haber-borde);border-radius:999px;padding:3px 9px}
+#app-l21 .asiento.bloqueado{opacity:.5;pointer-events:none}
+#app-l21 .veredicto{margin:0 13px 12px;font-size:12px;line-height:1.5;border-radius:8px;padding:9px 11px}
+#app-l21 .veredicto.bien{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
+#app-l21 .veredicto.mal{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde)}
+#app-l21 .temblor{animation:temblor .3s ease}
+@keyframes temblor{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+#app-l21 .reng{display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:baseline;font-size:12.5px;padding:6px 13px}
+#app-l21 .reng + .reng{border-top:1px solid var(--borde-suave)}
+#app-l21 .reng .c{color:var(--texto-suave)}
+#app-l21 .reng .m{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
+#app-l21 .reng .m.debe-c{color:var(--debe)}
+#app-l21 .reng .m.haber-c{color:var(--haber)}
+#app-l21 .reng.granTotal{border-top:2px solid var(--texto);font-weight:600;background:var(--panel-2)}
+#app-l21 .reng.granTotal .c{color:var(--texto)}
+#app-l21 .reng.granTotal .m{border-bottom:3px double var(--texto);padding-bottom:2px}
+#app-l21 .comprobacion{margin-top:16px;background:linear-gradient(160deg,var(--cabecera-1),var(--cabecera-2));color:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;display:none;animation:aparecer .35s ease both}
+#app-l21 .comprobacion.visible{display:block}
+#app-l21 .comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
+#app-l21 .comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+#app-l21 .comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
+#app-l21 .comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
+#app-l21 .estampa{position:absolute;right:14px;top:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;font-weight:600;color:#7ED9A7;background:rgba(30,122,77,.28);border:1px solid rgba(126,217,167,.45);border-radius:999px;padding:5px 10px}
+#app-l21 .btn-siguiente{margin-top:24px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:9px;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
+#app-l21 .btn-siguiente:active{transform:scale(.98)}
+#app-l21 nav.pestanas{flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--lienzo);padding:8px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(143,193,234,.2)}
+#app-l21 .pestana{font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 2px;border-radius:10px;color:rgba(255,255,255,.42);font-size:9px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;transition:color .2s, background .2s}
+#app-l21 .pestana svg{width:21px;height:21px}
+#app-l21 .pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
+@media (prefers-reduced-motion:reduce){#app-l21 *,#app-l21 *::before,#app-l21 *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+/* ===== l22 ===== */
+#app-l22{
+  --lienzo:#0B1A29;--cabecera-1:#122B42;--cabecera-2:#1A3A57;--fondo:#F2F5F8;--panel:#FFFFFF;--panel-2:#F4F7FA;
+  --borde:#D8E0E9;--borde-suave:#E1E8EF;--acento:#2F6FAD;--acento-claro:#8FC1EA;--acento-tinte:#EAF2FA;--acento-borde:#C6DCEF;
+  --debe:#A93226;--debe-tinte:#FBEAE7;--debe-borde:#F0C9C3;--haber:#1E7A4D;--haber-tinte:#E7F4EC;--haber-borde:#BFE3CD;
+  --texto:#16283A;--texto-suave:#5B6B7B;--sombra:0 1px 3px rgba(16,35,55,.08), 0 8px 24px rgba(16,35,55,.07);
+}
+#app-l22 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#app-l22,#app-l22{height:100%}
+#app-l22{background:var(--lienzo);font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--texto);display:flex;justify-content:center;background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,173,.28), transparent 60%)}
+#app-l22 .telefono{width:100%;max-width:430px;min-height:100dvh;background:var(--fondo);display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.5)}
+@media(min-width:480px){#app-l22 .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
+}
+#app-l22 header.app{background:linear-gradient(160deg,var(--cabecera-1) 0%, var(--cabecera-2) 100%);color:#fff;padding:22px 22px 18px;position:relative;flex-shrink:0}
+#app-l22 header.app::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--acento-claro) 20%,var(--acento-claro) 80%,transparent);opacity:.8}
+#app-l22 .marca{display:flex;align-items:baseline;gap:10px}
+#app-l22 .marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em;cursor:pointer}
+#app-l22 .marca h1 em{color:var(--acento-claro);font-style:normal}
+#app-l22 .folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
+#app-l22 .subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+#app-l22 .ecuacion-viva{margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(143,193,234,.28);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px}
+#app-l22 .ecuacion-viva .celda{text-align:center}
+#app-l22 .ecuacion-viva .etiqueta{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+#app-l22 .ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;transition:color .3s}
+#app-l22 .ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--acento-claro)}
+#app-l22 .ecuacion-viva.parpadeo .cifra{color:var(--acento-claro)}
+#app-l22 main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+#app-l22 .pantalla{display:none;padding:20px 18px 30px;animation:aparecer .3s ease both}
+#app-l22 .pantalla.activa{display:block}
+@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#app-l22 .ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+#app-l22 .ojal .num-c{font-family:'IBM Plex Mono',monospace;color:var(--acento);background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:5px;padding:2px 7px}
+#app-l22 .ojal::after{content:"";flex:1;height:1px;background:var(--borde)}
+#app-l22 h2.titulo{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.18;margin-bottom:6px}
+#app-l22 h2.titulo em{font-style:normal;color:var(--acento)}
+#app-l22 p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:6px;max-width:38ch}
+#app-l22 .parte-eti{display:flex;align-items:center;gap:9px;margin:24px 0 11px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--texto-suave)}
+#app-l22 .parte-eti .paso{width:22px;height:22px;border-radius:6px;background:var(--acento);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;flex-shrink:0}
+#app-l22 .parte-eti.ilu .paso{background:#5B6B7B}
+#app-l22 .parte-eti.tool .paso{background:var(--haber)}
+#app-l22 .parte-eti::after{content:"";flex:1;height:1px;background:var(--borde)}
+#app-l22 .explicacion{font-size:13.5px;line-height:1.6;color:#2A3E50}
+#app-l22 .explicacion p + p{margin-top:9px}
+#app-l22 .lista-def{list-style:none;margin:11px 0 0;display:flex;flex-direction:column;gap:8px}
+#app-l22 .lista-def li{position:relative;padding-left:20px;font-size:13px;line-height:1.5;color:#2A3E50}
+#app-l22 .lista-def li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--acento)}
+#app-l22 .lista-def li b{color:var(--texto)}
+#app-l22 .clave{margin-top:12px;font-size:12.5px;color:#33506B;line-height:1.55;background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:9px;padding:10px 12px}
+#app-l22 .clave b{color:var(--texto)}
+#app-l22 .panel{background:var(--panel);border:1px solid var(--borde);border-radius:10px;box-shadow:var(--sombra);overflow:hidden}
+#app-l22 .panel-tit{display:flex;align-items:center;gap:8px;background:var(--panel-2);border-bottom:1px solid var(--borde-suave);padding:8px 12px;font-size:9.5px;letter-spacing:.1em;font-weight:700;color:var(--texto-suave);text-transform:uppercase}
+#app-l22 .panel-tit .chip{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px;letter-spacing:.06em;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
+#app-l22 .panel-tit .chip.fig{background:#EEF1F4;color:#5B6B7B;border-color:var(--borde)}
+#app-l22 .panel-cuerpo{padding:14px}
+#app-l22 .eq-basica{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px}
+#app-l22 .eq-caja{text-align:center;border:1.5px solid var(--borde);border-radius:9px;padding:11px 6px;background:var(--panel-2);border-top-width:3px}
+#app-l22 .eq-caja.a{border-top-color:var(--acento)}
+#app-l22 .eq-caja.l{border-top-color:#B5851F}
+#app-l22 .eq-caja.e{border-top-color:var(--haber)}
+#app-l22 .eq-caja b{font-size:13px;font-weight:700;display:block;line-height:1.2}
+#app-l22 .eq-caja span{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+#app-l22 .eq-caja .valor{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--texto);margin-top:3px}
+#app-l22 .eq-op{font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--acento);font-weight:600;text-align:center}
+#app-l22 .eq-cap{margin-top:11px;font-size:11.5px;color:var(--texto-suave);text-align:center;line-height:1.5}
+#app-l22 .ilus23-scroll{overflow-x:auto;padding:14px}
+#app-l22 .ilus23{display:flex;align-items:flex-start;gap:7px;min-width:max-content}
+#app-l22 .i23-el{border:1px solid var(--borde);border-radius:8px;padding:8px;text-align:center;background:var(--panel);width:104px}
+#app-l22 .i23-el.eqm{background:var(--haber-tinte);border-color:var(--haber-borde)}
+#app-l22 .i23-nom{font-size:10.5px;font-weight:700;line-height:1.2;margin-bottom:6px;min-height:26px;display:flex;align-items:center;justify-content:center}
+#app-l22 .i23-op{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--texto-suave);font-weight:600;align-self:center;padding-top:26px}
+#app-l22 .mini-t{border:1px solid var(--borde-suave);border-radius:6px;overflow:hidden}
+#app-l22 .mini-t .mt-cab{display:grid;grid-template-columns:1fr 1fr;background:var(--panel-2)}
+#app-l22 .mini-t .mt-cab span{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.04em;font-weight:700;text-align:center;padding:2px 0}
+#app-l22 .mini-t .mt-cab span:first-child{color:var(--debe);border-right:1px solid var(--borde-suave)}
+#app-l22 .mini-t .mt-cab span:last-child{color:var(--haber)}
+#app-l22 .mini-t .mt-val{display:grid;grid-template-columns:1fr 1fr}
+#app-l22 .mini-t .mt-val span{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;text-align:center;padding:3px 0;line-height:1}
+#app-l22 .mini-t .mt-val span:first-child{border-right:1px solid var(--borde-suave)}
+#app-l22 .i23-cap{padding:0 14px 12px;font-size:11px;color:var(--texto-suave);line-height:1.5}
+#app-l22 .solver-eq{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:5px;margin-bottom:13px}
+#app-l22 .sv-cel{border:1.5px solid var(--borde);border-radius:9px;padding:9px 5px;text-align:center;background:var(--panel-2)}
+#app-l22 .sv-cel .lbl{font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+#app-l22 .sv-cel .val{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;margin-top:3px}
+#app-l22 .sv-cel.incognita{border-color:var(--acento);border-style:dashed;background:var(--acento-tinte)}
+#app-l22 .sv-cel.incognita .val{color:var(--acento)}
+#app-l22 .sv-op{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento);font-weight:600;align-self:center}
+#app-l22 .sv-ops{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+#app-l22 .btn-sv{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:12px 4px;cursor:pointer;transition:transform .15s;color:var(--texto)}
+#app-l22 .btn-sv:active{transform:scale(.96)}
+#app-l22 .btn-sv.correcta{border-color:var(--haber);background:var(--haber-tinte);color:var(--haber)}
+#app-l22 .btn-sv.incorrecta{border-color:var(--debe);background:var(--debe-tinte);color:var(--debe)}
+#app-l22 .btn-sv:disabled{cursor:default}
+#app-l22 .marcador{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--texto-suave);text-transform:uppercase;margin:12px 2px;display:flex;justify-content:space-between}
+#app-l22 .asiento{background:var(--panel);border:1px solid var(--borde);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(16,35,55,.06);transition:opacity .3s, border-color .3s}
+#app-l22 .asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
+#app-l22 .asiento .num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
+#app-l22 .asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
+#app-l22 .asiento .lineas{padding:2px 13px 6px;font-size:12px;color:var(--texto-suave);line-height:1.5}
+#app-l22 .opciones{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 13px 13px}
+#app-l22 .btn-clas{font-family:inherit;font-size:12px;font-weight:600;background:var(--panel);border:1px solid var(--borde);color:var(--texto);border-radius:8px;padding:11px 8px;cursor:pointer;transition:transform .15s, border-color .2s, background .2s}
+#app-l22 .btn-clas:active{transform:scale(.97)}
+#app-l22 .btn-clas.up{border-color:var(--haber-borde);color:var(--haber)}
+#app-l22 .btn-clas.down{border-color:var(--debe-borde);color:var(--debe)}
+#app-l22 .btn-clas.correcta{border-color:var(--haber);background:var(--haber-tinte);color:var(--haber)}
+#app-l22 .btn-clas.incorrecta{border-color:var(--debe);background:var(--debe-tinte);color:var(--debe)}
+#app-l22 .btn-clas.atenuada{opacity:.4}
+#app-l22 .reveal{padding:0 13px 13px;animation:aparecer .25s ease both}
+#app-l22 .delta-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:9px}
+#app-l22 .delta-cel{border:1px solid var(--borde-suave);border-radius:8px;background:var(--panel-2);padding:8px 6px;text-align:center}
+#app-l22 .delta-cel .dl{font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+#app-l22 .delta-cel .dv{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+#app-l22 .delta-cel .dv.dbl{font-size:11px;line-height:1.25}
+#app-l22 .delta-cel .dv.pos{color:var(--haber)}
+#app-l22 .delta-cel .dv.neg{color:var(--debe)}
+#app-l22 .veredicto{font-size:12px;line-height:1.5;border-radius:8px;padding:9px 11px}
+#app-l22 .veredicto.bien{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
+#app-l22 .veredicto.mal{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde);margin:0 13px 13px}
+#app-l22 .veredicto b{font-weight:700}
+#app-l22 .btn-next{margin-top:10px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:8px;padding:11px;cursor:pointer;transition:transform .15s}
+#app-l22 .btn-next:active{transform:scale(.98)}
+#app-l22 .temblor{animation:temblor .3s ease}
+@keyframes temblor{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+#app-l22 .ws-vacia{padding:22px 16px;text-align:center;color:var(--texto-suave);font-size:12.5px;line-height:1.5}
+#app-l22 table.worksheet{width:100%;border-collapse:collapse}
+#app-l22 table.worksheet th,#app-l22 table.worksheet td{padding:7px 8px;font-size:11px;text-align:right}
+#app-l22 table.worksheet thead th{background:var(--panel-2);border-bottom:1px solid var(--borde);font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave);font-weight:700}
+#app-l22 table.worksheet thead th:first-child,#app-l22 table.worksheet td:first-child{text-align:left}
+#app-l22 table.worksheet td{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;border-top:1px solid var(--borde-suave)}
+#app-l22 table.worksheet td:first-child{font-family:'IBM Plex Sans',sans-serif;color:var(--texto-suave);font-size:10.5px}
+#app-l22 table.worksheet td.pos{color:var(--haber)}
+#app-l22 table.worksheet td.neg{color:var(--debe)}
+#app-l22 table.worksheet td .par{display:block;font-size:9.5px;line-height:1.35}
+#app-l22 table.worksheet td.ok{color:var(--haber);text-align:center;font-weight:600}
+#app-l22 table.worksheet tfoot td{border-top:2px solid var(--texto);font-weight:700;background:var(--panel-2)}
+#app-l22 tr.fila-nueva{animation:filaEntra .35s ease both}
+@keyframes filaEntra{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+#app-l22 .comprobacion{margin-top:16px;background:linear-gradient(160deg,var(--cabecera-1),var(--cabecera-2));color:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;display:none;animation:aparecer .35s ease both}
+#app-l22 .comprobacion.visible{display:block}
+#app-l22 .comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
+#app-l22 .comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+#app-l22 .comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
+#app-l22 .comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
+#app-l22 .estampa{position:absolute;right:14px;top:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;font-weight:600;color:#7ED9A7;background:rgba(30,122,77,.28);border:1px solid rgba(126,217,167,.45);border-radius:999px;padding:5px 10px}
+#app-l22 .btn-fantasma{margin-top:14px;width:100%;font-family:inherit;font-size:12px;font-weight:600;background:transparent;border:1px solid var(--borde);color:var(--texto-suave);border-radius:8px;padding:9px;cursor:pointer}
+#app-l22 .btn-siguiente{margin-top:24px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:9px;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
+#app-l22 .btn-siguiente:active{transform:scale(.98)}
+#app-l22 nav.pestanas{flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--lienzo);padding:8px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(143,193,234,.2)}
+#app-l22 .pestana{font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 2px;border-radius:10px;color:rgba(255,255,255,.42);font-size:9px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;transition:color .2s, background .2s}
+#app-l22 .pestana svg{width:21px;height:21px}
+#app-l22 .pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
+@media (prefers-reduced-motion:reduce){#app-l22 *,#app-l22 *::before,#app-l22 *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
 </style>
 </head>
 <body>
-<div class=&quot;telefono&quot;>
+<div class="slot on" id="slot-intro"><div class="approot" id="app-intro">
+<div class="telefono">
 
-  <header class=&quot;app&quot;>
-    <div class=&quot;marca&quot;>
+  <header class="app">
+    <div class="marca">
       <h1>Ledger<em>Lab</em></h1>
-      <span class=&quot;folio&quot;>Module 00</span>
+      <span class="folio">Module 00</span>
     </div>
-    <div class=&quot;subtitulo&quot;>Intermediate Accounting</div>
-    <div class=&quot;ecuacion-viva&quot;>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Assets</div><div class=&quot;cifra&quot;>$15,500</div></div>
-      <div class=&quot;signo&quot;>=</div>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Liabilities</div><div class=&quot;cifra&quot;>$3,700</div></div>
-      <div class=&quot;signo&quot;>+</div>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Equity</div><div class=&quot;cifra&quot;>$11,800</div></div>
+    <div class="subtitulo">Intermediate Accounting</div>
+    <div class="ecuacion-viva">
+      <div class="celda"><div class="etiqueta">Assets</div><div class="cifra">$15,500</div></div>
+      <div class="signo">=</div>
+      <div class="celda"><div class="etiqueta">Liabilities</div><div class="cifra">$3,700</div></div>
+      <div class="signo">+</div>
+      <div class="celda"><div class="etiqueta">Equity</div><div class="cifra">$11,800</div></div>
     </div>
   </header>
 
-  <main id=&quot;principal&quot;>
+  <main id="principal">
 
     <!-- ============ SCREEN · INTRODUCTION ============ -->
-    <section class=&quot;pantalla activa&quot; id=&quot;p-intro&quot;>
-      <div class=&quot;ojal&quot;>Introduction to the course</div>
-      <h2 class=&quot;titulo&quot;>The ledger, <em>always in balance</em></h2>
-      <p class=&quot;intro&quot;>One equation governs every record a business keeps. This course teaches you to read it, prove it, and keep it in equilibrium.</p>
+    <section class="pantalla activa" id="p-intro">
+      <div class="ojal">Introduction to the course</div>
+      <h2 class="titulo">The ledger, <em>always in balance</em></h2>
+      <p class="intro">One equation governs every record a business keeps. This course teaches you to read it, prove it, and keep it in equilibrium.</p>
 
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>The accounting equation<span class=&quot;chip&quot;>CORE</span></div>
-        <div class=&quot;panel-cuerpo&quot;>
-          <div class=&quot;eq-hero&quot;>
-            <div class=&quot;termino&quot;><b>Assets</b><span>Accts 1000s</span></div>
-            <div class=&quot;op&quot;>=</div>
-            <div class=&quot;termino&quot;><b>Liabilities</b><span>Accts 2000s</span></div>
-            <div class=&quot;op&quot;>+</div>
-            <div class=&quot;termino&quot;><b>Equity</b><span>Accts 3000s</span></div>
+      <div class="panel">
+        <div class="panel-tit">The accounting equation<span class="chip">CORE</span></div>
+        <div class="panel-cuerpo">
+          <div class="eq-hero">
+            <div class="termino"><b>Assets</b><span>Accts 1000s</span></div>
+            <div class="op">=</div>
+            <div class="termino"><b>Liabilities</b><span>Accts 2000s</span></div>
+            <div class="op">+</div>
+            <div class="termino"><b>Equity</b><span>Accts 3000s</span></div>
           </div>
-          <div class=&quot;doble-regla&quot;></div>
+          <div class="doble-regla"></div>
         </div>
       </div>
 
-      <div class=&quot;ojal&quot; style=&quot;margin-top:22px&quot;>How every lesson works</div>
-      <div class=&quot;principios&quot;>
-        <div class=&quot;principio&quot;>
-          <div class=&quot;icono&quot;><svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3.2&quot;/><path d=&quot;M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z&quot;/></svg></div>
+      <div class="ojal" style="margin-top:22px">How every lesson works</div>
+      <div class="principios">
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/></svg></div>
           <div><h3>What — see the idea</h3><p>Each concept is shown the way it appears in real records: statements, accounts and entries.</p></div>
         </div>
-        <div class=&quot;principio&quot;>
-          <div class=&quot;icono&quot;><svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2 2.7 5 3.3 5 1.4 5 3.4-2.2 3.3-5 3.3-5-1.3-5-3.2&quot;/></svg></div>
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2 2.7 5 3.3 5 1.4 5 3.4-2.2 3.3-5 3.3-5-1.3-5-3.2"/></svg></div>
           <div><h3>Why — follow the money</h3><p>Every figure exists to help investors and creditors predict future cash flows. You'll learn the reason behind each rule.</p></div>
         </div>
-        <div class=&quot;principio&quot;>
-          <div class=&quot;icono&quot;><svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M4 17c4-1 5-9 12-9M16 4l4 4-4 4&quot;/><path d=&quot;M4 7c2 .3 3.4 1.5 4.6 3&quot;/></svg></div>
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c4-1 5-9 12-9M16 4l4 4-4 4"/><path d="M4 7c2 .3 3.4 1.5 4.6 3"/></svg></div>
           <div><h3>How — do the work</h3><p>You post the journal entries yourself and watch the ledger and the equation update at once.</p></div>
         </div>
       </div>
 
-      <div class=&quot;ojal&quot; style=&quot;margin-top:22px&quot;>Course plan · Four modules</div>
-      <div id=&quot;listaModulos&quot;>
+      <div class="ojal" style="margin-top:22px">Course plan · Four modules</div>
+      <div id="listaModulos">
 
-        <div class=&quot;asiento&quot;>
-          <div class=&quot;encabezado&quot;>
-            <span class=&quot;num&quot;>2.1</span>
-            <span class=&quot;desc&quot;>The Accounting Information System</span>
-            <span class=&quot;sello-ok&quot;>CURRENT</span>
+        <div class="asiento">
+          <div class="encabezado">
+            <span class="num">2.1</span>
+            <span class="desc">The Accounting Information System</span>
+            <span class="sello-ok">CURRENT</span>
           </div>
-          <div class=&quot;lineas&quot;><p>Double-entry, rules of debit and credit, the journal and the ledger.</p></div>
-          <div class=&quot;accion&quot;><button class=&quot;btn-registrar&quot; id=&quot;btnComenzar&quot;>Open module</button></div>
+          <div class="lineas"><p>Double-entry, rules of debit and credit, the journal and the ledger.</p></div>
+          <div class="accion"><button class="btn-registrar" id="btnComenzar">Open module</button></div>
         </div>
 
-        <div class=&quot;asiento bloqueado&quot;>
-          <div class=&quot;encabezado&quot;>
-            <span class=&quot;num&quot;>3.1</span>
-            <span class=&quot;desc&quot;>Income Statement &amp;amp; Revenue Recognition</span>
-            <span class=&quot;sello-ok&quot;>LOCKED</span>
+        <div class="asiento bloqueado">
+          <div class="encabezado">
+            <span class="num">3.1</span>
+            <span class="desc">Income Statement &amp; Revenue Recognition</span>
+            <span class="sello-ok">LOCKED</span>
           </div>
-          <div class=&quot;lineas&quot;><p>Measuring profitability over a period; when revenue is earned.</p></div>
+          <div class="lineas"><p>Measuring profitability over a period; when revenue is earned.</p></div>
         </div>
 
-        <div class=&quot;asiento bloqueado&quot;>
-          <div class=&quot;encabezado&quot;>
-            <span class=&quot;num&quot;>4.1</span>
-            <span class=&quot;desc&quot;>Balance Sheet &amp;amp; Statement of Cash Flows</span>
-            <span class=&quot;sello-ok&quot;>LOCKED</span>
+        <div class="asiento bloqueado">
+          <div class="encabezado">
+            <span class="num">4.1</span>
+            <span class="desc">Balance Sheet &amp; Statement of Cash Flows</span>
+            <span class="sello-ok">LOCKED</span>
           </div>
-          <div class=&quot;lineas&quot;><p>Reporting financial position and tracing where the cash moved.</p></div>
+          <div class="lineas"><p>Reporting financial position and tracing where the cash moved.</p></div>
         </div>
 
-        <div class=&quot;asiento bloqueado&quot;>
-          <div class=&quot;encabezado&quot;>
-            <span class=&quot;num&quot;>5.1</span>
-            <span class=&quot;desc&quot;>Completing the Accounting Cycle</span>
-            <span class=&quot;sello-ok&quot;>LOCKED</span>
+        <div class="asiento bloqueado">
+          <div class="encabezado">
+            <span class="num">5.1</span>
+            <span class="desc">Completing the Accounting Cycle</span>
+            <span class="sello-ok">LOCKED</span>
           </div>
-          <div class=&quot;lineas&quot;><p>Adjusting entries, closing nominal accounts, preparing the next period.</p></div>
+          <div class="lineas"><p>Adjusting entries, closing nominal accounts, preparing the next period.</p></div>
         </div>
       </div>
 
-      <p class=&quot;nota-pie&quot;><b>No prior bookkeeping required.</b> The app carries the arithmetic; you supply the accounting judgment.</p>
+      <p class="nota-pie"><b>No prior bookkeeping required.</b> The app carries the arithmetic; you supply the accounting judgment.</p>
 
-      <div class=&quot;comprobacion&quot;>
-        <div class=&quot;estampa&quot;>TRACKED</div>
+      <div class="comprobacion">
+        <div class="estampa">TRACKED</div>
         <h3>What you'll be able to prove</h3>
-        <div class=&quot;comp-fila&quot;><span>Record transactions in the general journal</span><b>2.1</b></div>
-        <div class=&quot;comp-fila&quot;><span>Post to the ledger and balance the equation</span><b>2.1</b></div>
-        <div class=&quot;comp-fila&quot;><span>Prepare the three linked statements</span><b>3–4</b></div>
-        <div class=&quot;comp-fila total&quot;><span>Total debits = Total credits</span><b>✓</b></div>
+        <div class="comp-fila"><span>Record transactions in the general journal</span><b>2.1</b></div>
+        <div class="comp-fila"><span>Post to the ledger and balance the equation</span><b>2.1</b></div>
+        <div class="comp-fila"><span>Prepare the three linked statements</span><b>3–4</b></div>
+        <div class="comp-fila total"><span>Total debits = Total credits</span><b>✓</b></div>
       </div>
     </section>
   </main>
 
-  <nav class=&quot;pestanas&quot; role=&quot;tablist&quot;>
-    <button class=&quot;pestana activa&quot; role=&quot;tab&quot; aria-selected=&quot;true&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M4 19.5V5a2 2 0 0 1 2-2h13v16H6.5a2.5 2.5 0 0 0 0 5H19&quot;/><path d=&quot;M9 7h6&quot;/></svg>
+  <nav class="pestanas" role="tablist">
+    <button class="pestana activa" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6.5a2.5 2.5 0 0 0 0 5H19"/><path d="M9 7h6"/></svg>
       Course
     </button>
-    <button class=&quot;pestana&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 3v18M3 7h18M7 7l-3.5 6a3.5 3.5 0 0 0 7 0L7 7ZM17 7l-3.5 6a3.5 3.5 0 0 0 7 0L17 7Z&quot;/></svg>
+    <button class="pestana" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7h18M7 7l-3.5 6a3.5 3.5 0 0 0 7 0L7 7ZM17 7l-3.5 6a3.5 3.5 0 0 0 7 0L17 7Z"/></svg>
       Rules
     </button>
-    <button class=&quot;pestana&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><rect x=&quot;4&quot; y=&quot;3&quot; width=&quot;16&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M8 8h8M8 12h8M8 16h5&quot;/></svg>
+    <button class="pestana" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
       Journal
     </button>
-    <button class=&quot;pestana&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M4 20V10M10 20V4M16 20v-7M21 20H3&quot;/></svg>
+    <button class="pestana" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>
       Statements
     </button>
   </nav>
 </div>
 
-<script>
-/* Begin lesson 2.1 */
-document.getElementById(&quot;btnComenzar&quot;).addEventListener(&quot;click&quot;,()=>{top.__nav('l21')});
+</div></div>
+<div class="slot" id="slot-l21"><div class="approot" id="app-l21">
+<div class="telefono">
 
-/* Tab selection — screens arrive in later builds. */
-const pestanas = document.querySelectorAll(&quot;.pestana&quot;);
-pestanas.forEach(b=>b.addEventListener(&quot;click&quot;,()=>{
-  pestanas.forEach(x=>{x.classList.remove(&quot;activa&quot;);x.setAttribute(&quot;aria-selected&quot;,&quot;false&quot;)});
-  b.classList.add(&quot;activa&quot;); b.setAttribute(&quot;aria-selected&quot;,&quot;true&quot;);
-}));
-</script>
-</body>
-</html>
-"></iframe></div>
-<div class="view" id="view-l21"><iframe title="l21" srcdoc="<!DOCTYPE html>
-<html lang=&quot;en&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot; />
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, viewport-fit=cover&quot; />
-<title>LedgerLab · 2.1 Debits and Credits</title>
-<meta name=&quot;theme-color&quot; content=&quot;#0C1D2E&quot; />
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
-<link href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
-<style>
-:root{
-  --lienzo:#0B1A29;--cabecera-1:#122B42;--cabecera-2:#1A3A57;--fondo:#F2F5F8;--panel:#FFFFFF;--panel-2:#F4F7FA;
-  --borde:#D8E0E9;--borde-suave:#E1E8EF;--acento:#2F6FAD;--acento-claro:#8FC1EA;--acento-tinte:#EAF2FA;--acento-borde:#C6DCEF;
-  --debe:#A93226;--debe-tinte:#FBEAE7;--debe-borde:#F0C9C3;--haber:#1E7A4D;--haber-tinte:#E7F4EC;--haber-borde:#BFE3CD;
-  --texto:#16283A;--texto-suave:#5B6B7B;--sombra:0 1px 3px rgba(16,35,55,.08), 0 8px 24px rgba(16,35,55,.07);
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{background:var(--lienzo);font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--texto);display:flex;justify-content:center;background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,173,.28), transparent 60%)}
-.telefono{width:100%;max-width:430px;min-height:100dvh;background:var(--fondo);display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.5)}
-@media(min-width:480px){.telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}}
-
-header.app{background:linear-gradient(160deg,var(--cabecera-1) 0%, var(--cabecera-2) 100%);color:#fff;padding:22px 22px 18px;position:relative;flex-shrink:0}
-header.app::after{content:&quot;&quot;;position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--acento-claro) 20%,var(--acento-claro) 80%,transparent);opacity:.8}
-.marca{display:flex;align-items:baseline;gap:10px}
-.marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em;cursor:pointer}
-.marca h1 em{color:var(--acento-claro);font-style:normal}
-.folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
-.subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
-.ecuacion-viva{margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(143,193,234,.28);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px}
-.ecuacion-viva .celda{text-align:center}
-.ecuacion-viva .etiqueta{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
-.ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;transition:color .3s}
-.ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento-claro)}
-.ecuacion-viva.parpadeo .cifra{color:var(--acento-claro)}
-.ecuacion-viva.rota .cifra{color:#F0A9A0}
-
-main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
-.pantalla{display:none;padding:20px 18px 30px;animation:aparecer .3s ease both}
-.pantalla.activa{display:block}
-@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* concepto */
-.ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.ojal .num-c{font-family:'IBM Plex Mono',monospace;color:var(--acento);background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:5px;padding:2px 7px}
-.ojal::after{content:&quot;&quot;;flex:1;height:1px;background:var(--borde)}
-h2.titulo{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.18;margin-bottom:6px}
-h2.titulo em{font-style:normal;color:var(--acento)}
-p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:6px;max-width:38ch}
-
-/* etiqueta de parte (1 explanation / 2 illustration / 3 tool) */
-.parte-eti{display:flex;align-items:center;gap:9px;margin:24px 0 11px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--texto-suave)}
-.parte-eti .paso{width:22px;height:22px;border-radius:6px;background:var(--acento);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;flex-shrink:0}
-.parte-eti.ilu .paso{background:#5B6B7B}
-.parte-eti.tool .paso{background:var(--haber)}
-.parte-eti::after{content:&quot;&quot;;flex:1;height:1px;background:var(--borde)}
-
-/* explicación */
-.explicacion{font-size:13.5px;line-height:1.6;color:#2A3E50}
-.explicacion p + p{margin-top:9px}
-.lista-def{list-style:none;margin:11px 0 0;display:flex;flex-direction:column;gap:8px}
-.lista-def li{position:relative;padding-left:20px;font-size:13px;line-height:1.5;color:#2A3E50}
-.lista-def li::before{content:&quot;&quot;;position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--acento)}
-.lista-def li b{color:var(--texto)}
-.clave{margin-top:12px;font-size:12.5px;color:#33506B;line-height:1.55;background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:9px;padding:10px 12px}
-.clave b{color:var(--texto)}
-
-/* paneles */
-.panel{background:var(--panel);border:1px solid var(--borde);border-radius:10px;box-shadow:var(--sombra);overflow:hidden}
-.panel-tit{display:flex;align-items:center;gap:8px;background:var(--panel-2);border-bottom:1px solid var(--borde-suave);padding:8px 12px;font-size:9.5px;letter-spacing:.1em;font-weight:700;color:var(--texto-suave);text-transform:uppercase}
-.panel-tit .chip{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px;letter-spacing:.06em;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
-.panel-tit .chip.fig{background:#EEF1F4;color:#5B6B7B;border-color:var(--borde)}
-.panel-cuerpo{padding:14px}
-
-/* cuenta T */
-.cuentaT .cabezaT{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--borde-suave)}
-.cuentaT .cabezaT b{font-size:13.5px;font-weight:700}
-.cuentaT .codigo{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;color:var(--texto-suave);background:var(--panel-2);border:1px solid var(--borde-suave);border-radius:6px;padding:2px 7px}
-.cuentaT .colsCab{display:grid;grid-template-columns:1fr 1fr;background:var(--panel-2);border-bottom:1px solid var(--borde-suave)}
-.cuentaT .colsCab div{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;font-weight:600;text-transform:uppercase;color:var(--texto-suave);text-align:center;padding:6px 4px}
-.cuentaT .colsCab div:first-child{border-right:1px solid var(--borde-suave);color:var(--debe)}
-.cuentaT .colsCab div:last-child{color:var(--haber)}
-.cuentaT .cuerpoT{display:grid;grid-template-columns:1fr 1fr;min-height:96px}
-.cuentaT .lado{padding:14px 10px;text-align:center}
-.cuentaT .lado:first-child{border-right:1px solid var(--borde-suave)}
-.cuentaT .pieT{border-top:1px solid var(--borde-suave);background:var(--panel-2);padding:8px 12px;text-align:center;font-size:11.5px;color:var(--texto-suave)}
-.cuentaT .pieT b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.04em}
-.montos{list-style:none;min-height:40px}
-.montos li{font-family:'IBM Plex Mono',monospace;font-size:12px;font-variant-numeric:tabular-nums;padding:1.5px 0;animation:aparecer .25s ease both}
-.insignia{display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:7px 11px;border-radius:7px}
-.insignia.neutra{background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
-
-/* Illustration 2.2 */
-.ilus22{display:flex;flex-direction:column;gap:12px}
-.caja-nb{border:1.5px solid;border-radius:10px;padding:12px}
-.caja-nb.debe-caja{border-color:var(--debe-borde);background:var(--debe-tinte)}
-.caja-nb.haber-caja{border-color:var(--haber-borde);background:var(--haber-tinte)}
-.nb-tit{font-size:12px;font-weight:700;text-align:center;margin-bottom:10px}
-.nb-cuenta{background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:9px 11px;margin-bottom:8px}
-.nb-cuenta:last-child{margin-bottom:0}
-.nb-nombre{font-size:12px;font-weight:600;margin-bottom:6px}
-.nb-t{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--borde-suave);border-radius:6px;overflow:hidden}
-.nb-col{padding:5px 6px;text-align:center}
-.nb-col:first-child{border-right:1px solid var(--borde-suave)}
-.nb-h{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.04em}
-.nb-s{display:block;font-size:10px;color:var(--texto-suave);margin-top:1px}
-
-/* double-entry diagram */
-.de-flujo{display:flex;flex-direction:column;align-items:center;gap:9px}
-.de-caja{background:var(--panel-2);border:1px solid var(--borde);border-radius:8px;padding:10px 14px;text-align:center;font-size:12.5px;font-weight:600;width:100%}
-.de-caja small{display:block;font-weight:400;color:var(--texto-suave);font-size:11px;margin-top:2px}
-.de-flecha{color:var(--acento);font-size:13px}
-.de-entradas{width:100%;border:1px solid var(--borde);border-radius:8px;overflow:hidden}
-.de-linea{display:grid;grid-template-columns:1fr auto;padding:8px 12px;font-size:12px}
-.de-linea span:last-child{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
-.de-linea.cargo{color:var(--debe)}
-.de-linea.abono{padding-left:26px;color:var(--haber);border-top:1px solid var(--borde-suave)}
-.de-balance{width:100%;background:var(--haber-tinte);border:1px solid var(--haber-borde);color:var(--haber);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:600;text-align:center;font-family:'IBM Plex Mono',monospace}
-
-/* tool: botones y drill */
-.respuestas{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:4px 13px 13px}
-.btn-lado{font-family:inherit;font-size:12.5px;font-weight:600;background:var(--panel);border-radius:8px;padding:11px 8px;cursor:pointer;transition:transform .15s}
-.btn-lado:active{transform:scale(.97)}
-.btn-lado.debe{border:1px solid var(--debe-borde);color:var(--debe)}
-.btn-lado.haber{border:1px solid var(--haber-borde);color:var(--haber)}
-.btn-lado span{display:block;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-suave);margin-top:2px;font-weight:600}
-.btn-fantasma{width:100%;font-family:inherit;font-size:12px;font-weight:600;background:transparent;border:1px solid var(--borde);color:var(--texto-suave);border-radius:8px;padding:9px;cursor:pointer}
-.marcador{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--texto-suave);text-transform:uppercase;margin:12px 2px;display:flex;justify-content:space-between}
-.asiento{background:var(--panel);border:1px solid var(--borde);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(16,35,55,.06);transition:opacity .3s, border-color .3s}
-.asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
-.asiento .num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
-.asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
-.asiento .lineas{padding:2px 13px 8px}
-.linea-diario{display:grid;grid-template-columns:1fr 74px 74px;gap:6px;align-items:baseline;font-size:12px;padding:3px 0}
-.linea-diario.cab{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-suave);font-weight:600;border-bottom:1px solid var(--borde-suave);padding-bottom:5px;margin-bottom:2px}
-.linea-diario.cab span:nth-child(2),.linea-diario.cab span:nth-child(3){text-align:right}
-.linea-diario .cuenta{color:var(--texto)}
-.linea-diario .cuenta.abono{padding-left:16px;color:var(--texto-suave)}
-.linea-diario .monto{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
-.linea-diario .monto.cargo{color:var(--debe)}
-.linea-diario .monto.abono{color:var(--haber)}
-.asiento .accion{border-top:1px solid var(--borde-suave);padding:9px 13px;display:flex;justify-content:flex-end}
-.btn-registrar{font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;transition:transform .15s}
-.btn-registrar:active{transform:scale(.97)}
-.btn-registrar:disabled{background:#B9C6D2;cursor:default}
-.asiento.registrado{border-color:var(--haber-borde)}
-.asiento.registrado .accion{display:none}
-.asiento .sello-ok{display:none}
-.asiento.registrado .sello-ok{display:inline-block;margin-left:auto;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;font-weight:600;color:var(--haber);background:var(--haber-tinte);border:1px solid var(--haber-borde);border-radius:999px;padding:3px 9px}
-.asiento.bloqueado{opacity:.5;pointer-events:none}
-.veredicto{margin:0 13px 12px;font-size:12px;line-height:1.5;border-radius:8px;padding:9px 11px}
-.veredicto.bien{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
-.veredicto.mal{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde)}
-.temblor{animation:temblor .3s ease}
-@keyframes temblor{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
-
-/* trial balance */
-.reng{display:grid;grid-template-columns:1fr 92px;gap:8px;align-items:baseline;font-size:12.5px;padding:6px 13px}
-.reng + .reng{border-top:1px solid var(--borde-suave)}
-.reng .c{color:var(--texto-suave)}
-.reng .m{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:500;text-align:right}
-.reng .m.debe-c{color:var(--debe)}
-.reng .m.haber-c{color:var(--haber)}
-.reng.granTotal{border-top:2px solid var(--texto);font-weight:600;background:var(--panel-2)}
-.reng.granTotal .c{color:var(--texto)}
-.reng.granTotal .m{border-bottom:3px double var(--texto);padding-bottom:2px}
-
-.comprobacion{margin-top:16px;background:linear-gradient(160deg,var(--cabecera-1),var(--cabecera-2));color:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;display:none;animation:aparecer .35s ease both}
-.comprobacion.visible{display:block}
-.comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
-.comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-.comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
-.comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
-.estampa{position:absolute;right:14px;top:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;font-weight:600;color:#7ED9A7;background:rgba(30,122,77,.28);border:1px solid rgba(126,217,167,.45);border-radius:999px;padding:5px 10px}
-
-.btn-siguiente{margin-top:24px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:9px;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
-.btn-siguiente:active{transform:scale(.98)}
-
-nav.pestanas{flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--lienzo);padding:8px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(143,193,234,.2)}
-.pestana{font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 2px;border-radius:10px;color:rgba(255,255,255,.42);font-size:9px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;transition:color .2s, background .2s}
-.pestana svg{width:21px;height:21px}
-.pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
-
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
-</style>
-</head>
-<body>
-<div class=&quot;telefono&quot;>
-
-  <header class=&quot;app&quot;>
-    <div class=&quot;marca&quot;>
-      <h1 id=&quot;volverIntro&quot; title=&quot;Back to course&quot;>Ledger<em>Lab</em></h1>
-      <span class=&quot;folio&quot;>Module 2.1</span>
+  <header class="app">
+    <div class="marca">
+      <h1 id="volverIntro" title="Back to course">Ledger<em>Lab</em></h1>
+      <span class="folio">Module 2.1</span>
     </div>
-    <div class=&quot;subtitulo&quot;>Debits and Credits</div>
-    <div class=&quot;ecuacion-viva&quot; id=&quot;ecuacionViva&quot;>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Total Debits</div><div class=&quot;cifra&quot; id=&quot;evD&quot;>$0</div></div>
-      <div class=&quot;signo&quot;>=</div>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Total Credits</div><div class=&quot;cifra&quot; id=&quot;evC&quot;>$0</div></div>
+    <div class="subtitulo">Debits and Credits</div>
+    <div class="ecuacion-viva" id="ecuacionViva">
+      <div class="celda"><div class="etiqueta">Total Debits</div><div class="cifra" id="evD">$0</div></div>
+      <div class="signo">=</div>
+      <div class="celda"><div class="etiqueta">Total Credits</div><div class="cifra" id="evC">$0</div></div>
     </div>
   </header>
 
-  <main id=&quot;principal&quot;>
+  <main id="principal">
 
     <!-- ============ CONCEPT 1 ============ -->
-    <section class=&quot;pantalla activa&quot; id=&quot;p-c1&quot;>
-      <div class=&quot;ojal&quot;><span class=&quot;num-c&quot;>Concept 1 / 3</span></div>
-      <h2 class=&quot;titulo&quot;>Debits and Credits</h2>
-      <p class=&quot;intro&quot;>Debit means left; credit means right. They describe where an entry goes — not whether it is good or bad.</p>
+    <section class="pantalla activa" id="p-c1">
+      <div class="ojal"><span class="num-c">Concept 1 / 3</span></div>
+      <h2 class="titulo">Debits and Credits</h2>
+      <p class="intro">Debit means left; credit means right. They describe where an entry goes — not whether it is good or bad.</p>
 
-      <div class=&quot;parte-eti&quot;><span class=&quot;paso&quot;>1</span> Explanation</div>
-      <div class=&quot;explicacion&quot;>
+      <div class="parte-eti"><span class="paso">1</span> Explanation</div>
+      <div class="explicacion">
         <p>The terms <b>debit</b> (Dr.) and <b>credit</b> (Cr.) mean <b>left</b> and <b>right</b>, respectively. They do not mean increase or decrease — they describe <b>where</b> a company makes an entry.</p>
-        <ul class=&quot;lista-def&quot;>
+        <ul class="lista-def">
           <li>An entry on the left side of an account is a <b>debit to</b> the account.</li>
           <li>An entry on the right side is a <b>credit to</b> the account.</li>
           <li>An account shows a <b>debit balance</b> if total debits exceed the credits.</li>
           <li>An account shows a <b>credit balance</b> if total credits exceed the debits.</li>
         </ul>
-        <div class=&quot;clave&quot;>Debits on the left and credits on the right is simply an accounting <b>custom</b> — like driving on the right-hand side of the road. The custom is now the rule, and it applies to <b>all</b> accounts.</div>
+        <div class="clave">Debits on the left and credits on the right is simply an accounting <b>custom</b> — like driving on the right-hand side of the road. The custom is now the rule, and it applies to <b>all</b> accounts.</div>
       </div>
 
-      <div class=&quot;parte-eti ilu&quot;><span class=&quot;paso&quot;>2</span> Illustration</div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>Anatomy of a T-account<span class=&quot;chip fig&quot;>FIGURE</span></div>
-        <div class=&quot;cuentaT&quot;>
-          <div class=&quot;cabezaT&quot;><b>Account Title</b><span class=&quot;codigo&quot;>GL-XXXX</span></div>
-          <div class=&quot;colsCab&quot;><div>Debit · Dr · left</div><div>Credit · Cr · right</div></div>
-          <div class=&quot;cuerpoT&quot;>
-            <div class=&quot;lado&quot;><span class=&quot;insignia neutra&quot;>enter on the left</span></div>
-            <div class=&quot;lado&quot;><span class=&quot;insignia neutra&quot;>enter on the right</span></div>
+      <div class="parte-eti ilu"><span class="paso">2</span> Illustration</div>
+      <div class="panel">
+        <div class="panel-tit">Anatomy of a T-account<span class="chip fig">FIGURE</span></div>
+        <div class="cuentaT">
+          <div class="cabezaT"><b>Account Title</b><span class="codigo">GL-XXXX</span></div>
+          <div class="colsCab"><div>Debit · Dr · left</div><div>Credit · Cr · right</div></div>
+          <div class="cuerpoT">
+            <div class="lado"><span class="insignia neutra">enter on the left</span></div>
+            <div class="lado"><span class="insignia neutra">enter on the right</span></div>
           </div>
-          <div class=&quot;pieT&quot;>Balance sits on the side with the larger total — <b style=&quot;color:var(--debe)&quot;>debit</b> or <b style=&quot;color:var(--haber)&quot;>credit</b>.</div>
+          <div class="pieT">Balance sits on the side with the larger total — <b style="color:var(--debe)">debit</b> or <b style="color:var(--haber)">credit</b>.</div>
         </div>
       </div>
 
-      <div class=&quot;parte-eti tool&quot;><span class=&quot;paso&quot;>3</span> Apply it</div>
-      <p class=&quot;intro&quot;>Post amounts to Cash, then read which side wins.</p>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>Account register<span class=&quot;chip&quot;>LIVE</span></div>
-        <div class=&quot;cuentaT&quot;>
-          <div class=&quot;cabezaT&quot;><b>Cash</b><span class=&quot;codigo&quot;>GL-1010</span></div>
-          <div class=&quot;colsCab&quot;><div>Debit (Dr)</div><div>Credit (Cr)</div></div>
-          <div class=&quot;cuerpoT&quot;>
-            <div class=&quot;lado&quot;><ul class=&quot;montos&quot; id=&quot;montosDebe&quot;></ul></div>
-            <div class=&quot;lado&quot;><ul class=&quot;montos&quot; id=&quot;montosHaber&quot;></ul></div>
+      <div class="parte-eti tool"><span class="paso">3</span> Apply it</div>
+      <p class="intro">Post amounts to Cash, then read which side wins.</p>
+      <div class="panel">
+        <div class="panel-tit">Account register<span class="chip">LIVE</span></div>
+        <div class="cuentaT">
+          <div class="cabezaT"><b>Cash</b><span class="codigo">GL-1010</span></div>
+          <div class="colsCab"><div>Debit (Dr)</div><div>Credit (Cr)</div></div>
+          <div class="cuerpoT">
+            <div class="lado"><ul class="montos" id="montosDebe"></ul></div>
+            <div class="lado"><ul class="montos" id="montosHaber"></ul></div>
           </div>
-          <div class=&quot;pieT&quot; id=&quot;pieBalance&quot;>No entries yet — post something below.</div>
+          <div class="pieT" id="pieBalance">No entries yet — post something below.</div>
         </div>
-        <div class=&quot;respuestas&quot; style=&quot;padding-top:12px&quot;>
-          <button class=&quot;btn-lado debe&quot; id=&quot;btnPostDebe&quot;>Post debit<span>left column</span></button>
-          <button class=&quot;btn-lado haber&quot; id=&quot;btnPostHaber&quot;>Post credit<span>right column</span></button>
+        <div class="respuestas" style="padding-top:12px">
+          <button class="btn-lado debe" id="btnPostDebe">Post debit<span>left column</span></button>
+          <button class="btn-lado haber" id="btnPostHaber">Post credit<span>right column</span></button>
         </div>
-        <div style=&quot;padding:0 13px 13px&quot;><button class=&quot;btn-fantasma&quot; id=&quot;btnLimpiar&quot;>Clear the account</button></div>
+        <div style="padding:0 13px 13px"><button class="btn-fantasma" id="btnLimpiar">Clear the account</button></div>
       </div>
 
-      <button class=&quot;btn-siguiente&quot; data-goto=&quot;p-c2&quot;>Next concept · Debit &amp;amp; Credit Rules ▸</button>
+      <button class="btn-siguiente" data-goto="p-c2">Next concept · Debit &amp; Credit Rules ▸</button>
     </section>
 
     <!-- ============ CONCEPT 2 ============ -->
-    <section class=&quot;pantalla&quot; id=&quot;p-c2&quot;>
-      <div class=&quot;ojal&quot;><span class=&quot;num-c&quot;>Concept 2 / 3</span></div>
-      <h2 class=&quot;titulo&quot;>Debit &amp;amp; Credit Rules</h2>
-      <p class=&quot;intro&quot;>Each account type increases on one specific side. That side is its normal balance.</p>
+    <section class="pantalla" id="p-c2">
+      <div class="ojal"><span class="num-c">Concept 2 / 3</span></div>
+      <h2 class="titulo">Debit &amp; Credit Rules</h2>
+      <p class="intro">Each account type increases on one specific side. That side is its normal balance.</p>
 
-      <div class=&quot;parte-eti&quot;><span class=&quot;paso&quot;>1</span> Explanation</div>
-      <div class=&quot;explicacion&quot;>
+      <div class="parte-eti"><span class="paso">1</span> Explanation</div>
+      <div class="explicacion">
         <p>Increases to all <b>asset</b> and <b>expense</b> accounts occur on the left (debit) side; decreases on the right (credit) side.</p>
         <p>Conversely, increases to all <b>liability</b>, <b>revenue</b>, and most <b>stockholders' equity</b> accounts occur on the right (credit) side; decreases on the left.</p>
-        <div class=&quot;clave&quot;>An account's <b>normal balance</b> is the side that increases it. One exception in the equity family: <b>Dividends</b> increases on the <b>debit</b> side.</div>
+        <div class="clave">An account's <b>normal balance</b> is the side that increases it. One exception in the equity family: <b>Dividends</b> increases on the <b>debit</b> side.</div>
       </div>
 
-      <div class=&quot;parte-eti ilu&quot;><span class=&quot;paso&quot;>2</span> Illustration</div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>Illustration 2.2 · Normal balances<span class=&quot;chip fig&quot;>FIGURE</span></div>
-        <div class=&quot;panel-cuerpo&quot;>
-          <div class=&quot;ilus22&quot;>
-            <div class=&quot;caja-nb debe-caja&quot;>
-              <div class=&quot;nb-tit&quot;>Normal Balance — <span style=&quot;color:var(--debe)&quot;>Debit</span></div>
-              <div class=&quot;nb-cuenta&quot;><div class=&quot;nb-nombre&quot;>Asset Accounts</div><div class=&quot;nb-t&quot;><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--debe)&quot;>Debit</span><span class=&quot;nb-s&quot;>+ increase</span></div><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--haber)&quot;>Credit</span><span class=&quot;nb-s&quot;>− decrease</span></div></div></div>
-              <div class=&quot;nb-cuenta&quot;><div class=&quot;nb-nombre&quot;>Expense Accounts</div><div class=&quot;nb-t&quot;><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--debe)&quot;>Debit</span><span class=&quot;nb-s&quot;>+ increase</span></div><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--haber)&quot;>Credit</span><span class=&quot;nb-s&quot;>− decrease</span></div></div></div>
+      <div class="parte-eti ilu"><span class="paso">2</span> Illustration</div>
+      <div class="panel">
+        <div class="panel-tit">Illustration 2.2 · Normal balances<span class="chip fig">FIGURE</span></div>
+        <div class="panel-cuerpo">
+          <div class="ilus22">
+            <div class="caja-nb debe-caja">
+              <div class="nb-tit">Normal Balance — <span style="color:var(--debe)">Debit</span></div>
+              <div class="nb-cuenta"><div class="nb-nombre">Asset Accounts</div><div class="nb-t"><div class="nb-col"><span class="nb-h" style="color:var(--debe)">Debit</span><span class="nb-s">+ increase</span></div><div class="nb-col"><span class="nb-h" style="color:var(--haber)">Credit</span><span class="nb-s">− decrease</span></div></div></div>
+              <div class="nb-cuenta"><div class="nb-nombre">Expense Accounts</div><div class="nb-t"><div class="nb-col"><span class="nb-h" style="color:var(--debe)">Debit</span><span class="nb-s">+ increase</span></div><div class="nb-col"><span class="nb-h" style="color:var(--haber)">Credit</span><span class="nb-s">− decrease</span></div></div></div>
             </div>
-            <div class=&quot;caja-nb haber-caja&quot;>
-              <div class=&quot;nb-tit&quot;>Normal Balance — <span style=&quot;color:var(--haber)&quot;>Credit</span></div>
-              <div class=&quot;nb-cuenta&quot;><div class=&quot;nb-nombre&quot;>Liability Accounts</div><div class=&quot;nb-t&quot;><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--debe)&quot;>Debit</span><span class=&quot;nb-s&quot;>− decrease</span></div><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--haber)&quot;>Credit</span><span class=&quot;nb-s&quot;>+ increase</span></div></div></div>
-              <div class=&quot;nb-cuenta&quot;><div class=&quot;nb-nombre&quot;>Stockholders' Equity Accounts</div><div class=&quot;nb-t&quot;><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--debe)&quot;>Debit</span><span class=&quot;nb-s&quot;>− decrease</span></div><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--haber)&quot;>Credit</span><span class=&quot;nb-s&quot;>+ increase</span></div></div></div>
-              <div class=&quot;nb-cuenta&quot;><div class=&quot;nb-nombre&quot;>Revenue Accounts</div><div class=&quot;nb-t&quot;><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--debe)&quot;>Debit</span><span class=&quot;nb-s&quot;>− decrease</span></div><div class=&quot;nb-col&quot;><span class=&quot;nb-h&quot; style=&quot;color:var(--haber)&quot;>Credit</span><span class=&quot;nb-s&quot;>+ increase</span></div></div></div>
+            <div class="caja-nb haber-caja">
+              <div class="nb-tit">Normal Balance — <span style="color:var(--haber)">Credit</span></div>
+              <div class="nb-cuenta"><div class="nb-nombre">Liability Accounts</div><div class="nb-t"><div class="nb-col"><span class="nb-h" style="color:var(--debe)">Debit</span><span class="nb-s">− decrease</span></div><div class="nb-col"><span class="nb-h" style="color:var(--haber)">Credit</span><span class="nb-s">+ increase</span></div></div></div>
+              <div class="nb-cuenta"><div class="nb-nombre">Stockholders' Equity Accounts</div><div class="nb-t"><div class="nb-col"><span class="nb-h" style="color:var(--debe)">Debit</span><span class="nb-s">− decrease</span></div><div class="nb-col"><span class="nb-h" style="color:var(--haber)">Credit</span><span class="nb-s">+ increase</span></div></div></div>
+              <div class="nb-cuenta"><div class="nb-nombre">Revenue Accounts</div><div class="nb-t"><div class="nb-col"><span class="nb-h" style="color:var(--debe)">Debit</span><span class="nb-s">− decrease</span></div><div class="nb-col"><span class="nb-h" style="color:var(--haber)">Credit</span><span class="nb-s">+ increase</span></div></div></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class=&quot;parte-eti tool&quot;><span class=&quot;paso&quot;>3</span> Apply it</div>
-      <p class=&quot;intro&quot;>Eight changes — post each to the correct side.</p>
-      <div class=&quot;marcador&quot;><span id=&quot;drillPos&quot;>Item 1 of 8</span><span id=&quot;drillPuntos&quot;>0 first-try correct</span></div>
-      <div id=&quot;cartaDrill&quot;></div>
-      <div class=&quot;comprobacion&quot; id=&quot;compDrill&quot;>
-        <div class=&quot;estampa&quot; id=&quot;estampaDrill&quot;>MASTERED ✓</div>
+      <div class="parte-eti tool"><span class="paso">3</span> Apply it</div>
+      <p class="intro">Eight changes — post each to the correct side.</p>
+      <div class="marcador"><span id="drillPos">Item 1 of 8</span><span id="drillPuntos">0 first-try correct</span></div>
+      <div id="cartaDrill"></div>
+      <div class="comprobacion" id="compDrill">
+        <div class="estampa" id="estampaDrill">MASTERED ✓</div>
         <h3>Rules applied</h3>
-        <div class=&quot;comp-fila&quot;><span>First-try correct</span><b id=&quot;resumenPuntos&quot;>0 / 8</b></div>
-        <div class=&quot;comp-fila total&quot;><span>Assets &amp;amp; expenses ↑ by debit · the rest ↑ by credit</span><b>✓</b></div>
-        <button class=&quot;btn-fantasma&quot; id=&quot;btnDrillReset&quot; style=&quot;border-color:rgba(255,255,255,.3);color:#fff;margin-top:14px&quot;>Run the drill again</button>
+        <div class="comp-fila"><span>First-try correct</span><b id="resumenPuntos">0 / 8</b></div>
+        <div class="comp-fila total"><span>Assets &amp; expenses ↑ by debit · the rest ↑ by credit</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnDrillReset" style="border-color:rgba(255,255,255,.3);color:#fff;margin-top:14px">Run the drill again</button>
       </div>
 
-      <button class=&quot;btn-siguiente&quot; data-goto=&quot;p-c3&quot;>Next concept · The Double-Entry System ▸</button>
+      <button class="btn-siguiente" data-goto="p-c3">Next concept · The Double-Entry System ▸</button>
     </section>
 
     <!-- ============ CONCEPT 3 ============ -->
-    <section class=&quot;pantalla&quot; id=&quot;p-c3&quot;>
-      <div class=&quot;ojal&quot;><span class=&quot;num-c&quot;>Concept 3 / 3</span></div>
-      <h2 class=&quot;titulo&quot;>The Double-Entry System</h2>
-      <p class=&quot;intro&quot;>Every transaction is recorded with equal debits and credits — which lets the books prove themselves.</p>
+    <section class="pantalla" id="p-c3">
+      <div class="ojal"><span class="num-c">Concept 3 / 3</span></div>
+      <h2 class="titulo">The Double-Entry System</h2>
+      <p class="intro">Every transaction is recorded with equal debits and credits — which lets the books prove themselves.</p>
 
-      <div class=&quot;parte-eti&quot;><span class=&quot;paso&quot;>1</span> Explanation</div>
-      <div class=&quot;explicacion&quot;>
+      <div class="parte-eti"><span class="paso">1</span> Explanation</div>
+      <div class="explicacion">
         <p>Under the <b>double-entry</b> system, a company records the dual (two-sided) effect of each transaction in appropriate accounts.</p>
-        <ul class=&quot;lista-def&quot;>
+        <ul class="lista-def">
           <li>This system offers a means of <b>proving the accuracy</b> of the recorded amounts.</li>
           <li>If every transaction is recorded with equal debits and credits, then the <b>sum of all debits must equal the sum of all credits</b>.</li>
         </ul>
       </div>
 
-      <div class=&quot;parte-eti ilu&quot;><span class=&quot;paso&quot;>2</span> Illustration</div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>One transaction, two entries<span class=&quot;chip fig&quot;>FIGURE</span></div>
-        <div class=&quot;panel-cuerpo&quot;>
-          <div class=&quot;de-flujo&quot;>
-            <div class=&quot;de-caja&quot;>A transaction occurs<small>Services performed for $1,500 cash</small></div>
-            <div class=&quot;de-flecha&quot;>▼</div>
-            <div class=&quot;de-entradas&quot;>
-              <div class=&quot;de-linea cargo&quot;><span>Dr · Cash</span><span>$1,500</span></div>
-              <div class=&quot;de-linea abono&quot;><span>Cr · Service Revenue</span><span>$1,500</span></div>
+      <div class="parte-eti ilu"><span class="paso">2</span> Illustration</div>
+      <div class="panel">
+        <div class="panel-tit">One transaction, two entries<span class="chip fig">FIGURE</span></div>
+        <div class="panel-cuerpo">
+          <div class="de-flujo">
+            <div class="de-caja">A transaction occurs<small>Services performed for $1,500 cash</small></div>
+            <div class="de-flecha">▼</div>
+            <div class="de-entradas">
+              <div class="de-linea cargo"><span>Dr · Cash</span><span>$1,500</span></div>
+              <div class="de-linea abono"><span>Cr · Service Revenue</span><span>$1,500</span></div>
             </div>
-            <div class=&quot;de-flecha&quot;>▼</div>
-            <div class=&quot;de-balance&quot;>Debits $1,500 = Credits $1,500 ✓</div>
+            <div class="de-flecha">▼</div>
+            <div class="de-balance">Debits $1,500 = Credits $1,500 ✓</div>
           </div>
         </div>
       </div>
 
-      <div class=&quot;parte-eti tool&quot;><span class=&quot;paso&quot;>3</span> Apply it</div>
-      <p class=&quot;intro&quot;>Post four transactions and watch total debits stay equal to total credits — in the register and the header bar.</p>
-      <div id=&quot;listaPrueba&quot;></div>
-      <div class=&quot;panel&quot; style=&quot;margin-top:6px&quot;>
-        <div class=&quot;panel-tit&quot;>Trial balance · running totals<span class=&quot;chip&quot; id=&quot;chipPrueba&quot;>0 / 4 POSTED</span></div>
-        <div class=&quot;reng&quot;><span class=&quot;c&quot;>Total debits</span><span class=&quot;m debe-c&quot; id=&quot;totalDebe&quot;>$0</span></div>
-        <div class=&quot;reng&quot;><span class=&quot;c&quot;>Total credits</span><span class=&quot;m haber-c&quot; id=&quot;totalHaber&quot;>$0</span></div>
-        <div class=&quot;reng granTotal&quot;><span class=&quot;c&quot;>Difference</span><span class=&quot;m&quot; id=&quot;totalDif&quot;>$0</span></div>
+      <div class="parte-eti tool"><span class="paso">3</span> Apply it</div>
+      <p class="intro">Post four transactions and watch total debits stay equal to total credits — in the register and the header bar.</p>
+      <div id="listaPrueba"></div>
+      <div class="panel" style="margin-top:6px">
+        <div class="panel-tit">Trial balance · running totals<span class="chip" id="chipPrueba">0 / 4 POSTED</span></div>
+        <div class="reng"><span class="c">Total debits</span><span class="m debe-c" id="totalDebe">$0</span></div>
+        <div class="reng"><span class="c">Total credits</span><span class="m haber-c" id="totalHaber">$0</span></div>
+        <div class="reng granTotal"><span class="c">Difference</span><span class="m" id="totalDif">$0</span></div>
       </div>
-      <div class=&quot;comprobacion&quot; id=&quot;compPrueba&quot;>
-        <div class=&quot;estampa&quot;>BALANCED ✓</div>
+      <div class="comprobacion" id="compPrueba">
+        <div class="estampa">BALANCED ✓</div>
         <h3>Accuracy, demonstrated</h3>
-        <div class=&quot;comp-fila&quot;><span>Sum of all debits</span><b id=&quot;pruebaDebe&quot;>$0</b></div>
-        <div class=&quot;comp-fila&quot;><span>Sum of all credits</span><b id=&quot;pruebaHaber&quot;>$0</b></div>
-        <div class=&quot;comp-fila total&quot;><span>Total debits = Total credits</span><b>✓</b></div>
-        <button class=&quot;btn-fantasma&quot; id=&quot;btnPruebaReset&quot; style=&quot;border-color:rgba(255,255,255,.3);color:#fff;margin-top:14px&quot;>Reset the proof</button>
+        <div class="comp-fila"><span>Sum of all debits</span><b id="pruebaDebe">$0</b></div>
+        <div class="comp-fila"><span>Sum of all credits</span><b id="pruebaHaber">$0</b></div>
+        <div class="comp-fila total"><span>Total debits = Total credits</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnPruebaReset" style="border-color:rgba(255,255,255,.3);color:#fff;margin-top:14px">Reset the proof</button>
       </div>
 
-      <button class=&quot;btn-siguiente&quot; id=&quot;btnNextLesson&quot;>Next lesson · The Accounting Equation ▸</button>
+      <button class="btn-siguiente" id="btnNextLesson">Next lesson · The Accounting Equation ▸</button>
     </section>
   </main>
 
-  <nav class=&quot;pestanas&quot; role=&quot;tablist&quot;>
-    <button class=&quot;pestana activa&quot; data-destino=&quot;p-c1&quot; role=&quot;tab&quot; aria-selected=&quot;true&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 3v18M4 8h16M4 8v9M20 8v9&quot;/></svg>
+  <nav class="pestanas" role="tablist">
+    <button class="pestana activa" data-destino="p-c1" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4 8h16M4 8v9M20 8v9"/></svg>
       Debit·Credit
     </button>
-    <button class=&quot;pestana&quot; data-destino=&quot;p-c2&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 3v18M3 7h18M7 7l-3.5 6a3.5 3.5 0 0 0 7 0L7 7ZM17 7l-3.5 6a3.5 3.5 0 0 0 7 0L17 7Z&quot;/></svg>
+    <button class="pestana" data-destino="p-c2" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7h18M7 7l-3.5 6a3.5 3.5 0 0 0 7 0L7 7ZM17 7l-3.5 6a3.5 3.5 0 0 0 7 0L17 7Z"/></svg>
       The Rules
     </button>
-    <button class=&quot;pestana&quot; data-destino=&quot;p-c3&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M4 20V10M10 20V4M16 20v-7M21 20H3&quot;/></svg>
+    <button class="pestana" data-destino="p-c3" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>
       Double-Entry
     </button>
   </nav>
 </div>
 
-<script>
-const fmt = n => (n<0?&quot;-&quot;:&quot;&quot;) + &quot;$&quot; + Math.abs(n).toLocaleString(&quot;en-US&quot;);
-const $ = id => document.getElementById(id);
-$(&quot;volverIntro&quot;).addEventListener(&quot;click&quot;,()=>{top.__nav('intro')});
-$(&quot;btnNextLesson&quot;).addEventListener(&quot;click&quot;,()=>{top.__nav('l22')});
+</div></div>
+<div class="slot" id="slot-l22"><div class="approot" id="app-l22">
+<div class="telefono">
 
-/* header Dr = Cr */
-let totDebe = 0, totHaber = 0;
-const ecuacionViva = $(&quot;ecuacionViva&quot;);
-function pintaEcuacion(){
-  $(&quot;evD&quot;).textContent = fmt(totDebe); $(&quot;evC&quot;).textContent = fmt(totHaber);
-  ecuacionViva.classList.toggle(&quot;rota&quot;, totDebe !== totHaber);
-  ecuacionViva.classList.add(&quot;parpadeo&quot;); setTimeout(()=>ecuacionViva.classList.remove(&quot;parpadeo&quot;), 500);
-}
-
-/* navegación por conceptos */
-const pestanas = document.querySelectorAll(&quot;.pestana&quot;);
-function irA(dest){
-  pestanas.forEach(x=>{const on=x.dataset.destino===dest;x.classList.toggle(&quot;activa&quot;,on);x.setAttribute(&quot;aria-selected&quot;,on)});
-  document.querySelectorAll(&quot;.pantalla&quot;).forEach(p=>p.classList.toggle(&quot;activa&quot;, p.id===dest));
-  $(&quot;principal&quot;).scrollTo({top:0});
-}
-pestanas.forEach(b=>b.addEventListener(&quot;click&quot;,()=>irA(b.dataset.destino)));
-document.querySelectorAll(&quot;.btn-siguiente[data-goto]&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>irA(b.dataset.goto)));
-
-/* ===== C1 tool: Cash register ===== */
-const AMOUNTS = [300,200,500,150,400,250]; let idx = 0;
-const efectivo = {debe:[], haber:[]};
-function pintaBalance(){
-  $(&quot;montosDebe&quot;).innerHTML  = efectivo.debe.map(m=>`<li>${fmt(m)}</li>`).join(&quot;&quot;);
-  $(&quot;montosHaber&quot;).innerHTML = efectivo.haber.map(m=>`<li>${fmt(m)}</li>`).join(&quot;&quot;);
-  const d = efectivo.debe.reduce((a,b)=>a+b,0), h = efectivo.haber.reduce((a,b)=>a+b,0);
-  const pie = $(&quot;pieBalance&quot;);
-  if(!d &amp;&amp; !h){ pie.innerHTML = &quot;No entries yet — post something below.&quot;; return; }
-  if(d>h)      pie.innerHTML = `Debits exceed credits → <b style=&quot;color:var(--debe)&quot;>DEBIT BALANCE ${fmt(d-h)}</b>`;
-  else if(h>d) pie.innerHTML = `Credits exceed debits → <b style=&quot;color:var(--haber)&quot;>CREDIT BALANCE ${fmt(h-d)}</b>`;
-  else         pie.innerHTML = `Both columns equal → <b style=&quot;color:var(--acento)&quot;>NO BALANCE</b>`;
-}
-$(&quot;btnPostDebe&quot;).addEventListener(&quot;click&quot;,()=>{ efectivo.debe.push(AMOUNTS[idx++ % AMOUNTS.length]); pintaBalance(); });
-$(&quot;btnPostHaber&quot;).addEventListener(&quot;click&quot;,()=>{ efectivo.haber.push(AMOUNTS[idx++ % AMOUNTS.length]); pintaBalance(); });
-$(&quot;btnLimpiar&quot;).addEventListener(&quot;click&quot;,()=>{ efectivo.debe=[]; efectivo.haber=[]; idx=0; pintaBalance(); });
-
-/* ===== C2 tool: rules drill ===== */
-const PREGUNTAS = [
-  {q:&quot;Cash increases after a customer pays.&quot;, tipo:&quot;an asset&quot;, r:&quot;debe&quot;, regla:&quot;Assets increase on the debit (left) side.&quot;},
-  {q:&quot;Accounts Payable increases on a purchase on account.&quot;, tipo:&quot;a liability&quot;, r:&quot;haber&quot;, regla:&quot;Liabilities increase on the credit (right) side.&quot;},
-  {q:&quot;Service Revenue is earned this period.&quot;, tipo:&quot;a revenue account&quot;, r:&quot;haber&quot;, regla:&quot;Revenues increase on the credit (right) side.&quot;},
-  {q:&quot;Rent Expense is incurred for the month.&quot;, tipo:&quot;an expense&quot;, r:&quot;debe&quot;, regla:&quot;Expenses increase on the debit (left) side.&quot;},
-  {q:&quot;Cash decreases when the company pays a bill.&quot;, tipo:&quot;an asset decreasing&quot;, r:&quot;haber&quot;, regla:&quot;Assets decrease on the credit (right) side.&quot;},
-  {q:&quot;Common Stock increases when shares are issued.&quot;, tipo:&quot;stockholders' equity&quot;, r:&quot;haber&quot;, regla:&quot;Equity accounts increase on the credit side.&quot;},
-  {q:&quot;Dividends are declared and paid.&quot;, tipo:&quot;the exception&quot;, r:&quot;debe&quot;, regla:&quot;Dividends is the equity account that increases by debit.&quot;},
-  {q:&quot;Notes Payable decreases when the loan is repaid.&quot;, tipo:&quot;a liability decreasing&quot;, r:&quot;debe&quot;, regla:&quot;Liabilities decrease on the debit (left) side.&quot;},
-];
-let qi = 0, puntos = 0, fallado = false;
-function pintaDrill(){
-  if(qi >= PREGUNTAS.length){
-    $(&quot;cartaDrill&quot;).innerHTML = &quot;&quot;;
-    $(&quot;drillPos&quot;).textContent = &quot;Drill finished&quot;;
-    $(&quot;resumenPuntos&quot;).textContent = `${puntos} / ${PREGUNTAS.length}`;
-    $(&quot;estampaDrill&quot;).textContent = puntos === PREGUNTAS.length ? &quot;MASTERED ✓&quot; : &quot;COMPLETE&quot;;
-    $(&quot;compDrill&quot;).classList.add(&quot;visible&quot;);
-    setTimeout(()=>$(&quot;compDrill&quot;).scrollIntoView({behavior:&quot;smooth&quot;,block:&quot;end&quot;}), 200);
-    return;
-  }
-  const p = PREGUNTAS[qi]; fallado = false;
-  $(&quot;drillPos&quot;).textContent = `Item ${qi+1} of ${PREGUNTAS.length}`;
-  $(&quot;cartaDrill&quot;).innerHTML = `
-    <div class=&quot;asiento&quot; id=&quot;cartaActiva&quot;>
-      <div class=&quot;encabezado&quot;><span class=&quot;num&quot;>Q-${qi+1}</span><span class=&quot;desc&quot;>${p.q}</span><span class=&quot;sello-ok&quot;>POSTED ✓</span></div>
-      <div class=&quot;lineas&quot; style=&quot;color:var(--texto-suave);font-size:12px&quot;>This is ${p.tipo} — which column records it?</div>
-      <div class=&quot;respuestas&quot;>
-        <button class=&quot;btn-lado debe&quot; data-r=&quot;debe&quot;>Debit<span>left column</span></button>
-        <button class=&quot;btn-lado haber&quot; data-r=&quot;haber&quot;>Credit<span>right column</span></button>
-      </div>
-      <div id=&quot;feedbackDrill&quot;></div>
-    </div>`;
-  document.querySelectorAll(&quot;#cartaDrill .btn-lado&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>responde(b.dataset.r)));
-}
-function responde(r){
-  const p = PREGUNTAS[qi], fb = $(&quot;feedbackDrill&quot;);
-  if(r === p.r){
-    if(!fallado) puntos++;
-    $(&quot;drillPuntos&quot;).textContent = `${puntos} first-try correct`;
-    $(&quot;cartaActiva&quot;).classList.add(&quot;registrado&quot;);
-    fb.innerHTML = `<div class=&quot;veredicto bien&quot;><b>Correct.</b> ${p.regla}</div>`;
-    totDebe += 100; totHaber += 100; pintaEcuacion();
-    qi++; setTimeout(pintaDrill, 1300);
-  }else{
-    fallado = true;
-    fb.innerHTML = `<div class=&quot;veredicto mal&quot;><b>Not quite.</b> ${p.regla} Try the other side.</div>`;
-    $(&quot;cartaActiva&quot;).classList.remove(&quot;temblor&quot;); void $(&quot;cartaActiva&quot;).offsetWidth; $(&quot;cartaActiva&quot;).classList.add(&quot;temblor&quot;);
-  }
-}
-$(&quot;btnDrillReset&quot;).addEventListener(&quot;click&quot;,()=>{
-  qi=0; puntos=0; $(&quot;drillPuntos&quot;).textContent=&quot;0 first-try correct&quot;; $(&quot;compDrill&quot;).classList.remove(&quot;visible&quot;);
-  pintaDrill(); irA(&quot;p-c2&quot;);
-});
-pintaDrill();
-
-/* ===== C3 tool: journal → trial balance ===== */
-const TRANS = [
-  {desc:&quot;Stockholders invest $10,000 cash in the business&quot;, diario:[[&quot;Cash&quot;,10000,&quot;cargo&quot;],[&quot;Common Stock&quot;,10000,&quot;abono&quot;]]},
-  {desc:&quot;Equipment is purchased for $3,000 on account&quot;, diario:[[&quot;Equipment&quot;,3000,&quot;cargo&quot;],[&quot;Accounts Payable&quot;,3000,&quot;abono&quot;]]},
-  {desc:&quot;Services are performed for $1,500 cash&quot;, diario:[[&quot;Cash&quot;,1500,&quot;cargo&quot;],[&quot;Service Revenue&quot;,1500,&quot;abono&quot;]]},
-  {desc:&quot;Rent of $800 is paid in cash&quot;, diario:[[&quot;Rent Expense&quot;,800,&quot;cargo&quot;],[&quot;Cash&quot;,800,&quot;abono&quot;]]},
-];
-let paso = 0, pDebe = 0, pHaber = 0;
-function pintaPrueba(){
-  const lista = $(&quot;listaPrueba&quot;); lista.innerHTML = &quot;&quot;;
-  TRANS.forEach((t,i)=>{
-    const d = document.createElement(&quot;div&quot;);
-    d.className = &quot;asiento&quot; + (i<paso?&quot; registrado&quot;:&quot;&quot;) + (i>paso?&quot; bloqueado&quot;:&quot;&quot;);
-    const lineas = t.diario.map(([cta,m,tipo])=>`
-      <div class=&quot;linea-diario&quot;>
-        <span class=&quot;cuenta ${tipo}&quot;>${cta}</span>
-        <span class=&quot;monto cargo&quot;>${tipo===&quot;cargo&quot; ? m.toLocaleString(&quot;en-US&quot;) : &quot;&quot;}</span>
-        <span class=&quot;monto abono&quot;>${tipo===&quot;abono&quot; ? m.toLocaleString(&quot;en-US&quot;) : &quot;&quot;}</span>
-      </div>`).join(&quot;&quot;);
-    d.innerHTML = `
-      <div class=&quot;encabezado&quot;><span class=&quot;num&quot;>JE-${i+1}</span><span class=&quot;desc&quot;>${t.desc}</span><span class=&quot;sello-ok&quot;>POSTED ✓</span></div>
-      <div class=&quot;lineas&quot;>
-        <div class=&quot;linea-diario cab&quot;><span>Account</span><span>Debit</span><span>Credit</span></div>
-        ${lineas}
-      </div>
-      <div class=&quot;accion&quot;><button class=&quot;btn-registrar&quot; data-i=&quot;${i}&quot; ${i!==paso?&quot;disabled&quot;:&quot;&quot;}>Post entry</button></div>`;
-    lista.appendChild(d);
-  });
-  lista.querySelectorAll(&quot;.btn-registrar&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>registra(+b.dataset.i)));
-}
-function registra(i){
-  TRANS[i].diario.forEach(([,m,tipo])=>{ if(tipo===&quot;cargo&quot;){pDebe+=m;totDebe+=m;}else{pHaber+=m;totHaber+=m;} });
-  paso++;
-  $(&quot;totalDebe&quot;).textContent=fmt(pDebe); $(&quot;totalHaber&quot;).textContent=fmt(pHaber); $(&quot;totalDif&quot;).textContent=fmt(pDebe-pHaber);
-  $(&quot;chipPrueba&quot;).textContent = `${paso} / ${TRANS.length} POSTED`;
-  pintaEcuacion(); pintaPrueba();
-  if(paso === TRANS.length){
-    $(&quot;pruebaDebe&quot;).textContent=fmt(pDebe); $(&quot;pruebaHaber&quot;).textContent=fmt(pHaber);
-    $(&quot;compPrueba&quot;).classList.add(&quot;visible&quot;);
-    setTimeout(()=>$(&quot;compPrueba&quot;).scrollIntoView({behavior:&quot;smooth&quot;,block:&quot;end&quot;}), 200);
-  }
-}
-$(&quot;btnPruebaReset&quot;).addEventListener(&quot;click&quot;,()=>{
-  totDebe-=pDebe; totHaber-=pHaber; paso=0; pDebe=0; pHaber=0;
-  $(&quot;totalDebe&quot;).textContent=$(&quot;totalHaber&quot;).textContent=$(&quot;totalDif&quot;).textContent=&quot;$0&quot;;
-  $(&quot;chipPrueba&quot;).textContent=&quot;0 / 4 POSTED&quot;; $(&quot;compPrueba&quot;).classList.remove(&quot;visible&quot;);
-  pintaEcuacion(); pintaPrueba();
-});
-
-pintaBalance(); pintaPrueba(); pintaEcuacion();
-</script>
-</body>
-</html>
-"></iframe></div>
-<div class="view" id="view-l22"><iframe title="l22" srcdoc="<!DOCTYPE html>
-<html lang=&quot;en&quot;>
-<head>
-<meta charset=&quot;UTF-8&quot; />
-<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, viewport-fit=cover&quot; />
-<title>LedgerLab · 2.2 The Accounting Equation</title>
-<meta name=&quot;theme-color&quot; content=&quot;#0C1D2E&quot; />
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
-<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
-<link href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
-<style>
-:root{
-  --lienzo:#0B1A29;--cabecera-1:#122B42;--cabecera-2:#1A3A57;--fondo:#F2F5F8;--panel:#FFFFFF;--panel-2:#F4F7FA;
-  --borde:#D8E0E9;--borde-suave:#E1E8EF;--acento:#2F6FAD;--acento-claro:#8FC1EA;--acento-tinte:#EAF2FA;--acento-borde:#C6DCEF;
-  --debe:#A93226;--debe-tinte:#FBEAE7;--debe-borde:#F0C9C3;--haber:#1E7A4D;--haber-tinte:#E7F4EC;--haber-borde:#BFE3CD;
-  --texto:#16283A;--texto-suave:#5B6B7B;--sombra:0 1px 3px rgba(16,35,55,.08), 0 8px 24px rgba(16,35,55,.07);
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{background:var(--lienzo);font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--texto);display:flex;justify-content:center;background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,173,.28), transparent 60%)}
-.telefono{width:100%;max-width:430px;min-height:100dvh;background:var(--fondo);display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.5)}
-@media(min-width:480px){.telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}}
-
-header.app{background:linear-gradient(160deg,var(--cabecera-1) 0%, var(--cabecera-2) 100%);color:#fff;padding:22px 22px 18px;position:relative;flex-shrink:0}
-header.app::after{content:&quot;&quot;;position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--acento-claro) 20%,var(--acento-claro) 80%,transparent);opacity:.8}
-.marca{display:flex;align-items:baseline;gap:10px}
-.marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em;cursor:pointer}
-.marca h1 em{color:var(--acento-claro);font-style:normal}
-.folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
-.subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
-.ecuacion-viva{margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(143,193,234,.28);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px}
-.ecuacion-viva .celda{text-align:center}
-.ecuacion-viva .etiqueta{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
-.ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;transition:color .3s}
-.ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--acento-claro)}
-.ecuacion-viva.parpadeo .cifra{color:var(--acento-claro)}
-
-main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
-.pantalla{display:none;padding:20px 18px 30px;animation:aparecer .3s ease both}
-.pantalla.activa{display:block}
-@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-.ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.ojal .num-c{font-family:'IBM Plex Mono',monospace;color:var(--acento);background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:5px;padding:2px 7px}
-.ojal::after{content:&quot;&quot;;flex:1;height:1px;background:var(--borde)}
-h2.titulo{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.18;margin-bottom:6px}
-h2.titulo em{font-style:normal;color:var(--acento)}
-p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:6px;max-width:38ch}
-
-.parte-eti{display:flex;align-items:center;gap:9px;margin:24px 0 11px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--texto-suave)}
-.parte-eti .paso{width:22px;height:22px;border-radius:6px;background:var(--acento);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;flex-shrink:0}
-.parte-eti.ilu .paso{background:#5B6B7B}
-.parte-eti.tool .paso{background:var(--haber)}
-.parte-eti::after{content:&quot;&quot;;flex:1;height:1px;background:var(--borde)}
-
-.explicacion{font-size:13.5px;line-height:1.6;color:#2A3E50}
-.explicacion p + p{margin-top:9px}
-.lista-def{list-style:none;margin:11px 0 0;display:flex;flex-direction:column;gap:8px}
-.lista-def li{position:relative;padding-left:20px;font-size:13px;line-height:1.5;color:#2A3E50}
-.lista-def li::before{content:&quot;&quot;;position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--acento)}
-.lista-def li b{color:var(--texto)}
-.clave{margin-top:12px;font-size:12.5px;color:#33506B;line-height:1.55;background:var(--acento-tinte);border:1px solid var(--acento-borde);border-radius:9px;padding:10px 12px}
-.clave b{color:var(--texto)}
-
-.panel{background:var(--panel);border:1px solid var(--borde);border-radius:10px;box-shadow:var(--sombra);overflow:hidden}
-.panel-tit{display:flex;align-items:center;gap:8px;background:var(--panel-2);border-bottom:1px solid var(--borde-suave);padding:8px 12px;font-size:9.5px;letter-spacing:.1em;font-weight:700;color:var(--texto-suave);text-transform:uppercase}
-.panel-tit .chip{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px;letter-spacing:.06em;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
-.panel-tit .chip.fig{background:#EEF1F4;color:#5B6B7B;border-color:var(--borde)}
-.panel-cuerpo{padding:14px}
-
-/* basic equation boxes */
-.eq-basica{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px}
-.eq-caja{text-align:center;border:1.5px solid var(--borde);border-radius:9px;padding:11px 6px;background:var(--panel-2);border-top-width:3px}
-.eq-caja.a{border-top-color:var(--acento)} .eq-caja.l{border-top-color:#B5851F} .eq-caja.e{border-top-color:var(--haber)}
-.eq-caja b{font-size:13px;font-weight:700;display:block;line-height:1.2}
-.eq-caja span{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
-.eq-caja .valor{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--texto);margin-top:3px}
-.eq-op{font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--acento);font-weight:600;text-align:center}
-.eq-cap{margin-top:11px;font-size:11.5px;color:var(--texto-suave);text-align:center;line-height:1.5}
-
-/* Illustration 2.3 strip */
-.ilus23-scroll{overflow-x:auto;padding:14px}
-.ilus23{display:flex;align-items:flex-start;gap:7px;min-width:max-content}
-.i23-el{border:1px solid var(--borde);border-radius:8px;padding:8px;text-align:center;background:var(--panel);width:104px}
-.i23-el.eqm{background:var(--haber-tinte);border-color:var(--haber-borde)}
-.i23-nom{font-size:10.5px;font-weight:700;line-height:1.2;margin-bottom:6px;min-height:26px;display:flex;align-items:center;justify-content:center}
-.i23-op{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--texto-suave);font-weight:600;align-self:center;padding-top:26px}
-.mini-t{border:1px solid var(--borde-suave);border-radius:6px;overflow:hidden}
-.mini-t .mt-cab{display:grid;grid-template-columns:1fr 1fr;background:var(--panel-2)}
-.mini-t .mt-cab span{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.04em;font-weight:700;text-align:center;padding:2px 0}
-.mini-t .mt-cab span:first-child{color:var(--debe);border-right:1px solid var(--borde-suave)}
-.mini-t .mt-cab span:last-child{color:var(--haber)}
-.mini-t .mt-val{display:grid;grid-template-columns:1fr 1fr}
-.mini-t .mt-val span{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;text-align:center;padding:3px 0;line-height:1}
-.mini-t .mt-val span:first-child{border-right:1px solid var(--borde-suave)}
-.i23-cap{padding:0 14px 12px;font-size:11px;color:var(--texto-suave);line-height:1.5}
-
-/* solver tool */
-.solver-eq{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:5px;margin-bottom:13px}
-.sv-cel{border:1.5px solid var(--borde);border-radius:9px;padding:9px 5px;text-align:center;background:var(--panel-2)}
-.sv-cel .lbl{font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
-.sv-cel .val{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;margin-top:3px}
-.sv-cel.incognita{border-color:var(--acento);border-style:dashed;background:var(--acento-tinte)}
-.sv-cel.incognita .val{color:var(--acento)}
-.sv-op{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento);font-weight:600;align-self:center}
-.sv-ops{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.btn-sv{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:12px 4px;cursor:pointer;transition:transform .15s;color:var(--texto)}
-.btn-sv:active{transform:scale(.96)}
-.btn-sv.correcta{border-color:var(--haber);background:var(--haber-tinte);color:var(--haber)}
-.btn-sv.incorrecta{border-color:var(--debe);background:var(--debe-tinte);color:var(--debe)}
-.btn-sv:disabled{cursor:default}
-
-/* generic quiz cards */
-.marcador{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--texto-suave);text-transform:uppercase;margin:12px 2px;display:flex;justify-content:space-between}
-.asiento{background:var(--panel);border:1px solid var(--borde);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(16,35,55,.06);transition:opacity .3s, border-color .3s}
-.asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
-.asiento .num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde)}
-.asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
-.asiento .lineas{padding:2px 13px 6px;font-size:12px;color:var(--texto-suave);line-height:1.5}
-.opciones{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 13px 13px}
-.btn-clas{font-family:inherit;font-size:12px;font-weight:600;background:var(--panel);border:1px solid var(--borde);color:var(--texto);border-radius:8px;padding:11px 8px;cursor:pointer;transition:transform .15s, border-color .2s, background .2s}
-.btn-clas:active{transform:scale(.97)}
-.btn-clas.up{border-color:var(--haber-borde);color:var(--haber)} .btn-clas.down{border-color:var(--debe-borde);color:var(--debe)}
-.btn-clas.correcta{border-color:var(--haber);background:var(--haber-tinte);color:var(--haber)}
-.btn-clas.incorrecta{border-color:var(--debe);background:var(--debe-tinte);color:var(--debe)}
-.btn-clas.atenuada{opacity:.4}
-.reveal{padding:0 13px 13px;animation:aparecer .25s ease both}
-.delta-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:9px}
-.delta-cel{border:1px solid var(--borde-suave);border-radius:8px;background:var(--panel-2);padding:8px 6px;text-align:center}
-.delta-cel .dl{font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
-.delta-cel .dv{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
-.delta-cel .dv.dbl{font-size:11px;line-height:1.25} .delta-cel .dv.pos{color:var(--haber)} .delta-cel .dv.neg{color:var(--debe)}
-.veredicto{font-size:12px;line-height:1.5;border-radius:8px;padding:9px 11px}
-.veredicto.bien{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
-.veredicto.mal{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde);margin:0 13px 13px}
-.veredicto b{font-weight:700}
-.btn-next{margin-top:10px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:8px;padding:11px;cursor:pointer;transition:transform .15s}
-.btn-next:active{transform:scale(.98)}
-.temblor{animation:temblor .3s ease}
-@keyframes temblor{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
-
-/* worksheet */
-.ws-vacia{padding:22px 16px;text-align:center;color:var(--texto-suave);font-size:12.5px;line-height:1.5}
-table.worksheet{width:100%;border-collapse:collapse}
-table.worksheet th,table.worksheet td{padding:7px 8px;font-size:11px;text-align:right}
-table.worksheet thead th{background:var(--panel-2);border-bottom:1px solid var(--borde);font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave);font-weight:700}
-table.worksheet thead th:first-child,table.worksheet td:first-child{text-align:left}
-table.worksheet td{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;border-top:1px solid var(--borde-suave)}
-table.worksheet td:first-child{font-family:'IBM Plex Sans',sans-serif;color:var(--texto-suave);font-size:10.5px}
-table.worksheet td.pos{color:var(--haber)} table.worksheet td.neg{color:var(--debe)}
-table.worksheet td .par{display:block;font-size:9.5px;line-height:1.35}
-table.worksheet td.ok{color:var(--haber);text-align:center;font-weight:600}
-table.worksheet tfoot td{border-top:2px solid var(--texto);font-weight:700;background:var(--panel-2)}
-tr.fila-nueva{animation:filaEntra .35s ease both}
-@keyframes filaEntra{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
-
-.comprobacion{margin-top:16px;background:linear-gradient(160deg,var(--cabecera-1),var(--cabecera-2));color:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;display:none;animation:aparecer .35s ease both}
-.comprobacion.visible{display:block}
-.comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
-.comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-.comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
-.comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
-.estampa{position:absolute;right:14px;top:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;font-weight:600;color:#7ED9A7;background:rgba(30,122,77,.28);border:1px solid rgba(126,217,167,.45);border-radius:999px;padding:5px 10px}
-.btn-fantasma{margin-top:14px;width:100%;font-family:inherit;font-size:12px;font-weight:600;background:transparent;border:1px solid var(--borde);color:var(--texto-suave);border-radius:8px;padding:9px;cursor:pointer}
-
-.btn-siguiente{margin-top:24px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;border:none;border-radius:9px;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
-.btn-siguiente:active{transform:scale(.98)}
-
-nav.pestanas{flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--lienzo);padding:8px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(143,193,234,.2)}
-.pestana{font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 2px;border-radius:10px;color:rgba(255,255,255,.42);font-size:9px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;transition:color .2s, background .2s}
-.pestana svg{width:21px;height:21px}
-.pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
-
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
-</style>
-</head>
-<body>
-<div class=&quot;telefono&quot;>
-
-  <header class=&quot;app&quot;>
-    <div class=&quot;marca&quot;>
-      <h1 id=&quot;volverIntro&quot; title=&quot;Back to course&quot;>Ledger<em>Lab</em></h1>
-      <span class=&quot;folio&quot;>Module 2.2</span>
+  <header class="app">
+    <div class="marca">
+      <h1 id="volverIntro" title="Back to course">Ledger<em>Lab</em></h1>
+      <span class="folio">Module 2.2</span>
     </div>
-    <div class=&quot;subtitulo&quot;>The Accounting Equation</div>
-    <div class=&quot;ecuacion-viva&quot; id=&quot;ecuacionViva&quot;>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Δ Assets</div><div class=&quot;cifra&quot; id=&quot;evA&quot;>$0</div></div>
-      <div class=&quot;signo&quot;>=</div>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Δ Liabilities</div><div class=&quot;cifra&quot; id=&quot;evL&quot;>$0</div></div>
-      <div class=&quot;signo&quot;>+</div>
-      <div class=&quot;celda&quot;><div class=&quot;etiqueta&quot;>Δ Equity</div><div class=&quot;cifra&quot; id=&quot;evE&quot;>$0</div></div>
+    <div class="subtitulo">The Accounting Equation</div>
+    <div class="ecuacion-viva" id="ecuacionViva">
+      <div class="celda"><div class="etiqueta">Δ Assets</div><div class="cifra" id="evA">$0</div></div>
+      <div class="signo">=</div>
+      <div class="celda"><div class="etiqueta">Δ Liabilities</div><div class="cifra" id="evL">$0</div></div>
+      <div class="signo">+</div>
+      <div class="celda"><div class="etiqueta">Δ Equity</div><div class="cifra" id="evE">$0</div></div>
     </div>
   </header>
 
-  <main id=&quot;principal&quot;>
+  <main id="principal">
 
     <!-- ============ CONCEPT 1 ============ -->
-    <section class=&quot;pantalla activa&quot; id=&quot;p-c1&quot;>
-      <div class=&quot;ojal&quot;><span class=&quot;num-c&quot;>Concept 1 / 3</span></div>
-      <h2 class=&quot;titulo&quot;>The Basic Equation</h2>
-      <p class=&quot;intro&quot;>Because every debit has a matching credit, what a company owns always equals the claims against it.</p>
+    <section class="pantalla activa" id="p-c1">
+      <div class="ojal"><span class="num-c">Concept 1 / 3</span></div>
+      <h2 class="titulo">The Basic Equation</h2>
+      <p class="intro">Because every debit has a matching credit, what a company owns always equals the claims against it.</p>
 
-      <div class=&quot;parte-eti&quot;><span class=&quot;paso&quot;>1</span> Explanation</div>
-      <div class=&quot;explicacion&quot;>
+      <div class="parte-eti"><span class="paso">1</span> Explanation</div>
+      <div class="explicacion">
         <p>In a double-entry system, for every debit there must be a credit, and vice versa. This leads to the basic accounting equation:</p>
         <p><b>Assets = Liabilities + Stockholders' Equity.</b> The left side lists what the company owns; the right side shows the claims against those assets — first creditors, then owners.</p>
-        <div class=&quot;clave&quot;>Assets carry <b>debit</b> balances; liabilities and equity carry <b>credit</b> balances. So the equation is really just <b>total debits = total credits</b>, written another way.</div>
+        <div class="clave">Assets carry <b>debit</b> balances; liabilities and equity carry <b>credit</b> balances. So the equation is really just <b>total debits = total credits</b>, written another way.</div>
       </div>
 
-      <div class=&quot;parte-eti ilu&quot;><span class=&quot;paso&quot;>2</span> Illustration</div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>The basic accounting equation<span class=&quot;chip fig&quot;>FIGURE</span></div>
-        <div class=&quot;panel-cuerpo&quot;>
-          <div class=&quot;eq-basica&quot;>
-            <div class=&quot;eq-caja a&quot;><b>Assets</b><span>Debit bal.</span></div>
-            <div class=&quot;eq-op&quot;>=</div>
-            <div class=&quot;eq-caja l&quot;><b>Liabilities</b><span>Credit bal.</span></div>
-            <div class=&quot;eq-op&quot;>+</div>
-            <div class=&quot;eq-caja e&quot;><b>Equity</b><span>Credit bal.</span></div>
+      <div class="parte-eti ilu"><span class="paso">2</span> Illustration</div>
+      <div class="panel">
+        <div class="panel-tit">The basic accounting equation<span class="chip fig">FIGURE</span></div>
+        <div class="panel-cuerpo">
+          <div class="eq-basica">
+            <div class="eq-caja a"><b>Assets</b><span>Debit bal.</span></div>
+            <div class="eq-op">=</div>
+            <div class="eq-caja l"><b>Liabilities</b><span>Credit bal.</span></div>
+            <div class="eq-op">+</div>
+            <div class="eq-caja e"><b>Equity</b><span>Credit bal.</span></div>
           </div>
-          <div class=&quot;eq-cap&quot;>Know any two amounts and the third is fixed — the equation always holds.</div>
+          <div class="eq-cap">Know any two amounts and the third is fixed — the equation always holds.</div>
         </div>
       </div>
 
-      <div class=&quot;parte-eti tool&quot;><span class=&quot;paso&quot;>3</span> Apply it</div>
-      <p class=&quot;intro&quot;>Solve for the missing element in each equation.</p>
-      <div class=&quot;marcador&quot;><span id=&quot;svPos&quot;>Problem 1 of 3</span><span id=&quot;svPuntos&quot;>0 first-try correct</span></div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>Equation solver<span class=&quot;chip&quot;>SOLVE</span></div>
-        <div class=&quot;panel-cuerpo&quot; id=&quot;svCuerpo&quot;></div>
+      <div class="parte-eti tool"><span class="paso">3</span> Apply it</div>
+      <p class="intro">Solve for the missing element in each equation.</p>
+      <div class="marcador"><span id="svPos">Problem 1 of 3</span><span id="svPuntos">0 first-try correct</span></div>
+      <div class="panel">
+        <div class="panel-tit">Equation solver<span class="chip">SOLVE</span></div>
+        <div class="panel-cuerpo" id="svCuerpo"></div>
       </div>
-      <div class=&quot;comprobacion&quot; id=&quot;compSv&quot;>
-        <div class=&quot;estampa&quot;>SOLVED ✓</div>
+      <div class="comprobacion" id="compSv">
+        <div class="estampa">SOLVED ✓</div>
         <h3>The equation holds</h3>
-        <div class=&quot;comp-fila&quot;><span>Solved first-try</span><b id=&quot;svResumen&quot;>0 / 3</b></div>
-        <div class=&quot;comp-fila total&quot;><span>Assets = Liabilities + Equity</span><b>✓</b></div>
-        <button class=&quot;btn-fantasma&quot; id=&quot;btnSvReset&quot; style=&quot;border-color:rgba(255,255,255,.3);color:#fff&quot;>Solve again</button>
+        <div class="comp-fila"><span>Solved first-try</span><b id="svResumen">0 / 3</b></div>
+        <div class="comp-fila total"><span>Assets = Liabilities + Equity</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnSvReset" style="border-color:rgba(255,255,255,.3);color:#fff">Solve again</button>
       </div>
 
-      <button class=&quot;btn-siguiente&quot; data-goto=&quot;p-c2&quot;>Next concept · The Expanded Equation ▸</button>
+      <button class="btn-siguiente" data-goto="p-c2">Next concept · The Expanded Equation ▸</button>
     </section>
 
     <!-- ============ CONCEPT 2 ============ -->
-    <section class=&quot;pantalla&quot; id=&quot;p-c2&quot;>
-      <div class=&quot;ojal&quot;><span class=&quot;num-c&quot;>Concept 2 / 3</span></div>
-      <h2 class=&quot;titulo&quot;>The Expanded Equation</h2>
-      <p class=&quot;intro&quot;>Stockholders' equity is built from five accounts — three raise it, two lower it.</p>
+    <section class="pantalla" id="p-c2">
+      <div class="ojal"><span class="num-c">Concept 2 / 3</span></div>
+      <h2 class="titulo">The Expanded Equation</h2>
+      <p class="intro">Stockholders' equity is built from five accounts — three raise it, two lower it.</p>
 
-      <div class=&quot;parte-eti&quot;><span class=&quot;paso&quot;>1</span> Explanation</div>
-      <div class=&quot;explicacion&quot;>
+      <div class="parte-eti"><span class="paso">1</span> Explanation</div>
+      <div class="explicacion">
         <p>Illustration 2.3 expands the equation to show the accounts that make up stockholders' equity, with each account's debit/credit rule:</p>
-        <p style=&quot;font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--panel-2);border:1px solid var(--borde);border-radius:8px;padding:10px;line-height:1.5;color:var(--texto)&quot;>Assets = Liabilities + Common&amp;nbsp;Stock + Retained&amp;nbsp;Earnings + Revenues − Expenses − Dividends</p>
-        <div class=&quot;clave&quot;><b>Common Stock, Retained Earnings, and Revenues</b> increase equity (credit balances). <b>Expenses and Dividends</b> decrease equity — so they carry <b>debit</b> balances even though they sit under equity.</div>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--panel-2);border:1px solid var(--borde);border-radius:8px;padding:10px;line-height:1.5;color:var(--texto)">Assets = Liabilities + Common&nbsp;Stock + Retained&nbsp;Earnings + Revenues − Expenses − Dividends</p>
+        <div class="clave"><b>Common Stock, Retained Earnings, and Revenues</b> increase equity (credit balances). <b>Expenses and Dividends</b> decrease equity — so they carry <b>debit</b> balances even though they sit under equity.</div>
       </div>
 
-      <div class=&quot;parte-eti ilu&quot;><span class=&quot;paso&quot;>2</span> Illustration</div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>Illustration 2.3 · Expanded equation &amp;amp; rules<span class=&quot;chip fig&quot;>FIGURE</span></div>
-        <div class=&quot;ilus23-scroll&quot; id=&quot;ilus23&quot;></div>
-        <div class=&quot;i23-cap&quot;>Dr / Cr rows show the side that increases (+) and decreases (−) each account. Scroll to see the full equity family.</div>
+      <div class="parte-eti ilu"><span class="paso">2</span> Illustration</div>
+      <div class="panel">
+        <div class="panel-tit">Illustration 2.3 · Expanded equation &amp; rules<span class="chip fig">FIGURE</span></div>
+        <div class="ilus23-scroll" id="ilus23"></div>
+        <div class="i23-cap">Dr / Cr rows show the side that increases (+) and decreases (−) each account. Scroll to see the full equity family.</div>
       </div>
 
-      <div class=&quot;parte-eti tool&quot;><span class=&quot;paso&quot;>3</span> Apply it</div>
-      <p class=&quot;intro&quot;>For each equity account, decide whether it raises or lowers stockholders' equity.</p>
-      <div class=&quot;marcador&quot;><span id=&quot;eqPos&quot;>Account 1 of 5</span><span id=&quot;eqPuntos&quot;>0 first-try correct</span></div>
-      <div id=&quot;cartaEq&quot;></div>
-      <div class=&quot;comprobacion&quot; id=&quot;compEq&quot;>
-        <div class=&quot;estampa&quot;>MASTERED ✓</div>
+      <div class="parte-eti tool"><span class="paso">3</span> Apply it</div>
+      <p class="intro">For each equity account, decide whether it raises or lowers stockholders' equity.</p>
+      <div class="marcador"><span id="eqPos">Account 1 of 5</span><span id="eqPuntos">0 first-try correct</span></div>
+      <div id="cartaEq"></div>
+      <div class="comprobacion" id="compEq">
+        <div class="estampa">MASTERED ✓</div>
         <h3>Equity effects</h3>
-        <div class=&quot;comp-fila&quot;><span>First-try correct</span><b id=&quot;eqResumen&quot;>0 / 5</b></div>
-        <div class=&quot;comp-fila total&quot;><span>Revenues, Common Stock &amp;amp; Retained Earnings ↑ · Expenses &amp;amp; Dividends ↓</span><b>✓</b></div>
-        <button class=&quot;btn-fantasma&quot; id=&quot;btnEqReset&quot; style=&quot;border-color:rgba(255,255,255,.3);color:#fff&quot;>Try again</button>
+        <div class="comp-fila"><span>First-try correct</span><b id="eqResumen">0 / 5</b></div>
+        <div class="comp-fila total"><span>Revenues, Common Stock &amp; Retained Earnings ↑ · Expenses &amp; Dividends ↓</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnEqReset" style="border-color:rgba(255,255,255,.3);color:#fff">Try again</button>
       </div>
 
-      <button class=&quot;btn-siguiente&quot; data-goto=&quot;p-c3&quot;>Next concept · Transaction Analysis ▸</button>
+      <button class="btn-siguiente" data-goto="p-c3">Next concept · Transaction Analysis ▸</button>
     </section>
 
     <!-- ============ CONCEPT 3 ============ -->
-    <section class=&quot;pantalla&quot; id=&quot;p-c3&quot;>
-      <div class=&quot;ojal&quot;><span class=&quot;num-c&quot;>Concept 3 / 3</span></div>
-      <h2 class=&quot;titulo&quot;>Transaction Analysis</h2>
-      <p class=&quot;intro&quot;>Every transaction changes the equation's elements — but the equality always survives.</p>
+    <section class="pantalla" id="p-c3">
+      <div class="ojal"><span class="num-c">Concept 3 / 3</span></div>
+      <h2 class="titulo">Transaction Analysis</h2>
+      <p class="intro">Every transaction changes the equation's elements — but the equality always survives.</p>
 
-      <div class=&quot;parte-eti&quot;><span class=&quot;paso&quot;>1</span> Explanation</div>
-      <div class=&quot;explicacion&quot;>
+      <div class="parte-eti"><span class="paso">1</span> Explanation</div>
+      <div class="explicacion">
         <p>Every time a transaction occurs, the elements of the accounting equation change. However, the basic equality remains.</p>
         <p>To analyze a transaction, identify which two elements move and by how much — keeping the change on the left equal to the change on the right. Consider eight transactions for <b>Perez Inc.</b></p>
       </div>
 
-      <div class=&quot;parte-eti ilu&quot;><span class=&quot;paso&quot;>2</span> Illustration</div>
-      <div class=&quot;panel&quot;>
-        <div class=&quot;panel-tit&quot;>Worked example · Transaction 1<span class=&quot;chip fig&quot;>FIGURE</span></div>
-        <div class=&quot;panel-cuerpo&quot;>
-          <p style=&quot;font-size:12px;color:var(--texto-suave);margin-bottom:10px&quot;>Owners invest $40,000 in exchange for common stock:</p>
-          <div class=&quot;eq-basica&quot;>
-            <div class=&quot;eq-caja a&quot;><b>Assets</b><span class=&quot;valor&quot; style=&quot;color:var(--haber)&quot;>+40,000</span></div>
-            <div class=&quot;eq-op&quot;>=</div>
-            <div class=&quot;eq-caja l&quot;><b>Liab.</b><span class=&quot;valor&quot;>—</span></div>
-            <div class=&quot;eq-op&quot;>+</div>
-            <div class=&quot;eq-caja e&quot;><b>Equity</b><span class=&quot;valor&quot; style=&quot;color:var(--haber)&quot;>+40,000</span></div>
+      <div class="parte-eti ilu"><span class="paso">2</span> Illustration</div>
+      <div class="panel">
+        <div class="panel-tit">Worked example · Transaction 1<span class="chip fig">FIGURE</span></div>
+        <div class="panel-cuerpo">
+          <p style="font-size:12px;color:var(--texto-suave);margin-bottom:10px">Owners invest $40,000 in exchange for common stock:</p>
+          <div class="eq-basica">
+            <div class="eq-caja a"><b>Assets</b><span class="valor" style="color:var(--haber)">+40,000</span></div>
+            <div class="eq-op">=</div>
+            <div class="eq-caja l"><b>Liab.</b><span class="valor">—</span></div>
+            <div class="eq-op">+</div>
+            <div class="eq-caja e"><b>Equity</b><span class="valor" style="color:var(--haber)">+40,000</span></div>
           </div>
-          <div class=&quot;eq-cap&quot;>Cash rises $40,000 and equity rises $40,000 — both sides move together.</div>
+          <div class="eq-cap">Cash rises $40,000 and equity rises $40,000 — both sides move together.</div>
         </div>
       </div>
 
-      <div class=&quot;parte-eti tool&quot;><span class=&quot;paso&quot;>3</span> Apply it</div>
-      <p class=&quot;intro&quot;>Classify which two elements each transaction moves; the worksheet proves every one stays in balance.</p>
-      <div class=&quot;marcador&quot;><span id=&quot;anaPos&quot;>Transaction 1 of 8</span><span id=&quot;anaBal&quot;>0 balanced</span></div>
-      <div id=&quot;cartaAna&quot;></div>
+      <div class="parte-eti tool"><span class="paso">3</span> Apply it</div>
+      <p class="intro">Classify which two elements each transaction moves; the worksheet proves every one stays in balance.</p>
+      <div class="marcador"><span id="anaPos">Transaction 1 of 8</span><span id="anaBal">0 balanced</span></div>
+      <div id="cartaAna"></div>
 
-      <div class=&quot;panel&quot; style=&quot;margin-top:6px&quot;>
-        <div class=&quot;panel-tit&quot;>Worksheet · net change per element<span class=&quot;chip&quot; id=&quot;chipWs&quot;>0 / 8</span></div>
-        <div id=&quot;wsWrap&quot;><div class=&quot;ws-vacia&quot;>Classify and apply a transaction to add its first row.</div></div>
+      <div class="panel" style="margin-top:6px">
+        <div class="panel-tit">Worksheet · net change per element<span class="chip" id="chipWs">0 / 8</span></div>
+        <div id="wsWrap"><div class="ws-vacia">Classify and apply a transaction to add its first row.</div></div>
       </div>
 
-      <div class=&quot;comprobacion&quot; id=&quot;compPrueba&quot;>
-        <div class=&quot;estampa&quot;>BALANCED ✓</div>
+      <div class="comprobacion" id="compPrueba">
+        <div class="estampa">BALANCED ✓</div>
         <h3>The equality holds</h3>
-        <div class=&quot;comp-fila&quot;><span>Σ change in assets</span><b id=&quot;sumA&quot;>$0</b></div>
-        <div class=&quot;comp-fila&quot;><span>Σ change in liabilities</span><b id=&quot;sumL&quot;>$0</b></div>
-        <div class=&quot;comp-fila&quot;><span>Σ change in equity</span><b id=&quot;sumE&quot;>$0</b></div>
-        <div class=&quot;comp-fila total&quot;><span>Assets = Liabilities + Equity</span><b>✓</b></div>
-        <button class=&quot;btn-fantasma&quot; id=&quot;btnReset&quot; style=&quot;border-color:rgba(255,255,255,.3);color:#fff&quot;>Reset the worksheet</button>
+        <div class="comp-fila"><span>Σ change in assets</span><b id="sumA">$0</b></div>
+        <div class="comp-fila"><span>Σ change in liabilities</span><b id="sumL">$0</b></div>
+        <div class="comp-fila"><span>Σ change in equity</span><b id="sumE">$0</b></div>
+        <div class="comp-fila total"><span>Assets = Liabilities + Equity</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnReset" style="border-color:rgba(255,255,255,.3);color:#fff">Reset the worksheet</button>
       </div>
 
-      <button class=&quot;btn-siguiente&quot; id=&quot;btnVolverCurso&quot;>Back to course ▸</button>
+      <button class="btn-siguiente" id="btnVolverCurso">Back to course ▸</button>
     </section>
   </main>
 
-  <nav class=&quot;pestanas&quot; role=&quot;tablist&quot;>
-    <button class=&quot;pestana activa&quot; data-destino=&quot;p-c1&quot; role=&quot;tab&quot; aria-selected=&quot;true&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 8h14M5 8l3.5 5.5a2.5 2.5 0 0 1-7 0L5 8ZM19 8l-3.5 5.5a2.5 2.5 0 0 0 7 0L19 8ZM12 4v16M8 20h8&quot;/></svg>
+  <nav class="pestanas" role="tablist">
+    <button class="pestana activa" data-destino="p-c1" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M5 8l3.5 5.5a2.5 2.5 0 0 1-7 0L5 8ZM19 8l-3.5 5.5a2.5 2.5 0 0 0 7 0L19 8ZM12 4v16M8 20h8"/></svg>
       Equation
     </button>
-    <button class=&quot;pestana&quot; data-destino=&quot;p-c2&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><rect x=&quot;3&quot; y=&quot;4&quot; width=&quot;18&quot; height=&quot;16&quot; rx=&quot;2&quot;/><path d=&quot;M3 10h18M12 4v16&quot;/></svg>
+    <button class="pestana" data-destino="p-c2" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M12 4v16"/></svg>
       Expanded
     </button>
-    <button class=&quot;pestana&quot; data-destino=&quot;p-c3&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot;>
-      <svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><rect x=&quot;4&quot; y=&quot;3&quot; width=&quot;16&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M8 8h8M8 12h8M8 16h5&quot;/></svg>
+    <button class="pestana" data-destino="p-c3" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
       Analyze
     </button>
   </nav>
 </div>
 
+</div></div>
+
 <script>
+window.__navTo=function(n){
+  var slots=document.querySelectorAll('.slot');
+  for(var i=0;i<slots.length;i++) slots[i].classList.remove('on');
+  var el=document.getElementById('slot-'+n);
+  if(el){ el.classList.add('on'); el.scrollTop=0; }
+};
+</script>
+
+<script>(function(){
+  var root=document.getElementById('app-intro');
+  var D=new Proxy(document,{get:function(t,p){
+    if(p==='getElementById')return function(id){return root.querySelector('#'+CSS.escape(id));};
+    if(p==='querySelector')return function(s){return root.querySelector(s);};
+    if(p==='querySelectorAll')return function(s){return root.querySelectorAll(s);};
+    var v=t[p];return typeof v==='function'?v.bind(t):v;
+  }});
+  (function(document){
+
+/* Begin lesson 2.1 */
+document.getElementById("btnComenzar").addEventListener("click",()=>{__navTo('l21')});
+
+/* Tab selection — screens arrive in later builds. */
+const pestanas = document.querySelectorAll(".pestana");
+pestanas.forEach(b=>b.addEventListener("click",()=>{
+  pestanas.forEach(x=>{x.classList.remove("activa");x.setAttribute("aria-selected","false")});
+  b.classList.add("activa"); b.setAttribute("aria-selected","true");
+}));
+
+  })(D);
+})();</script>
+
+<script>(function(){
+  var root=document.getElementById('app-l21');
+  var D=new Proxy(document,{get:function(t,p){
+    if(p==='getElementById')return function(id){return root.querySelector('#'+CSS.escape(id));};
+    if(p==='querySelector')return function(s){return root.querySelector(s);};
+    if(p==='querySelectorAll')return function(s){return root.querySelectorAll(s);};
+    var v=t[p];return typeof v==='function'?v.bind(t):v;
+  }});
+  (function(document){
+
+const fmt = n => (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-US");
 const $ = id => document.getElementById(id);
-const signed = n => n===0 ? &quot;$0&quot; : (n>0?&quot;+&quot;:&quot;−&quot;) + &quot;$&quot; + Math.abs(n).toLocaleString(&quot;en-US&quot;);
-$(&quot;volverIntro&quot;).addEventListener(&quot;click&quot;,()=>{top.__nav('intro')});
-$(&quot;btnVolverCurso&quot;).addEventListener(&quot;click&quot;,()=>{top.__nav('intro')});
+$("volverIntro").addEventListener("click",()=>{__navTo('intro')});
+$("btnNextLesson").addEventListener("click",()=>{__navTo('l22')});
 
-const pestanas = document.querySelectorAll(&quot;.pestana&quot;);
-function irA(dest){
-  pestanas.forEach(x=>{const on=x.dataset.destino===dest;x.classList.toggle(&quot;activa&quot;,on);x.setAttribute(&quot;aria-selected&quot;,on)});
-  document.querySelectorAll(&quot;.pantalla&quot;).forEach(p=>p.classList.toggle(&quot;activa&quot;, p.id===dest));
-  $(&quot;principal&quot;).scrollTo({top:0});
+/* header Dr = Cr */
+let totDebe = 0, totHaber = 0;
+const ecuacionViva = $("ecuacionViva");
+function pintaEcuacion(){
+  $("evD").textContent = fmt(totDebe); $("evC").textContent = fmt(totHaber);
+  ecuacionViva.classList.toggle("rota", totDebe !== totHaber);
+  ecuacionViva.classList.add("parpadeo"); setTimeout(()=>ecuacionViva.classList.remove("parpadeo"), 500);
 }
-pestanas.forEach(b=>b.addEventListener(&quot;click&quot;,()=>irA(b.dataset.destino)));
-document.querySelectorAll(&quot;.btn-siguiente[data-goto]&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>irA(b.dataset.goto)));
 
-const ev = $(&quot;ecuacionViva&quot;);
+/* navegación por conceptos */
+const pestanas = document.querySelectorAll(".pestana");
+function irA(dest){
+  pestanas.forEach(x=>{const on=x.dataset.destino===dest;x.classList.toggle("activa",on);x.setAttribute("aria-selected",on)});
+  document.querySelectorAll(".pantalla").forEach(p=>p.classList.toggle("activa", p.id===dest));
+  $("principal").scrollTo({top:0});
+}
+pestanas.forEach(b=>b.addEventListener("click",()=>irA(b.dataset.destino)));
+document.querySelectorAll(".btn-siguiente[data-goto]").forEach(b=>b.addEventListener("click",()=>irA(b.dataset.goto)));
+
+/* ===== C1 tool: Cash register ===== */
+const AMOUNTS = [300,200,500,150,400,250]; let idx = 0;
+const efectivo = {debe:[], haber:[]};
+function pintaBalance(){
+  $("montosDebe").innerHTML  = efectivo.debe.map(m=>`<li>${fmt(m)}</li>`).join("");
+  $("montosHaber").innerHTML = efectivo.haber.map(m=>`<li>${fmt(m)}</li>`).join("");
+  const d = efectivo.debe.reduce((a,b)=>a+b,0), h = efectivo.haber.reduce((a,b)=>a+b,0);
+  const pie = $("pieBalance");
+  if(!d && !h){ pie.innerHTML = "No entries yet — post something below."; return; }
+  if(d>h)      pie.innerHTML = `Debits exceed credits → <b style="color:var(--debe)">DEBIT BALANCE ${fmt(d-h)}</b>`;
+  else if(h>d) pie.innerHTML = `Credits exceed debits → <b style="color:var(--haber)">CREDIT BALANCE ${fmt(h-d)}</b>`;
+  else         pie.innerHTML = `Both columns equal → <b style="color:var(--acento)">NO BALANCE</b>`;
+}
+$("btnPostDebe").addEventListener("click",()=>{ efectivo.debe.push(AMOUNTS[idx++ % AMOUNTS.length]); pintaBalance(); });
+$("btnPostHaber").addEventListener("click",()=>{ efectivo.haber.push(AMOUNTS[idx++ % AMOUNTS.length]); pintaBalance(); });
+$("btnLimpiar").addEventListener("click",()=>{ efectivo.debe=[]; efectivo.haber=[]; idx=0; pintaBalance(); });
+
+/* ===== C2 tool: rules drill ===== */
+const PREGUNTAS = [
+  {q:"Cash increases after a customer pays.", tipo:"an asset", r:"debe", regla:"Assets increase on the debit (left) side."},
+  {q:"Accounts Payable increases on a purchase on account.", tipo:"a liability", r:"haber", regla:"Liabilities increase on the credit (right) side."},
+  {q:"Service Revenue is earned this period.", tipo:"a revenue account", r:"haber", regla:"Revenues increase on the credit (right) side."},
+  {q:"Rent Expense is incurred for the month.", tipo:"an expense", r:"debe", regla:"Expenses increase on the debit (left) side."},
+  {q:"Cash decreases when the company pays a bill.", tipo:"an asset decreasing", r:"haber", regla:"Assets decrease on the credit (right) side."},
+  {q:"Common Stock increases when shares are issued.", tipo:"stockholders' equity", r:"haber", regla:"Equity accounts increase on the credit side."},
+  {q:"Dividends are declared and paid.", tipo:"the exception", r:"debe", regla:"Dividends is the equity account that increases by debit."},
+  {q:"Notes Payable decreases when the loan is repaid.", tipo:"a liability decreasing", r:"debe", regla:"Liabilities decrease on the debit (left) side."},
+];
+let qi = 0, puntos = 0, fallado = false;
+function pintaDrill(){
+  if(qi >= PREGUNTAS.length){
+    $("cartaDrill").innerHTML = "";
+    $("drillPos").textContent = "Drill finished";
+    $("resumenPuntos").textContent = `${puntos} / ${PREGUNTAS.length}`;
+    $("estampaDrill").textContent = puntos === PREGUNTAS.length ? "MASTERED ✓" : "COMPLETE";
+    $("compDrill").classList.add("visible");
+    setTimeout(()=>$("compDrill").scrollIntoView({behavior:"smooth",block:"end"}), 200);
+    return;
+  }
+  const p = PREGUNTAS[qi]; fallado = false;
+  $("drillPos").textContent = `Item ${qi+1} of ${PREGUNTAS.length}`;
+  $("cartaDrill").innerHTML = `
+    <div class="asiento" id="cartaActiva">
+      <div class="encabezado"><span class="num">Q-${qi+1}</span><span class="desc">${p.q}</span><span class="sello-ok">POSTED ✓</span></div>
+      <div class="lineas" style="color:var(--texto-suave);font-size:12px">This is ${p.tipo} — which column records it?</div>
+      <div class="respuestas">
+        <button class="btn-lado debe" data-r="debe">Debit<span>left column</span></button>
+        <button class="btn-lado haber" data-r="haber">Credit<span>right column</span></button>
+      </div>
+      <div id="feedbackDrill"></div>
+    </div>`;
+  document.querySelectorAll("#cartaDrill .btn-lado").forEach(b=>b.addEventListener("click",()=>responde(b.dataset.r)));
+}
+function responde(r){
+  const p = PREGUNTAS[qi], fb = $("feedbackDrill");
+  if(r === p.r){
+    if(!fallado) puntos++;
+    $("drillPuntos").textContent = `${puntos} first-try correct`;
+    $("cartaActiva").classList.add("registrado");
+    fb.innerHTML = `<div class="veredicto bien"><b>Correct.</b> ${p.regla}</div>`;
+    totDebe += 100; totHaber += 100; pintaEcuacion();
+    qi++; setTimeout(pintaDrill, 1300);
+  }else{
+    fallado = true;
+    fb.innerHTML = `<div class="veredicto mal"><b>Not quite.</b> ${p.regla} Try the other side.</div>`;
+    $("cartaActiva").classList.remove("temblor"); void $("cartaActiva").offsetWidth; $("cartaActiva").classList.add("temblor");
+  }
+}
+$("btnDrillReset").addEventListener("click",()=>{
+  qi=0; puntos=0; $("drillPuntos").textContent="0 first-try correct"; $("compDrill").classList.remove("visible");
+  pintaDrill(); irA("p-c2");
+});
+pintaDrill();
+
+/* ===== C3 tool: journal → trial balance ===== */
+const TRANS = [
+  {desc:"Stockholders invest $10,000 cash in the business", diario:[["Cash",10000,"cargo"],["Common Stock",10000,"abono"]]},
+  {desc:"Equipment is purchased for $3,000 on account", diario:[["Equipment",3000,"cargo"],["Accounts Payable",3000,"abono"]]},
+  {desc:"Services are performed for $1,500 cash", diario:[["Cash",1500,"cargo"],["Service Revenue",1500,"abono"]]},
+  {desc:"Rent of $800 is paid in cash", diario:[["Rent Expense",800,"cargo"],["Cash",800,"abono"]]},
+];
+let paso = 0, pDebe = 0, pHaber = 0;
+function pintaPrueba(){
+  const lista = $("listaPrueba"); lista.innerHTML = "";
+  TRANS.forEach((t,i)=>{
+    const d = document.createElement("div");
+    d.className = "asiento" + (i<paso?" registrado":"") + (i>paso?" bloqueado":"");
+    const lineas = t.diario.map(([cta,m,tipo])=>`
+      <div class="linea-diario">
+        <span class="cuenta ${tipo}">${cta}</span>
+        <span class="monto cargo">${tipo==="cargo" ? m.toLocaleString("en-US") : ""}</span>
+        <span class="monto abono">${tipo==="abono" ? m.toLocaleString("en-US") : ""}</span>
+      </div>`).join("");
+    d.innerHTML = `
+      <div class="encabezado"><span class="num">JE-${i+1}</span><span class="desc">${t.desc}</span><span class="sello-ok">POSTED ✓</span></div>
+      <div class="lineas">
+        <div class="linea-diario cab"><span>Account</span><span>Debit</span><span>Credit</span></div>
+        ${lineas}
+      </div>
+      <div class="accion"><button class="btn-registrar" data-i="${i}" ${i!==paso?"disabled":""}>Post entry</button></div>`;
+    lista.appendChild(d);
+  });
+  lista.querySelectorAll(".btn-registrar").forEach(b=>b.addEventListener("click",()=>registra(+b.dataset.i)));
+}
+function registra(i){
+  TRANS[i].diario.forEach(([,m,tipo])=>{ if(tipo==="cargo"){pDebe+=m;totDebe+=m;}else{pHaber+=m;totHaber+=m;} });
+  paso++;
+  $("totalDebe").textContent=fmt(pDebe); $("totalHaber").textContent=fmt(pHaber); $("totalDif").textContent=fmt(pDebe-pHaber);
+  $("chipPrueba").textContent = `${paso} / ${TRANS.length} POSTED`;
+  pintaEcuacion(); pintaPrueba();
+  if(paso === TRANS.length){
+    $("pruebaDebe").textContent=fmt(pDebe); $("pruebaHaber").textContent=fmt(pHaber);
+    $("compPrueba").classList.add("visible");
+    setTimeout(()=>$("compPrueba").scrollIntoView({behavior:"smooth",block:"end"}), 200);
+  }
+}
+$("btnPruebaReset").addEventListener("click",()=>{
+  totDebe-=pDebe; totHaber-=pHaber; paso=0; pDebe=0; pHaber=0;
+  $("totalDebe").textContent=$("totalHaber").textContent=$("totalDif").textContent="$0";
+  $("chipPrueba").textContent="0 / 4 POSTED"; $("compPrueba").classList.remove("visible");
+  pintaEcuacion(); pintaPrueba();
+});
+
+pintaBalance(); pintaPrueba(); pintaEcuacion();
+
+  })(D);
+})();</script>
+
+<script>(function(){
+  var root=document.getElementById('app-l22');
+  var D=new Proxy(document,{get:function(t,p){
+    if(p==='getElementById')return function(id){return root.querySelector('#'+CSS.escape(id));};
+    if(p==='querySelector')return function(s){return root.querySelector(s);};
+    if(p==='querySelectorAll')return function(s){return root.querySelectorAll(s);};
+    var v=t[p];return typeof v==='function'?v.bind(t):v;
+  }});
+  (function(document){
+
+const $ = id => document.getElementById(id);
+const signed = n => n===0 ? "$0" : (n>0?"+":"−") + "$" + Math.abs(n).toLocaleString("en-US");
+$("volverIntro").addEventListener("click",()=>{__navTo('intro')});
+$("btnVolverCurso").addEventListener("click",()=>{__navTo('intro')});
+
+const pestanas = document.querySelectorAll(".pestana");
+function irA(dest){
+  pestanas.forEach(x=>{const on=x.dataset.destino===dest;x.classList.toggle("activa",on);x.setAttribute("aria-selected",on)});
+  document.querySelectorAll(".pantalla").forEach(p=>p.classList.toggle("activa", p.id===dest));
+  $("principal").scrollTo({top:0});
+}
+pestanas.forEach(b=>b.addEventListener("click",()=>irA(b.dataset.destino)));
+document.querySelectorAll(".btn-siguiente[data-goto]").forEach(b=>b.addEventListener("click",()=>irA(b.dataset.goto)));
+
+const ev = $("ecuacionViva");
 function setHeader(a,l,e){
-  $(&quot;evA&quot;).textContent=signed(a); $(&quot;evL&quot;).textContent=signed(l); $(&quot;evE&quot;).textContent=signed(e);
-  ev.classList.add(&quot;parpadeo&quot;); setTimeout(()=>ev.classList.remove(&quot;parpadeo&quot;),500);
+  $("evA").textContent=signed(a); $("evL").textContent=signed(l); $("evE").textContent=signed(e);
+  ev.classList.add("parpadeo"); setTimeout(()=>ev.classList.remove("parpadeo"),500);
 }
 
 /* ===== C1 tool: equation solver ===== */
 const PROBLEMAS = [
-  {a:90000, l:40000, e:50000, x:&quot;e&quot;, ops:[50000,130000,40000]},
-  {a:85000, l:25000, e:60000, x:&quot;a&quot;, ops:[60000,85000,110000]},
-  {a:120000, l:50000, e:70000, x:&quot;l&quot;, ops:[190000,70000,50000]},
+  {a:90000, l:40000, e:50000, x:"e", ops:[50000,130000,40000]},
+  {a:85000, l:25000, e:60000, x:"a", ops:[60000,85000,110000]},
+  {a:120000, l:50000, e:70000, x:"l", ops:[190000,70000,50000]},
 ];
 let si = 0, sPuntos = 0, sFallado = false;
 function pintaSolver(){
   if(si >= PROBLEMAS.length){
-    $(&quot;svPos&quot;).textContent = &quot;Solver finished&quot;;
-    $(&quot;svResumen&quot;).textContent = `${sPuntos} / ${PROBLEMAS.length}`;
-    $(&quot;svCuerpo&quot;).innerHTML = `<p style=&quot;font-size:12.5px;color:var(--texto-suave);text-align:center;padding:8px 0&quot;>All three solved. The third element is always fixed by the other two.</p>`;
-    $(&quot;compSv&quot;).classList.add(&quot;visible&quot;);
-    setTimeout(()=>$(&quot;compSv&quot;).scrollIntoView({behavior:&quot;smooth&quot;,block:&quot;end&quot;}),200);
+    $("svPos").textContent = "Solver finished";
+    $("svResumen").textContent = `${sPuntos} / ${PROBLEMAS.length}`;
+    $("svCuerpo").innerHTML = `<p style="font-size:12.5px;color:var(--texto-suave);text-align:center;padding:8px 0">All three solved. The third element is always fixed by the other two.</p>`;
+    $("compSv").classList.add("visible");
+    setTimeout(()=>$("compSv").scrollIntoView({behavior:"smooth",block:"end"}),200);
     return;
   }
   const p = PROBLEMAS[si]; sFallado = false;
-  $(&quot;svPos&quot;).textContent = `Problem ${si+1} of ${PROBLEMAS.length}`;
-  const cel = (k,name)=>`<div class=&quot;sv-cel ${p.x===k?&quot;incognita&quot;:&quot;&quot;}&quot;><div class=&quot;lbl&quot;>${name}</div><div class=&quot;val&quot; id=&quot;sv-${k}&quot;>${p.x===k?&quot;?&quot;:&quot;$&quot;+p[k].toLocaleString(&quot;en-US&quot;)}</div></div>`;
-  const opts = p.ops.map(v=>`<button class=&quot;btn-sv&quot; data-v=&quot;${v}&quot;>$${v.toLocaleString(&quot;en-US&quot;)}</button>`).join(&quot;&quot;);
-  $(&quot;svCuerpo&quot;).innerHTML = `
-    <div class=&quot;solver-eq&quot;>
-      ${cel(&quot;a&quot;,&quot;Assets&quot;)}<div class=&quot;sv-op&quot;>=</div>${cel(&quot;l&quot;,&quot;Liab.&quot;)}<div class=&quot;sv-op&quot;>+</div>${cel(&quot;e&quot;,&quot;Equity&quot;)}
+  $("svPos").textContent = `Problem ${si+1} of ${PROBLEMAS.length}`;
+  const cel = (k,name)=>`<div class="sv-cel ${p.x===k?"incognita":""}"><div class="lbl">${name}</div><div class="val" id="sv-${k}">${p.x===k?"?":"$"+p[k].toLocaleString("en-US")}</div></div>`;
+  const opts = p.ops.map(v=>`<button class="btn-sv" data-v="${v}">$${v.toLocaleString("en-US")}</button>`).join("");
+  $("svCuerpo").innerHTML = `
+    <div class="solver-eq">
+      ${cel("a","Assets")}<div class="sv-op">=</div>${cel("l","Liab.")}<div class="sv-op">+</div>${cel("e","Equity")}
     </div>
-    <div class=&quot;sv-ops&quot;>${opts}</div>
-    <div id=&quot;svFb&quot;></div>`;
-  document.querySelectorAll(&quot;#svCuerpo .btn-sv&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>respondeSv(b)));
+    <div class="sv-ops">${opts}</div>
+    <div id="svFb"></div>`;
+  document.querySelectorAll("#svCuerpo .btn-sv").forEach(b=>b.addEventListener("click",()=>respondeSv(b)));
 }
 function respondeSv(btn){
   const p = PROBLEMAS[si], v = +btn.dataset.v;
   if(v === p[p.x]){
     if(!sFallado) sPuntos++;
-    $(&quot;svPuntos&quot;).textContent = `${sPuntos} first-try correct`;
-    document.querySelectorAll(&quot;#svCuerpo .btn-sv&quot;).forEach(b=>{b.disabled=true; if(+b.dataset.v===v) b.classList.add(&quot;correcta&quot;)});
-    $(&quot;sv-&quot;+p.x).textContent = &quot;$&quot;+p[p.x].toLocaleString(&quot;en-US&quot;);
-    $(&quot;sv-&quot;+p.x).parentElement.classList.remove(&quot;incognita&quot;);
+    $("svPuntos").textContent = `${sPuntos} first-try correct`;
+    document.querySelectorAll("#svCuerpo .btn-sv").forEach(b=>{b.disabled=true; if(+b.dataset.v===v) b.classList.add("correcta")});
+    $("sv-"+p.x).textContent = "$"+p[p.x].toLocaleString("en-US");
+    $("sv-"+p.x).parentElement.classList.remove("incognita");
     setHeader(p.a, p.l, p.e);
-    $(&quot;svFb&quot;).innerHTML = `<div class=&quot;veredicto bien&quot; style=&quot;margin-top:11px&quot;><b>Correct.</b> $${p.a.toLocaleString()} = $${p.l.toLocaleString()} + $${p.e.toLocaleString()}.</div><button class=&quot;btn-next&quot; id=&quot;svNext&quot;>${si===PROBLEMAS.length-1?&quot;Finish ▸&quot;:&quot;Next problem ▸&quot;}</button>`;
-    $(&quot;svNext&quot;).addEventListener(&quot;click&quot;,()=>{ si++; pintaSolver(); });
+    $("svFb").innerHTML = `<div class="veredicto bien" style="margin-top:11px"><b>Correct.</b> $${p.a.toLocaleString()} = $${p.l.toLocaleString()} + $${p.e.toLocaleString()}.</div><button class="btn-next" id="svNext">${si===PROBLEMAS.length-1?"Finish ▸":"Next problem ▸"}</button>`;
+    $("svNext").addEventListener("click",()=>{ si++; pintaSolver(); });
   }else{
-    sFallado = true; btn.disabled = true; btn.classList.add(&quot;incorrecta&quot;);
-    if(!$(&quot;svFb&quot;).querySelector(&quot;.veredicto&quot;)) $(&quot;svFb&quot;).innerHTML = `<div class=&quot;veredicto mal&quot; style=&quot;margin:11px 0 0&quot;><b>Not balanced.</b> Rearrange: the unknown side must make both sides equal.</div>`;
+    sFallado = true; btn.disabled = true; btn.classList.add("incorrecta");
+    if(!$("svFb").querySelector(".veredicto")) $("svFb").innerHTML = `<div class="veredicto mal" style="margin:11px 0 0"><b>Not balanced.</b> Rearrange: the unknown side must make both sides equal.</div>`;
   }
 }
-$(&quot;btnSvReset&quot;).addEventListener(&quot;click&quot;,()=>{ si=0; sPuntos=0; $(&quot;svPuntos&quot;).textContent=&quot;0 first-try correct&quot;; $(&quot;compSv&quot;).classList.remove(&quot;visible&quot;); setHeader(0,0,0); pintaSolver(); irA(&quot;p-c1&quot;); });
+$("btnSvReset").addEventListener("click",()=>{ si=0; sPuntos=0; $("svPuntos").textContent="0 first-try correct"; $("compSv").classList.remove("visible"); setHeader(0,0,0); pintaSolver(); irA("p-c1"); });
 pintaSolver();
 
 /* ===== C2 illustration + tool ===== */
 const I23 = [
-  {n:&quot;Assets&quot;, dr:&quot;+&quot;, cr:&quot;−&quot;}, {op:&quot;=&quot;},
-  {n:&quot;Liabilities&quot;, dr:&quot;−&quot;, cr:&quot;+&quot;}, {op:&quot;+&quot;},
-  {n:&quot;Common Stock&quot;, dr:&quot;−&quot;, cr:&quot;+&quot;, eqm:true}, {op:&quot;+&quot;},
-  {n:&quot;Retained Earnings&quot;, dr:&quot;−&quot;, cr:&quot;+&quot;, eqm:true}, {op:&quot;+&quot;},
-  {n:&quot;Revenues&quot;, dr:&quot;−&quot;, cr:&quot;+&quot;, eqm:true}, {op:&quot;−&quot;},
-  {n:&quot;Expenses&quot;, dr:&quot;+&quot;, cr:&quot;−&quot;, eqm:true}, {op:&quot;−&quot;},
-  {n:&quot;Dividends&quot;, dr:&quot;+&quot;, cr:&quot;−&quot;, eqm:true},
+  {n:"Assets", dr:"+", cr:"−"}, {op:"="},
+  {n:"Liabilities", dr:"−", cr:"+"}, {op:"+"},
+  {n:"Common Stock", dr:"−", cr:"+", eqm:true}, {op:"+"},
+  {n:"Retained Earnings", dr:"−", cr:"+", eqm:true}, {op:"+"},
+  {n:"Revenues", dr:"−", cr:"+", eqm:true}, {op:"−"},
+  {n:"Expenses", dr:"+", cr:"−", eqm:true}, {op:"−"},
+  {n:"Dividends", dr:"+", cr:"−", eqm:true},
 ];
-$(&quot;ilus23&quot;).innerHTML = `<div class=&quot;ilus23&quot;>${I23.map(x=>{
-  if(x.op) return `<div class=&quot;i23-op&quot;>${x.op}</div>`;
-  return `<div class=&quot;i23-el ${x.eqm?&quot;eqm&quot;:&quot;&quot;}&quot;>
-    <div class=&quot;i23-nom&quot;>${x.n}</div>
-    <div class=&quot;mini-t&quot;><div class=&quot;mt-cab&quot;><span>Dr</span><span>Cr</span></div><div class=&quot;mt-val&quot;><span>${x.dr}</span><span>${x.cr}</span></div></div>
+$("ilus23").innerHTML = `<div class="ilus23">${I23.map(x=>{
+  if(x.op) return `<div class="i23-op">${x.op}</div>`;
+  return `<div class="i23-el ${x.eqm?"eqm":""}">
+    <div class="i23-nom">${x.n}</div>
+    <div class="mini-t"><div class="mt-cab"><span>Dr</span><span>Cr</span></div><div class="mt-val"><span>${x.dr}</span><span>${x.cr}</span></div></div>
   </div>`;
-}).join(&quot;&quot;)}</div>`;
+}).join("")}</div>`;
 
 const EFECTO = [
-  {n:&quot;Revenues earned from services&quot;, r:&quot;up&quot;, regla:&quot;Revenues increase stockholders' equity (credit balance).&quot;},
-  {n:&quot;Rent Expense for the period&quot;, r:&quot;down&quot;, regla:&quot;Expenses decrease stockholders' equity (debit balance).&quot;},
-  {n:&quot;Common Stock issued to owners&quot;, r:&quot;up&quot;, regla:&quot;Common Stock increases stockholders' equity (credit balance).&quot;},
-  {n:&quot;Dividends declared to stockholders&quot;, r:&quot;down&quot;, regla:&quot;Dividends decrease stockholders' equity (debit balance).&quot;},
-  {n:&quot;Retained Earnings from prior profit&quot;, r:&quot;up&quot;, regla:&quot;Retained Earnings increases stockholders' equity (credit balance).&quot;},
+  {n:"Revenues earned from services", r:"up", regla:"Revenues increase stockholders' equity (credit balance)."},
+  {n:"Rent Expense for the period", r:"down", regla:"Expenses decrease stockholders' equity (debit balance)."},
+  {n:"Common Stock issued to owners", r:"up", regla:"Common Stock increases stockholders' equity (credit balance)."},
+  {n:"Dividends declared to stockholders", r:"down", regla:"Dividends decrease stockholders' equity (debit balance)."},
+  {n:"Retained Earnings from prior profit", r:"up", regla:"Retained Earnings increases stockholders' equity (credit balance)."},
 ];
 let ei = 0, ePuntos = 0, eFallado = false;
 function pintaEq(){
   if(ei >= EFECTO.length){
-    $(&quot;eqPos&quot;).textContent = &quot;Finished&quot;; $(&quot;eqResumen&quot;).textContent = `${ePuntos} / ${EFECTO.length}`;
-    $(&quot;cartaEq&quot;).innerHTML = &quot;&quot;; $(&quot;compEq&quot;).classList.add(&quot;visible&quot;);
-    setTimeout(()=>$(&quot;compEq&quot;).scrollIntoView({behavior:&quot;smooth&quot;,block:&quot;end&quot;}),200); return;
+    $("eqPos").textContent = "Finished"; $("eqResumen").textContent = `${ePuntos} / ${EFECTO.length}`;
+    $("cartaEq").innerHTML = ""; $("compEq").classList.add("visible");
+    setTimeout(()=>$("compEq").scrollIntoView({behavior:"smooth",block:"end"}),200); return;
   }
   const p = EFECTO[ei]; eFallado = false;
-  $(&quot;eqPos&quot;).textContent = `Account ${ei+1} of ${EFECTO.length}`;
-  $(&quot;cartaEq&quot;).innerHTML = `
-    <div class=&quot;asiento&quot; id=&quot;cartaEqAct&quot;>
-      <div class=&quot;encabezado&quot;><span class=&quot;num&quot;>${ei+1}</span><span class=&quot;desc&quot;>${p.n}</span></div>
-      <div class=&quot;lineas&quot;>Does this account raise or lower stockholders' equity?</div>
-      <div class=&quot;opciones&quot;>
-        <button class=&quot;btn-clas up&quot; data-r=&quot;up&quot;>▲ Increases equity</button>
-        <button class=&quot;btn-clas down&quot; data-r=&quot;down&quot;>▼ Decreases equity</button>
+  $("eqPos").textContent = `Account ${ei+1} of ${EFECTO.length}`;
+  $("cartaEq").innerHTML = `
+    <div class="asiento" id="cartaEqAct">
+      <div class="encabezado"><span class="num">${ei+1}</span><span class="desc">${p.n}</span></div>
+      <div class="lineas">Does this account raise or lower stockholders' equity?</div>
+      <div class="opciones">
+        <button class="btn-clas up" data-r="up">▲ Increases equity</button>
+        <button class="btn-clas down" data-r="down">▼ Decreases equity</button>
       </div>
-      <div id=&quot;eqFb&quot;></div>
+      <div id="eqFb"></div>
     </div>`;
-  document.querySelectorAll(&quot;#cartaEq .btn-clas&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>respondeEq(b)));
+  document.querySelectorAll("#cartaEq .btn-clas").forEach(b=>b.addEventListener("click",()=>respondeEq(b)));
 }
 function respondeEq(btn){
   const p = EFECTO[ei];
   if(btn.dataset.r === p.r){
     if(!eFallado) ePuntos++;
-    $(&quot;eqPuntos&quot;).textContent = `${ePuntos} first-try correct`;
-    document.querySelectorAll(&quot;#cartaEq .btn-clas&quot;).forEach(b=>{b.disabled=true; if(b.dataset.r===p.r) b.classList.add(&quot;correcta&quot;); else b.classList.add(&quot;atenuada&quot;)});
-    $(&quot;eqFb&quot;).innerHTML = `<div class=&quot;reveal&quot;><div class=&quot;veredicto bien&quot;><b>Correct.</b> ${p.regla}</div><button class=&quot;btn-next&quot; id=&quot;eqNext&quot;>${ei===EFECTO.length-1?&quot;Finish ▸&quot;:&quot;Next account ▸&quot;}</button></div>`;
-    $(&quot;eqNext&quot;).addEventListener(&quot;click&quot;,()=>{ ei++; pintaEq(); });
+    $("eqPuntos").textContent = `${ePuntos} first-try correct`;
+    document.querySelectorAll("#cartaEq .btn-clas").forEach(b=>{b.disabled=true; if(b.dataset.r===p.r) b.classList.add("correcta"); else b.classList.add("atenuada")});
+    $("eqFb").innerHTML = `<div class="reveal"><div class="veredicto bien"><b>Correct.</b> ${p.regla}</div><button class="btn-next" id="eqNext">${ei===EFECTO.length-1?"Finish ▸":"Next account ▸"}</button></div>`;
+    $("eqNext").addEventListener("click",()=>{ ei++; pintaEq(); });
   }else{
-    eFallado = true; btn.disabled = true; btn.classList.add(&quot;incorrecta&quot;);
-    const card = $(&quot;cartaEqAct&quot;); card.classList.remove(&quot;temblor&quot;); void card.offsetWidth; card.classList.add(&quot;temblor&quot;);
+    eFallado = true; btn.disabled = true; btn.classList.add("incorrecta");
+    const card = $("cartaEqAct"); card.classList.remove("temblor"); void card.offsetWidth; card.classList.add("temblor");
   }
 }
-$(&quot;btnEqReset&quot;).addEventListener(&quot;click&quot;,()=>{ ei=0; ePuntos=0; $(&quot;eqPuntos&quot;).textContent=&quot;0 first-try correct&quot;; $(&quot;compEq&quot;).classList.remove(&quot;visible&quot;); pintaEq(); irA(&quot;p-c2&quot;); });
+$("btnEqReset").addEventListener("click",()=>{ ei=0; ePuntos=0; $("eqPuntos").textContent="0 first-try correct"; $("compEq").classList.remove("visible"); pintaEq(); irA("p-c2"); });
 pintaEq();
 
 /* ===== C3 tool: Perez analyzer + worksheet ===== */
-const CLASES = {A:&quot;Assets only&quot;, AL:&quot;Assets &amp; Liabilities&quot;, AE:&quot;Assets &amp; Equity&quot;, LE:&quot;Liabilities &amp; Equity&quot;};
+const CLASES = {A:"Assets only", AL:"Assets & Liabilities", AE:"Assets & Equity", LE:"Liabilities & Equity"};
 const PEREZ = [
-  {desc:&quot;Owners invest $40,000 in exchange for common stock.&quot;, clase:&quot;AE&quot;, a:40000,l:0,e:40000, nota:&quot;Cash comes in and common stock is issued — equity rises.&quot;},
-  {desc:&quot;Disburse $600 cash for administrative wages.&quot;, clase:&quot;AE&quot;, a:-600,l:0,e:-600, nota:&quot;Wages are an expense; the expense reduces equity.&quot;},
-  {desc:&quot;Purchase office equipment priced at $5,200, giving a 10% promissory note.&quot;, clase:&quot;AL&quot;, a:5200,l:5200,e:0, nota:&quot;An asset (equipment) rises and a note payable rises with it.&quot;},
-  {desc:&quot;Receive $4,000 cash for services performed.&quot;, clase:&quot;AE&quot;, a:4000,l:0,e:4000, nota:&quot;Service revenue increases equity.&quot;},
-  {desc:&quot;Pay off a short-term liability of $7,000.&quot;, clase:&quot;AL&quot;, a:-7000,l:-7000,e:0, nota:&quot;Cash falls and the payable is cleared.&quot;},
-  {desc:&quot;Declare a cash dividend of $5,000.&quot;, clase:&quot;LE&quot;, a:0,l:5000,e:-5000, nota:&quot;A dividend payable is created; equity falls. Assets change only when it is paid.&quot;},
-  {desc:&quot;Convert a long-term liability of $80,000 into common stock.&quot;, clase:&quot;LE&quot;, a:0,l:-80000,e:80000, nota:&quot;Debt is swapped for equity — liabilities down, equity up.&quot;},
-  {desc:&quot;Pay cash of $16,000 for a delivery van.&quot;, clase:&quot;A&quot;, a:0,l:0,e:0, aCells:[&quot;−16,000&quot;,&quot;+16,000&quot;], nota:&quot;One asset for another: Cash down $16,000, Equipment up $16,000 — total assets unchanged.&quot;},
+  {desc:"Owners invest $40,000 in exchange for common stock.", clase:"AE", a:40000,l:0,e:40000, nota:"Cash comes in and common stock is issued — equity rises."},
+  {desc:"Disburse $600 cash for administrative wages.", clase:"AE", a:-600,l:0,e:-600, nota:"Wages are an expense; the expense reduces equity."},
+  {desc:"Purchase office equipment priced at $5,200, giving a 10% promissory note.", clase:"AL", a:5200,l:5200,e:0, nota:"An asset (equipment) rises and a note payable rises with it."},
+  {desc:"Receive $4,000 cash for services performed.", clase:"AE", a:4000,l:0,e:4000, nota:"Service revenue increases equity."},
+  {desc:"Pay off a short-term liability of $7,000.", clase:"AL", a:-7000,l:-7000,e:0, nota:"Cash falls and the payable is cleared."},
+  {desc:"Declare a cash dividend of $5,000.", clase:"LE", a:0,l:5000,e:-5000, nota:"A dividend payable is created; equity falls. Assets change only when it is paid."},
+  {desc:"Convert a long-term liability of $80,000 into common stock.", clase:"LE", a:0,l:-80000,e:80000, nota:"Debt is swapped for equity — liabilities down, equity up."},
+  {desc:"Pay cash of $16,000 for a delivery van.", clase:"A", a:0,l:0,e:0, aCells:["−16,000","+16,000"], nota:"One asset for another: Cash down $16,000, Equipment up $16,000 — total assets unchanged."},
 ];
 let ai = 0, balanced = 0; const applied = [];
 function pintaAna(){
   if(ai >= PEREZ.length){
-    $(&quot;anaPos&quot;).textContent = &quot;All 8 analyzed&quot;;
-    $(&quot;cartaAna&quot;).innerHTML = `<div class=&quot;veredicto bien&quot; style=&quot;margin:0&quot;><b>Done —</b> all eight transactions kept the equation balanced. The worksheet proof is below.</div>`;
+    $("anaPos").textContent = "All 8 analyzed";
+    $("cartaAna").innerHTML = `<div class="veredicto bien" style="margin:0"><b>Done —</b> all eight transactions kept the equation balanced. The worksheet proof is below.</div>`;
     return;
   }
   const t = PEREZ[ai];
-  $(&quot;anaPos&quot;).textContent = `Transaction ${ai+1} of 8`;
-  const opts = [&quot;A&quot;,&quot;AL&quot;,&quot;AE&quot;,&quot;LE&quot;].map(k=>`<button class=&quot;btn-clas&quot; data-k=&quot;${k}&quot;>${CLASES[k]}</button>`).join(&quot;&quot;);
-  $(&quot;cartaAna&quot;).innerHTML = `
-    <div class=&quot;asiento&quot; id=&quot;cartaActiva&quot;>
-      <div class=&quot;encabezado&quot;><span class=&quot;num&quot;>TXN ${ai+1}</span><span class=&quot;desc&quot;>${t.desc}</span></div>
-      <div class=&quot;lineas&quot;>Which two elements of the equation does this transaction move?</div>
-      <div class=&quot;opciones&quot;>${opts}</div>
-      <div id=&quot;revealAna&quot;></div>
+  $("anaPos").textContent = `Transaction ${ai+1} of 8`;
+  const opts = ["A","AL","AE","LE"].map(k=>`<button class="btn-clas" data-k="${k}">${CLASES[k]}</button>`).join("");
+  $("cartaAna").innerHTML = `
+    <div class="asiento" id="cartaActiva">
+      <div class="encabezado"><span class="num">TXN ${ai+1}</span><span class="desc">${t.desc}</span></div>
+      <div class="lineas">Which two elements of the equation does this transaction move?</div>
+      <div class="opciones">${opts}</div>
+      <div id="revealAna"></div>
     </div>`;
-  document.querySelectorAll(&quot;#cartaAna .btn-clas&quot;).forEach(b=>b.addEventListener(&quot;click&quot;,()=>clasifica(b)));
+  document.querySelectorAll("#cartaAna .btn-clas").forEach(b=>b.addEventListener("click",()=>clasifica(b)));
 }
 function clasifica(btn){
   const t = PEREZ[ai], k = btn.dataset.k;
   if(k === t.clase){
-    document.querySelectorAll(&quot;#cartaAna .btn-clas&quot;).forEach(b=>{b.disabled=true; if(b.dataset.k===k) b.classList.add(&quot;correcta&quot;); else b.classList.add(&quot;atenuada&quot;)});
+    document.querySelectorAll("#cartaAna .btn-clas").forEach(b=>{b.disabled=true; if(b.dataset.k===k) b.classList.add("correcta"); else b.classList.add("atenuada")});
     const aCell = t.aCells
-      ? `<span class=&quot;dv dbl&quot;><span class=&quot;neg&quot;>${t.aCells[0]}</span><br><span class=&quot;pos&quot;>${t.aCells[1]}</span></span>`
-      : `<span class=&quot;dv ${t.a>0?&quot;pos&quot;:t.a<0?&quot;neg&quot;:&quot;&quot;}&quot;>${signed(t.a)}</span>`;
-    $(&quot;revealAna&quot;).innerHTML = `
-      <div class=&quot;reveal&quot;>
-        <div class=&quot;delta-strip&quot;>
-          <div class=&quot;delta-cel&quot;><div class=&quot;dl&quot;>Δ Assets</div>${aCell}</div>
-          <div class=&quot;delta-cel&quot;><div class=&quot;dl&quot;>Δ Liabilities</div><span class=&quot;dv ${t.l>0?&quot;pos&quot;:t.l<0?&quot;neg&quot;:&quot;&quot;}&quot;>${signed(t.l)}</span></div>
-          <div class=&quot;delta-cel&quot;><div class=&quot;dl&quot;>Δ Equity</div><span class=&quot;dv ${t.e>0?&quot;pos&quot;:t.e<0?&quot;neg&quot;:&quot;&quot;}&quot;>${signed(t.e)}</span></div>
+      ? `<span class="dv dbl"><span class="neg">${t.aCells[0]}</span><br><span class="pos">${t.aCells[1]}</span></span>`
+      : `<span class="dv ${t.a>0?"pos":t.a<0?"neg":""}">${signed(t.a)}</span>`;
+    $("revealAna").innerHTML = `
+      <div class="reveal">
+        <div class="delta-strip">
+          <div class="delta-cel"><div class="dl">Δ Assets</div>${aCell}</div>
+          <div class="delta-cel"><div class="dl">Δ Liabilities</div><span class="dv ${t.l>0?"pos":t.l<0?"neg":""}">${signed(t.l)}</span></div>
+          <div class="delta-cel"><div class="dl">Δ Equity</div><span class="dv ${t.e>0?"pos":t.e<0?"neg":""}">${signed(t.e)}</span></div>
         </div>
-        <div class=&quot;veredicto bien&quot;><b>In balance.</b> ${t.nota}</div>
-        <button class=&quot;btn-next&quot; id=&quot;btnNextAna&quot;>${ai===PEREZ.length-1?&quot;Finish ▸&quot;:&quot;Next transaction ▸&quot;}</button>
+        <div class="veredicto bien"><b>In balance.</b> ${t.nota}</div>
+        <button class="btn-next" id="btnNextAna">${ai===PEREZ.length-1?"Finish ▸":"Next transaction ▸"}</button>
       </div>`;
     setHeader(t.a,t.l,t.e);
-    balanced++; $(&quot;anaBal&quot;).textContent = `${balanced} balanced`;
+    balanced++; $("anaBal").textContent = `${balanced} balanced`;
     applied.push(t); pintaWorksheet();
-    $(&quot;btnNextAna&quot;).addEventListener(&quot;click&quot;,()=>{ ai++; pintaAna(); });
+    $("btnNextAna").addEventListener("click",()=>{ ai++; pintaAna(); });
   }else{
-    btn.classList.add(&quot;incorrecta&quot;); btn.disabled = true;
-    const card = $(&quot;cartaActiva&quot;); card.classList.remove(&quot;temblor&quot;); void card.offsetWidth; card.classList.add(&quot;temblor&quot;);
-    if(!$(&quot;revealAna&quot;).querySelector(&quot;.veredicto.mal&quot;))
-      $(&quot;revealAna&quot;).innerHTML = `<div class=&quot;veredicto mal&quot;><b>Not that pair.</b> Trace the cash and what it turns into — which two elements actually change?</div>`;
+    btn.classList.add("incorrecta"); btn.disabled = true;
+    const card = $("cartaActiva"); card.classList.remove("temblor"); void card.offsetWidth; card.classList.add("temblor");
+    if(!$("revealAna").querySelector(".veredicto.mal"))
+      $("revealAna").innerHTML = `<div class="veredicto mal"><b>Not that pair.</b> Trace the cash and what it turns into — which two elements actually change?</div>`;
   }
 }
 function pintaWorksheet(){
-  $(&quot;chipWs&quot;).textContent = `${applied.length} / 8`;
-  if(!applied.length){ $(&quot;wsWrap&quot;).innerHTML = `<div class=&quot;ws-vacia&quot;>Classify and apply a transaction to add its first row.</div>`; return; }
+  $("chipWs").textContent = `${applied.length} / 8`;
+  if(!applied.length){ $("wsWrap").innerHTML = `<div class="ws-vacia">Classify and apply a transaction to add its first row.</div>`; return; }
   let sa=0,sl=0,se=0;
   const filas = applied.map((t,i)=>{
     sa+=t.a; sl+=t.l; se+=t.e;
     const aCell = t.aCells
-      ? `<td><span class=&quot;par&quot; style=&quot;color:var(--debe)&quot;>${t.aCells[0]}</span><span class=&quot;par&quot; style=&quot;color:var(--haber)&quot;>${t.aCells[1]}</span></td>`
-      : `<td class=&quot;${t.a>0?&quot;pos&quot;:t.a<0?&quot;neg&quot;:&quot;&quot;}&quot;>${t.a===0?&quot;—&quot;:signed(t.a)}</td>`;
-    return `<tr class=&quot;fila-nueva&quot;><td>Txn ${i+1}</td>${aCell}<td class=&quot;${t.l>0?&quot;pos&quot;:t.l<0?&quot;neg&quot;:&quot;&quot;}&quot;>${t.l===0?&quot;—&quot;:signed(t.l)}</td><td class=&quot;${t.e>0?&quot;pos&quot;:t.e<0?&quot;neg&quot;:&quot;&quot;}&quot;>${t.e===0?&quot;—&quot;:signed(t.e)}</td><td class=&quot;ok&quot;>✓</td></tr>`;
-  }).join(&quot;&quot;);
-  $(&quot;wsWrap&quot;).innerHTML = `<table class=&quot;worksheet&quot;><thead><tr><th>Txn</th><th>Assets</th><th>Liab.</th><th>Equity</th><th>Bal.</th></tr></thead><tbody>${filas}</tbody><tfoot><tr><td>Net</td><td>${signed(sa)}</td><td>${signed(sl)}</td><td>${signed(se)}</td><td class=&quot;ok&quot;>✓</td></tr></tfoot></table>`;
+      ? `<td><span class="par" style="color:var(--debe)">${t.aCells[0]}</span><span class="par" style="color:var(--haber)">${t.aCells[1]}</span></td>`
+      : `<td class="${t.a>0?"pos":t.a<0?"neg":""}">${t.a===0?"—":signed(t.a)}</td>`;
+    return `<tr class="fila-nueva"><td>Txn ${i+1}</td>${aCell}<td class="${t.l>0?"pos":t.l<0?"neg":""}">${t.l===0?"—":signed(t.l)}</td><td class="${t.e>0?"pos":t.e<0?"neg":""}">${t.e===0?"—":signed(t.e)}</td><td class="ok">✓</td></tr>`;
+  }).join("");
+  $("wsWrap").innerHTML = `<table class="worksheet"><thead><tr><th>Txn</th><th>Assets</th><th>Liab.</th><th>Equity</th><th>Bal.</th></tr></thead><tbody>${filas}</tbody><tfoot><tr><td>Net</td><td>${signed(sa)}</td><td>${signed(sl)}</td><td>${signed(se)}</td><td class="ok">✓</td></tr></tfoot></table>`;
   if(applied.length === 8){
-    $(&quot;sumA&quot;).textContent=signed(sa); $(&quot;sumL&quot;).textContent=signed(sl); $(&quot;sumE&quot;).textContent=signed(se);
-    $(&quot;compPrueba&quot;).classList.add(&quot;visible&quot;);
+    $("sumA").textContent=signed(sa); $("sumL").textContent=signed(sl); $("sumE").textContent=signed(se);
+    $("compPrueba").classList.add("visible");
   }
 }
-$(&quot;btnReset&quot;).addEventListener(&quot;click&quot;,()=>{
-  ai=0; balanced=0; applied.length=0; $(&quot;anaBal&quot;).textContent=&quot;0 balanced&quot;; setHeader(0,0,0);
-  $(&quot;compPrueba&quot;).classList.remove(&quot;visible&quot;); pintaAna(); pintaWorksheet(); irA(&quot;p-c3&quot;);
+$("btnReset").addEventListener("click",()=>{
+  ai=0; balanced=0; applied.length=0; $("anaBal").textContent="0 balanced"; setHeader(0,0,0);
+  $("compPrueba").classList.remove("visible"); pintaAna(); pintaWorksheet(); irA("p-c3");
 });
 pintaAna(); pintaWorksheet();
-</script>
-</body>
-</html>
-"></iframe></div>
-<script>
-  function __nav(n){
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
-    var el=document.getElementById('view-'+n);
-    if(!el) return;
-    el.classList.add('on');
-    try{ el.querySelector('iframe').contentWindow.scrollTo(0,0); }catch(e){}
-  }
-  window.__nav=__nav;
-</script>
+
+  })(D);
+})();</script>
+
 </body>
 </html>
