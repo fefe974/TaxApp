@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>LedgerLab · 2.2 The Accounting Equation</title>
+<meta name="theme-color" content="#0C1D2E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lienzo:#0B1A29;
+  --cabecera-1:#122B42;
+  --cabecera-2:#1A3A57;
+  --fondo:#F2F5F8;
+  --panel:#FFFFFF;
+  --panel-2:#F4F7FA;
+  --borde:#D8E0E9;
+  --borde-suave:#E1E8EF;
+  --acento:#2F6FAD;
+  --acento-claro:#8FC1EA;
+  --acento-tinte:#EAF2FA;
+  --acento-borde:#C6DCEF;
+  --debe:#A93226;
+  --debe-tinte:#FBEAE7;
+  --debe-borde:#F0C9C3;
+  --haber:#1E7A4D;
+  --haber-tinte:#E7F4EC;
+  --haber-borde:#BFE3CD;
+  --texto:#16283A;
+  --texto-suave:#5B6B7B;
+  --sombra:0 1px 3px rgba(16,35,55,.08), 0 8px 24px rgba(16,35,55,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:var(--lienzo);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  color:var(--texto);
+  display:flex;justify-content:center;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,173,.28), transparent 60%);
+}
+.telefono{
+  width:100%;max-width:430px;min-height:100dvh;
+  background:var(--fondo);
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  box-shadow:0 0 80px rgba(0,0,0,.5);
+}
+@media(min-width:480px){
+  .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
+}
+
+/* ---------- cabecera ---------- */
+header.app{
+  background:linear-gradient(160deg,var(--cabecera-1) 0%, var(--cabecera-2) 100%);
+  color:#fff;padding:22px 22px 18px;position:relative;flex-shrink:0;
+}
+header.app::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--acento-claro) 20%,var(--acento-claro) 80%,transparent);opacity:.8;
+}
+.marca{display:flex;align-items:baseline;gap:10px}
+.marca h1{font-size:20px;font-weight:700;letter-spacing:-.01em;cursor:pointer}
+.marca h1 em{color:var(--acento-claro);font-style:normal}
+.folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase}
+.subtitulo{margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+
+.ecuacion-viva{
+  margin-top:16px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(143,193,234,.28);border-radius:10px;padding:10px 12px;
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;
+}
+.ecuacion-viva .celda{text-align:center}
+.ecuacion-viva .etiqueta{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+.ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;transition:color .3s}
+.ecuacion-viva .signo{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--acento-claro)}
+.ecuacion-viva.parpadeo .cifra{color:var(--acento-claro)}
+.ecuacion-viva.rota .cifra{color:#F0A9A0}
+
+/* ---------- contenido ---------- */
+main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+.pantalla{display:none;padding:20px 18px 28px;animation:aparecer .3s ease both}
+.pantalla.activa{display:block}
+@keyframes aparecer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.ojal{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ojal::after{content:"";flex:1;height:1px;background:var(--borde)}
+h2.titulo{font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px}
+h2.titulo em{font-style:normal;color:var(--acento)}
+p.intro{font-size:13px;line-height:1.55;color:var(--texto-suave);margin-bottom:16px;max-width:38ch}
+
+/* ---------- paneles ---------- */
+.panel{background:var(--panel);border:1px solid var(--borde);border-radius:10px;box-shadow:var(--sombra);overflow:hidden}
+.panel-tit{
+  display:flex;align-items:center;gap:8px;background:var(--panel-2);border-bottom:1px solid var(--borde-suave);
+  padding:8px 12px;font-size:9.5px;letter-spacing:.1em;font-weight:700;color:var(--texto-suave);text-transform:uppercase;
+}
+.panel-tit .chip{
+  margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px;
+  letter-spacing:.06em;background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde);
+}
+.panel-cuerpo{padding:14px}
+
+/* ---------- ecuación básica (cajas) ---------- */
+.eq-basica{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px}
+.eq-caja{
+  text-align:center;border:1.5px solid var(--borde);border-radius:9px;padding:11px 6px;background:var(--panel-2);
+  border-top-width:3px;
+}
+.eq-caja.a{border-top-color:var(--acento)}
+.eq-caja.l{border-top-color:#B5851F}
+.eq-caja.e{border-top-color:var(--haber)}
+.eq-caja b{font-size:13px;font-weight:700;display:block;line-height:1.2}
+.eq-caja span{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+.eq-op{font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--acento);font-weight:600;text-align:center}
+
+/* ---------- ecuación expandida (pills) ---------- */
+.exp-eq{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;justify-content:center}
+.exp-op{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--texto-suave);font-weight:600;display:flex;align-items:center}
+.se-grupo{
+  flex:1 1 100%;border:1.5px dashed var(--haber-borde);border-radius:10px;padding:11px 8px 8px;margin-top:12px;
+  background:var(--haber-tinte);position:relative;
+}
+.se-grupo .se-lab{
+  position:absolute;top:-8px;left:12px;background:var(--panel);padding:0 6px;
+  font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--haber);
+}
+.se-fila{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-content:center}
+.pill{
+  font-family:inherit;font-size:11.5px;font-weight:600;cursor:pointer;
+  background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:8px 11px;color:var(--texto);
+  transition:transform .15s, border-color .2s, box-shadow .2s;
+}
+.pill:active{transform:scale(.96)}
+.pill.activa{border-color:var(--acento);box-shadow:0 0 0 2px rgba(47,111,173,.18)}
+.pill.eqm{background:var(--haber-tinte);border-color:var(--haber-borde)}
+.detalle{
+  margin-top:12px;border:1px solid var(--borde);border-radius:9px;background:var(--panel-2);padding:12px;
+  animation:aparecer .25s ease both;
+}
+.detalle h4{font-size:13px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.detalle .badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px}
+.badge.deb{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde)}
+.badge.cre{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
+.detalle p{font-size:12px;line-height:1.5;color:var(--texto-suave)}
+.detalle .lineas-info{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.detalle .li{display:flex;justify-content:space-between;font-size:11.5px;border-bottom:1px solid var(--borde-suave);padding-bottom:4px}
+.detalle .li b{font-family:'IBM Plex Mono',monospace;font-weight:600}
+
+/* ---------- grid de efectos (Illustration 2.3) ---------- */
+.fila-efecto{
+  display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
+  background:var(--panel);border:1px solid var(--borde);border-radius:9px;
+  padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 2px rgba(16,35,55,.05);
+}
+.fila-efecto .cuenta-nom{font-size:12.5px;font-weight:600;line-height:1.2}
+.fila-efecto .cuenta-cod{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--texto-suave);font-weight:500;margin-top:1px}
+.mini-t{border:1px solid var(--borde-suave);border-radius:6px;overflow:hidden;width:76px}
+.mini-t .mt-cab{display:grid;grid-template-columns:1fr 1fr;background:var(--panel-2)}
+.mini-t .mt-cab span{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;font-weight:700;text-align:center;padding:2px 0}
+.mini-t .mt-cab span:first-child{color:var(--debe);border-right:1px solid var(--borde-suave)}
+.mini-t .mt-cab span:last-child{color:var(--haber)}
+.mini-t .mt-val{display:grid;grid-template-columns:1fr 1fr}
+.mini-t .mt-val span{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;text-align:center;padding:3px 0;line-height:1}
+.mini-t .mt-val span:first-child{border-right:1px solid var(--borde-suave)}
+.efecto-eq{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:3px 7px;border-radius:999px;white-space:nowrap;text-align:center;min-width:64px}
+.efecto-eq.up{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
+.efecto-eq.down{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde)}
+.efecto-eq.none{background:var(--panel-2);color:var(--texto-suave);border:1px solid var(--borde)}
+
+/* ---------- clasificación / transacciones ---------- */
+.marcador{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--texto-suave);text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between}
+.asiento{
+  background:var(--panel);border:1px solid var(--borde);border-radius:10px;margin-bottom:10px;overflow:hidden;
+  box-shadow:0 1px 3px rgba(16,35,55,.06);transition:opacity .3s, border-color .3s;
+}
+.asiento .encabezado{display:flex;align-items:center;gap:10px;padding:12px 13px 8px}
+.asiento .num{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;
+  background:var(--acento-tinte);color:var(--acento);border:1px solid var(--acento-borde);
+}
+.asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
+.asiento .lineas{padding:2px 13px 6px;font-size:12px;color:var(--texto-suave);line-height:1.5}
+.opciones{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 13px 13px}
+.btn-clas{
+  font-family:inherit;font-size:12px;font-weight:600;background:var(--panel);border:1px solid var(--borde);
+  color:var(--texto);border-radius:8px;padding:11px 8px;cursor:pointer;transition:transform .15s, border-color .2s, background .2s;
+}
+.btn-clas:active{transform:scale(.97)}
+.btn-clas.correcta{border-color:var(--haber);background:var(--haber-tinte);color:var(--haber)}
+.btn-clas.incorrecta{border-color:var(--debe);background:var(--debe-tinte);color:var(--debe)}
+.btn-clas.atenuada{opacity:.4}
+.reveal{padding:0 13px 13px;animation:aparecer .25s ease both}
+.delta-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:9px}
+.delta-cel{border:1px solid var(--borde-suave);border-radius:8px;background:var(--panel-2);padding:8px 6px;text-align:center}
+.delta-cel .dl{font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+.delta-cel .dv{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+.delta-cel .dv.dbl{font-size:11px;line-height:1.25}
+.delta-cel .dv.pos{color:var(--haber)}
+.delta-cel .dv.neg{color:var(--debe)}
+.veredicto{font-size:12px;line-height:1.5;border-radius:8px;padding:9px 11px}
+.veredicto.bien{background:var(--haber-tinte);color:var(--haber);border:1px solid var(--haber-borde)}
+.veredicto.mal{background:var(--debe-tinte);color:var(--debe);border:1px solid var(--debe-borde);margin:0 13px 13px}
+.veredicto b{font-weight:700}
+.btn-next{
+  margin-top:10px;width:100%;font-family:inherit;font-size:12.5px;font-weight:600;background:var(--acento);color:#fff;
+  border:none;border-radius:8px;padding:11px;cursor:pointer;transition:transform .15s;
+}
+.btn-next:active{transform:scale(.98)}
+.temblor{animation:temblor .3s ease}
+@keyframes temblor{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+
+/* ---------- hoja de trabajo (worksheet) ---------- */
+.ws-vacia{padding:26px 16px;text-align:center;color:var(--texto-suave);font-size:12.5px;line-height:1.5}
+table.worksheet{width:100%;border-collapse:collapse}
+table.worksheet th,table.worksheet td{padding:7px 8px;font-size:11px;text-align:right}
+table.worksheet thead th{
+  background:var(--panel-2);border-bottom:1px solid var(--borde);
+  font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--texto-suave);font-weight:700;
+}
+table.worksheet thead th:first-child,table.worksheet td:first-child{text-align:left}
+table.worksheet td{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;border-top:1px solid var(--borde-suave)}
+table.worksheet td:first-child{font-family:'IBM Plex Sans',sans-serif;color:var(--texto-suave);font-size:10.5px}
+table.worksheet td.pos{color:var(--haber)}
+table.worksheet td.neg{color:var(--debe)}
+table.worksheet td .par{display:block;font-size:9.5px;line-height:1.35}
+table.worksheet td.ok{color:var(--haber);text-align:center;font-weight:600}
+table.worksheet tfoot td{border-top:2px solid var(--texto);font-weight:700;background:var(--panel-2)}
+tr.fila-nueva{animation:filaEntra .35s ease both}
+@keyframes filaEntra{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+
+/* ---------- comprobación ---------- */
+.comprobacion{
+  margin-top:16px;background:linear-gradient(160deg,var(--cabecera-1),var(--cabecera-2));
+  color:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;
+  display:none;animation:aparecer .35s ease both;
+}
+.comprobacion.visible{display:block}
+.comprobacion h3{font-size:16px;font-weight:700;margin-bottom:12px;max-width:70%}
+.comp-fila{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;flex-shrink:0}
+.comp-fila.total{border-bottom:none;border-top:2px solid var(--acento-claro);margin-top:6px;padding-top:10px;font-weight:600}
+.estampa{
+  position:absolute;right:14px;top:14px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;font-weight:600;
+  color:#7ED9A7;background:rgba(30,122,77,.28);border:1px solid rgba(126,217,167,.45);border-radius:999px;padding:5px 10px;
+}
+.btn-fantasma{
+  margin-top:14px;width:100%;font-family:inherit;font-size:12px;font-weight:600;background:transparent;
+  border:1px solid var(--borde);color:var(--texto-suave);border-radius:8px;padding:9px;cursor:pointer;
+}
+.nota-pie{
+  margin-top:14px;font-size:12px;color:#33506B;line-height:1.55;background:var(--acento-tinte);
+  border:1px solid var(--acento-borde);border-radius:9px;padding:10px 12px;
+}
+.nota-pie b{color:var(--texto)}
+
+/* ---------- barra de pestañas ---------- */
+nav.pestanas{
+  flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--lienzo);padding:8px 10px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(143,193,234,.2);
+}
+.pestana{
+  font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:7px 4px;border-radius:10px;color:rgba(255,255,255,.42);font-size:9px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+  transition:color .2s, background .2s;
+}
+.pestana svg{width:21px;height:21px}
+.pestana.activa{color:var(--acento-claro);background:rgba(143,193,234,.12)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+<div class="telefono">
+
+  <header class="app">
+    <div class="marca">
+      <h1 id="volverIntro" title="Back to course">Ledger<em>Lab</em></h1>
+      <span class="folio">Module 2.2</span>
+    </div>
+    <div class="subtitulo">The Accounting Equation</div>
+    <div class="ecuacion-viva" id="ecuacionViva">
+      <div class="celda"><div class="etiqueta">Δ Assets</div><div class="cifra" id="evA">$0</div></div>
+      <div class="signo">=</div>
+      <div class="celda"><div class="etiqueta">Δ Liabilities</div><div class="cifra" id="evL">$0</div></div>
+      <div class="signo">+</div>
+      <div class="celda"><div class="etiqueta">Δ Equity</div><div class="cifra" id="evE">$0</div></div>
+    </div>
+  </header>
+
+  <main id="principal">
+
+    <!-- ============ SCREEN 1 · EQUATION ============ -->
+    <section class="pantalla activa" id="p-ecuacion">
+      <div class="ojal">Lesson 2.2 · The basic equation</div>
+      <h2 class="titulo">For every debit, <em>a credit</em></h2>
+      <p class="intro">In a double-entry system, every debit has a matching credit. That balance gives us accounting's basic equation.</p>
+
+      <div class="panel">
+        <div class="panel-tit">Basic accounting equation<span class="chip">CORE</span></div>
+        <div class="panel-cuerpo">
+          <div class="eq-basica">
+            <div class="eq-caja a"><b>Assets</b><span>Debit bal.</span></div>
+            <div class="eq-op">=</div>
+            <div class="eq-caja l"><b>Liabilities</b><span>Credit bal.</span></div>
+            <div class="eq-op">+</div>
+            <div class="eq-caja e"><b>Equity</b><span>Credit bal.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ojal" style="margin-top:22px">Illustration 2.3 · The expanded equation</div>
+      <p class="intro">Stockholders' equity is built from five accounts. Tap any element to see its debit/credit rule and how it moves the equation.</p>
+
+      <div class="panel">
+        <div class="panel-tit">Expanded equation<span class="chip">INTERACTIVE</span></div>
+        <div class="panel-cuerpo">
+          <div class="exp-eq">
+            <button class="pill" data-k="assets">Assets</button>
+            <span class="exp-op">=</span>
+            <button class="pill" data-k="liab">Liabilities</button>
+            <span class="exp-op">+</span>
+            <div class="se-grupo">
+              <span class="se-lab">Stockholders' Equity</span>
+              <div class="se-fila">
+                <button class="pill eqm" data-k="cs">Common Stock</button>
+                <span class="exp-op">+</span>
+                <button class="pill eqm" data-k="re">Retained Earnings</button>
+                <span class="exp-op">+</span>
+                <button class="pill eqm" data-k="rev">Revenues</button>
+                <span class="exp-op">−</span>
+                <button class="pill eqm" data-k="exp">Expenses</button>
+                <span class="exp-op">−</span>
+                <button class="pill eqm" data-k="div">Dividends</button>
+              </div>
+            </div>
+          </div>
+          <div class="detalle" id="detalleExp" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <p class="nota-pie">Like the basic equation, the expanded equation must always <b>balance</b> — total debits equal total credits.</p>
+    </section>
+
+    <!-- ============ SCREEN 2 · EFFECTS ============ -->
+    <section class="pantalla" id="p-efectos">
+      <div class="ojal">Illustration 2.3 · Debit / credit rules &amp; effects</div>
+      <h2 class="titulo">Where each account <em>increases</em></h2>
+      <p class="intro">The seven account families and the side that increases each (+). Notice the equity family splits: three raise equity, two lower it.</p>
+
+      <div id="gridEfectos"></div>
+
+      <p class="nota-pie"><b>The split that trips people up:</b> Expenses and Dividends live under equity, yet they carry <b>debit</b> balances — because they <b>reduce</b> equity.</p>
+    </section>
+
+    <!-- ============ SCREEN 3 · ANALYZE ============ -->
+    <section class="pantalla" id="p-analizar">
+      <div class="ojal">Perez Inc. · Eight transactions</div>
+      <h2 class="titulo">Every transaction <em>keeps the balance</em></h2>
+      <p class="intro">Classify which two elements each transaction moves, then apply it. The equation stays balanced every time.</p>
+
+      <div class="marcador"><span id="anaPos">Transaction 1 of 8</span><span id="anaBal">0 balanced</span></div>
+      <div id="cartaAna"></div>
+    </section>
+
+    <!-- ============ SCREEN 4 · PROOF ============ -->
+    <section class="pantalla" id="p-prueba">
+      <div class="ojal">Transaction worksheet · The proof</div>
+      <h2 class="titulo">Net change, <em>column by column</em></h2>
+      <p class="intro">Each transaction you apply lands here. The columns prove the equality holds — total assets change equals total liabilities plus equity change.</p>
+
+      <div class="panel">
+        <div class="panel-tit">Worksheet · net change per element<span class="chip" id="chipWs">0 / 8</span></div>
+        <div id="wsWrap">
+          <div class="ws-vacia" id="wsVacia">No transactions applied yet.<br>Open the <b>Analyze</b> tab to classify and apply the eight transactions.</div>
+        </div>
+      </div>
+
+      <div class="comprobacion" id="compPrueba">
+        <div class="estampa">BALANCED ✓</div>
+        <h3>The equality holds</h3>
+        <div class="comp-fila"><span>Σ change in assets</span><b id="sumA">$0</b></div>
+        <div class="comp-fila"><span>Σ change in liabilities</span><b id="sumL">$0</b></div>
+        <div class="comp-fila"><span>Σ change in equity</span><b id="sumE">$0</b></div>
+        <div class="comp-fila total"><span>Assets = Liabilities + Equity</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnReset" style="border-color:rgba(255,255,255,.3);color:#fff">Reset the worksheet</button>
+      </div>
+
+      <p class="nota-pie" id="notaExpandida" style="display:none"><b>Expanded equation, restated:</b> Assets = Liabilities + Common Stock + Retained Earnings + Revenues − Expenses − Dividends.</p>
+    </section>
+  </main>
+
+  <nav class="pestanas" role="tablist">
+    <button class="pestana activa" data-destino="p-ecuacion" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14M5 8l3.5 5.5a2.5 2.5 0 0 1-7 0L5 8ZM19 8l-3.5 5.5a2.5 2.5 0 0 0 7 0L19 8ZM12 4v16M8 20h8"/></svg>
+      Equation
+    </button>
+    <button class="pestana" data-destino="p-efectos" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M12 4v16"/></svg>
+      Effects
+    </button>
+    <button class="pestana" data-destino="p-analizar" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      Analyze
+    </button>
+    <button class="pestana" data-destino="p-prueba" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>
+      Proof
+    </button>
+  </nav>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const signed = n => n===0 ? "$0" : (n>0?"+":"−") + "$" + Math.abs(n).toLocaleString("en-US");
+
+$("volverIntro").addEventListener("click",()=>{location.href="course-intro.html"});
+
+/* ================= navegación ================= */
+const pestanas = document.querySelectorAll(".pestana");
+pestanas.forEach(b=>b.addEventListener("click",()=>{
+  pestanas.forEach(x=>{x.classList.remove("activa");x.setAttribute("aria-selected","false")});
+  b.classList.add("activa"); b.setAttribute("aria-selected","true");
+  document.querySelectorAll(".pantalla").forEach(p=>p.classList.remove("activa"));
+  $(b.dataset.destino).classList.add("activa");
+  $("principal").scrollTo({top:0});
+}));
+function irA(dest){ document.querySelector(`.pestana[data-destino="${dest}"]`).click(); }
+
+/* ================= header Δ ================= */
+const ev = $("ecuacionViva");
+function setHeader(a,l,e){
+  $("evA").textContent = signed(a);
+  $("evL").textContent = signed(l);
+  $("evE").textContent = signed(e);
+  ev.classList.toggle("rota", a !== (l+e));
+  ev.classList.add("parpadeo"); setTimeout(()=>ev.classList.remove("parpadeo"), 500);
+}
+
+/* ================= 1 · expanded equation ================= */
+const INFO = {
+  assets:{n:"Assets", nb:"Debit", up:"debit", eq:null, txt:"Resources the company controls. They sit on the left of the equation."},
+  liab:{n:"Liabilities", nb:"Credit", up:"credit", eq:null, txt:"Amounts owed to creditors. They sit on the right of the equation."},
+  cs:{n:"Common Stock", nb:"Credit", up:"credit", eq:"up", txt:"Owner investment in the company. It increases stockholders' equity."},
+  re:{n:"Retained Earnings", nb:"Credit", up:"credit", eq:"up", txt:"Prior earnings kept in the business. It increases stockholders' equity."},
+  rev:{n:"Revenues", nb:"Credit", up:"credit", eq:"up", txt:"Inflows from performing services. Revenues increase stockholders' equity."},
+  exp:{n:"Expenses", nb:"Debit", up:"debit", eq:"down", txt:"Costs of generating revenue. Expenses decrease stockholders' equity."},
+  div:{n:"Dividends", nb:"Debit", up:"debit", eq:"down", txt:"Distributions to stockholders. Dividends decrease stockholders' equity."},
+};
+function pintaDetalle(k){
+  const i = INFO[k];
+  const eqLine = i.eq==null ? "" :
+    `<div class="li"><span>Effect on equity</span><b style="color:var(--${i.eq==="up"?"haber":"debe"})">${i.eq==="up"?"▲ Increases":"▼ Decreases"}</b></div>`;
+  $("detalleExp").innerHTML = `
+    <h4>${i.n}<span class="badge ${i.nb==="Debit"?"deb":"cre"}">${i.nb.toUpperCase()} BAL.</span></h4>
+    <div class="lineas-info">
+      <div class="li"><span>Normal balance</span><b style="color:var(--${i.nb==="Debit"?"debe":"haber"})">${i.nb}</b></div>
+      <div class="li"><span>Increased by a</span><b>${i.up}</b></div>
+      ${eqLine}
+    </div>
+    <p>${i.txt}</p>`;
+  document.querySelectorAll(".pill").forEach(p=>p.classList.toggle("activa", p.dataset.k===k));
+}
+document.querySelectorAll(".pill").forEach(p=>p.addEventListener("click",()=>pintaDetalle(p.dataset.k)));
+pintaDetalle("assets");
+
+/* ================= 2 · effects grid (Illustration 2.3) ================= */
+const EFECTOS = [
+  {n:"Assets", cod:"1000s", dr:"+", cr:"−", eq:"none", tag:"—"},
+  {n:"Liabilities", cod:"2000s", dr:"−", cr:"+", eq:"none", tag:"—"},
+  {n:"Common Stock", cod:"3100", dr:"−", cr:"+", eq:"up", tag:"▲ equity"},
+  {n:"Retained Earnings", cod:"3200", dr:"−", cr:"+", eq:"up", tag:"▲ equity"},
+  {n:"Revenues", cod:"4000s", dr:"−", cr:"+", eq:"up", tag:"▲ equity"},
+  {n:"Expenses", cod:"5000s", dr:"+", cr:"−", eq:"down", tag:"▼ equity"},
+  {n:"Dividends", cod:"3300", dr:"+", cr:"−", eq:"down", tag:"▼ equity"},
+];
+$("gridEfectos").innerHTML = EFECTOS.map(e=>`
+  <div class="fila-efecto">
+    <div><div class="cuenta-nom">${e.n}</div><div class="cuenta-cod">${e.cod}</div></div>
+    <div class="mini-t">
+      <div class="mt-cab"><span>Dr</span><span>Cr</span></div>
+      <div class="mt-val"><span>${e.dr}</span><span>${e.cr}</span></div>
+    </div>
+    <div class="efecto-eq ${e.eq}">${e.tag}</div>
+  </div>`).join("");
+
+/* ================= 3 · Perez Inc. transactions ================= */
+/* clase: A = assets only · AL = assets+liab · AE = assets+equity · LE = liab+equity */
+const PEREZ = [
+  {desc:"Owners invest $40,000 in exchange for common stock.", clase:"AE", a:40000, l:0, e:40000, nota:"Cash comes in and common stock is issued — equity rises."},
+  {desc:"Disburse $600 cash for administrative wages.", clase:"AE", a:-600, l:0, e:-600, nota:"Wages are an expense; the expense reduces equity."},
+  {desc:"Purchase office equipment priced at $5,200, giving a 10% promissory note.", clase:"AL", a:5200, l:5200, e:0, nota:"An asset (equipment) rises and a note payable rises with it."},
+  {desc:"Receive $4,000 cash for services performed.", clase:"AE", a:4000, l:0, e:4000, nota:"Service revenue increases equity."},
+  {desc:"Pay off a short-term liability of $7,000.", clase:"AL", a:-7000, l:-7000, e:0, nota:"Cash falls and the payable is cleared."},
+  {desc:"Declare a cash dividend of $5,000.", clase:"LE", a:0, l:5000, e:-5000, nota:"A dividend payable (liability) is created; equity falls. Assets change only when it is paid."},
+  {desc:"Convert a long-term liability of $80,000 into common stock.", clase:"LE", a:0, l:-80000, e:80000, nota:"Debt is swapped for equity — liabilities down, equity up."},
+  {desc:"Pay cash of $16,000 for a delivery van.", clase:"A", a:0, l:0, e:0, aCells:["−16,000","+16,000"], nota:"One asset for another: Cash down $16,000, Equipment up $16,000 — total assets unchanged."},
+];
+const CLASES = {
+  A:"Assets only", AL:"Assets & Liabilities", AE:"Assets & Equity", LE:"Liabilities & Equity"
+};
+let ai = 0, balanced = 0;
+const applied = [];
+
+function pintaAna(){
+  if(ai >= PEREZ.length){
+    $("anaPos").textContent = "All 8 analyzed";
+    $("cartaAna").innerHTML = `
+      <div class="comprobacion visible" style="margin-top:0">
+        <div class="estampa">COMPLETE</div>
+        <h3>All eight transactions balanced</h3>
+        <div class="comp-fila"><span>Transactions kept in balance</span><b>${balanced} / 8</b></div>
+        <div class="comp-fila total"><span>The basic equality always held</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnVerProof" style="border-color:rgba(255,255,255,.3);color:#fff">View the worksheet proof</button>
+      </div>`;
+    $("btnVerProof").addEventListener("click",()=>irA("p-prueba"));
+    return;
+  }
+  const t = PEREZ[ai];
+  $("anaPos").textContent = `Transaction ${ai+1} of 8`;
+  const opts = ["A","AL","AE","LE"].map(k=>`<button class="btn-clas" data-k="${k}">${CLASES[k]}</button>`).join("");
+  $("cartaAna").innerHTML = `
+    <div class="asiento" id="cartaActiva">
+      <div class="encabezado"><span class="num">TXN ${ai+1}</span><span class="desc">${t.desc}</span></div>
+      <div class="lineas">Which two elements of the equation does this transaction move?</div>
+      <div class="opciones">${opts}</div>
+      <div id="revealAna"></div>
+    </div>`;
+  document.querySelectorAll("#cartaAna .btn-clas").forEach(b=>b.addEventListener("click",()=>clasifica(b)));
+}
+
+function clasifica(btn){
+  const t = PEREZ[ai];
+  const k = btn.dataset.k;
+  if(k === t.clase){
+    document.querySelectorAll("#cartaAna .btn-clas").forEach(b=>{
+      b.disabled = true;
+      if(b.dataset.k===k) b.classList.add("correcta"); else b.classList.add("atenuada");
+    });
+    const aCell = t.aCells
+      ? `<span class="dv dbl"><span class="neg">${t.aCells[0]}</span><br><span class="pos">${t.aCells[1]}</span></span>`
+      : `<span class="dv ${t.a>0?"pos":t.a<0?"neg":""}">${signed(t.a)}</span>`;
+    $("revealAna").innerHTML = `
+      <div class="reveal">
+        <div class="delta-strip">
+          <div class="delta-cel"><div class="dl">Δ Assets</div>${aCell}</div>
+          <div class="delta-cel"><div class="dl">Δ Liabilities</div><span class="dv ${t.l>0?"pos":t.l<0?"neg":""}">${signed(t.l)}</span></div>
+          <div class="delta-cel"><div class="dl">Δ Equity</div><span class="dv ${t.e>0?"pos":t.e<0?"neg":""}">${signed(t.e)}</span></div>
+        </div>
+        <div class="veredicto bien"><b>In balance.</b> ${t.nota} Δ Assets ${signed(t.a)} = Δ Liabilities ${signed(t.l)} + Δ Equity ${signed(t.e)}.</div>
+        <button class="btn-next" id="btnNextAna">${ai===PEREZ.length-1 ? "Finish ▸" : "Next transaction ▸"}</button>
+      </div>`;
+    setHeader(t.a, t.l, t.e);
+    balanced++; $("anaBal").textContent = `${balanced} balanced`;
+    applied.push(t); pintaWorksheet();
+    $("btnNextAna").addEventListener("click",()=>{ ai++; pintaAna(); $("principal").scrollTo({top:0,behavior:"smooth"}); });
+  }else{
+    btn.classList.add("incorrecta"); btn.disabled = true;
+    const card = $("cartaActiva");
+    card.classList.remove("temblor"); void card.offsetWidth; card.classList.add("temblor");
+    let hint = $("revealAna").querySelector(".veredicto.mal");
+    if(!hint){
+      $("revealAna").innerHTML = `<div class="veredicto mal"><b>Not that pair.</b> Trace the cash and what it turns into — which two elements actually change?</div>`;
+    }
+  }
+}
+
+/* ================= 4 · worksheet proof ================= */
+function pintaWorksheet(){
+  $("chipWs").textContent = `${applied.length} / 8`;
+  if(applied.length === 0){
+    $("wsWrap").innerHTML = `<div class="ws-vacia" id="wsVacia">No transactions applied yet.<br>Open the <b>Analyze</b> tab to classify and apply the eight transactions.</div>`;
+    $("compPrueba").classList.remove("visible");
+    $("notaExpandida").style.display = "none";
+    return;
+  }
+  let sa=0, sl=0, se=0;
+  const filas = applied.map((t,i)=>{
+    sa+=t.a; sl+=t.l; se+=t.e;
+    const aCell = t.aCells
+      ? `<td class="pos"><span class="par" style="color:var(--debe)">${t.aCells[0]}</span><span class="par" style="color:var(--haber)">${t.aCells[1]}</span></td>`
+      : `<td class="${t.a>0?"pos":t.a<0?"neg":""}">${t.a===0?"—":signed(t.a)}</td>`;
+    return `<tr class="fila-nueva">
+      <td>Txn ${i+1}</td>${aCell}
+      <td class="${t.l>0?"pos":t.l<0?"neg":""}">${t.l===0?"—":signed(t.l)}</td>
+      <td class="${t.e>0?"pos":t.e<0?"neg":""}">${t.e===0?"—":signed(t.e)}</td>
+      <td class="ok">✓</td></tr>`;
+  }).join("");
+  $("wsWrap").innerHTML = `
+    <table class="worksheet">
+      <thead><tr><th>Txn</th><th>Assets</th><th>Liabilities</th><th>Equity</th><th>Bal.</th></tr></thead>
+      <tbody>${filas}</tbody>
+      <tfoot><tr><td>Net</td><td>${signed(sa)}</td><td>${signed(sl)}</td><td>${signed(se)}</td><td class="ok">✓</td></tr></tfoot>
+    </table>`;
+  if(applied.length === 8){
+    $("sumA").textContent = signed(sa);
+    $("sumL").textContent = signed(sl);
+    $("sumE").textContent = signed(se);
+    $("compPrueba").classList.add("visible");
+    $("notaExpandida").style.display = "";
+  }
+}
+
+$("btnReset").addEventListener("click",()=>{
+  ai = 0; balanced = 0; applied.length = 0;
+  $("anaBal").textContent = "0 balanced";
+  setHeader(0,0,0);
+  pintaAna(); pintaWorksheet();
+  irA("p-analizar");
+});
+
+pintaAna();
+pintaWorksheet();
+</script>
+</body>
+</html>

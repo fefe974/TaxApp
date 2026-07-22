@@ -460,6 +460,7 @@ nav.pestanas{
         <div class="comp-fila"><span>Sum of all debits</span><b id="pruebaDebe">$0</b></div>
         <div class="comp-fila"><span>Sum of all credits</span><b id="pruebaHaber">$0</b></div>
         <div class="comp-fila total"><span>Total debits = Total credits</span><b>✓</b></div>
+        <button class="btn-registrar" id="btnNextLesson" style="width:100%;margin-top:14px;padding:12px">Next lesson · The Accounting Equation ▸</button>
         <button class="btn-fantasma" id="btnPruebaReset" style="border-color:rgba(255,255,255,.3);color:#fff">Reset the proof</button>
       </div>
     </section>
@@ -491,6 +492,7 @@ const fmt = n => (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-US");
 const $ = id => document.getElementById(id);
 
 document.getElementById("volverIntro").addEventListener("click",()=>{location.href="course-intro.html"});
+document.getElementById("btnNextLesson").addEventListener("click",()=>{location.href="lesson-2-2.html"});
 
 /* ================= ecuación viva: Dr = Cr ================= */
 let totDebe = 0, totHaber = 0;
