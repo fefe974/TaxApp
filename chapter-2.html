@@ -12,7 +12,9 @@
   --bg:#F5F6FB;--card:#FFFFFF;--line:#E7E9F1;--line-soft:#EEF0F6;
   --text:#1C2130;--muted:#69708A;--muted-2:#8A90A6;
   --excel:#217346;--excel-050:#E7F3EC;
-  --streak:#F59E0B;--ok:#16A34A;--danger:#DC2626;
+  --streak:#F59E0B;--ok:#16A34A;
+  --dr:#B4351F;--dr-050:#FBEAE5;--dr-100:#F1CBC0;
+  --cr:#15803D;--cr-050:#E9F5EE;--cr-100:#C4E6D1;
   --shadow:0 1px 2px rgba(24,28,45,.06),0 8px 24px rgba(24,28,45,.08);
   --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   --mono:'SF Mono',ui-monospace,'Segoe UI Mono',Menlo,Consolas,monospace;
@@ -25,25 +27,21 @@ body{background:#0E0B1C;font-family:var(--font);color:var(--text);display:flex;j
   position:relative;overflow:hidden;box-shadow:0 0 80px rgba(0,0,0,.55)}
 @media(min-width:480px){.phone{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}}
 
-/* ---------- top bar ---------- */
+/* top bar */
 header.app{background:var(--card);border-bottom:1px solid var(--line);padding:14px 16px 12px;flex-shrink:0;z-index:5}
 .brand{display:flex;align-items:center;gap:10px}
-.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(150deg,var(--primary),#8A6BEF);
-  display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(108,79,224,.3)}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(150deg,var(--primary),#8A6BEF);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(108,79,224,.3)}
 .brand .t1{font-size:14.5px;font-weight:700;line-height:1.15}
 .brand .t2{font-size:11px;color:var(--muted-2);font-weight:500}
 .brand .spacer{margin-left:auto}
-.streak{display:inline-flex;align-items:center;gap:4px;background:#FFF6E8;border:1px solid #FBE3B8;color:#B45309;
-  font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px}
-.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(150deg,#B9A6F2,#6C4FE0);margin-left:8px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px}
+.streak{display:inline-flex;align-items:center;gap:4px;background:#FFF6E8;border:1px solid #FBE3B8;color:#B45309;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(150deg,#B9A6F2,#6C4FE0);margin-left:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px}
 .progress-wrap{margin-top:12px;display:flex;align-items:center;gap:10px}
 .progress-wrap .lab{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap}
 .bar{flex:1;height:7px;border-radius:999px;background:var(--line);overflow:hidden}
-.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--primary),#8A6BEF);width:60%}
+.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--primary),#8A6BEF);width:0;transition:width .4s ease}
 .progress-wrap .pct{font-size:12px;font-weight:700;color:var(--primary);font-variant-numeric:tabular-nums}
 
-/* ---------- content ---------- */
 main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
 .view{display:none;padding:16px 16px 96px;animation:in .3s ease both}
 .view.on{display:block}
@@ -51,61 +49,205 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;-
 
 .chap-eyebrow{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
 .chap-title{font-size:19px;font-weight:800;line-height:1.25;margin-top:3px;letter-spacing:-.01em;text-wrap:balance}
-
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
 .sec-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.02em;margin:20px 2px 10px;display:flex;align-items:center;gap:8px}
 .sec-label .count{margin-left:auto;font-size:11px;color:var(--muted-2);font-weight:600}
 
-/* ---------- lessons list ---------- */
+/* lessons list */
 .lessons{display:flex;flex-direction:column;gap:8px}
-.lesson-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:12px 13px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .12s;width:100%;text-align:left;font-family:inherit}
+.lesson-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 13px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .12s;width:100%;text-align:left;font-family:inherit}
 .lesson-row:active{transform:scale(.99)}
 .lesson-row.active{border-color:var(--primary-200);box-shadow:0 0 0 3px var(--primary-050),var(--shadow)}
-.l-num{width:28px;height:28px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:700;background:var(--primary-050);color:var(--primary);border:1px solid var(--primary-100)}
+.l-num{width:28px;height:28px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--primary-050);color:var(--primary);border:1px solid var(--primary-100)}
 .lesson-row.done .l-num{background:var(--ok);color:#fff;border-color:var(--ok)}
 .lesson-row.active .l-num{background:var(--primary);color:#fff;border-color:var(--primary)}
+.lesson-row.active.done .l-num{background:var(--ok);border-color:var(--ok)}
 .l-txt{min-width:0}
 .l-txt .l-t{display:block;font-size:13.5px;font-weight:700;line-height:1.25}
 .l-txt .l-s{display:block;font-size:11.5px;color:var(--muted-2);margin-top:2px}
 .l-chk{margin-left:auto;color:var(--ok);flex-shrink:0;display:none}
 .lesson-row.done .l-chk{display:block}
 
-/* ---------- lesson content ---------- */
-.lesson-badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--primary);background:var(--primary-050);border:1px solid var(--primary-100);border-radius:6px;padding:3px 8px}
-.lesson-h{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:10px 0 8px}
+/* lecture parts */
+.lesson-badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--primary);background:var(--primary-050);border:1px solid var(--primary-100);border-radius:6px;padding:3px 8px}
+.lesson-h{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:10px 0 8px;text-wrap:balance}
 .lesson-p{font-size:13.5px;line-height:1.6;color:#3C4356}
-
-/* reversing-entries diagram */
-.re-flow{display:flex;flex-direction:column;gap:10px;margin:16px 0}
-.je-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
-.je-head{padding:10px 13px;border-bottom:1px solid var(--line-soft);background:#FAFAFE}
-.je-head .d{font-size:13px;font-weight:800}
-.je-head .s{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
-.je-lines{padding:11px 13px;display:flex;flex-direction:column;gap:6px}
-.je-line{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:8px;font-size:12.5px}
-.je-line .drcr{font-weight:700;color:var(--muted);font-size:10.5px;width:16px}
-.je-line .amt{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600}
-.je-line.cr .acct{padding-left:14px;color:var(--muted)}
-.re-arrow{align-self:center;color:var(--primary);display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-
-/* key point */
-.keypoint{margin-top:16px;background:var(--primary-050);border:1px solid var(--primary-100);border-radius:14px;padding:13px 14px;display:flex;gap:11px}
+.plabel{display:flex;align-items:center;gap:9px;margin:22px 0 11px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.plabel .step{width:22px;height:22px;border-radius:7px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.plabel.ilu .step{background:#8A90A6}
+.plabel.tool .step{background:var(--cr)}
+.plabel::after{content:"";flex:1;height:1px;background:var(--line)}
+.explain{font-size:13.5px;line-height:1.6;color:#3C4356}
+.explain p+p{margin-top:9px}
+.blist{list-style:none;margin:11px 0 0;display:flex;flex-direction:column;gap:8px}
+.blist li{position:relative;padding-left:20px;font-size:13px;line-height:1.5;color:#3C4356}
+.blist li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--primary)}
+.blist li b{color:var(--text)}
+.keypoint{margin-top:14px;background:var(--primary-050);border:1px solid var(--primary-100);border-radius:14px;padding:13px 14px;display:flex;gap:11px}
 .keypoint .kp-ic{width:30px;height:30px;border-radius:9px;background:#fff;border:1px solid var(--primary-100);display:flex;align-items:center;justify-content:center;color:var(--primary);flex-shrink:0}
 .keypoint h4{font-size:13px;font-weight:800;margin-bottom:3px}
 .keypoint p{font-size:12.5px;line-height:1.55;color:#4A4568}
 
-.nav-btns{display:flex;gap:10px;margin-top:18px}
-.btn{font-family:inherit;font-size:13.5px;font-weight:700;border-radius:12px;padding:12px 16px;cursor:pointer;border:1px solid var(--line);
-  background:var(--card);color:var(--text);display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:transform .12s}
-.btn:active{transform:scale(.98)}
-.btn.ghost{flex:0 0 auto}
-.btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);flex:1;box-shadow:0 6px 16px rgba(108,79,224,.28)}
-.btn.wide{width:100%}
+/* figure card */
+.figure{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+.fig-head{display:flex;align-items:center;gap:8px;padding:9px 13px;border-bottom:1px solid var(--line-soft);background:#FAFAFE;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.fig-head .tag{margin-left:auto;font-size:9px;font-weight:700;color:var(--muted-2);background:#EEF0F6;border:1px solid var(--line);border-radius:999px;padding:2px 8px;letter-spacing:.04em}
+.fig-body{padding:14px}
 
-/* excel lab launcher */
+/* T-account */
+.taccount{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+.ta-head{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line-soft)}
+.ta-head b{font-size:13.5px;font-weight:800}
+.ta-code{font-family:var(--mono);font-size:9.5px;font-weight:600;color:var(--muted);background:#F4F2FB;border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.ta-cols{display:grid;grid-template-columns:1fr 1fr;background:#F4F2FB;border-bottom:1px solid var(--line-soft)}
+.ta-cols span{font-family:var(--mono);font-size:9px;letter-spacing:.05em;font-weight:700;text-transform:uppercase;text-align:center;padding:6px 0}
+.ta-cols span:first-child{color:var(--dr);border-right:1px solid var(--line-soft)}
+.ta-cols span:last-child{color:var(--cr)}
+.ta-body{display:grid;grid-template-columns:1fr 1fr;min-height:92px}
+.ta-side{padding:12px 10px;text-align:center}
+.ta-side:first-child{border-right:1px solid var(--line-soft)}
+.ta-foot{border-top:1px solid var(--line-soft);background:#FAFAFE;padding:9px 12px;text-align:center;font-size:11.5px;color:var(--muted)}
+.ta-foot b{font-family:var(--mono);font-size:10.5px}
+.amtlist{list-style:none;min-height:38px}
+.amtlist li{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;padding:1.5px 0}
+.badge2{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;font-weight:700;padding:7px 11px;border-radius:8px}
+.badge2.up{background:var(--cr-050);color:var(--cr);border:1px solid var(--cr-100)}
+.badge2.down{background:var(--dr-050);color:var(--dr);border:1px solid var(--dr-100)}
+.badge2.neu{background:var(--primary-050);color:var(--primary);border:1px solid var(--primary-100)}
+.hint{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--primary);font-weight:700;margin-top:8px}
+
+/* Illustration 2.2 boxes */
+.nbwrap{display:flex;flex-direction:column;gap:11px}
+.nbbox{border:1.5px solid;border-radius:12px;padding:11px}
+.nbbox.dr{border-color:var(--dr-100);background:var(--dr-050)}
+.nbbox.cr{border-color:var(--cr-100);background:var(--cr-050)}
+.nbbox .nbt{font-size:12px;font-weight:800;text-align:center;margin-bottom:9px}
+.nbrow{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-bottom:7px}
+.nbrow:last-child{margin-bottom:0}
+.nbrow .nn{font-size:12px;font-weight:700;margin-bottom:6px}
+.nbmini{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line-soft);border-radius:6px;overflow:hidden}
+.nbmini div{padding:4px 6px;text-align:center}
+.nbmini div:first-child{border-right:1px solid var(--line-soft)}
+.nbmini .h{display:block;font-family:var(--mono);font-size:9px;font-weight:700}
+.nbmini .s{display:block;font-size:10px;color:var(--muted);margin-top:1px}
+
+/* Illustration 2.3 strip */
+.i23scroll{overflow-x:auto;padding:2px}
+.i23{display:flex;align-items:flex-start;gap:7px;min-width:max-content}
+.i23el{border:1px solid var(--line);border-radius:9px;padding:8px;text-align:center;background:var(--card);width:100px}
+.i23el.eqm{background:var(--primary-050);border-color:var(--primary-100)}
+.i23nom{font-size:10px;font-weight:700;line-height:1.2;margin-bottom:6px;min-height:24px;display:flex;align-items:center;justify-content:center}
+.i23op{font-family:var(--mono);font-size:14px;color:var(--muted);font-weight:700;align-self:center;padding-top:24px}
+.mt{border:1px solid var(--line-soft);border-radius:6px;overflow:hidden}
+.mt .c{display:grid;grid-template-columns:1fr 1fr}
+.mt .c.hd span{font-family:var(--mono);font-size:8px;font-weight:700;text-align:center;padding:2px 0}
+.mt .c.hd span:first-child{color:var(--dr);border-right:1px solid var(--line-soft)}
+.mt .c.hd span:last-child{color:var(--cr)}
+.mt .c.vl span{font-family:var(--mono);font-size:13px;font-weight:700;text-align:center;padding:3px 0;line-height:1}
+.mt .c.vl span:first-child{border-right:1px solid var(--line-soft)}
+
+/* buttons */
+.btn{font-family:inherit;font-size:13.5px;font-weight:700;border-radius:12px;padding:12px 16px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:transform .12s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 6px 16px rgba(108,79,224,.28)}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.btn-side{font-family:inherit;font-size:12.5px;font-weight:700;background:var(--card);border-radius:10px;padding:11px 8px;cursor:pointer;transition:transform .12s}
+.btn-side:active{transform:scale(.97)}
+.btn-side.dr{border:1px solid var(--dr-100);color:var(--dr)}
+.btn-side.cr{border:1px solid var(--cr-100);color:var(--cr)}
+.btn-side span{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);margin-top:2px;font-weight:600}
+.btn-ghost{width:100%;margin-top:10px;font-family:inherit;font-size:12px;font-weight:600;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:9px;cursor:pointer}
+.scoreline{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;margin:10px 2px;display:flex;justify-content:space-between}
+.opt{font-family:inherit;text-align:left;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;transition:transform .12s;width:100%}
+.opt:active{transform:scale(.99)}
+.opt.right{border-color:var(--cr);background:var(--cr-050);color:#12703F}
+.opt.wrong{border-color:var(--dr);background:var(--dr-050);color:#9A2A18}
+.opt.dim{opacity:.45}
+.fbk{margin-top:10px;font-size:12.5px;line-height:1.5;border-radius:10px;padding:10px 12px}
+.fbk.ok{background:var(--cr-050);color:#12703F;border:1px solid var(--cr-100)}
+.fbk.no{background:var(--dr-050);color:#9A2A18;border:1px solid var(--dr-100)}
+.fbk b{font-weight:800}
+.shake{animation:shk .3s ease}
+@keyframes shk{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+
+/* journal entries */
+.je{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:9px;overflow:hidden;transition:opacity .3s,border-color .3s}
+.je .jh{display:flex;align-items:center;gap:9px;padding:11px 12px 7px}
+.je .jn{font-family:var(--mono);font-size:9.5px;font-weight:700;padding:3px 7px;border-radius:6px;background:var(--primary-050);color:var(--primary);border:1px solid var(--primary-100);flex-shrink:0}
+.je .jd{font-size:12.5px;font-weight:700;line-height:1.3}
+.je .jl{padding:2px 12px 9px}
+.jline{display:grid;grid-template-columns:1fr 66px 66px;gap:5px;font-size:11.5px;padding:2.5px 0}
+.jline.hd{font-family:var(--mono);font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);font-weight:700;border-bottom:1px solid var(--line-soft);padding-bottom:4px;margin-bottom:2px}
+.jline.hd span:nth-child(n+2){text-align:right}
+.jline .amt{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.jline .amt.dr{color:var(--dr)} .jline .amt.cr{color:var(--cr)}
+.jline .acct.cr{padding-left:12px;color:var(--muted)}
+.je .ja{border-top:1px solid var(--line-soft);padding:8px 12px;display:flex;justify-content:flex-end}
+.je .jpost{font-family:inherit;font-size:12px;font-weight:700;background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px 15px;cursor:pointer}
+.je .jpost:disabled{background:#B9C0D2}
+.je.done{border-color:var(--cr-100)} .je.done .ja{display:none}
+.je .jok{display:none;margin-left:auto;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--cr);background:var(--cr-050);border:1px solid var(--cr-100);border-radius:999px;padding:3px 8px}
+.je.done .jok{display:inline-block}
+.je.locked{opacity:.45;pointer-events:none}
+
+/* totals / trial balance */
+.tb{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);margin-top:4px}
+.tb .r{display:grid;grid-template-columns:1fr 90px;gap:8px;padding:8px 12px;font-size:12.5px}
+.tb .r+.r{border-top:1px solid var(--line-soft)}
+.tb .r .m{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.tb .r .m.dr{color:var(--dr)} .tb .r .m.cr{color:var(--cr)}
+.tb .r.tot{border-top:2px solid var(--text);background:#FAFAFE;font-weight:800}
+.tb .cap{padding:7px 12px;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);font-weight:700;background:#F4F2FB;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between}
+
+/* solver */
+.sv{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:5px;align-items:stretch;margin-bottom:12px}
+.svc{border:1.5px solid var(--line);border-radius:9px;padding:9px 5px;text-align:center;background:#FAFAFE}
+.svc .l{font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-2);font-weight:700}
+.svc .v{font-family:var(--mono);font-size:14px;font-weight:700;margin-top:3px}
+.svc.q{border-color:var(--primary);border-style:dashed;background:var(--primary-050)}
+.svc.q .v{color:var(--primary)}
+.svop{font-family:var(--mono);font-size:16px;color:var(--primary);font-weight:700;align-self:center}
+.svo{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.btn-sv{font-family:var(--mono);font-size:13px;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 4px;cursor:pointer;color:var(--text)}
+.btn-sv.right{border-color:var(--cr);background:var(--cr-050);color:#12703F}
+.btn-sv.wrong{border-color:var(--dr);background:var(--dr-050);color:#9A2A18}
+
+/* delta strip + worksheet */
+.dstrip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0}
+.dcel{border:1px solid var(--line-soft);border-radius:9px;background:#FAFAFE;padding:8px 6px;text-align:center}
+.dcel .dl{font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-2);font-weight:700}
+.dcel .dv{font-family:var(--mono);font-size:13px;font-weight:700;margin-top:2px}
+.dcel .dv.dbl{font-size:11px;line-height:1.25}
+.dcel .dv.pos{color:var(--cr)} .dcel .dv.neg{color:var(--dr)}
+.wswrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);margin-top:4px}
+.wscap{padding:8px 12px;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);font-weight:700;background:#F4F2FB;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between}
+table.ws{width:100%;border-collapse:collapse}
+table.ws th,table.ws td{padding:6px 8px;font-size:10.5px;text-align:right}
+table.ws thead th{background:#FAFAFE;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-2);font-weight:700}
+table.ws thead th:first-child,table.ws td:first-child{text-align:left}
+table.ws td{font-family:var(--mono);font-variant-numeric:tabular-nums;border-top:1px solid var(--line-soft);color:#2C3346}
+table.ws td:first-child{font-family:var(--font);color:var(--muted);font-size:10px}
+table.ws td.pos{color:var(--cr)} table.ws td.neg{color:var(--dr)}
+table.ws td .par{display:block;font-size:9px;line-height:1.3}
+table.ws td.ok{color:var(--cr);text-align:center;font-weight:700}
+table.ws tfoot td{border-top:2px solid var(--text);font-weight:800;background:#FAFAFE}
+.wsempty{padding:18px 14px;text-align:center;color:var(--muted-2);font-size:12px;line-height:1.5}
+
+/* completion */
+.finish{margin-top:14px;background:linear-gradient(150deg,var(--nav),var(--nav-2));color:#fff;border-radius:14px;padding:16px;display:none}
+.finish.on{display:block}
+.finish h4{font-size:15px;font-weight:800;margin-bottom:8px}
+.finish .fr{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.finish .fr b{font-family:var(--mono)}
+.finish .fr.last{border-bottom:none;border-top:2px solid #8A6BEF;margin-top:4px;padding-top:8px;font-weight:700}
+
+/* lesson nav */
+.lnav{display:flex;gap:10px;margin-top:18px}
+.lnav .btn{flex:1}
+
+/* excel launcher */
 .lab-launch{margin-top:18px;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;cursor:pointer;width:100%;text-align:left;font-family:inherit}
 .lab-launch:active{transform:scale(.99)}
 .lab-ic{width:38px;height:38px;border-radius:10px;background:var(--excel-050);color:var(--excel);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:16px}
@@ -113,22 +255,21 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;-
 .lab-launch .ls{font-size:11.5px;color:var(--muted-2)}
 .lab-launch .go{margin-left:auto;color:var(--muted-2)}
 
-/* ---------- excel lab view ---------- */
+/* excel view */
 .xl-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
 .xl-head .lab-ic{width:34px;height:34px;border-radius:9px;font-size:14px}
 .xl-title{font-size:15px;font-weight:800;line-height:1.15}
 .xl-sub{font-size:11.5px;color:var(--muted-2)}
 .xl-tabs{display:flex;gap:6px;overflow-x:auto;margin:14px -16px 0;padding:0 16px 4px;scrollbar-width:none}
 .xl-tabs::-webkit-scrollbar{display:none}
-.xl-tab{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);
-  border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap}
+.xl-tab{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap}
 .xl-tab.on{background:var(--excel);color:#fff;border-color:var(--excel)}
 .sheet-wrap{margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
 .sheet-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table.sheet{border-collapse:collapse;font-size:11px;min-width:640px}
 table.sheet th,table.sheet td{padding:7px 9px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-soft)}
 table.sheet thead .grp th{background:#2C2350;color:#fff;font-weight:700;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;text-align:center;border-bottom:none}
-table.sheet thead .sub th{background:#F4F2FB;color:var(--muted);font-weight:700;font-size:9px;letter-spacing:.03em;text-transform:uppercase;position:sticky;top:0}
+table.sheet thead .sub th{background:#F4F2FB;color:var(--muted);font-weight:700;font-size:9px;letter-spacing:.03em;text-transform:uppercase}
 table.sheet .acct{text-align:left;position:sticky;left:0;background:var(--card);z-index:2;font-weight:600;color:var(--text);box-shadow:1px 0 0 var(--line-soft)}
 table.sheet thead .grp th.acct{background:#F4F2FB;z-index:3;color:var(--muted);vertical-align:bottom;text-align:left}
 table.sheet td{font-family:var(--mono);font-variant-numeric:tabular-nums;color:#2C3346}
@@ -137,14 +278,14 @@ table.sheet tbody tr:nth-child(even) .acct{background:#FBFBFE}
 .sheet-foot{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-top:1px solid var(--line);font-size:11px;color:var(--muted-2)}
 .sheet-foot b{color:var(--text);font-variant-numeric:tabular-nums}
 
-/* ---------- home ---------- */
+/* home */
 .hero-hi{font-size:20px;font-weight:800;letter-spacing:-.01em}
 .hero-sub{font-size:13px;color:var(--muted);margin-top:2px}
 .continue{margin-top:16px;background:linear-gradient(150deg,var(--nav),var(--nav-2));border-radius:18px;padding:18px;color:#fff;position:relative;overflow:hidden}
 .continue .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#B9A6F2;font-weight:700}
 .continue h3{font-size:18px;font-weight:800;margin:5px 0 12px}
 .continue .cbar{height:7px;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden}
-.continue .cbar span{display:block;height:100%;width:60%;background:linear-gradient(90deg,#8A6BEF,#B9A6F2)}
+.continue .cbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#8A6BEF,#B9A6F2);transition:width .4s}
 .continue .row{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:12px;color:#CFC6EE}
 .continue .btn{margin-top:14px;background:#fff;color:var(--nav);border:none;font-weight:800}
 .tip{margin-top:14px;background:#FFF9EC;border:1px solid #FBE3B8;border-radius:16px;padding:14px;display:flex;gap:11px}
@@ -156,17 +297,6 @@ table.sheet tbody tr:nth-child(even) .acct{background:#FBFBFE}
 .stat .n{font-size:19px;font-weight:800;color:var(--primary)}
 .stat .l{font-size:10.5px;color:var(--muted-2);font-weight:600;margin-top:2px}
 
-/* ---------- quiz ---------- */
-.q-card{margin-top:14px}
-.q-card .qh{padding:14px 15px 4px;font-size:14px;font-weight:800}
-.q-card .opts{padding:8px 15px 15px;display:flex;flex-direction:column;gap:9px}
-.opt{font-family:inherit;text-align:left;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;transition:transform .12s}
-.opt:active{transform:scale(.99)}
-.opt.right{border-color:var(--ok);background:#EFFaf2;color:#12703F}
-.opt.wrong{border-color:var(--danger);background:#FDEEEE;color:#B42318}
-.q-fb{padding:0 15px 15px;font-size:12.5px;line-height:1.5}
-.q-fb .g{color:#12703F}
-
 /* progress */
 .pr-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:10px;box-shadow:var(--shadow)}
 .pr-item .top{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:8px}
@@ -174,16 +304,12 @@ table.sheet tbody tr:nth-child(even) .acct{background:#FBFBFE}
 .pr-bar{height:7px;border-radius:999px;background:var(--line);overflow:hidden}
 .pr-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),#8A6BEF)}
 
-/* ---------- AI tutor ---------- */
-.fab{position:absolute;right:16px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:20;
-  background:linear-gradient(150deg,var(--primary),#8A6BEF);color:#fff;border:none;border-radius:16px;padding:12px 15px;
-  display:flex;align-items:center;gap:8px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
-  box-shadow:0 10px 24px rgba(108,79,224,.4)}
+/* AI tutor */
+.fab{position:absolute;right:16px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:20;background:linear-gradient(150deg,var(--primary),#8A6BEF);color:#fff;border:none;border-radius:16px;padding:12px 15px;display:flex;align-items:center;gap:8px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(108,79,224,.4)}
 .fab .beta{font-size:8.5px;background:rgba(255,255,255,.22);border-radius:5px;padding:1px 5px;letter-spacing:.05em}
 .tutor-back{position:absolute;inset:0;background:rgba(14,11,28,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:30}
 .tutor-back.on{opacity:1;pointer-events:auto}
-.tutor{position:absolute;left:0;right:0;bottom:0;height:82%;background:var(--bg);border-radius:22px 22px 0 0;z-index:31;
-  transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.8,.3,1);display:flex;flex-direction:column;overflow:hidden}
+.tutor{position:absolute;left:0;right:0;bottom:0;height:82%;background:var(--bg);border-radius:22px 22px 0 0;z-index:31;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.8,.3,1);display:flex;flex-direction:column;overflow:hidden}
 .tutor.on{transform:none}
 .tutor-head{display:flex;align-items:center;gap:9px;padding:14px 16px;background:var(--card);border-bottom:1px solid var(--line)}
 .tutor-head .ai{width:30px;height:30px;border-radius:9px;background:linear-gradient(150deg,var(--primary),#8A6BEF);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -202,11 +328,9 @@ table.sheet tbody tr:nth-child(even) .acct{background:#FBFBFE}
 .chat-input .send{width:42px;border:none;border-radius:12px;background:var(--primary);color:#fff;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .disclaim{text-align:center;font-size:10.5px;color:var(--muted-2);padding:6px}
 
-/* ---------- bottom nav ---------- */
-nav.tabbar{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);background:var(--nav);
-  padding:8px 6px calc(9px + env(safe-area-inset-bottom));z-index:10}
-.tab{font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:6px 2px;border-radius:11px;color:rgba(255,255,255,.5);font-size:9.5px;font-weight:600;transition:color .2s,background .2s}
+/* bottom nav */
+nav.tabbar{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);background:var(--nav);padding:8px 6px calc(9px + env(safe-area-inset-bottom));z-index:10}
+.tab{font-family:inherit;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border-radius:11px;color:rgba(255,255,255,.5);font-size:9.5px;font-weight:600;transition:color .2s,background .2s}
 .tab svg{width:21px;height:21px}
 .tab.on{color:#fff;background:rgba(138,107,239,.22)}
 .tab.on svg{color:#B9A6F2}
@@ -220,192 +344,116 @@ nav.tabbar{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);backgr
   <header class="app">
     <div class="brand">
       <div class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.7V19c4-.2 6.5.3 8 1.8M12 6.5C13.5 5 16 4.5 20 4.7V19c-4-.2-6.5.3-8 1.8M12 6.5V20.8"/></svg></div>
-      <div>
-        <div class="t1">Financial Accounting</div>
-        <div class="t2">Learning Academy</div>
-      </div>
+      <div><div class="t1">Financial Accounting</div><div class="t2">Learning Academy</div></div>
       <span class="spacer"></span>
       <span class="streak">🔥 7</span>
       <div class="avatar">A</div>
     </div>
     <div class="progress-wrap">
       <span class="lab">Chapter progress</span>
-      <div class="bar"><span></span></div>
-      <span class="pct">60%</span>
+      <div class="bar"><span id="progBar"></span></div>
+      <span class="pct" id="progPct">0%</span>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- ============ HOME ============ -->
+    <!-- HOME -->
     <section class="view" id="v-home">
       <div class="hero-hi">Welcome back, Alex</div>
       <div class="hero-sub">Chapter 2 · The Accounting Information System</div>
-
       <div class="continue">
         <div class="k">Continue learning</div>
-        <h3>Reversing Entries</h3>
-        <div class="cbar"><span></span></div>
-        <div class="row"><span>Lesson 1 of 5</span><span>60% complete</span></div>
-        <button class="btn" data-go="v-lessons">Continue lesson →</button>
+        <h3 id="contTitle">Debits and Credits</h3>
+        <div class="cbar"><span id="contBar"></span></div>
+        <div class="row"><span id="contPos">Concept 1 of 6</span><span id="contPct">0% complete</span></div>
+        <button class="btn" id="contBtn">Continue lesson →</button>
       </div>
-
       <div class="stat-grid">
         <div class="stat"><div class="n">7</div><div class="l">Day streak</div></div>
-        <div class="stat"><div class="n">60%</div><div class="l">Chapter</div></div>
-        <div class="stat"><div class="n">1/5</div><div class="l">Lessons</div></div>
+        <div class="stat"><div class="n" id="homePct">0%</div><div class="l">Chapter</div></div>
+        <div class="stat"><div class="n" id="homeDone">0/6</div><div class="l">Concepts</div></div>
       </div>
-
-      <div class="tip">
-        <div class="ic">💡</div>
-        <div><h4>Study tip</h4><p>Practice makes progress. The more you journal, the more confident you'll become.</p></div>
-      </div>
+      <div class="tip"><div class="ic">💡</div><div><h4>Study tip</h4><p>Each concept follows the same path: read the idea, study the figure, then apply it with the tool. Do the tool — that's where it sticks.</p></div></div>
     </section>
 
-    <!-- ============ LESSONS ============ -->
+    <!-- LESSONS -->
     <section class="view on" id="v-lessons">
       <div class="chap-eyebrow">Chapter 2</div>
       <div class="chap-title">The Accounting Information System</div>
-
-      <div class="sec-label">Lessons <span class="count">1 of 5 complete</span></div>
-      <div class="lessons">
-        <button class="lesson-row active done"><span class="l-num">1</span><span class="l-txt"><span class="l-t">Reversing Entries</span><span class="l-s">Why companies use them</span></span><span class="l-chk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span></button>
-        <button class="lesson-row"><span class="l-num">2</span><span class="l-txt"><span class="l-t">Adjusting Entries</span><span class="l-s">The accrual concept</span></span></button>
-        <button class="lesson-row"><span class="l-num">3</span><span class="l-txt"><span class="l-t">10-Column Worksheet</span><span class="l-s">Building the worksheet</span></span></button>
-        <button class="lesson-row"><span class="l-num">4</span><span class="l-txt"><span class="l-t">Financial Statements</span><span class="l-s">From worksheet to statements</span></span></button>
-        <button class="lesson-row"><span class="l-num">5</span><span class="l-txt"><span class="l-t">Knowledge Check</span><span class="l-s">Test your understanding</span></span></button>
+      <div class="sec-label">Concepts <span class="count" id="conceptsCount">0 of 6 complete</span></div>
+      <div class="lessons" id="lessonList"></div>
+      <div class="sec-label">Now studying</div>
+      <div id="lessonContent"></div>
+      <div class="lnav">
+        <button class="btn" id="lPrev">← Previous</button>
+        <button class="btn primary" id="lNext">Next →</button>
       </div>
-
-      <div class="sec-label">Lesson</div>
-      <span class="lesson-badge">Lesson 1</span>
-      <h2 class="lesson-h">Reversing Entries</h2>
-      <p class="lesson-p">Companies use reversing entries to simplify the recording of adjusting entries in the next accounting period.</p>
-
-      <div class="re-flow">
-        <div class="je-card">
-          <div class="je-head"><div class="d">December 31</div><div class="s">Record the adjusting entry</div></div>
-          <div class="je-lines">
-            <div class="je-line"><span class="drcr">Dr</span><span class="acct">Supplies Expense</span><span class="amt">20,000</span></div>
-            <div class="je-line cr"><span class="drcr">Cr</span><span class="acct">Prepaid Supplies</span><span class="amt">20,000</span></div>
-          </div>
-        </div>
-        <div class="re-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg> Reverse next period</div>
-        <div class="je-card">
-          <div class="je-head"><div class="d">January 1</div><div class="s">Reverse the entry</div></div>
-          <div class="je-lines">
-            <div class="je-line"><span class="drcr">Dr</span><span class="acct">Prepaid Supplies</span><span class="amt">20,000</span></div>
-            <div class="je-line cr"><span class="drcr">Cr</span><span class="acct">Supplies Expense</span><span class="amt">20,000</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="keypoint">
-        <div class="kp-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2.5h6c0-1.3.3-1.8 1-2.5A6 6 0 0 0 12 3Z"/></svg></div>
-        <div><h4>Key point</h4><p>Reversing entries do not affect the financial statements. They only make the next period's adjusting entries easier to record.</p></div>
-      </div>
-
-      <div class="nav-btns">
-        <button class="btn ghost">← Previous</button>
-        <button class="btn primary" id="lessonNext">Next →</button>
-      </div>
-
       <button class="lab-launch" data-go="v-excel">
         <span class="lab-ic">⊞</span>
-        <span><span class="lt">Excel Lab · 10-Column Worksheet</span><span class="ls">Practice in an interactive worksheet</span></span>
+        <span><span class="lt">Excel Lab · 10-Column Worksheet</span><span class="ls">Practice the accounting cycle in a worksheet</span></span>
         <span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </button>
     </section>
 
-    <!-- ============ EXCEL LAB ============ -->
+    <!-- EXCEL LAB -->
     <section class="view" id="v-excel">
-      <div class="xl-head">
-        <span class="lab-ic">⊞</span>
-        <div><div class="xl-title">10-Column Worksheet</div><div class="xl-sub">Uptown Cabinet Co · Year ended Dec 31, 20X1</div></div>
-      </div>
-
+      <div class="xl-head"><span class="lab-ic">⊞</span><div><div class="xl-title">10-Column Worksheet</div><div class="xl-sub">Uptown Cabinet Co · Year ended Dec 31, 20X1</div></div></div>
       <div class="xl-tabs" id="xlTabs">
-        <button class="xl-tab">Instructions</button>
-        <button class="xl-tab">Trial Balance</button>
-        <button class="xl-tab">Adjustments</button>
-        <button class="xl-tab on">Worksheet</button>
-        <button class="xl-tab">Income Statement</button>
-        <button class="xl-tab">Balance Sheet</button>
+        <button class="xl-tab">Instructions</button><button class="xl-tab">Trial Balance</button><button class="xl-tab">Adjustments</button><button class="xl-tab on">Worksheet</button><button class="xl-tab">Income Statement</button><button class="xl-tab">Balance Sheet</button>
       </div>
-
       <div class="sheet-wrap">
         <div class="sheet-scroll">
           <table class="sheet">
             <thead>
-              <tr class="grp">
-                <th class="acct" rowspan="2">Account Title</th>
-                <th colspan="2">Trial Balance</th>
-                <th colspan="2">Adjustments</th>
-                <th colspan="2">Adj. Trial Balance</th>
-                <th colspan="2">Income Statement</th>
-                <th colspan="2">Balance Sheet</th>
-              </tr>
-              <tr class="sub">
-                <th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th>
-              </tr>
+              <tr class="grp"><th class="acct" rowspan="2">Account Title</th><th colspan="2">Trial Balance</th><th colspan="2">Adjustments</th><th colspan="2">Adj. Trial Balance</th><th colspan="2">Income Statement</th><th colspan="2">Balance Sheet</th></tr>
+              <tr class="sub"><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th><th>Dr</th><th>Cr</th></tr>
             </thead>
             <tbody id="sheetBody"></tbody>
           </table>
         </div>
         <div class="sheet-foot"><span>Worksheet · 100%</span><span>Totals <b>378,900</b></span></div>
       </div>
-
       <button class="btn primary wide" id="openExcel" style="margin-top:16px">⊞&nbsp; Open in Excel</button>
       <div class="disclaim" id="excelToast" style="height:16px"></div>
     </section>
 
-    <!-- ============ QUIZ ============ -->
+    <!-- QUIZ -->
     <section class="view" id="v-quiz">
       <div class="chap-eyebrow">Knowledge check</div>
       <div class="chap-title">Test your understanding</div>
-      <div class="card q-card" id="quizCard">
-        <div class="qh">Why is Supplies Expense debited in the year-end adjusting entry?</div>
-        <div class="opts" id="quizOpts">
-          <button class="opt" data-ok="0">It increases the asset account</button>
-          <button class="opt" data-ok="1">It records the supplies used, increasing expense</button>
-          <button class="opt" data-ok="0">It reverses the prior period</button>
+      <div class="card" style="margin-top:14px;padding:15px">
+        <div style="font-size:14px;font-weight:800;margin-bottom:10px">On which side does a company increase Rent Expense?</div>
+        <div id="quizOpts" style="display:flex;flex-direction:column;gap:9px">
+          <button class="opt" data-ok="1">Debit — expenses increase on the left</button>
+          <button class="opt" data-ok="0">Credit — expenses increase on the right</button>
+          <button class="opt" data-ok="0">Either side works</button>
         </div>
-        <div class="q-fb" id="quizFb"></div>
+        <div id="quizFb" style="margin-top:10px"></div>
       </div>
     </section>
 
-    <!-- ============ PROGRESS ============ -->
+    <!-- PROGRESS -->
     <section class="view" id="v-progress">
       <div class="chap-eyebrow">Your progress</div>
       <div class="chap-title">Chapter 2 overview</div>
       <div class="stat-grid" style="margin-top:16px">
-        <div class="stat"><div class="n">60%</div><div class="l">Complete</div></div>
+        <div class="stat"><div class="n" id="prPct">0%</div><div class="l">Complete</div></div>
         <div class="stat"><div class="n">7</div><div class="l">Day streak</div></div>
-        <div class="stat"><div class="n">1/5</div><div class="l">Lessons</div></div>
+        <div class="stat"><div class="n" id="prDone">0/6</div><div class="l">Concepts</div></div>
       </div>
-      <div class="sec-label">Lesson progress</div>
-      <div class="pr-item"><div class="top"><span>1 · Reversing Entries</span><span class="p">100%</span></div><div class="pr-bar"><span style="width:100%"></span></div></div>
-      <div class="pr-item"><div class="top"><span>2 · Adjusting Entries</span><span class="p">40%</span></div><div class="pr-bar"><span style="width:40%"></span></div></div>
-      <div class="pr-item"><div class="top"><span>3 · 10-Column Worksheet</span><span class="p">0%</span></div><div class="pr-bar"><span style="width:0"></span></div></div>
-      <div class="pr-item"><div class="top"><span>4 · Financial Statements</span><span class="p">0%</span></div><div class="pr-bar"><span style="width:0"></span></div></div>
-      <div class="pr-item"><div class="top"><span>5 · Knowledge Check</span><span class="p">0%</span></div><div class="pr-bar"><span style="width:0"></span></div></div>
+      <div class="sec-label">Concept progress</div>
+      <div id="prList"></div>
     </section>
 
   </main>
 
-  <!-- AI Tutor -->
   <button class="fab" id="fab"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9c0 1.6.4 3.1 1.1 4.4L3 21l4.6-1.1A9 9 0 1 0 12 3Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg> AI Tutor <span class="beta">BETA</span></button>
   <div class="tutor-back" id="tutorBack"></div>
   <div class="tutor" id="tutor">
-    <div class="tutor-head">
-      <span class="ai"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9c0 1.6.4 3.1 1.1 4.4L3 21l4.6-1.1A9 9 0 1 0 12 3Z"/></svg></span>
-      <span class="tt">AI Tutor</span><span class="beta">BETA</span>
-      <button class="x" id="tutorClose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>
+    <div class="tutor-head"><span class="ai"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9c0 1.6.4 3.1 1.1 4.4L3 21l4.6-1.1A9 9 0 1 0 12 3Z"/></svg></span><span class="tt">AI Tutor</span><span class="beta">BETA</span><button class="x" id="tutorClose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
     <div class="chat" id="chat"></div>
-    <div class="chat-input">
-      <input id="chatInput" placeholder="Ask me anything…" />
-      <button class="send" id="chatSend"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg></button>
-    </div>
+    <div class="chat-input"><input id="chatInput" placeholder="Ask me anything…" /><button class="send" id="chatSend"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg></button></div>
     <div class="disclaim">AI Tutor can make mistakes.</div>
   </div>
 
@@ -420,85 +468,234 @@ nav.tabbar{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);backgr
 
 <script>
 const $ = id => document.getElementById(id);
+const fmt = n => (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-US");
+const signed = n => n===0 ? "$0" : (n>0?"+":"−") + "$" + Math.abs(n).toLocaleString("en-US");
 
-/* ---- navigation ---- */
-const tabs = document.querySelectorAll(".tab");
-function go(view){
-  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on", v.id===view));
-  tabs.forEach(t=>t.classList.toggle("on", t.dataset.go===view));
+/* ---------------- concept definitions ---------------- */
+const CONCEPTS = [
+  { t:"Debits and Credits", s:"Left, right — not good, bad", badge:"Lesson 2.1 · Concept 1",
+    lead:"Debit means left; credit means right. They describe where an entry goes.",
+    exp:`<div class="explain"><p>The terms <b>debit</b> (Dr.) and <b>credit</b> (Cr.) mean <b>left</b> and <b>right</b>. They do not mean increase or decrease — they describe <b>where</b> an entry is made.</p><ul class="blist"><li>An entry on the left side is a <b>debit to</b> the account.</li><li>An entry on the right side is a <b>credit to</b> the account.</li><li>A <b>debit balance</b> means debits exceed credits; a <b>credit balance</b> means the reverse.</li></ul></div><div class="keypoint"><div class="kp-ic">🚗</div><div><h4>Key point</h4><p>Debits-left / credits-right is a custom — like driving on the right-hand side of the road. The custom is now the rule, and it applies to <b>all</b> accounts.</p></div></div>`,
+    ill:`<div class="taccount"><div class="ta-head"><b>Account Title</b><span class="ta-code">GL-XXXX</span></div><div class="ta-cols"><span>Debit · Dr · left</span><span>Credit · Cr · right</span></div><div class="ta-body"><div class="ta-side"><span class="badge2 neu">enter left</span></div><div class="ta-side"><span class="badge2 neu">enter right</span></div></div><div class="ta-foot">Balance sits on the side with the larger total.</div></div>`,
+    tool:`<div class="taccount"><div class="ta-head"><b>Cash</b><span class="ta-code">GL-1010</span></div><div class="ta-cols"><span>Debit (Dr)</span><span>Credit (Cr)</span></div><div class="ta-body"><div class="ta-side"><ul class="amtlist" id="mD"></ul></div><div class="ta-side"><ul class="amtlist" id="mC"></ul></div></div><div class="ta-foot" id="balMsg">No entries yet — post something below.</div></div><div class="duo"><button class="btn-side dr" id="pD">Post debit<span>left column</span></button><button class="btn-side cr" id="pC">Post credit<span>right column</span></button></div><button class="btn-ghost" id="clr">Clear the account</button>`,
+    init(){
+      const A=[300,200,500,150,400,250]; let i=0; const e={d:[],c:[]};
+      const paint=()=>{ $("mD").innerHTML=e.d.map(m=>`<li>${fmt(m)}</li>`).join(""); $("mC").innerHTML=e.c.map(m=>`<li>${fmt(m)}</li>`).join("");
+        const d=e.d.reduce((a,b)=>a+b,0),c=e.c.reduce((a,b)=>a+b,0),m=$("balMsg");
+        if(!d&&!c){m.innerHTML="No entries yet — post something below.";return;}
+        if(d>c)m.innerHTML=`Debits exceed credits → <b style="color:var(--dr)">DEBIT BALANCE ${fmt(d-c)}</b>`;
+        else if(c>d)m.innerHTML=`Credits exceed debits → <b style="color:var(--cr)">CREDIT BALANCE ${fmt(c-d)}</b>`;
+        else m.innerHTML=`Both columns equal → <b style="color:var(--primary)">NO BALANCE</b>`;
+        if((e.d.length+e.c.length)>=3) markDone(0);
+      };
+      $("pD").onclick=()=>{e.d.push(A[i++%A.length]);paint();};
+      $("pC").onclick=()=>{e.c.push(A[i++%A.length]);paint();};
+      $("clr").onclick=()=>{e.d=[];e.c=[];i=0;paint();};
+    }},
+
+  { t:"Debit & Credit Rules", s:"The normal balance of each account", badge:"Lesson 2.1 · Concept 2",
+    lead:"Each account type increases on one specific side — its normal balance.",
+    exp:`<div class="explain"><p>Increases to all <b>asset</b> and <b>expense</b> accounts occur on the left (debit) side. Increases to all <b>liability</b>, <b>revenue</b>, and most <b>equity</b> accounts occur on the right (credit) side.</p></div><div class="keypoint"><div class="kp-ic">⚖️</div><div><h4>Key point</h4><p>An account's <b>normal balance</b> is the side that increases it. The one exception: <b>Dividends</b> increases on the <b>debit</b> side.</p></div></div>`,
+    ill:`<div class="nbwrap"><div class="nbbox dr"><div class="nbt">Normal Balance — <span style="color:var(--dr)">Debit</span></div>${nbRow("Asset Accounts","+ increase","− decrease")}${nbRow("Expense Accounts","+ increase","− decrease")}</div><div class="nbbox cr"><div class="nbt">Normal Balance — <span style="color:var(--cr)">Credit</span></div>${nbRow("Liability Accounts","− decrease","+ increase")}${nbRow("Stockholders' Equity","− decrease","+ increase")}${nbRow("Revenue Accounts","− decrease","+ increase")}</div></div>`,
+    tool:`<div class="scoreline"><span id="drPos">Item 1 of 8</span><span id="drPts">0 first-try</span></div><div id="drHost"></div>`,
+    init(){
+      const Q=[["Cash increases after a customer pays.","an asset","dr","Assets increase on the debit (left) side."],
+        ["Accounts Payable rises on a purchase on account.","a liability","cr","Liabilities increase on the credit (right) side."],
+        ["Service Revenue is earned this period.","a revenue account","cr","Revenues increase on the credit (right) side."],
+        ["Rent Expense is incurred for the month.","an expense","dr","Expenses increase on the debit (left) side."],
+        ["Cash decreases when a bill is paid.","an asset decreasing","cr","Assets decrease on the credit (right) side."],
+        ["Common Stock rises when shares are issued.","stockholders' equity","cr","Equity accounts increase on the credit side."],
+        ["Dividends are declared and paid.","the exception","dr","Dividends is the equity account that increases by debit."],
+        ["Notes Payable falls when the loan is repaid.","a liability decreasing","dr","Liabilities decrease on the debit (left) side."]];
+      let i=0,pts=0,bad=false; const my=mountId;
+      const render=()=>{
+        if(my!==mountId) return;
+        if(i>=Q.length){ $("drHost").innerHTML=`<div class="finish on"><h4>Rules applied</h4><div class="fr"><span>First-try correct</span><b>${pts} / ${Q.length}</b></div><div class="fr last"><span>Assets &amp; expenses ↑ by debit · the rest ↑ by credit</span><b>✓</b></div></div>`; $("drPos").textContent="Complete"; markDone(1); return; }
+        bad=false; $("drPos").textContent=`Item ${i+1} of ${Q.length}`;
+        $("drHost").innerHTML=`<div class="card" id="drCard" style="padding:13px"><div style="font-size:13px;font-weight:700">${Q[i][0]}</div><div style="font-size:12px;color:var(--muted);margin-top:3px">This is ${Q[i][1]} — which column records it?</div><div class="duo"><button class="btn-side dr" data-r="dr">Debit<span>left</span></button><button class="btn-side cr" data-r="cr">Credit<span>right</span></button></div><div id="drFb"></div></div>`;
+        $("drCard").querySelectorAll(".btn-side").forEach(b=>b.onclick=()=>ans(b.dataset.r));
+      };
+      const ans=r=>{ if(r===Q[i][2]){ if(!bad)pts++; $("drPts").textContent=`${pts} first-try`; $("drFb").innerHTML=`<div class="fbk ok"><b>Correct.</b> ${Q[i][3]}</div>`; i++; setTimeout(render,1100);} else{ bad=true; $("drFb").innerHTML=`<div class="fbk no"><b>Not quite.</b> ${Q[i][3]} Try the other side.</div>`; const c=$("drCard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake"); } };
+      render();
+    }},
+
+  { t:"The Double-Entry System", s:"How the books prove themselves", badge:"Lesson 2.1 · Concept 3",
+    lead:"Every transaction is recorded with equal debits and credits.",
+    exp:`<div class="explain"><p>Under the <b>double-entry</b> system, a company records the dual (two-sided) effect of each transaction in appropriate accounts.</p><ul class="blist"><li>It offers a means of <b>proving the accuracy</b> of the recorded amounts.</li><li>If every transaction has equal debits and credits, the <b>sum of all debits equals the sum of all credits</b>.</li></ul></div>`,
+    ill:`<div class="figure"><div class="fig-head">One transaction, two entries<span class="tag">Figure</span></div><div class="fig-body"><div style="text-align:center;font-size:12.5px;font-weight:700;background:#FAFAFE;border:1px solid var(--line);border-radius:9px;padding:9px">Services performed for $1,500 cash</div><div style="text-align:center;color:var(--primary);margin:7px 0">▼</div><div class="tb"><div class="r"><span style="color:var(--dr)">Dr · Cash</span><span class="m dr">1,500</span></div><div class="r"><span style="color:var(--cr);padding-left:12px">Cr · Service Revenue</span><span class="m cr">1,500</span></div></div><div style="text-align:center;margin-top:9px"><span class="badge2 up">Debits 1,500 = Credits 1,500 ✓</span></div></div></div>`,
+    tool:`<div id="jList"></div><div class="tb" style="margin-top:8px"><div class="cap"><span>Trial balance · running totals</span><span id="tbCount">0 / 4</span></div><div class="r"><span>Total debits</span><span class="m dr" id="tD">$0</span></div><div class="r"><span>Total credits</span><span class="m cr" id="tC">$0</span></div><div class="r tot"><span>Difference</span><span class="m" id="tDiff">$0</span></div></div><div class="finish" id="jDone"><h4>Accuracy, demonstrated</h4><div class="fr"><span>Sum of all debits</span><b id="jSumD">$0</b></div><div class="fr"><span>Sum of all credits</span><b id="jSumC">$0</b></div><div class="fr last"><span>Total debits = Total credits</span><b>✓</b></div></div>`,
+    init(){
+      const T=[["Stockholders invest $10,000 cash",[["Cash",10000,"dr"],["Common Stock",10000,"cr"]]],
+        ["Equipment purchased for $3,000 on account",[["Equipment",3000,"dr"],["Accounts Payable",3000,"cr"]]],
+        ["Services performed for $1,500 cash",[["Cash",1500,"dr"],["Service Revenue",1500,"cr"]]],
+        ["Rent of $800 paid in cash",[["Rent Expense",800,"dr"],["Cash",800,"cr"]]]];
+      let step=0,D=0,C=0;
+      const render=()=>{ $("jList").innerHTML=T.map((t,i)=>{
+        const lines=t[1].map(([a,m,s])=>`<div class="jline"><span class="acct ${s}">${a}</span><span class="amt dr">${s==="dr"?m.toLocaleString():""}</span><span class="amt cr">${s==="cr"?m.toLocaleString():""}</span></div>`).join("");
+        return `<div class="je ${i<step?"done":""} ${i>step?"locked":""}"><div class="jh"><span class="jn">JE-${i+1}</span><span class="jd">${t[0]}</span><span class="jok">Posted ✓</span></div><div class="jl"><div class="jline hd"><span>Account</span><span>Debit</span><span>Credit</span></div>${lines}</div><div class="ja"><button class="jpost" data-i="${i}" ${i!==step?"disabled":""}>Post entry</button></div></div>`;
+      }).join(""); $("jList").querySelectorAll(".jpost").forEach(b=>b.onclick=()=>post(+b.dataset.i)); };
+      const post=i=>{ T[i][1].forEach(([,m,s])=>{ if(s==="dr")D+=m; else C+=m; }); step++;
+        $("tD").textContent=fmt(D);$("tC").textContent=fmt(C);$("tDiff").textContent=fmt(D-C);$("tbCount").textContent=`${step} / 4`; render();
+        if(step===T.length){ $("jSumD").textContent=fmt(D);$("jSumC").textContent=fmt(C);$("jDone").classList.add("on"); markDone(2);} };
+      render();
+    }},
+
+  { t:"The Basic Equation", s:"Assets = Liabilities + Equity", badge:"Lesson 2.2 · Concept 1",
+    lead:"What a company owns always equals the claims against it.",
+    exp:`<div class="explain"><p>Because every debit has a matching credit, we reach the basic accounting equation:</p><p style="font-family:var(--mono);font-size:12.5px;background:#FAFAFE;border:1px solid var(--line);border-radius:9px;padding:10px;color:var(--text)">Assets = Liabilities + Stockholders' Equity</p></div><div class="keypoint"><div class="kp-ic">🧮</div><div><h4>Key point</h4><p>Assets carry <b>debit</b> balances; liabilities and equity carry <b>credit</b> balances. The equation is just <b>total debits = total credits</b>, written another way.</p></div></div>`,
+    ill:`<div class="figure"><div class="fig-head">The basic accounting equation<span class="tag">Figure</span></div><div class="fig-body"><div class="sv" style="margin:0"><div class="svc"><div class="l">Assets</div><div class="v" style="font-size:12px">Debit</div></div><div class="svop">=</div><div class="svc"><div class="l">Liabilities</div><div class="v" style="font-size:12px">Credit</div></div><div class="svop">+</div><div class="svc"><div class="l">Equity</div><div class="v" style="font-size:12px">Credit</div></div></div></div></div>`,
+    tool:`<div class="scoreline"><span id="svPos">Problem 1 of 3</span><span id="svPts">0 first-try</span></div><div class="card" style="padding:14px"><div id="svHost"></div></div>`,
+    init(){
+      const P=[{a:90000,l:40000,e:50000,x:"e",o:[50000,130000,40000]},{a:85000,l:25000,e:60000,x:"a",o:[60000,85000,110000]},{a:120000,l:50000,e:70000,x:"l",o:[190000,70000,50000]}];
+      let i=0,pts=0,bad=false;
+      const render=()=>{ if(i>=P.length){ $("svHost").innerHTML=`<div class="finish on" style="margin-top:0"><h4>The equation holds</h4><div class="fr"><span>Solved first-try</span><b>${pts} / ${P.length}</b></div><div class="fr last"><span>Assets = Liabilities + Equity</span><b>✓</b></div></div>`; $("svPos").textContent="Complete"; markDone(3); return; }
+        bad=false; const p=P[i]; $("svPos").textContent=`Problem ${i+1} of ${P.length}`;
+        const cel=(k,n)=>`<div class="svc ${p.x===k?"q":""}"><div class="l">${n}</div><div class="v">${p.x===k?"?":"$"+p[k].toLocaleString()}</div></div>`;
+        $("svHost").innerHTML=`<div class="sv">${cel("a","Assets")}<div class="svop">=</div>${cel("l","Liab.")}<div class="svop">+</div>${cel("e","Equity")}</div><div class="svo">${p.o.map(v=>`<button class="btn-sv" data-v="${v}">$${v.toLocaleString()}</button>`).join("")}</div><div id="svFb"></div>`;
+        $("svHost").querySelectorAll(".btn-sv").forEach(b=>b.onclick=()=>ans(b));
+      };
+      const ans=b=>{ const p=P[i],v=+b.dataset.v; if(v===p[p.x]){ if(!bad)pts++; $("svPts").textContent=`${pts} first-try`; $("svHost").querySelectorAll(".btn-sv").forEach(x=>{x.disabled=true;if(+x.dataset.v===v)x.classList.add("right");}); $("svFb").innerHTML=`<div class="fbk ok" style="margin-top:11px"><b>Correct.</b> $${p.a.toLocaleString()} = $${p.l.toLocaleString()} + $${p.e.toLocaleString()}.</div><button class="btn primary wide" id="svNext" style="margin-top:10px">${i===P.length-1?"Finish":"Next problem →"}</button>`; $("svNext").onclick=()=>{i++;render();}; } else { bad=true; b.disabled=true; b.classList.add("wrong"); if(!$("svFb").innerHTML)$("svFb").innerHTML=`<div class="fbk no" style="margin-top:11px"><b>Not balanced.</b> The unknown side must make both sides equal.</div>`; } };
+      render();
+    }},
+
+  { t:"The Expanded Equation", s:"The five equity accounts", badge:"Lesson 2.2 · Concept 2",
+    lead:"Stockholders' equity is built from five accounts — three raise it, two lower it.",
+    exp:`<div class="explain"><p>Illustration 2.3 expands the equation to show the equity accounts and their rules:</p><p style="font-family:var(--mono);font-size:11.5px;background:#FAFAFE;border:1px solid var(--line);border-radius:9px;padding:10px;line-height:1.5;color:var(--text)">Assets = Liabilities + Common&nbsp;Stock + Retained&nbsp;Earnings + Revenues − Expenses − Dividends</p></div><div class="keypoint"><div class="kp-ic">🔀</div><div><h4>Key point</h4><p><b>Common Stock, Retained Earnings, Revenues</b> raise equity (credit balances). <b>Expenses and Dividends</b> lower it — so they carry <b>debit</b> balances.</p></div></div>`,
+    ill:`<div class="figure"><div class="fig-head">Illustration 2.3 · Expanded equation &amp; rules<span class="tag">Figure</span></div><div class="i23scroll" id="i23"></div></div>`,
+    tool:`<div class="scoreline"><span id="eqPos">Account 1 of 5</span><span id="eqPts">0 first-try</span></div><div id="eqHost"></div>`,
+    init(){
+      $("i23").innerHTML=`<div class="i23">`+[["Assets","+","−"],["=","",""],["Liabilities","−","+"],["+","",""],["Common Stock","−","+",1],["+","",""],["Ret. Earnings","−","+",1],["+","",""],["Revenues","−","+",1],["−","",""],["Expenses","+","−",1],["−","",""],["Dividends","+","−",1]].map(x=>{
+        if(!x[1]&&!x[2])return `<div class="i23op">${x[0]}</div>`;
+        return `<div class="i23el ${x[3]?"eqm":""}"><div class="i23nom">${x[0]}</div><div class="mt"><div class="c hd"><span>Dr</span><span>Cr</span></div><div class="c vl"><span>${x[1]}</span><span>${x[2]}</span></div></div></div>`;
+      }).join("")+`</div>`;
+      const E=[["Revenues earned from services","up","Revenues increase equity (credit balance)."],["Rent Expense for the period","down","Expenses decrease equity (debit balance)."],["Common Stock issued to owners","up","Common Stock increases equity (credit balance)."],["Dividends declared to stockholders","down","Dividends decrease equity (debit balance)."],["Retained Earnings from prior profit","up","Retained Earnings increases equity (credit balance)."]];
+      let i=0,pts=0,bad=false; const my=mountId;
+      const render=()=>{ if(my!==mountId) return; if(i>=E.length){ $("eqHost").innerHTML=`<div class="finish on"><h4>Equity effects</h4><div class="fr"><span>First-try correct</span><b>${pts} / ${E.length}</b></div><div class="fr last"><span>Revenues, Common Stock &amp; Retained Earnings ↑ · Expenses &amp; Dividends ↓</span><b>✓</b></div></div>`; $("eqPos").textContent="Complete"; markDone(4); return; }
+        bad=false; $("eqPos").textContent=`Account ${i+1} of ${E.length}`;
+        $("eqHost").innerHTML=`<div class="card" id="eqCard" style="padding:13px"><div style="font-size:13px;font-weight:700;margin-bottom:2px">${E[i][0]}</div><div style="font-size:12px;color:var(--muted)">Raise or lower stockholders' equity?</div><div class="duo"><button class="btn-side cr" data-r="up">▲ Increases</button><button class="btn-side dr" data-r="down">▼ Decreases</button></div><div id="eqFb"></div></div>`;
+        $("eqCard").querySelectorAll(".btn-side").forEach(b=>b.onclick=()=>ans(b.dataset.r));
+      };
+      const ans=r=>{ if(r===E[i][1]){ if(!bad)pts++; $("eqPts").textContent=`${pts} first-try`; $("eqFb").innerHTML=`<div class="fbk ok"><b>Correct.</b> ${E[i][2]}</div>`; i++; setTimeout(render,1100);} else { bad=true; const c=$("eqCard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake"); $("eqFb").innerHTML=`<div class="fbk no"><b>Look again.</b> ${E[i][2]}</div>`; } };
+      render();
+    }},
+
+  { t:"Transaction Analysis", s:"Every transaction keeps the balance", badge:"Lesson 2.2 · Concept 3",
+    lead:"The elements change, but the basic equality always survives.",
+    exp:`<div class="explain"><p>Every time a transaction occurs, the elements of the equation change — but the basic equality remains.</p><p>To analyze one, identify which two elements move and by how much, keeping the change on the left equal to the change on the right. Here are eight for <b>Perez Inc.</b></p></div>`,
+    ill:`<div class="figure"><div class="fig-head">Worked example · Transaction 1<span class="tag">Figure</span></div><div class="fig-body"><div style="font-size:12px;color:var(--muted);margin-bottom:9px">Owners invest $40,000 for common stock:</div><div class="sv" style="margin:0"><div class="svc"><div class="l">Assets</div><div class="v" style="color:var(--cr)">+40k</div></div><div class="svop">=</div><div class="svc"><div class="l">Liab.</div><div class="v">—</div></div><div class="svop">+</div><div class="svc"><div class="l">Equity</div><div class="v" style="color:var(--cr)">+40k</div></div></div></div></div>`,
+    tool:`<div class="scoreline"><span id="anPos">Transaction 1 of 8</span><span id="anBal">0 balanced</span></div><div id="anHost"></div><div class="wswrap" style="margin-top:8px"><div class="wscap"><span>Worksheet · net change</span><span id="wsCount">0 / 8</span></div><div id="wsBody"><div class="wsempty">Classify a transaction to add its first row.</div></div></div><div class="finish" id="anDone"><h4>The equality holds</h4><div class="fr"><span>Σ change in assets</span><b id="sA">$0</b></div><div class="fr"><span>Σ change in liabilities</span><b id="sL">$0</b></div><div class="fr"><span>Σ change in equity</span><b id="sE">$0</b></div><div class="fr last"><span>Assets = Liabilities + Equity</span><b>✓</b></div></div>`,
+    init(){
+      const CL={A:"Assets only",AL:"Assets & Liab.",AE:"Assets & Equity",LE:"Liab. & Equity"};
+      const P=[["Owners invest $40,000 for common stock.","AE",40000,0,40000,null,"Cash in, common stock issued — equity rises."],
+        ["Disburse $600 cash for administrative wages.","AE",-600,0,-600,null,"Wages are an expense; equity falls."],
+        ["Buy equipment for $5,200 on a 10% note.","AL",5200,5200,0,null,"Equipment up, note payable up."],
+        ["Receive $4,000 cash for services performed.","AE",4000,0,4000,null,"Service revenue increases equity."],
+        ["Pay off a short-term liability of $7,000.","AL",-7000,-7000,0,null,"Cash falls, payable cleared."],
+        ["Declare a cash dividend of $5,000.","LE",0,5000,-5000,null,"Dividend payable up; equity down."],
+        ["Convert an $80,000 long-term liability to stock.","LE",0,-80000,80000,null,"Debt swapped for equity."],
+        ["Pay cash of $16,000 for a delivery van.","A",0,0,0,["−16,000","+16,000"],"One asset for another — total assets unchanged."]];
+      let i=0,bal=0; const app=[];
+      const render=()=>{ if(i>=P.length){ $("anHost").innerHTML=`<div class="fbk ok"><b>Done —</b> all eight kept the equation balanced. See the worksheet below.</div>`; $("anPos").textContent="Complete"; return; }
+        const p=P[i]; $("anPos").textContent=`Transaction ${i+1} of 8`;
+        $("anHost").innerHTML=`<div class="card" id="anCard" style="padding:13px"><div style="font-size:13px;font-weight:700">${p[0]}</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Which two elements move?</div><div class="duo" style="grid-template-columns:1fr 1fr">${["A","AL","AE","LE"].map(k=>`<button class="opt" data-k="${k}" style="text-align:center;padding:11px 6px;font-size:12px">${CL[k]}</button>`).join("")}</div><div id="anRev"></div></div>`;
+        $("anCard").querySelectorAll(".opt").forEach(b=>b.onclick=()=>cls(b));
+      };
+      const cls=b=>{ const p=P[i],k=b.dataset.k;
+        if(k===p[1]){ $("anCard").querySelectorAll(".opt").forEach(x=>{x.disabled=true; x.classList.add(x.dataset.k===k?"right":"dim");});
+          const aC=p[5]?`<span class="dv dbl"><span class="neg">${p[5][0]}</span><br><span class="pos">${p[5][1]}</span></span>`:`<span class="dv ${p[2]>0?"pos":p[2]<0?"neg":""}">${signed(p[2])}</span>`;
+          $("anRev").innerHTML=`<div class="dstrip"><div class="dcel"><div class="dl">Δ Assets</div>${aC}</div><div class="dcel"><div class="dl">Δ Liab.</div><span class="dv ${p[3]>0?"pos":p[3]<0?"neg":""}">${signed(p[3])}</span></div><div class="dcel"><div class="dl">Δ Equity</div><span class="dv ${p[4]>0?"pos":p[4]<0?"neg":""}">${signed(p[4])}</span></div></div><div class="fbk ok"><b>In balance.</b> ${p[6]}</div><button class="btn primary wide" id="anNext" style="margin-top:10px">${i===P.length-1?"Finish":"Next transaction →"}</button>`;
+          bal++; $("anBal").textContent=`${bal} balanced`; app.push(p); paintWs();
+          $("anNext").onclick=()=>{i++;render();};
+        } else { b.disabled=true; b.classList.add("wrong"); const c=$("anCard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake"); } };
+      const paintWs=()=>{ $("wsCount").textContent=`${app.length} / 8`;
+        let sa=0,sl=0,se=0; const rows=app.map((p,n)=>{ sa+=p[2];sl+=p[3];se+=p[4];
+          const aC=p[5]?`<td><span class="par" style="color:var(--dr)">${p[5][0]}</span><span class="par" style="color:var(--cr)">${p[5][1]}</span></td>`:`<td class="${p[2]>0?"pos":p[2]<0?"neg":""}">${p[2]===0?"—":signed(p[2])}</td>`;
+          return `<tr><td>Txn ${n+1}</td>${aC}<td class="${p[3]>0?"pos":p[3]<0?"neg":""}">${p[3]===0?"—":signed(p[3])}</td><td class="${p[4]>0?"pos":p[4]<0?"neg":""}">${p[4]===0?"—":signed(p[4])}</td><td class="ok">✓</td></tr>`; }).join("");
+        $("wsBody").innerHTML=`<table class="ws"><thead><tr><th>Txn</th><th>Assets</th><th>Liab.</th><th>Equity</th><th>Bal.</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>Net</td><td>${signed(sa)}</td><td>${signed(sl)}</td><td>${signed(se)}</td><td class="ok">✓</td></tr></tfoot></table>`;
+        if(app.length===8){ $("sA").textContent=signed(sa);$("sL").textContent=signed(sl);$("sE").textContent=signed(se);$("anDone").classList.add("on"); markDone(5);} };
+      render();
+    }},
+];
+function nbRow(name,dr,cr){ return `<div class="nbrow"><div class="nn">${name}</div><div class="nbmini"><div><span class="h" style="color:var(--dr)">Debit</span><span class="s">${dr}</span></div><div><span class="h" style="color:var(--cr)">Credit</span><span class="s">${cr}</span></div></div></div>`; }
+
+/* ---------------- lesson engine ---------------- */
+const done = new Set();
+let cur = 0;
+let mountId = 0;
+
+function buildList(){
+  $("lessonList").innerHTML = CONCEPTS.map((c,i)=>`
+    <button class="lesson-row" data-i="${i}"><span class="l-num">${i+1}</span><span class="l-txt"><span class="l-t">${c.t}</span><span class="l-s">${c.s}</span></span><span class="l-chk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span></button>`).join("");
+  $("lessonList").querySelectorAll(".lesson-row").forEach(r=>r.onclick=()=>select(+r.dataset.i));
+}
+function refreshList(){
+  $("lessonList").querySelectorAll(".lesson-row").forEach((r,i)=>{
+    r.classList.toggle("active", i===cur);
+    r.classList.toggle("done", done.has(i));
+  });
+  $("conceptsCount").textContent = `${done.size} of 6 complete`;
+}
+function select(i){
+  cur = i;
+  mountId++;
+  const c = CONCEPTS[i];
+  $("lessonContent").innerHTML =
+    `<span class="lesson-badge">${c.badge}</span><h2 class="lesson-h">${c.t}</h2><p class="lesson-p">${c.lead}</p>`+
+    `<div class="plabel"><span class="step">1</span> Explanation</div>${c.exp}`+
+    `<div class="plabel ilu"><span class="step">2</span> Illustration</div>${c.ill}`+
+    `<div class="plabel tool"><span class="step">3</span> Apply it</div>${c.tool}`;
+  c.init();
+  $("lPrev").disabled = i===0;
+  $("lNext").textContent = i===CONCEPTS.length-1 ? "Finish ✓" : "Next →";
+  refreshList();
   $("main").scrollTo({top:0});
 }
-tabs.forEach(t=>t.addEventListener("click",()=>go(t.dataset.go)));
-document.querySelectorAll("[data-go]").forEach(el=>{ if(!el.classList.contains("tab")) el.addEventListener("click",()=>go(el.dataset.go)); });
+$("lPrev").onclick=()=>{ if(cur>0) select(cur-1); };
+$("lNext").onclick=()=>{ if(cur<CONCEPTS.length-1) select(cur+1); else go("v-progress"); };
 
-/* ---- lessons list selection ---- */
-document.querySelectorAll(".lesson-row").forEach(r=>r.addEventListener("click",()=>{
-  document.querySelectorAll(".lesson-row").forEach(x=>x.classList.remove("active"));
-  r.classList.add("active");
-}));
-$("lessonNext").addEventListener("click",()=>go("v-excel"));
-
-/* ---- excel lab worksheet data ---- */
-const ROWS = [
-  ["Cash","111,200","","","","111,200","","","","111,200",""],
-  ["Accounts Receivable","96,000","","","","96,000","","","","96,000",""],
-  ["Supplies","23,500","","","(12,800)","10,700","","","","10,700",""],
-  ["Prepaid Insurance","24,000","","","(6,000)","18,000","","","","18,000",""],
-  ["Office Equipment","66,000","","","","66,000","","","","66,000",""],
-  ["Accumulated Depreciation","","12,000","","2,400","","14,400","","","","14,400"],
-  ["Accounts Payable","","26,000","","","","26,000","","","","26,000"],
-  ["Unearned Service Revenue","","18,700","(7,200)","","","11,500","","","","11,500"],
-  ["Common Stock","","100,000","","","","100,000","","","","100,000"],
-];
-$("sheetBody").innerHTML = ROWS.map(r=>{
-  const cells = r.slice(1).map(c=>`<td>${c||""}</td>`).join("");
-  return `<tr><td class="acct">${r[0]}</td>${cells}</tr>`;
-}).join("");
-$("xlTabs").querySelectorAll(".xl-tab").forEach(t=>t.addEventListener("click",()=>{
-  $("xlTabs").querySelectorAll(".xl-tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
-}));
-$("openExcel").addEventListener("click",()=>{
-  const el = $("excelToast"); el.textContent = "Opening the worksheet in Excel Lab…";
-  setTimeout(()=>el.textContent="", 2200);
-});
-
-/* ---- quiz ---- */
-$("quizOpts").querySelectorAll(".opt").forEach(o=>o.addEventListener("click",()=>{
-  if($("quizOpts").dataset.done) return;
-  const ok = o.dataset.ok==="1";
-  o.classList.add(ok?"right":"wrong");
-  if(ok){
-    $("quizOpts").dataset.done = "1";
-    $("quizFb").innerHTML = `<span class="g"><b>Correct.</b> Supplies used during the period become Supplies Expense — a debit that increases expense and reduces net income.</span>`;
-  }else{
-    $("quizFb").innerHTML = `Not quite — think about what happens to the supplies that were <em>used up</em>. Try again.`;
-  }
-}));
-
-/* ---- AI tutor ---- */
-const CHAT = [
-  {who:"user", text:"Why is Supplies debited for the adjusting entry?"},
-  {who:"ai", html:`Great question! At year-end, the Supplies account has a debit balance representing the supplies remaining. Since some supplies were used during the period, we recognize that as an expense:<div class="hl"><b>Supplies Expense</b> is debited because it increases expenses, which reduces net income.</div>This follows the accounting equation: expenses increase on the <b>debit</b> side.`},
-  {who:"user", text:"Can you check my worksheet?"},
-  {who:"ai", text:"I'd be happy to! Open the Excel Lab, tap “Open in Excel”, and I'll review your entries column by column."},
-];
-function renderChat(){
-  $("chat").innerHTML = CHAT.map(m=>`<div class="msg ${m.who}">${m.html||m.text}</div>`).join("");
-  $("chat").scrollTop = $("chat").scrollHeight;
+function markDone(i){
+  if(done.has(i)) return;
+  done.add(i); refreshList(); updateProgress();
 }
-function openTutor(){ $("tutor").classList.add("on"); $("tutorBack").classList.add("on"); renderChat(); }
+function updateProgress(){
+  const pct = Math.round(done.size/CONCEPTS.length*100);
+  $("progBar").style.width = pct+"%"; $("progPct").textContent = pct+"%";
+  $("homePct").textContent = pct+"%"; $("homeDone").textContent = `${done.size}/6`;
+  $("prPct").textContent = pct+"%"; $("prDone").textContent = `${done.size}/6`;
+  $("contBar").style.width = pct+"%"; $("contPct").textContent = pct+"% complete";
+  $("contPos").textContent = `Concept ${Math.min(done.size+1,6)} of 6`;
+  $("contTitle").textContent = CONCEPTS[Math.min(done.size,5)].t;
+  $("prList").innerHTML = CONCEPTS.map((c,i)=>{ const p=done.has(i)?100:(i===cur?50:0);
+    return `<div class="pr-item"><div class="top"><span>${i+1} · ${c.t}</span><span class="p">${p}%</span></div><div class="pr-bar"><span style="width:${p}%"></span></div></div>`; }).join("");
+}
+
+/* ---------------- shell nav ---------------- */
+const tabs = document.querySelectorAll(".tab");
+function go(view){ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on", v.id===view)); tabs.forEach(t=>t.classList.toggle("on", t.dataset.go===view)); $("main").scrollTo({top:0}); }
+tabs.forEach(t=>t.onclick=()=>go(t.dataset.go));
+document.querySelectorAll("[data-go]").forEach(el=>{ if(!el.classList.contains("tab")) el.onclick=()=>go(el.dataset.go); });
+$("contBtn").onclick=()=>{ select(Math.min(done.size,5)); go("v-lessons"); };
+
+/* excel lab */
+const ROWS=[["Cash","111,200","","","","111,200","","","","111,200",""],["Accounts Receivable","96,000","","","","96,000","","","","96,000",""],["Supplies","23,500","","","(12,800)","10,700","","","","10,700",""],["Prepaid Insurance","24,000","","","(6,000)","18,000","","","","18,000",""],["Office Equipment","66,000","","","","66,000","","","","66,000",""],["Accumulated Depreciation","","12,000","","2,400","","14,400","","","","14,400"],["Accounts Payable","","26,000","","","","26,000","","","","26,000"],["Unearned Service Revenue","","18,700","(7,200)","","","11,500","","","","11,500"],["Common Stock","","100,000","","","","100,000","","","","100,000"]];
+$("sheetBody").innerHTML=ROWS.map(r=>`<tr><td class="acct">${r[0]}</td>${r.slice(1).map(c=>`<td>${c||""}</td>`).join("")}</tr>`).join("");
+$("xlTabs").querySelectorAll(".xl-tab").forEach(t=>t.onclick=()=>{ $("xlTabs").querySelectorAll(".xl-tab").forEach(x=>x.classList.remove("on")); t.classList.add("on"); });
+$("openExcel").onclick=()=>{ $("excelToast").textContent="Opening the worksheet in Excel Lab…"; setTimeout(()=>$("excelToast").textContent="",2200); };
+
+/* quiz */
+$("quizOpts").querySelectorAll(".opt").forEach(o=>o.onclick=()=>{ if($("quizOpts").dataset.done)return; const ok=o.dataset.ok==="1"; o.classList.add(ok?"right":"wrong"); if(ok){ $("quizOpts").dataset.done="1"; $("quizFb").innerHTML=`<div class="fbk ok"><b>Correct.</b> Rent Expense is an expense — expenses increase on the debit (left) side, which reduces net income.</div>`; } else { $("quizFb").innerHTML=`<div class="fbk no">Not quite — an expense increases on the same side as an asset. Try again.</div>`; } });
+
+/* AI tutor */
+const CHAT=[{who:"user",text:"Why does a debit increase Cash but decrease a liability?"},{who:"ai",html:`Because a debit just means the <b>left side</b> — what it does depends on the account. Assets (like Cash) increase on the left; liabilities increase on the right, so a left-side entry <em>reduces</em> them.<div class="hl"><b>Rule of thumb:</b> assets &amp; expenses go up with debits; liabilities, revenue &amp; equity go up with credits.</div>`},{who:"user",text:"Can you check my worksheet?"},{who:"ai",text:"Open the Excel Lab, tap “Open in Excel”, and I'll review your entries column by column."}];
+function renderChat(){ $("chat").innerHTML=CHAT.map(m=>`<div class="msg ${m.who}">${m.html||m.text}</div>`).join(""); $("chat").scrollTop=$("chat").scrollHeight; }
+$("fab").onclick=()=>{ $("tutor").classList.add("on"); $("tutorBack").classList.add("on"); renderChat(); };
 function closeTutor(){ $("tutor").classList.remove("on"); $("tutorBack").classList.remove("on"); }
-$("fab").addEventListener("click", openTutor);
-$("tutorClose").addEventListener("click", closeTutor);
-$("tutorBack").addEventListener("click", closeTutor);
-function sendMsg(){
-  const v = $("chatInput").value.trim(); if(!v) return;
-  CHAT.push({who:"user", text:v});
-  CHAT.push({who:"ai", text:"Good question — I'd trace it back to the accounting equation and the debit/credit rules. In the full version I'll walk through your specific numbers step by step."});
-  $("chatInput").value = ""; renderChat();
-}
-$("chatSend").addEventListener("click", sendMsg);
-$("chatInput").addEventListener("keydown", e=>{ if(e.key==="Enter") sendMsg(); });
+$("tutorClose").onclick=closeTutor; $("tutorBack").onclick=closeTutor;
+function send(){ const v=$("chatInput").value.trim(); if(!v)return; CHAT.push({who:"user",text:v}); CHAT.push({who:"ai",text:"Good question — I'd trace it back to the debit/credit rules and the accounting equation. In the full version I'll walk through your specific numbers."}); $("chatInput").value=""; renderChat(); }
+$("chatSend").onclick=send; $("chatInput").addEventListener("keydown",e=>{ if(e.key==="Enter")send(); });
+
+/* boot */
+buildList(); select(0); updateProgress();
 </script>
 </body>
 </html>
