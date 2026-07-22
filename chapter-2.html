@@ -249,8 +249,19 @@ table.ws tfoot td{border-top:2px solid var(--text);font-weight:800;background:#F
 .lab-launch .ls{font-size:11.5px;color:var(--muted-2)}
 .lab-launch .go{margin-left:auto;color:var(--muted-2)}
 
-/* ---------- functional worksheet ---------- */
+/* ---------- Excel Lab (contextual exercise) ---------- */
 .xl-sub{font-size:13px;color:var(--muted);margin:0 2px 4px}
+.ex-context{width:100%;text-align:left;font-family:inherit;display:flex;align-items:center;gap:10px;background:var(--primary-050);border:1px solid var(--primary-100);border-radius:12px;padding:10px 12px;margin-top:14px;cursor:pointer}
+.ex-context .ecn{flex:1;min-width:0}
+.ex-context .ek{display:block;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--primary)}
+.ex-context .et{display:block;font-size:13px;font-weight:700;color:var(--text);margin-top:1px}
+.ex-context .eo{font-size:12px;font-weight:700;color:var(--primary);white-space:nowrap;display:flex;align-items:center;gap:2px}
+.ex-frame{margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+.ex-bar{display:flex;align-items:center;gap:8px;padding:9px 13px;background:var(--excel-050);border-bottom:1px solid var(--line-soft);color:var(--excel);font-size:13px;font-weight:800}
+.ex-bar .ex-ic{font-size:15px}
+.ex-bar .ex-tag{margin-left:auto;font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em;color:var(--excel);background:#fff;border:1px solid var(--cr-100);border-radius:999px;padding:2px 8px}
+.ex-body{padding:14px}
+.ex-done-note{margin-top:14px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
 .adj-panel{margin-top:14px}
 .adj-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:9px;box-shadow:var(--shadow)}
 .adj-row .ak{width:22px;height:22px;border-radius:6px;background:var(--primary-050);color:var(--primary);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -392,7 +403,7 @@ nav.tabbar{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);backgr
       <div class="inset" id="lessonList"></div>
       <button class="lab-launch" id="labLaunch">
         <span class="lab-ic">⊞</span>
-        <span><span class="lt">Excel Lab · 10-Column Worksheet</span><span class="ls">Complete an adjusting-entries worksheet</span></span>
+        <span><span class="lt">Excel Lab</span><span class="ls">Open the exercise for your current lesson</span></span>
         <span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </button>
     </section>
@@ -406,34 +417,15 @@ nav.tabbar{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);backgr
       </div>
     </section>
 
-    <!-- EXCEL LAB -->
+    <!-- EXCEL LAB (contextual to current lesson) -->
     <section class="view" id="v-excel" data-title="Excel Lab">
       <h1 class="large-title">Excel Lab</h1>
-      <div class="xl-sub">Uptown Cabinet Co · 10-Column Worksheet</div>
-      <div class="card" style="margin-top:12px;padding:13px">
-        <div style="font-size:12.5px;line-height:1.55;color:#3C4356"><b>Your task:</b> enter each year-end adjustment below. The Adjusted Trial Balance, Income Statement, and Balance Sheet columns recalculate automatically. Then tap <b>Check my worksheet</b>.</div>
+      <div class="xl-sub">The application exercise for your current lesson</div>
+      <button class="ex-context" id="exContext"></button>
+      <div class="ex-frame">
+        <div class="ex-bar"><span class="ex-ic">⊞</span><b id="exName">Exercise</b><span class="ex-tag">EXERCISE</span></div>
+        <div class="ex-body" id="exHost"></div>
       </div>
-
-      <div class="grouphdr">Adjustments</div>
-      <div class="adj-panel" id="adjPanel"></div>
-
-      <div class="xl-tabs" id="xlTabs">
-        <button class="xl-tab on" data-m="all">Full worksheet</button>
-        <button class="xl-tab" data-m="tb">Trial Balance</button>
-        <button class="xl-tab" data-m="adj">Adjustments</button>
-        <button class="xl-tab" data-m="atb">Adjusted TB</button>
-        <button class="xl-tab" data-m="is">Income Statement</button>
-        <button class="xl-tab" data-m="bs">Balance Sheet</button>
-      </div>
-      <div class="sheet-wrap">
-        <div class="sheet-scroll"><table class="sheet" id="sheet"></table></div>
-        <div class="ws-status">
-          <span class="ni">Net income: <b id="niVal">$0</b></span>
-          <span class="pill off" id="wsPill">Enter adjustments</span>
-        </div>
-      </div>
-      <button class="btn primary wide" id="checkWs" style="margin-top:14px">Check my worksheet</button>
-      <div id="wsResult" style="margin-top:12px"></div>
     </section>
 
     <!-- QUIZ -->
@@ -492,6 +484,7 @@ const num = n => n===0 ? "" : Math.abs(n).toLocaleString("en-US");
 
 /* ================= concepts (unchanged content) ================= */
 function nbRow(name,dr,cr){ return `<div class="nbrow"><div class="nn">${name}</div><div class="nbmini"><div><span class="h" style="color:var(--dr)">Debit</span><span class="s">${dr}</span></div><div><span class="h" style="color:var(--cr)">Credit</span><span class="s">${cr}</span></div></div></div>`; }
+function i23strip(){ return `<div class="i23">`+[["Assets","+","−"],["=","",""],["Liabilities","−","+"],["+","",""],["Common Stock","−","+",1],["+","",""],["Ret. Earnings","−","+",1],["+","",""],["Revenues","−","+",1],["−","",""],["Expenses","+","−",1],["−","",""],["Dividends","+","−",1]].map(x=>{ if(!x[1]&&!x[2])return `<div class="i23op">${x[0]}</div>`; return `<div class="i23el ${x[3]?"eqm":""}"><div class="i23nom">${x[0]}</div><div class="mt"><div class="c hd"><span>Dr</span><span>Cr</span></div><div class="c vl"><span>${x[1]}</span><span>${x[2]}</span></div></div></div>`; }).join("")+`</div>`; }
 const CONCEPTS = [
   { t:"Debits and Credits", s:"Left, right — not good, bad", badge:"Lesson 2.1 · Concept 1",
     lead:"Debit means left; credit means right. They describe where an entry goes.",
@@ -552,10 +545,9 @@ const CONCEPTS = [
   { t:"The Expanded Equation", s:"The five equity accounts", badge:"Lesson 2.2 · Concept 2",
     lead:"Stockholders' equity is built from five accounts — three raise it, two lower it.",
     exp:`<div class="explain"><p>Illustration 2.3 expands the equation to show the equity accounts and their rules:</p><p style="font-family:var(--mono);font-size:11.5px;background:#FAFAFE;border:1px solid var(--line);border-radius:9px;padding:10px;line-height:1.5;color:var(--text)">Assets = Liabilities + Common&nbsp;Stock + Retained&nbsp;Earnings + Revenues − Expenses − Dividends</p></div><div class="keypoint"><div class="kp-ic">🔀</div><div><h4>Key point</h4><p><b>Common Stock, Retained Earnings, Revenues</b> raise equity (credit balances). <b>Expenses and Dividends</b> lower it — so they carry <b>debit</b> balances.</p></div></div>`,
-    ill:`<div class="figure"><div class="fig-head">Illustration 2.3 · Expanded equation &amp; rules<span class="tag">Figure</span></div><div class="i23scroll" id="i23"></div></div>`,
+    ill:`<div class="figure"><div class="fig-head">Illustration 2.3 · Expanded equation &amp; rules<span class="tag">Figure</span></div><div class="i23scroll">${i23strip()}</div></div>`,
     tool:`<div class="scoreline"><span id="eqPos">Account 1 of 5</span><span id="eqPts">0 first-try</span></div><div id="eqHost"></div>`,
-    init(){ $("i23").innerHTML=`<div class="i23">`+[["Assets","+","−"],["=","",""],["Liabilities","−","+"],["+","",""],["Common Stock","−","+",1],["+","",""],["Ret. Earnings","−","+",1],["+","",""],["Revenues","−","+",1],["−","",""],["Expenses","+","−",1],["−","",""],["Dividends","+","−",1]].map(x=>{ if(!x[1]&&!x[2])return `<div class="i23op">${x[0]}</div>`; return `<div class="i23el ${x[3]?"eqm":""}"><div class="i23nom">${x[0]}</div><div class="mt"><div class="c hd"><span>Dr</span><span>Cr</span></div><div class="c vl"><span>${x[1]}</span><span>${x[2]}</span></div></div></div>`; }).join("")+`</div>`;
-      const E=[["Revenues earned from services","up","Revenues increase equity (credit balance)."],["Rent Expense for the period","down","Expenses decrease equity (debit balance)."],["Common Stock issued to owners","up","Common Stock increases equity (credit balance)."],["Dividends declared to stockholders","down","Dividends decrease equity (debit balance)."],["Retained Earnings from prior profit","up","Retained Earnings increases equity (credit balance)."]];
+    init(){ const E=[["Revenues earned from services","up","Revenues increase equity (credit balance)."],["Rent Expense for the period","down","Expenses decrease equity (debit balance)."],["Common Stock issued to owners","up","Common Stock increases equity (credit balance)."],["Dividends declared to stockholders","down","Dividends decrease equity (debit balance)."],["Retained Earnings from prior profit","up","Retained Earnings increases equity (credit balance)."]];
       let i=0,pts=0,bad=false; const my=mountId;
       const render=()=>{ if(my!==mountId)return; if(i>=E.length){ $("eqHost").innerHTML=`<div class="finish on"><h4>Equity effects</h4><div class="fr"><span>First-try correct</span><b>${pts} / ${E.length}</b></div><div class="fr last"><span>Revenues, Common Stock &amp; Retained Earnings ↑ · Expenses &amp; Dividends ↓</span><b>✓</b></div></div>`; $("eqPos").textContent="Complete"; markDone(4); return; }
         bad=false; $("eqPos").textContent=`Account ${i+1} of ${E.length}`;
@@ -588,8 +580,10 @@ const CONCEPTS = [
 ];
 
 /* ================= progress ================= */
+const EX_NAMES = ["Cash T-account ledger","Debit/credit posting drill","Journal & trial balance","Equation solver","Equity effects check","Accounting-equation worksheet"];
 const done = new Set();
 let cur = 0;
+let activeEx = 0;
 let mountId = 0;
 let detailOpen = false;
 
@@ -637,8 +631,10 @@ function pushConcept(i){
     `<span class="lesson-badge">${c.badge}</span><h1 class="lesson-h">${c.t}</h1><p class="lesson-p">${c.lead}</p>`+
     `<div class="plabel"><span class="step">1</span> Explanation</div>${c.exp}`+
     `<div class="plabel ilu"><span class="step">2</span> Illustration</div>${c.ill}`+
-    `<div class="plabel tool"><span class="step">3</span> Apply it</div>${c.tool}`;
-  c.init();
+    `<div class="plabel tool"><span class="step">3</span> Apply it</div>`+
+    `<button class="lab-launch" id="openEx"><span class="lab-ic">⊞</span><span><span class="lt">Excel Lab · ${EX_NAMES[i]}</span><span class="ls">Practice this concept in the worksheet</span></span><span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></button>`+
+    `<p style="font-size:12px;color:var(--muted);margin-top:9px;line-height:1.5">The <b>Excel Lab</b> holds the application exercise for this lesson. Complete it to mark the concept done.</p>`;
+  $("openEx").onclick=()=>openExcel(i);
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on", v.id==="v-concept"));
   $("navTitle").textContent = c.t;
   $("navBackLabel").textContent = "Chapter 2";
@@ -652,8 +648,8 @@ function pushConcept(i){
 $("navBack").onclick=()=>setTab("v-lessons");
 $("lPrev").onclick=()=>{ if(cur>0) pushConcept(cur-1); };
 $("lNext").onclick=()=>{ if(cur<CONCEPTS.length-1) pushConcept(cur+1); else setTab("v-progress"); };
-document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>setTab(t.dataset.go));
-$("labLaunch").onclick=()=>setTab("v-excel");
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ if(t.dataset.go==="v-excel") openExcel(cur); else setTab(t.dataset.go); });
+$("labLaunch").onclick=()=>openExcel(cur);
 $("contBtn").onclick=()=>openConcept(Math.min(done.size,5));
 
 /* large-title collapse on scroll */
@@ -663,90 +659,23 @@ $("main").addEventListener("scroll",()=>{
   if(!detailOpen) navbar.classList.toggle("solid", s>34);
 });
 
-/* ================= functional Excel Lab ================= */
-const ACCTS=[
-  {n:"Cash",dr:111200,cr:0,st:"BS"},{n:"Accounts Receivable",dr:96000,cr:0,st:"BS"},
-  {n:"Supplies",dr:23500,cr:0,st:"BS"},{n:"Prepaid Insurance",dr:24000,cr:0,st:"BS"},
-  {n:"Office Equipment",dr:66000,cr:0,st:"BS"},{n:"Accumulated Depreciation",dr:0,cr:12000,st:"BS"},
-  {n:"Accounts Payable",dr:0,cr:26000,st:"BS"},{n:"Unearned Service Revenue",dr:0,cr:18700,st:"BS"},
-  {n:"Salaries Payable",dr:0,cr:0,st:"BS"},{n:"Common Stock",dr:0,cr:100000,st:"BS"},
-  {n:"Retained Earnings",dr:0,cr:62000,st:"BS"},{n:"Dividends",dr:28000,cr:0,st:"BS"},
-  {n:"Service Revenue",dr:0,cr:160200,st:"IS"},{n:"Salaries Expense",dr:30200,cr:0,st:"IS"},
-  {n:"Supplies Expense",dr:0,cr:0,st:"IS"},{n:"Insurance Expense",dr:0,cr:0,st:"IS"},
-  {n:"Depreciation Expense",dr:0,cr:0,st:"IS"},
-];
-const ADJ=[
-  {k:"a",label:"Supplies used during the year",hint:"Supplies Expense · Supplies",correct:12800,e:[["Supplies Expense","dr"],["Supplies","cr"]]},
-  {k:"b",label:"Insurance expired",hint:"Insurance Expense · Prepaid Insurance",correct:6000,e:[["Insurance Expense","dr"],["Prepaid Insurance","cr"]]},
-  {k:"c",label:"Depreciation on office equipment",hint:"Depreciation Exp · Accum. Depreciation",correct:2400,e:[["Depreciation Expense","dr"],["Accumulated Depreciation","cr"]]},
-  {k:"d",label:"Unearned revenue now earned",hint:"Unearned Revenue · Service Revenue",correct:7200,e:[["Unearned Service Revenue","dr"],["Service Revenue","cr"]]},
-  {k:"e",label:"Salaries accrued but unpaid",hint:"Salaries Expense · Salaries Payable",correct:1800,e:[["Salaries Expense","dr"],["Salaries Payable","cr"]]},
-];
-let wsMode="all";
-$("adjPanel").innerHTML = ADJ.map(a=>`<div class="adj-row"><span class="ak">${a.k}</span><span class="al"><span class="an">${a.label}</span><span class="ah">${a.hint}</span></span><span class="adj-in" id="in-${a.k}"><span class="cur">$</span><input inputmode="numeric" data-k="${a.k}" placeholder="0" /></span></div>`).join("");
-$("adjPanel").querySelectorAll("input").forEach(inp=>{
-  inp.addEventListener("input",()=>{ inp.value=inp.value.replace(/[^0-9]/g,""); recalc(); });
-});
-function amounts(){ const m={}; ADJ.forEach(a=>{ m[a.k]=parseInt(($("adjPanel").querySelector(`input[data-k="${a.k}"]`).value)||"0",10)||0; }); return m; }
-function compute(){
-  const amt=amounts(); const rows=ACCTS.map(a=>({n:a.n,st:a.st,tbDr:a.dr,tbCr:a.cr,adjDr:0,adjCr:0}));
-  const find=n=>rows.find(r=>r.n===n);
-  ADJ.forEach(a=>{ const v=amt[a.k]; if(!v)return; a.e.forEach(([nm,side])=>{ const r=find(nm); if(side==="dr")r.adjDr+=v; else r.adjCr+=v; }); });
-  let t={tbDr:0,tbCr:0,adjDr:0,adjCr:0,atbDr:0,atbCr:0,isDr:0,isCr:0,bsDr:0,bsCr:0};
-  rows.forEach(r=>{ const net=(r.tbDr+r.adjDr)-(r.tbCr+r.adjCr); r.atbDr=net>=0?net:0; r.atbCr=net<0?-net:0;
-    r.isDr=r.st==="IS"?r.atbDr:0; r.isCr=r.st==="IS"?r.atbCr:0; r.bsDr=r.st==="BS"?r.atbDr:0; r.bsCr=r.st==="BS"?r.atbCr:0;
-    for(const k in t) t[k]+=r[k]; });
-  const ni=t.isCr-t.isDr;
-  return {amt,rows,t,ni};
+/* ================= Excel Lab (per-lesson exercise) ================= */
+function openExcel(i){
+  activeEx = i; cur = i; mountId++;
+  const c = CONCEPTS[i];
+  $("exName").textContent = EX_NAMES[i];
+  $("exContext").innerHTML = `<span class="ecn"><span class="ek">Applying · ${c.badge}</span><span class="et">${c.t}</span></span><span class="eo">Open lesson ›</span>`;
+  $("exContext").onclick = ()=>pushConcept(i);
+  $("exHost").innerHTML = c.tool;
+  c.init();
+  setTab("v-excel");
 }
-const GROUPS={tb:["tbDr","tbCr","Trial Balance"],adj:["adjDr","adjCr","Adjustments"],atb:["atbDr","atbCr","Adj. Trial Balance"],is:["isDr","isCr","Income Statement"],bs:["bsDr","bsCr","Balance Sheet"]};
-function recalc(){
-  const {rows,t,ni}=compute();
-  const gk = wsMode==="all"?["tb","adj","atb","is","bs"]:[wsMode];
-  const grp = gk.map(k=>({key:k,dr:GROUPS[k][0],cr:GROUPS[k][1],label:GROUPS[k][2]}));
-  let head=`<thead><tr class="grp"><th class="acct" rowspan="2">Account</th>${grp.map(g=>`<th colspan="2">${g.label}</th>`).join("")}</tr><tr class="sub">${grp.map(()=>`<th>Dr</th><th>Cr</th>`).join("")}</tr></thead>`;
-  const cell=(v)=>`<td>${num(v)}</td>`;
-  let body=rows.map(r=>`<tr><td class="acct">${r.n}</td>${grp.map(g=>cell(r[g.dr])+cell(r[g.cr])).join("")}</tr>`).join("");
-  // totals + net income (pre-close totals)
-  let totRow=`<tr class="tot"><td class="acct">Totals</td>${grp.map(g=>`<td>${num(t[g.dr])}</td><td>${num(t[g.cr])}</td>`).join("")}</tr>`;
-  let niRow="", finRow="";
-  if(gk.includes("is")||gk.includes("bs")){
-    niRow=`<tr class="ni"><td class="acct">Net income</td>${grp.map(g=>{
-      if(g.key==="is") return `<td>${ni>0?num(ni):""}</td><td>${ni<0?num(-ni):""}</td>`;
-      if(g.key==="bs") return `<td>${ni<0?num(-ni):""}</td><td>${ni>0?num(ni):""}</td>`;
-      return `<td></td><td></td>`; }).join("")}</tr>`;
-    finRow=`<tr class="tot"><td class="acct">&nbsp;</td>${grp.map(g=>{
-      if(g.key==="is") return `<td>${num(t.isDr+(ni>0?ni:0))}</td><td>${num(t.isCr+(ni<0?-ni:0))}</td>`;
-      if(g.key==="bs") return `<td>${num(t.bsDr+(ni<0?-ni:0))}</td><td>${num(t.bsCr+(ni>0?ni:0))}</td>`;
-      return `<td></td><td></td>`; }).join("")}</tr>`;
-  }
-  $("sheet").innerHTML=head+`<tbody>${body}${totRow}${niRow}${finRow}</tbody>`;
-  $("niVal").textContent=fmt(ni);
-  const entered=ADJ.every(a=>amounts()[a.k]>0);
-  const pill=$("wsPill");
-  if(!entered){ pill.className="pill off"; pill.textContent="Enter adjustments"; }
-  else { pill.className="pill bal"; pill.textContent="Worksheet balances ✓"; }
-}
-$("xlTabs").querySelectorAll(".xl-tab").forEach(t=>t.onclick=()=>{ $("xlTabs").querySelectorAll(".xl-tab").forEach(x=>x.classList.remove("on")); t.classList.add("on"); wsMode=t.dataset.m; recalc(); });
-$("checkWs").onclick=()=>{
-  const amt=amounts(); let right=0;
-  ADJ.forEach(a=>{ const box=$("in-"+a.k); box.classList.remove("right","wrong"); const v=amt[a.k];
-    if(v===a.correct){ box.classList.add("right"); right++; } else { box.classList.add("wrong"); } });
-  const {ni}=compute();
-  if(right===ADJ.length){
-    $("wsResult").innerHTML=`<div class="fbk ok"><b>Worksheet complete.</b> All five adjustments are correct. The books balance and net income is <b>${fmt(ni)}</b>, which carries to Retained Earnings on the balance sheet.</div>`;
-    $("labLaunch").querySelector(".ls").textContent="Completed ✓";
-  } else {
-    $("wsResult").innerHTML=`<div class="fbk no"><b>${right} of ${ADJ.length} correct.</b> The red fields don't match the adjustment data yet. Re-read each item — the amount is the value used up, earned, or accrued during the year.</div>`;
-  }
-};
-recalc();
 
 /* ================= quiz ================= */
 $("quizOpts").querySelectorAll(".opt").forEach(o=>o.onclick=()=>{ if($("quizOpts").dataset.done)return; const ok=o.dataset.ok==="1"; o.classList.add(ok?"right":"wrong"); if(ok){ $("quizOpts").dataset.done="1"; $("quizFb").innerHTML=`<div class="fbk ok"><b>Correct.</b> Rent Expense is an expense — expenses increase on the debit (left) side, which reduces net income.</div>`; } else { $("quizFb").innerHTML=`<div class="fbk no">Not quite — an expense increases on the same side as an asset. Try again.</div>`; } });
 
 /* ================= AI tutor ================= */
-const CHAT=[{who:"user",text:"Why does a debit increase Cash but decrease a liability?"},{who:"ai",html:`Because a debit just means the <b>left side</b> — what it does depends on the account. Assets (like Cash) increase on the left; liabilities increase on the right, so a left-side entry <em>reduces</em> them.<div class="hl"><b>Rule of thumb:</b> assets &amp; expenses go up with debits; liabilities, revenue &amp; equity go up with credits.</div>`},{who:"user",text:"Can you check my worksheet?"},{who:"ai",text:"Open the Excel Lab, enter the five adjustments, and tap “Check my worksheet” — I'll flag any that don't match."}];
+const CHAT=[{who:"user",text:"Why does a debit increase Cash but decrease a liability?"},{who:"ai",html:`Because a debit just means the <b>left side</b> — what it does depends on the account. Assets (like Cash) increase on the left; liabilities increase on the right, so a left-side entry <em>reduces</em> them.<div class="hl"><b>Rule of thumb:</b> assets &amp; expenses go up with debits; liabilities, revenue &amp; equity go up with credits.</div>`},{who:"user",text:"Can you check my worksheet?"},{who:"ai",text:"Each lesson's Excel Lab holds its own exercise — open the lesson you're on and tap “Excel Lab · …” to practice that concept."}];
 function renderChat(){ $("chat").innerHTML=CHAT.map(m=>`<div class="msg ${m.who}">${m.html||m.text}</div>`).join(""); $("chat").scrollTop=$("chat").scrollHeight; }
 function openTutor(){ $("tutor").classList.add("on"); $("tutorBack").classList.add("on"); renderChat(); }
 function closeTutor(){ $("tutor").classList.remove("on"); $("tutorBack").classList.remove("on"); }
