@@ -1993,6 +1993,11 @@
   .pf-row .mono { font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
   .pf-row:nth-child(odd) { border-right: 1px solid var(--line); }
   @media (max-width: 520px) { .pf-grid { grid-template-columns: 1fr; } .pf-row:nth-child(odd) { border-right: none; } }
+  .pf-hint { display: none; margin-top: 12px; border: 1px solid var(--line); border-left: 3px solid #1d5a8f; border-radius: 10px; background: color-mix(in srgb, #1d5a8f 6%, var(--card)); padding: 12px 14px; font-size: 13px; }
+  .pf-hint.show { display: block; }
+  .pf-hint b { color: var(--ink); }
+  .pf-hint ul { margin: 7px 0 0; padding-left: 18px; }
+  .pf-hint li { margin: 5px 0; color: var(--ink-soft); line-height: 1.5; }
   .mis-badge { display: inline-block; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--asset); background: var(--asset-bg); border-radius: 999px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
 
   /* ===== Module 6 — Cash-Basis vs. Accrual-Basis (Appendix 2A) ===== */
@@ -7662,7 +7667,19 @@
                 <div class="mis-row key"><span class="l">Earnings per common share (÷ 100,000)</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-mseps" inputmode="decimal" placeholder="?" aria-label="Earnings per share"></span></div>
               </div>
             </div>
-            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="p-msbtn">Check part a</button></div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="p-msbtn">Check part a</button><button class="btn" id="p-mshintbtn">Hints</button></div>
+            <div class="pf-hint" id="p-mshint">
+              <b>Hints — multiple-step</b>
+              <ul>
+                <li>Six accounts belong on the balance sheet, not here: Cash, Accounts payable, Income taxes payable, Warranty liability, Accounts receivable, and Retained earnings. Leave them out.</li>
+                <li>Net sales = Sales revenue − Sales discounts − Sales returns and allowances.</li>
+                <li>Gross profit = Net sales − Cost of goods sold.</li>
+                <li>Total operating expenses = Selling + General and administrative. Income from operations = Gross profit − operating expenses.</li>
+                <li>Add other revenues and gains (interest revenue, gain on sale), then subtract other expenses and losses (interest expense, loss on fire) to reach income before income tax.</li>
+                <li>Income tax = 30% of income before income tax. Net income = income before tax − tax.</li>
+                <li>EPS = Net income ÷ 100,000 shares.</li>
+              </ul>
+            </div>
             <div class="gp-feedback" id="p-msfb" style="margin-top:12px;"></div>
           </section>
 
@@ -7688,7 +7705,17 @@
                 <div class="mis-row key"><span class="l">Earnings per common share (÷ 100,000)</span><span class="c1"></span><span class="c2"><input class="mis-inp" id="p-sseps" inputmode="decimal" placeholder="?" aria-label="Earnings per share"></span></div>
               </div>
             </div>
-            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="p-ssbtn">Check part b</button></div>
+            <div class="gp-actions" style="margin-top:12px;"><button class="btn primary" id="p-ssbtn">Check part b</button><button class="btn" id="p-sshintbtn">Hints</button></div>
+            <div class="pf-hint" id="p-sshint">
+              <b>Hints — single-step</b>
+              <ul>
+                <li>All revenues go in one group, all expenses in another — no gross-profit or operating subtotals.</li>
+                <li>Total revenues = Net sales + Interest revenue + Gain on sale of equipment. (Net sales is the same figure you found in part a.)</li>
+                <li>Total expenses = Cost of goods sold + Selling + General and administrative + Interest expense + Loss on fire + Income tax.</li>
+                <li>Net income = Total revenues − Total expenses — it matches part a.</li>
+                <li>EPS = Net income ÷ 100,000 shares.</li>
+              </ul>
+            </div>
             <div class="gp-feedback" id="p-ssfb" style="margin-top:12px;"></div>
           </section>
 
@@ -12604,6 +12631,8 @@
       '<b>Part b is correct.</b> Total revenues $4,008,000 − total expenses $3,270,900 = <b>$737,100</b> — the same bottom line and the same <b>$7.37</b> EPS as the multiple-step form.',
       'Not all correct. Total revenues = net sales + interest revenue + gain on sale. Total expenses = every expense including income tax. Net income = the difference.');
   });
+  $('p-mshintbtn').addEventListener('click', function () { $('p-mshint').classList.toggle('show'); });
+  $('p-sshintbtn').addEventListener('click', function () { $('p-sshint').classList.toggle('show'); });
   function openC2m1p() { goScreen('c2m1p'); $('c2m1p-scroll').scrollTop = 0; }
   $('start-c2m1p-card').addEventListener('click', openC2m1p);
   $('c2m1p-back').addEventListener('click', function () { goScreen('course2'); });
