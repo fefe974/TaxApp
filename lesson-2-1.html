@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>LedgerLab · 2.1 Debits and Credits</title>
+<meta name="theme-color" content="#0E1B14" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#0E1B14;
+  --libro:#17382A;
+  --libro-2:#1E4634;
+  --papel:#F6F2E7;
+  --papel-2:#EFE8D6;
+  --regla:#DCD3BC;
+  --margen:#C25A4A;
+  --laton:#B98F35;
+  --laton-claro:#D9B45C;
+  --debe:#A8402C;
+  --haber:#1F6B4A;
+  --texto:#1C2A21;
+  --texto-suave:#5C6A5E;
+  --blanco:#FDFCF8;
+  --sombra:0 10px 30px rgba(14,27,20,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:var(--tinta);
+  font-family:'Archivo',system-ui,sans-serif;
+  color:var(--texto);
+  display:flex;justify-content:center;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(30,70,52,.55), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 7px);
+}
+.telefono{
+  width:100%;max-width:430px;min-height:100dvh;
+  background:var(--papel);
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  box-shadow:0 0 80px rgba(0,0,0,.5);
+}
+@media(min-width:480px){
+  .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
+}
+
+/* ---------- cabecera ---------- */
+header.app{
+  background:linear-gradient(160deg,var(--libro) 0%, var(--libro-2) 100%);
+  color:var(--papel);
+  padding:22px 22px 18px;
+  position:relative;
+  flex-shrink:0;
+}
+header.app::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--laton-claro) 20%,var(--laton-claro) 80%,transparent);
+  opacity:.85;
+}
+.marca{display:flex;align-items:baseline;gap:10px}
+.marca h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;letter-spacing:.2px;cursor:pointer}
+.marca h1 em{color:var(--laton-claro);font-style:italic}
+.folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:rgba(246,242,231,.55);text-transform:uppercase}
+.subtitulo{margin-top:3px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,242,231,.62);font-weight:500}
+
+/* ---------- barra de ecuación viva (Dr = Cr) ---------- */
+.ecuacion-viva{
+  margin-top:16px;background:rgba(9,20,14,.35);
+  border:1px solid rgba(217,180,92,.28);
+  border-radius:12px;padding:10px 12px;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;
+}
+.ecuacion-viva .celda{text-align:center}
+.ecuacion-viva .etiqueta{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,242,231,.55);font-weight:600}
+.ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--papel);font-variant-numeric:tabular-nums;transition:color .3s}
+.ecuacion-viva .signo{font-family:'Instrument Serif',serif;font-size:20px;color:var(--laton-claro)}
+.ecuacion-viva.parpadeo .cifra{color:var(--laton-claro)}
+.ecuacion-viva.rota .cifra{color:#E8A091}
+
+/* ---------- contenido ---------- */
+main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
+.pantalla{display:none;padding:20px 18px 28px;animation:aparecer .35s ease both}
+.pantalla.activa{display:block}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.ojal{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--laton);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ojal::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--laton),transparent)}
+h2.titulo{font-family:'Instrument Serif',serif;font-weight:400;font-size:27px;line-height:1.12;margin-bottom:6px}
+h2.titulo em{font-style:italic;color:var(--libro-2)}
+p.intro{font-size:13.5px;line-height:1.55;color:var(--texto-suave);margin-bottom:18px;max-width:34ch}
+
+/* ---------- hoja de libro (papel rayado) ---------- */
+.hoja{
+  background:
+    linear-gradient(var(--margen) 0 0) 26px 0/1.5px 100% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 27px, var(--regla) 27px 28px),
+    var(--blanco);
+  border:1px solid #E4DCC6;
+  border-radius:14px;
+  box-shadow:var(--sombra);
+  padding:18px 16px 16px 38px;
+  position:relative;
+}
+.hoja.simple{background:var(--blanco);padding:16px}
+
+/* ---------- tarjetas de principios ---------- */
+.principios{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.principio{
+  background:var(--blanco);border:1px solid #E4DCC6;border-radius:13px;
+  padding:14px 15px;display:flex;gap:13px;align-items:flex-start;
+  box-shadow:0 3px 12px rgba(14,27,20,.06);
+}
+.principio .icono{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(150deg,var(--libro),var(--libro-2));
+  display:flex;align-items:center;justify-content:center;color:var(--laton-claro);
+}
+.principio h3{font-size:14px;font-weight:700;margin-bottom:2px}
+.principio p{font-size:12.5px;line-height:1.5;color:var(--texto-suave)}
+
+.nota-pie{margin-top:16px;font-size:11.5px;color:var(--texto-suave);line-height:1.55;border-left:2px solid var(--laton);padding-left:11px}
+.nota-pie b{color:var(--texto)}
+
+/* ---------- fichas de cuenta ---------- */
+.fichas{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px}
+.ficha{
+  background:var(--blanco);border:1px solid #E4DCC6;border-radius:11px;
+  padding:11px 12px;text-align:left;cursor:pointer;font-family:inherit;
+  transition:border-color .2s, box-shadow .2s, transform .15s;
+}
+.ficha:active{transform:scale(.97)}
+.ficha .nombre{font-size:13px;font-weight:600;color:var(--texto)}
+.ficha .saldo{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;display:inline-block;padding:2px 7px;border-radius:99px}
+.ficha .saldo.deudor{background:rgba(168,64,44,.1);color:var(--debe)}
+.ficha .saldo.acreedor{background:rgba(31,107,74,.1);color:var(--haber)}
+.ficha.activa{border-color:var(--laton);box-shadow:0 0 0 2.5px rgba(185,143,53,.25), var(--sombra)}
+
+/* ---------- cuenta T ---------- */
+.cuentaT{margin-top:4px}
+.cuentaT .cabeza{
+  text-align:center;font-family:'Instrument Serif',serif;font-size:21px;
+  padding-bottom:9px;border-bottom:2.5px solid var(--texto);
+}
+.cuentaT .cuerpo{display:grid;grid-template-columns:1fr 1fr;min-height:130px}
+.cuentaT .lado{padding:12px 10px;text-align:center}
+.cuentaT .lado:first-child{border-right:2.5px solid var(--texto)}
+.cuentaT .lado h4{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--texto-suave);margin-bottom:9px}
+.cuentaT .lado.toca{background:none;border-top:none;border-left:none;border-bottom:none;cursor:pointer;font-family:inherit;transition:background .2s}
+.cuentaT .lado.toca:active{background:rgba(185,143,53,.07)}
+.mas-menos{
+  font-family:'Instrument Serif',serif;font-size:38px;line-height:1;display:inline-flex;
+  width:56px;height:56px;border-radius:50%;align-items:center;justify-content:center;
+  animation:sello .35s cubic-bezier(.2,1.4,.4,1) both;
+}
+.mas-menos.sube{background:rgba(31,107,74,.12);color:var(--haber);border:1.5px solid rgba(31,107,74,.35)}
+.mas-menos.baja{background:rgba(168,64,44,.09);color:var(--debe);border:1.5px dashed rgba(168,64,44,.4)}
+.mas-menos.neutro{background:rgba(185,143,53,.1);color:var(--laton);border:1.5px solid rgba(185,143,53,.45);font-size:21px}
+.cuentaT .pie{margin-top:2px;padding-top:10px;text-align:center;font-size:12px;color:var(--texto-suave)}
+.cuentaT .pie b{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em}
+@keyframes sello{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.pista{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--laton);font-weight:700;margin-top:9px}
+.montos{list-style:none;margin-top:8px;min-height:44px}
+.montos li{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:1.5px 0;animation:aparecer .25s ease both}
+
+/* ---------- asientos / drill ---------- */
+.asiento{
+  background:var(--blanco);border:1px solid #E4DCC6;border-radius:13px;
+  margin-bottom:11px;overflow:hidden;transition:opacity .3s, border-color .3s;
+  box-shadow:0 3px 12px rgba(14,27,20,.05);
+}
+.asiento .encabezado{display:flex;align-items:center;gap:11px;padding:13px 14px 9px}
+.asiento .num{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  width:26px;height:26px;border-radius:50%;border:1.5px solid var(--laton);
+  color:var(--laton);display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
+.asiento .lineas{padding:0 14px 12px 51px}
+.linea-diario{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;padding:2.5px 0}
+.linea-diario .cuenta{color:var(--texto-suave)}
+.linea-diario .cuenta.abono{padding-left:16px}
+.linea-diario .monto{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:500}
+.linea-diario .monto.cargo{color:var(--debe)}
+.linea-diario .monto.abono{color:var(--haber)}
+.asiento .accion{border-top:1px dashed var(--regla);padding:9px 14px;display:flex;justify-content:flex-end}
+.btn-registrar{
+  font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--libro-2);color:var(--papel);border:none;border-radius:9px;
+  padding:9px 18px;cursor:pointer;transition:transform .15s, background .2s;
+}
+.btn-registrar:active{transform:scale(.95)}
+.btn-registrar:disabled{background:#C9C2AE;cursor:default}
+.asiento.registrado{border-color:rgba(31,107,74,.4)}
+.asiento.registrado .accion{display:none}
+.asiento .sello-ok{display:none}
+.asiento.registrado .sello-ok{
+  display:inline-block;margin-left:auto;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;font-weight:600;
+  color:var(--haber);border:1.5px solid var(--haber);border-radius:5px;padding:2px 7px;
+  transform:rotate(-4deg);animation:sello .3s cubic-bezier(.2,1.4,.4,1) both;
+}
+.asiento.bloqueado{opacity:.45;pointer-events:none}
+
+/* respuestas del drill */
+.respuestas{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:4px 14px 13px}
+.btn-lado{
+  font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--blanco);border-radius:10px;padding:12px 8px;cursor:pointer;
+  transition:transform .15s, box-shadow .2s;
+}
+.btn-lado:active{transform:scale(.96)}
+.btn-lado.debe{border:1.5px solid rgba(168,64,44,.45);color:var(--debe)}
+.btn-lado.haber{border:1.5px solid rgba(31,107,74,.45);color:var(--haber)}
+.btn-lado span{display:block;font-size:9px;letter-spacing:.14em;color:var(--texto-suave);margin-top:2px}
+.veredicto{
+  margin:0 14px 12px;font-size:12px;line-height:1.5;border-radius:9px;padding:9px 11px;
+  animation:aparecer .25s ease both;
+}
+.veredicto.bien{background:rgba(31,107,74,.09);color:var(--haber);border:1px solid rgba(31,107,74,.3)}
+.veredicto.mal{background:rgba(168,64,44,.07);color:var(--debe);border:1px dashed rgba(168,64,44,.35)}
+.marcador{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--texto-suave);text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between}
+.temblor{animation:temblor .3s ease}
+@keyframes temblor{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+
+/* ---------- estado (prueba) ---------- */
+.estado{
+  background:var(--blanco);border:1px solid #E4DCC6;border-radius:14px;
+  box-shadow:var(--sombra);overflow:hidden;margin-top:16px;
+}
+.estado .membrete{padding:13px 16px 11px;border-bottom:2.5px solid var(--texto)}
+.estado .membrete h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:19px;line-height:1.1}
+.estado .membrete span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+.estado .cuerpo{padding:11px 16px 14px}
+.reng{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;padding:4.5px 0}
+.reng .c{color:var(--texto-suave)}
+.reng .m{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:500}
+.reng .m.debe-c{color:var(--debe)}
+.reng .m.haber-c{color:var(--haber)}
+.reng.granTotal{border-top:2.5px solid var(--texto);margin-top:4px;padding-top:8px;font-weight:700}
+.reng.granTotal .m{border-bottom:3px double var(--texto);padding-bottom:2px}
+
+/* ---------- comprobación + sello ---------- */
+.comprobacion{
+  margin-top:16px;background:linear-gradient(160deg,var(--libro),var(--libro-2));
+  color:var(--papel);border-radius:15px;padding:20px 18px;position:relative;overflow:hidden;
+  display:none;animation:aparecer .4s ease both;
+}
+.comprobacion.visible{display:block}
+.comprobacion h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:20px;margin-bottom:12px;max-width:75%}
+.comp-fila{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid rgba(246,242,231,.14)}
+.comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600}
+.comp-fila.total{border-bottom:none;border-top:2px solid var(--laton-claro);margin-top:6px;padding-top:10px;font-weight:700}
+.estampa{
+  position:absolute;right:14px;top:14px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;font-weight:600;
+  color:var(--laton-claro);border:2.5px double var(--laton-claro);border-radius:8px;
+  padding:7px 11px;transform:rotate(7deg);
+  animation:estampar .5s cubic-bezier(.2,1.6,.35,1) .25s both;
+}
+@keyframes estampar{from{transform:rotate(7deg) scale(2.4);opacity:0}60%{opacity:1}to{transform:rotate(7deg) scale(1);opacity:1}}
+.btn-fantasma{
+  margin-top:14px;width:100%;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.05em;
+  background:transparent;border:1.5px solid var(--regla);color:var(--texto-suave);
+  border-radius:10px;padding:10px;cursor:pointer;text-transform:uppercase;
+}
+
+/* ---------- barra de pestañas ---------- */
+nav.pestanas{
+  flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--tinta);padding:8px 10px calc(10px + env(safe-area-inset-bottom));
+  border-top:1px solid rgba(217,180,92,.22);
+}
+.pestana{
+  font-family:inherit;background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:7px 4px;border-radius:11px;color:rgba(246,242,231,.45);
+  font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  transition:color .2s, background .2s;
+}
+.pestana svg{width:21px;height:21px}
+.pestana.activa{color:var(--laton-claro);background:rgba(217,180,92,.1)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<div class="telefono">
+
+  <header class="app">
+    <div class="marca">
+      <h1 id="volverIntro" title="Back to course">Ledger<em>Lab</em></h1>
+      <span class="folio">Folio 2.1</span>
+    </div>
+    <div class="subtitulo">Debits and Credits</div>
+    <div class="ecuacion-viva" id="ecuacionViva">
+      <div class="celda"><div class="etiqueta">Total Debits</div><div class="cifra" id="evD">$0</div></div>
+      <div class="signo">=</div>
+      <div class="celda"><div class="etiqueta">Total Credits</div><div class="cifra" id="evC">$0</div></div>
+    </div>
+  </header>
+
+  <main id="principal">
+
+    <!-- ============ SCREEN 1 · LESSON ============ -->
+    <section class="pantalla activa" id="p-leccion">
+      <div class="ojal">Lesson 2.1 · Where, not how much</div>
+      <h2 class="titulo">Debit means left, <em>credit means right</em></h2>
+      <p class="intro">Dr. and Cr. do not mean increase or decrease. They only describe <b>where</b> an entry is made. Tap each side of the account.</p>
+
+      <div class="hoja">
+        <div class="cuentaT">
+          <div class="cabeza">Any Account</div>
+          <div class="cuerpo">
+            <button class="lado toca" id="ladoIzq">
+              <h4>Left side</h4>
+              <span id="selloIzq"></span>
+              <div class="pista" id="pistaIzq">Tap to reveal</div>
+            </button>
+            <button class="lado toca" id="ladoDer">
+              <h4>Right side</h4>
+              <span id="selloDer"></span>
+              <div class="pista" id="pistaDer">Tap to reveal</div>
+            </button>
+          </div>
+          <div class="pie" id="pieLados">The names say nothing about value — only position.</div>
+        </div>
+      </div>
+
+      <div class="ojal" style="margin-top:24px">Try it · Which balance?</div>
+      <p class="intro">Post amounts to either side of Cash. Whichever side holds the larger total decides the balance.</p>
+
+      <div class="hoja simple">
+        <div class="cuentaT">
+          <div class="cabeza">Cash</div>
+          <div class="cuerpo" style="min-height:110px">
+            <div class="lado">
+              <h4>Debit</h4>
+              <ul class="montos" id="montosDebe"></ul>
+            </div>
+            <div class="lado">
+              <h4>Credit</h4>
+              <ul class="montos" id="montosHaber"></ul>
+            </div>
+          </div>
+          <div class="pie" id="pieBalance">No entries yet — post something below.</div>
+        </div>
+        <div class="respuestas" style="padding:12px 0 0">
+          <button class="btn-lado debe" id="btnPostDebe">Post debit<span>left side</span></button>
+          <button class="btn-lado haber" id="btnPostHaber">Post credit<span>right side</span></button>
+        </div>
+        <button class="btn-fantasma" id="btnLimpiar">Clear the account</button>
+      </div>
+
+      <p class="nota-pie"><b>Just a custom.</b> Debits on the left and credits on the right is a convention — like driving on the right-hand side of the road. But the custom is now the rule, and it applies to <b>all</b> accounts.</p>
+
+      <div class="ojal" style="margin-top:24px">The double-entry system</div>
+      <div class="principios">
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7h13M8 12h13M8 17h13"/><path d="M3.5 7h.01M3.5 12h.01M3.5 17h.01"/></svg></div>
+          <div><h3>Dual effect</h3><p>Every transaction touches at least two accounts: each entry has a two-sided effect, recorded with equal debits and credits.</p></div>
+        </div>
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/></svg></div>
+          <div><h3>Built-in proof</h3><p>If every transaction keeps debits equal to credits, then the sum of all debits must equal the sum of all credits — an automatic accuracy check.</p></div>
+        </div>
+      </div>
+
+      <p class="nota-pie">Continue to the <b>Rules</b> tab to explore Illustration 2.2 — which side increases each type of account.</p>
+    </section>
+
+    <!-- ============ SCREEN 2 · RULES (Illustration 2.2) ============ -->
+    <section class="pantalla" id="p-reglas">
+      <div class="ojal">Illustration 2.2 · Normal balances</div>
+      <h2 class="titulo">Increases left <em>or increases right?</em></h2>
+      <p class="intro">Tap an account type to open its T-account: where it increases, where it decreases, and its normal balance.</p>
+
+      <div class="fichas" id="fichas"></div>
+
+      <div class="hoja" id="panelT" aria-live="polite">
+        <div class="cuentaT" id="cuentaT"></div>
+      </div>
+
+      <p class="nota-pie"><b>Watch the equity family.</b> Common Stock and Retained Earnings increase on the <b>credit</b> side — but Dividends increases on the <b>debit</b> side.</p>
+    </section>
+
+    <!-- ============ SCREEN 3 · DRILL ============ -->
+    <section class="pantalla" id="p-drill">
+      <div class="ojal">Practice · Debit or credit?</div>
+      <h2 class="titulo">Eight entries, <em>choose the side</em></h2>
+      <p class="intro">For each change, decide whether the entry belongs on the debit (left) or credit (right) side.</p>
+
+      <div class="marcador"><span id="drillPos">Entry 1 of 8</span><span id="drillPuntos">0 first-try correct</span></div>
+
+      <div id="cartaDrill"></div>
+
+      <div class="comprobacion" id="compDrill">
+        <div class="estampa" id="estampaDrill">IN BALANCE</div>
+        <h3>Drill complete</h3>
+        <div class="comp-fila"><span>First-try correct</span><b id="resumenPuntos">0 / 8</b></div>
+        <div class="comp-fila"><span>Rule to remember</span><b>Dr = left</b></div>
+        <div class="comp-fila total"><span>Assets &amp; expenses ↑ by debit · the rest ↑ by credit</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnDrillReset" style="border-color:rgba(246,242,231,.3);color:var(--papel)">Run the drill again</button>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 4 · PROOF ============ -->
+    <section class="pantalla" id="p-prueba">
+      <div class="ojal">Double-entry accounting · The proof</div>
+      <h2 class="titulo">The ledger proves <em>itself</em></h2>
+      <p class="intro">Record each transaction. Both sides move together — watch the running totals in the header stay equal.</p>
+
+      <div id="listaPrueba"></div>
+
+      <div class="estado">
+        <div class="membrete"><h3>Running proof</h3><span>Sum of debits · sum of credits</span></div>
+        <div class="cuerpo">
+          <div class="reng"><span class="c">Total debits</span><span class="m debe-c" id="totalDebe">$0</span></div>
+          <div class="reng"><span class="c">Total credits</span><span class="m haber-c" id="totalHaber">$0</span></div>
+          <div class="reng granTotal"><span class="c">Difference</span><span class="m" id="totalDif">$0</span></div>
+        </div>
+      </div>
+
+      <div class="comprobacion" id="compPrueba">
+        <div class="estampa">PROVED</div>
+        <h3>Accuracy, demonstrated</h3>
+        <div class="comp-fila"><span>Sum of all debits</span><b id="pruebaDebe">$0</b></div>
+        <div class="comp-fila"><span>Sum of all credits</span><b id="pruebaHaber">$0</b></div>
+        <div class="comp-fila total"><span>Total debits = Total credits</span><b>✓</b></div>
+        <button class="btn-fantasma" id="btnPruebaReset" style="border-color:rgba(246,242,231,.3);color:var(--papel)">Reset the proof</button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="pestanas" role="tablist">
+    <button class="pestana activa" data-destino="p-leccion" role="tab" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6.5a2.5 2.5 0 0 0 0 5H19"/><path d="M9 7h6"/></svg>
+      Lesson
+    </button>
+    <button class="pestana" data-destino="p-reglas" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7h18M7 7l-3.5 6a3.5 3.5 0 0 0 7 0L7 7ZM17 7l-3.5 6a3.5 3.5 0 0 0 7 0L17 7Z"/></svg>
+      Rules
+    </button>
+    <button class="pestana" data-destino="p-drill" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      Drill
+    </button>
+    <button class="pestana" data-destino="p-prueba" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>
+      Proof
+    </button>
+  </nav>
+</div>
+
+<script>
+/* ================= helpers ================= */
+const fmt = n => (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-US");
+const $ = id => document.getElementById(id);
+
+document.getElementById("volverIntro").addEventListener("click",()=>{location.href="course-intro.html"});
+
+/* ================= ecuación viva: Dr = Cr ================= */
+let totDebe = 0, totHaber = 0;
+const ecuacionViva = $("ecuacionViva");
+function pintaEcuacion(){
+  $("evD").textContent = fmt(totDebe);
+  $("evC").textContent = fmt(totHaber);
+  ecuacionViva.classList.toggle("rota", totDebe !== totHaber);
+  ecuacionViva.classList.add("parpadeo");
+  setTimeout(()=>ecuacionViva.classList.remove("parpadeo"), 500);
+}
+
+/* ================= navegación ================= */
+const pestanas = document.querySelectorAll(".pestana");
+pestanas.forEach(b=>b.addEventListener("click",()=>{
+  pestanas.forEach(x=>{x.classList.remove("activa");x.setAttribute("aria-selected","false")});
+  b.classList.add("activa"); b.setAttribute("aria-selected","true");
+  document.querySelectorAll(".pantalla").forEach(p=>p.classList.remove("activa"));
+  $(b.dataset.destino).classList.add("activa");
+  $("principal").scrollTo({top:0});
+}));
+
+/* ================= lección: lados tocables ================= */
+const LADOS = {
+  izq:{sello:"selloIzq", pista:"pistaIzq", txt:"Dr.", nota:"An entry on the left side is a <b>debit to</b> the account."},
+  der:{sello:"selloDer", pista:"pistaDer", txt:"Cr.", nota:"An entry on the right side is a <b>credit to</b> the account."}
+};
+let descubiertos = 0;
+function descubre(k){
+  const l = LADOS[k];
+  if($(l.sello).innerHTML) return;
+  $(l.sello).innerHTML = `<span class="mas-menos neutro">${l.txt}</span>`;
+  $(l.pista).textContent = k==="izq" ? "Debit · Dr." : "Credit · Cr.";
+  descubiertos++;
+  $("pieLados").innerHTML = descubiertos===2
+    ? "Dr. and Cr. describe <b>where</b> — never how much. The positioning is simply an accounting custom."
+    : l.nota;
+}
+$("ladoIzq").addEventListener("click",()=>descubre("izq"));
+$("ladoDer").addEventListener("click",()=>descubre("der"));
+
+/* ================= lección: saldo de Cash ================= */
+const AMOUNTS = [300, 200, 500, 150, 400, 250];
+let idx = 0;
+const efectivo = {debe:[], haber:[]};
+function pintaBalance(){
+  $("montosDebe").innerHTML  = efectivo.debe.map(m=>`<li>${fmt(m)}</li>`).join("");
+  $("montosHaber").innerHTML = efectivo.haber.map(m=>`<li>${fmt(m)}</li>`).join("");
+  const d = efectivo.debe.reduce((a,b)=>a+b,0), h = efectivo.haber.reduce((a,b)=>a+b,0);
+  const pie = $("pieBalance");
+  if(!d && !h){ pie.innerHTML = "No entries yet — post something below."; return; }
+  if(d>h)      pie.innerHTML = `Debits exceed credits → <b style="color:var(--debe)">DEBIT BALANCE ${fmt(d-h)}</b>`;
+  else if(h>d) pie.innerHTML = `Credits exceed debits → <b style="color:var(--haber)">CREDIT BALANCE ${fmt(h-d)}</b>`;
+  else         pie.innerHTML = `Both sides equal → <b style="color:var(--laton)">NO BALANCE</b>`;
+}
+$("btnPostDebe").addEventListener("click",()=>{ efectivo.debe.push(AMOUNTS[idx++ % AMOUNTS.length]); pintaBalance(); });
+$("btnPostHaber").addEventListener("click",()=>{ efectivo.haber.push(AMOUNTS[idx++ % AMOUNTS.length]); pintaBalance(); });
+$("btnLimpiar").addEventListener("click",()=>{ efectivo.debe=[]; efectivo.haber=[]; idx=0; pintaBalance(); });
+
+/* ================= reglas: Illustration 2.2 ================= */
+const CUENTAS = [
+  {n:"Asset Accounts",    saldo:"deudor",  sube:"cargo", nota:"Cash, receivables, equipment"},
+  {n:"Expense Accounts",  saldo:"deudor",  sube:"cargo", nota:"Rent, salaries, utilities"},
+  {n:"Dividends",         saldo:"deudor",  sube:"cargo", nota:"Distributions to stockholders"},
+  {n:"Liability Accounts",saldo:"acreedor",sube:"abono", nota:"Payables, notes, loans"},
+  {n:"Stockholders' Equity", saldo:"acreedor",sube:"abono", nota:"Common Stock, Retained Earnings"},
+  {n:"Revenue Accounts",  saldo:"acreedor",sube:"abono", nota:"Service revenue, sales"},
+];
+const fichasEl = $("fichas");
+const cuentaTEl = $("cuentaT");
+function pintaT(i){
+  const c = CUENTAS[i];
+  const subeCargo = c.sube === "cargo";
+  cuentaTEl.innerHTML = `
+    <div class="cabeza">${c.n}</div>
+    <div class="cuerpo">
+      <div class="lado">
+        <h4>Debit · Left</h4>
+        <span class="mas-menos ${subeCargo?"sube":"baja"}">${subeCargo?"+":"−"}</span>
+        <div class="pista">${subeCargo?"Increase":"Decrease"}</div>
+      </div>
+      <div class="lado">
+        <h4>Credit · Right</h4>
+        <span class="mas-menos ${subeCargo?"baja":"sube"}">${subeCargo?"−":"+"}</span>
+        <div class="pista">${subeCargo?"Decrease":"Increase"}</div>
+      </div>
+    </div>
+    <div class="pie">Normal balance · <b style="color:var(--${c.saldo==="deudor"?"debe":"haber"})">${c.saldo==="deudor"?"DEBIT":"CREDIT"}</b></div>`;
+  document.querySelectorAll(".ficha").forEach((f,j)=>f.classList.toggle("activa", j===i));
+}
+CUENTAS.forEach((c,i)=>{
+  const b = document.createElement("button");
+  b.className = "ficha";
+  b.innerHTML = `<div class="nombre">${c.n}</div><span class="saldo ${c.saldo}">${c.saldo==="deudor"?"debit":"credit"}</span>`;
+  b.addEventListener("click",()=>pintaT(i));
+  fichasEl.appendChild(b);
+});
+pintaT(0);
+
+/* ================= drill ================= */
+const PREGUNTAS = [
+  {q:"Cash increases after a customer pays.",             tipo:"an asset",              r:"debe",  regla:"Assets increase on the debit (left) side."},
+  {q:"Accounts Payable increases on a purchase on account.", tipo:"a liability",        r:"haber", regla:"Liabilities increase on the credit (right) side."},
+  {q:"Service Revenue is earned this period.",            tipo:"a revenue account",     r:"haber", regla:"Revenues increase on the credit (right) side."},
+  {q:"Rent Expense is incurred for the month.",           tipo:"an expense",            r:"debe",  regla:"Expenses increase on the debit (left) side."},
+  {q:"Cash decreases when the company pays a bill.",      tipo:"an asset decreasing",   r:"haber", regla:"Assets decrease on the credit (right) side."},
+  {q:"Common Stock increases when shares are issued.",    tipo:"stockholders' equity",  r:"haber", regla:"Equity accounts increase on the credit side."},
+  {q:"Dividends are declared and paid.",                  tipo:"the exception",         r:"debe",  regla:"Dividends is the equity account that increases by debit."},
+  {q:"Notes Payable decreases when the loan is repaid.",  tipo:"a liability decreasing",r:"debe",  regla:"Liabilities decrease on the debit (left) side."},
+];
+let qi = 0, puntos = 0, fallado = false;
+function pintaDrill(){
+  if(qi >= PREGUNTAS.length){
+    $("cartaDrill").innerHTML = "";
+    $("drillPos").textContent = "Drill finished";
+    $("resumenPuntos").textContent = `${puntos} / ${PREGUNTAS.length}`;
+    $("estampaDrill").textContent = puntos === PREGUNTAS.length ? "IN BALANCE" : "POSTED";
+    $("compDrill").classList.add("visible");
+    setTimeout(()=>$("compDrill").scrollIntoView({behavior:"smooth",block:"end"}), 200);
+    return;
+  }
+  const p = PREGUNTAS[qi];
+  fallado = false;
+  $("drillPos").textContent = `Entry ${qi+1} of ${PREGUNTAS.length}`;
+  $("cartaDrill").innerHTML = `
+    <div class="asiento" id="cartaActiva">
+      <div class="encabezado">
+        <span class="num">${qi+1}</span>
+        <span class="desc">${p.q}</span>
+        <span class="sello-ok">DR/CR</span>
+      </div>
+      <div class="lineas"><div class="linea-diario"><span class="cuenta">This is ${p.tipo} — which side records it?</span></div></div>
+      <div class="respuestas">
+        <button class="btn-lado debe" data-r="debe">Debit<span>left side</span></button>
+        <button class="btn-lado haber" data-r="haber">Credit<span>right side</span></button>
+      </div>
+      <div id="feedbackDrill"></div>
+    </div>`;
+  document.querySelectorAll("#cartaDrill .btn-lado").forEach(b=>b.addEventListener("click",()=>responde(b.dataset.r)));
+}
+function responde(r){
+  const p = PREGUNTAS[qi];
+  const fb = $("feedbackDrill");
+  if(r === p.r){
+    if(!fallado){ puntos++; }
+    $("drillPuntos").textContent = `${puntos} first-try correct`;
+    $("cartaActiva").classList.add("registrado");
+    fb.innerHTML = `<div class="veredicto bien"><b>Correct.</b> ${p.regla}</div>`;
+    totDebe += 100; totHaber += 100; pintaEcuacion();
+    qi++;
+    setTimeout(pintaDrill, 1400);
+  }else{
+    fallado = true;
+    fb.innerHTML = `<div class="veredicto mal"><b>Not quite.</b> ${p.regla} Try the other side.</div>`;
+    $("cartaActiva").classList.remove("temblor"); void $("cartaActiva").offsetWidth;
+    $("cartaActiva").classList.add("temblor");
+  }
+}
+$("btnDrillReset").addEventListener("click",()=>{
+  qi = 0; puntos = 0;
+  $("drillPuntos").textContent = "0 first-try correct";
+  $("compDrill").classList.remove("visible");
+  pintaDrill();
+  $("principal").scrollTo({top:0,behavior:"smooth"});
+});
+pintaDrill();
+
+/* ================= prueba: Dr = Cr ================= */
+const TRANS = [
+  {desc:"Stockholders invest $10,000 cash in the business",
+   diario:[["Cash",10000,"cargo"],["Common Stock",10000,"abono"]]},
+  {desc:"Equipment is purchased for $3,000 on account",
+   diario:[["Equipment",3000,"cargo"],["Accounts Payable",3000,"abono"]]},
+  {desc:"Services are performed for $1,500 cash",
+   diario:[["Cash",1500,"cargo"],["Service Revenue",1500,"abono"]]},
+  {desc:"Rent of $800 is paid in cash",
+   diario:[["Rent Expense",800,"cargo"],["Cash",800,"abono"]]},
+];
+let paso = 0, pDebe = 0, pHaber = 0;
+function pintaPrueba(){
+  const lista = $("listaPrueba");
+  lista.innerHTML = "";
+  TRANS.forEach((t,i)=>{
+    const d = document.createElement("div");
+    d.className = "asiento" + (i<paso?" registrado":"") + (i>paso?" bloqueado":"");
+    const lineas = t.diario.map(([cta,m,tipo])=>`
+      <div class="linea-diario">
+        <span class="cuenta ${tipo}">${tipo==="abono"?"&nbsp;&nbsp;&nbsp;&nbsp;":""}${cta}</span>
+        <span class="monto ${tipo}">${tipo==="cargo"?"Dr. ":"Cr. "}$${m.toLocaleString("en-US")}</span>
+      </div>`).join("");
+    d.innerHTML = `
+      <div class="encabezado">
+        <span class="num">${i+1}</span>
+        <span class="desc">${t.desc}</span>
+        <span class="sello-ok">REC.</span>
+      </div>
+      <div class="lineas">${lineas}</div>
+      <div class="accion"><button class="btn-registrar" data-i="${i}" ${i!==paso?"disabled":""}>Record entry</button></div>`;
+    lista.appendChild(d);
+  });
+  lista.querySelectorAll(".btn-registrar").forEach(b=>b.addEventListener("click",()=>registra(+b.dataset.i)));
+}
+function registra(i){
+  TRANS[i].diario.forEach(([,m,tipo])=>{
+    if(tipo==="cargo"){ pDebe+=m; totDebe+=m; } else { pHaber+=m; totHaber+=m; }
+  });
+  paso++;
+  $("totalDebe").textContent  = fmt(pDebe);
+  $("totalHaber").textContent = fmt(pHaber);
+  $("totalDif").textContent   = fmt(pDebe - pHaber);
+  pintaEcuacion();
+  pintaPrueba();
+  if(paso === TRANS.length){
+    $("pruebaDebe").textContent  = fmt(pDebe);
+    $("pruebaHaber").textContent = fmt(pHaber);
+    $("compPrueba").classList.add("visible");
+    setTimeout(()=>$("compPrueba").scrollIntoView({behavior:"smooth",block:"end"}), 200);
+  }
+}
+$("btnPruebaReset").addEventListener("click",()=>{
+  totDebe -= pDebe; totHaber -= pHaber;
+  paso = 0; pDebe = 0; pHaber = 0;
+  $("totalDebe").textContent = $("totalHaber").textContent = $("totalDif").textContent = "$0";
+  $("compPrueba").classList.remove("visible");
+  pintaEcuacion();
+  pintaPrueba();
+  $("principal").scrollTo({top:0,behavior:"smooth"});
+});
+pintaPrueba();
+pintaEcuacion();
+</script>
+</body>
+</html>
