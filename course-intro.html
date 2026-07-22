@@ -10,176 +10,191 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0E1B14;
-  --ledger:#17382A;
-  --ledger-2:#1E4634;
-  --paper:#F6F2E7;
-  --paper-2:#EFE8D6;
-  --rule:#DCD3BC;
-  --margin:#C25A4A;
-  --brass:#B98F35;
-  --brass-light:#D9B45C;
-  --debit:#A8402C;
-  --credit:#1F6B4A;
-  --text:#1C2A21;
-  --text-soft:#5C6A5E;
-  --white:#FDFCF8;
-  --shadow:0 10px 30px rgba(14,27,20,.16);
+  --tinta:#0E1B14;
+  --libro:#17382A;
+  --libro-2:#1E4634;
+  --papel:#F6F2E7;
+  --papel-2:#EFE8D6;
+  --regla:#DCD3BC;
+  --margen:#C25A4A;
+  --laton:#B98F35;
+  --laton-claro:#D9B45C;
+  --debe:#A8402C;
+  --haber:#1F6B4A;
+  --texto:#1C2A21;
+  --texto-suave:#5C6A5E;
+  --blanco:#FDFCF8;
+  --sombra:0 10px 30px rgba(14,27,20,.16);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{
-  background:var(--ink);
+  background:var(--tinta);
   font-family:'Archivo',system-ui,sans-serif;
-  color:var(--text);
+  color:var(--texto);
   display:flex;justify-content:center;
   background-image:
     radial-gradient(ellipse 80% 50% at 50% -10%, rgba(30,70,52,.55), transparent 60%),
     repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 7px);
 }
-.phone{
+.telefono{
   width:100%;max-width:430px;min-height:100dvh;
-  background:var(--paper);
+  background:var(--papel);
   display:flex;flex-direction:column;
   position:relative;overflow:hidden;
   box-shadow:0 0 80px rgba(0,0,0,.5);
 }
 @media(min-width:480px){
-  .phone{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
+  .telefono{min-height:auto;height:min(880px,94vh);margin:3vh 0;border-radius:34px;border:1px solid rgba(255,255,255,.08)}
 }
 
-/* ---------- masthead ---------- */
+/* ---------- cabecera ---------- */
 header.app{
-  background:linear-gradient(160deg,var(--ledger) 0%, var(--ledger-2) 100%);
-  color:var(--paper);
+  background:linear-gradient(160deg,var(--libro) 0%, var(--libro-2) 100%);
+  color:var(--papel);
   padding:22px 22px 18px;
-  position:relative;flex-shrink:0;
+  position:relative;
+  flex-shrink:0;
 }
 header.app::after{
   content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
-  background:linear-gradient(90deg,transparent,var(--brass-light) 20%,var(--brass-light) 80%,transparent);
+  background:linear-gradient(90deg,transparent,var(--laton-claro) 20%,var(--laton-claro) 80%,transparent);
   opacity:.85;
 }
-.brand{display:flex;align-items:baseline;gap:10px}
-.brand h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;letter-spacing:.2px}
-.brand h1 em{color:var(--brass-light);font-style:italic}
+.marca{display:flex;align-items:baseline;gap:10px}
+.marca h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:26px;letter-spacing:.2px}
+.marca h1 em{color:var(--laton-claro);font-style:italic}
 .folio{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:rgba(246,242,231,.55);text-transform:uppercase}
-.tagline{margin-top:3px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,242,231,.62);font-weight:500}
+.subtitulo{margin-top:3px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,242,231,.62);font-weight:500}
 
-/* course meta strip */
-.meta-strip{
+/* ---------- barra de ecuación viva ---------- */
+.ecuacion-viva{
   margin-top:16px;background:rgba(9,20,14,.35);
   border:1px solid rgba(217,180,92,.28);
-  border-radius:12px;padding:11px 12px;
-  display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;
+  border-radius:12px;padding:10px 12px;
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;
 }
-.meta-strip .cell{text-align:center;position:relative}
-.meta-strip .cell + .cell::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:26px;width:1px;background:rgba(217,180,92,.22)}
-.meta-strip .num{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600;color:var(--paper);font-variant-numeric:tabular-nums}
-.meta-strip .lab{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,242,231,.55);font-weight:600;margin-top:2px}
+.ecuacion-viva .celda{text-align:center}
+.ecuacion-viva .etiqueta{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,242,231,.55);font-weight:600}
+.ecuacion-viva .cifra{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--papel);font-variant-numeric:tabular-nums;transition:color .3s}
+.ecuacion-viva .signo{font-family:'Instrument Serif',serif;font-size:20px;color:var(--laton-claro)}
+.ecuacion-viva.parpadeo .cifra{color:var(--laton-claro)}
 
-/* ---------- content ---------- */
+/* ---------- contenido ---------- */
 main{flex:1;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth}
-.screen{padding:20px 18px 28px;animation:appear .35s ease both}
-@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pantalla{display:none;padding:20px 18px 28px;animation:aparecer .35s ease both}
+.pantalla.activa{display:block}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-.eyebrow{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--brass);display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--brass),transparent)}
-h2.title{font-family:'Instrument Serif',serif;font-weight:400;font-size:29px;line-height:1.1;margin-bottom:8px}
-h2.title em{font-style:italic;color:var(--ledger-2)}
-p.intro{font-size:13.5px;line-height:1.6;color:var(--text-soft);margin-bottom:18px;max-width:36ch}
+.ojal{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--laton);display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ojal::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--laton),transparent)}
+h2.titulo{font-family:'Instrument Serif',serif;font-weight:400;font-size:27px;line-height:1.12;margin-bottom:6px}
+h2.titulo em{font-style:italic;color:var(--libro-2)}
+p.intro{font-size:13.5px;line-height:1.55;color:var(--texto-suave);margin-bottom:18px;max-width:34ch}
 
-/* hero equation on ledger paper */
-.sheet{
+/* ---------- hoja de libro (papel rayado) ---------- */
+.hoja{
   background:
-    linear-gradient(var(--margin) 0 0) 26px 0/1.5px 100% no-repeat,
-    repeating-linear-gradient(to bottom, transparent 0 27px, var(--rule) 27px 28px),
-    var(--white);
-  border:1px solid #E4DCC6;border-radius:14px;box-shadow:var(--shadow);
-  padding:18px 16px 16px 38px;position:relative;
+    linear-gradient(var(--margen) 0 0) 26px 0/1.5px 100% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 27px, var(--regla) 27px 28px),
+    var(--blanco);
+  border:1px solid #E4DCC6;
+  border-radius:14px;
+  box-shadow:var(--sombra);
+  padding:18px 16px 16px 38px;
+  position:relative;
 }
-.eq-hero{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:6px 0 2px}
-.eq-hero .term{text-align:center}
-.eq-hero .term b{font-family:'Instrument Serif',serif;font-weight:400;font-size:29px;display:block;line-height:1}
-.eq-hero .term span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-soft);font-weight:600}
-.eq-hero .op{font-family:'Instrument Serif',serif;font-size:25px;color:var(--brass)}
-.double-rule{margin:14px 0 0;border-top:2.5px solid var(--text);border-bottom:1px solid var(--text);height:4px}
-.sheet-cap{margin-top:12px;font-size:11px;line-height:1.5;color:var(--text-soft);text-align:center;letter-spacing:.02em}
 
-/* ---------- the method: WHAT / WHY / HOW ---------- */
-.method{display:flex;flex-direction:column;gap:9px;margin-top:14px}
-.method-card{
-  background:var(--white);border:1px solid #E4DCC6;border-radius:13px;
-  padding:13px 14px;display:flex;gap:12px;align-items:flex-start;
+/* ecuación héroe */
+.eq-hero{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:6px 0 2px}
+.eq-hero .termino{text-align:center}
+.eq-hero .termino b{font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;display:block;line-height:1}
+.eq-hero .termino span{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--texto-suave);font-weight:600}
+.eq-hero .op{font-family:'Instrument Serif',serif;font-size:26px;color:var(--laton)}
+.doble-regla{margin:14px 0 0;border-top:2.5px solid var(--texto);border-bottom:1px solid var(--texto);height:4px}
+
+/* ---------- tarjetas de principios ---------- */
+.principios{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.principio{
+  background:var(--blanco);border:1px solid #E4DCC6;border-radius:13px;
+  padding:14px 15px;display:flex;gap:13px;align-items:flex-start;
   box-shadow:0 3px 12px rgba(14,27,20,.06);
 }
-.tag{
-  flex-shrink:0;font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;letter-spacing:.06em;
-  color:var(--paper);padding:5px 9px;border-radius:7px;min-width:52px;text-align:center;margin-top:1px;
+.principio .icono{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(150deg,var(--libro),var(--libro-2));
+  display:flex;align-items:center;justify-content:center;color:var(--laton-claro);
 }
-.tag.what{background:var(--ledger)}
-.tag.why{background:var(--brass)}
-.tag.how{background:var(--credit)}
-.method-card h3{font-size:13.5px;font-weight:700;margin-bottom:2px}
-.method-card p{font-size:12.5px;line-height:1.5;color:var(--text-soft)}
+.principio h3{font-size:14px;font-weight:700;margin-bottom:2px}
+.principio p{font-size:12.5px;line-height:1.5;color:var(--texto-suave)}
 
-/* ---------- what you'll cover (folio list) ---------- */
-.module{
-  background:var(--white);border:1px solid #E4DCC6;border-radius:13px;
-  margin-bottom:10px;overflow:hidden;box-shadow:0 3px 12px rgba(14,27,20,.05);
-  display:flex;align-items:stretch;text-align:left;width:100%;font-family:inherit;cursor:pointer;
-  transition:border-color .2s, box-shadow .2s, transform .15s;
-}
-.module:active{transform:scale(.985)}
-.module.current{border-color:var(--brass);box-shadow:0 0 0 2px rgba(185,143,53,.22), var(--shadow)}
-.module .spine{
-  flex-shrink:0;width:46px;background:linear-gradient(160deg,var(--ledger),var(--ledger-2));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--brass-light);
-  letter-spacing:.02em;
-}
-.module .body{padding:11px 13px;flex:1;min-width:0}
-.module .body h4{font-size:13.5px;font-weight:700;line-height:1.25}
-.module .body p{font-size:11.5px;line-height:1.45;color:var(--text-soft);margin-top:2px}
-.module .flag{
-  align-self:flex-start;margin-top:5px;font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
-  padding:2px 7px;border-radius:99px;display:inline-block;
-}
-.module .flag.start{background:rgba(185,143,53,.14);color:var(--brass)}
-.module .flag.soon{background:rgba(92,106,94,.12);color:var(--text-soft)}
-.module .chev{align-self:center;padding-right:12px;color:var(--rule)}
+.nota-pie{margin-top:16px;font-size:11.5px;color:var(--texto-suave);line-height:1.55;border-left:2px solid var(--laton);padding-left:11px}
+.nota-pie b{color:var(--texto)}
 
-/* footnote */
-.footnote{margin-top:16px;font-size:11.5px;color:var(--text-soft);line-height:1.55;border-left:2px solid var(--brass);padding-left:11px}
-.footnote b{color:var(--text)}
-
-/* CTA */
-.cta{
-  margin-top:20px;width:100%;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  background:linear-gradient(160deg,var(--ledger),var(--ledger-2));color:var(--paper);border:none;border-radius:13px;
-  padding:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
-  box-shadow:0 6px 18px rgba(14,27,20,.22);transition:transform .15s, box-shadow .2s;position:relative;overflow:hidden;
+/* ---------- módulos como asientos ---------- */
+.asiento{
+  background:var(--blanco);border:1px solid #E4DCC6;border-radius:13px;
+  margin-bottom:11px;overflow:hidden;transition:opacity .3s, border-color .3s;
+  box-shadow:0 3px 12px rgba(14,27,20,.05);
 }
-.cta::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--brass-light) 25%,var(--brass-light) 75%,transparent)}
-.cta:active{transform:scale(.98);box-shadow:0 3px 10px rgba(14,27,20,.25)}
-.cta svg{width:17px;height:17px}
+.asiento .encabezado{display:flex;align-items:center;gap:11px;padding:13px 14px 9px}
+.asiento .num{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  width:26px;height:26px;border-radius:50%;border:1.5px solid var(--laton);
+  color:var(--laton);display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.asiento .desc{font-size:13px;font-weight:600;line-height:1.35}
+.asiento .lineas{padding:0 14px 12px 51px}
+.asiento .lineas p{font-size:12px;line-height:1.5;color:var(--texto-suave)}
+.asiento .accion{border-top:1px dashed var(--regla);padding:9px 14px;display:flex;justify-content:flex-end}
+.btn-registrar{
+  font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--libro-2);color:var(--papel);border:none;border-radius:9px;
+  padding:9px 18px;cursor:pointer;transition:transform .15s, background .2s;
+}
+.btn-registrar:active{transform:scale(.95)}
+.asiento .sello-ok{
+  display:inline-block;margin-left:auto;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;font-weight:600;
+  color:var(--laton);border:1.5px solid var(--laton);border-radius:5px;padding:2px 7px;
+  transform:rotate(-4deg);
+}
+.asiento.bloqueado{opacity:.45;pointer-events:none}
 
-/* ---------- bottom tabs ---------- */
-nav.tabs{
+/* ---------- tarjeta de bienvenida (comprobación) ---------- */
+.comprobacion{
+  margin-top:16px;background:linear-gradient(160deg,var(--libro),var(--libro-2));
+  color:var(--papel);border-radius:15px;padding:20px 18px;position:relative;overflow:hidden;
+  animation:aparecer .4s ease both;
+}
+.comprobacion h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:20px;margin-bottom:12px}
+.comp-fila{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid rgba(246,242,231,.14)}
+.comp-fila b{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600}
+.comp-fila.total{border-bottom:none;border-top:2px solid var(--laton-claro);margin-top:6px;padding-top:10px;font-weight:700}
+.estampa{
+  position:absolute;right:14px;top:14px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;font-weight:600;
+  color:var(--laton-claro);border:2.5px double var(--laton-claro);border-radius:8px;
+  padding:7px 11px;transform:rotate(7deg);
+  animation:estampar .5s cubic-bezier(.2,1.6,.35,1) .25s both;
+}
+@keyframes estampar{from{transform:rotate(7deg) scale(2.4);opacity:0}60%{opacity:1}to{transform:rotate(7deg) scale(1);opacity:1}}
+
+/* ---------- barra de pestañas ---------- */
+nav.pestanas{
   flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);
-  background:var(--ink);padding:8px 10px calc(10px + env(safe-area-inset-bottom));
+  background:var(--tinta);padding:8px 10px calc(10px + env(safe-area-inset-bottom));
   border-top:1px solid rgba(217,180,92,.22);
 }
-.tab{
+.pestana{
   font-family:inherit;background:none;border:none;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;gap:4px;
   padding:7px 4px;border-radius:11px;color:rgba(246,242,231,.45);
   font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
   transition:color .2s, background .2s;
 }
-.tab svg{width:21px;height:21px}
-.tab.active{color:var(--brass-light);background:rgba(217,180,92,.1)}
+.pestana svg{width:21px;height:21px}
+.pestana.activa{color:var(--laton-claro);background:rgba(217,180,92,.1)}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
@@ -187,145 +202,135 @@ nav.tabs{
 </style>
 </head>
 <body>
-<div class="phone">
+<div class="telefono">
 
   <header class="app">
-    <div class="brand">
+    <div class="marca">
       <h1>Ledger<em>Lab</em></h1>
-      <span class="folio">Folio 00 · Intro</span>
+      <span class="folio">Folio 0.0</span>
     </div>
-    <div class="tagline">Intermediate Accounting</div>
-    <div class="meta-strip">
-      <div class="cell"><div class="num">4</div><div class="lab">Modules</div></div>
-      <div class="cell"><div class="num">12</div><div class="lab">Lessons</div></div>
-      <div class="cell"><div class="num">~3h</div><div class="lab">Guided</div></div>
+    <div class="subtitulo">Intermediate Accounting</div>
+    <div class="ecuacion-viva">
+      <div class="celda"><div class="etiqueta">Assets</div><div class="cifra">$15,500</div></div>
+      <div class="signo">=</div>
+      <div class="celda"><div class="etiqueta">Liabilities</div><div class="cifra">$3,700</div></div>
+      <div class="signo">+</div>
+      <div class="celda"><div class="etiqueta">Equity</div><div class="cifra">$11,800</div></div>
     </div>
   </header>
 
-  <main id="content">
-    <section class="screen" id="s-intro">
+  <main id="principal">
 
-      <div class="eyebrow">Welcome to the course</div>
-      <h2 class="title">Accounting, taught as a <em>living system</em></h2>
-      <p class="intro">Not rules to memorize — a set of records that always stays in balance. You'll read every number, learn why it's reported, and post the entries yourself.</p>
+    <!-- ============ SCREEN · INTRODUCTION ============ -->
+    <section class="pantalla activa" id="p-intro">
+      <div class="ojal">Introduction to the course</div>
+      <h2 class="titulo">The ledger, <em>always in balance</em></h2>
+      <p class="intro">One equation governs every record a business keeps. This course teaches you to read it, prove it, and keep it in equilibrium.</p>
 
-      <div class="sheet">
+      <div class="hoja">
         <div class="eq-hero">
-          <div class="term"><b>Assets</b><span>Debit balance</span></div>
+          <div class="termino"><b>Assets</b><span>Debit</span></div>
           <div class="op">=</div>
-          <div class="term"><b>Liabilities</b><span>Credit balance</span></div>
+          <div class="termino"><b>Liabilities</b><span>Credit</span></div>
           <div class="op">+</div>
-          <div class="term"><b>Equity</b><span>Credit balance</span></div>
+          <div class="termino"><b>Equity</b><span>Credit</span></div>
         </div>
-        <div class="double-rule"></div>
-        <div class="sheet-cap">Every lesson comes back to this one equation.</div>
+        <div class="doble-regla"></div>
       </div>
 
-      <div class="eyebrow" style="margin-top:24px">How each lesson works</div>
-      <div class="method">
-        <div class="method-card">
-          <span class="tag what">WHAT</span>
-          <div><h3>See the idea</h3><p>A plain-language reading of the statement, account, or standard — the way it actually appears in practice.</p></div>
+      <div class="ojal" style="margin-top:24px">How every lesson works</div>
+      <div class="principios">
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/></svg></div>
+          <div><h3>What — see the idea</h3><p>Each concept is shown the way it appears in real records: statements, accounts and entries.</p></div>
         </div>
-        <div class="method-card">
-          <span class="tag why">WHY</span>
-          <div><h3>Understand the reason</h3><p>Why the number is reported, and how it helps investors and creditors predict future cash flows.</p></div>
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2 2.7 5 3.3 5 1.4 5 3.4-2.2 3.3-5 3.3-5-1.3-5-3.2"/></svg></div>
+          <div><h3>Why — follow the money</h3><p>Every figure exists to help investors and creditors predict future cash flows. You'll learn the reason behind each rule.</p></div>
         </div>
-        <div class="method-card">
-          <span class="tag how">HOW</span>
-          <div><h3>Do the work</h3><p>Post the journal entries, build the T-accounts, and watch the ledger balance in real time.</p></div>
+        <div class="principio">
+          <div class="icono"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c4-1 5-9 12-9M16 4l4 4-4 4"/><path d="M4 7c2 .3 3.4 1.5 4.6 3"/></svg></div>
+          <div><h3>How — do the work</h3><p>You post the journal entries yourself and watch the ledger and the equation update at once.</p></div>
         </div>
       </div>
 
-      <div class="eyebrow" style="margin-top:24px">What you'll cover</div>
+      <div class="ojal" style="margin-top:24px">Course plan · Four modules</div>
+      <div id="listaModulos">
 
-      <button class="module current" type="button">
-        <span class="spine">2.1</span>
-        <div class="body">
-          <h4>The Accounting Information System</h4>
-          <p>Double-entry, debits &amp; credits, and the journal-to-ledger flow.</p>
-          <span class="flag start">Start here</span>
+        <div class="asiento">
+          <div class="encabezado">
+            <span class="num">2.1</span>
+            <span class="desc">The Accounting Information System</span>
+            <span class="sello-ok">START</span>
+          </div>
+          <div class="lineas"><p>Double-entry, rules of debit and credit, the journal and the ledger.</p></div>
+          <div class="accion"><button class="btn-registrar" id="btnComenzar">Begin lesson</button></div>
         </div>
-        <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
-      </button>
 
-      <button class="module" type="button">
-        <span class="spine">3.1</span>
-        <div class="body">
-          <h4>Income Statement &amp; Revenue Recognition</h4>
-          <p>Measure profitability over a period; when revenue is earned.</p>
-          <span class="flag soon">Module 2</span>
+        <div class="asiento bloqueado">
+          <div class="encabezado">
+            <span class="num">3.1</span>
+            <span class="desc">Income Statement &amp; Revenue Recognition</span>
+          </div>
+          <div class="lineas"><p>Measuring profitability over a period; when revenue is earned.</p></div>
         </div>
-        <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
-      </button>
 
-      <button class="module" type="button">
-        <span class="spine">4.1</span>
-        <div class="body">
-          <h4>Balance Sheet &amp; Cash Flows</h4>
-          <p>Report financial position and trace where the cash moved.</p>
-          <span class="flag soon">Module 3</span>
+        <div class="asiento bloqueado">
+          <div class="encabezado">
+            <span class="num">4.1</span>
+            <span class="desc">Balance Sheet &amp; Statement of Cash Flows</span>
+          </div>
+          <div class="lineas"><p>Reporting financial position and tracing where the cash moved.</p></div>
         </div>
-        <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
-      </button>
 
-      <button class="module" type="button">
-        <span class="spine">5.1</span>
-        <div class="body">
-          <h4>Closing the Accounting Cycle</h4>
-          <p>Adjust, close nominal accounts, and prepare the next period.</p>
-          <span class="flag soon">Module 4</span>
+        <div class="asiento bloqueado">
+          <div class="encabezado">
+            <span class="num">5.1</span>
+            <span class="desc">Completing the Accounting Cycle</span>
+          </div>
+          <div class="lineas"><p>Adjusting entries, closing nominal accounts, preparing the next period.</p></div>
         </div>
-        <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
-      </button>
+      </div>
 
-      <p class="footnote">You don't need any prior bookkeeping. <b>Bring a calculator's patience</b> — the app handles the arithmetic so you can focus on the accounting judgment.</p>
+      <p class="nota-pie"><b>No prior bookkeeping required.</b> The app carries the arithmetic; you supply the accounting judgment.</p>
 
-      <button class="cta" id="begin">
-        Begin Lesson 2.1
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-
+      <div class="comprobacion">
+        <div class="estampa">IN BALANCE</div>
+        <h3>What you'll be able to prove</h3>
+        <div class="comp-fila"><span>Record transactions in the general journal</span><b>2.1</b></div>
+        <div class="comp-fila"><span>Post to the ledger and balance the equation</span><b>2.1</b></div>
+        <div class="comp-fila"><span>Prepare the three linked statements</span><b>3–4</b></div>
+        <div class="comp-fila total"><span>Total debits = Total credits</span><b>✓</b></div>
+      </div>
     </section>
   </main>
 
-  <nav class="tabs" role="tablist">
-    <button class="tab active" role="tab" aria-selected="true">
+  <nav class="pestanas" role="tablist">
+    <button class="pestana activa" role="tab" aria-selected="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6.5a2.5 2.5 0 0 0 0 5H19"/><path d="M9 7h6"/></svg>
       Course
     </button>
-    <button class="tab" role="tab" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-      Lessons
-    </button>
-    <button class="tab" role="tab" aria-selected="false">
+    <button class="pestana" role="tab" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 7h18M7 7l-3.5 6a3.5 3.5 0 0 0 7 0L7 7ZM17 7l-3.5 6a3.5 3.5 0 0 0 7 0L17 7Z"/></svg>
-      Practice
+      Rules
     </button>
-    <button class="tab" role="tab" aria-selected="false">
+    <button class="pestana" role="tab" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      Journal
+    </button>
+    <button class="pestana" role="tab" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>
-      Progress
+      Statements
     </button>
   </nav>
 </div>
 
 <script>
-/* Tabs: purely visual selection for now — screens land in later builds. */
-const tabs = document.querySelectorAll(".tab");
-tabs.forEach(t=>t.addEventListener("click",()=>{
-  tabs.forEach(x=>{x.classList.remove("active");x.setAttribute("aria-selected","false")});
-  t.classList.add("active"); t.setAttribute("aria-selected","true");
-}));
-
-/* Begin + module taps: placeholder hook for the lesson player. */
-function pulse(el){ el.animate(
-  [{transform:"scale(1)"},{transform:"scale(.97)"},{transform:"scale(1)"}],
-  {duration:180,easing:"ease"}
-);}
-document.getElementById("begin").addEventListener("click",e=>pulse(e.currentTarget));
-document.querySelectorAll(".module").forEach(m=>m.addEventListener("click",()=>{
-  document.querySelectorAll(".module").forEach(x=>x.classList.remove("current"));
-  m.classList.add("current");
+/* Tab selection — screens arrive in later builds. */
+const pestanas = document.querySelectorAll(".pestana");
+pestanas.forEach(b=>b.addEventListener("click",()=>{
+  pestanas.forEach(x=>{x.classList.remove("activa");x.setAttribute("aria-selected","false")});
+  b.classList.add("activa"); b.setAttribute("aria-selected","true");
 }));
 </script>
 </body>
