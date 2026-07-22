@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ledgerlab-classroom-v1';
+const CACHE_NAME = 'financial-accounting-v15';
 const APP_SHELL = [
   './',
   './index.html',

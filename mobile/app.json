@@ -1,18 +1,18 @@
 {
   "expo": {
-    "name": "LedgerLab Classroom",
-    "slug": "ledgerlab-classroom",
+    "name": "Financial Accounting",
+    "slug": "financial-accounting",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#00264F",
+    "backgroundColor": "#0d1b2e",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#00264F",
+        "backgroundColor": "#0d1b2e",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
