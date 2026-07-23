@@ -270,6 +270,28 @@ table.ws tfoot td{border-top:2px solid var(--text);font-weight:800;background:#F
 .ex-instr li{position:relative;padding-left:28px;font-size:13px;line-height:1.45;color:#39435C;counter-increment:step}
 .ex-instr li b{color:var(--text)}
 .ex-instr li::before{content:counter(step);position:absolute;left:0;top:-1px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+/* editable spreadsheet */
+.ss-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px}
+table.ss{width:100%;border-collapse:collapse;font-size:12px}
+table.ss th,table.ss td{border:.5px solid var(--line);padding:0}
+table.ss thead th{background:#EEF0F6;color:var(--muted);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.03em;padding:7px 8px;text-align:center}
+table.ss thead th.lbl{text-align:left}
+table.ss td.lbl{text-align:left;padding:8px 9px;font-weight:600;color:var(--text);background:#FAFBFD;line-height:1.3;font-size:11.5px}
+table.ss td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;padding:8px 9px;color:#2C3346}
+table.ss td.calc{background:#F5F6FB;color:var(--muted)}
+table.ss td.op{text-align:center;background:#EEF0F6;color:var(--muted);font-family:var(--mono);font-weight:700}
+table.ss td.ck{text-align:center;font-weight:800;width:32px;color:var(--muted-2)}
+table.ss input.cell,table.ss select.cell{width:100%;border:none;background:#FFFCEC;font-size:12.5px;padding:8px 9px;outline:none;font-family:var(--mono);text-align:right;color:var(--text)}
+table.ss select.cell{font-family:var(--font);text-align:left;-webkit-appearance:none;appearance:none}
+table.ss input.cell::placeholder{color:#CBBE8E}
+table.ss input.cell:focus,table.ss select.cell:focus{background:#fff;box-shadow:inset 0 0 0 2px var(--primary-200)}
+table.ss input.cell.right,table.ss select.cell.right{background:var(--cr-050);color:var(--cr)}
+table.ss input.cell.wrong,table.ss select.cell.wrong{background:var(--dr-050);color:var(--dr)}
+table.ss tr.tot td{border-top:1.5px solid var(--text);font-weight:800;background:#F4F4FB}
+table.ss tr.sub td{background:#EDE9FB;color:var(--primary-strong);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.03em;padding:6px 9px;text-align:left}
+.ss-note{margin-top:10px;font-size:12.5px;font-weight:700;text-align:right;color:var(--text)}
+.ss-note b{font-family:var(--mono)}
+.ex-hint{font-size:11.5px;color:var(--muted);line-height:1.4}
 .adj-panel{margin-top:14px}
 .adj-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:9px;box-shadow:var(--shadow)}
 .adj-row .ak{width:22px;height:22px;border-radius:6px;background:var(--primary-050);color:var(--primary);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -588,16 +610,96 @@ const CONCEPTS = [
 ];
 
 /* ================= progress ================= */
-const EX_NAMES = ["Cash T-account ledger","Debit/credit posting drill","Journal & trial balance","Equation solver","Equity effects check","Accounting-equation worksheet"];
+const EX_NAMES = ["Cash ledger","Normal-balance table","Journalize & foot","Equation solver","Retained earnings statement","Accounting-equation worksheet"];
 const EX_INSTR = [
-  {task:"Build the Cash account, then read its balance.", steps:["Tap <b>Post debit</b> or <b>Post credit</b> to add an amount to that side.","Whichever side totals more decides the balance — debit or credit.","Post at least three entries to finish."]},
-  {task:"Decide the side for each of the 8 items.", steps:["Read the change described on the card.","Tap <b>Debit</b> (left) or <b>Credit</b> (right).","Work through all eight items."]},
-  {task:"Post the entries and prove the books balance.", steps:["Tap <b>Post entry</b> on each journal entry, from top to bottom.","The running trial balance updates as you post.","You're done when total debits equal total credits."]},
-  {task:"Solve for the missing amount in each equation.", steps:["Two values are given; one cell shows a “?”.","Tap the option that makes <b>Assets = Liabilities + Equity</b>.","Solve all three problems."]},
-  {task:"Say how each account affects equity.", steps:["Read the account name.","Tap <b>▲ Increases</b> or <b>▼ Decreases</b> equity.","Answer all five accounts."]},
-  {task:"Analyze the eight transactions.", steps:["For each one, tap the <b>two elements</b> that change.","The worksheet fills in the amounts for you.","Check that every row keeps <b>Assets = Liabilities + Equity</b>."]},
+  {task:"Record each transaction in the Cash ledger, then read the balance.", steps:["Type each amount into the correct <b>Debit</b> or <b>Credit</b> cell; leave the other blank.","The Totals row and the balance update as you type.","Tap <b>Check the ledger</b> when you're done."]},
+  {task:"Set the normal balance of each account.", steps:["Open the <b>Normal balance</b> cell in each row.","Choose <b>Debit</b> or <b>Credit</b>.","Tap <b>Check the column</b> to grade every row."]},
+  {task:"Journalize both transactions so the trial balance ties.", steps:["Type each amount into the correct <b>Debit</b> or <b>Credit</b> cell.","Watch the Totals row foot as you type.","Total debits must equal total credits — then <b>Check</b>."]},
+  {task:"Fill the missing amount so each equation balances.", steps:["Each row has one empty (yellow) cell.","Type the amount that makes <b>Assets = Liabilities + Equity</b>.","A ✓ appears when a row balances; then <b>Check</b>."]},
+  {task:"Complete the statement of retained earnings.", steps:["Net income = Revenues − Expenses.","Ending retained earnings = Beginning + Net income − Dividends.","Type both yellow cells, then <b>Check</b>."]},
+  {task:"Record each transaction's effect on the equation.", steps:["Type the change under <b>Assets</b>, <b>Liabilities</b>, or <b>Equity</b> — use a minus sign for a decrease.","Leave columns that don't change blank.","Every row must keep Assets = Liabilities + Equity, then <b>Check</b>."]},
 ];
 function exInstrHTML(i){ const x=EX_INSTR[i]; return `<section class="ex-instr" aria-label="How to do this exercise"><h4><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> How to do this</h4><p class="task">${x.task}</p><ol>${x.steps.map(s=>`<li>${s}</li>`).join("")}</ol></section>`; }
+
+/* ---- editable spreadsheet exercises (one per lesson) ---- */
+const DS = {
+  cash:[["Owner invests cash — $10,000","dr",10000],["Paid office rent — $1,200","cr",1200],["Cash received from a customer — $3,500","dr",3500],["Paid a supplier on account — $2,000","cr",2000]],
+  nb:[["Cash","dr"],["Accounts Payable","cr"],["Service Revenue","cr"],["Rent Expense","dr"],["Common Stock","cr"],["Dividends","dr"]],
+  je:[{h:"① Purchased equipment for $6,000 cash",lines:[["Equipment","dr",6000],["Cash","cr",6000]]},{h:"② Billed a customer $2,500 for services on account",lines:[["Accounts Receivable","dr",2500],["Service Revenue","cr",2500]]}],
+  eq:[{a:null,l:40000,e:50000,ans:90000},{a:85000,l:null,e:60000,ans:25000},{a:120000,l:50000,e:null,ans:70000}],
+  re:{rev:9500,exp:6200,ni:3300,beg:12000,div:1500,end:13800},
+  ws:[["Owners invest $40,000 cash for common stock",40000,0,40000],["Purchase equipment for $5,000 on account",5000,5000,0],["Pay $2,000 owed on account",-2000,-2000,0],["Provide services for $8,000 cash",8000,0,8000],["Pay a $3,000 cash dividend",-3000,0,-3000]],
+};
+const giInt = el => { const v=(el.value||"").replace(/[^0-9-]/g,""); return (v===""||v==="-")?null:parseInt(v,10); };
+const sfmt = n => (n<0?"−":"") + Math.abs(n).toLocaleString("en-US");
+const EXSHEET = [
+  { /* 0 · Cash ledger */
+    mk(){ const rows=DS.cash.map((r,i)=>`<tr><td class="lbl">${r[0]}</td><td><input class="cell" data-r="${i}" data-c="dr" inputmode="numeric" placeholder="0" aria-label="Debit"></td><td><input class="cell" data-r="${i}" data-c="cr" inputmode="numeric" placeholder="0" aria-label="Credit"></td></tr>`).join("");
+      return `<div class="ss-wrap"><table class="ss"><thead><tr><th class="lbl">Transaction · Cash account</th><th>Debit</th><th>Credit</th></tr></thead><tbody>${rows}<tr class="tot"><td class="lbl">Totals</td><td class="num" id="tDr">$0</td><td class="num" id="tCr">$0</td></tr></tbody></table></div><div class="ss-note" id="balNote">Balance: <b>—</b></div><button class="btn primary wide" id="chkBtn" style="margin-top:12px">Check the ledger</button><div id="chkFb" style="margin-top:12px"></div>`; },
+    run(idx){ const h=$("exHost");
+      const rc=()=>{ let d=0,c=0; DS.cash.forEach((r,i)=>{ d+=giInt(h.querySelector(`[data-r="${i}"][data-c="dr"]`))||0; c+=giInt(h.querySelector(`[data-r="${i}"][data-c="cr"]`))||0; }); $("tDr").textContent=fmt(d);$("tCr").textContent=fmt(c); const diff=d-c; $("balNote").innerHTML=(d||c)?`Balance: <b style="color:var(--${diff>=0?'dr':'cr'})">${fmt(Math.abs(diff))} ${diff>=0?'debit':'credit'}</b>`:`Balance: <b>—</b>`; };
+      h.querySelectorAll("input.cell").forEach(el=>el.addEventListener("input",()=>{ el.value=el.value.replace(/[^0-9]/g,""); rc(); }));
+      $("chkBtn").onclick=()=>{ let ok=true; DS.cash.forEach((r,i)=>["dr","cr"].forEach(c=>{ const el=h.querySelector(`[data-r="${i}"][data-c="${c}"]`); el.classList.remove("right","wrong"); const want=r[1]===c?r[2]:0; const got=giInt(el)||0; if(got===want){ if(want)el.classList.add("right"); } else { el.classList.add("wrong"); ok=false; } }));
+        $("chkFb").innerHTML=ok?`<div class="fbk ok"><b>Correct.</b> Debits $13,500 − credits $3,200 leave a <b>$10,300 debit balance</b> in Cash.</div>`:`<div class="fbk no">Some cells are off — put each amount on the side the transaction calls for, and leave the other blank.</div>`; if(ok)markDone(idx); };
+      rc(); } },
+
+  { /* 1 · Normal-balance table */
+    mk(){ const rows=DS.nb.map((r,i)=>`<tr><td class="lbl">${r[0]}</td><td><select class="cell" data-r="${i}" aria-label="Normal balance for ${r[0]}"><option value="">— choose —</option><option value="dr">Debit</option><option value="cr">Credit</option></select></td></tr>`).join("");
+      return `<div class="ss-wrap"><table class="ss"><thead><tr><th class="lbl">Account</th><th class="lbl">Normal balance</th></tr></thead><tbody>${rows}</tbody></table></div><button class="btn primary wide" id="chkBtn" style="margin-top:12px">Check the column</button><div id="chkFb" style="margin-top:12px"></div>`; },
+    run(idx){ const h=$("exHost");
+      $("chkBtn").onclick=()=>{ let ok=true,filled=true; DS.nb.forEach((r,i)=>{ const el=h.querySelector(`select[data-r="${i}"]`); el.classList.remove("right","wrong"); if(!el.value){filled=false;return;} if(el.value===r[1])el.classList.add("right"); else {el.classList.add("wrong");ok=false;} });
+        if(!filled){ $("chkFb").innerHTML=`<div class="fbk no">Choose a normal balance for every account first.</div>`; return; }
+        $("chkFb").innerHTML=ok?`<div class="fbk ok"><b>All correct.</b> Assets, expenses &amp; dividends are debit-balance; liabilities, revenue &amp; equity are credit-balance.</div>`:`<div class="fbk no">The red cells are wrong — only <b>Dividends</b> breaks the equity pattern (it's a debit).</div>`; if(ok)markDone(idx); }; } },
+
+  { /* 2 · Journalize & foot */
+    mk(){ let body="",ri=0; DS.je.forEach(t=>{ body+=`<tr class="sub"><td colspan="3">${t.h}</td></tr>`; t.lines.forEach(ln=>{ body+=`<tr><td class="lbl">${ln[0]}</td><td><input class="cell" data-r="${ri}" data-c="dr" inputmode="numeric" placeholder="0"></td><td><input class="cell" data-r="${ri}" data-c="cr" inputmode="numeric" placeholder="0"></td></tr>`; ri++; }); });
+      return `<div class="ss-wrap"><table class="ss"><thead><tr><th class="lbl">Account</th><th>Debit</th><th>Credit</th></tr></thead><tbody>${body}<tr class="tot"><td class="lbl">Totals</td><td class="num" id="tDr">$0</td><td class="num" id="tCr">$0</td></tr></tbody></table></div><div class="ss-note" id="eqNote">Debits — · Credits —</div><button class="btn primary wide" id="chkBtn" style="margin-top:12px">Check the entries</button><div id="chkFb" style="margin-top:12px"></div>`; },
+    run(idx){ const h=$("exHost"); const LN=[]; DS.je.forEach(t=>t.lines.forEach(l=>LN.push(l)));
+      const rc=()=>{ let d=0,c=0; LN.forEach((l,i)=>{ d+=giInt(h.querySelector(`[data-r="${i}"][data-c="dr"]`))||0; c+=giInt(h.querySelector(`[data-r="${i}"][data-c="cr"]`))||0; }); $("tDr").textContent=fmt(d);$("tCr").textContent=fmt(c); const bal=(d===c&&(d||c)); $("eqNote").innerHTML=`Debits ${fmt(d)} ${bal?'=':'≠'} Credits ${fmt(c)}`; $("eqNote").style.color=bal?'var(--cr)':'var(--muted)'; };
+      h.querySelectorAll("input.cell").forEach(el=>el.addEventListener("input",()=>{ el.value=el.value.replace(/[^0-9]/g,""); rc(); }));
+      $("chkBtn").onclick=()=>{ let ok=true; LN.forEach((l,i)=>["dr","cr"].forEach(c=>{ const el=h.querySelector(`[data-r="${i}"][data-c="${c}"]`); el.classList.remove("right","wrong"); const want=l[1]===c?l[2]:0; const got=giInt(el)||0; if(got===want){ if(want)el.classList.add("right"); } else { el.classList.add("wrong"); ok=false; } }));
+        $("chkFb").innerHTML=ok?`<div class="fbk ok"><b>Balanced.</b> Total debits $8,500 = total credits $8,500 — both entries are recorded correctly.</div>`:`<div class="fbk no">Check the red cells — each account takes its amount on one side only, and the two sides must be equal.</div>`; if(ok)markDone(idx); };
+      rc(); } },
+
+  { /* 3 · Equation solver */
+    mk(){ const td=(r,k,i)=> r[k]===null?`<td><input class="cell" data-r="${i}" inputmode="numeric" placeholder="?"></td>`:`<td class="num calc">$${r[k].toLocaleString()}</td>`;
+      const rows=DS.eq.map((r,i)=>`<tr>${td(r,'a',i)}<td class="op">=</td>${td(r,'l',i)}<td class="op">+</td>${td(r,'e',i)}<td class="ck" id="ck${i}">—</td></tr>`).join("");
+      return `<div class="ss-wrap"><table class="ss"><thead><tr><th>Assets</th><th></th><th>Liabilities</th><th></th><th>Equity</th><th></th></tr></thead><tbody>${rows}</tbody></table></div><button class="btn primary wide" id="chkBtn" style="margin-top:12px">Check the equations</button><div id="chkFb" style="margin-top:12px"></div>`; },
+    run(idx){ const h=$("exHost");
+      const rc=()=>{ DS.eq.forEach((r,i)=>{ const el=h.querySelector(`input[data-r="${i}"]`); const v=giInt(el); const a=r.a===null?v:r.a,l=r.l===null?v:r.l,e=r.e===null?v:r.e; const ck=$("ck"+i); if(v===null){ck.textContent="—";ck.style.color="var(--muted-2)";} else if(a===l+e){ck.textContent="✓";ck.style.color="var(--cr)";} else {ck.textContent="✗";ck.style.color="var(--dr)";} }); };
+      h.querySelectorAll("input.cell").forEach(el=>el.addEventListener("input",()=>{ el.value=el.value.replace(/[^0-9]/g,""); rc(); }));
+      $("chkBtn").onclick=()=>{ let ok=true; DS.eq.forEach((r,i)=>{ const el=h.querySelector(`input[data-r="${i}"]`); el.classList.remove("right","wrong"); if(giInt(el)===r.ans)el.classList.add("right"); else {el.classList.add("wrong");ok=false;} }); $("chkFb").innerHTML=ok?`<div class="fbk ok"><b>All balanced.</b> Given any two parts of the equation, the third is fixed.</div>`:`<div class="fbk no">Re-check the red cells — the missing amount must make Assets equal Liabilities + Equity.</div>`; if(ok)markDone(idx); };
+      rc(); } },
+
+  { /* 4 · Retained earnings statement */
+    mk(){ const d=DS.re; return `<div class="ss-wrap"><table class="ss"><thead><tr><th class="lbl">Statement of Retained Earnings</th><th>Amount</th></tr></thead><tbody>
+      <tr><td class="lbl">Revenues</td><td class="num calc">$${d.rev.toLocaleString()}</td></tr>
+      <tr><td class="lbl">Less: Expenses</td><td class="num calc">(${d.exp.toLocaleString()})</td></tr>
+      <tr class="tot"><td class="lbl">Net income</td><td><input class="cell" id="niIn" inputmode="numeric" placeholder="?"></td></tr>
+      <tr><td class="lbl">Beginning retained earnings</td><td class="num calc">$${d.beg.toLocaleString()}</td></tr>
+      <tr><td class="lbl">Add: Net income</td><td class="num calc" id="niEcho">—</td></tr>
+      <tr><td class="lbl">Less: Dividends</td><td class="num calc">(${d.div.toLocaleString()})</td></tr>
+      <tr class="tot"><td class="lbl">Ending retained earnings</td><td><input class="cell" id="endIn" inputmode="numeric" placeholder="?"></td></tr>
+      </tbody></table></div><button class="btn primary wide" id="chkBtn" style="margin-top:12px">Check the statement</button><div id="chkFb" style="margin-top:12px"></div>`; },
+    run(idx){ const h=$("exHost"),d=DS.re;
+      const rc=()=>{ const ni=giInt($("niIn")); $("niEcho").textContent=ni===null?"—":"$"+ni.toLocaleString(); };
+      h.querySelectorAll("input.cell").forEach(el=>el.addEventListener("input",()=>{ el.value=el.value.replace(/[^0-9]/g,""); rc(); }));
+      $("chkBtn").onclick=()=>{ [["niIn",d.ni],["endIn",d.end]].forEach(([id,ans])=>{ const el=$(id); el.classList.remove("right","wrong"); if(giInt(el)===ans)el.classList.add("right"); else el.classList.add("wrong"); }); const ok=giInt($("niIn"))===d.ni&&giInt($("endIn"))===d.end;
+        $("chkFb").innerHTML=ok?`<div class="fbk ok"><b>Correct.</b> Net income $3,300; ending retained earnings $12,000 + 3,300 − 1,500 = <b>$13,800</b>.</div>`:`<div class="fbk no">Net income = Revenues − Expenses. Ending RE = Beginning + Net income − Dividends.</div>`; if(ok)markDone(idx); };
+      rc(); } },
+
+  { /* 5 · Accounting-equation worksheet */
+    mk(){ const rows=DS.ws.map((r,i)=>`<tr><td class="lbl">${r[0]}</td><td><input class="cell" data-r="${i}" data-c="0" inputmode="text" placeholder="0"></td><td><input class="cell" data-r="${i}" data-c="1" inputmode="text" placeholder="0"></td><td><input class="cell" data-r="${i}" data-c="2" inputmode="text" placeholder="0"></td><td class="ck" id="ck${i}">—</td></tr>`).join("");
+      return `<p class="ex-hint" style="margin-bottom:8px">Enter a decrease with a minus sign, e.g. <b>−2000</b>.</p><div class="ss-wrap"><table class="ss"><thead><tr><th class="lbl">Transaction</th><th>Assets</th><th>Liab.</th><th>Equity</th><th></th></tr></thead><tbody>${rows}<tr class="tot"><td class="lbl">Ending balance</td><td class="num" id="tA">0</td><td class="num" id="tL">0</td><td class="num" id="tE">0</td><td class="ck" id="ckT">—</td></tr></tbody></table></div><button class="btn primary wide" id="chkBtn" style="margin-top:12px">Check the worksheet</button><div id="chkFb" style="margin-top:12px"></div>`; },
+    run(idx){ const h=$("exHost");
+      const gv=(i,c)=>giInt(h.querySelector(`[data-r="${i}"][data-c="${c}"]`))||0;
+      const rc=()=>{ let ta=0,tl=0,te=0; DS.ws.forEach((r,i)=>{ const a=gv(i,0),l=gv(i,1),e=gv(i,2); ta+=a;tl+=l;te+=e; const any=["0","1","2"].some(c=>h.querySelector(`[data-r="${i}"][data-c="${c}"]`).value); const ck=$("ck"+i); if(!any){ck.textContent="—";ck.style.color="var(--muted-2)";} else if(a===l+e){ck.textContent="✓";ck.style.color="var(--cr)";} else {ck.textContent="✗";ck.style.color="var(--dr)";} });
+        $("tA").textContent=sfmt(ta);$("tL").textContent=sfmt(tl);$("tE").textContent=sfmt(te); const ck=$("ckT"); if(ta===tl+te){ck.textContent="✓";ck.style.color="var(--cr)";} else {ck.textContent="✗";ck.style.color="var(--dr)";} };
+      h.querySelectorAll("input.cell").forEach(el=>el.addEventListener("input",()=>{ el.value=el.value.replace(/[^0-9-]/g,""); rc(); }));
+      $("chkBtn").onclick=()=>{ let ok=true; DS.ws.forEach((r,i)=>[0,1,2].forEach(c=>{ const el=h.querySelector(`[data-r="${i}"][data-c="${c}"]`); el.classList.remove("right","wrong"); const want=r[c+1]; const got=gv(i,c); if(got===want){ if(want)el.classList.add("right"); } else { el.classList.add("wrong"); ok=false; } }));
+        $("chkFb").innerHTML=ok?`<div class="fbk ok"><b>Balanced worksheet.</b> Ending totals: Assets $48,000 = Liabilities $3,000 + Equity $45,000.</div>`:`<div class="fbk no">Check the red cells — record each effect (minus for a decrease) so every row keeps Assets = Liabilities + Equity.</div>`; if(ok)markDone(idx); };
+      rc(); } },
+];
 const done = new Set();
 let cur = 0;
 let activeEx = 0;
@@ -683,8 +785,8 @@ function openExcel(i){
   $("exName").textContent = EX_NAMES[i];
   $("exContext").innerHTML = `<span class="ecn"><span class="ek">Applying · ${c.badge}</span><span class="et">${c.t}</span></span><span class="eo">Open lesson ›</span>`;
   $("exContext").onclick = ()=>pushConcept(i);
-  $("exHost").innerHTML = exInstrHTML(i) + c.tool;
-  c.init();
+  $("exHost").innerHTML = exInstrHTML(i) + EXSHEET[i].mk();
+  EXSHEET[i].run(i);
   setTab("v-excel");
 }
 
