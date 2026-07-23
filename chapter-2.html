@@ -262,6 +262,14 @@ table.ws tfoot td{border-top:2px solid var(--text);font-weight:800;background:#F
 .ex-bar .ex-tag{margin-left:auto;font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em;color:var(--excel);background:#fff;border:1px solid var(--cr-100);border-radius:999px;padding:2px 8px}
 .ex-body{padding:14px}
 .ex-done-note{margin-top:14px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
+.ex-instr{background:#EEF1FE;border:1px solid #D8DEFB;border-radius:12px;padding:13px 14px;margin-bottom:14px}
+.ex-instr h4{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--primary-strong);margin-bottom:9px;text-transform:uppercase}
+.ex-instr h4 svg{flex-shrink:0}
+.ex-instr .task{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:10px}
+.ex-instr ol{margin:0;padding:0;list-style:none;counter-reset:step;display:flex;flex-direction:column;gap:8px}
+.ex-instr li{position:relative;padding-left:28px;font-size:13px;line-height:1.45;color:#39435C;counter-increment:step}
+.ex-instr li b{color:var(--text)}
+.ex-instr li::before{content:counter(step);position:absolute;left:0;top:-1px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .adj-panel{margin-top:14px}
 .adj-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:9px;box-shadow:var(--shadow)}
 .adj-row .ak{width:22px;height:22px;border-radius:6px;background:var(--primary-050);color:var(--primary);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -581,6 +589,15 @@ const CONCEPTS = [
 
 /* ================= progress ================= */
 const EX_NAMES = ["Cash T-account ledger","Debit/credit posting drill","Journal & trial balance","Equation solver","Equity effects check","Accounting-equation worksheet"];
+const EX_INSTR = [
+  {task:"Build the Cash account, then read its balance.", steps:["Tap <b>Post debit</b> or <b>Post credit</b> to add an amount to that side.","Whichever side totals more decides the balance — debit or credit.","Post at least three entries to finish."]},
+  {task:"Decide the side for each of the 8 items.", steps:["Read the change described on the card.","Tap <b>Debit</b> (left) or <b>Credit</b> (right).","Work through all eight items."]},
+  {task:"Post the entries and prove the books balance.", steps:["Tap <b>Post entry</b> on each journal entry, from top to bottom.","The running trial balance updates as you post.","You're done when total debits equal total credits."]},
+  {task:"Solve for the missing amount in each equation.", steps:["Two values are given; one cell shows a “?”.","Tap the option that makes <b>Assets = Liabilities + Equity</b>.","Solve all three problems."]},
+  {task:"Say how each account affects equity.", steps:["Read the account name.","Tap <b>▲ Increases</b> or <b>▼ Decreases</b> equity.","Answer all five accounts."]},
+  {task:"Analyze the eight transactions.", steps:["For each one, tap the <b>two elements</b> that change.","The worksheet fills in the amounts for you.","Check that every row keeps <b>Assets = Liabilities + Equity</b>."]},
+];
+function exInstrHTML(i){ const x=EX_INSTR[i]; return `<section class="ex-instr" aria-label="How to do this exercise"><h4><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> How to do this</h4><p class="task">${x.task}</p><ol>${x.steps.map(s=>`<li>${s}</li>`).join("")}</ol></section>`; }
 const done = new Set();
 let cur = 0;
 let activeEx = 0;
@@ -666,7 +683,7 @@ function openExcel(i){
   $("exName").textContent = EX_NAMES[i];
   $("exContext").innerHTML = `<span class="ecn"><span class="ek">Applying · ${c.badge}</span><span class="et">${c.t}</span></span><span class="eo">Open lesson ›</span>`;
   $("exContext").onclick = ()=>pushConcept(i);
-  $("exHost").innerHTML = c.tool;
+  $("exHost").innerHTML = exInstrHTML(i) + c.tool;
   c.init();
   setTab("v-excel");
 }
