@@ -87,6 +87,14 @@
     .practice-scroll table { min-width: 560px; }
     .perez-scroll table { min-width: 620px; }
   }
+
+  /* Course 2 lecture animations */
+@keyframes c2l1rpPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+@keyframes c2l1rpPost { 0% { opacity: 0; transform: translateY(-6px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes c2l2jPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes c2l3ldPost { 0% { opacity: 0; transform: translateY(-8px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes c2l3ldBal { 0% { background: var(--color-accent-200); } 100% { background: transparent; } }
+@keyframes c2l5riseIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
@@ -701,6 +709,823 @@
         </section>
       </div>
     </section>
+
+    <section class="lecture" id="c2l1" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 &middot; Lecture 1</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">The Recording Process</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 640px; text-wrap: pretty;">Although you <em>could</em> enter transactions straight into the accounts, almost no business does. Every transaction moves through three basic steps &mdash; the heart of the accounting cycle. Follow one purchase all the way through.</p>
+  </header>
+
+  <div style="padding: 26px 44px 26px 56px; display: flex; flex-direction: column; gap: 40px; max-width: 1180px; width: 100%; box-sizing: border-box;">
+
+    <!-- Three steps -->
+    <section id="c2l1-rp-steps" style="padding: var(--space-2) 0 0;">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Overview</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Three Steps, Every Transaction</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 700px;">The first step &mdash; <strong>analyze</strong> &mdash; you met in the section intro. The other two, <strong>journalize</strong> and <strong>post</strong>, are what this lecture is about.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: 30px; height: 30px; background: var(--color-accent-900); color: #fff; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 15px; flex-shrink: 0;">1</span>
+            <span style="font-family: var(--font-heading); font-size: 17px; font-weight: 600;">Analyze</span>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Read the source document and decide which accounts change, and whether each is debited or credited.</p>
+        </div>
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: 30px; height: 30px; background: var(--color-accent-900); color: #fff; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 15px; flex-shrink: 0;">2</span>
+            <span style="font-family: var(--font-heading); font-size: 17px; font-weight: 600;">Journalize</span>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Record the transaction in the general journal as equal debits and credits, in date order.</p>
+        </div>
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: 30px; height: 30px; background: var(--color-accent-900); color: #fff; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 15px; flex-shrink: 0;">3</span>
+            <span style="font-family: var(--font-heading); font-size: 17px; font-weight: 600;">Post</span>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Transfer each journal amount into the individual ledger account it affects.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Illustration 2.7 -->
+    <section id="c2l1-rp-illus" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Illustration 2.7 &middot; Interactive</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Follow One Transaction Through</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button class="btn btn-secondary" id="c2l1-prev" type="button">&larr; Back</button>
+          <button class="btn btn-primary" id="c2l1-next" type="button">Next step &rarr;</button>
+        </div>
+      </div>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;"><strong>Sierra Corporation</strong> purchases equipment for <strong>$5,000</strong> cash on October 2. Step through analyze &rarr; journalize &rarr; post and watch the amount travel from the invoice into the journal, then into the ledger.</p>
+
+      <!-- stepper -->
+      <div id="c2l1-stepper" style="display: flex; gap: 8px; margin-bottom: 20px;"></div>
+
+      <!-- three panels -->
+      <div id="c2l1-panels" style="display: grid; grid-template-columns: 1fr 26px 1.15fr 26px 1.25fr; align-items: stretch; gap: 0;"></div>
+
+      <!-- step callout -->
+      <div id="c2l1-callout"></div>
+    </section>
+
+    <!-- Why it matters -->
+    <section id="c2l1-rp-why" style="padding: 24px 0 40px; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Takeaway</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Journal First, Ledger Second</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">The journal captures the whole transaction in one place, in the order it happened. The ledger takes those same debits and credits and re-files them by account, so you can read a running balance. Nothing new is invented in the ledger &mdash; it is the journal, re-sorted.</p>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border: 1px solid var(--color-neutral-400); padding: 18px 20px;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);">Up next</div>
+          <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-top: 2px;">Lecture 2 &mdash; The Journal</div>
+          <div style="font-size: 13px; color: var(--color-neutral-700); margin-top: 2px;">The exact technique of journalizing, line by line.</div>
+        </div>
+        <button class="btn btn-primary" type="button" disabled>Continue &rarr;</button>
+      </div>
+    </section>
+  </div>
+</section>
+
+    <section class="lecture" id="c2l2" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 &middot; Lecture 2</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">The Journal</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 640px; text-wrap: pretty;">Companies record transactions in chronological order, so the journal is called the <strong>book of original entry</strong>. Here you&rsquo;ll learn its exact form &mdash; then build an entry yourself.</p>
+  </header>
+
+  <div style="padding: 26px 44px 26px 56px; display: flex; flex-direction: column; gap: 40px; max-width: 1180px; width: 100%; box-sizing: border-box;">
+
+    <!-- What the journal does -->
+    <section id="c2l2-jn-why" style="padding: var(--space-2) 0 0;">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Why It Matters</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">What the Journal Does</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Every company keeps at least one <strong>general journal</strong> &mdash; spaces for dates, account titles and explanations, and two amount columns. It makes three contributions to the recording process:</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px; color: var(--color-accent-700);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            <span style="font-family: var(--font-heading); font-size: 15px; font-weight: 600; color: var(--color-text);">Complete effects</span>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">It discloses the <strong>full effect</strong> of a transaction in one place &mdash; both sides, together.</p>
+        </div>
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px; color: var(--color-accent-700);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            <span style="font-family: var(--font-heading); font-size: 15px; font-weight: 600; color: var(--color-text);">Chronological record</span>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">It provides a <strong>date-ordered</strong> history of everything the business did.</p>
+        </div>
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+          <div style="display: flex; align-items: center; gap: 10px; color: var(--color-accent-700);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span style="font-family: var(--font-heading); font-size: 15px; font-weight: 600; color: var(--color-text);">Catches errors</span>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Debits and credits sit side by side, so an out-of-balance entry is easy to <strong>spot and locate</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Illustration 2.8 -->
+    <section id="c2l2-jn-illus" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Illustration 2.8 &middot; Interactive</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">The Technique of Journalizing</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Two transactions for Sierra Corporation, on the first page of the journal (<strong>J1</strong>). Tap a numbered marker to see what that part of the entry is for.</p>
+
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start;">
+        <!-- journal -->
+        <div style="border: 1px solid var(--color-neutral-500); background: #fff;">
+          <div style="background: var(--color-accent-700); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.04em;">General Journal</span>
+            <span style="font-family: var(--font-heading); font-weight: 700; font-size: 12px; border: 1px solid var(--color-accent-300); padding: 1px 7px;">J1</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 78px 1fr 44px 78px 78px; font-size: 13px;">
+            <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;">Date</div>
+            <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;">Account Titles &amp; Explanation</div>
+            <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600; text-align: center;">Ref.</div>
+            <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600; text-align: right;">Debit</div>
+            <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600; text-align: right;">Credit</div>
+
+            <!-- row: 2025 / Sept 1 -->
+            <div style="padding: 8px 8px 2px; border-right: 1px solid var(--color-neutral-300);">
+              <span style="color: var(--color-neutral-600);">2025</span><br>
+              <button type="button" data-marker="1" style="width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 11px; display: inline-grid; place-items: center; color: #fff; background: var(--color-accent-700); box-shadow: 0 0 0 3px var(--color-accent-200); margin-right: 2px; vertical-align: middle;">1</button> Sept. 1
+            </div>
+            <div style="padding: 8px 8px 2px; border-right: 1px solid var(--color-neutral-300);">
+              <div style="display: flex; align-items: center; gap: 6px;"><button type="button" data-marker="2" style="width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 11px; display: inline-grid; place-items: center; color: #fff; background: var(--color-neutral-500); box-shadow: none; margin-right: 2px; vertical-align: middle;">2</button><span style="color: #2f7d4f; font-weight: 600;">Cash</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; padding-left: 26px;"><button type="button" data-marker="3" style="width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 11px; display: inline-grid; place-items: center; color: #fff; background: var(--color-neutral-500); box-shadow: none; margin-right: 2px; vertical-align: middle;">3</button><span style="color: #b8442c; font-weight: 600;">Common Stock</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; padding-left: 26px; font-style: italic; color: var(--color-neutral-600); font-size: 12px;"><button type="button" data-marker="4" style="width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 11px; display: inline-grid; place-items: center; color: #fff; background: var(--color-neutral-500); box-shadow: none; margin-right: 2px; vertical-align: middle;">4</button>(Issued common stock for cash)</div>
+            </div>
+            <div style="padding: 8px 6px 2px; border-right: 1px solid var(--color-neutral-300); text-align: center;"><button type="button" data-marker="5" style="width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 11px; display: inline-grid; place-items: center; color: #fff; background: var(--color-neutral-500); box-shadow: none; margin-right: 2px; vertical-align: middle;">5</button></div>
+            <div style="padding: 8px 8px 2px; border-right: 1px solid var(--color-neutral-300); text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: #2f7d4f;">15,000</div>
+            <div style="padding: 8px 8px 2px; text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: #b8442c;"><br>15,000</div>
+
+            <!-- spacer row -->
+            <div style="border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200); padding: 4px;"></div>
+            <div style="border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200); padding: 4px;"></div>
+            <div style="border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200);"></div>
+            <div style="border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200);"></div>
+            <div style="border-top: 1px solid var(--color-neutral-200);"></div>
+
+            <!-- row 2: Sept 1 equipment -->
+            <div style="padding: 6px 8px; border-right: 1px solid var(--color-neutral-300);">1</div>
+            <div style="padding: 6px 8px; border-right: 1px solid var(--color-neutral-300);">
+              <div style="color: #2f7d4f; font-weight: 600;">Equipment</div>
+              <div style="padding-left: 26px; color: #b8442c; font-weight: 600;">Cash</div>
+              <div style="padding-left: 26px; font-style: italic; color: var(--color-neutral-600); font-size: 12px;">(Purchased equipment for cash)</div>
+            </div>
+            <div style="padding: 6px; border-right: 1px solid var(--color-neutral-300);"></div>
+            <div style="padding: 6px 8px; text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: #2f7d4f;">7,000</div>
+            <div style="padding: 6px 8px; text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: #b8442c;"><br>7,000</div>
+          </div>
+        </div>
+
+        <!-- annotation panel -->
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px; position: sticky; top: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span id="c2l2-note-badge" style="width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; background: var(--color-accent-700); color: #fff; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 700; font-size: 15px; animation: c2l2jPop 0.3s ease;">1</span>
+            <span id="c2l2-note-title" style="font-family: var(--font-heading); font-size: 16px; font-weight: 600;">The date column</span>
+          </div>
+          <p id="c2l2-note-body" style="margin: 12px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-800);">The date of the transaction is entered in the Date column &mdash; the year on the first line, then the month and day. Sierra&rsquo;s first entry is Sept. 1, 2025.</p>
+          <div style="margin-top: 16px; display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" data-dot="1" style="width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: #fff; background: var(--color-accent-700); border: 1px solid var(--color-accent-500);">1</button>
+            <button type="button" data-dot="2" style="width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500);">2</button>
+            <button type="button" data-dot="3" style="width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500);">3</button>
+            <button type="button" data-dot="4" style="width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500);">4</button>
+            <button type="button" data-dot="5" style="width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500);">5</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journalizing steps -->
+    <section id="c2l2-jn-steps" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">The Rule</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">A Complete Entry Has Three Parts</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px; max-width: 720px;">
+        <div style="display: flex; gap: 14px; align-items: flex-start; border-left: 3px solid var(--color-accent-500); padding: 4px 0 4px 16px;"><span style="font-family: var(--font-heading); font-weight: 600; color: var(--color-accent-700); font-size: 15px;">1</span><span style="font-size: 14px; line-height: 1.55;">The <strong>date</strong> of the transaction.</span></div>
+        <div style="display: flex; gap: 14px; align-items: flex-start; border-left: 3px solid var(--color-accent-500); padding: 4px 0 4px 16px;"><span style="font-family: var(--font-heading); font-weight: 600; color: var(--color-accent-700); font-size: 15px;">2</span><span style="font-size: 14px; line-height: 1.55;">The <strong>accounts and amounts</strong> to be debited and credited.</span></div>
+        <div style="display: flex; gap: 14px; align-items: flex-start; border-left: 3px solid var(--color-accent-500); padding: 4px 0 4px 16px;"><span style="font-family: var(--font-heading); font-weight: 600; color: var(--color-accent-700); font-size: 15px;">3</span><span style="font-size: 14px; line-height: 1.55;">A brief <strong>explanation</strong> of the transaction.</span></div>
+      </div>
+    </section>
+
+    <!-- Practice lab -->
+    <section id="c2l2-jn-practice" style="padding: 24px 0 40px; border-top: 1px solid var(--color-neutral-300);">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Practice &middot; Journalize It</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Build the Entry Yourself</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span id="c2l2-result" style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.03em; color: var(--color-neutral-700);"></span>
+          <button class="btn btn-secondary" type="button" data-action="reset">Reset</button>
+          <button class="btn btn-primary" type="button" data-action="check">Check entry</button>
+        </div>
+      </div>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;"><strong>Oct. 3:</strong> Sierra Corporation performs services and receives <strong>$1,200</strong> cash from a customer. Choose the accounts and enter the amounts on the correct sides. Debit on top, credit indented below.</p>
+
+      <div style="border: 1px solid var(--color-neutral-500); background: #fff; max-width: 760px;">
+        <div style="background: var(--color-accent-700); color: #fff; padding: 8px 12px; font-family: var(--font-heading); font-weight: 600; font-size: 13px;">General Journal</div>
+        <div style="display: grid; grid-template-columns: 90px 1fr 96px 96px; font-size: 13px;">
+          <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;">Date</div>
+          <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;">Account Title</div>
+          <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600; text-align: right;">Debit</div>
+          <div style="padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600; text-align: right;">Credit</div>
+
+          <!-- debit line -->
+          <div style="padding: 10px 8px; border-right: 1px solid var(--color-neutral-300); font-family: var(--font-heading); font-weight: 600;">Oct. 3</div>
+          <div style="padding: 8px; border-right: 1px solid var(--color-neutral-300);">
+            <select id="c2l2-dr-acct" style="width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; font: inherit; font-size: 13px; padding: 7px 8px; cursor: pointer;">
+              <option value="">Debit account&hellip;</option>
+              <option value="Cash">Cash</option>
+              <option value="Accounts Receivable">Accounts Receivable</option>
+              <option value="Service Revenue">Service Revenue</option>
+              <option value="Common Stock">Common Stock</option>
+              <option value="Equipment">Equipment</option>
+            </select>
+          </div>
+          <div style="padding: 8px; border-right: 1px solid var(--color-neutral-300);"><input id="c2l2-dr-amt" inputmode="numeric" placeholder="0" style="width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; text-align: right; font: inherit; font-weight: 600; font-variant-numeric: tabular-nums; padding: 7px 9px;"></div>
+          <div style="padding: 8px;"><input disabled placeholder="" style="width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-300); background: var(--color-neutral-100); font: inherit; padding: 7px 9px;"></div>
+
+          <!-- credit line -->
+          <div style="padding: 10px 8px; border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200);"></div>
+          <div style="padding: 8px 8px 8px 34px; border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200);">
+            <select id="c2l2-cr-acct" style="width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; font: inherit; font-size: 13px; padding: 7px 8px; cursor: pointer;">
+              <option value="">Credit account&hellip;</option>
+              <option value="Cash">Cash</option>
+              <option value="Accounts Receivable">Accounts Receivable</option>
+              <option value="Service Revenue">Service Revenue</option>
+              <option value="Common Stock">Common Stock</option>
+              <option value="Equipment">Equipment</option>
+            </select>
+          </div>
+          <div style="padding: 8px; border-right: 1px solid var(--color-neutral-300); border-top: 1px solid var(--color-neutral-200);"><input disabled placeholder="" style="width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-300); background: var(--color-neutral-100); font: inherit; padding: 7px 9px;"></div>
+          <div style="padding: 8px; border-top: 1px solid var(--color-neutral-200);"><input id="c2l2-cr-amt" inputmode="numeric" placeholder="0" style="width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; text-align: right; font: inherit; font-weight: 600; font-variant-numeric: tabular-nums; padding: 7px 9px;"></div>
+        </div>
+      </div>
+      <div id="c2l2-feedback" hidden style="margin-top: 16px; border-left: 3px solid var(--color-neutral-500); background: #fff; padding: 14px 16px; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 760px;"></div>
+    </section>
+  </div>
+</section>
+
+    <section class="lecture" id="c2l3" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 · Lecture 3</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">The Ledger</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 640px; text-wrap: pretty;">The entire group of accounts a company maintains is the <strong>ledger</strong>. It keeps the running balance of every account &mdash; how much cash is on hand, how much is owed. This lecture opens it up and shows the amounts arriving from the journal.</p>
+  </header>
+
+  <div style="padding: 26px 44px 26px 56px; display: flex; flex-direction: column; gap: 40px; max-width: 1180px; width: 100%; box-sizing: border-box;">
+
+    <!-- Concept + cycle -->
+    <section id="c2l3-ld-concept" style="padding: var(--space-2) 0 0;">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Where We Are</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Post to the Ledger Accounts</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Every company keeps a <strong>general ledger</strong> &mdash; the full set of asset, liability, and stockholders&rsquo; equity accounts. Posting is step 3 of the cycle: moving each journal amount into the account it belongs to.</p>
+      <div id="c2l3-cycle" style="display: flex; flex-wrap: wrap; gap: 5px;"></div>
+    </section>
+
+    <!-- Illustration 2.9 chart of accounts -->
+    <section id="c2l3-ld-chart" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Illustration 2.9 · Interactive</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">The General Ledger — Chart of Accounts</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Accounts are arranged in the order they appear in the financial statements &mdash; assets first, then liabilities, then stockholders&rsquo; equity (including revenues and expenses). Each is numbered. Tap an account to inspect it.</p>
+      <div id="c2l3-groups" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start;"></div>
+      <!-- detail strip -->
+      <div style="margin-top: 16px; border: 1px solid var(--color-neutral-400); border-left: 3px solid var(--color-accent-700); padding: 16px 20px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.4fr; gap: 20px; align-items: center;">
+        <div>
+          <div id="c2l3-sel-kicker" style="font-family: var(--font-heading); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-500);"></div>
+          <div id="c2l3-sel-name" style="font-family: var(--font-heading); font-size: 20px; font-weight: 600; margin-top: 2px;"></div>
+        </div>
+        <div style="border-left: 1px solid var(--color-neutral-300); padding-left: 20px;">
+          <div style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-500);">Normal balance</div>
+          <div id="c2l3-sel-bal" style="font-family: var(--font-heading); font-size: 17px; margin-top: 3px;"></div>
+        </div>
+        <div style="border-left: 1px solid var(--color-neutral-300); padding-left: 20px;">
+          <div style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-500);">Increases on the</div>
+          <div id="c2l3-sel-inc" style="font-family: var(--font-heading); font-size: 17px; margin-top: 3px;"></div>
+        </div>
+        <div style="border-left: 1px solid var(--color-neutral-300); padding-left: 20px;">
+          <div style="font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-500);">Reported on</div>
+          <div id="c2l3-sel-stmt" style="font-family: var(--font-heading); font-size: 16px; font-weight: 600; margin-top: 3px;"></div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 18px; margin-top: 14px; font-size: 12px; color: var(--color-neutral-600); align-items: center; flex-wrap: wrap;">
+        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 22px; height: 16px; background: #d4e9dc; border: 1px solid #5aa27a; display: inline-grid; place-items: center; font-family: var(--font-heading); font-weight: 700; font-size: 9px; color: #2f7d4f;">Dr</span> normal debit balance</span>
+        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 22px; height: 16px; background: #f0dcd4; border: 1px solid #cf8a76; display: inline-grid; place-items: center; font-family: var(--font-heading); font-weight: 700; font-size: 9px; color: #b8442c;">Cr</span> normal credit balance</span>
+      </div>
+    </section>
+
+    <!-- Flagship: posting / running balance -->
+    <section id="c2l3-ld-post" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Interactive · Watch It Post</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">How a Balance Is Built</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button id="c2l3-reset-btn" class="btn btn-secondary" type="button">Reset</button>
+          <button id="c2l3-post-btn" class="btn btn-primary" type="button">Post first entry →</button>
+        </div>
+      </div>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Sierra&rsquo;s <strong>Cash</strong> account, posted from the journal one entry at a time. Cash is an asset, so debits raise the balance and credits lower it. Post each entry and watch the running balance rebuild.</p>
+
+      <div style="display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 24px; align-items: start;">
+        <!-- journal queue -->
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 8px;">Journal — entries touching Cash</div>
+          <div id="c2l3-queue" style="display: flex; flex-direction: column; gap: 6px;"></div>
+        </div>
+
+        <!-- ledger account (three-column running balance) -->
+        <div style="border: 1px solid var(--color-neutral-500); background: #fff;">
+          <div style="background: var(--color-accent-900); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.03em;">Cash</span>
+            <span style="font-family: var(--font-heading); font-size: 11px; color: var(--color-accent-200); letter-spacing: 0.05em;">Account No. 101</span>
+          </div>
+          <div id="c2l3-ledger-grid" style="display: grid; grid-template-columns: 62px 1fr 92px 92px 104px; font-size: 12.5px;"></div>
+          <div style="border-top: 2px solid var(--color-accent-900); background: var(--color-accent-100); display: flex; justify-content: space-between; align-items: baseline; padding: 10px 12px;">
+            <span style="font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;">Current balance</span>
+            <span id="c2l3-current-balance" style="font-family: var(--font-heading); font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums;">$0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accounting Matters: blockchain -->
+    <section id="c2l3-ld-matters" style="padding: 24px 0 40px; border-top: 1px solid var(--color-neutral-300);">
+      <div style="border: 1px solid var(--color-accent-500);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--color-accent-100); border-bottom: 1px solid var(--color-accent-500); padding: 12px 18px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v10l8 5 8-5V7Z"></path><path d="M12 22V12"></path><path d="m4 7 8 5 8-5"></path></svg>
+            <span style="font-family: var(--font-heading); font-size: 16px; font-weight: 600; letter-spacing: 0.02em;">Accounting Matters</span>
+          </div>
+          <span style="font-family: var(--font-heading); font-size: 13px; font-weight: 600; font-style: italic; color: var(--color-accent-800);">Working on the Chain Gang</span>
+        </div>
+        <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div style="font-size: 13.5px; line-height: 1.65; color: var(--color-neutral-800);">
+            <p style="margin: 0 0 12px;">A ledger doesn&rsquo;t have to live in one company&rsquo;s books. <strong>Blockchain</strong> &mdash; the technology behind digital currencies like bitcoin &mdash; is a <strong>decentralized, digital ledger</strong> shared across a peer-to-peer network. Transactions are grouped into time-stamped &ldquo;blocks&rdquo; linked to the block before, and once recorded they can&rsquo;t be altered retroactively.</p>
+            <p style="margin: 0;">Enhanced security, near real-time settlement, and lower fraud risk are pushing this into accounting. As organizations adopt it across many use cases, financial-reporting systems &mdash; and the profession itself &mdash; will adapt from record-keeper toward advisor.</p>
+          </div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 12px;">Respondents Citing Blockchain Use Case as an Area of Focus</div>
+            <div id="c2l3-chainbars" style="display: flex; flex-direction: column; gap: 9px;"></div>
+            <div style="font-size: 10.5px; color: var(--color-neutral-500); margin-top: 12px; font-style: italic;">Source: Deloitte&rsquo;s 2020 Global Blockchain Survey.</div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border: 1px solid var(--color-neutral-400); padding: 18px 20px; margin-top: 24px;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);">You&rsquo;ve completed the recording steps</div>
+          <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-top: 2px;">Analyze → Journalize → Post</div>
+          <div style="font-size: 13px; color: var(--color-neutral-700); margin-top: 2px;">Next comes proving the ledger balances: the trial balance.</div>
+        </div>
+        <button class="btn btn-secondary" type="button" disabled>Back to course intro</button>
+      </div>
+    </section>
+  </div>
+</section>
+
+    <section class="lecture" id="c2l4" hidden>
+  <style>
+    #c2l4 [data-range]:hover { border-color: var(--color-accent-600); }
+  </style>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 · Lecture 4</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">The Chart of Accounts</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 660px; text-wrap: pretty;">The number and type of accounts differ from company to company. A <strong>chart of accounts</strong> lists them all &mdash; each with a number that fixes its place in the ledger. Explore the numbering system and Pioneer Advertising&rsquo;s own chart.</p>
+  </header>
+
+  <div style="padding: 26px 44px 26px 56px; display: flex; flex-direction: column; gap: 40px; max-width: 1180px; width: 100%; box-sizing: border-box;">
+
+    <!-- Concept -->
+    <section id="c2l4-concept" style="padding: var(--space-2) 0 0;">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">How Many Accounts?</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">It Depends on the Business</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px;">
+        <p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--color-neutral-800);">How many accounts a company keeps depends on how much detail management wants. One company might use a single <strong>Utilities Expense</strong> account; another splits it into gas, electricity, and water.</p>
+        <p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--color-neutral-800);">A small business may manage on <strong>20 to 30</strong> accounts, while a giant like <strong>Anheuser-Busch InBev</strong> needs thousands to track worldwide activities. Numbers identify each account&rsquo;s place in the ledger.</p>
+      </div>
+    </section>
+
+    <!-- Numbering system -->
+    <section id="c2l4-numbering" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Interactive · The Numbering System</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Numbers Tell You the Type</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Pioneer Advertising groups its account numbers into ranges. Tap a range to highlight those accounts in the chart below &mdash; the balance-sheet accounts come first, then the income-statement accounts.</p>
+      <div id="c2l4-ranges" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+        <button type="button" data-range="asset" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">101–199</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Assets</span>
+        </button>
+        <button type="button" data-range="liability" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">200–299</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Liabilities</span>
+        </button>
+        <button type="button" data-range="equity" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">300–399</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Stockholders&rsquo; Equity</span>
+        </button>
+        <button type="button" data-range="revenue" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">400–499</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Revenues</span>
+        </button>
+        <button type="button" data-range="expense" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">500–799</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Expenses</span>
+        </button>
+        <button type="button" data-range="otherRev" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">800–899</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Other Revenues</span>
+        </button>
+        <button type="button" data-range="otherExp" style="display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: #fff; color: var(--color-text); border: 1px solid var(--color-neutral-400); opacity: 1;">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">900–999</span>
+          <span style="font-size: 12px; letter-spacing: 0.03em;">Other Expenses</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Illustration 2.10 chart -->
+    <section id="c2l4-chart" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Illustration 2.10</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Pioneer Advertising — Chart of Accounts</h2>
+      <p id="c2l4-filter-note" style="margin: var(--space-3) 0 18px; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-700); max-width: 720px;">Accounts are listed in financial-statement order and numbered by type. Tap a range above to highlight a group.</p>
+      <div style="border: 1px solid var(--color-neutral-500); background: #fff; padding: 26px 30px;">
+        <div style="text-align: center; margin-bottom: 22px;">
+          <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600;">Pioneer Advertising</div>
+          <div style="font-family: var(--font-heading); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-600);">Chart of Accounts</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 34px;">
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; text-align: center; border-bottom: 1.5px solid var(--color-text); padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.02em;">Assets</div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">101</span><span>Cash</span></div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">112</span><span>Accounts Receivable</span></div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">113</span><span>Allowance for Doubtful Accounts</span></div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">126</span><span>Supplies</span></div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">130</span><span>Prepaid Insurance</span></div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">157</span><span>Equipment</span></div>
+              <div data-type="asset" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">158</span><span>Accumulated Depreciation—Equipment</span></div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; text-align: center; border-bottom: 1.5px solid var(--color-text); padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.02em;">Liabilities</div>
+              <div data-type="liability" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">200</span><span>Notes Payable</span></div>
+              <div data-type="liability" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">201</span><span>Accounts Payable</span></div>
+              <div data-type="liability" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">209</span><span>Unearned Service Revenue</span></div>
+              <div data-type="liability" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">212</span><span>Salaries and Wages Payable</span></div>
+              <div data-type="liability" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">230</span><span>Interest Payable</span></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; text-align: center; border-bottom: 1.5px solid var(--color-text); padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.02em;">Stockholders&rsquo; Equity</div>
+              <div data-type="equity" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">311</span><span>Common Stock</span></div>
+              <div data-type="equity" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">320</span><span>Retained Earnings</span></div>
+              <div data-type="equity" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">332</span><span>Dividends</span></div>
+              <div data-type="equity" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">350</span><span>Income Summary</span></div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; text-align: center; border-bottom: 1.5px solid var(--color-text); padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.02em;">Revenues</div>
+              <div data-type="revenue" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">400</span><span>Service Revenue</span></div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; text-align: center; border-bottom: 1.5px solid var(--color-text); padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.02em;">Expenses</div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">631</span><span>Supplies Expense</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">711</span><span>Depreciation Expense</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">722</span><span>Insurance Expense</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">726</span><span>Salaries and Wages Expense</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">729</span><span>Rent Expense</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">732</span><span>Utilities Expenses</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">750</span><span>Bad Debt Expense</span></div>
+              <div data-type="expense" style="display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: transparent; opacity: 1; transition: opacity 0.2s;"><span style="font-family: var(--font-heading); font-variant-numeric: tabular-nums; color: var(--color-neutral-500); width: 34px; flex-shrink: 0;">905</span><span>Interest Expense</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 16px; display: flex; gap: 12px; align-items: flex-start; border-left: 3px solid var(--color-accent-500); background: var(--color-accent-100); padding: 14px 16px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+        <div style="font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Notice the <strong>gaps</strong> in the numbering (101, 112, 113&hellip;). They&rsquo;re deliberate &mdash; space to insert new accounts as the business grows, without renumbering everything.</div>
+      </div>
+    </section>
+
+    <section style="padding: 20px 0 40px; border-top: 1px solid var(--color-neutral-300); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <div>
+        <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);">Up next</div>
+        <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-top: 2px;">Lecture 5 — The Recording Process, Illustrated</div>
+      </div>
+      <button class="btn btn-primary" type="button" disabled>Continue &rarr;</button>
+    </section>
+  </div>
+</section>
+
+    <section class="lecture" id="c2l5" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 · Lecture 5</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">The Recording Process, Illustrated</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 680px; text-wrap: pretty;">Pioneer Advertising&rsquo;s first month, one transaction at a time. Each event is taken through the same five steps &mdash; basic analysis, the equation, the debit&ndash;credit rule, the journal entry, and posting to the ledger.</p>
+  </header>
+
+  <div style="padding: 26px 44px 40px 56px; max-width: 1180px; width: 100%; box-sizing: border-box;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px;">
+      <div id="c2l5-progress" style="font-family: var(--font-heading); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-800);"></div>
+      <div style="display: flex; gap: 10px;">
+        <button id="c2l5-prev" class="btn btn-secondary" type="button">&larr; Previous</button>
+        <button id="c2l5-next" class="btn btn-primary" type="button">Next transaction &rarr;</button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div id="c2l5-txstrip" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+      <div id="c2l5-stack" style="border: 1px solid var(--color-neutral-400); background: #fff;"></div>
+    </div>
+  </div>
+</section>
+
+    <section class="lecture" id="c2l6" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 · Lecture 6</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">Journalizing &amp; Posting — The Whole Month</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 680px; text-wrap: pretty;">Here is Pioneer Advertising&rsquo;s complete October journal and the ledger it posts into. <strong>Click any account</strong> &mdash; in the journal or the ledger &mdash; to trace it through both.</p>
+  </header>
+
+  <div style="padding: 26px 44px 40px 56px; max-width: 1180px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px;">
+    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+      <span id="c2l6-trace-label"></span>
+      <button id="c2l6-clear" type="button">Clear trace</button>
+    </div>
+
+    <!-- Journal J1 -->
+    <section id="c2l6-journal">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600; margin-bottom: 8px;">Illustration 2.21 · General Journal Entries</div>
+      <div style="border: 1px solid var(--color-neutral-500); background: #fff;">
+        <div style="background: var(--color-accent-700); color: #fff; padding: 8px 14px; display: flex; justify-content: space-between; align-items: baseline;">
+          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.03em;">General Journal</span>
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 12px; border: 1px solid var(--color-accent-300); padding: 1px 8px;">Page J1</span>
+        </div>
+        <div id="c2l6-journal-grid" style="display: grid; grid-template-columns: 66px 1fr 48px 100px 100px; font-size: 12.5px;"></div>
+      </div>
+    </section>
+
+    <!-- Ledger 2.22 -->
+    <section id="c2l6-ledger">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600; margin: 8px 0;">Illustration 2.22 · General Ledger</div>
+      <div id="c2l6-ledger-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;"></div>
+    </section>
+
+    <div style="border-left: 3px solid var(--color-accent-500); background: var(--color-accent-100); padding: 14px 16px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">The ledger lets Pioneer see every entry affecting an account in one place &mdash; handy for spotting trends or errors. The <strong>Ref.</strong> number in the journal points to the account; management can follow it back to the source entry to see what prompted it.</div>
+
+    <section style="padding: 4px 0 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <div>
+        <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);">Up next</div>
+        <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-top: 2px;">Lecture 7 — The Trial Balance</div>
+      </div>
+      <button class="btn btn-primary" type="button" disabled>Continue &rarr;</button>
+    </section>
+  </div>
+</section>
+
+    <section class="lecture" id="c2l7" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 · Lecture 7</span>
+      <span class="tag tag-accent">Lecture</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 38px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.03;">The Trial Balance</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 680px; text-wrap: pretty;">A <strong>trial balance</strong> lists every account and its balance at a point in time, debits in one column and credits in the other. Its job is to prove the two columns are equal &mdash; the first check on the ledger.</p>
+  </header>
+
+  <div style="padding: 26px 44px 40px 56px; max-width: 1180px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px;">
+
+    <!-- cycle -->
+    <section id="c2l7-where" style="padding: var(--space-2) 0 0;">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Where We Are</div>
+      <h2 style="margin: 6px 0 12px; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Prepare a Trial Balance</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">1</span><span style="line-height: 1.15;">Analyze</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">2</span><span style="line-height: 1.15;">Journalize</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">3</span><span style="line-height: 1.15;">Post to ledger</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: var(--color-accent-900); color: #fff; border: 1px solid var(--color-accent-900);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-accent-300); color: #fff;">4</span><span style="line-height: 1.15;">Prepare a trial balance</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">5</span><span style="line-height: 1.15;">Adjusting entries</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">6</span><span style="line-height: 1.15;">Adjusted trial balance</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">7</span><span style="line-height: 1.15;">Financial statements</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">8</span><span style="line-height: 1.15;">Closing entries</span></div>
+          <div style="flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: #fff; color: var(--color-neutral-700); border: 1px solid var(--color-neutral-300);"><span style="width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid var(--color-neutral-400); color: var(--color-neutral-600);">9</span><span style="line-height: 1.15;">Post-closing trial balance</span></div>
+      </div>
+    </section>
+
+    <!-- Illustration 2.23 -->
+    <section id="c2l7-doc" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Illustration 2.23</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Pioneer Advertising &mdash; Trial Balance</h2>
+        </div>
+        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; padding: 5px 14px; border: 1px solid var(--color-accent-500); background: var(--color-accent-900); color: #fff;">&#10003; In balance &middot; $287,000 = $287,000</span>
+      </div>
+      <p style="margin: var(--space-3) 0 18px; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-700); max-width: 720px;">Prepared from the ledger balances at October 31. Accounts appear in ledger order; debit balances go in the left column, credit balances in the right.</p>
+      <div style="max-width: 560px; border: 1px solid var(--color-accent-400); background: var(--color-accent-100); padding: 24px 30px;">
+        <div style="text-align: center; margin-bottom: 18px;">
+          <div style="font-family: var(--font-heading); font-size: 17px; font-weight: 600;">Pioneer Advertising</div>
+          <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 600;">Trial Balance</div>
+          <div style="font-size: 12.5px; color: var(--color-neutral-600);">October 31, 2025</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 96px 96px; font-size: 13px; background: #fff; border: 1px solid var(--color-neutral-300);">
+          <div style="padding: 6px 10px; border-bottom: 1px solid var(--color-neutral-300);"></div>
+          <div style="padding: 6px 10px; border-bottom: 1px solid var(--color-neutral-300); text-align: right; font-family: var(--font-heading); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-600);">Debit</div>
+          <div style="padding: 6px 10px; border-bottom: 1px solid var(--color-neutral-300); text-align: right; font-family: var(--font-heading); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-600);">Credit</div>
+            <div style="padding: 4px 10px;">Cash</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">80,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Accounts Receivable</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">72,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Supplies</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">25,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Prepaid Insurance</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">6,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Equipment</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">50,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Notes Payable</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;"></div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;">50,000</div>
+            <div style="padding: 4px 10px;">Accounts Payable</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;"></div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;">25,000</div>
+            <div style="padding: 4px 10px;">Unearned Service Revenue</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;"></div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;">12,000</div>
+            <div style="padding: 4px 10px;">Common Stock</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;"></div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;">100,000</div>
+            <div style="padding: 4px 10px;">Dividends</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">5,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Service Revenue</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;"></div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;">100,000</div>
+            <div style="padding: 4px 10px;">Salaries and Wages Expense</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">40,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+            <div style="padding: 4px 10px;">Rent Expense</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #2f7d4f; font-weight: 600;">9,000</div>
+            <div style="padding: 4px 10px; text-align: right; font-variant-numeric: tabular-nums; color: #b8442c; font-weight: 600;"></div>
+          <div style="padding: 8px 10px; border-top: 1px solid var(--color-text); font-family: var(--font-heading); font-weight: 600;">Totals</div>
+          <div style="padding: 8px 10px; border-top: 1px solid var(--color-text); text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; border-bottom: 3px double var(--color-text);">$287,000</div>
+          <div style="padding: 8px 10px; border-top: 1px solid var(--color-text); text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; border-bottom: 3px double var(--color-text);">$287,000</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- procedures -->
+    <section id="c2l7-how" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">The Procedure</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Three Steps to Build It</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;">
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 16px;"><div style="font-family: var(--font-heading); font-weight: 600; font-size: 15px;"><span style="color: var(--color-accent-700);">1.</span> List balances</div><p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Write each account title and its ledger balance in the correct column.</p></div>
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 16px;"><div style="font-family: var(--font-heading); font-weight: 600; font-size: 15px;"><span style="color: var(--color-accent-700);">2.</span> Total the columns</div><p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Add the debit column and the credit column separately.</p></div>
+        <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 16px;"><div style="font-family: var(--font-heading); font-weight: 600; font-size: 15px;"><span style="color: var(--color-accent-700);">3.</span> Prove equality</div><p style="margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: var(--color-neutral-800);">Confirm the two totals agree. If they don&rsquo;t, there is an error to find.</p></div>
+      </div>
+    </section>
+
+    <!-- limitations explorer -->
+    <section id="c2l7-limits" style="padding: 24px 0 0; border-top: 1px solid var(--color-neutral-300);">
+      <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Interactive &middot; Know Its Limits</div>
+      <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Errors a Trial Balance Won&rsquo;t Catch</h2>
+      <p style="margin: var(--space-3) 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">The columns can agree even when the books are wrong. As long as equal debits and credits were posted &mdash; even to the wrong account or amount &mdash; the totals still match. Tap each to see why it slips through.</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="c2l7-limit" data-limit="0" style="border: 1px solid var(--color-neutral-400); background: #fff;">
+            <button type="button" data-limit-toggle style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; font: inherit; cursor: pointer; border: none; background: #fff;">
+              <span style="width: 26px; height: 26px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px; border: 1px solid var(--color-accent-500); color: var(--color-accent-800);">1</span>
+              <span style="flex: 1; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px;">A transaction is never journalized</span>
+              <span data-sign style="font-family: var(--font-heading); font-size: 18px; color: var(--color-accent-700);">+</span>
+            </button>
+            <div data-body hidden style="padding: 0 16px 14px 52px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">If a whole transaction is left out, both its debit and its credit are missing. The columns stay equal because nothing was added to either side &mdash; yet the books are incomplete.</div>
+          </div>
+          <div class="c2l7-limit" data-limit="1" style="border: 1px solid var(--color-neutral-400); background: #fff;">
+            <button type="button" data-limit-toggle style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; font: inherit; cursor: pointer; border: none; background: #fff;">
+              <span style="width: 26px; height: 26px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px; border: 1px solid var(--color-accent-500); color: var(--color-accent-800);">2</span>
+              <span style="flex: 1; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px;">A correct entry is not posted</span>
+              <span data-sign style="font-family: var(--font-heading); font-size: 18px; color: var(--color-accent-700);">+</span>
+            </button>
+            <div data-body hidden style="padding: 0 16px 14px 52px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">If an entire journal entry is never posted, both sides are omitted from the ledger together. The trial balance still balances, but two accounts are understated.</div>
+          </div>
+          <div class="c2l7-limit" data-limit="2" style="border: 1px solid var(--color-neutral-400); background: #fff;">
+            <button type="button" data-limit-toggle style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; font: inherit; cursor: pointer; border: none; background: #fff;">
+              <span style="width: 26px; height: 26px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px; border: 1px solid var(--color-accent-500); color: var(--color-accent-800);">3</span>
+              <span style="flex: 1; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px;">A journal entry is posted twice</span>
+              <span data-sign style="font-family: var(--font-heading); font-size: 18px; color: var(--color-accent-700);">+</span>
+            </button>
+            <div data-body hidden style="padding: 0 16px 14px 52px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">Posting the same entry twice adds an equal debit and credit a second time. The columns still agree &mdash; both totals are simply overstated by the same amount.</div>
+          </div>
+          <div class="c2l7-limit" data-limit="3" style="border: 1px solid var(--color-neutral-400); background: #fff;">
+            <button type="button" data-limit-toggle style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; font: inherit; cursor: pointer; border: none; background: #fff;">
+              <span style="width: 26px; height: 26px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px; border: 1px solid var(--color-accent-500); color: var(--color-accent-800);">4</span>
+              <span style="flex: 1; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px;">The wrong accounts are used</span>
+              <span data-sign style="font-family: var(--font-heading); font-size: 18px; color: var(--color-accent-700);">+</span>
+            </button>
+            <div data-body hidden style="padding: 0 16px 14px 52px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">Debiting or crediting the wrong account still records equal debits and credits. The totals match, but the amounts sit in the wrong places.</div>
+          </div>
+          <div class="c2l7-limit" data-limit="4" style="border: 1px solid var(--color-neutral-400); background: #fff;">
+            <button type="button" data-limit-toggle style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; font: inherit; cursor: pointer; border: none; background: #fff;">
+              <span style="width: 26px; height: 26px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px; border: 1px solid var(--color-accent-500); color: var(--color-accent-800);">5</span>
+              <span style="flex: 1; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px;">Offsetting errors are made in an amount</span>
+              <span data-sign style="font-family: var(--font-heading); font-size: 18px; color: var(--color-accent-700);">+</span>
+            </button>
+            <div data-body hidden style="padding: 0 16px 14px 52px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">If a debit and its matching credit are both recorded at the same wrong amount, the errors cancel. The columns balance despite both being incorrect.</div>
+          </div>
+      </div>
+      <div style="margin-top: 18px; border-left: 3px solid var(--color-accent-500); background: var(--color-accent-100); padding: 14px 16px; font-size: 13px; line-height: 1.6; color: var(--color-neutral-800);">In short: as long as a company posts <strong>equal</strong> debits and credits &mdash; even to the wrong account or in the wrong amount &mdash; the total debits will still equal the total credits.</div>
+    </section>
+
+    <section style="padding: 4px 0 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--color-neutral-300); padding-top: 24px;">
+      <div>
+        <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);">Put it all together</div>
+        <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-top: 2px;">Capstone &mdash; Journalize, Post &amp; Prepare a Trial Balance</div>
+      </div>
+      <button class="btn btn-primary" type="button" disabled>Start the capstone &rarr;</button>
+    </section>
+  </div>
+</section>
+
+    <section class="lecture" id="c2cap" hidden>
+  <header style="padding: var(--space-8) 44px var(--space-6) 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Module 2 · Capstone · LO 2.2</span>
+      <span class="tag tag-accent">Capstone</span>
+    </div>
+    <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 34px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.05;">Journalize, Post &amp; Prepare a Trial Balance</h1>
+    <p style="margin: var(--space-4) 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 680px; text-wrap: pretty;"><strong>Kleene Window Washing Inc.</strong> opened on July 1, 2025. Work the full month: record every transaction in the journal, study the posted ledger, then prove the books balance.</p>
+  </header>
+
+  <div style="padding: 22px 44px 40px 56px; max-width: 1180px; width: 100%; box-sizing: border-box;">
+    <!-- tabs -->
+    <div id="c2cap-tabs" style="display: flex; gap: 4px; border-bottom: 2px solid var(--color-accent-900); margin-bottom: 24px;"></div>
+
+    <!-- ============ TAB A: JOURNALIZE ============ -->
+    <div id="c2cap-panel-journalize" data-panel="journalize">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 680px;">Record each July transaction. Enter the <strong>debit</strong> line(s) first, then the <strong>credit</strong> line(s). Pick the account and type the amount in the highlighted column.</p>
+        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+          <span id="c2cap-jscore" style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: var(--color-neutral-700);"></span>
+          <button id="c2cap-jreset" class="btn btn-secondary" type="button">Reset</button>
+          <button id="c2cap-jcheck" class="btn btn-primary" type="button">Check entries</button>
+        </div>
+      </div>
+      <div id="c2cap-jcards" style="display: flex; flex-direction: column; gap: 14px;"></div>
+    </div>
+
+    <!-- ============ TAB B: POST ============ -->
+    <div id="c2cap-panel-post" data-panel="post" hidden>
+      <p style="margin: 0 0 18px; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Every journal entry, posted to its T-account. Debits sit on the left, credits on the right, and the <strong>balance</strong> is the difference on the account&rsquo;s normal side. Study these &mdash; you&rsquo;ll need the balances for the trial balance.</p>
+      <div id="c2cap-taccounts" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;"></div>
+    </div>
+
+    <!-- ============ TAB C: TRIAL BALANCE ============ -->
+    <div id="c2cap-panel-trial" data-panel="trial" hidden>
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); max-width: 640px;">Enter each account&rsquo;s balance in the correct column, then prove the totals agree. Accounts with no balance this month are left blank.</p>
+        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+          <span id="c2cap-tscore" style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: var(--color-neutral-700);"></span>
+          <button id="c2cap-treset" class="btn btn-secondary" type="button">Reset</button>
+          <button id="c2cap-tcheck" class="btn btn-primary" type="button">Check</button>
+        </div>
+      </div>
+      <div style="max-width: 620px; border: 1px solid var(--color-accent-400); background: var(--color-accent-100); padding: 22px 26px;">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 600;">Kleene Window Washing Inc.</div>
+          <div style="font-family: var(--font-heading); font-size: 13px; font-weight: 600;">Trial Balance</div>
+          <div style="font-size: 12px; color: var(--color-neutral-600);">July 31, 2025</div>
+        </div>
+        <div id="c2cap-tbgrid" style="display: grid; grid-template-columns: 1fr 104px 104px; font-size: 13px; background: #fff; border: 1px solid var(--color-neutral-300);"></div>
+        <div id="c2cap-tbnote" style="margin-top: 14px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid var(--color-neutral-400); background: #fff;"></div>
+      </div>
+    </div>
+  </div>
+</section>
   </main>
 </div>
 
@@ -715,10 +1540,18 @@
     "3": "The statements connect in one direction: net income flows into retained earnings, and retained earnings flows onto the balance sheet.",
     "C": "Check every row before moving on — each transaction on its own must keep Assets = Liabilities + Stockholders’ Equity.",
     "C2S": "Learning Objective 2 — record and summarize accounting transactions. Only events that change assets, liabilities, or equity get recorded.",
+    "c2l1": "Analyze → journalize → post. The journal is written first; the ledger is a re-sorted copy.",
+    "c2l2": "Debit at the left margin, credit indented on the next line.",
+    "c2l3": "The ledger re-files the journal's debits and credits by account, giving each a running balance.",
+    "c2l4": "Account numbers follow the statements: balance-sheet accounts first, then income-statement accounts.",
+    "c2l5": "Every transaction runs the same five steps — do them in order and debits equal credits.",
+    "c2l6": "The Ref. number links each journal line to its ledger account, in both directions.",
+    "c2l7": "A balanced trial balance proves debits equal credits — not that every entry is correct.",
+    "c2cap": "Journalize, post, then prove the ledger balances with a trial balance.",
   };
   const tipEl = document.getElementById("study-tip-body");
   const buttons = Array.from(document.querySelectorAll(".nav-link[data-goto]"));
-  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2"), "3": document.getElementById("lecture-3"), "C": document.getElementById("cap-screen"), "C2S": document.getElementById("course2-intro") };
+  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2"), "3": document.getElementById("lecture-3"), "C": document.getElementById("cap-screen"), "C2S": document.getElementById("course2-intro"), "c2l1": document.getElementById("c2l1"), "c2l2": document.getElementById("c2l2"), "c2l3": document.getElementById("c2l3"), "c2l4": document.getElementById("c2l4"), "c2l5": document.getElementById("c2l5"), "c2l6": document.getElementById("c2l6"), "c2l7": document.getElementById("c2l7"), "c2cap": document.getElementById("c2cap") };
   const COURSE_OF = { "1": "c1", "2": "c1", "3": "c1", "C": "c1", "C2S": "c2", "c2l1": "c2", "c2l2": "c2", "c2l3": "c2", "c2l4": "c2", "c2l5": "c2", "c2l6": "c2", "c2l7": "c2", "c2cap": "c2" };
   const courseHeaders = Array.from(document.querySelectorAll(".course-header"));
   function setCourse(c) {
@@ -2074,6 +2907,1445 @@
 
   renderCycle();
   renderIllus();
+})();
+
+/* ═══════════ Lecture 1 — The Recording Process ═══════════ */
+(function () {
+  "use strict";
+  const scope = document.getElementById("c2l1");
+  if (!scope) return;
+  const gid = id => scope.querySelector("#" + id);
+
+  const STEPS = [
+    { label: "Analyze", title: "Step 1 &mdash; Analyze the transaction", desc: "Sierra reads the supplier&rsquo;s invoice. Equipment (an asset) increases, so it is debited; Cash (an asset) decreases, so it is credited &mdash; $5,000 on each side." },
+    { label: "Journalize", title: "Step 2 &mdash; Enter it in the journal", desc: "The transaction is written in the general journal on Oct. 2: the debit (Equipment) at the left margin, the credit (Cash) indented below, with a short explanation." },
+    { label: "Post", title: "Step 3 &mdash; Post to the ledger", desc: "Each amount is transferred to its own ledger account. The $5,000 debit lands in Equipment; the $5,000 credit lands on the right side of Cash, beneath the Oct. 1 opening balance." },
+  ];
+
+  let step = 1;
+
+  const panel = reached => "padding: 16px; border: 1px solid " + (reached ? "var(--color-accent-600)" : "var(--color-neutral-300)") + "; background: " + (reached ? "#fff" : "var(--color-neutral-100)") + "; opacity: " + (reached ? "1" : "0.55") + "; transition: opacity 0.3s, border-color 0.3s;";
+
+  function stepperHTML() {
+    return STEPS.map((s, i) => {
+      const n = i + 1;
+      const on = n === step;
+      const done = n < step;
+      const btnStyle = "flex: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px; font: inherit; cursor: pointer; text-align: left; background: " + (on ? "var(--color-accent-900)" : (done ? "var(--color-accent-100)" : "#fff")) + "; color: " + (on ? "#fff" : "var(--color-text)") + "; border: 1px solid " + (on ? "var(--color-accent-900)" : (done ? "var(--color-accent-500)" : "var(--color-neutral-400)")) + ";";
+      const numStyle = "width: 22px; height: 22px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 12px; border: 1px solid " + (on ? "var(--color-accent-300)" : "var(--color-accent-500)") + "; color: " + (on ? "#fff" : "var(--color-accent-700)") + ";";
+      return '<button type="button" data-step="' + n + '" style="' + btnStyle + '"><span style="' + numStyle + '">' + n + '</span><span style="text-align: left; line-height: 1.15;">' + s.label + '</span></button>';
+    }).join("");
+  }
+
+  function panelsHTML() {
+    const show1 = step >= 1, show2 = step >= 2, hide2 = step < 2, show3 = step >= 3;
+    const arrow1Stroke = step >= 2 ? "var(--color-accent-600)" : "var(--color-neutral-400)";
+    const arrow2Stroke = step >= 3 ? "var(--color-accent-600)" : "var(--color-neutral-400)";
+    const arrow1Anim = step === 2 ? "animation: c2l1rpPulse 1.4s ease-in-out infinite;" : "";
+    const arrow2Anim = step === 3 ? "animation: c2l1rpPulse 1.4s ease-in-out infinite;" : "";
+
+    const analyzeNote = show1
+      ? '<div style="margin-top: 12px; border-left: 3px solid var(--color-accent-500); padding: 8px 12px; background: var(--color-accent-100); font-size: 12px; line-height: 1.5; animation: c2l1rpPost 0.4s ease both;"><strong>Analyze:</strong> Equipment (asset) increases &mdash; debit. Cash (asset) decreases &mdash; credit. $5,000 each.</div>'
+      : "";
+
+    const journalEntry = show2
+      ? '<div style="padding: 8px 6px; border-right: 1px solid var(--color-neutral-300); font-family: var(--font-heading); font-weight: 600; animation: c2l1rpPost 0.4s ease both;">Oct. 2</div>'
+        + '<div style="animation: c2l1rpPost 0.4s ease both;">'
+        + '<div style="display: flex; justify-content: space-between; padding: 6px 8px 3px;"><span style="color: #2f7d4f; font-weight: 600;">Equipment</span><span style="font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: #2f7d4f;">5,000</span></div>'
+        + '<div style="display: flex; justify-content: space-between; padding: 3px 8px 8px 26px;"><span style="color: #b8442c; font-weight: 600;">Cash</span><span style="font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: #b8442c;">5,000</span></div>'
+        + '<div style="padding: 0 8px 8px 26px; font-size: 11px; font-style: italic; color: var(--color-neutral-600);">(Purchased equipment for cash)</div>'
+        + '</div>'
+      : "";
+
+    const journalAwaiting = hide2
+      ? '<div style="grid-column: 1 / 3; padding: 22px 12px; text-align: center; color: var(--color-neutral-400); font-size: 12px; font-style: italic;">Awaiting entry&hellip;</div>'
+      : "";
+
+    const cashPosting = show3
+      ? '<div style="display: flex; justify-content: space-between; gap: 6px; white-space: nowrap; color: #b8442c; animation: c2l1rpPost 0.5s ease both;"><span>Oct. 2</span><span style="font-weight: 700;">5,000</span></div>'
+      : "";
+    const equipPosting = show3
+      ? '<div style="display: flex; justify-content: space-between; gap: 6px; white-space: nowrap; color: #2f7d4f; animation: c2l1rpPost 0.5s ease both;"><span>Oct. 2</span><span style="font-weight: 700;">5,000</span></div>'
+      : "";
+
+    return ''
+      // 1 source document
+      + '<div style="' + panel(show1) + '">'
+        + '<div style="font-family: var(--font-heading); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">1 &middot; Source Document</div>'
+        + '<div style="border: 1px solid var(--color-neutral-500); background: #fff;">'
+          + '<div style="background: var(--color-accent-900); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: baseline;"><span style="font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.1em;">INVOICE</span><span style="font-size: 10px; letter-spacing: 0.04em; color: var(--color-accent-200);">Superior Equipment Sales</span></div>'
+          + '<div style="padding: 12px;">'
+            + '<div style="font-size: 11px; color: var(--color-neutral-500); text-transform: uppercase; letter-spacing: 0.06em;">Bill to</div>'
+            + '<div style="font-family: var(--font-heading); font-size: 14px; font-weight: 600; margin-bottom: 10px;">Sierra Corporation</div>'
+            + '<div style="border-top: 1px solid var(--color-neutral-300); padding-top: 10px; display: flex; justify-content: space-between; font-size: 13px;"><span>Office equipment</span><span style="font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums;">$5,000</span></div>'
+            + '<div style="margin-top: 10px; font-size: 11.5px; color: var(--color-neutral-600); font-style: italic;">Paid in cash &middot; Oct. 2</div>'
+          + '</div>'
+        + '</div>'
+        + analyzeNote
+      + '</div>'
+      // arrow 1
+      + '<div style="display: flex; align-items: center; justify-content: center;"><svg width="26" height="20" viewBox="0 0 26 20" fill="none" stroke="' + arrow1Stroke + '" stroke-width="1.5" style="' + arrow1Anim + '"><path d="M0 10h20"></path><path d="M16 4l6 6-6 6"></path></svg></div>'
+      // 2 journal
+      + '<div style="' + panel(show2) + '">'
+        + '<div style="font-family: var(--font-heading); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">2 &middot; General Journal</div>'
+        + '<div style="border: 1px solid var(--color-neutral-500); background: #fff;">'
+          + '<div style="background: var(--color-accent-700); color: #fff; padding: 6px 10px; font-family: var(--font-heading); font-weight: 600; font-size: 12px; text-align: center; letter-spacing: 0.04em;">General Journal</div>'
+          + '<div style="display: grid; grid-template-columns: 42px 1fr; font-size: 12px;">'
+            + '<div style="padding: 6px 6px; border-bottom: 1px solid var(--color-neutral-300); border-right: 1px solid var(--color-neutral-300); font-family: var(--font-heading); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-500);">Date</div>'
+            + '<div style="padding: 6px 8px; border-bottom: 1px solid var(--color-neutral-300); font-family: var(--font-heading); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-500);">Account titles</div>'
+            + journalEntry
+            + journalAwaiting
+          + '</div>'
+        + '</div>'
+      + '</div>'
+      // arrow 2
+      + '<div style="display: flex; align-items: center; justify-content: center;"><svg width="26" height="20" viewBox="0 0 26 20" fill="none" stroke="' + arrow2Stroke + '" stroke-width="1.5" style="' + arrow2Anim + '"><path d="M0 10h20"></path><path d="M16 4l6 6-6 6"></path></svg></div>'
+      // 3 ledger
+      + '<div style="' + panel(show3) + '">'
+        + '<div style="font-family: var(--font-heading); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">3 &middot; General Ledger</div>'
+        + '<div style="display: flex; flex-direction: column; gap: 12px;">'
+          // Cash T
+          + '<div>'
+            + '<div style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; text-align: center; border-bottom: 2px solid var(--color-text); padding-bottom: 3px;">Cash</div>'
+            + '<div style="display: grid; grid-template-columns: 1fr 1fr;">'
+              + '<div style="border-right: 2px solid var(--color-text); padding: 6px 8px; font-size: 12px; font-variant-numeric: tabular-nums; min-height: 40px;"><div style="display: flex; justify-content: space-between; gap: 6px; white-space: nowrap; color: #2f7d4f;"><span>Oct. 1</span><span style="font-weight: 700;">10,000</span></div></div>'
+              + '<div style="padding: 6px 8px; font-size: 12px; font-variant-numeric: tabular-nums; min-height: 40px;">' + cashPosting + '</div>'
+            + '</div>'
+          + '</div>'
+          // Equipment T
+          + '<div>'
+            + '<div style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; text-align: center; border-bottom: 2px solid var(--color-text); padding-bottom: 3px;">Equipment</div>'
+            + '<div style="display: grid; grid-template-columns: 1fr 1fr;">'
+              + '<div style="border-right: 2px solid var(--color-text); padding: 6px 8px; font-size: 12px; font-variant-numeric: tabular-nums; min-height: 30px;">' + equipPosting + '</div>'
+              + '<div style="padding: 6px 8px; min-height: 30px;"></div>'
+            + '</div>'
+          + '</div>'
+        + '</div>'
+      + '</div>';
+  }
+
+  function calloutHTML() {
+    const active = STEPS[step - 1];
+    return '<div style="margin-top: 18px; display: flex; gap: 12px; align-items: flex-start; border-left: 3px solid var(--color-accent-500); background: var(--color-accent-100); padding: 14px 16px;">'
+      + '<span style="width: 26px; height: 26px; flex-shrink: 0; background: var(--color-accent-900); color: #fff; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px;">' + step + '</span>'
+      + '<div><div style="font-family: var(--font-heading); font-size: 15px; font-weight: 600;">' + active.title + '</div>'
+      + '<div style="font-size: 13px; line-height: 1.55; color: var(--color-neutral-800); margin-top: 3px;">' + active.desc + '</div></div>'
+      + '</div>';
+  }
+
+  function render() {
+    gid("c2l1-stepper").innerHTML = stepperHTML();
+    gid("c2l1-panels").innerHTML = panelsHTML();
+    gid("c2l1-callout").innerHTML = calloutHTML();
+
+    const prevBtn = gid("c2l1-prev");
+    prevBtn.style.cssText = step === 1 ? "opacity: 0.4; pointer-events: none;" : "";
+    gid("c2l1-next").innerHTML = step === 3 ? "Restart" : "Next step &rarr;";
+  }
+
+  scope.addEventListener("click", function (e) {
+    const stepBtn = e.target.closest("[data-step]");
+    if (stepBtn && scope.contains(stepBtn)) {
+      step = parseInt(stepBtn.getAttribute("data-step"), 10);
+      render();
+      return;
+    }
+    if (e.target.closest("#c2l1-prev")) {
+      step = Math.max(1, step - 1);
+      render();
+      return;
+    }
+    if (e.target.closest("#c2l1-next")) {
+      step = step >= 3 ? 1 : step + 1;
+      render();
+      return;
+    }
+  });
+
+  render();
+})();
+
+/* ═══════════ Lecture 2 — The Journal ═══════════ */
+(function () {
+  "use strict";
+  const scope = document.getElementById("c2l2");
+  if (!scope) return;
+  const gid = id => scope.querySelector("#" + id);
+  const qsa = sel => scope.querySelectorAll(sel);
+
+  const NOTES = [
+    { title: "The date column", body: "The date of the transaction is entered in the Date column — the year on the first line, then the month and day. Sierra’s first entry is Sept. 1, 2025." },
+    { title: "The debit account", body: "The account to be debited is entered first, at the extreme left margin of the “Account Titles & Explanation” column, and its amount goes in the Debit column. Here: Cash, $15,000." },
+    { title: "The credit account", body: "The account to be credited is indented and entered on the next line, and its amount goes in the Credit column. Here: Common Stock, $15,000. The indent is what marks it as the credit." },
+    { title: "The explanation", body: "A brief explanation of the transaction appears on the line below the credit. A blank line separates individual entries and keeps the journal easy to read." },
+    { title: "The reference column", body: "The Ref. (reference) column is left blank when the entry is first made. It’s filled in later, during posting, with the ledger account number the amount was transferred to." },
+  ];
+
+  const state = { note: 1, dr: "", drAmt: "", cr: "", crAmt: "", checked: false };
+
+  function parseNum(v) {
+    const s = String(v || "").replace(/[^0-9.]/g, "");
+    if (s === "") return null;
+    const n = parseFloat(s);
+    return isNaN(n) ? null : n;
+  }
+
+  // ---- Illustration 2.8 ----
+  const markerStyle = on =>
+    "width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: none; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 11px; display: inline-grid; place-items: center; color: #fff; background: " +
+    (on ? "var(--color-accent-700)" : "var(--color-neutral-500)") +
+    "; box-shadow: " + (on ? "0 0 0 3px var(--color-accent-200)" : "none") +
+    "; margin-right: 2px; vertical-align: middle;";
+
+  const dotStyle = on =>
+    "width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: " +
+    (on ? "#fff" : "var(--color-accent-700)") + "; background: " +
+    (on ? "var(--color-accent-700)" : "transparent") + "; border: 1px solid var(--color-accent-500);";
+
+  const badge = gid("c2l2-note-badge");
+  const noteTitle = gid("c2l2-note-title");
+  const noteBody = gid("c2l2-note-body");
+  const markers = qsa("[data-marker]");
+  const dots = qsa("[data-dot]");
+
+  function renderIllus(animate) {
+    const n = state.note;
+    markers.forEach(m => { m.style.cssText = markerStyle(parseInt(m.getAttribute("data-marker"), 10) === n); });
+    dots.forEach(d => { d.style.cssText = dotStyle(parseInt(d.getAttribute("data-dot"), 10) === n); });
+    const active = NOTES[n - 1];
+    badge.textContent = String(n);
+    noteTitle.textContent = active.title;
+    noteBody.textContent = active.body;
+    if (animate) {
+      badge.style.animation = "none";
+      void badge.offsetWidth;
+      badge.style.animation = "c2l2jPop 0.3s ease";
+    }
+  }
+
+  function selectNote(n) {
+    if (state.note === n) return;
+    state.note = n;
+    renderIllus(true);
+  }
+
+  markers.forEach(m => m.addEventListener("click", () => selectNote(parseInt(m.getAttribute("data-marker"), 10))));
+  dots.forEach(d => d.addEventListener("click", () => selectNote(parseInt(d.getAttribute("data-dot"), 10))));
+
+  // ---- Practice lab ----
+  const drAcct = gid("c2l2-dr-acct");
+  const crAcct = gid("c2l2-cr-acct");
+  const drAmt = gid("c2l2-dr-amt");
+  const crAmt = gid("c2l2-cr-amt");
+  const result = gid("c2l2-result");
+  const feedback = gid("c2l2-feedback");
+  const checkBtn = scope.querySelector('[data-action="check"]');
+  const resetBtn = scope.querySelector('[data-action="reset"]');
+
+  const selBase = "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; font: inherit; font-size: 13px; padding: 7px 8px; cursor: pointer;";
+  const inpBase = "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; text-align: right; font: inherit; font-weight: 600; font-variant-numeric: tabular-nums; padding: 7px 9px;";
+  const okDeco = " box-shadow: inset 0 0 0 2px var(--color-accent-500); background: var(--color-accent-100);";
+  const badDeco = " box-shadow: inset 0 0 0 2px var(--color-neutral-500); background: var(--color-neutral-200);";
+
+  function selStyle(ok) { return selBase + (state.checked ? (ok ? okDeco : badDeco) : ""); }
+  function inpStyle(ok) { return inpBase + (state.checked ? (ok ? okDeco : badDeco) : ""); }
+
+  function renderLab() {
+    const drOk = state.dr === "Cash";
+    const crOk = state.cr === "Service Revenue";
+    const drAmtOk = parseNum(state.drAmt) === 1200;
+    const crAmtOk = parseNum(state.crAmt) === 1200;
+    const allOk = drOk && crOk && drAmtOk && crAmtOk;
+
+    drAcct.style.cssText = selStyle(drOk);
+    crAcct.style.cssText = selStyle(crOk);
+    drAmt.style.cssText = inpStyle(drAmtOk);
+    crAmt.style.cssText = inpStyle(crAmtOk);
+
+    if (state.checked) {
+      result.textContent = allOk ? "✓ Balanced & correct" : "Review the entry";
+      result.style.color = allOk ? "var(--color-accent-700)" : "var(--color-neutral-700)";
+
+      let labFeedback = "", feedbackBorder = "var(--color-neutral-500)";
+      if (allOk) {
+        labFeedback = "Correct. Cash (an asset) increases, so it is debited $1,200; Service Revenue increases stockholders’ equity, so it is credited $1,200. Debits equal credits — the entry balances.";
+        feedbackBorder = "#5aa27a";
+      } else {
+        const tips = [];
+        if (!drOk) tips.push("the cash received increases an asset, which is debited");
+        if (!crOk) tips.push("performing a service earns revenue, which is credited");
+        if ((drOk && !drAmtOk) || (crOk && !crAmtOk) || (!drAmtOk && !crAmtOk)) tips.push("both amounts are $1,200");
+        labFeedback = "Not quite — " + tips.join("; ") + ". Debit on top, credit indented below.";
+        feedbackBorder = "#cf8a76";
+      }
+      feedback.textContent = labFeedback;
+      feedback.style.borderLeftColor = feedbackBorder;
+      feedback.hidden = false;
+    } else {
+      result.textContent = "";
+      result.style.color = "var(--color-neutral-700)";
+      feedback.hidden = true;
+    }
+  }
+
+  // selects: structural change -> full re-style, clears checked
+  drAcct.addEventListener("change", e => { state.dr = e.target.value; state.checked = false; renderLab(); });
+  crAcct.addEventListener("change", e => { state.cr = e.target.value; state.checked = false; renderLab(); });
+  // amount inputs: update on each keystroke without stealing focus (no element rebuild)
+  drAmt.addEventListener("input", e => { state.drAmt = e.target.value; state.checked = false; renderLab(); });
+  crAmt.addEventListener("input", e => { state.crAmt = e.target.value; state.checked = false; renderLab(); });
+
+  checkBtn.addEventListener("click", () => { state.checked = true; renderLab(); });
+  resetBtn.addEventListener("click", () => {
+    state.dr = ""; state.drAmt = ""; state.cr = ""; state.crAmt = ""; state.checked = false;
+    drAcct.value = ""; crAcct.value = ""; drAmt.value = ""; crAmt.value = "";
+    renderLab();
+  });
+
+  // initial paint
+  renderIllus(false);
+  renderLab();
+})();
+
+/* ═══════════ Lecture 3 — The Ledger ═══════════ */
+(function () {
+  "use strict";
+  const scope = document.getElementById("c2l3");
+  if (!scope) return;
+  const gid = id => scope.querySelector("#" + id);
+
+  const CYCLE = ["Analyze", "Journalize", "Post to ledger", "Trial balance", "Adjusting entries", "Adjusted trial balance", "Financial statements", "Closing entries", "Post-closing trial balance"];
+
+  const ACCOUNTS = {
+    asset: { title: "Asset Accounts", statement: "Balance Sheet",
+      items: [ ["101", "Cash"], ["112", "Accounts Receivable"], ["126", "Supplies"], ["140", "Land"], ["157", "Equipment"] ] },
+    liability: { title: "Liability Accounts", statement: "Balance Sheet",
+      items: [ ["200", "Notes Payable"], ["201", "Accounts Payable"], ["212", "Salaries & Wages Payable"], ["230", "Interest Payable"] ] },
+    equity: { title: "Stockholders’ Equity Accounts",
+      items: [
+        ["311", "Common Stock", "credit", "Balance Sheet"],
+        ["320", "Retained Earnings", "credit", "Balance Sheet"],
+        ["332", "Dividends", "debit", "Retained Earnings Statement"],
+        ["400", "Service Revenue", "credit", "Income Statement"],
+        ["726", "Salaries & Wages Expense", "debit", "Income Statement"] ] },
+  };
+
+  // Cash ledger posting sequence: [date, desc, debit, credit]
+  const QUEUE = [
+    ["Oct 1", "Issued common stock", 10000, 0],
+    ["Oct 1", "Borrowed on note payable", 5000, 0],
+    ["Oct 2", "Purchased equipment", 0, 5000],
+    ["Oct 3", "Services performed for cash", 1200, 0],
+    ["Oct 4", "Paid rent for the month", 0, 900],
+    ["Oct 20", "Paid cash dividend", 0, 500],
+  ];
+  const CHAIN = [ ["Digital currency", 33], ["Data access/sharing", 32], ["Data reconciliation", 31], ["Identity protection", 31], ["Payments", 30], ["Track-and-trace", 27], ["Asset protection", 27] ];
+
+  const DR = { text: "#2f7d4f", strong: "#d4e9dc", border: "#5aa27a" };
+  const CR = { text: "#b8442c", strong: "#f0dcd4", border: "#cf8a76" };
+
+  const state = { selKey: "asset", selIdx: 0, posted: 0 };
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const fmt = n => (n ? n.toLocaleString("en-US") : "");
+
+  function normalFor(key, item) {
+    if (key === "asset") return { bal: "Debit", inc: "debit", stmt: ACCOUNTS.asset.statement };
+    if (key === "liability") return { bal: "Credit", inc: "credit", stmt: ACCOUNTS.liability.statement };
+    return { bal: item[2] === "credit" ? "Credit" : "Debit", inc: item[2], stmt: item[3] };
+  }
+
+  // — Cycle (static) —
+  function renderCycle() {
+    const html = CYCLE.map((label, i) => {
+      const on = i === 2;
+      const style = "flex: 1 1 120px; min-width: 110px; display: flex; align-items: center; gap: 7px; padding: 9px 10px; font-size: 12px; background: " + (on ? "var(--color-accent-900)" : "#fff") + "; color: " + (on ? "#fff" : "var(--color-neutral-700)") + "; border: 1px solid " + (on ? "var(--color-accent-900)" : "var(--color-neutral-300)") + ";";
+      const numStyle = "width: 20px; height: 20px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid " + (on ? "var(--color-accent-300)" : "var(--color-neutral-400)") + "; color: " + (on ? "#fff" : "var(--color-neutral-600)") + ";";
+      return '<div style="' + style + '"><span style="' + numStyle + '">' + (i + 1) + '</span><span style="line-height: 1.15;">' + esc(label) + '</span></div>';
+    }).join("");
+    gid("c2l3-cycle").innerHTML = html;
+  }
+
+  // — Chart of accounts —
+  function renderGroups() {
+    const html = Object.keys(ACCOUNTS).map(key => {
+      const g = ACCOUNTS[key];
+      const accts = g.items.map((item, idx) => {
+        const n = normalFor(key, item);
+        const on = state.selKey === key && state.selIdx === idx;
+        const isDr = n.inc === "debit";
+        const dot = isDr ? "Dr" : "Cr";
+        const dotStyle = "font-family: var(--font-heading); font-weight: 700; font-size: 9px; width: 20px; height: 15px; flex-shrink: 0; display: inline-grid; place-items: center; color: " + (isDr ? DR.text : CR.text) + "; background: " + (isDr ? DR.strong : CR.strong) + "; border: 1px solid " + (isDr ? DR.border : CR.border) + ";";
+        const style = "display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; font: inherit; font-size: 12.5px; padding: 6px 8px; cursor: pointer; border: none; background: " + (on ? "var(--color-accent-100)" : "transparent") + "; box-shadow: " + (on ? "inset 0 0 0 1px var(--color-accent-500)" : "none") + ";";
+        return '<button type="button" data-acct data-key="' + key + '" data-idx="' + idx + '" style="' + style + '">' +
+          '<span style="font-family: var(--font-heading); font-size: 10.5px; color: var(--color-neutral-500); width: 30px; flex-shrink: 0;">' + esc(item[0]) + '</span>' +
+          '<span style="text-align: left; flex: 1;">' + esc(item[1]) + '</span>' +
+          '<span style="' + dotStyle + '">' + dot + '</span>' +
+        '</button>';
+      }).join("");
+      return '<div style="border: 1px solid var(--color-neutral-400); background: #fff;">' +
+        '<div style="background: var(--color-accent-700); color: #fff; padding: 8px 12px; display: flex; align-items: center; gap: 8px; min-height: 20px;">' +
+          '<span style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em;">' + esc(g.title) + '</span>' +
+        '</div>' +
+        '<div style="padding: 6px;">' + accts + '</div>' +
+      '</div>';
+    }).join("");
+    gid("c2l3-groups").innerHTML = html;
+  }
+
+  function renderDetail() {
+    const g = ACCOUNTS[state.selKey];
+    const item = g.items[state.selIdx];
+    const n = normalFor(state.selKey, item);
+    const isDr = n.inc === "debit";
+    const color = isDr ? DR.text : CR.text;
+    gid("c2l3-sel-kicker").textContent = "Account #" + item[0] + " · " + g.title.replace(" Accounts", "");
+    gid("c2l3-sel-name").textContent = item[1];
+    const bal = gid("c2l3-sel-bal");
+    bal.textContent = n.bal;
+    bal.style.fontWeight = "700";
+    bal.style.color = color;
+    const inc = gid("c2l3-sel-inc");
+    inc.textContent = n.inc + " side";
+    inc.style.fontWeight = "700";
+    inc.style.color = color;
+    gid("c2l3-sel-stmt").textContent = n.stmt;
+  }
+
+  // — Posting / running balance —
+  function renderQueue() {
+    const html = QUEUE.map((q, i) => {
+      const done = i < state.posted;
+      const next = i === state.posted;
+      const isCr = q[3] > 0;
+      const amt = (isCr ? "Cr " : "Dr ") + fmt(isCr ? q[3] : q[2]);
+      const amtStyle = "font-family: var(--font-heading); font-weight: 700; font-size: 12px; font-variant-numeric: tabular-nums; color: " + (isCr ? CR.text : DR.text) + ";";
+      const style = "display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid " + (next ? "var(--color-accent-600)" : "var(--color-neutral-300)") + "; background: " + (done ? "var(--color-neutral-100)" : (next ? "var(--color-accent-100)" : "#fff")) + "; opacity: " + (done ? "0.55" : "1") + ";";
+      return '<div style="' + style + '">' +
+        '<span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; width: 42px; flex-shrink: 0;">' + esc(q[0]) + '</span>' +
+        '<span style="flex: 1; font-size: 12.5px; line-height: 1.35;">' + esc(q[1]) + '</span>' +
+        '<span style="' + amtStyle + '">' + amt + '</span>' +
+      '</div>';
+    }).join("");
+    gid("c2l3-queue").innerHTML = html;
+  }
+
+  function renderLedger() {
+    const hdr = "padding: 7px 10px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;";
+    let html =
+      '<div style="' + hdr + '">Date</div>' +
+      '<div style="' + hdr + '">Explanation</div>' +
+      '<div style="' + hdr + ' text-align: right;">Debit</div>' +
+      '<div style="' + hdr + ' text-align: right;">Credit</div>' +
+      '<div style="' + hdr + ' text-align: right; background: var(--color-accent-200);">Balance</div>';
+    let bal = 0;
+    for (let i = 0; i < state.posted; i++) {
+      const q = QUEUE[i];
+      bal += q[2] - q[3];
+      const isNew = i === state.posted - 1;
+      const cell = "padding: 7px 10px; border-bottom: 1px solid var(--color-neutral-200);" + (isNew ? " animation: c2l3ldPost 0.4s ease both;" : "");
+      const balCell = "padding: 7px 10px; border-bottom: 1px solid var(--color-neutral-200); text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; background: var(--color-accent-100);" + (isNew ? " animation: c2l3ldBal 0.9s ease both;" : "");
+      html +=
+        '<div style="' + cell + '">' + esc(q[0]) + '</div>' +
+        '<div style="' + cell + '">' + esc(q[1]) + '</div>' +
+        '<div style="' + cell + ' text-align: right; color: #2f7d4f; font-weight: 600; font-variant-numeric: tabular-nums;">' + fmt(q[2]) + '</div>' +
+        '<div style="' + cell + ' text-align: right; color: #b8442c; font-weight: 600; font-variant-numeric: tabular-nums;">' + fmt(q[3]) + '</div>' +
+        '<div style="' + balCell + '">' + (fmt(bal) || "0") + '</div>';
+    }
+    if (state.posted === 0) {
+      html += '<div style="grid-column: 1 / 6; padding: 26px 12px; text-align: center; color: var(--color-neutral-400); font-size: 12.5px; font-style: italic;">Nothing posted yet — press “Post next entry” to begin.</div>';
+    }
+    gid("c2l3-ledger-grid").innerHTML = html;
+    gid("c2l3-current-balance").textContent = "$" + (fmt(bal) || "0");
+    gid("c2l3-post-btn").textContent = state.posted >= QUEUE.length ? "Start over" : (state.posted === 0 ? "Post first entry →" : "Post next entry →");
+  }
+
+  // — Accounting Matters bars (static) —
+  function renderChain() {
+    const html = CHAIN.map(([label, pct]) => {
+      const barStyle = "position: absolute; left: 0; top: 0; height: 100%; width: " + (pct / 35 * 100) + "%; background: var(--color-accent-600);";
+      return '<div style="display: grid; grid-template-columns: 118px 1fr 34px; align-items: center; gap: 8px;">' +
+        '<span style="font-size: 11.5px; text-align: right; color: var(--color-neutral-700);">' + esc(label) + '</span>' +
+        '<span style="height: 16px; background: var(--color-neutral-200); position: relative;"><span style="' + barStyle + '"></span></span>' +
+        '<span style="font-family: var(--font-heading); font-weight: 700; font-size: 12px; color: var(--color-accent-800);">' + pct + '%</span>' +
+      '</div>';
+    }).join("");
+    gid("c2l3-chainbars").innerHTML = html;
+  }
+
+  function renderPost() {
+    renderQueue();
+    renderLedger();
+  }
+
+  // — Events —
+  gid("c2l3-groups").addEventListener("click", e => {
+    const btn = e.target.closest("[data-acct]");
+    if (!btn) return;
+    state.selKey = btn.getAttribute("data-key");
+    state.selIdx = parseInt(btn.getAttribute("data-idx"), 10);
+    renderGroups();
+    renderDetail();
+  });
+
+  gid("c2l3-post-btn").addEventListener("click", () => {
+    state.posted = state.posted >= QUEUE.length ? 0 : state.posted + 1;
+    renderPost();
+  });
+
+  gid("c2l3-reset-btn").addEventListener("click", () => {
+    state.posted = 0;
+    renderPost();
+  });
+
+  renderCycle();
+  renderGroups();
+  renderDetail();
+  renderPost();
+  renderChain();
+})();
+
+/* ═══════════ Lecture 4 — Chart of Accounts ═══════════ */
+(function () {
+  "use strict";
+  var scope = document.getElementById("c2l4");
+  if (!scope) return;
+  var gid = function (id) { return scope.querySelector("#" + id); };
+  var qsa = function (sel) { return scope.querySelectorAll(sel); };
+
+  var RANGES = [
+    { key: "asset", range: "101–199", label: "Assets" },
+    { key: "liability", range: "200–299", label: "Liabilities" },
+    { key: "equity", range: "300–399", label: "Stockholders’ Equity" },
+    { key: "revenue", range: "400–499", label: "Revenues" },
+    { key: "expense", range: "500–799", label: "Expenses" },
+    { key: "otherRev", range: "800–899", label: "Other Revenues" },
+    { key: "otherExp", range: "900–999", label: "Other Expenses" }
+  ];
+
+  var state = { sel: null };
+
+  var btnStyle = function (key) {
+    var on = state.sel === key;
+    var dim = state.sel && !on;
+    return "display: flex; flex-direction: column; gap: 3px; padding: 12px 12px; font: inherit; cursor: pointer; text-align: left; background: " +
+      (on ? "var(--color-accent-900)" : "#fff") + "; color: " + (on ? "#fff" : "var(--color-text)") +
+      "; border: 1px solid " + (on ? "var(--color-accent-900)" : "var(--color-neutral-400)") +
+      "; opacity: " + (dim ? "0.55" : "1") + ";";
+  };
+
+  var rowStyle = function (type) {
+    var sel = state.sel;
+    var active = !sel || sel === type;
+    return "display: flex; gap: 8px; font-size: 12.5px; padding: 3px 6px; line-height: 1.35; align-items: baseline; background: " +
+      (sel === type ? "var(--color-accent-100)" : "transparent") +
+      "; opacity: " + (active ? "1" : "0.32") + "; transition: opacity 0.2s;";
+  };
+
+  var filterNoteText = function () {
+    var sel = state.sel;
+    if (!sel) return "Accounts are listed in financial-statement order and numbered by type. Tap a range above to highlight a group.";
+    var selRange = RANGES.filter(function (r) { return r.key === sel; })[0];
+    if (!selRange) return "";
+    return "Highlighting the " + selRange.label + " accounts (" + selRange.range + "). Pioneer has no accounts in the 800–999 ranges.";
+  };
+
+  var render = function () {
+    qsa("[data-range]").forEach(function (btn) {
+      btn.setAttribute("style", btnStyle(btn.getAttribute("data-range")));
+    });
+    qsa("[data-type]").forEach(function (row) {
+      row.setAttribute("style", rowStyle(row.getAttribute("data-type")));
+    });
+    var note = gid("c2l4-filter-note");
+    if (note) note.textContent = filterNoteText();
+  };
+
+  qsa("[data-range]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var key = btn.getAttribute("data-range");
+      state.sel = state.sel === key ? null : key;
+      render();
+    });
+  });
+
+  render();
+})();
+
+/* ═══════════ Lecture 5 — Recording Process Illustrated ═══════════ */
+(function () {
+  "use strict";
+  const scope = document.getElementById("c2l5");
+  if (!scope) return;
+  const gid = id => scope.querySelector("#" + id);
+  const qsa = sel => scope.querySelectorAll(sel);
+
+  const G = "#2f7d4f", R = "#b8442c";
+
+  // eq entries: [label, amount] amount signed. journal lines: [acct, ref, debit, credit, indent]
+  const TX = [
+    { n: 1, date: "Oct 1", illus: "Illustration 2.11", title: "Investment of cash by stockholders",
+      narrative: "C. R. Yazici invests $100,000 cash in an advertising company known as Pioneer Advertising.",
+      basic: "The asset Cash increases $100,000; stockholders’ equity (specifically, Common Stock) increases $100,000.",
+      eq: { a: [["Cash", 100000]], l: [], se: [["Common Stock", 100000]] },
+      drcr: ["Debits increase assets: debit Cash $100,000.", "Credits increase stockholders’ equity: credit Common Stock $100,000."],
+      journal: [["Cash", "101", 100000, 0, false], ["Common Stock", "311", 0, 100000, true], ["(Issued common stock for cash)", "", 0, 0, true]],
+      ledger: [["Cash", "101", "debit", 100000], ["Common Stock", "311", "credit", 100000]] },
+
+    { n: 2, date: "Oct 1", illus: "Illustration 2.12", title: "Purchase of office equipment",
+      narrative: "Pioneer Advertising purchases office equipment costing $50,000 by signing a 3-month, 12%, $50,000 note payable.",
+      basic: "The asset Equipment increases $50,000; the liability Notes Payable increases $50,000.",
+      eq: { a: [["Equipment", 50000]], l: [["Notes Payable", 50000]], se: [] },
+      drcr: ["Debits increase assets: debit Equipment $50,000.", "Credits increase liabilities: credit Notes Payable $50,000."],
+      journal: [["Equipment", "157", 50000, 0, false], ["Notes Payable", "200", 0, 50000, true], ["(Issued 3-month, 12% note for office equipment)", "", 0, 0, true]],
+      ledger: [["Equipment", "157", "debit", 50000], ["Notes Payable", "200", "credit", 50000]] },
+
+    { n: 3, date: "Oct 2", illus: "Illustration 2.13", title: "Receipt of cash for future service",
+      narrative: "Pioneer Advertising receives a $12,000 cash advance from R. Knox, a client, for advertising services expected to be completed by December 31.",
+      basic: "The asset Cash increases $12,000; the liability Unearned Service Revenue increases $12,000 because the service has not been performed yet.",
+      eq: { a: [["Cash", 12000]], l: [["Unearned Serv. Rev.", 12000]], se: [] },
+      drcr: ["Debits increase assets: debit Cash $12,000.", "Credits increase liabilities: credit Unearned Service Revenue $12,000."],
+      journal: [["Cash", "101", 12000, 0, false], ["Unearned Service Revenue", "209", 0, 12000, true], ["(Received cash from R. Knox for future service)", "", 0, 0, true]],
+      ledger: [["Cash", "101", "debit", 12000], ["Unearned Serv. Rev.", "209", "credit", 12000]] },
+
+    { n: 4, date: "Oct 3", illus: "Illustration 2.14", title: "Payment of monthly rent",
+      narrative: "Pioneer Advertising pays office rent for October in cash, $9,000.",
+      basic: "Rent Expense increases $9,000 because the payment pertains only to the current month; the asset Cash decreases $9,000.",
+      eq: { a: [["Cash", -9000]], l: [], se: [["Rent Expense", -9000]] },
+      drcr: ["Debits increase expenses: debit Rent Expense $9,000.", "Credits decrease assets: credit Cash $9,000."],
+      journal: [["Rent Expense", "729", 9000, 0, false], ["Cash", "101", 0, 9000, true], ["(Paid cash for October rent)", "", 0, 0, true]],
+      ledger: [["Rent Expense", "729", "debit", 9000], ["Cash", "101", "credit", 9000]] },
+
+    { n: 5, date: "Oct 4", illus: "Illustration 2.15", title: "Payment for insurance",
+      narrative: "Pioneer Advertising pays $6,000 for a one-year insurance policy that will expire next year on September 30.",
+      basic: "The asset Prepaid Insurance increases $6,000 because the payment extends to more than the current month; the asset Cash decreases $6,000.",
+      eq: { a: [["Prepaid Insurance", 6000], ["Cash", -6000]], l: [], se: [] },
+      drcr: ["Debits increase assets: debit Prepaid Insurance $6,000.", "Credits decrease assets: credit Cash $6,000."],
+      journal: [["Prepaid Insurance", "130", 6000, 0, false], ["Cash", "101", 0, 6000, true], ["(Paid one-year policy; effective date October 1)", "", 0, 0, true]],
+      ledger: [["Prepaid Insurance", "130", "debit", 6000], ["Cash", "101", "credit", 6000]] },
+
+    { n: 6, date: "Oct 5", illus: "Illustration 2.16", title: "Purchase of supplies on credit",
+      narrative: "Pioneer Advertising purchases an estimated three-month supply of advertising materials on account from Aero Supply for $25,000.",
+      basic: "The asset Supplies increases $25,000; the liability Accounts Payable increases $25,000.",
+      eq: { a: [["Supplies", 25000]], l: [["Accounts Payable", 25000]], se: [] },
+      drcr: ["Debits increase assets: debit Supplies $25,000.", "Credits increase liabilities: credit Accounts Payable $25,000."],
+      journal: [["Supplies", "126", 25000, 0, false], ["Accounts Payable", "201", 0, 25000, true], ["(Purchased supplies on account from Aero Supply)", "", 0, 0, true]],
+      ledger: [["Supplies", "126", "debit", 25000], ["Accounts Payable", "201", "credit", 25000]] },
+
+    { n: 7, date: "Oct 9", illus: "Illustration 2.17", title: "Signing a contract", noEntry: true,
+      narrative: "Pioneer Advertising signs a contract with a local newspaper for advertising inserts (flyers) to be distributed starting the last Sunday in November. Payment of $7,000 is due following delivery.",
+      basic: "A business transaction has not occurred. There is only an agreement between Pioneer Advertising and the newspaper for services to be provided in November. Therefore, no journal entry is necessary in October." },
+
+    { n: 8, date: "Oct 26", illus: "Illustration 2.18", title: "Payment of salaries",
+      narrative: "Pioneer Advertising pays employee salaries and wages in cash, $40,000, for the four-week pay period ended Friday, October 26.",
+      basic: "Salaries and Wages Expense increases $40,000; the asset Cash decreases $40,000.",
+      eq: { a: [["Cash", -40000]], l: [], se: [["Sal./Wages Expense", -40000]] },
+      drcr: ["Debits increase expenses: debit Salaries and Wages Expense $40,000.", "Credits decrease assets: credit Cash $40,000."],
+      journal: [["Salaries and Wages Expense", "726", 40000, 0, false], ["Cash", "101", 0, 40000, true], ["(Paid salaries to date)", "", 0, 0, true]],
+      ledger: [["Sal./Wages Exp.", "726", "debit", 40000], ["Cash", "101", "credit", 40000]] },
+
+    { n: 9, date: "Oct 31", illus: "Illustration 2.19", title: "Receipt of cash for services provided",
+      narrative: "Pioneer Advertising receives $28,000 in cash and bills Copa Company $72,000 for advertising services of $100,000 performed in October.",
+      basic: "The asset Cash increases $28,000; the asset Accounts Receivable increases $72,000; the revenue account Service Revenue increases $100,000.",
+      eq: { a: [["Cash", 28000], ["Accounts Rec.", 72000]], l: [], se: [["Service Revenue", 100000]] },
+      drcr: ["Debits increase assets: debit Cash $28,000 and Accounts Receivable $72,000.", "Credits increase revenues: credit Service Revenue $100,000."],
+      journal: [["Cash", "101", 28000, 0, false], ["Accounts Receivable", "112", 72000, 0, false], ["Service Revenue", "400", 0, 100000, true], ["(Recognized revenue for services performed)", "", 0, 0, true]],
+      ledger: [["Cash", "101", "debit", 28000], ["Accounts Rec.", "112", "debit", 72000], ["Service Revenue", "400", "credit", 100000]] },
+
+    { n: 10, date: "Oct 31", illus: "Illustration 2.20", title: "Declaration and payment of dividend",
+      narrative: "Pioneer Advertising’s board of directors declares and pays a $5,000 cash dividend to stockholders.",
+      basic: "The Dividends account increases $5,000; the asset Cash decreases $5,000.",
+      eq: { a: [["Cash", -5000]], l: [], se: [["Dividends", -5000]] },
+      drcr: ["Debits increase dividends: debit Dividends $5,000.", "Credits decrease assets: credit Cash $5,000."],
+      journal: [["Dividends", "332", 5000, 0, false], ["Cash", "101", 0, 5000, true], ["(Declared and paid a cash dividend)", "", 0, 0, true]],
+      ledger: [["Dividends", "332", "debit", 5000], ["Cash", "101", "credit", 5000]] },
+  ];
+
+  const TAB_STYLE = "background: var(--color-accent-100); border-right: 1px solid var(--color-neutral-300); border-bottom: 1px solid var(--color-neutral-300); padding: 16px 16px; font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent-800);";
+
+  let sel = 0;
+
+  const fmtSigned = n => (n < 0 ? "−" : "+") + Math.abs(n).toLocaleString("en-US");
+  const fmt = n => (n ? n.toLocaleString("en-US") : "");
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  const eqCol = (title, arr, emptyDash) => {
+    let inner = (arr || []).map(([label, amt]) =>
+      '<div style="display: flex; justify-content: space-between; gap: 8px;"><span>' + esc(label) +
+      '</span><span style="font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; color: ' +
+      (amt < 0 ? R : G) + ';">' + fmtSigned(amt) + '</span></div>').join("");
+    if (emptyDash && (!arr || arr.length === 0)) inner += '<div style="color: var(--color-neutral-400);">—</div>';
+    return inner;
+  };
+
+  function stackHtml(tx) {
+    let h = "";
+    // header band
+    h += '<div style="background: var(--color-accent-900); color: #fff; padding: 16px 20px;">' +
+      '<div style="font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-200);">' +
+      esc(tx.illus) + ' · ' + esc(tx.date) + '</div>' +
+      '<div style="font-size: 15px; line-height: 1.55; margin-top: 6px; max-width: 760px;">' + esc(tx.narrative) + '</div></div>';
+
+    // layer 1 basic
+    h += '<div style="display: grid; grid-template-columns: 150px 1fr; border-bottom: 1px solid var(--color-neutral-300);">' +
+      '<div style="' + TAB_STYLE + '">Basic Analysis</div>' +
+      '<div style="padding: 16px 20px; font-size: 13.5px; line-height: 1.6; background: var(--color-neutral-100);">' + esc(tx.basic) + '</div></div>';
+
+    if (!tx.noEntry) {
+      // layer 2 equation
+      h += '<div style="display: grid; grid-template-columns: 150px 1fr; border-bottom: 1px solid var(--color-neutral-300);">' +
+        '<div style="' + TAB_STYLE + '">Equation Analysis</div>' +
+        '<div style="padding: 16px 20px;">' +
+        '<div style="display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; font-size: 12.5px;">' +
+        '<div style="flex: 1; min-width: 120px;"><div style="font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-500); border-bottom: 1px solid var(--color-neutral-400); padding-bottom: 3px; margin-bottom: 6px;">Assets</div>' +
+        eqCol("Assets", tx.eq.a, false) + '</div>' +
+        '<div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; padding-top: 18px;">=</div>' +
+        '<div style="flex: 1; min-width: 120px;"><div style="font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-500); border-bottom: 1px solid var(--color-neutral-400); padding-bottom: 3px; margin-bottom: 6px;">Liabilities</div>' +
+        eqCol("Liabilities", tx.eq.l, true) + '</div>' +
+        '<div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; padding-top: 18px;">+</div>' +
+        '<div style="flex: 1.3; min-width: 150px;"><div style="font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-500); border-bottom: 1px solid var(--color-neutral-400); padding-bottom: 3px; margin-bottom: 6px;">Stockholders’ Equity</div>' +
+        eqCol("SE", tx.eq.se, true) + '</div>' +
+        '</div></div></div>';
+
+      // layer 3 debit-credit
+      h += '<div style="display: grid; grid-template-columns: 150px 1fr; border-bottom: 1px solid var(--color-neutral-300);">' +
+        '<div style="' + TAB_STYLE + '">Debit&ndash;Credit Analysis</div>' +
+        '<div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.55;">' +
+        (tx.drcr || []).map(t => '<div>' + esc(t) + '</div>').join("") + '</div></div>';
+
+      // layer 4 journal
+      const jr = tx.journal.map((j, i) => {
+        const memo = j[0].charAt(0) === "(";
+        const cellBase = "padding: 6px 8px;";
+        const dateCell = cellBase + " border-right: 1px solid var(--color-neutral-200); font-family: var(--font-heading); font-weight: 600;";
+        const acctCell = cellBase + " border-right: 1px solid var(--color-neutral-200);" + (j[4] ? " padding-left: 26px;" : "") + (memo ? " font-style: italic; color: var(--color-neutral-600); font-size: 11.5px;" : "");
+        const cell = cellBase + " border-right: 1px solid var(--color-neutral-200);";
+        return '<div style="' + dateCell + '">' + (i === 0 ? esc(tx.date) : "") + '</div>' +
+          '<div style="' + acctCell + '">' + esc(j[0]) + '</div>' +
+          '<div style="' + cell + ' text-align: center; color: var(--color-neutral-500); font-family: var(--font-heading);">' + esc(j[1]) + '</div>' +
+          '<div style="' + cell + ' text-align: right; font-family: var(--font-heading); font-weight: 600; font-variant-numeric: tabular-nums; color: #2f7d4f;">' + fmt(j[2]) + '</div>' +
+          '<div style="' + cell + ' text-align: right; font-family: var(--font-heading); font-weight: 600; font-variant-numeric: tabular-nums; color: #b8442c;">' + fmt(j[3]) + '</div>';
+      }).join("");
+      h += '<div style="display: grid; grid-template-columns: 150px 1fr; border-bottom: 1px solid var(--color-neutral-300);">' +
+        '<div style="' + TAB_STYLE + '">Journal Entry</div>' +
+        '<div style="padding: 16px 20px;"><div style="border: 1px solid var(--color-neutral-400);">' +
+        '<div style="background: var(--color-accent-700); color: #fff; padding: 5px 10px; font-family: var(--font-heading); font-weight: 600; font-size: 11.5px;">General Journal</div>' +
+        '<div style="display: grid; grid-template-columns: 54px 1fr 42px 84px 84px; font-size: 12.5px;">' + jr + '</div>' +
+        '</div></div></div>';
+
+      // layer 5 posting
+      const posts = tx.ledger.map(l => {
+        const isDebit = l[2] === "debit", isCredit = l[2] === "credit";
+        const debitInner = isDebit ? '<div style="display: flex; justify-content: space-between; gap: 6px; white-space: nowrap; color: #2f7d4f;"><span>' + esc(tx.date) + '</span><span style="font-weight: 700;">' + fmt(l[3]) + '</span></div>' : "";
+        const creditInner = isCredit ? '<div style="display: flex; justify-content: space-between; gap: 6px; white-space: nowrap; color: #b8442c;"><span>' + esc(tx.date) + '</span><span style="font-weight: 700;">' + fmt(l[3]) + '</span></div>' : "";
+        return '<div style="min-width: 150px;">' +
+          '<div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--color-text); padding-bottom: 3px;"><span style="font-family: var(--font-heading); font-weight: 600; font-size: 12.5px;">' + esc(l[0]) + '</span><span style="font-family: var(--font-heading); font-size: 10px; color: var(--color-neutral-500);">' + esc(l[1]) + '</span></div>' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; min-height: 34px;">' +
+          '<div style="border-right: 2px solid var(--color-text); padding: 5px 8px; font-size: 12px; font-variant-numeric: tabular-nums;">' + debitInner + '</div>' +
+          '<div style="padding: 5px 8px; font-size: 12px; font-variant-numeric: tabular-nums;">' + creditInner + '</div>' +
+          '</div></div>';
+      }).join("");
+      h += '<div style="display: grid; grid-template-columns: 150px 1fr;">' +
+        '<div style="' + TAB_STYLE + ' border-bottom: none;">Posting to Ledger</div>' +
+        '<div style="padding: 16px 20px;"><div style="display: flex; flex-wrap: wrap; gap: 20px;">' + posts + '</div></div></div>';
+    } else {
+      // no entry
+      h += '<div style="display: grid; grid-template-columns: 150px 1fr;">' +
+        '<div style="' + TAB_STYLE + ' border-bottom: none;">No Entry</div>' +
+        '<div style="padding: 20px; display: flex; gap: 14px; align-items: flex-start; background: var(--color-neutral-100);">' +
+        '<span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: 2px solid var(--color-neutral-500); color: var(--color-neutral-600); display: grid; place-items: center;">' +
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg></span>' +
+        '<div style="font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-800);">No journal entry is made. A signed contract is only a promise — no asset, liability, or equity has changed yet. Pioneer will record it in November, when the service is performed and payment comes due.</div>' +
+        '</div></div>';
+    }
+    return h;
+  }
+
+  function txStripHtml() {
+    return TX.map((t, i) => {
+      const on = i === sel;
+      const bstyle = "flex: 1 1 150px; min-width: 140px; display: flex; gap: 8px; align-items: center; padding: 7px 9px; font: inherit; cursor: pointer; text-align: left; background: " +
+        (on ? "var(--color-accent-100)" : "#fff") + "; border: 1px solid " + (on ? "var(--color-accent-600)" : "var(--color-neutral-300)") + ";";
+      const nstyle = "width: 22px; height: 22px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 11px; border: 1px solid " +
+        (on ? "var(--color-accent-700)" : "var(--color-neutral-400)") + "; color: " + (on ? "var(--color-accent-800)" : "var(--color-neutral-600)") + "; background: " + (on ? "#fff" : "transparent") + ";";
+      return '<button type="button" data-idx="' + i + '" style="' + bstyle + '">' +
+        '<span style="' + nstyle + '">' + t.n + '</span>' +
+        '<span style="display: flex; flex-direction: column; gap: 1px; text-align: left;">' +
+        '<span style="font-family: var(--font-heading); font-weight: 600; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent-700);">' + esc(t.date) + '</span>' +
+        '<span style="font-size: 11.5px; line-height: 1.2;">' + esc(t.title) + '</span></span></button>';
+    }).join("");
+  }
+
+  const progressEl = gid("c2l5-progress");
+  const stripEl = gid("c2l5-txstrip");
+  const stackEl = gid("c2l5-stack");
+  const prevBtn = gid("c2l5-prev");
+  const nextBtn = gid("c2l5-next");
+
+  function render() {
+    const tx = TX[sel];
+    progressEl.textContent = "Transaction " + tx.n + " of " + TX.length;
+    prevBtn.setAttribute("style", sel === 0 ? "opacity: 0.4; pointer-events: none;" : "");
+    nextBtn.setAttribute("style", sel === TX.length - 1 ? "opacity: 0.4; pointer-events: none;" : "");
+    stripEl.innerHTML = txStripHtml();
+    qsa("[data-idx]").forEach(b => {
+      b.addEventListener("click", () => { sel = +b.getAttribute("data-idx"); render(); });
+    });
+    stackEl.innerHTML = stackHtml(tx);
+  }
+
+  prevBtn.addEventListener("click", () => { sel = Math.max(0, sel - 1); render(); });
+  nextBtn.addEventListener("click", () => { sel = Math.min(TX.length - 1, sel + 1); render(); });
+
+  render();
+})();
+
+/* ═══════════ Lecture 6 — Summary: Journalizing & Posting ═══════════ */
+(function () {
+  "use strict";
+  var scope = document.getElementById("c2l6");
+  if (!scope) return;
+  var gid = function (id) { return scope.querySelector("#" + id); };
+
+  var META = {
+    "101": ["Cash", "debit"], "112": ["Accounts Receivable", "debit"], "126": ["Supplies", "debit"], "130": ["Prepaid Insurance", "debit"], "157": ["Equipment", "debit"],
+    "200": ["Notes Payable", "credit"], "201": ["Accounts Payable", "credit"], "209": ["Unearned Service Revenue", "credit"],
+    "311": ["Common Stock", "credit"], "332": ["Dividends", "debit"], "400": ["Service Revenue", "credit"],
+    "726": ["Salaries and Wages Expense", "debit"], "729": ["Rent Expense", "debit"]
+  };
+  var LEDGER_ORDER = ["101", "112", "126", "130", "157", "200", "201", "209", "311", "332", "400", "726", "729"];
+
+  // entries: {date, lines:[[name, ref, debit, credit, indent]], memo}
+  var ENTRIES = [
+    { date: "Oct. 1", lines: [["Cash", "101", 100000, 0, false], ["Common Stock", "311", 0, 100000, true]], memo: "(Issued common stock for cash)" },
+    { date: "1", lines: [["Equipment", "157", 50000, 0, false], ["Notes Payable", "200", 0, 50000, true]], memo: "(Issued 3-month, 12% note for equipment)" },
+    { date: "2", lines: [["Cash", "101", 12000, 0, false], ["Unearned Service Revenue", "209", 0, 12000, true]], memo: "(Received cash from R. Knox for future service)" },
+    { date: "3", lines: [["Rent Expense", "729", 9000, 0, false], ["Cash", "101", 0, 9000, true]], memo: "(Paid cash for October rent)" },
+    { date: "4", lines: [["Prepaid Insurance", "130", 6000, 0, false], ["Cash", "101", 0, 6000, true]], memo: "(Paid one-year policy; effective October 1)" },
+    { date: "5", lines: [["Supplies", "126", 25000, 0, false], ["Accounts Payable", "201", 0, 25000, true]], memo: "(Purchased supplies on account from Aero Supply)" },
+    { date: "26", lines: [["Salaries and Wages Expense", "726", 40000, 0, false], ["Cash", "101", 0, 40000, true]], memo: "(Paid salaries to date)" },
+    { date: "31", lines: [["Cash", "101", 28000, 0, false], ["Accounts Receivable", "112", 72000, 0, false], ["Service Revenue", "400", 0, 100000, true]], memo: "(Recognized revenue for services performed)" },
+    { date: "31", lines: [["Dividends", "332", 5000, 0, false], ["Cash", "101", 0, 5000, true]], memo: "(Declared and paid a cash dividend)" }
+  ];
+
+  var JHDR = "padding: 7px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); border-right: 1px solid var(--color-accent-200); font-family: var(--font-heading); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;";
+  var LHDR = "padding: 4px 7px; background: var(--color-accent-100); border-bottom: 1px solid var(--color-accent-900); font-family: var(--font-heading); font-size: 9px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-accent-800); font-weight: 600;";
+
+  var state = { trace: null };
+
+  function fmt(n) { return n ? n.toLocaleString("en-US") : ""; }
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function cell(style, content, dataTrace) {
+    var attr = dataTrace != null ? ' data-trace="' + dataTrace + '"' : "";
+    return '<div style="' + style + '"' + attr + ">" + content + "</div>";
+  }
+
+  function renderJournal() {
+    var trace = state.trace;
+    var h = "";
+    h += cell(JHDR, "Date");
+    h += cell(JHDR, "Account Titles &amp; Explanation");
+    h += cell(JHDR + " text-align: center;", "Ref.");
+    h += cell(JHDR + " text-align: right;", "Debit");
+    h += cell(JHDR + " text-align: right;", "Credit");
+
+    ENTRIES.forEach(function (e, ei) {
+      e.lines.forEach(function (l, li) {
+        var ref = l[1];
+        var hot = trace === ref;
+        var base = "padding: 6px 8px; border-bottom: 1px solid var(--color-neutral-200);";
+        var dateCell = base + " border-right: 1px solid var(--color-neutral-200); font-family: var(--font-heading); font-weight: 600;" + (hot ? " background: var(--color-accent-100);" : "");
+        var acctCell = base + " border-right: 1px solid var(--color-neutral-200); cursor: pointer;" + (l[4] ? " padding-left: 24px;" : "") + (hot ? " background: var(--color-accent-100); font-weight: 600; color: var(--color-accent-900);" : "");
+        var refCell = base + " border-right: 1px solid var(--color-neutral-200); text-align: center; font-family: var(--font-heading); cursor: pointer; color: " + (hot ? "var(--color-accent-900)" : "var(--color-neutral-500)") + ";" + (hot ? " background: var(--color-accent-100); font-weight: 700;" : "");
+        var numCell = base + " border-right: 1px solid var(--color-neutral-200); text-align: right; font-family: var(--font-heading); font-weight: 600; font-variant-numeric: tabular-nums;" + (hot ? " background: var(--color-accent-100);" : "");
+        h += cell(dateCell, li === 0 ? esc(e.date) : "");
+        h += cell(acctCell, esc(l[0]), ref);
+        h += cell(refCell, esc(ref), ref);
+        h += cell(numCell + " color: #2f7d4f;", fmt(l[2]));
+        h += cell(numCell + " color: #b8442c;", fmt(l[3]));
+      });
+      // memo row
+      var anyHot = trace && e.lines.some(function (l) { return l[1] === trace; });
+      var mbg = anyHot ? " background: var(--color-accent-100);" : "";
+      var mbase = "padding: 4px 8px 8px 24px; border-bottom: 1px solid var(--color-neutral-200); font-style: italic; color: var(--color-neutral-600); font-size: 11.5px;" + mbg;
+      var mNum = "border-bottom: 1px solid var(--color-neutral-200); border-right: 1px solid var(--color-neutral-200);" + mbg;
+      h += cell("padding: 4px; border-bottom: 1px solid var(--color-neutral-200);" + mbg, "");
+      h += cell(mbase, esc(e.memo));
+      h += cell("border-bottom: 1px solid var(--color-neutral-200);" + mbg, "");
+      h += cell(mNum + " color: #2f7d4f;", "");
+      h += cell(mNum + " color: #b8442c;", "");
+      // spacer
+      if (ei < ENTRIES.length - 1) {
+        var sNum = "border-bottom: 1px solid var(--color-neutral-200); border-right: 1px solid var(--color-neutral-200);";
+        h += cell("padding: 2px; border-bottom: 1px solid var(--color-neutral-200);", "");
+        h += cell("padding: 2px; border-bottom: 1px solid var(--color-neutral-200);", "");
+        h += cell("border-bottom: 1px solid var(--color-neutral-200);", "");
+        h += cell(sNum + " color: #2f7d4f;", "");
+        h += cell(sNum + " color: #b8442c;", "");
+      }
+    });
+    gid("c2l6-journal-grid").innerHTML = h;
+  }
+
+  function renderLedger() {
+    var trace = state.trace;
+    // derive ledger postings in journal order
+    var byAcct = {};
+    LEDGER_ORDER.forEach(function (no) { byAcct[no] = []; });
+    ENTRIES.forEach(function (e) {
+      e.lines.forEach(function (l) {
+        byAcct[l[1]].push({ date: e.date === "Oct. 1" ? "Oct 1" : e.date, debit: l[2], credit: l[3] });
+      });
+    });
+
+    var out = "";
+    LEDGER_ORDER.forEach(function (no) {
+      var meta = META[no];
+      var name = meta[0], normal = meta[1];
+      var bal = 0;
+      var postings = byAcct[no];
+      var rowsHtml = "";
+      postings.forEach(function (p, i) {
+        bal += (normal === "debit") ? (p.debit - p.credit) : (p.credit - p.debit);
+        var isLast = i === postings.length - 1;
+        var c = "padding: 4px 7px; border-bottom: 1px solid var(--color-neutral-200);";
+        var balCell = "padding: 4px 7px; border-bottom: 1px solid var(--color-neutral-200); text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; background: var(--color-accent-100); color: " + (isLast ? "var(--color-accent-900)" : "var(--color-neutral-700)") + ";";
+        rowsHtml += cell(c, esc(p.date));
+        rowsHtml += cell(c + " text-align: right; color: #2f7d4f; font-variant-numeric: tabular-nums;", fmt(p.debit));
+        rowsHtml += cell(c + " text-align: right; color: #b8442c; font-variant-numeric: tabular-nums;", fmt(p.credit));
+        rowsHtml += cell(balCell, fmt(bal) || "0");
+      });
+      var hot = trace === no;
+      var cardStyle = "border: 1px solid " + (hot ? "var(--color-accent-700)" : "var(--color-neutral-400)") + "; background: #fff; box-shadow: " + (hot ? "var(--shadow-sm)" : "none") + ";";
+      var headStyle = "width: 100%; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font: inherit; cursor: pointer; padding: 6px 10px; border: none; text-align: left; color: " + (hot ? "#fff" : "var(--color-text)") + "; background: " + (hot ? "var(--color-accent-900)" : "var(--color-neutral-100)") + "; border-bottom: 1px solid var(--color-neutral-300);";
+
+      var card = '<div style="' + cardStyle + '">';
+      card += '<button type="button" data-trace="' + no + '" style="' + headStyle + '">';
+      card += '<span style="font-family: var(--font-heading); font-weight: 600; font-size: 12.5px;">' + esc(name) + "</span>";
+      card += '<span style="font-family: var(--font-heading); font-size: 10px; opacity: 0.7;">No. ' + no + "</span>";
+      card += "</button>";
+      card += '<div style="display: grid; grid-template-columns: 44px 1fr 1fr 1fr; font-size: 11px;">';
+      card += cell(LHDR, "Date");
+      card += cell(LHDR + " text-align: right;", "Dr");
+      card += cell(LHDR + " text-align: right;", "Cr");
+      card += cell(LHDR + " text-align: right; background: var(--color-accent-100);", "Bal");
+      card += rowsHtml;
+      card += "</div></div>";
+      out += card;
+    });
+    gid("c2l6-ledger-grid").innerHTML = out;
+  }
+
+  function renderTrace() {
+    var trace = state.trace;
+    var traceName = trace ? META[trace][0] : "";
+    var label = gid("c2l6-trace-label");
+    label.textContent = trace ? ("Tracing account " + trace + " · " + traceName) : "Click any account to trace it across the journal and ledger";
+    label.setAttribute("style", "font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.02em; color: " + (trace ? "var(--color-accent-800)" : "var(--color-neutral-600)") + ";");
+    var clear = gid("c2l6-clear");
+    clear.setAttribute("style", "font: inherit; font-size: 11.5px; font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 12px; cursor: pointer; border: 1px solid var(--color-neutral-400); background: #fff; color: var(--color-neutral-700);" + (trace ? "" : " opacity: 0.4; pointer-events: none;"));
+  }
+
+  function render() {
+    renderTrace();
+    renderJournal();
+    renderLedger();
+  }
+
+  function setTrace(t) {
+    state.trace = (state.trace === t) ? null : t;
+    render();
+  }
+
+  scope.addEventListener("click", function (ev) {
+    var clear = ev.target.closest("#c2l6-clear");
+    if (clear && scope.contains(clear)) { state.trace = null; render(); return; }
+    var el = ev.target.closest("[data-trace]");
+    if (el && scope.contains(el)) { setTrace(el.getAttribute("data-trace")); }
+  });
+
+  render();
+})();
+
+/* ═══════════ Lecture 7 — The Trial Balance ═══════════ */
+(function () {
+  "use strict";
+  const scope = document.getElementById("c2l7");
+  if (!scope) return;
+  const qsa = sel => scope.querySelectorAll(sel);
+
+  // Limitations accordion — toggle open/closed per item (DC state.open{}).
+  qsa(".c2l7-limit").forEach(item => {
+    const btn = item.querySelector("[data-limit-toggle]");
+    const body = item.querySelector("[data-body]");
+    const sign = item.querySelector("[data-sign]");
+    if (!btn || !body || !sign) return;
+    btn.addEventListener("click", () => {
+      const isOpen = !body.hidden;
+      const next = !isOpen;
+      body.hidden = !next;
+      sign.textContent = next ? "−" : "+";
+      item.style.borderColor = next ? "var(--color-accent-600)" : "var(--color-neutral-400)";
+      btn.style.background = next ? "var(--color-accent-100)" : "#fff";
+    });
+  });
+})();
+
+/* ═══════════ Capstone — Journalize, Post & Trial Balance ═══════════ */
+(function () {
+  "use strict";
+  var scope = document.getElementById("c2cap");
+  if (!scope) return;
+  var gid = function (id) { return scope.querySelector("#" + id); };
+
+  var G = "#2f7d4f", R = "#b8442c";
+
+  var ACCOUNTS = ["Cash", "Accounts Receivable", "Supplies", "Prepaid Insurance", "Equipment", "Accounts Payable", "Salaries and Wages Payable", "Common Stock", "Retained Earnings", "Dividends", "Income Summary", "Service Revenue", "Maintenance and Repairs Expense", "Supplies Expense", "Depreciation Expense", "Insurance Expense", "Salaries and Wages Expense"];
+  var NORMAL = { "Cash": "d", "Accounts Receivable": "d", "Supplies": "d", "Prepaid Insurance": "d", "Equipment": "d", "Accounts Payable": "c", "Salaries and Wages Payable": "c", "Common Stock": "c", "Retained Earnings": "c", "Dividends": "d", "Service Revenue": "c", "Maintenance and Repairs Expense": "d", "Supplies Expense": "d", "Depreciation Expense": "d", "Insurance Expense": "d", "Salaries and Wages Expense": "d" };
+
+  // each line: [account, debit, credit]
+  var TX = [
+    { date: "July 1", desc: "Issued 12,000 shares of common stock for $12,000 cash.", lines: [["Cash", 12000, 0], ["Common Stock", 0, 12000]] },
+    { date: "1", desc: "Purchased a used truck for $8,000, paying $2,000 cash and the balance on account.", lines: [["Equipment", 8000, 0], ["Accounts Payable", 0, 6000], ["Cash", 0, 2000]] },
+    { date: "3", desc: "Purchased cleaning supplies for $900 on account.", lines: [["Supplies", 900, 0], ["Accounts Payable", 0, 900]] },
+    { date: "5", desc: "Paid $1,800 cash on a one-year insurance policy effective July 1.", lines: [["Prepaid Insurance", 1800, 0], ["Cash", 0, 1800]] },
+    { date: "12", desc: "Billed customers $3,700 for cleaning services performed.", lines: [["Accounts Receivable", 3700, 0], ["Service Revenue", 0, 3700]] },
+    { date: "18", desc: "Paid $1,000 owed on the truck and $500 owed on cleaning supplies.", lines: [["Accounts Payable", 1500, 0], ["Cash", 0, 1500]] },
+    { date: "20", desc: "Paid $2,000 cash for employee salaries.", lines: [["Salaries and Wages Expense", 2000, 0], ["Cash", 0, 2000]] },
+    { date: "21", desc: "Collected $1,600 cash from customers billed on July 12.", lines: [["Cash", 1600, 0], ["Accounts Receivable", 0, 1600]] },
+    { date: "25", desc: "Billed customers $2,500 for cleaning services performed.", lines: [["Accounts Receivable", 2500, 0], ["Service Revenue", 0, 2500]] },
+    { date: "31", desc: "Paid $290 for maintenance of the truck during the month.", lines: [["Maintenance and Repairs Expense", 290, 0], ["Cash", 0, 290]] },
+    { date: "31", desc: "Declared and paid a $600 cash dividend.", lines: [["Dividends", 600, 0], ["Cash", 0, 600]] }
+  ];
+  var TX_DATES = ["7/1", "7/1", "7/3", "7/5", "7/12", "7/18", "7/20", "7/21", "7/25", "7/31", "7/31"];
+  var TB_ORDER = ["Cash", "Accounts Receivable", "Supplies", "Prepaid Insurance", "Equipment", "Accounts Payable", "Salaries and Wages Payable", "Common Stock", "Dividends", "Service Revenue", "Maintenance and Repairs Expense", "Supplies Expense", "Depreciation Expense", "Insurance Expense", "Salaries and Wages Expense"];
+  var POST_ORDER = ["Cash", "Accounts Receivable", "Supplies", "Prepaid Insurance", "Equipment", "Accounts Payable", "Common Stock", "Dividends", "Service Revenue", "Maintenance and Repairs Expense", "Salaries and Wages Expense"];
+
+  // ---- state ----
+  var state = { tab: "journalize", j: {}, tb: {}, checkedJ: false, checkedT: false };
+
+  function parse(v) {
+    var s = String(v == null ? "" : v).replace(/[^0-9.]/g, "");
+    if (s === "") return null;
+    var n = parseFloat(s);
+    return isNaN(n) ? null : n;
+  }
+  function fmt(n) { return n ? n.toLocaleString("en-US") : ""; }
+
+  // ---- ledger derivation ----
+  function buildLedger() {
+    var acc = {};
+    TX.forEach(function (t, ti) {
+      t.lines.forEach(function (ln) {
+        var name = ln[0], d = ln[1], c = ln[2];
+        if (!acc[name]) acc[name] = { debits: [], credits: [], sumD: 0, sumC: 0 };
+        if (d) { acc[name].debits.push({ date: TX_DATES[ti], amt: d }); acc[name].sumD += d; }
+        if (c) { acc[name].credits.push({ date: TX_DATES[ti], amt: c }); acc[name].sumC += c; }
+      });
+    });
+    return acc;
+  }
+  function balanceOf(name, acc) {
+    var a = acc[name];
+    if (!a) return 0;
+    return NORMAL[name] === "d" ? a.sumD - a.sumC : a.sumC - a.sumD;
+  }
+  var LEDGER = buildLedger();
+
+  // ---- style helpers ----
+  var J_GREEN = " box-shadow: inset 0 0 0 2px " + G + "; background: #eef6f1;";
+  var NEUTRAL_MARK = " box-shadow: inset 0 0 0 2px var(--color-neutral-500); background: var(--color-neutral-200);";
+  var inpBase = "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; font: inherit; padding: 7px 8px;";
+  var jhdr = "padding: 6px 8px; background: var(--color-accent-100); border-bottom: 1.5px solid var(--color-accent-900); border-right: 1px solid var(--color-accent-200); font-family: var(--font-heading); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent-800); font-weight: 600;";
+  var thdr = "padding: 5px 10px; border-bottom: 1px solid var(--color-neutral-300); font-family: var(--font-heading); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-neutral-600);";
+
+  function el(tag, style, text) {
+    var e = document.createElement(tag);
+    if (style) e.style.cssText = style;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  // ======================= TABS =======================
+  var tabDefs = [["journalize", "a", "Journalize"], ["post", "b", "Post to Ledger"], ["trial", "c", "Trial Balance"]];
+  var tabButtons = [];
+  function tabBtnStyle(on) {
+    return "display: flex; align-items: center; gap: 8px; padding: 10px 16px; font: inherit; font-family: var(--font-heading); font-weight: 600; font-size: 14px; cursor: pointer; border: none; background: " + (on ? "var(--color-accent-900)" : "transparent") + "; color: " + (on ? "#fff" : "var(--color-neutral-700)") + ";";
+  }
+  function tabNumStyle(on) {
+    return "width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; text-transform: uppercase; border: 1px solid " + (on ? "var(--color-accent-300)" : "var(--color-neutral-400)") + "; color: " + (on ? "#fff" : "var(--color-neutral-600)") + ";";
+  }
+  function buildTabs() {
+    var wrap = gid("c2cap-tabs");
+    wrap.innerHTML = "";
+    tabButtons = [];
+    tabDefs.forEach(function (def) {
+      var key = def[0], num = def[1], label = def[2];
+      var on = state.tab === key;
+      var btn = el("button", tabBtnStyle(on));
+      btn.type = "button";
+      var numSpan = el("span", tabNumStyle(on), num);
+      btn.appendChild(numSpan);
+      btn.appendChild(document.createTextNode(label));
+      btn.addEventListener("click", function () { setTab(key); });
+      wrap.appendChild(btn);
+      tabButtons.push({ key: key, btn: btn, numSpan: numSpan });
+    });
+  }
+  function setTab(key) {
+    state.tab = key;
+    tabButtons.forEach(function (t) {
+      var on = t.key === key;
+      t.btn.style.cssText = tabBtnStyle(on);
+      t.numSpan.style.cssText = tabNumStyle(on);
+    });
+    ["journalize", "post", "trial"].forEach(function (k) {
+      gid("c2cap-panel-" + k).hidden = (k !== key);
+    });
+  }
+
+  // ======================= JOURNALIZE =======================
+  var jLines = [];   // {acctField, amtField}
+  var jCards = [];    // {cardEl, statusEl, lines:[...]}
+
+  function acctWrapStyle(isDebit) {
+    return "padding: 6px 8px; border-bottom: 1px solid var(--color-neutral-200); border-right: 1px solid var(--color-neutral-200);" + (isDebit ? "" : " padding-left: 28px;");
+  }
+  var cellWrapStyle = "padding: 6px 8px; border-bottom: 1px solid var(--color-neutral-200); border-right: 1px solid var(--color-neutral-200);";
+
+  function buildJournalize() {
+    var host = gid("c2cap-jcards");
+    host.innerHTML = "";
+    jLines = [];
+    jCards = [];
+    TX.forEach(function (t, ti) {
+      var card = el("div", "border: 1px solid var(--color-neutral-400); background: #fff;");
+
+      var head = el("div", "display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-neutral-100);");
+      head.appendChild(el("span", "width: 46px; flex-shrink: 0; font-family: var(--font-heading); font-weight: 600; font-size: 12px; color: var(--color-accent-800); padding-top: 1px;", t.date));
+      head.appendChild(el("span", "flex: 1; font-size: 13.5px; line-height: 1.5;", t.desc));
+      var statusEl = el("span", "font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; flex-shrink: 0; color: var(--color-neutral-600); display: none;");
+      head.appendChild(statusEl);
+      card.appendChild(head);
+
+      var grid = el("div", "display: grid; grid-template-columns: 1fr 118px 118px; font-size: 13px;");
+      grid.appendChild(el("div", jhdr, "Account"));
+      grid.appendChild(el("div", jhdr + " text-align: right;", "Debit"));
+      grid.appendChild(el("div", jhdr + " text-align: right;", "Credit"));
+
+      var cardLines = [];
+      t.lines.forEach(function (ans, li) {
+        var isDebit = ans[1] > 0;
+        var acctKey = "j-" + ti + "-" + li + "-a";
+        var amtKey = "j-" + ti + "-" + li + "-m";
+
+        // account select
+        var acctWrap = el("div", acctWrapStyle(isDebit));
+        var sel = document.createElement("select");
+        var acctBase = inpBase + " cursor: pointer; font-size: 12.5px;";
+        sel.style.cssText = acctBase;
+        var opt0 = document.createElement("option");
+        opt0.value = ""; opt0.textContent = "Select account…";
+        sel.appendChild(opt0);
+        ACCOUNTS.forEach(function (a) {
+          var o = document.createElement("option");
+          o.value = a; o.textContent = a;
+          sel.appendChild(o);
+        });
+        sel.value = state.j[acctKey] || "";
+        (function (key) {
+          sel.addEventListener("change", function () { state.j[key] = sel.value; onJInput(); });
+        })(acctKey);
+        acctWrap.appendChild(sel);
+
+        var acctField = {
+          el: sel, base: acctBase,
+          ok: function () { return (state.j[acctKey] || "") === ans[0]; }
+        };
+
+        // amount input
+        var amtBase = inpBase + " text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; color: " + (isDebit ? G : R) + ";";
+        var inp = document.createElement("input");
+        inp.type = "text";
+        inp.setAttribute("inputmode", "numeric");
+        inp.placeholder = "0";
+        inp.style.cssText = amtBase;
+        inp.value = state.j[amtKey] || "";
+        (function (key) {
+          inp.addEventListener("input", function () { state.j[key] = inp.value; onJInput(); });
+        })(amtKey);
+        var amtField = {
+          el: inp, base: amtBase,
+          ok: function () { return parse(state.j[amtKey]) === (isDebit ? ans[1] : ans[2]); }
+        };
+
+        var debitCell = el("div", cellWrapStyle);
+        var creditCell = el("div", cellWrapStyle);
+        if (isDebit) {
+          debitCell.appendChild(inp);
+          creditCell.appendChild(el("div", "height: 34px;"));
+        } else {
+          debitCell.appendChild(el("div", "height: 34px;"));
+          creditCell.appendChild(inp);
+        }
+
+        grid.appendChild(acctWrap);
+        grid.appendChild(debitCell);
+        grid.appendChild(creditCell);
+
+        var lineObj = { acctField: acctField, amtField: amtField };
+        cardLines.push(lineObj);
+        jLines.push(lineObj);
+      });
+
+      card.appendChild(grid);
+      host.appendChild(card);
+      jCards.push({ cardEl: card, statusEl: statusEl, lines: cardLines });
+    });
+    if (state.checkedJ) applyJMarks(); else clearJVisuals();
+  }
+
+  function clearJVisuals() {
+    jLines.forEach(function (l) {
+      l.acctField.el.style.cssText = l.acctField.base;
+      l.amtField.el.style.cssText = l.amtField.base;
+    });
+    jCards.forEach(function (c) {
+      c.cardEl.style.cssText = "border: 1px solid var(--color-neutral-400); background: #fff;";
+      c.statusEl.style.display = "none";
+      c.statusEl.textContent = "";
+    });
+    var score = gid("c2cap-jscore");
+    score.textContent = "";
+    score.style.color = "var(--color-neutral-700)";
+  }
+
+  function applyJMarks() {
+    var jCorrect = 0, jTotal = 0;
+    jLines.forEach(function (l) {
+      var aOk = l.acctField.ok(), mOk = l.amtField.ok();
+      l.acctField.el.style.cssText = l.acctField.base + (aOk ? J_GREEN : NEUTRAL_MARK);
+      l.amtField.el.style.cssText = l.amtField.base + (mOk ? J_GREEN : NEUTRAL_MARK);
+    });
+    jCards.forEach(function (c) {
+      var cardOk = c.lines.every(function (l) { return l.acctField.ok() && l.amtField.ok(); });
+      c.lines.forEach(function () { jTotal++; });
+      c.lines.forEach(function (l) { if (l.acctField.ok() && l.amtField.ok()) jCorrect++; });
+      c.cardEl.style.cssText = "border: 1px solid " + (cardOk ? G : "var(--color-neutral-500)") + "; background: #fff;";
+      c.statusEl.textContent = cardOk ? "✓ Correct" : "Review";
+      c.statusEl.style.color = cardOk ? "var(--color-accent-700)" : "var(--color-neutral-600)";
+      c.statusEl.style.display = "";
+    });
+    var score = gid("c2cap-jscore");
+    score.textContent = jCorrect + " / " + jTotal + " lines correct";
+    score.style.color = (jCorrect === jTotal) ? "var(--color-accent-700)" : "var(--color-neutral-700)";
+  }
+
+  function onJInput() {
+    if (state.checkedJ) {
+      state.checkedJ = false;
+      clearJVisuals();
+    }
+  }
+
+  // ======================= POST =======================
+  function buildPost() {
+    var host = gid("c2cap-taccounts");
+    host.innerHTML = "";
+    POST_ORDER.forEach(function (name) {
+      var a = LEDGER[name];
+      var box = el("div", "border: 1px solid var(--color-neutral-400); background: #fff;");
+      var head = el("div", "display: flex; justify-content: space-between; align-items: baseline; padding: 7px 12px; background: var(--color-accent-900); color: #fff;");
+      head.appendChild(el("span", "font-family: var(--font-heading); font-weight: 600; font-size: 13px;", name));
+      head.appendChild(el("span", "font-family: var(--font-heading); font-size: 11px; color: var(--color-accent-200);", "Bal. " + (fmt(balanceOf(name, LEDGER)) || "0")));
+      box.appendChild(head);
+
+      var cols = el("div", "display: grid; grid-template-columns: 1fr 1fr;");
+      var dCol = el("div", "border-right: 2px solid var(--color-text); padding: 6px 10px; display: flex; flex-direction: column; gap: 3px; min-height: 30px;");
+      var cCol = el("div", "padding: 6px 10px; display: flex; flex-direction: column; gap: 3px; min-height: 30px;");
+      (a ? a.debits : []).forEach(function (d) {
+        var row = el("div", "display: flex; justify-content: space-between; gap: 8px; white-space: nowrap; font-size: 12px; font-variant-numeric: tabular-nums; color: #2f7d4f;");
+        row.appendChild(el("span", "color: var(--color-neutral-500);", d.date));
+        row.appendChild(el("span", "font-weight: 600;", fmt(d.amt)));
+        dCol.appendChild(row);
+      });
+      (a ? a.credits : []).forEach(function (c) {
+        var row = el("div", "display: flex; justify-content: space-between; gap: 8px; white-space: nowrap; font-size: 12px; font-variant-numeric: tabular-nums; color: #b8442c;");
+        row.appendChild(el("span", "color: var(--color-neutral-500);", c.date));
+        row.appendChild(el("span", "font-weight: 600;", fmt(c.amt)));
+        cCol.appendChild(row);
+      });
+      cols.appendChild(dCol);
+      cols.appendChild(cCol);
+      box.appendChild(cols);
+      host.appendChild(box);
+    });
+  }
+
+  // ======================= TRIAL BALANCE =======================
+  var tbFields = [];   // {el, base, ansD?, ansC?, ok(), isBlank()}
+  var tbTotalDEl, tbTotalCEl;
+
+  function cellStyle(color) {
+    return "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-300); background: #fff; text-align: right; font: inherit; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 5px 7px; color: " + color + ";";
+  }
+
+  function buildTrial() {
+    var grid = gid("c2cap-tbgrid");
+    grid.innerHTML = "";
+    tbFields = [];
+
+    grid.appendChild(el("div", thdr));
+    grid.appendChild(el("div", thdr + " text-align: right;", "Debit"));
+    grid.appendChild(el("div", thdr + " text-align: right;", "Credit"));
+
+    TB_ORDER.forEach(function (name, ri) {
+      var bal = balanceOf(name, LEDGER);
+      var side = NORMAL[name];
+      var ansD = (bal > 0 && side === "d") ? bal : 0;
+      var ansC = (bal > 0 && side === "c") ? bal : 0;
+      var dKey = "t-" + ri + "-d", cKey = "t-" + ri + "-c";
+
+      grid.appendChild(el("div", "padding: 5px 10px; border-bottom: 1px solid var(--color-neutral-200); font-size: 12.5px; display: flex; align-items: center;", name));
+
+      var dWrap = el("div", "padding: 3px 6px; border-bottom: 1px solid var(--color-neutral-200);");
+      var dInp = makeTbInput(dKey, G, ansD);
+      dWrap.appendChild(dInp);
+      grid.appendChild(dWrap);
+
+      var cWrap = el("div", "padding: 3px 6px; border-bottom: 1px solid var(--color-neutral-200);");
+      var cInp = makeTbInput(cKey, R, ansC);
+      cWrap.appendChild(cInp);
+      grid.appendChild(cWrap);
+    });
+
+    var lblStyle = "padding: 8px 10px; border-top: 1px solid var(--color-text); font-family: var(--font-heading); font-weight: 600;";
+    var totStyle = "padding: 8px 10px; border-top: 1px solid var(--color-text); text-align: right; font-family: var(--font-heading); font-weight: 700; font-variant-numeric: tabular-nums; border-bottom: 3px double var(--color-text);";
+    grid.appendChild(el("div", lblStyle, "Totals"));
+    tbTotalDEl = el("div", totStyle, "$0");
+    tbTotalCEl = el("div", totStyle, "$0");
+    grid.appendChild(tbTotalDEl);
+    grid.appendChild(tbTotalCEl);
+
+    if (state.checkedT) applyTMarks(); else clearTVisuals();
+    updateTrial();
+  }
+
+  function makeTbInput(key, color, ans) {
+    var base = cellStyle(color);
+    var inp = document.createElement("input");
+    inp.type = "text";
+    inp.setAttribute("inputmode", "numeric");
+    inp.placeholder = "";
+    inp.style.cssText = base;
+    inp.value = state.tb[key] || "";
+    inp.addEventListener("input", function () { state.tb[key] = inp.value; onTInput(); });
+    var field = {
+      el: inp, base: base, ans: ans,
+      ok: function () { return (parse(state.tb[key]) || 0) === ans; },
+      isBlank: function () { return !state.tb[key]; }
+    };
+    tbFields.push(field);
+    return inp;
+  }
+
+  function clearTVisuals() {
+    tbFields.forEach(function (f) { f.el.style.cssText = f.base; });
+    var score = gid("c2cap-tscore");
+    score.textContent = "";
+    score.style.color = "var(--color-neutral-700)";
+  }
+
+  function applyTMarks() {
+    var tCorrect = 0, tTotalCells = 0;
+    tbFields.forEach(function (f) {
+      tTotalCells++;
+      var good = f.ok(), blank = f.isBlank();
+      if (good) tCorrect++;
+      var mk = (good && !blank) ? J_GREEN : (good ? "" : NEUTRAL_MARK);
+      f.el.style.cssText = f.base + mk;
+    });
+    var score = gid("c2cap-tscore");
+    score.textContent = tCorrect + " / " + tTotalCells + " cells correct";
+    score.style.color = (tCorrect === tTotalCells) ? "var(--color-accent-700)" : "var(--color-neutral-700)";
+  }
+
+  function updateTrial() {
+    var enteredD = 0, enteredC = 0, tCorrect = 0, tTotalCells = tbFields.length;
+    TB_ORDER.forEach(function (name, ri) {
+      enteredD += parse(state.tb["t-" + ri + "-d"]) || 0;
+      enteredC += parse(state.tb["t-" + ri + "-c"]) || 0;
+    });
+    tbFields.forEach(function (f) { if (f.ok()) tCorrect++; });
+    var tbBalanced = enteredD === enteredC && enteredD > 0;
+    var tbAllOk = tCorrect === tTotalCells;
+
+    tbTotalDEl.textContent = enteredD ? "$" + fmt(enteredD) : "$0";
+    tbTotalCEl.textContent = enteredC ? "$" + fmt(enteredC) : "$0";
+
+    var note = gid("c2cap-tbnote");
+    note.innerHTML = "";
+    var noteText;
+    if (!enteredD && !enteredC) {
+      noteText = "Enter the balances to prove the columns agree.";
+    } else if (tbBalanced) {
+      noteText = (state.checkedT && tbAllOk) ? "In balance and correct — $23,600 = $23,600." : "Columns agree at $" + fmt(enteredD) + ". Press Check to grade.";
+    } else {
+      noteText = "Columns don’t agree yet — Debit $" + fmt(enteredD) + " vs Credit $" + fmt(enteredC) + ".";
+    }
+    var noteBorder = (enteredD && tbBalanced) ? "var(--color-accent-400)" : "var(--color-neutral-400)";
+    var noteIcon = (!enteredD && !enteredC) ? "→" : (tbBalanced ? "✓" : "⚠");
+    var iconColor = (enteredD && tbBalanced) ? "var(--color-accent-700)" : "var(--color-neutral-600)";
+    var iconBorder = (enteredD && tbBalanced) ? "var(--color-accent-700)" : "var(--color-neutral-500)";
+
+    note.style.cssText = "margin-top: 14px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid " + noteBorder + "; background: #fff;";
+    note.appendChild(el("span", "width: 22px; height: 22px; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid " + iconBorder + "; color: " + iconColor + "; font-size: 12px; font-weight: 700;", noteIcon));
+    note.appendChild(el("span", "font-family: var(--font-heading); font-weight: 600; font-size: 13px;", noteText));
+  }
+
+  function onTInput() {
+    if (state.checkedT) {
+      state.checkedT = false;
+      clearTVisuals();
+    }
+    updateTrial();
+  }
+
+  // ======================= WIRE BUTTONS =======================
+  gid("c2cap-jcheck").addEventListener("click", function () {
+    state.checkedJ = true;
+    applyJMarks();
+  });
+  gid("c2cap-jreset").addEventListener("click", function () {
+    state.j = {};
+    state.checkedJ = false;
+    jLines.forEach(function (l) {
+      l.acctField.el.value = "";
+      l.amtField.el.value = "";
+    });
+    clearJVisuals();
+  });
+  gid("c2cap-tcheck").addEventListener("click", function () {
+    state.checkedT = true;
+    applyTMarks();
+    updateTrial();
+  });
+  gid("c2cap-treset").addEventListener("click", function () {
+    state.tb = {};
+    state.checkedT = false;
+    tbFields.forEach(function (f) { f.el.value = ""; });
+    clearTVisuals();
+    updateTrial();
+  });
+
+  // ======================= INIT =======================
+  buildTabs();
+  buildJournalize();
+  buildPost();
+  buildTrial();
+  setTab("journalize");
 })();
 </script>
 </body>
