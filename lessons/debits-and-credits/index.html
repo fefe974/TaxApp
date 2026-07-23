@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Debits and Credits · Financial Accounting Lecture</title>
 <meta name="description" content="Interactive Chapter 2 lecture on debits and credits: the concept, Illustration 2.2 (the debit/credit rules), and a guided practice spreadsheet for journal entries.">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 <style>
   html, body { margin: 0; padding: 0; background: var(--color-bg); }
   a { color: var(--color-accent-700); }
@@ -18,13 +18,14 @@
     width: 230px; flex-shrink: 0; background: var(--color-accent-900); color: var(--color-neutral-100);
     display: flex; flex-direction: column; padding: var(--space-6) var(--space-4); gap: var(--space-2);
   }
-  .nav-item {
-    display: flex; align-items: center; gap: var(--space-3);
-    background: transparent; border: none; color: var(--color-neutral-100);
-    font: inherit; font-size: 13.5px; padding: var(--space-3) var(--space-2); cursor: pointer; width: 100%;
+  .nav-link {
+    display: flex; align-items: center; gap: var(--space-3); text-decoration: none;
+    color: var(--color-neutral-100); font: inherit; font-size: 13.5px; padding: var(--space-3) var(--space-2);
   }
-  .nav-item:hover { background: rgba(255,255,255,0.08); }
-  .nav-item .num {
+  .nav-link:hover { background: rgba(255,255,255,0.08); }
+  .nav-link[aria-current="page"] { background: rgba(255,255,255,0.10); color: #fff; }
+  .nav-link[aria-current="page"] .num { border-color: var(--color-accent-300); color: var(--color-accent-300); }
+  .nav-link .num {
     width: 20px; height: 20px; border: 1px solid currentColor; display: inline-grid; place-items: center;
     font-size: 11px; font-family: var(--font-heading); flex-shrink: 0;
   }
@@ -62,7 +63,10 @@
       </div>
     </div>
     <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: 0 var(--space-2) var(--space-2);">Chapter 2</div>
-    <nav id="nav" style="display: contents;"></nav>
+    <nav style="display: contents;">
+      <a class="nav-link" href="../debits-and-credits/index.html" aria-current="page"><span class="num">1</span><span>Lecture 1 — Debits &amp; Credits</span></a>
+      <a class="nav-link" href="../accounting-equation/index.html"><span class="num">2</span><span>Lecture 2 — The Accounting Equation</span></a>
+    </nav>
     <div class="study-tip" style="margin-top: auto; border: 1px solid var(--color-accent-700); padding: var(--space-4);">
       <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-300); margin-bottom: var(--space-2);">Study Tip</div>
       <div style="font-size: 12.5px; line-height: 1.5; color: var(--color-neutral-200);">Debit means left, credit means right — nothing more. Direction, not increase or decrease.</div>
@@ -269,26 +273,6 @@ const parseAmt = v => { const n = parseFloat(String(v || "").replace(/[^0-9.]/g,
 
 /* ── State ── */
 const state = { cells: {}, checked: false, selectedType: 0, openGuides: {} };
-
-/* ─────────────────────────── Sidebar navigation ─────────────────────────── */
-function renderNav() {
-  const nav = document.getElementById("nav");
-  const items = [
-    { num: "1", label: "The concept — Dr. and Cr.", target: "lesson" },
-    { num: "2", label: "Illustration 2.2 — the rules", target: "illustration" },
-    { num: "3", label: "Practice Lab — journal entries", target: "practice" },
-  ];
-  items.forEach(n => {
-    const btn = document.createElement("button");
-    btn.className = "nav-item";
-    btn.innerHTML = '<span class="num">' + n.num + '</span><span style="text-align: left;">' + n.label + '</span>';
-    btn.addEventListener("click", () => {
-      const el = document.getElementById(n.target);
-      if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 16; window.scrollTo({ top: y, behavior: "smooth" }); }
-    });
-    nav.appendChild(btn);
-  });
-}
 
 /* ─────────────────────── Illustration 2.2 — account tiles ─────────────────────── */
 function tileMarkup(ty) {
@@ -599,7 +583,6 @@ function resetSheet() {
 }
 
 /* ─────────────────────────────── Boot ─────────────────────────────── */
-renderNav();
 renderIllustration();
 renderSheet();
 document.getElementById("formula-bar").textContent = FORMULA_DEFAULT;
