@@ -92,6 +92,10 @@
       <button class="nav-link" type="button" data-goto="2"><span class="num">2</span><span>Lecture 2 — The Accounting Equation</span></button>
       <button class="nav-link" type="button" data-goto="3"><span class="num">3</span><span>Lecture 3 — Financial Statements</span></button>
     </nav>
+    <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: var(--space-4) var(--space-2) var(--space-2);">Capstone · LO 2.1</div>
+    <nav style="display: contents;">
+      <button class="nav-link" type="button" data-goto="C"><span class="num">★</span><span>Analyze Transactions</span></button>
+    </nav>
     <div class="study-tip" style="margin-top: auto; border: 1px solid var(--color-accent-700); padding: var(--space-4);">
       <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-300); margin-bottom: var(--space-2);">Study Tip</div>
       <div id="study-tip-body" style="font-size: 12.5px; line-height: 1.5; color: var(--color-neutral-200);"></div>
@@ -392,6 +396,136 @@
         </section>
       </div>
     </section>
+
+    <!-- ═══════════════ Capstone — Analyze Transactions (LO 2.1) ═══════════════ -->
+    <section class="lecture" id="cap-screen" hidden>
+      <header style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700);">Chapter 2 · Put It into Practice · LO 2.1</div>
+          <h1 style="margin: 2px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600; letter-spacing: 0.01em;">Analyze Transactions Using the Accounting Equation</h1>
+        </div>
+        <span class="tag tag-accent">Capstone</span>
+      </header>
+      <div class="content" style="max-width: 1180px;">
+        <!-- Facts -->
+        <section id="cap-facts" style="padding: var(--space-2) 0 var(--space-4);">
+          <div class="card-kicker">Facts · Speedy Delivery Inc.</div>
+          <h2 class="card-title" style="font-size: 20px; margin-top: var(--space-2);">First Month of Operations</h2>
+          <p style="margin: var(--space-3) 0 0; font-size: 14px; line-height: 1.6; max-width: 720px;">Speedy Delivery Inc. was incorporated on <strong>July 1, 2025</strong>. During the first month of operations, the following transactions occurred. Stuck on one? Open its <strong>Guide</strong> for the analysis.</p>
+          <div id="cap-facts-list" style="display: flex; flex-direction: column; margin-top: var(--space-4);"></div>
+        </section>
+
+        <!-- Worksheet -->
+        <section id="cap-worksheet" style="padding: var(--space-2) 0 var(--space-4);">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+            <div>
+              <div class="card-kicker">Instructions · Tabular Analysis</div>
+              <h2 class="card-title" style="font-size: 20px; margin-top: var(--space-2);">Worksheet — Effects on the Accounting Equation</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+              <span id="cap-score" style="font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; color: var(--color-neutral-700);"></span>
+              <button class="btn btn-secondary" id="cap-reset">Reset</button>
+              <button class="btn btn-primary blueprint" style="position: relative;" id="cap-check"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>Check Work</button>
+            </div>
+          </div>
+          <div style="font-size: 13.5px; color: var(--color-neutral-700); margin-top: var(--space-2); line-height: 1.55; max-width: 860px;">Enter each effect as a signed amount: <strong>positive</strong> for an increase, <strong>negative</strong> for a decrease; leave a cell blank when an account is unaffected. Expenses and dividends reduce equity, so enter them as <strong>negatives</strong>. Transaction 7 is split into three rows — one per expense. Finish each row by classifying it.</div>
+          <div style="overflow-x: auto; margin-top: var(--space-5);">
+            <table style="width: 100%; border-collapse: collapse; min-width: 940px;">
+              <thead>
+                <tr style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11.5px; color: var(--color-accent-800);">
+                  <th style="padding: 0;"> </th>
+                  <th colspan="3" style="text-align: center; padding: 0 4px 6px; font-weight: 600; border-bottom: 1px solid var(--color-accent-400);">Assets</th>
+                  <th style="text-align: center; padding: 0 2px 6px; font-family: var(--font-body); font-size: 15px; color: var(--color-neutral-800);">=</th>
+                  <th colspan="2" style="text-align: center; padding: 0 4px 6px; font-weight: 600; border-bottom: 1px solid var(--color-accent-400);">Liabilities</th>
+                  <th style="text-align: center; padding: 0 2px 6px; font-family: var(--font-body); font-size: 15px; color: var(--color-neutral-800);">+</th>
+                  <th colspan="4" style="text-align: center; padding: 0 4px 6px; font-weight: 600; border-bottom: 1px solid var(--color-accent-400);">Stockholders&rsquo; Equity</th>
+                  <th style="padding: 0;"> </th>
+                </tr>
+                <tr style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10.5px; color: var(--color-neutral-600);">
+                  <th rowspan="2" style="text-align: left; padding: 4px 6px 8px 0; font-weight: 500; width: 30px; vertical-align: bottom;">#</th>
+                  <th rowspan="2" style="text-align: right; padding: 4px 5px 8px; font-weight: 500; width: 78px; vertical-align: bottom;">Cash</th>
+                  <th rowspan="2" style="text-align: right; padding: 4px 5px 8px; font-weight: 500; width: 78px; vertical-align: bottom;">Accts Rec.</th>
+                  <th rowspan="2" style="text-align: right; padding: 4px 5px 8px; font-weight: 500; width: 78px; vertical-align: bottom;">Equip.</th>
+                  <th rowspan="2" style="width: 18px;"> </th>
+                  <th rowspan="2" style="text-align: right; padding: 4px 5px 8px; font-weight: 500; width: 78px; vertical-align: bottom;">Notes Pay.</th>
+                  <th rowspan="2" style="text-align: right; padding: 4px 5px 8px; font-weight: 500; width: 78px; vertical-align: bottom;">Accts Pay.</th>
+                  <th rowspan="2" style="width: 18px;"> </th>
+                  <th rowspan="2" style="text-align: right; padding: 4px 5px 8px; font-weight: 500; width: 78px; vertical-align: bottom;">Common Stock</th>
+                  <th colspan="3" style="text-align: center; padding: 2px 5px 3px; font-weight: 500; border-bottom: 1px solid var(--color-neutral-400);">Retained Earnings</th>
+                  <th rowspan="2" style="text-align: left; padding: 4px 5px 8px; font-weight: 500; width: 158px; vertical-align: bottom;">Classification</th>
+                </tr>
+                <tr style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10.5px; color: var(--color-neutral-600);">
+                  <th style="text-align: right; padding: 3px 5px 8px; font-weight: 500; width: 78px;">Rev.</th>
+                  <th style="text-align: right; padding: 3px 5px 8px; font-weight: 500; width: 78px;">&minus; Exp.</th>
+                  <th style="text-align: right; padding: 3px 5px 8px; font-weight: 500; width: 70px;">&minus; Div.</th>
+                </tr>
+                <tr><td colspan="13" style="border-bottom: 1.5px solid var(--color-accent-900); padding: 0;"></td></tr>
+              </thead>
+              <tbody id="cap-rows"></tbody>
+            </table>
+          </div>
+          <div id="cap-feedback" style="display: none; margin-top: var(--space-4); border-left: 3px solid var(--color-neutral-500); background: #fff; padding: var(--space-4); flex-direction: column; gap: 8px;">
+            <div style="font-family: var(--font-heading); font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-neutral-700);">Rows to review</div>
+            <div id="cap-feedback-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
+          </div>
+        </section>
+
+        <!-- Proof -->
+        <section id="cap-balance" style="padding: var(--space-2) 0 var(--space-4);">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+            <div>
+              <div class="card-kicker">Proof · Does It Balance?</div>
+              <h2 class="card-title" style="font-size: 20px; margin-top: var(--space-2);">The Equation, Weighed</h2>
+            </div>
+            <span id="cap-verdict"></span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-6); align-items: stretch; margin-top: var(--space-5);">
+            <!-- Assets ledger -->
+            <div style="display: flex; flex-direction: column;">
+              <div style="font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-800); padding-bottom: 8px; border-bottom: 1.5px solid var(--color-accent-900); display: flex; justify-content: space-between; align-items: baseline;"><span>Assets</span><span style="font-size: 10.5px; color: var(--color-neutral-500); letter-spacing: 0.06em;">What we own</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Cash</span><span data-lv="cash" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Accounts Receivable</span><span data-lv="ar" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Equipment</span><span data-lv="equip" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="margin-top: auto; padding-top: 10px; border-top: 1.5px solid var(--color-text); display: flex; justify-content: space-between; align-items: baseline;">
+                <span style="font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;">Total Assets</span>
+                <span id="cap-grand-assets" style="font-family: var(--font-heading); font-weight: 600; font-size: 24px; font-variant-numeric: tabular-nums; border-bottom: 3px double var(--color-text); padding: 0 2px 2px;">$0</span>
+              </div>
+            </div>
+            <!-- Balance scale -->
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 200px; padding: 0 var(--space-2);">
+              <div style="position: relative; width: 200px; height: 118px;">
+                <div data-beam style="position: absolute; left: 50%; top: 10px; width: 200px; height: 4px; background: var(--color-accent-900); transform-origin: 100px 2px; transition: transform 0.6s cubic-bezier(.34,1.4,.5,1); transform: translateX(-50%) rotate(0deg);">
+                  <div style="position: absolute; left: 0; top: 50%; width: 1px; height: 26px; background: var(--color-neutral-500); transform: translateX(-0.5px);"></div>
+                  <div data-pan-left style="position: absolute; top: 50%; margin-top: 26px; width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--color-accent-900); display: grid; place-items: center; background: var(--color-neutral-100); transform-origin: center top; transition: transform 0.6s cubic-bezier(.34,1.4,.5,1); left: -23px; transform: rotate(0deg);"><span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px;">A</span></div>
+                  <div style="position: absolute; right: 0; top: 50%; width: 1px; height: 26px; background: var(--color-neutral-500); transform: translateX(0.5px);"></div>
+                  <div data-pan-right style="position: absolute; top: 50%; margin-top: 26px; width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--color-accent-900); display: grid; place-items: center; background: var(--color-neutral-100); transform-origin: center top; transition: transform 0.6s cubic-bezier(.34,1.4,.5,1); right: -23px; transform: rotate(0deg);"><span style="font-family: var(--font-heading); font-weight: 700; font-size: 15px;">L+E</span></div>
+                </div>
+                <div style="position: absolute; left: 50%; top: 6px; transform: translateX(-50%); width: 12px; height: 12px; border-radius: 50%; background: var(--color-accent-900);"></div>
+                <div style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); width: 0; height: 0; border-left: 22px solid transparent; border-right: 22px solid transparent; border-bottom: 78px solid var(--color-accent-900);"></div>
+                <div style="position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 84px; height: 5px; background: var(--color-accent-900);"></div>
+              </div>
+              <div style="font-family: var(--font-heading); font-size: 34px; font-weight: 600; margin-top: 6px;">=</div>
+            </div>
+            <!-- Liab + Equity ledger -->
+            <div style="display: flex; flex-direction: column;">
+              <div style="font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-800); padding-bottom: 8px; border-bottom: 1.5px solid var(--color-accent-900); display: flex; justify-content: space-between; align-items: baseline;"><span>Liabilities + Equity</span><span style="font-size: 10.5px; color: var(--color-neutral-500); letter-spacing: 0.06em;">Who has a claim</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Notes Payable</span><span data-lv="np" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Accounts Payable</span><span data-lv="ap" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Common Stock</span><span data-lv="cs" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--color-neutral-300);"><span style="font-size: 12.5px; color: var(--color-neutral-700);">Retained Earnings</span><span data-lv="retained" style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--color-text);">—</span></div>
+              <div style="margin-top: auto; padding-top: 10px; border-top: 1.5px solid var(--color-text); display: flex; justify-content: space-between; align-items: baseline;">
+                <span style="font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;">Total L + E</span>
+                <span id="cap-grand-lse" style="font-family: var(--font-heading); font-weight: 600; font-size: 24px; font-variant-numeric: tabular-nums; border-bottom: 3px double var(--color-text); padding: 0 2px 2px;">$0</span>
+              </div>
+            </div>
+          </div>
+          <div id="cap-balnote" style="display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-5); padding: var(--space-3) var(--space-4); border: 1px solid var(--color-neutral-400); background: var(--color-neutral-100); color: var(--color-neutral-700);">
+            <span id="cap-balicon" style="width: 24px; height: 24px; flex-shrink: 0; display: grid; place-items: center; font-size: 14px; font-weight: 700; border: 1.5px solid currentColor; border-radius: 50%;">→</span>
+            <span id="cap-baltext" style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.02em;">Start entering effects above — this proof updates live.</span>
+          </div>
+        </section>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -404,10 +538,11 @@
     "1": "Debit means left, credit means right — nothing more. Direction, not increase or decrease.",
     "2": "Assets = Liabilities + Stockholders’ Equity. This equality can never be broken — every transaction keeps it in balance.",
     "3": "The statements connect in one direction: net income flows into retained earnings, and retained earnings flows onto the balance sheet.",
+    "C": "Check every row before moving on — each transaction on its own must keep Assets = Liabilities + Stockholders’ Equity.",
   };
   const tipEl = document.getElementById("study-tip-body");
   const buttons = Array.from(document.querySelectorAll(".nav-link[data-goto]"));
-  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2"), "3": document.getElementById("lecture-3") };
+  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2"), "3": document.getElementById("lecture-3"), "C": document.getElementById("cap-screen") };
   function show(n) {
     Object.keys(lectures).forEach(k => { lectures[k].hidden = (k !== n); });
     buttons.forEach(b => {
@@ -1343,6 +1478,303 @@
 
   renderFlow();
   renderEffects();
+})();
+
+/* ═══════════════════════ Capstone — Analyze Transactions ═══════════════════════ */
+(function () {
+  const scope = document.getElementById("cap-screen");
+  const gid = id => scope.querySelector("#" + id);
+  const qs = sel => scope.querySelector(sel);
+  const qsa = sel => scope.querySelectorAll(sel);
+
+  const DR = { text: "#2f7d4f", strong: "#d4e9dc" };
+  const CR = { text: "#b8442c", strong: "#f0dcd4" };
+  const COLS = ["cash", "ar", "equip", "np", "ap", "cs", "rev", "exp", "div"];
+  const ASSET_COLS = ["cash", "ar", "equip"];
+  const COL_NAMES = { cash: "Cash", ar: "Accounts Receivable", equip: "Equipment", np: "Notes Payable", ap: "Accounts Payable", cs: "Common Stock", rev: "Revenues", exp: "Expenses", div: "Dividends" };
+  const CLS_OPTIONS = ["", "Issued Stock", "Rent Expense", "Purchased Equipment", "Service Revenue", "Borrowing (Note Payable)", "Salaries/Wages Expense", "Utilities Expense", "Advertising Expense", "Dividends"];
+
+  const FACTS = [
+    { n: "1", text: "Stockholders invested $10,000 in cash in exchange for common stock of Speedy Delivery Inc.", steps: [
+      "Cash of $10,000 comes into the business — the asset Cash increases.",
+      "In exchange the company issues stock — Common Stock increases by $10,000.",
+      "No creditor is involved. Effect: Cash +10,000 = Common Stock +10,000. Classification: Issued Stock." ] },
+    { n: "2", text: "Paid $800 for July rent.", steps: [
+      "Cash of $800 leaves the business — Cash decreases.",
+      "Rent is a cost of operating in July — an expense. Expenses reduce retained earnings, so enter −800 in the Exp. column.",
+      "Effect: Cash −800 = Exp. −800. Classification: Rent Expense." ] },
+    { n: "3", text: "Purchased office equipment on account, $3,000.", steps: [
+      "The company receives equipment — the asset Equipment increases by $3,000.",
+      "“On account” means it promises to pay later — Accounts Payable increases by $3,000.",
+      "Cash is untouched. Effect: Equipment +3,000 = Accounts Payable +3,000. Classification: Purchased Equipment." ] },
+    { n: "4", text: "Performed delivery service for clients for cash, $1,500.", steps: [
+      "Cash of $1,500 comes in — Cash increases.",
+      "The service has been performed, so revenue is earned — Rev. +1,500 (revenue increases retained earnings).",
+      "Effect: Cash +1,500 = Rev. +1,500. Classification: Service Revenue." ] },
+    { n: "5", text: "Borrowed $700 cash from a bank on a note payable.", steps: [
+      "Cash of $700 comes in — Cash increases.",
+      "Signing a note creates a debt — Notes Payable increases by $700. Borrowing is NOT revenue: nothing was earned.",
+      "Effect: Cash +700 = Notes Payable +700. Classification: Borrowing." ] },
+    { n: "6", text: "Performed delivery services for a client on account, $2,000.", steps: [
+      "The service is performed, so revenue is earned now — Rev. +2,000 — even though no cash was received.",
+      "The client owes the company — Accounts Receivable increases by $2,000.",
+      "Revenue is recognized when earned, not when collected. Effect: Accts Rec. +2,000 = Rev. +2,000. Classification: Service Revenue." ] },
+    { n: "7", text: "Paid monthly expenses: salaries $500, utilities $300, and advertising $100.", steps: [
+      "Three separate expenses were paid in cash — use rows 7a, 7b and 7c, one per expense.",
+      "Each payment decreases Cash and adds a negative amount to the Exp. column: −500, −300, −100.",
+      "Combined effect: Cash −900 = Exp. −900. Classifications: Salaries/Wages, Utilities, Advertising Expense." ] },
+  ];
+
+  const ROWS = [
+    { id: "1", n: "1", exp: { cash: 10000, cs: 10000 }, label: "Issued Stock" },
+    { id: "2", n: "2", exp: { cash: -800, exp: -800 }, label: "Rent Expense" },
+    { id: "3", n: "3", exp: { equip: 3000, ap: 3000 }, label: "Purchased Equipment" },
+    { id: "4", n: "4", exp: { cash: 1500, rev: 1500 }, label: "Service Revenue" },
+    { id: "5", n: "5", exp: { cash: 700, np: 700 }, label: "Borrowing (Note Payable)" },
+    { id: "6", n: "6", exp: { ar: 2000, rev: 2000 }, label: "Service Revenue" },
+    { id: "7a", n: "7a", exp: { cash: -500, exp: -500 }, label: "Salaries/Wages Expense" },
+    { id: "7b", n: "7b", exp: { cash: -300, exp: -300 }, label: "Utilities Expense" },
+    { id: "7c", n: "7c", exp: { cash: -100, exp: -100 }, label: "Advertising Expense" },
+  ];
+  const ROW_BY_ID = {};
+  ROWS.forEach(r => { ROW_BY_ID[r.id] = r; });
+
+  const state = { cells: {}, labels: {}, checked: false, openGuides: {} };
+
+  const parseSigned = v => { const s = String(v || "").replace(/[^0-9.\-]/g, ""); if (s === "" || s === "-") return null; const n = parseFloat(s); return isNaN(n) ? null : n; };
+  const fmtMoney = n => { if (!n) return "—"; return (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString("en-US"); };
+  const money0 = n => { const m = fmtMoney(n); return m === "—" ? "$0" : m; };
+  const getCell = (id, k) => parseSigned(state.cells[id + "-" + k]);
+
+  /* ── Facts ── */
+  function renderFacts() {
+    const list = gid("cap-facts-list");
+    list.innerHTML = "";
+    FACTS.forEach((f, i) => {
+      const open = !!state.openGuides[f.n];
+      const wrap = document.createElement("div");
+      wrap.setAttribute("style", "padding: var(--space-3) 0;" + (i === FACTS.length - 1 ? "" : " border-bottom: 1px solid var(--color-neutral-300);"));
+      let stepsHtml = "";
+      f.steps.forEach((text, j) => {
+        stepsHtml += '<span style="display: flex; gap: var(--space-2); align-items: flex-start;"><span style="width: 16px; height: 16px; border: 1px solid var(--color-accent-500); color: var(--color-accent-700); display: inline-grid; place-items: center; font-size: 10px; font-family: var(--font-heading); font-weight: 600; flex-shrink: 0; margin-top: 1px;">' + (j + 1) + '</span><span>' + text + '</span></span>';
+      });
+      wrap.innerHTML =
+        '<div style="display: flex; align-items: flex-start; gap: var(--space-3);">' +
+          '<span style="width: 24px; height: 24px; border: 1.5px solid var(--color-accent-700); color: var(--color-accent-800); display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 12.5px; flex-shrink: 0;">' + f.n + '</span>' +
+          '<span style="font-size: 13.5px; line-height: 1.55; flex: 1; text-wrap: pretty; padding-top: 2px;">' + f.text + '</span>' +
+          '<button class="guide-btn" data-guidebtn="' + f.n + '" style="font: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-heading); color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500); padding: 2px 8px; cursor: pointer; flex-shrink: 0;">' + (open ? "Hide guide" : "Guide") + '</button>' +
+        '</div>' +
+        '<div data-guide="' + f.n + '" style="display: ' + (open ? "flex" : "none") + '; flex-direction: column; gap: 8px; margin: var(--space-3) 0 var(--space-2) 36px; border-left: 3px solid var(--color-accent-500); background: #fff; padding: var(--space-3); font-size: 12.5px; line-height: 1.5;">' + stepsHtml + '</div>';
+      list.appendChild(wrap);
+    });
+    qsa("[data-guidebtn]").forEach(btn => btn.addEventListener("click", () => toggleGuide(btn.getAttribute("data-guidebtn"))));
+  }
+  function toggleGuide(n) {
+    state.openGuides[n] = !state.openGuides[n];
+    const g = qs('[data-guide="' + n + '"]');
+    const b = qs('[data-guidebtn="' + n + '"]');
+    const open = !!state.openGuides[n];
+    g.style.display = open ? "flex" : "none";
+    b.textContent = open ? "Hide guide" : "Guide";
+  }
+
+  /* ── Worksheet ── */
+  const inputStyle = "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; text-align: right; font: inherit; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; padding: 6px 7px;";
+  const clsBase = "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; font: inherit; font-size: 12px; padding: 6px 4px; color: var(--color-text); cursor: pointer;";
+
+  const cellColor = val => val === null ? "var(--color-text)" : (val > 0 ? DR.text : (val < 0 ? CR.text : "var(--color-neutral-700)"));
+  function cellStyle(id, k) {
+    const val = getCell(id, k);
+    const expected = ROW_BY_ID[id].exp[k] || 0;
+    let style = inputStyle + " color: " + cellColor(val) + ";";
+    if (state.checked) {
+      const entered = val === null ? 0 : val;
+      const ok = entered === expected;
+      if (expected !== 0 && ok) style += " box-shadow: inset 0 0 0 2px " + (expected > 0 ? "#5aa27a" : "#cf8a76") + "; background: " + (expected > 0 ? DR.strong : CR.strong) + ";";
+      else if (!ok) style += " box-shadow: inset 0 0 0 2px var(--color-neutral-500); background: var(--color-neutral-200);";
+    }
+    return style;
+  }
+  function clsStyle(id) {
+    let s = clsBase;
+    if (state.checked) {
+      const ok = (state.labels[id] || "") === ROW_BY_ID[id].label;
+      s += ok ? " box-shadow: inset 0 0 0 2px var(--color-accent-500); background: var(--color-accent-100);" : " box-shadow: inset 0 0 0 2px var(--color-neutral-500); background: var(--color-neutral-200);";
+    }
+    return s;
+  }
+
+  function renderWorksheet() {
+    const body = gid("cap-rows");
+    body.innerHTML = "";
+    ROWS.forEach((r, idx) => {
+      const tr = document.createElement("tr");
+      tr.setAttribute("style", "border-bottom: 1px solid var(--color-neutral-300); background: " + (idx % 2 ? "var(--color-neutral-100)" : "transparent") + ";");
+      const inputCell = k => '<td style="padding: 6px 3px;"><input data-cell="' + r.id + "-" + k + '" inputmode="numeric" style=""></td>';
+      const opts = CLS_OPTIONS.map(o => '<option value="' + o + '">' + (o === "" ? "Classify…" : o) + '</option>').join("");
+      tr.innerHTML =
+        '<td style="padding: 8px 6px 8px 0; vertical-align: middle;"><span data-numbadge="' + r.id + '"></span></td>' +
+        inputCell("cash") + inputCell("ar") + inputCell("equip") +
+        '<td style="text-align: center; color: var(--color-neutral-400); font-size: 13px;">=</td>' +
+        inputCell("np") + inputCell("ap") +
+        '<td style="text-align: center; color: var(--color-neutral-400); font-size: 13px;">+</td>' +
+        inputCell("cs") + inputCell("rev") + inputCell("exp") + inputCell("div") +
+        '<td style="padding: 6px 3px 6px 5px;"><select data-cls="' + r.id + '">' + opts + '</select></td>';
+      body.appendChild(tr);
+      COLS.forEach(k => {
+        const inp = tr.querySelector('[data-cell="' + r.id + "-" + k + '"]');
+        inp.value = state.cells[r.id + "-" + k] || "";
+        inp.setAttribute("style", cellStyle(r.id, k));
+        inp.addEventListener("input", () => onCell(r.id, k, inp));
+      });
+      const sel = tr.querySelector('[data-cls="' + r.id + '"]');
+      sel.value = state.labels[r.id] || "";
+      sel.setAttribute("style", clsStyle(r.id));
+      sel.addEventListener("change", () => onLabel(r.id, sel));
+    });
+
+    const tot = document.createElement("tr");
+    tot.setAttribute("style", "border-top: 2px solid var(--color-accent-900); background: var(--color-accent-100); font-variant-numeric: tabular-nums;");
+    const totCell = k => '<td data-tot="' + k + '" style="padding: 9px 8px; text-align: right; font-weight: 700; font-size: 12.5px;">—</td>';
+    tot.innerHTML =
+      '<td style="padding: 9px 6px 9px 0; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; font-weight: 600;">Bal.</td>' +
+      totCell("cash") + totCell("ar") + totCell("equip") +
+      '<td style="text-align: center; color: var(--color-neutral-600); font-size: 13px;">=</td>' +
+      totCell("np") + totCell("ap") +
+      '<td style="text-align: center; color: var(--color-neutral-600); font-size: 13px;">+</td>' +
+      totCell("cs") + totCell("rev") + totCell("exp") + totCell("div") +
+      '<td style="padding: 9px 5px; font-size: 11px; color: var(--color-neutral-600);"> </td>';
+    body.appendChild(tot);
+
+    recompute();
+  }
+
+  function onCell(id, k, inp) {
+    state.cells[id + "-" + k] = inp.value;
+    if (state.checked) clearCheck();
+    else inp.setAttribute("style", cellStyle(id, k));
+    recompute();
+  }
+  function onLabel(id, sel) {
+    state.labels[id] = sel.value;
+    if (state.checked) clearCheck();
+    else sel.setAttribute("style", clsStyle(id));
+  }
+
+  function clearCheck() {
+    state.checked = false;
+    ROWS.forEach(r => {
+      COLS.forEach(k => { const inp = qs('[data-cell="' + r.id + "-" + k + '"]'); if (inp) inp.setAttribute("style", cellStyle(r.id, k)); });
+      const sel = qs('[data-cls="' + r.id + '"]'); if (sel) sel.setAttribute("style", clsStyle(r.id));
+    });
+    gid("cap-score").textContent = "";
+    gid("cap-score").style.color = "var(--color-neutral-700)";
+    gid("cap-feedback").style.display = "none";
+  }
+
+  function recompute() {
+    const totals = { cash: 0, ar: 0, equip: 0, np: 0, ap: 0, cs: 0, rev: 0, exp: 0, div: 0 };
+    ROWS.forEach(r => {
+      let assetsDelta = 0, lseDelta = 0, anyEntry = false;
+      COLS.forEach(k => {
+        const val = getCell(r.id, k);
+        const entered = val === null ? 0 : val;
+        if (val !== null) anyEntry = true;
+        totals[k] += entered;
+        if (ASSET_COLS.indexOf(k) >= 0) assetsDelta += entered; else lseDelta += entered;
+      });
+      const balanced = anyEntry && assetsDelta === lseDelta;
+      const badge = qs('[data-numbadge="' + r.id + '"]');
+      badge.textContent = r.n;
+      badge.setAttribute("title", balanced ? "This row keeps the equation in balance" : "Enter the effects — the row must balance on its own");
+      badge.setAttribute("style", "width: 26px; height: 26px; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 12px; border: 1.5px solid " + (balanced ? "var(--color-accent-600)" : "var(--color-neutral-400)") + "; color: " + (balanced ? "var(--color-accent-800)" : "var(--color-neutral-600)") + ";" + (balanced ? " background: var(--color-accent-100);" : ""));
+    });
+    COLS.forEach(k => { const el = qs('[data-tot="' + k + '"]'); if (el) el.textContent = fmtMoney(totals[k]); });
+
+    const grandAssets = totals.cash + totals.ar + totals.equip;
+    const retained = totals.rev + totals.exp + totals.div;
+    const grandLSE = totals.np + totals.ap + totals.cs + retained;
+    const balanced = grandAssets === grandLSE;
+    const anyTotal = grandAssets !== 0 || grandLSE !== 0;
+    const diff = grandAssets - grandLSE;
+
+    setLedger("cash", totals.cash); setLedger("ar", totals.ar); setLedger("equip", totals.equip);
+    setLedger("np", totals.np); setLedger("ap", totals.ap); setLedger("cs", totals.cs); setLedger("retained", retained);
+    gid("cap-grand-assets").textContent = money0(grandAssets);
+    gid("cap-grand-lse").textContent = money0(grandLSE);
+
+    const tilt = (!anyTotal || balanced) ? 0 : (diff > 0 ? -8 : 8);
+    qs("[data-beam]").style.transform = "translateX(-50%) rotate(" + tilt + "deg)";
+    const panBg = (anyTotal && balanced) ? "var(--color-accent-100)" : "var(--color-neutral-100)";
+    [qs("[data-pan-left]"), qs("[data-pan-right]")].forEach(p => { p.style.background = panBg; p.style.transform = "rotate(" + (-tilt) + "deg)"; });
+
+    const verdict = gid("cap-verdict");
+    verdict.textContent = !anyTotal ? "Awaiting entries" : (balanced ? "Balanced" : "Not yet balanced");
+    verdict.setAttribute("style", "font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border: 1px solid " + (anyTotal && balanced ? "var(--color-accent-500); background: var(--color-accent-900); color: var(--color-neutral-100)" : "var(--color-neutral-400); color: var(--color-neutral-600)") + ";");
+
+    const noteWrap = gid("cap-balnote");
+    noteWrap.setAttribute("style", "display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-5); padding: var(--space-3) var(--space-4); border: 1px solid " + (anyTotal && balanced ? "var(--color-accent-400); background: var(--color-accent-100); color: var(--color-accent-800)" : "var(--color-neutral-400); background: var(--color-neutral-100); color: var(--color-neutral-700)") + ";");
+    gid("cap-balicon").textContent = !anyTotal ? "→" : (balanced ? "✓" : "⚠");
+    gid("cap-baltext").textContent = !anyTotal ? "Start entering effects above — this proof updates live." : (balanced ? "In balance — Assets = Liabilities + Stockholders’ Equity." : "Out of balance by $" + Math.abs(diff).toLocaleString("en-US") + " — find the row that doesn’t balance on its own.");
+  }
+  function setLedger(key, n) {
+    const el = qs('[data-lv="' + key + '"]');
+    if (!el) return;
+    el.textContent = fmtMoney(n);
+    el.style.color = n < 0 ? CR.text : "var(--color-text)";
+  }
+
+  function checkAnswers() {
+    state.checked = true;
+    let effectsTotal = 0, effectsCorrect = 0, labelsCorrect = 0;
+    const wrong = [];
+    ROWS.forEach(r => {
+      let rowOk = true;
+      COLS.forEach(k => {
+        const expected = r.exp[k] || 0;
+        const val = getCell(r.id, k);
+        const entered = val === null ? 0 : val;
+        const ok = entered === expected;
+        if (!ok) rowOk = false;
+        if (expected !== 0) { effectsTotal++; if (ok) effectsCorrect++; }
+        const inp = qs('[data-cell="' + r.id + "-" + k + '"]');
+        inp.setAttribute("style", cellStyle(r.id, k));
+      });
+      const labelOk = (state.labels[r.id] || "") === r.label;
+      if (labelOk) labelsCorrect++; else rowOk = false;
+      qs('[data-cls="' + r.id + '"]').setAttribute("style", clsStyle(r.id));
+      if (!rowOk) wrong.push(r);
+    });
+    const allRight = effectsCorrect === effectsTotal && labelsCorrect === ROWS.length && wrong.length === 0;
+    const score = gid("cap-score");
+    score.textContent = effectsCorrect + " / " + effectsTotal + " effects · " + labelsCorrect + " / " + ROWS.length + " labels";
+    score.style.color = allRight ? "var(--color-accent-700)" : "var(--color-neutral-700)";
+
+    const fb = gid("cap-feedback");
+    if (wrong.length) {
+      gid("cap-feedback-list").innerHTML = wrong.map(r => {
+        const parts = COLS.filter(k => r.exp[k]).map(k => COL_NAMES[k] + " " + (r.exp[k] > 0 ? "+" : "−") + "$" + Math.abs(r.exp[k]).toLocaleString("en-US"));
+        return '<div style="font-size: 12.5px; line-height: 1.5;"><strong>(' + r.n + ')</strong> Correct effect: ' + parts.join(" · ") + ' — ' + r.label + '.</div>';
+      }).join("");
+      fb.style.display = "flex";
+    } else {
+      fb.style.display = "none";
+    }
+  }
+
+  function resetExercise() {
+    state.cells = {}; state.labels = {}; state.checked = false; state.openGuides = {};
+    renderFacts();
+    renderWorksheet();
+    gid("cap-score").textContent = "";
+    gid("cap-score").style.color = "var(--color-neutral-700)";
+    gid("cap-feedback").style.display = "none";
+  }
+
+  renderFacts();
+  renderWorksheet();
+  gid("cap-check").addEventListener("click", checkAnswers);
+  gid("cap-reset").addEventListener("click", resetExercise);
 })();
 </script>
 </body>
