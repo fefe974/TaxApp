@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial Accounting · Chapter 2 Lectures</title>
+<meta name="description" content="Interactive Chapter 2 lessons: Lecture 1 — Debits and Credits, and Lecture 2 — The Accounting Equation.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--color-bg); }
+  a { color: var(--color-accent-700); }
+  a:hover { color: var(--color-accent-800); }
+  input.sheet-cell:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+
+  .layout { display: flex; min-height: 100vh; font-family: var(--font-body); color: var(--color-text); }
+
+  .sidebar {
+    width: 230px; flex-shrink: 0; background: var(--color-accent-900); color: var(--color-neutral-100);
+    display: flex; flex-direction: column; padding: var(--space-6) var(--space-4); gap: var(--space-2);
+  }
+  .nav-link {
+    display: flex; align-items: center; gap: var(--space-3); text-decoration: none;
+    color: var(--color-neutral-100); font: inherit; font-size: 13.5px; padding: var(--space-3) var(--space-2);
+    background: none; border: none; width: 100%; text-align: left; cursor: pointer;
+  }
+  .nav-link:hover { background: rgba(255,255,255,0.08); }
+  .nav-link[aria-current="page"] { background: rgba(255,255,255,0.10); color: #fff; }
+  .nav-link[aria-current="page"] .num { border-color: var(--color-accent-300); color: var(--color-accent-300); }
+  .nav-link .num {
+    width: 20px; height: 20px; border: 1px solid currentColor; display: inline-grid; place-items: center;
+    font-size: 11px; font-family: var(--font-heading); flex-shrink: 0;
+  }
+
+  main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .lecture { display: flex; flex-direction: column; min-width: 0; }
+  .lecture[hidden] { display: none; }
+  .content { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-6); max-width: 1100px; width: 100%; box-sizing: border-box; margin: 0 auto; }
+
+  .acct-tile:hover, .eq-tile:hover { border-color: var(--color-accent-600) !important; }
+  .guide-btn:hover { background: var(--color-accent-200) !important; }
+
+  @media (max-width: 860px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; }
+    .sidebar .study-tip { display: none; }
+    .concept-grid, .illustration-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 680px) {
+    .practice-scroll, .perez-scroll { overflow-x: auto; }
+    .practice-scroll table { min-width: 560px; }
+    .perez-scroll table { min-width: 620px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <!-- ───────────── Shared sidebar ───────────── -->
+  <aside class="sidebar">
+    <div style="display: flex; align-items: center; gap: var(--space-3); padding: 0 var(--space-2) var(--space-6);">
+      <div style="width: 34px; height: 34px; border: 1px solid var(--color-accent-300); display: grid; place-items: center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+      </div>
+      <div>
+        <div style="font-family: var(--font-heading); font-size: 17px; font-weight: 600; line-height: 1.1; letter-spacing: 0.02em;">Financial Accounting</div>
+        <div style="font-size: 11px; color: var(--color-accent-300); letter-spacing: 0.08em; text-transform: uppercase;">Learning Academy</div>
+      </div>
+    </div>
+    <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: 0 var(--space-2) var(--space-2);">Chapter 2</div>
+    <nav style="display: contents;">
+      <button class="nav-link" type="button" data-goto="1"><span class="num">1</span><span>Lecture 1 — Debits &amp; Credits</span></button>
+      <button class="nav-link" type="button" data-goto="2"><span class="num">2</span><span>Lecture 2 — The Accounting Equation</span></button>
+    </nav>
+    <div class="study-tip" style="margin-top: auto; border: 1px solid var(--color-accent-700); padding: var(--space-4);">
+      <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-300); margin-bottom: var(--space-2);">Study Tip</div>
+      <div id="study-tip-body" style="font-size: 12.5px; line-height: 1.5; color: var(--color-neutral-200);"></div>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ═══════════════ Lecture 1 — Debits and Credits ═══════════════ -->
+    <section class="lecture" id="lecture-1">
+      <header style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700);">Chapter 2 · The Accounting Information System</div>
+          <h1 style="margin: 2px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600; letter-spacing: 0.01em;">Debits and Credits</h1>
+        </div>
+        <span class="tag tag-accent">Lecture 1</span>
+      </header>
+      <div class="content">
+        <!-- Concept -->
+        <section id="lesson" class="card blueprint" style="padding: var(--space-6);">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div class="card-kicker">Lesson 1 · Concept</div>
+          <h2 class="card-title" style="font-size: 22px; margin-top: var(--space-2);">Debit means left. Credit means right.</h2>
+          <div class="concept-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); margin-top: var(--space-4); font-size: 14.5px; line-height: 1.65;">
+            <div>
+              <p style="margin: 0 0 var(--space-3);">The terms <strong>debit</strong> (Dr.) and <strong>credit</strong> (Cr.) mean left and right. They do <em>not</em> mean increase or decrease — they describe <strong>where</strong> a company makes entries in the recording process.</p>
+              <ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px;">
+                <li>An entry on the <strong>left</strong> side of an account is a <strong>debit</strong> to the account.</li>
+                <li>An entry on the <strong>right</strong> side is a <strong>credit</strong> to the account.</li>
+                <li>An account shows a <strong>debit balance</strong> if total debits exceed total credits.</li>
+                <li>An account shows a <strong>credit balance</strong> if total credits exceed total debits.</li>
+              </ul>
+            </div>
+            <p style="margin: 0;">Under the universally used <strong>double-entry accounting</strong> system, every transaction is recorded with equal debits and credits — so the sum of all debits must always equal the sum of all credits. That equality is a built-in check on the accuracy of the records. Positioning debits on the left and credits on the right is simply the custom — like driving on the right-hand side of the road, the rule applies to all accounts.</p>
+          </div>
+        </section>
+        <!-- Interactive Illustration 2.2 -->
+        <section id="illustration" class="card blueprint" style="padding: var(--space-6);">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+            <div>
+              <div class="card-kicker">Illustration 2.2 · Interactive</div>
+              <h2 class="card-title" style="font-size: 20px; margin-top: var(--space-2);">The Double-Entry (Debit and Credit) System</h2>
+            </div>
+            <div style="display: flex; gap: var(--space-4); align-items: center; font-size: 12.5px; padding-top: var(--space-2);">
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 14px; background: #d4e9dc; border: 1px solid #5aa27a; display: inline-block;"></span><strong style="color: #2f7d4f;">Debit</strong> = left</span>
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 14px; background: #f0dcd4; border: 1px solid #cf8a76; display: inline-block;"></span><strong style="color: #b8442c;">Credit</strong> = right</span>
+            </div>
+          </div>
+          <div style="font-size: 13px; color: var(--color-neutral-700); margin-top: var(--space-2);">Accounts with a <strong style="color: #2f7d4f;">debit</strong> normal balance sit on the left; accounts with a <strong style="color: #b8442c;">credit</strong> normal balance sit on the right. Click any account to see how its T-account behaves and why.</div>
+          <div class="illustration-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); margin-top: var(--space-4); align-items: start;">
+            <div>
+              <div style="background: #2f7d4f; color: #fff; padding: 8px 12px; font-family: var(--font-heading); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; display: flex; align-items: center; justify-content: space-between;"><span>Normal Balance — Debit</span><span style="font-weight: 400; opacity: 0.8; font-size: 11px;">Left side</span></div>
+              <div id="l1-debit-tiles" style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-3);"></div>
+            </div>
+            <div>
+              <div style="background: #b8442c; color: #fff; padding: 8px 12px; font-family: var(--font-heading); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px; display: flex; align-items: center; justify-content: space-between;"><span>Normal Balance — Credit</span><span style="font-weight: 400; opacity: 0.8; font-size: 11px;">Right side</span></div>
+              <div id="l1-credit-tiles" style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-3);"></div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-4); border: 1px solid var(--color-accent-300); background: var(--color-accent-100); padding: var(--space-4); display: flex; gap: var(--space-3); align-items: flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            <div style="font-size: 13.5px; line-height: 1.6;"><strong id="l1-sel-heading" style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px;"></strong><br><span id="l1-sel-explain"></span></div>
+          </div>
+        </section>
+        <!-- Practice spreadsheet -->
+        <section id="practice" class="card blueprint" style="padding: 0; overflow: hidden;">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-neutral-300); flex-wrap: wrap;">
+            <div>
+              <div class="card-kicker">Practice Lab · Guided Spreadsheet</div>
+              <h2 class="card-title" style="font-size: 19px; margin-top: 2px;">Record each transaction: Debit or Credit?</h2>
+            </div>
+            <div style="display: flex; gap: var(--space-3); align-items: center;">
+              <span id="l1-score" style="font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; color: var(--color-neutral-700);"></span>
+              <button class="btn btn-secondary" id="l1-btn-reset">Reset</button>
+              <button class="btn btn-primary blueprint" style="position: relative;" id="l1-btn-check"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>Check answers</button>
+            </div>
+          </div>
+          <div style="padding: var(--space-3) var(--space-6); font-size: 13px; color: var(--color-neutral-700); border-bottom: 1px solid var(--color-neutral-300); line-height: 1.55;">Each transaction affects exactly two accounts. For each row, <strong>type the account title</strong> and enter its amount in the <strong style="color: #2f7d4f;">Debit</strong> or <strong style="color: #b8442c;">Credit</strong> column. The Account Type fills in once a valid account is recognized. Stuck? Open the <strong>Guide</strong> on any transaction for a step-by-step analysis. Column totals update live — a correct sheet stays in balance.</div>
+          <div style="background: #fff;">
+            <div style="display: flex; align-items: center; gap: var(--space-2); padding: 6px var(--space-3); border-bottom: 1px solid var(--color-neutral-300); background: var(--color-neutral-100); font-size: 12px; color: var(--color-neutral-700);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path></svg>
+              <span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em;">GENERAL-JOURNAL.XLSX</span>
+              <span style="color: var(--color-neutral-400);">|</span><span>Sheet 1 · December, Year 1</span>
+              <span id="l1-balance-note" style="margin-left: auto; font-variant-numeric: tabular-nums;"></span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-2); padding: 4px var(--space-3); border-bottom: 1px solid var(--color-neutral-300); background: var(--color-neutral-100); font-size: 12px; color: var(--color-neutral-600);">
+              <span style="font-style: italic; font-family: var(--font-heading); color: var(--color-accent-700); font-weight: 600;">fx</span>
+              <span id="l1-formula-bar" style="border-left: 1px solid var(--color-neutral-300); padding-left: var(--space-2);"></span>
+            </div>
+            <div class="practice-scroll">
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums;">
+                <thead>
+                  <tr style="background: var(--color-neutral-200); color: var(--color-neutral-600); font-size: 11px; font-family: var(--font-heading); letter-spacing: 0.06em;">
+                    <th style="width: 36px; padding: 3px; border: 1px solid var(--color-neutral-300); font-weight: 500;"> </th>
+                    <th style="padding: 3px; border: 1px solid var(--color-neutral-300); font-weight: 500;">A</th>
+                    <th style="padding: 3px; border: 1px solid var(--color-neutral-300); font-weight: 500; width: 130px;">B</th>
+                    <th style="padding: 3px; border: 1px solid var(--color-neutral-300); font-weight: 500; width: 120px;">C</th>
+                    <th style="padding: 3px; border: 1px solid var(--color-neutral-300); font-weight: 500; width: 120px;">D</th>
+                  </tr>
+                  <tr style="background: var(--color-accent-900); color: var(--color-neutral-100); font-family: var(--font-heading); letter-spacing: 0.05em; text-transform: uppercase; font-size: 12px;">
+                    <th style="padding: 8px 6px; border-right: 1px solid var(--color-accent-700); font-weight: 500;"> </th>
+                    <th style="text-align: left; padding: 8px 12px; border-right: 1px solid var(--color-accent-700); font-weight: 500;">Account Title</th>
+                    <th style="text-align: left; padding: 8px 12px; border-right: 1px solid var(--color-accent-700); font-weight: 500;">Account Type</th>
+                    <th style="text-align: right; padding: 8px 12px; font-weight: 600; background: #2f7d4f; color: #fff; border-right: 2px solid var(--color-neutral-100);">Debit (Dr.)</th>
+                    <th style="text-align: right; padding: 8px 12px; font-weight: 600; background: #b8442c; color: #fff;">Credit (Cr.)</th>
+                  </tr>
+                </thead>
+                <tbody id="l1-sheet-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ═══════════════ Lecture 2 — The Accounting Equation ═══════════════ -->
+    <section class="lecture" id="lecture-2" hidden>
+      <header style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg);">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700);">Chapter 2 · Lecture 2</div>
+          <h1 style="margin: 2px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600; letter-spacing: 0.01em;">The Accounting Equation</h1>
+        </div>
+        <span class="tag tag-accent">Lecture 2</span>
+      </header>
+      <div class="content">
+        <!-- Concept -->
+        <section id="eq-concept" class="card blueprint" style="padding: var(--space-6);">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div class="card-kicker">Lesson · Concept</div>
+          <h2 class="card-title" style="font-size: 22px; margin-top: var(--space-2);">The Accounting Equation</h2>
+          <div class="concept-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); margin-top: var(--space-4); font-size: 14.5px; line-height: 1.65;">
+            <p style="margin: 0;">In a double-entry system, for every debit there must be a credit, and vice versa. This leads us to the basic equation in accounting — the foundation on which every transaction is recorded.</p>
+            <p style="margin: 0;">Every time a transaction occurs, the elements of the equation change; the equality always remains. Like the basic equation, the expanded equation must always balance — total debits equal total credits.</p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6);">
+            <div class="blueprint" style="position: relative; border: 1px solid var(--color-neutral-500); padding: var(--space-4) var(--space-6); text-align: center; min-width: 160px;">
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: 0.03em;">Assets</div>
+            </div>
+            <div style="font-family: var(--font-heading); font-size: 28px; font-weight: 600;">=</div>
+            <div class="blueprint" style="position: relative; border: 1px solid var(--color-neutral-500); padding: var(--space-4) var(--space-6); text-align: center; min-width: 160px;">
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: 0.03em;">Liabilities</div>
+            </div>
+            <div style="font-family: var(--font-heading); font-size: 28px; font-weight: 600;">+</div>
+            <div class="blueprint" style="position: relative; border: 1px solid var(--color-neutral-500); padding: var(--space-4) var(--space-6); text-align: center; min-width: 200px;">
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: 0.03em;">Stockholders&rsquo; Equity</div>
+            </div>
+          </div>
+        </section>
+        <!-- Illustration 2.3 · Interactive expanded equation -->
+        <section id="eq-illustration" class="card blueprint" style="padding: var(--space-6);">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+            <div>
+              <div class="card-kicker">Illustration 2.3 · Interactive</div>
+              <h2 class="card-title" style="font-size: 20px; margin-top: var(--space-2);">Expanded Equation — Debit / Credit Rules &amp; Effects</h2>
+            </div>
+            <div style="display: flex; gap: var(--space-4); align-items: center; font-size: 12.5px; padding-top: var(--space-2);">
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 14px; background: #d4e9dc; border: 1px solid #5aa27a; display: inline-block;"></span><strong style="color: #2f7d4f;">Dr</strong> increases</span>
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 14px; background: #f0dcd4; border: 1px solid #cf8a76; display: inline-block;"></span><strong style="color: #b8442c;">Cr</strong> increases</span>
+            </div>
+          </div>
+          <div style="font-size: 13px; color: var(--color-neutral-700); margin-top: var(--space-2);">Each box shows how that account behaves. The <strong>+</strong> marks the side that increases the account (its normal balance). Click any box for the reasoning.</div>
+          <div id="l2-eq-diagram" style="display: flex; align-items: flex-start; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4);"></div>
+          <div style="margin-top: var(--space-4); border: 1px solid var(--color-accent-300); background: var(--color-accent-100); padding: var(--space-4); display: flex; gap: var(--space-3); align-items: flex-start;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            <div style="font-size: 13.5px; line-height: 1.6;"><strong id="l2-eq-sel-heading" style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px;"></strong><br><span id="l2-eq-sel-explain"></span></div>
+          </div>
+        </section>
+        <!-- Perez Inc. guided exercise -->
+        <section id="eq-practice" class="card blueprint" style="padding: var(--space-6);">
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+            <div>
+              <div class="card-kicker">Lesson · Guided Exercise</div>
+              <h2 class="card-title" style="font-size: 20px; margin-top: var(--space-2);">Eight transactions for Perez Inc.</h2>
+            </div>
+            <div style="display: flex; gap: var(--space-3); align-items: center;">
+              <span id="l2-score" style="font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.04em; color: var(--color-neutral-700);"></span>
+              <button class="btn btn-secondary" id="l2-btn-reset">Reset</button>
+              <button class="btn btn-primary blueprint" style="position: relative;" id="l2-btn-check"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>Check answers</button>
+            </div>
+          </div>
+          <div style="font-size: 13.5px; color: var(--color-neutral-700); margin-top: var(--space-2); line-height: 1.55;">For each transaction, enter the <strong>net change</strong> to each element — a positive number for an increase, a negative number for a decrease, and <strong>0</strong> for no change. Your entries must keep <strong>Assets = Liabilities + Stockholders&rsquo; Equity</strong>. Stuck? Open the <strong>Guide</strong> for a step-by-step analysis.</div>
+          <div class="perez-scroll">
+            <table style="width: 100%; border-collapse: collapse; margin-top: var(--space-5);">
+              <thead>
+                <tr style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; color: var(--color-neutral-500);">
+                  <th colspan="2" style="padding: 0;"> </th>
+                  <th style="text-align: center; padding: 0 8px 6px; font-weight: 600; color: var(--color-accent-800);">Assets</th>
+                  <th style="padding: 0;"> </th>
+                  <th style="text-align: center; padding: 0 8px 6px; font-weight: 600; color: var(--color-accent-800);">Liabilities</th>
+                  <th style="padding: 0;"> </th>
+                  <th style="text-align: center; padding: 0 8px 6px; font-weight: 600; color: var(--color-accent-800);">Stk. Equity</th>
+                </tr>
+                <tr style="font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; color: var(--color-neutral-600); border-bottom: 1.5px solid var(--color-accent-900);">
+                  <th style="text-align: left; padding: 4px 8px 8px 0; font-weight: 500; width: 34px;">#</th>
+                  <th style="text-align: left; padding: 4px 8px 8px; font-weight: 500;">Transaction</th>
+                  <th style="text-align: right; padding: 4px 8px 8px; font-weight: 500; width: 108px;">Δ change</th>
+                  <th style="text-align: center; padding: 4px 2px 8px; font-family: var(--font-body); font-size: 16px; color: var(--color-neutral-800); width: 20px;">=</th>
+                  <th style="text-align: right; padding: 4px 8px 8px; font-weight: 500; width: 108px;">Δ change</th>
+                  <th style="text-align: center; padding: 4px 2px 8px; font-family: var(--font-body); font-size: 16px; color: var(--color-neutral-800); width: 20px;">+</th>
+                  <th style="text-align: right; padding: 4px 8px 8px; font-weight: 500; width: 108px;">Δ change</th>
+                </tr>
+              </thead>
+              <tbody id="l2-perez-body"></tbody>
+            </table>
+          </div>
+          <div style="margin-top: var(--space-4); display: flex; align-items: center; gap: var(--space-2); border: 1px solid var(--color-accent-300); background: var(--color-accent-100); padding: var(--space-3) var(--space-4);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M16 16h.01"></path><path d="M8 8h.01"></path><path d="m8 16 8-8"></path><rect x="2" y="2" width="20" height="20" rx="0"></rect></svg>
+            <span id="l2-balance-note"></span>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+/* ───────────────────────── App shell — lecture switching ───────────────────────── */
+(function () {
+  const tips = {
+    "1": "Debit means left, credit means right — nothing more. Direction, not increase or decrease.",
+    "2": "Assets = Liabilities + Stockholders’ Equity. This equality can never be broken — every transaction keeps it in balance.",
+  };
+  const tipEl = document.getElementById("study-tip-body");
+  const buttons = Array.from(document.querySelectorAll(".nav-link[data-goto]"));
+  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2") };
+  function show(n) {
+    Object.keys(lectures).forEach(k => { lectures[k].hidden = (k !== n); });
+    buttons.forEach(b => {
+      if (b.getAttribute("data-goto") === n) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    });
+    tipEl.textContent = tips[n];
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  buttons.forEach(b => b.addEventListener("click", () => show(b.getAttribute("data-goto"))));
+  show("1");
+})();
+
+/* ═══════════════════════ Lecture 1 — Debits and Credits ═══════════════════════ */
+(function () {
+  const scope = document.getElementById("lecture-1");
+  const gid = id => scope.querySelector("#" + id);
+  const qs = sel => scope.querySelector(sel);
+  const qsa = sel => scope.querySelectorAll(sel);
+
+  const TXNS = [
+    { label: "1. Purchased office supplies for $2,500 cash", amt: 2500,
+      pairs: [
+        { account: "Supplies", type: "Asset", side: "dr", amt: 2500, dir: "increases" },
+        { account: "Cash", type: "Asset", side: "cr", amt: 2500, dir: "decreases" } ],
+      steps: [
+        "Identify the accounts: Supplies and Cash — both are assets.",
+        "Analyze the change: Supplies increases (you now own more supplies); Cash decreases (you paid it out).",
+        "Apply the rule: assets increase with a debit and decrease with a credit → Debit Supplies 2,500 · Credit Cash 2,500." ] },
+    { label: "2. Performed services on account (billed the client) for $8,000", amt: 8000,
+      pairs: [
+        { account: "Accounts Receivable", type: "Asset", side: "dr", amt: 8000, dir: "increases" },
+        { account: "Service Revenue", type: "Revenue", side: "cr", amt: 8000, dir: "increases" } ],
+      steps: [
+        "Identify the accounts: Accounts Receivable (an asset — the client owes you) and Service Revenue.",
+        "Analyze the change: both increase — the receivable is a new asset, and revenue was earned.",
+        "Apply the rules: assets increase with a debit; revenues increase with a credit → Debit A/R 8,000 · Credit Service Revenue 8,000." ] },
+    { label: "3. Borrowed $15,000 from the bank on a note payable", amt: 15000,
+      pairs: [
+        { account: "Cash", type: "Asset", side: "dr", amt: 15000, dir: "increases" },
+        { account: "Notes Payable", type: "Liability", side: "cr", amt: 15000, dir: "increases" } ],
+      steps: [
+        "Identify the accounts: Cash (asset) and Notes Payable (liability).",
+        "Analyze the change: both increase — cash came in, and you now owe the bank.",
+        "Apply the rules: assets increase with a debit; liabilities increase with a credit → Debit Cash 15,000 · Credit Notes Payable 15,000." ] },
+    { label: "4. Paid $1,200 cash for the month’s rent", amt: 1200,
+      pairs: [
+        { account: "Rent Expense", type: "Expense", side: "dr", amt: 1200, dir: "increases" },
+        { account: "Cash", type: "Asset", side: "cr", amt: 1200, dir: "decreases" } ],
+      steps: [
+        "Identify the accounts: Rent Expense and Cash.",
+        "Analyze the change: the expense increases (a cost was incurred); Cash decreases.",
+        "Apply the rules: expenses increase with a debit; assets decrease with a credit → Debit Rent Expense 1,200 · Credit Cash 1,200." ] },
+    { label: "5. Issued common stock to investors for $10,000 cash", amt: 10000,
+      pairs: [
+        { account: "Cash", type: "Asset", side: "dr", amt: 10000, dir: "increases" },
+        { account: "Common Stock", type: "Equity", side: "cr", amt: 10000, dir: "increases" } ],
+      steps: [
+        "Identify the accounts: Cash (asset) and Common Stock (stockholders’ equity).",
+        "Analyze the change: both increase — cash came in, and ownership claims grew.",
+        "Apply the rules: assets increase with a debit; equity increases with a credit → Debit Cash 10,000 · Credit Common Stock 10,000." ] },
+    { label: "6. Declared and paid a $500 cash dividend", amt: 500,
+      pairs: [
+        { account: "Dividends", type: "Equity (contra)", side: "dr", amt: 500, dir: "increases" },
+        { account: "Cash", type: "Asset", side: "cr", amt: 500, dir: "decreases" } ],
+      steps: [
+        "Identify the accounts: Dividends and Cash.",
+        "Analyze the change: Dividends increases (more was distributed); Cash decreases.",
+        "Apply the rules: Dividends is the equity exception — it increases with a DEBIT because it reduces equity; assets decrease with a credit → Debit Dividends 500 · Credit Cash 500." ] },
+  ];
+
+  const TYPES = [
+    { title: "Assets", normal: "Debit", explain: "Resources the company owns — Cash, Supplies, Accounts Receivable, Equipment. Increases are recorded on the left (debit) side, decreases on the right (credit) side. Because increases outweigh decreases, assets normally carry a debit balance." },
+    { title: "Expenses", normal: "Debit", explain: "Costs of operating — Rent, Salaries, Utilities. Expenses reduce stockholders’ equity, so they behave opposite to equity: they increase on the debit side and normally carry a debit balance." },
+    { title: "Liabilities", normal: "Credit", explain: "Amounts owed to creditors — Notes Payable, Accounts Payable, Unearned Revenue. Increases are recorded on the right (credit) side, decreases on the left (debit) side. Normal balance: credit." },
+    { title: "Stockholders’ Equity", normal: "Credit", explain: "Ownership claims — Common Stock and Retained Earnings increase on the credit side. The one exception is Dividends, which increases on the debit side because it reduces equity." },
+    { title: "Revenues", normal: "Credit", explain: "Amounts earned from services or sales. Revenues increase stockholders’ equity, so they increase on the credit side and normally carry a credit balance." },
+    { title: "Dividends", normal: "Debit", explain: "Distributions to stockholders. Dividends reduce equity, so — unlike the rest of equity — they increase on the DEBIT side. This is the equity exception to remember." },
+  ];
+
+  const DR = { text: "#2f7d4f", tint: "#eef5f0", strong: "#d4e9dc", border: "#5aa27a" };
+  const CR = { text: "#b8442c", tint: "#f7ede9", strong: "#f0dcd4", border: "#cf8a76" };
+
+  const ACCT_TYPE = {};
+  TXNS.forEach(t => t.pairs.forEach(p => { ACCT_TYPE[p.account.toLowerCase()] = p.type; }));
+
+  function typeColor(type) {
+    const t = String(type).toLowerCase();
+    if (t.startsWith("asset")) return "#3f72a6";
+    if (t.startsWith("expense")) return "#b5701f";
+    if (t.startsWith("liab")) return "#8256b8";
+    if (t.startsWith("revenue")) return "#8a7a1c";
+    if (t.startsWith("dividend")) return "#5a6b82";
+    if (t.startsWith("equity") || t.startsWith("stockholder")) return "#2f8f83";
+    return "#5a6b82";
+  }
+
+  const fmt = n => (n ? n.toLocaleString("en-US") : "0");
+  const parseAmt = v => { const n = parseFloat(String(v || "").replace(/[^0-9.]/g, "")); return isNaN(n) ? 0 : n; };
+
+  const state = { cells: {}, checked: false, selectedType: 0, openGuides: {} };
+
+  /* Illustration 2.2 — account tiles */
+  function tileMarkup(ty) {
+    const isDr = ty.normal === "Debit";
+    const drCell = "padding: 8px 4px; border-right: 2px solid var(--color-neutral-400); color: " + DR.text + "; background: " + (isDr ? DR.strong : DR.tint) + ";" + (isDr ? " font-weight: 700;" : "");
+    const crCell = "padding: 8px 4px; color: " + CR.text + "; background: " + (isDr ? CR.tint : CR.strong) + ";" + (isDr ? "" : " font-weight: 700;");
+    const badgeStyle = "font-family: var(--font-heading); font-weight: 600; font-size: 11px; padding: 1px 7px; letter-spacing: 0.06em; color: #fff; background: " + (isDr ? DR.text : CR.text) + ";";
+    const drSign = isDr ? "+ increase" : "− decrease";
+    const crSign = isDr ? "− decrease" : "+ increase";
+    return '' +
+      '<span style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);">' +
+        '<span style="font-family: var(--font-heading); font-weight: 600; font-size: 15px; text-transform: uppercase; letter-spacing: 0.05em;">' + ty.title + '</span>' +
+        '<span style="' + badgeStyle + '">' + (isDr ? "DR" : "CR") + '</span>' +
+      '</span>' +
+      '<span style="display: grid; grid-template-columns: 1fr 1fr; margin-top: var(--space-3); border-top: 1.5px solid var(--color-neutral-800); text-align: center; font-size: 12px;">' +
+        '<span style="' + drCell + '">Debit<br><strong>' + drSign + '</strong></span>' +
+        '<span style="' + crCell + '">Credit<br><strong>' + crSign + '</strong></span>' +
+      '</span>';
+  }
+  function tileStyle(ty, active) {
+    const tc = typeColor(ty.title);
+    const bw = active ? "2px" : "1px";
+    const bc = active ? "var(--color-accent-600)" : "var(--color-neutral-400)";
+    return "display: block; width: 100%; text-align: left; font: inherit; cursor: pointer; padding: var(--space-3); background: #fff; border-top: 4px solid " + tc +
+      "; border-left: " + bw + " solid " + bc + "; border-right: " + bw + " solid " + bc + "; border-bottom: " + bw + " solid " + bc + ";" +
+      (active ? " box-shadow: var(--shadow-sm);" : "");
+  }
+  function renderIllustration() {
+    const drWrap = gid("l1-debit-tiles");
+    const crWrap = gid("l1-credit-tiles");
+    drWrap.innerHTML = "";
+    crWrap.innerHTML = "";
+    TYPES.forEach((ty, i) => {
+      const btn = document.createElement("button");
+      btn.className = "acct-tile";
+      btn.setAttribute("style", tileStyle(ty, i === state.selectedType));
+      btn.innerHTML = tileMarkup(ty);
+      btn.addEventListener("click", () => { state.selectedType = i; renderIllustration(); });
+      (ty.normal === "Debit" ? drWrap : crWrap).appendChild(btn);
+    });
+    const sel = TYPES[state.selectedType];
+    gid("l1-sel-heading").textContent = sel.title + " — normal balance: " + sel.normal + ".";
+    gid("l1-sel-explain").textContent = sel.explain;
+  }
+
+  /* Practice spreadsheet */
+  const cellBase = "width: 100%; box-sizing: border-box; border: none; background: transparent; text-align: right; font: inherit; font-weight: 600; padding: 6px 12px;";
+  const drCellStyle = cellBase + " color: " + DR.text + ";";
+  const crCellStyle = cellBase + " color: " + CR.text + ";";
+  const acctInputStyle = "width: 100%; box-sizing: border-box; border: none; background: transparent; text-align: left; font: inherit; font-weight: 600; padding: 6px 12px; color: inherit;";
+  const tdBaseAcct = "padding: 0; border-right: 1px solid var(--color-neutral-300); border-bottom: 1px solid var(--color-neutral-300); ";
+  const tdBaseDr = "padding: 0; border-bottom: 1px solid var(--color-neutral-300); border-right: 2px solid var(--color-neutral-400); background: " + DR.tint + "; ";
+  const tdBaseCr = "padding: 0; border-bottom: 1px solid var(--color-neutral-300); background: " + CR.tint + "; ";
+  const FORMULA_DEFAULT = "Enter each amount in the Debit or Credit column of the two account rows";
+  const FORMULA_CHECKED = "Checked — highlighted cells show correct (accent) and incorrect (gray) entries";
+
+  function cellVal(key) { return state.cells[key] || ""; }
+
+  function renderSheet() {
+    const body = gid("l1-sheet-body");
+    body.innerHTML = "";
+    let rowNum = 2;
+    TXNS.forEach((t, ti) => {
+      const myRowNum = rowNum; rowNum += 1 + t.pairs.length;
+      const open = !!state.openGuides[ti];
+
+      const gRow = document.createElement("tr");
+      gRow.style.background = "var(--color-accent-100)";
+      gRow.innerHTML =
+        '<td style="border: 1px solid var(--color-neutral-300); text-align: center; color: var(--color-neutral-500); font-size: 11px; background: var(--color-neutral-200);">' + myRowNum + '</td>' +
+        '<td colspan="4" style="padding: 6px 12px; border-bottom: 1px solid var(--color-neutral-300);">' +
+          '<span style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);">' +
+            '<span style="font-weight: 600; font-size: 13px;">' + t.label + '</span>' +
+            '<span style="display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0;">' +
+              '<span data-status="' + ti + '"></span>' +
+              '<button class="guide-btn" data-guidebtn="' + ti + '" style="font: inherit; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-heading); color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500); padding: 2px 8px; cursor: pointer;">' + (open ? "Hide guide" : "Guide") + '</button>' +
+            '</span>' +
+          '</span>' +
+        '</td>';
+      body.appendChild(gRow);
+
+      if (open) {
+        const guideRow = document.createElement("tr");
+        guideRow.style.background = "var(--color-neutral-100)";
+        let stepsHtml = "";
+        t.steps.forEach((text, i) => {
+          stepsHtml +=
+            '<span style="display: flex; gap: var(--space-2); align-items: flex-start;">' +
+              '<span style="width: 16px; height: 16px; border: 1px solid var(--color-accent-500); color: var(--color-accent-700); display: inline-grid; place-items: center; font-size: 10px; font-family: var(--font-heading); font-weight: 600; flex-shrink: 0; margin-top: 1px;">' + (i + 1) + '</span>' +
+              '<span>' + text + '</span>' +
+            '</span>';
+        });
+        guideRow.innerHTML =
+          '<td style="border: 1px solid var(--color-neutral-300); background: var(--color-neutral-200);"> </td>' +
+          '<td colspan="4" style="padding: var(--space-3) 12px; border-bottom: 1px solid var(--color-neutral-300);">' +
+            '<span style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; line-height: 1.5;">' + stepsHtml + '</span>' +
+          '</td>';
+        body.appendChild(guideRow);
+      }
+
+      t.pairs.forEach((_, pi) => {
+        const key = ti + "-" + pi;
+        const acct = cellVal(key + "-acct");
+        const norm = acct.trim().toLowerCase();
+        const acctType = ACCT_TYPE[norm] || "";
+        const tr = document.createElement("tr");
+        const dotStyle = acctType ? "background: " + typeColor(acctType) + ";" : "background: transparent; border: 1px solid var(--color-neutral-400);";
+        tr.innerHTML =
+          '<td style="border: 1px solid var(--color-neutral-300); text-align: center; color: var(--color-neutral-500); font-size: 11px; background: var(--color-neutral-200);">' + (myRowNum + 1 + pi) + '</td>' +
+          '<td data-acct-td="' + key + '" style="' + tdBaseAcct + '"><input class="sheet-cell" data-acct="' + key + '" placeholder="Type account name…" style="' + acctInputStyle + '"></td>' +
+          '<td data-type-td="' + key + '" style="padding: 6px 12px; border-right: 1px solid var(--color-neutral-300); border-bottom: 1px solid var(--color-neutral-300); color: var(--color-neutral-700); font-size: 12px;">' +
+            '<span style="display: flex; align-items: center; gap: 6px;"><span data-type-dot="' + key + '" style="width: 8px; height: 8px; flex-shrink: 0; ' + dotStyle + '"></span><span data-type-label="' + key + '">' + acctType + '</span></span>' +
+          '</td>' +
+          '<td data-dr-td="' + key + '" style="' + tdBaseDr + '"><input class="sheet-cell" data-dr="' + key + '" inputmode="numeric" style="' + drCellStyle + '"></td>' +
+          '<td data-cr-td="' + key + '" style="' + tdBaseCr + '"><input class="sheet-cell" data-cr="' + key + '" inputmode="numeric" style="' + crCellStyle + '"></td>';
+        body.appendChild(tr);
+        tr.querySelector('[data-acct]').value = acct;
+        tr.querySelector('[data-dr]').value = cellVal(key + "-dr");
+        tr.querySelector('[data-cr]').value = cellVal(key + "-cr");
+      });
+
+      const fbRow = document.createElement("tr");
+      fbRow.setAttribute("data-feedback", ti);
+      fbRow.style.display = "none";
+      fbRow.innerHTML =
+        '<td style="border: 1px solid var(--color-neutral-300); background: var(--color-neutral-200);"> </td>' +
+        '<td colspan="4" data-feedback-cell="' + ti + '" style="padding: 6px 12px; border-bottom: 1px solid var(--color-neutral-300); font-size: 12.5px; line-height: 1.5;"></td>';
+      body.appendChild(fbRow);
+    });
+
+    const totRow = document.createElement("tr");
+    totRow.style.cssText = "background: var(--color-accent-100); font-weight: 600; border-top: 2px solid var(--color-accent-900);";
+    totRow.innerHTML =
+      '<td style="background: var(--color-neutral-200); border: 1px solid var(--color-neutral-300);"> </td>' +
+      '<td style="padding: 8px 12px; border-right: 1px solid var(--color-neutral-300); font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.05em; font-size: 12.5px;">Totals</td>' +
+      '<td style="padding: 8px 12px; border-right: 1px solid var(--color-neutral-300); text-align: right; color: var(--color-neutral-600); font-size: 12px;">Dr must equal Cr →</td>' +
+      '<td data-total-dr style="padding: 8px 12px; text-align: right; border-bottom: 3px double var(--color-neutral-800); background: #d4e9dc; color: #2f7d4f; border-right: 2px solid var(--color-neutral-400);">0</td>' +
+      '<td data-total-cr style="padding: 8px 12px; text-align: right; border-bottom: 3px double var(--color-neutral-800); background: #f0dcd4; color: #b8442c;">0</td>';
+    body.appendChild(totRow);
+
+    wireSheetInputs();
+    recomputeLive();
+  }
+
+  function wireSheetInputs() {
+    qsa("[data-acct]").forEach(inp => {
+      inp.addEventListener("input", e => {
+        const key = e.target.getAttribute("data-acct");
+        state.cells[key + "-acct"] = e.target.value;
+        updateTypeCell(key);
+        onEdit();
+      });
+    });
+    qsa("[data-dr]").forEach(inp => {
+      const key = inp.getAttribute("data-dr");
+      inp.addEventListener("input", e => { state.cells[key + "-dr"] = e.target.value; onEdit(); });
+      inp.addEventListener("blur", () => formatCell(key + "-dr", inp));
+    });
+    qsa("[data-cr]").forEach(inp => {
+      const key = inp.getAttribute("data-cr");
+      inp.addEventListener("input", e => { state.cells[key + "-cr"] = e.target.value; onEdit(); });
+      inp.addEventListener("blur", () => formatCell(key + "-cr", inp));
+    });
+    qsa("[data-guidebtn]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const ti = +btn.getAttribute("data-guidebtn");
+        state.openGuides[ti] = !state.openGuides[ti];
+        renderSheet();
+      });
+    });
+  }
+
+  function updateTypeCell(key) {
+    const norm = (state.cells[key + "-acct"] || "").trim().toLowerCase();
+    const acctType = ACCT_TYPE[norm] || "";
+    const label = qs('[data-type-label="' + key + '"]');
+    const dot = qs('[data-type-dot="' + key + '"]');
+    if (label) label.textContent = acctType;
+    if (dot) dot.setAttribute("style", "width: 8px; height: 8px; flex-shrink: 0; " + (acctType ? "background: " + typeColor(acctType) + ";" : "background: transparent; border: 1px solid var(--color-neutral-400);"));
+  }
+
+  function formatCell(key, inp) {
+    const n = parseAmt(state.cells[key]);
+    const v = n ? n.toLocaleString("en-US") : "";
+    state.cells[key] = v;
+    inp.value = v;
+  }
+
+  function onEdit() {
+    if (state.checked) {
+      state.checked = false;
+      clearCheckedUI();
+    }
+    recomputeLive();
+  }
+
+  function clearCheckedUI() {
+    qsa("[data-acct-td]").forEach(td => td.setAttribute("style", tdBaseAcct));
+    qsa("[data-dr-td]").forEach(td => td.setAttribute("style", tdBaseDr));
+    qsa("[data-cr-td]").forEach(td => td.setAttribute("style", tdBaseCr));
+    qsa("[data-status]").forEach(s => { s.textContent = ""; s.removeAttribute("style"); });
+    qsa("[data-feedback]").forEach(r => { r.style.display = "none"; });
+    gid("l1-score").textContent = "";
+    gid("l1-score").style.color = "var(--color-neutral-700)";
+    gid("l1-formula-bar").textContent = FORMULA_DEFAULT;
+  }
+
+  function recomputeLive() {
+    let totalDr = 0, totalCr = 0;
+    TXNS.forEach((t, ti) => t.pairs.forEach((_, pi) => {
+      const key = ti + "-" + pi;
+      totalDr += parseAmt(state.cells[key + "-dr"]);
+      totalCr += parseAmt(state.cells[key + "-cr"]);
+    }));
+    const drEl = qs("[data-total-dr]");
+    const crEl = qs("[data-total-cr]");
+    if (drEl) drEl.textContent = fmt(totalDr);
+    if (crEl) crEl.textContent = fmt(totalCr);
+    const balanced = totalDr === totalCr && totalDr > 0;
+    gid("l1-balance-note").textContent =
+      balanced ? "✓ In balance" : (totalDr || totalCr ? "Out of balance by " + fmt(Math.abs(totalDr - totalCr)) : "Sheet is empty");
+  }
+
+  function checkAnswers() {
+    state.checked = true;
+    let correctRows = 0, totalRowCount = 0;
+    const goodDr = "background: " + DR.strong + "; box-shadow: inset 0 0 0 2px " + DR.border + ";";
+    const goodCr = "background: " + CR.strong + "; box-shadow: inset 0 0 0 2px " + CR.border + ";";
+    const bad = "background: var(--color-neutral-200); box-shadow: inset 0 0 0 2px var(--color-neutral-500);";
+    const acctGood = "background: var(--color-accent-100); box-shadow: inset 0 0 0 2px var(--color-accent-500);";
+
+    TXNS.forEach((t, ti) => {
+      let txnCorrect = true;
+      t.pairs.forEach((_, pi) => {
+        totalRowCount++;
+        const key = ti + "-" + pi;
+        const acct = cellVal(key + "-acct");
+        const drN = parseAmt(cellVal(key + "-dr"));
+        const crN = parseAmt(cellVal(key + "-cr"));
+        const norm = acct.trim().toLowerCase();
+        const match = t.pairs.find(p => p.account.toLowerCase() === norm);
+        const ok = match ? (match.side === "dr" ? (drN === match.amt && crN === 0) : (crN === match.amt && drN === 0)) : false;
+        if (ok) correctRows++; else txnCorrect = false;
+
+        const acctTd = qs('[data-acct-td="' + key + '"]');
+        const drTd = qs('[data-dr-td="' + key + '"]');
+        const crTd = qs('[data-cr-td="' + key + '"]');
+        let acctBg = "", drBg = "", crBg = "";
+        if (match) {
+          acctBg = acctGood;
+          if (match.side === "dr") { drBg = drN === match.amt ? goodDr : bad; crBg = crN ? bad : ""; }
+          else { crBg = crN === match.amt ? goodCr : bad; drBg = drN ? bad : ""; }
+        } else {
+          acctBg = bad; drBg = drN ? bad : ""; crBg = crN ? bad : "";
+        }
+        acctTd.setAttribute("style", tdBaseAcct + acctBg);
+        drTd.setAttribute("style", tdBaseDr + drBg);
+        crTd.setAttribute("style", tdBaseCr + crBg);
+      });
+
+      const status = qs('[data-status="' + ti + '"]');
+      status.textContent = txnCorrect ? "✓ Correct" : "✗ Review";
+      status.setAttribute("style", "font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: " + (txnCorrect ? "var(--color-accent-700)" : "var(--color-neutral-700)") + ";");
+
+      const fbRow = qs('[data-feedback="' + ti + '"]');
+      const fbCell = qs('[data-feedback-cell="' + ti + '"]');
+      if (!txnCorrect) {
+        const correctSummary = t.pairs.map(p => (p.side === "dr" ? "Dr. " : "Cr. ") + p.account + " " + fmt(p.amt)).join("   ");
+        fbCell.textContent = "Correct entry: " + correctSummary + ". " + t.steps[2];
+        fbRow.setAttribute("style", "background: var(--color-neutral-100); border-left: 3px solid var(--color-neutral-500);");
+        fbRow.style.display = "";
+      } else {
+        fbRow.style.display = "none";
+      }
+    });
+
+    const score = gid("l1-score");
+    score.textContent = correctRows + " / " + totalRowCount + " entries correct";
+    score.style.color = correctRows === totalRowCount ? "var(--color-accent-700)" : "var(--color-neutral-700)";
+    gid("l1-formula-bar").textContent = FORMULA_CHECKED;
+    recomputeLive();
+  }
+
+  function resetSheet() {
+    state.cells = {};
+    state.checked = false;
+    state.openGuides = {};
+    renderSheet();
+    gid("l1-score").textContent = "";
+    gid("l1-score").style.color = "var(--color-neutral-700)";
+    gid("l1-formula-bar").textContent = FORMULA_DEFAULT;
+  }
+
+  renderIllustration();
+  renderSheet();
+  gid("l1-formula-bar").textContent = FORMULA_DEFAULT;
+  gid("l1-btn-check").addEventListener("click", checkAnswers);
+  gid("l1-btn-reset").addEventListener("click", resetSheet);
+})();
+
+/* ═══════════════════════ Lecture 2 — The Accounting Equation ═══════════════════════ */
+(function () {
+  const scope = document.getElementById("lecture-2");
+  const gid = id => scope.querySelector("#" + id);
+  const qs = sel => scope.querySelector(sel);
+  const qsa = sel => scope.querySelectorAll(sel);
+
+  const DR = { text: "#2f7d4f", tint: "#eef5f0", strong: "#d4e9dc" };
+  const CR = { text: "#b8442c", tint: "#f7ede9", strong: "#f0dcd4" };
+
+  const EQ = [
+    { title: "Assets", normal: "Debit", explain: "Resources the company owns. Assets increase on the debit (left) side and decrease on the credit (right) side, so they normally carry a debit balance." },
+    { title: "Liabilities", normal: "Credit", explain: "Amounts owed to creditors. Liabilities increase on the credit (right) side and decrease on the debit (left) side, so they normally carry a credit balance." },
+    { title: "Common Stock", normal: "Credit", op: "", explain: "Investments by owners increase stockholders’ equity, so Common Stock increases with a credit. Normal balance: credit." },
+    { title: "Retained Earnings", normal: "Credit", op: "+", explain: "Accumulated net income kept in the business increases equity, so Retained Earnings increases with a credit. Normal balance: credit." },
+    { title: "Revenues", normal: "Credit", op: "+", explain: "Revenues increase stockholders’ equity, so they increase on the credit side. Normal balance: credit." },
+    { title: "Expenses", normal: "Debit", op: "−", explain: "Expenses reduce stockholders’ equity, so they behave opposite to equity: they increase on the debit side. Normal balance: debit." },
+    { title: "Dividends", normal: "Debit", op: "−", explain: "Dividends reduce stockholders’ equity, so — the equity exception — they increase on the debit side. Normal balance: debit." },
+  ];
+
+  const PEREZ = [
+    { n: 1, txn: "Owners invest $40,000 in exchange for common stock.", a: 40000, l: 0, se: 40000,
+      steps: [
+        "Cash comes into the business, so Assets increase by $40,000.",
+        "The owners receive common stock, so Stockholders’ Equity increases by $40,000.",
+        "No creditor is involved, so Liabilities are unchanged. Effect: A +40,000 = L 0 + SE +40,000." ] },
+    { n: 2, txn: "Disburse $600 cash for administrative wages.", a: -600, l: 0, se: -600, seNote: "expense",
+      steps: [
+        "Cash leaves the business, so Assets decrease by $600.",
+        "Wages are an expense; expenses reduce Stockholders’ Equity by $600.",
+        "No liability changes. Effect: A −600 = L 0 + SE −600." ] },
+    { n: 3, txn: "Purchase office equipment priced at $5,200, giving a 10% promissory note in exchange.", a: 5200, l: 5200, se: 0,
+      steps: [
+        "The company receives equipment, so Assets increase by $5,200.",
+        "It signs a note instead of paying cash, so Liabilities increase by $5,200.",
+        "Equity is untouched. Effect: A +5,200 = L +5,200 + SE 0." ] },
+    { n: 4, txn: "Receive $4,000 cash for services performed.", a: 4000, l: 0, se: 4000, seNote: "revenue",
+      steps: [
+        "Cash comes in, so Assets increase by $4,000.",
+        "Services performed generate revenue; revenue increases Stockholders’ Equity by $4,000.",
+        "No liability changes. Effect: A +4,000 = L 0 + SE +4,000." ] },
+    { n: 5, txn: "Pay off a short-term liability of $7,000.", a: -7000, l: -7000, se: 0,
+      steps: [
+        "Cash is paid out, so Assets decrease by $7,000.",
+        "The debt is settled, so Liabilities decrease by $7,000.",
+        "Equity is unaffected. Effect: A −7,000 = L −7,000 + SE 0." ] },
+    { n: 6, txn: "Declare a cash dividend of $5,000.", a: 0, l: 5000, se: -5000,
+      steps: [
+        "A dividend is declared but not yet paid, creating Dividends Payable — Liabilities increase by $5,000.",
+        "Dividends reduce Stockholders’ Equity by $5,000.",
+        "No cash moves yet, so Assets are unchanged. Effect: A 0 = L +5,000 + SE −5,000." ] },
+    { n: 7, txn: "Convert a long-term liability of $80,000 into common stock.", a: 0, l: -80000, se: 80000,
+      steps: [
+        "The debt is extinguished, so Liabilities decrease by $80,000.",
+        "Common stock is issued in its place, so Stockholders’ Equity increases by $80,000.",
+        "No asset changes hands. Effect: A 0 = L −80,000 + SE +80,000." ] },
+    { n: 8, txn: "Pay cash of $16,000 for a delivery van.", a: 0, l: 0, se: 0,
+      steps: [
+        "Cash decreases by $16,000, but a van (an asset) increases by $16,000.",
+        "The two asset effects cancel, so the NET change in Assets is $0.",
+        "Liabilities and Equity are untouched. Effect: A 0 = L 0 + SE 0 (asset composition changes only)." ] },
+  ];
+
+  const CORRECT = {};
+  PEREZ.forEach(p => { CORRECT[p.n + "-a"] = p.a; CORRECT[p.n + "-l"] = p.l; CORRECT[p.n + "-se"] = p.se; });
+
+  function parseSigned(v) {
+    const s = String(v == null ? "" : v).replace(/[^0-9.\-]/g, "");
+    if (s === "" || s === "-") return null;
+    const n = parseFloat(s);
+    return isNaN(n) ? null : n;
+  }
+  function fmtSigned(n) {
+    if (n === 0) return "0";
+    return (n > 0 ? "+" : "−") + Math.abs(n).toLocaleString("en-US");
+  }
+  function signColor(val) {
+    if (val === null) return "var(--color-text)";
+    if (val > 0) return DR.text;
+    if (val < 0) return CR.text;
+    return "var(--color-neutral-700)";
+  }
+  function getVal(key) { return parseSigned(state.cells[key]); }
+
+  const state = { selectedEq: 0, cells: {}, checked: false, openGuides: {} };
+
+  /* Illustration 2.3 — expanded-equation tiles */
+  function tileCellStyles(e) {
+    const isDr = e.normal === "Debit";
+    const drCell = "padding: 5px 2px; border-right: 1px solid var(--color-neutral-700); color: " + DR.text + "; background: " + (isDr ? DR.strong : DR.tint) + ";" + (isDr ? " font-weight: 700;" : "");
+    const crCell = "padding: 5px 2px; color: " + CR.text + "; background: " + (isDr ? CR.tint : CR.strong) + ";" + (isDr ? "" : " font-weight: 700;");
+    return { isDr, drCell, crCell, drSign: isDr ? "+" : "−", crSign: isDr ? "−" : "+" };
+  }
+  function tileButtonStyle(active) {
+    return "display: block; text-align: left; font: inherit; cursor: pointer; padding: 0; background: #fff; border: " +
+      (active ? "2px solid var(--color-accent-600)" : "1px solid var(--color-neutral-500)") + ";" + (active ? " box-shadow: var(--shadow-sm);" : "");
+  }
+  function badgeStyle(isDr) {
+    return "font-family: var(--font-heading); font-weight: 600; font-size: 10px; padding: 1px 5px; letter-spacing: 0.05em; color: #fff; background: " + (isDr ? DR.text : CR.text) + ";";
+  }
+  function tileInner(e, minWidth, titleSize, pad) {
+    const c = tileCellStyles(e);
+    return '' +
+      '<span style="display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: ' + pad + ';">' +
+        '<span style="font-family: var(--font-heading); font-weight: 600; font-size: ' + titleSize + '; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap;">' + e.title + '</span>' +
+        '<span style="' + badgeStyle(c.isDr) + '">' + (c.isDr ? "DR" : "CR") + '</span>' +
+      '</span>' +
+      '<span style="display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--color-neutral-700); text-align: center; font-size: 11px; min-width: ' + minWidth + ';">' +
+        '<span style="' + c.drCell + '">Dr <strong>' + c.drSign + '</strong></span>' +
+        '<span style="' + c.crCell + '">Cr <strong>' + c.crSign + '</strong></span>' +
+      '</span>';
+  }
+  function makeTile(e, idx, variant) {
+    const btn = document.createElement("button");
+    btn.className = "eq-tile";
+    btn.setAttribute("style", tileButtonStyle(idx === state.selectedEq));
+    if (variant === "se") btn.innerHTML = tileInner(e, "96px", "11px", "5px 7px");
+    else btn.innerHTML = tileInner(e, "118px", "12px", "5px 8px");
+    btn.addEventListener("click", () => { state.selectedEq = idx; renderIllustration(); });
+    return btn;
+  }
+
+  function renderIllustration() {
+    const diagram = gid("l2-eq-diagram");
+    diagram.innerHTML = "";
+    const opStyle = "align-self: center; font-family: var(--font-heading); font-size: 26px; font-weight: 600;";
+
+    const assetsWrap = document.createElement("div");
+    assetsWrap.style.flex = "0 0 auto";
+    assetsWrap.appendChild(makeTile(EQ[0], 0, "big"));
+    diagram.appendChild(assetsWrap);
+
+    const eq = document.createElement("div"); eq.setAttribute("style", opStyle); eq.textContent = "="; diagram.appendChild(eq);
+
+    const liabWrap = document.createElement("div");
+    liabWrap.style.flex = "0 0 auto";
+    liabWrap.appendChild(makeTile(EQ[1], 1, "big"));
+    diagram.appendChild(liabWrap);
+
+    const plus = document.createElement("div"); plus.setAttribute("style", opStyle); plus.textContent = "+"; diagram.appendChild(plus);
+
+    const seBox = document.createElement("div");
+    seBox.className = "blueprint";
+    seBox.setAttribute("style", "flex: 1 1 460px; position: relative; border: 1px solid var(--color-neutral-400); padding: var(--space-3);");
+    seBox.innerHTML =
+      '<i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>' +
+      '<div style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; margin-bottom: var(--space-3);">Stockholders&rsquo; Equity</div>';
+    const seRow = document.createElement("div");
+    seRow.setAttribute("style", "display: flex; align-items: stretch; gap: 4px; flex-wrap: wrap; justify-content: center;");
+    for (let i = 2; i < EQ.length; i++) {
+      const e = EQ[i];
+      const cell = document.createElement("span");
+      cell.setAttribute("style", "display: flex; align-items: center; gap: 4px;");
+      if (e.op) {
+        const op = document.createElement("span");
+        op.setAttribute("style", "font-family: var(--font-heading); font-size: 18px; font-weight: 600; color: var(--color-neutral-600);");
+        op.textContent = e.op;
+        cell.appendChild(op);
+      }
+      cell.appendChild(makeTile(e, i, "se"));
+      seRow.appendChild(cell);
+    }
+    seBox.appendChild(seRow);
+    diagram.appendChild(seBox);
+
+    const sel = EQ[state.selectedEq];
+    gid("l2-eq-sel-heading").textContent = sel.title + " — normal balance: " + sel.normal + ".";
+    gid("l2-eq-sel-explain").textContent = sel.explain;
+  }
+
+  /* Perez Inc. guided exercise */
+  const inputBase = "width: 100%; box-sizing: border-box; border: 1px solid var(--color-neutral-400); background: #fff; text-align: right; font: inherit; font-weight: 600; font-variant-numeric: tabular-nums; padding: 7px 9px;";
+
+  function cellStyle(val, correct, checked) {
+    let style = inputBase;
+    if (checked) {
+      if (val === correct) {
+        const ring = correct > 0 ? "#5aa27a" : (correct < 0 ? "#cf8a76" : "var(--color-accent-500)");
+        const bg = correct > 0 ? DR.strong : (correct < 0 ? CR.strong : "var(--color-accent-100)");
+        style += " box-shadow: inset 0 0 0 2px " + ring + "; background: " + bg + ";";
+      } else {
+        style += " box-shadow: inset 0 0 0 2px var(--color-neutral-500); background: var(--color-neutral-200);";
+      }
+    }
+    style += " color: " + signColor(val) + ";";
+    return style;
+  }
+
+  function renderPerez() {
+    const body = gid("l2-perez-body");
+    body.innerHTML = "";
+    PEREZ.forEach((p, idx) => {
+      const tr = document.createElement("tr");
+      tr.setAttribute("style", "border-bottom: 1px solid var(--color-neutral-300); background: " + (idx % 2 ? "var(--color-neutral-100)" : "transparent") + ";");
+
+      const tdNum = document.createElement("td");
+      tdNum.setAttribute("style", "padding: var(--space-3) var(--space-3) var(--space-3) 0; vertical-align: top;");
+      tdNum.innerHTML = '<span style="width: 26px; height: 26px; border: 1.5px solid var(--color-accent-700); color: var(--color-accent-800); display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 13px;">' + p.n + '</span>';
+      tr.appendChild(tdNum);
+
+      const tdTxn = document.createElement("td");
+      tdTxn.setAttribute("style", "padding: var(--space-3) var(--space-4) var(--space-3) 8px; vertical-align: top; font-size: 13.5px; line-height: 1.5;");
+      let stepsHtml = "";
+      p.steps.forEach((text, i) => {
+        stepsHtml +=
+          '<span style="display: flex; gap: var(--space-2); align-items: flex-start;">' +
+            '<span style="width: 16px; height: 16px; border: 1px solid var(--color-accent-500); color: var(--color-accent-700); display: inline-grid; place-items: center; font-size: 10px; font-family: var(--font-heading); font-weight: 600; flex-shrink: 0; margin-top: 1px;">' + (i + 1) + '</span>' +
+            '<span>' + text + '</span>' +
+          '</span>';
+      });
+      tdTxn.innerHTML =
+        '<div style="text-wrap: pretty;">' + p.txn + '</div>' +
+        '<div style="display: flex; align-items: center; gap: var(--space-2); margin-top: 8px; flex-wrap: wrap;">' +
+          '<button class="guide-btn" data-guidebtn="' + p.n + '" style="font: inherit; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-heading); color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-500); padding: 2px 8px; cursor: pointer;">Guide</button>' +
+          '<span data-balchip="' + p.n + '" style="font-size: 10.5px; font-family: var(--font-heading); letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent-700); border: 1px solid var(--color-accent-400); padding: 1px 6px; display: none;">✓ balances</span>' +
+          '<span data-status="' + p.n + '"></span>' +
+        '</div>' +
+        '<div data-guide="' + p.n + '" style="display: none; margin-top: var(--space-3); border-left: 3px solid var(--color-accent-500); background: #fff; padding: var(--space-3); flex-direction: column; gap: 8px; font-size: 12.5px; line-height: 1.5;">' + stepsHtml + '</div>' +
+        '<div data-feedback="' + p.n + '" style="display: none; margin-top: 8px; font-size: 12.5px; line-height: 1.5; color: var(--color-neutral-700); border-left: 3px solid var(--color-neutral-500); padding-left: var(--space-3);"></div>';
+      tr.appendChild(tdTxn);
+
+      tr.appendChild(cellTd(p.n + "-a"));
+      tr.appendChild(opTd("="));
+      tr.appendChild(cellTd(p.n + "-l"));
+      tr.appendChild(opTd("+"));
+      const tdSe = document.createElement("td");
+      tdSe.setAttribute("style", "padding: var(--space-3) 8px; vertical-align: top;");
+      tdSe.appendChild(makeInput(p.n + "-se"));
+      if (p.seNote) {
+        const hint = document.createElement("div");
+        hint.setAttribute("style", "text-align: right; font-size: 11px; color: var(--color-neutral-500); margin-top: 3px; font-style: italic;");
+        hint.textContent = "(" + p.seNote + ")";
+        tdSe.appendChild(hint);
+      }
+      tr.appendChild(tdSe);
+
+      body.appendChild(tr);
+    });
+
+    const totRow = document.createElement("tr");
+    totRow.setAttribute("style", "border-top: 2px solid var(--color-accent-900); background: var(--color-accent-100);");
+    totRow.innerHTML =
+      '<td colspan="2" style="padding: 10px 8px 10px 0; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.05em; font-size: 12.5px; font-weight: 600;">Net change</td>' +
+      '<td data-total="a" style="padding: 10px 8px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 13px;">0</td>' +
+      '<td style="text-align: center; font-size: 15px; color: var(--color-neutral-600);">=</td>' +
+      '<td data-total="l" style="padding: 10px 8px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 13px;">0</td>' +
+      '<td style="text-align: center; font-size: 15px; color: var(--color-neutral-600);">+</td>' +
+      '<td data-total="se" style="padding: 10px 8px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 13px;">0</td>';
+    body.appendChild(totRow);
+
+    qsa("[data-guidebtn]").forEach(btn => {
+      btn.addEventListener("click", () => toggleGuide(+btn.getAttribute("data-guidebtn")));
+    });
+    updateTotals();
+  }
+
+  function opTd(sym) {
+    const td = document.createElement("td");
+    td.setAttribute("style", "text-align: center; font-size: 16px; color: var(--color-neutral-500); vertical-align: top; padding-top: 14px;");
+    td.textContent = sym;
+    return td;
+  }
+  function cellTd(key) {
+    const td = document.createElement("td");
+    td.setAttribute("style", "padding: var(--space-3) 8px; vertical-align: top;");
+    td.appendChild(makeInput(key));
+    return td;
+  }
+  function makeInput(key) {
+    const inp = document.createElement("input");
+    inp.setAttribute("data-cell", key);
+    inp.setAttribute("inputmode", "numeric");
+    inp.setAttribute("placeholder", "0");
+    inp.value = state.cells[key] || "";
+    inp.setAttribute("style", cellStyle(getVal(key), CORRECT[key], state.checked));
+    inp.addEventListener("input", () => onCellInput(key, inp));
+    return inp;
+  }
+
+  function onCellInput(key, inp) {
+    state.cells[key] = inp.value;
+    if (state.checked) {
+      state.checked = false;
+      clearCheckedUI();
+    } else {
+      inp.setAttribute("style", cellStyle(getVal(key), CORRECT[key], false));
+    }
+    const n = key.split("-")[0];
+    updateRowChip(n);
+    updateTotals();
+  }
+
+  function recolorAll() {
+    qsa("[data-cell]").forEach(inp => {
+      const key = inp.getAttribute("data-cell");
+      inp.setAttribute("style", cellStyle(getVal(key), CORRECT[key], state.checked));
+    });
+  }
+
+  function clearCheckedUI() {
+    recolorAll();
+    qsa("[data-status]").forEach(s => { s.textContent = ""; s.removeAttribute("style"); });
+    qsa("[data-feedback]").forEach(f => { f.style.display = "none"; f.textContent = ""; });
+    const score = gid("l2-score");
+    score.textContent = "";
+    score.style.color = "var(--color-neutral-700)";
+  }
+
+  function updateRowChip(n) {
+    const chip = qs('[data-balchip="' + n + '"]');
+    if (!chip) return;
+    const va = getVal(n + "-a"), vl = getVal(n + "-l"), vse = getVal(n + "-se");
+    const balanced = va !== null && vl !== null && vse !== null && va === vl + vse;
+    chip.style.display = balanced ? "" : "none";
+  }
+
+  function updateTotals() {
+    let sumA = 0, sumL = 0, sumSE = 0;
+    PEREZ.forEach(p => {
+      sumA += getVal(p.n + "-a") || 0;
+      sumL += getVal(p.n + "-l") || 0;
+      sumSE += getVal(p.n + "-se") || 0;
+    });
+    qs('[data-total="a"]').textContent = fmtSigned(sumA);
+    qs('[data-total="l"]').textContent = fmtSigned(sumL);
+    qs('[data-total="se"]').textContent = fmtSigned(sumSE);
+    const balanced = sumA === sumL + sumSE;
+    const note = gid("l2-balance-note");
+    note.textContent = balanced ? "✓ In balance — Assets = Liabilities + Equity" : "Out of balance by " + Math.abs(sumA - (sumL + sumSE)).toLocaleString("en-US");
+    note.setAttribute("style", "font-family: var(--font-heading); font-weight: 600; font-size: 12.5px; letter-spacing: 0.04em; color: " + (balanced ? "var(--color-accent-700)" : "var(--color-neutral-600)") + ";");
+  }
+
+  function toggleGuide(n) {
+    state.openGuides[n] = !state.openGuides[n];
+    const guide = qs('[data-guide="' + n + '"]');
+    const btn = qs('[data-guidebtn="' + n + '"]');
+    const open = !!state.openGuides[n];
+    guide.style.display = open ? "flex" : "none";
+    btn.textContent = open ? "Hide guide" : "Guide";
+  }
+
+  function checkAnswers() {
+    state.checked = true;
+    let correct = 0, total = 0;
+    PEREZ.forEach(p => {
+      let rowOk = true;
+      ["a", "l", "se"].forEach(col => {
+        total++;
+        const key = p.n + "-" + col;
+        const val = getVal(key);
+        const ok = val === CORRECT[key];
+        if (ok) correct++; else rowOk = false;
+        const inp = qs('[data-cell="' + key + '"]');
+        inp.setAttribute("style", cellStyle(val, CORRECT[key], true));
+      });
+      const status = qs('[data-status="' + p.n + '"]');
+      status.textContent = rowOk ? "✓ Correct" : "✗ Review";
+      status.setAttribute("style", "font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: " + (rowOk ? "var(--color-accent-700)" : "var(--color-neutral-700)") + ";");
+      const fb = qs('[data-feedback="' + p.n + '"]');
+      if (!rowOk) {
+        const answer = "A " + fmtSigned(p.a) + " = L " + fmtSigned(p.l) + " + SE " + fmtSigned(p.se);
+        fb.textContent = "Correct effect: " + answer + ". " + p.steps[p.steps.length - 1];
+        fb.style.display = "";
+      } else {
+        fb.style.display = "none";
+      }
+    });
+    const score = gid("l2-score");
+    score.textContent = correct + " / " + total + " effects correct";
+    score.style.color = correct === total ? "var(--color-accent-700)" : "var(--color-neutral-700)";
+  }
+
+  function resetExercise() {
+    state.cells = {};
+    state.checked = false;
+    state.openGuides = {};
+    renderPerez();
+    const score = gid("l2-score");
+    score.textContent = "";
+    score.style.color = "var(--color-neutral-700)";
+  }
+
+  renderIllustration();
+  renderPerez();
+  gid("l2-btn-check").addEventListener("click", checkAnswers);
+  gid("l2-btn-reset").addEventListener("click", resetExercise);
+})();
+</script>
+</body>
+</html>
