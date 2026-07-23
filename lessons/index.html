@@ -38,7 +38,7 @@
   /* Lesson sections flow as open content — no blueprint frame or corner marks */
   .lesson-section { display: flex; flex-direction: column; gap: var(--space-2); }
 
-  .acct-tile:hover, .eq-tile:hover { border-color: var(--color-accent-600) !important; }
+  .acct-tile:hover, .eq-tile:hover, .c2-hoverborder:hover { border-color: var(--color-accent-600) !important; }
   .guide-btn:hover { background: var(--color-accent-200) !important; }
 
   /* Lecture 3 — statement-flow animations */
@@ -64,7 +64,7 @@
     .layout { flex-direction: column; }
     .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; }
     .sidebar .study-tip { display: none; }
-    .concept-grid, .illustration-grid, .fs-grid, .duo-grid { grid-template-columns: 1fr !important; }
+    .concept-grid, .illustration-grid, .fs-grid, .duo-grid, .c2-two, .c2-three, .c2-events { grid-template-columns: 1fr !important; }
   }
   @media (max-width: 680px) {
     .practice-scroll, .perez-scroll { overflow-x: auto; }
@@ -86,7 +86,7 @@
         <div style="font-size: 11px; color: var(--color-accent-300); letter-spacing: 0.08em; text-transform: uppercase;">Learning Academy</div>
       </div>
     </div>
-    <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: 0 var(--space-2) var(--space-2);">Chapter 2</div>
+    <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: 0 var(--space-2) var(--space-2);">Course 1 · Chapter 2</div>
     <nav style="display: contents;">
       <button class="nav-link" type="button" data-goto="1"><span class="num">1</span><span>Lecture 1 — Debits &amp; Credits</span></button>
       <button class="nav-link" type="button" data-goto="2"><span class="num">2</span><span>Lecture 2 — The Accounting Equation</span></button>
@@ -95,6 +95,10 @@
     <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: var(--space-4) var(--space-2) var(--space-2);">Capstone · LO 2.1</div>
     <nav style="display: contents;">
       <button class="nav-link" type="button" data-goto="C"><span class="num">★</span><span>Analyze Transactions</span></button>
+    </nav>
+    <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-400); padding: var(--space-4) var(--space-2) var(--space-2);">Course 2 · Section 2.2</div>
+    <nav style="display: contents;">
+      <button class="nav-link" type="button" data-goto="C2S"><span class="num" style="width: auto; padding: 0 5px;">2.2</span><span>Analyze &amp; Record Transactions</span></button>
     </nav>
     <div class="study-tip" style="margin-top: auto; border: 1px solid var(--color-accent-700); padding: var(--space-4);">
       <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-300); margin-bottom: var(--space-2);">Study Tip</div>
@@ -526,6 +530,146 @@
         </section>
       </div>
     </section>
+
+    <!-- ═══════════════ Course 2 · Section 2.2 — Analyze & Record Business Transactions ═══════════════ -->
+    <section class="lecture" id="course2-intro" hidden>
+      <header style="padding: var(--space-8) 44px 26px 56px; border-bottom: 1px solid var(--color-neutral-300); background: var(--color-bg); position: relative; overflow: hidden;">
+        <div style="display: flex; align-items: flex-start; gap: var(--space-6); max-width: 1120px;">
+          <div style="font-family: var(--font-heading); font-size: 82px; font-weight: 600; line-height: 0.82; color: var(--color-accent-500); letter-spacing: -0.01em; flex-shrink: 0;">2.2</div>
+          <div style="padding-top: 4px;">
+            <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+              <span style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Chapter 2 · The Accounting Information System</span>
+              <span class="tag tag-accent">Section Intro</span>
+            </div>
+            <h1 style="margin: 8px 0 0; font-family: var(--font-heading); font-size: 40px; font-weight: 600; letter-spacing: 0.005em; line-height: 1.02; max-width: 640px;">Analyze &amp; Record Business Transactions</h1>
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-4); border-left: 3px solid var(--color-accent-500); padding: 4px 0 4px var(--space-4);">
+              <span style="width: 26px; height: 26px; border-radius: 50%; background: var(--color-accent-900); color: var(--color-neutral-100); display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 14px; flex-shrink: 0;">2</span>
+              <div>
+                <div style="font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-500); font-weight: 600;">Learning Objective</div>
+                <div style="font-family: var(--font-heading); font-size: 17px; font-weight: 600;">Record and summarize accounting transactions.</div>
+              </div>
+            </div>
+            <p style="margin: 18px 0 0; font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); max-width: 620px; text-wrap: pretty;">Every number in a company&rsquo;s books begins as a real-world event. This section builds the habit at the heart of accounting: look at what happened, decide whether it changed the company&rsquo;s financial position, and &mdash; if it did &mdash; record it so the accounting equation always stays in balance.</p>
+          </div>
+        </div>
+      </header>
+      <div style="padding: 26px 44px 26px 56px; display: flex; flex-direction: column; gap: var(--space-8); max-width: 1180px; width: 100%; box-sizing: border-box;">
+
+        <!-- The accounting cycle -->
+        <section id="ar-cycle" style="padding: var(--space-2) 0 0;">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">The Road Ahead</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">The Accounting Cycle</h2>
+          <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 680px;">The recording process moves through nine steps, in order, every period. This course opens at the very first one &mdash; <strong>analyzing transactions</strong>. Tap any step to see what it does.</p>
+          <div id="c2-cycle-steps" style="display: flex; flex-wrap: wrap; gap: 6px; align-items: stretch;"></div>
+          <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3); align-items: flex-start; border-left: 3px solid var(--color-accent-500); background: var(--color-accent-100); padding: var(--space-4);">
+            <span id="c2-cycle-badge" style="width: 30px; height: 30px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 15px; background: var(--color-accent-900); color: var(--color-neutral-100);">1</span>
+            <div>
+              <div id="c2-cycle-title" style="font-family: var(--font-heading); font-size: 16px; font-weight: 600;"></div>
+              <div id="c2-cycle-desc" style="font-size: 13.5px; line-height: 1.55; color: var(--color-neutral-800); margin-top: 3px;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- What is a transaction -->
+        <section id="ar-what" style="padding: var(--space-6) 0 0; border-top: 1px solid var(--color-neutral-300);">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">The Core Idea</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">What Counts as a Transaction?</h2>
+          <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;"><strong>Transactions</strong> are a business&rsquo;s economic events that accountants record. Companies do plenty of other things &mdash; hiring, answering e-mail, meeting clients &mdash; but only events that change assets, liabilities, or stockholders&rsquo; equity get recorded. Transactions come in two kinds.</p>
+          <div class="c2-two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+            <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+              <div style="display: flex; align-items: center; gap: var(--space-3);">
+                <span style="width: 40px; height: 40px; border: 1px solid var(--color-accent-500); display: grid; place-items: center; color: var(--color-accent-700); flex-shrink: 0;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><path d="M12 18v3"></path><path d="M5.6 5.6l2.1 2.1"></path><path d="M16.3 16.3l2.1 2.1"></path><path d="M3 12h3"></path><path d="M18 12h3"></path><circle cx="12" cy="12" r="3.2"></circle></svg>
+                </span>
+                <div>
+                  <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600;">External</div>
+                  <div style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-500);">Company &harr; outsiders</div>
+                </div>
+              </div>
+              <p style="margin: var(--space-3) 0 0; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-800);">Economic events between the company and an outside party.</p>
+              <div style="margin-top: var(--space-3); display: flex; flex-direction: column; gap: 7px;">
+                <span style="font-size: 12.5px; line-height: 1.4; display: flex; gap: 8px;"><span style="color: var(--color-accent-600);">&rarr;</span>Buying equipment from a supplier</span>
+                <span style="font-size: 12.5px; line-height: 1.4; display: flex; gap: 8px;"><span style="color: var(--color-accent-600);">&rarr;</span>Paying monthly rent to a landlord</span>
+                <span style="font-size: 12.5px; line-height: 1.4; display: flex; gap: 8px;"><span style="color: var(--color-accent-600);">&rarr;</span>Selling a service to a customer</span>
+              </div>
+            </div>
+            <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-700); padding: 18px;">
+              <div style="display: flex; align-items: center; gap: var(--space-3);">
+                <span style="width: 40px; height: 40px; border: 1px solid var(--color-accent-500); display: grid; place-items: center; color: var(--color-accent-700); flex-shrink: 0;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l7-4 7 4v14"></path><path d="M9 21v-6h6v6"></path><path d="M9 10h.01"></path><path d="M15 10h.01"></path></svg>
+                </span>
+                <div>
+                  <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600;">Internal</div>
+                  <div style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-500);">Inside the company</div>
+                </div>
+              </div>
+              <p style="margin: var(--space-3) 0 0; font-size: 13.5px; line-height: 1.6; color: var(--color-neutral-800);">Economic events that occur entirely within one company.</p>
+              <div style="margin-top: var(--space-3); display: flex; flex-direction: column; gap: 7px;">
+                <span style="font-size: 12.5px; line-height: 1.4; display: flex; gap: 8px;"><span style="color: var(--color-accent-600);">&rarr;</span>Using up cleaning supplies</span>
+                <span style="font-size: 12.5px; line-height: 1.4; display: flex; gap: 8px;"><span style="color: var(--color-accent-600);">&rarr;</span>Consuming cooking materials in the kitchen</span>
+                <span style="font-size: 12.5px; line-height: 1.4; display: flex; gap: 8px;"><span style="color: var(--color-accent-600);">&rarr;</span>Depreciating equipment over time</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Illustration 2.6 -->
+        <section id="ar-illus" style="padding: var(--space-6) 0 0; border-top: 1px solid var(--color-neutral-300);">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">Illustration 2.6 · Interactive</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">The Transaction Identification Process</h2>
+          <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Every event is put through one test. Pick an event below and follow it down the flow to see whether it gets recorded.</p>
+          <div style="border: 1px solid var(--color-neutral-400); padding: var(--space-6); background: #fff;">
+            <div id="c2-illus-body"></div>
+          </div>
+        </section>
+
+        <!-- Dual effect -->
+        <section id="ar-dual" style="padding: var(--space-6) 0 var(--space-4); border-top: 1px solid var(--color-neutral-300);">
+          <div style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600;">The Rule That Keeps It Balanced</div>
+          <h2 style="margin: 6px 0 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600;">Every Transaction Has a Dual Effect</h2>
+          <p style="margin: var(--space-3) 0 18px; font-size: 14.5px; line-height: 1.6; color: var(--color-neutral-800); max-width: 720px;">Recording a transaction always touches at least two items. If one asset increases, something else must move to keep <strong>Assets = Liabilities + Stockholders&rsquo; Equity</strong>. When an asset increases, exactly one of these must happen:</p>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+            <div style="border: 1px solid var(--color-accent-700); background: var(--color-accent-100); padding: var(--space-3) var(--space-6); font-family: var(--font-heading); font-size: 17px; font-weight: 600;">An asset increases</div>
+            <svg width="18" height="26" viewBox="0 0 18 26" fill="none" stroke="var(--color-accent-600)" stroke-width="1.5"><path d="M9 0v18"></path><path d="M3 13l6 6 6-6"></path></svg>
+            <div class="c2-three" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); width: 100%;">
+              <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-500); padding: var(--space-4); text-align: center;">
+                <div style="font-family: var(--font-heading); font-size: 26px; font-weight: 600; color: var(--color-accent-700);">&darr;</div>
+                <div style="font-size: 13.5px; line-height: 1.4; margin-top: 4px; color: var(--color-neutral-800);">Decrease another asset</div>
+              </div>
+              <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-500); padding: var(--space-4); text-align: center;">
+                <div style="font-family: var(--font-heading); font-size: 26px; font-weight: 600; color: var(--color-accent-700);">&uarr;</div>
+                <div style="font-size: 13.5px; line-height: 1.4; margin-top: 4px; color: var(--color-neutral-800);">Increase a liability</div>
+              </div>
+              <div style="border: 1px solid var(--color-neutral-400); border-top: 3px solid var(--color-accent-500); padding: var(--space-4); text-align: center;">
+                <div style="font-family: var(--font-heading); font-size: 26px; font-weight: 600; color: var(--color-accent-700);">&uarr;</div>
+                <div style="font-size: 13.5px; line-height: 1.4; margin-top: 4px; color: var(--color-neutral-800);">Increase stockholders&rsquo; equity</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-6); border-left: 3px solid var(--color-accent-700); background: var(--color-accent-100); padding: var(--space-4) 18px;">
+            <div style="font-family: var(--font-heading); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent-800);">Worked example</div>
+            <p style="margin: 8px 0 var(--space-3); font-size: 14px; line-height: 1.6; color: var(--color-neutral-800);">A company buys a <strong>$10,000</strong> piece of equipment, paying <strong>$6,000</strong> in cash now and agreeing to pay the <strong>$4,000</strong> balance in 30 days.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); font-family: var(--font-heading); font-size: 13.5px; font-weight: 600; align-items: center;">
+              <span style="border: 1px solid var(--color-neutral-500); background: #fff; padding: 6px 12px;">Equipment <span style="color: var(--color-accent-700);">+$10,000</span></span>
+              <span style="color: var(--color-neutral-500);">=</span>
+              <span style="border: 1px solid var(--color-neutral-500); background: #fff; padding: 6px 12px;">Cash <span style="color: #b8442c;">&minus;$6,000</span></span>
+              <span style="color: var(--color-neutral-500);">+</span>
+              <span style="border: 1px solid var(--color-neutral-500); background: #fff; padding: 6px 12px;">Accounts Payable <span style="color: var(--color-accent-700);">+$4,000</span></span>
+            </div>
+            <div style="margin-top: var(--space-3); font-size: 12.5px; color: var(--color-neutral-700);">Net change in assets: +$10,000 &minus; $6,000 = <strong>+$4,000</strong>, matched by the <strong>+$4,000</strong> liability. Still in balance.</div>
+          </div>
+        </section>
+
+        <!-- Up next -->
+        <section style="padding: 18px 0 var(--space-8); border-top: 1px solid var(--color-neutral-300); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);">Up next</div>
+            <div style="font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-top: 2px;">Lecture 1 — The Recording Process</div>
+          </div>
+          <button class="btn btn-primary" type="button" disabled title="Coming soon">Begin the mechanics &rarr;</button>
+        </section>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -539,10 +683,11 @@
     "2": "Assets = Liabilities + Stockholders’ Equity. This equality can never be broken — every transaction keeps it in balance.",
     "3": "The statements connect in one direction: net income flows into retained earnings, and retained earnings flows onto the balance sheet.",
     "C": "Check every row before moving on — each transaction on its own must keep Assets = Liabilities + Stockholders’ Equity.",
+    "C2S": "Learning Objective 2 — record and summarize accounting transactions. Only events that change assets, liabilities, or equity get recorded.",
   };
   const tipEl = document.getElementById("study-tip-body");
   const buttons = Array.from(document.querySelectorAll(".nav-link[data-goto]"));
-  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2"), "3": document.getElementById("lecture-3"), "C": document.getElementById("cap-screen") };
+  const lectures = { "1": document.getElementById("lecture-1"), "2": document.getElementById("lecture-2"), "3": document.getElementById("lecture-3"), "C": document.getElementById("cap-screen"), "C2S": document.getElementById("course2-intro") };
   function show(n) {
     Object.keys(lectures).forEach(k => { lectures[k].hidden = (k !== n); });
     buttons.forEach(b => {
@@ -1775,6 +1920,116 @@
   renderWorksheet();
   gid("cap-check").addEventListener("click", checkAnswers);
   gid("cap-reset").addEventListener("click", resetExercise);
+})();
+
+/* ═══════════════════════ Course 2 · Section 2.2 — Analyze & Record ═══════════════════════ */
+(function () {
+  const scope = document.getElementById("course2-intro");
+  const gid = id => scope.querySelector("#" + id);
+
+  const GREEN = { text: "#2f7d4f", strong: "#d4e9dc", border: "#5aa27a" };
+  const RED = { text: "#b8442c", strong: "#f0dcd4", border: "#cf8a76" };
+
+  const CYCLE = [
+    { label: "Analyze transactions", desc: "Identify economic events and decide whether they change assets, liabilities, or stockholders’ equity — the focus of this section." },
+    { label: "Journalize", desc: "Record each transaction in the journal as equal debits and credits, in chronological order." },
+    { label: "Post", desc: "Transfer the journal entries into the individual ledger accounts they affect." },
+    { label: "Trial balance", desc: "List every ledger account balance to check that total debits equal total credits." },
+    { label: "Adjusting entries", desc: "Update accounts for revenues earned and expenses incurred that haven’t been recorded yet." },
+    { label: "Adjusted trial balance", desc: "Re-prove that debits equal credits after the adjusting entries are posted." },
+    { label: "Financial statements", desc: "Prepare the income statement, statement of stockholders’ equity, and balance sheet." },
+    { label: "Closing entries", desc: "Transfer temporary account balances (revenues, expenses, dividends) into retained earnings." },
+    { label: "Post-closing trial balance", desc: "Confirm the ledger is in balance and ready to begin the next accounting period." },
+  ];
+
+  const EVENTS = [
+    { title: "Purchase a computer", record: true, verdict: "Yes", reason: "Equipment (an asset) increases and cash or a payable changes to pay for it. Financial position is affected — so it is recorded." },
+    { title: "Discuss trip options with a client", record: false, verdict: "No", reason: "No asset, liability, or equity has changed — it is only a conversation. Nothing is recorded until an exchange actually occurs." },
+    { title: "Pay the monthly rent", record: true, verdict: "Yes", reason: "Cash decreases and rent expense reduces stockholders’ equity. Financial position is affected — so it is recorded." },
+  ];
+  const EVENT_ICONS = [
+    '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9"></path><path d="M2 16h20l-1.3 2.6a1 1 0 0 1-.9.4H4.2a1 1 0 0 1-.9-.4L2 16Z"></path></svg>',
+    '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+    '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 17.5v-11"></path></svg>',
+  ];
+
+  const state = { selectedStep: 0, selectedEvent: null };
+
+  function renderCycle() {
+    const wrap = gid("c2-cycle-steps");
+    wrap.innerHTML = "";
+    CYCLE.forEach((s, i) => {
+      const active = i === state.selectedStep;
+      const isCurrent = i === 0;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "c2-hoverborder";
+      btn.setAttribute("style", "flex: 1 1 128px; min-width: 118px; display: flex; align-items: center; gap: 8px; padding: 10px 10px; font: inherit; cursor: pointer; text-align: left; background: " + (active ? "var(--color-accent-900)" : (isCurrent ? "var(--color-accent-100)" : "#fff")) + "; color: " + (active ? "var(--color-neutral-100)" : "var(--color-text)") + "; border: 1px solid " + (active ? "var(--color-accent-900)" : (isCurrent ? "var(--color-accent-500)" : "var(--color-neutral-400)")) + ";");
+      const numStyle = "width: 22px; height: 22px; flex-shrink: 0; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 12px; border: 1px solid " + (active ? "var(--color-accent-300)" : "var(--color-accent-500)") + "; color: " + (active ? "var(--color-neutral-100)" : "var(--color-accent-700)") + ";";
+      btn.innerHTML = '<span style="' + numStyle + '">' + (i + 1) + '</span><span style="text-align: left; line-height: 1.2;">' + s.label + '</span>';
+      btn.addEventListener("click", () => { state.selectedStep = i; renderCycle(); });
+      wrap.appendChild(btn);
+    });
+    const cur = CYCLE[state.selectedStep];
+    gid("c2-cycle-badge").textContent = state.selectedStep + 1;
+    gid("c2-cycle-title").textContent = cur.label + (state.selectedStep === 0 ? " — you are here" : "");
+    gid("c2-cycle-desc").textContent = cur.desc;
+  }
+
+  function renderIllus() {
+    const body = gid("c2-illus-body");
+    const hasSel = state.selectedEvent !== null;
+    const ev = hasSel ? EVENTS[state.selectedEvent] : null;
+    const rec = ev && ev.record;
+    const vc = rec ? GREEN : RED;
+    const flowStroke = hasSel ? "var(--color-accent-600)" : "var(--color-neutral-400)";
+    const flowAnim = hasSel ? "animation: flowPulse 1.6s ease-in-out infinite;" : "";
+    const flowSvg = '<svg width="20" height="34" viewBox="0 0 20 34" fill="none" stroke="' + flowStroke + '" stroke-width="1.5" style="' + flowAnim + '"><path d="M10 0v26"></path><path d="M3 20l7 7 7-7"></path></svg>';
+
+    const eventBtn = i => {
+      const sel = state.selectedEvent === i;
+      const style = "display: flex; flex-direction: column; align-items: center; gap: 10px; padding: var(--space-4) var(--space-3); font: inherit; cursor: pointer; background: " + (sel ? "var(--color-accent-100)" : "#fff") + "; border: " + (sel ? "2px solid var(--color-accent-700)" : "1px solid var(--color-neutral-400)") + "; box-shadow: " + (sel ? "var(--shadow-sm)" : "none") + ";";
+      const iconWrap = "width: 54px; height: 54px; display: grid; place-items: center; border: 1px solid " + (sel ? "var(--color-accent-600)" : "var(--color-neutral-400)") + "; color: " + (sel ? "var(--color-accent-800)" : "var(--color-neutral-700)") + ";";
+      return '<button type="button" class="c2-hoverborder" data-ev="' + i + '" style="' + style + '"><span style="' + iconWrap + '">' + EVENT_ICONS[i] + '</span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; text-align: center; line-height: 1.25;">' + EVENTS[i].title + '</span></button>';
+    };
+
+    const criterionStyle = "display: flex; align-items: center; gap: 12px; padding: var(--space-4); font-size: 14px; line-height: 1.5; border: 1px solid " + (hasSel ? "var(--color-accent-600)" : "var(--color-neutral-400)") + "; background: " + (hasSel ? "var(--color-accent-100)" : "var(--color-neutral-100)") + "; color: " + (hasSel ? "var(--color-accent-900)" : "var(--color-neutral-700)") + ";";
+
+    let recordRegion;
+    if (hasSel) {
+      const verdictBoxStyle = "width: 132px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-4); border: 2px solid " + vc.border + "; background: " + vc.strong + "; color: " + vc.text + ";";
+      const verdictBadgeStyle = "font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 14px; color: #fff; background: " + vc.text + ";";
+      const outcomeIconStyle = "width: 42px; height: 42px; flex-shrink: 0; display: grid; place-items: center; color: #fff; background: " + vc.text + ";";
+      const outcomeIcon = rec
+        ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>'
+        : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg>';
+      recordRegion =
+        '<div style="display: flex; gap: var(--space-4); align-items: stretch; animation: riseIn 0.35s ease both;">' +
+          '<div style="' + verdictBoxStyle + '"><span style="' + verdictBadgeStyle + '">' + ev.verdict + '</span><span style="font-family: var(--font-heading); font-size: 15px; font-weight: 600; margin-top: 8px;">' + (rec ? "Record it" : "Don’t record") + '</span></div>' +
+          '<div style="flex: 1; border: 1px solid var(--color-neutral-400); padding: var(--space-4); display: flex; gap: var(--space-3);">' +
+            '<span style="' + outcomeIconStyle + '">' + outcomeIcon + '</span>' +
+            '<div><div style="font-family: var(--font-heading); font-size: 15px; font-weight: 600;">' + (rec ? "Recorded as a transaction" : "Not recorded") + '</div><div style="font-size: 13px; line-height: 1.55; color: var(--color-neutral-800); margin-top: 4px;">' + ev.reason + '</div></div>' +
+          '</div>' +
+        '</div>';
+    } else {
+      recordRegion = '<div style="border: 1px dashed var(--color-neutral-400); padding: var(--space-4); color: var(--color-neutral-500); font-size: 13.5px; display: flex; align-items: center; gap: 8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>Select an event above to run it through the test.</div>';
+    }
+
+    const labelCell = txt => '<div style="font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);">' + txt + '</div>';
+    body.innerHTML =
+      '<div style="display: grid; grid-template-columns: 60px 1fr; gap: var(--space-4); align-items: center;">' + labelCell("Events") +
+        '<div class="c2-events" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);">' + eventBtn(0) + eventBtn(1) + eventBtn(2) + '</div></div>' +
+      '<div style="display: grid; grid-template-columns: 60px 1fr; margin: var(--space-3) 0;"><div></div><div style="display: flex; justify-content: center;">' + flowSvg + '</div></div>' +
+      '<div style="display: grid; grid-template-columns: 60px 1fr; gap: var(--space-4); align-items: center;">' + labelCell("Criterion") +
+        '<div style="' + criterionStyle + '"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg><span>Is the financial position — assets, liabilities, or stockholders’ equity — of the company changed?</span></div></div>' +
+      '<div style="display: grid; grid-template-columns: 60px 1fr; margin: var(--space-3) 0;"><div></div><div style="display: flex; justify-content: center;">' + flowSvg + '</div></div>' +
+      '<div style="display: grid; grid-template-columns: 60px 1fr; gap: var(--space-4); align-items: stretch;"><div style="font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500); align-self: center;">Record?</div>' + recordRegion + '</div>';
+
+    scope.querySelectorAll("[data-ev]").forEach(b => b.addEventListener("click", () => { state.selectedEvent = +b.getAttribute("data-ev"); renderIllus(); }));
+  }
+
+  renderCycle();
+  renderIllus();
 })();
 </script>
 </body>
