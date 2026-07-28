@@ -28,6 +28,7 @@ jobs:
         run: |
           mkdir -p _site/icons
           cp index.html manifest.webmanifest sw.js _site/
+          cp ledger-lab.html ledger-lab.webmanifest _site/
           cp -r icons/* _site/icons/
       - uses: actions/upload-pages-artifact@v3
         with:

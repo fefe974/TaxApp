@@ -1,8 +1,10 @@
-const CACHE_NAME = 'financial-accounting-v15';
+const CACHE_NAME = 'financial-accounting-v16';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './ledger-lab.html',
+  './ledger-lab.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
