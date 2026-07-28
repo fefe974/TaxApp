@@ -1,0 +1,19 @@
+{
+  "name": "Ledger Lab",
+  "short_name": "Ledger Lab",
+  "description": "Post transactions into a tabular summary, watch the account balances move, and prove that assets equal liabilities plus stockholders' equity.",
+  "start_url": "./ledger-lab.html",
+  "scope": "./",
+  "id": "/TaxApp/ledger-lab.html",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "background_color": "#F3F5FA",
+  "theme_color": "#1B4193",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
