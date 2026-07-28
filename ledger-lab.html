@@ -1,0 +1,1564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Ledger Lab · LO 2.1 Practice</title>
+<meta name="description" content="A pocket worksheet for the tabular summary: post transactions, watch the account balances move, and prove that assets equal liabilities plus stockholders' equity." />
+<meta name="theme-color" content="#1B4193" />
+<link rel="manifest" href="ledger-lab.webmanifest" />
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png" />
+<!-- Explicit apple-touch-icon is required: iOS's implicit lookup probes the origin
+     root (/apple-touch-icon.png), which never resolves under the /TaxApp/ subpath,
+     and it falls back to a screenshot of the page for the home-screen icon. -->
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Ledger Lab" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #eef1f8;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #17255A;
+  }
+  button, input { font-family: inherit; }
+  h1, h2, h3, h4, h5, h6 { font-family: inherit; }
+  a { color: #2C63CE; }
+  a:hover { color: #1E4B9B; }
+
+  @keyframes sheetUp { from { transform: translateY(102%); } to { transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes chipIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  @keyframes nudge { 0%,100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+
+  /* ── Page shell: marketing column beside the device on desktop ───────── */
+  .page {
+    min-height: 100vh;
+    padding: 44px 40px 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    align-items: flex-start;
+    justify-content: center;
+    background: radial-gradient(120% 90% at 8% 0%, #fdf3ec 0%, #eef1f8 45%, #e6e9f6 100%);
+  }
+  .intro { max-width: 330px; padding-top: 30px; display: flex; flex-direction: column; gap: 18px; }
+
+  /* ── iOS device frame ───────────────────────────────────────────────── */
+  .device {
+    width: 402px;
+    height: 874px;
+    border-radius: 48px;
+    overflow: hidden;
+    position: relative;
+    background: #F2F2F7;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);
+    flex: none;
+  }
+  .island {
+    position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+    width: 126px; height: 37px; border-radius: 24px; background: #000; z-index: 50;
+  }
+  .statusbar {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; align-items: center; padding: 21px 24px 19px;
+    font-family: -apple-system, "SF Pro", system-ui, sans-serif;
+    pointer-events: none;
+  }
+  .statusbar .t { flex: 1; text-align: center; font-weight: 590; font-size: 17px; line-height: 22px; color: #fff; }
+  .statusbar .i { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .home-indicator {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 60; height: 34px;
+    display: flex; justify-content: center; align-items: flex-end; padding-bottom: 8px;
+    pointer-events: none;
+  }
+  .home-indicator span { width: 139px; height: 5px; border-radius: 100px; background: rgba(255,255,255,0.7); }
+
+  /* The app itself fills the frame. */
+  #app {
+    position: relative; height: 100%; display: flex; flex-direction: column;
+    background: #F3F5FA; overflow: hidden;
+  }
+
+  /* Header top padding clears the iOS status bar; overridden on real phones. */
+  :root { --hdr-top: 54px; --bar-bottom: 30px; }
+
+  /* ── Full-bleed on real phones / narrow viewports ────────────────────── */
+  @media (max-width: 900px) {
+    :root {
+      --hdr-top: calc(14px + env(safe-area-inset-top, 40px));
+      --bar-bottom: calc(12px + env(safe-area-inset-bottom, 18px));
+    }
+    body { background: #F3F5FA; }
+    .page { padding: 0; gap: 0; display: block; background: none; }
+    .intro { display: none; }
+    .device {
+      width: 100%; height: 100vh; height: 100dvh;
+      border-radius: 0; box-shadow: none; background: #F3F5FA;
+    }
+    .island, .statusbar, .home-indicator { display: none; }
+  }
+
+  /* ── Hover treatments (mirror the design's style-hover attributes) ───── */
+  @media (hover: hover) {
+    .hv-grad-blue:hover  { background: linear-gradient(150deg,#3670DB,#20489F) !important; }
+    .hv-grad-green:hover { background: linear-gradient(150deg,#1FCB86,#149A62) !important; }
+    .hv-chip:hover       { background: #E3EBFB !important; color: #1B4193 !important; }
+    .hv-chip2:hover      { background: #D3E1FA !important; }
+    .hv-chip3:hover      { background: #E3EBFB !important; }
+    .hv-nav:hover        { background: #E3EBFB !important; color: #2C63CE !important; }
+    .hv-glass:hover      { background: rgba(255,255,255,0.26) !important; }
+    .hv-menu:hover       { background: #F3F5FA !important; }
+    .hv-lift:hover       { box-shadow: 0 8px 24px rgba(20,41,92,0.13) !important; }
+    .hv-lift-sm:hover    { box-shadow: 0 6px 20px rgba(20,41,92,0.10) !important; }
+    .hv-link:hover       { color: #2C63CE !important; }
+    .hv-green-soft:hover { background: #D8F0E5 !important; }
+    .hv-white:hover      { background: #F4F7FC !important; }
+  }
+  button:disabled { cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <aside class="intro">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:11px;background:linear-gradient(150deg,#2C63CE,#16295C);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700;letter-spacing:0.02em;box-shadow:0 6px 14px rgba(28,60,140,0.28)">L=</div>
+      <span style="font-size:15px;font-weight:700;letter-spacing:0.02em">Ledger Lab</span>
+    </div>
+    <h2 style="font-size:36px;line-height:1.12;font-weight:800;letter-spacing:-0.02em;margin:0;text-wrap:pretty">Analyze transactions using the accounting equation</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span style="padding:5px 12px;border-radius:999px;background:#e3ebfb;color:#2C63CE;font-size:12px;font-weight:600">LO 2.1</span>
+      <span style="padding:5px 12px;border-radius:999px;background:#fff;color:#5C688A;font-size:12px;font-weight:600;box-shadow:0 2px 8px rgba(20,41,92,0.06)">Chapter 2 · Practice</span>
+    </div>
+    <p style="font-size:14.5px;line-height:1.7;color:#5C688A;margin:0">A pocket worksheet for the tabular summary. Students post each transaction, watch the account balances move, and prove that assets equal liabilities plus stockholders' equity — then read the statements it produces.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span style="flex:none;font-size:12px;font-weight:700;letter-spacing:0.06em;color:#2C63CE;min-width:86px;padding-top:2px">GUIDED</span>
+        <span style="font-size:13.5px;line-height:1.55;color:#5C688A">Checks every entry as it is posted, with hints and correction feedback.</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span style="flex:none;font-size:12px;font-weight:700;letter-spacing:0.06em;color:#2C63CE;min-width:86px;padding-top:2px">INDEPENDENT</span>
+        <span style="font-size:13.5px;line-height:1.55;color:#5C688A">Silent worksheet — build all seven rows, then submit for grading.</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="device">
+    <div class="island"></div>
+    <div class="statusbar">
+      <div class="t">9:41</div>
+      <div class="i">
+        <svg width="19" height="12" viewBox="0 0 19 12" aria-hidden="true">
+          <rect x="0" y="7.5" width="3.2" height="4.5" rx="0.7" fill="#fff"/>
+          <rect x="4.8" y="5" width="3.2" height="7" rx="0.7" fill="#fff"/>
+          <rect x="9.6" y="2.5" width="3.2" height="9.5" rx="0.7" fill="#fff"/>
+          <rect x="14.4" y="0" width="3.2" height="12" rx="0.7" fill="#fff"/>
+        </svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" aria-hidden="true">
+          <path d="M8.5 3.2C10.8 3.2 12.9 4.1 14.4 5.6L15.5 4.5C13.7 2.7 11.2 1.5 8.5 1.5C5.8 1.5 3.3 2.7 1.5 4.5L2.6 5.6C4.1 4.1 6.2 3.2 8.5 3.2Z" fill="#fff"/>
+          <path d="M8.5 6.8C9.9 6.8 11.1 7.3 12 8.2L13.1 7.1C11.8 5.9 10.2 5.1 8.5 5.1C6.8 5.1 5.2 5.9 3.9 7.1L5 8.2C5.9 7.3 7.1 6.8 8.5 6.8Z" fill="#fff"/>
+          <circle cx="8.5" cy="10.5" r="1.5" fill="#fff"/>
+        </svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#fff" stroke-opacity="0.35" fill="none"/>
+          <rect x="2" y="2" width="20" height="9" rx="2" fill="#fff"/>
+          <path d="M25 4.5V8.5C25.8 8.2 26.5 7.2 26.5 6.5C26.5 5.8 25.8 4.8 25 4.5Z" fill="#fff" fill-opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div id="app"></div>
+
+    <div class="home-indicator"><span></span></div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════════════
+     DATA — the exercise definition
+     ══════════════════════════════════════════════════════════════════════ */
+
+  var COLS = [
+    { k: 'cash',  full: 'Cash',        grp: 'A' },
+    { k: 'ar',    full: 'Accts. Rec.', grp: 'A' },
+    { k: 'equip', full: 'Equipment',   grp: 'A' },
+    { k: 'np',    full: 'Notes Pay.',  grp: 'L' },
+    { k: 'ap',    full: 'Accts. Pay.', grp: 'L' },
+    { k: 'cs',    full: 'Com. Stock',  grp: 'E' },
+    { k: 'rev',   full: 'Revenue',     grp: 'E' },
+    { k: 'exp',   full: 'Expense',     grp: 'E' },
+    { k: 'div',   full: 'Dividends',   grp: 'E' }
+  ];
+  var NAME = {};
+  COLS.forEach(function (c) { NAME[c.k] = c.full; });
+
+  var TX = [
+    { n: 1, text: 'Stockholders invested $10,000 in cash in exchange for common stock.', memo: 'Issued Stock',
+      hint: 'Two things happen at once: the company receives cash (an asset) and issues shares (equity). Both increase by $10,000.',
+      entries: [{ col: 'cash', amt: 10000 }, { col: 'cs', amt: 10000 }] },
+    { n: 2, text: 'Paid $800 for July rent.', memo: 'Rent Expense',
+      hint: 'Cash goes out, and rent is an expense. Expenses reduce retained earnings, so post the Expense side as a decrease.',
+      entries: [{ col: 'cash', amt: -800 }, { col: 'exp', amt: -800 }] },
+    { n: 3, text: 'Purchased office equipment on account, $3,000.', memo: 'Purch. Equip.',
+      hint: '"On account" means no cash moved yet. One asset rises and a liability rises with it.',
+      entries: [{ col: 'equip', amt: 3000 }, { col: 'ap', amt: 3000 }] },
+    { n: 4, text: 'Performed delivery service for clients for cash, $1,500.', memo: 'Service Revenue',
+      hint: 'Cash in, revenue earned. Revenue increases retained earnings within stockholders’ equity.',
+      entries: [{ col: 'cash', amt: 1500 }, { col: 'rev', amt: 1500 }] },
+    { n: 5, text: 'Borrowed $700 cash from a bank on a note payable.', memo: 'Borrowing',
+      hint: 'Borrowing raises cash and creates an obligation. Nothing touches equity — the lender is not an owner.',
+      entries: [{ col: 'cash', amt: 700 }, { col: 'np', amt: 700 }] },
+    { n: 6, text: 'Performed delivery services for a client on account, $2,000.', memo: 'Service Revenue',
+      hint: 'Revenue is recorded when the service is performed, even though no cash arrived. The claim on the client is a receivable.',
+      entries: [{ col: 'ar', amt: 2000 }, { col: 'rev', amt: 2000 }] },
+    { n: 7, text: 'Paid monthly expenses: salaries $500, utilities $300, and advertising $100.', memo: 'Sal./Wages, Utilities, Adv. Exp.',
+      hint: 'Three separate expenses, each paid in cash. Post them one pair at a time: cash down, expense down.',
+      entries: [{ col: 'cash', amt: -500 }, { col: 'exp', amt: -500 },
+                { col: 'cash', amt: -300 }, { col: 'exp', amt: -300 },
+                { col: 'cash', amt: -100 }, { col: 'exp', amt: -100 }] }
+  ];
+
+  var EXP_LABELS = { 800: 'Rent expense', 500: 'Salaries and wages expense', 300: 'Utilities expense', 100: 'Advertising expense' };
+  var ERR = '#D9534F';
+  var OK = '#16A96D';
+
+  var PROPS = {
+    studentName: 'Maya',
+    courseName: 'ACCT 201 · Financial Accounting',
+    companyName: 'Speedy Delivery Inc.',
+    showEquationMeter: true,
+    hintsOpenByDefault: false
+  };
+
+  /* ══════════════════════════════════════════════════════════════════════
+     PURE HELPERS
+     ══════════════════════════════════════════════════════════════════════ */
+
+  function group(entries) {
+    var s = {};
+    COLS.forEach(function (c) { s[c.k] = 0; });
+    entries.forEach(function (e) { s[e.col] += e.amt; });
+    return s;
+  }
+  function num(n) {
+    if (!n) return '';
+    var a = Math.abs(n).toLocaleString('en-US');
+    return (n < 0 ? '−' : '+') + a;
+  }
+  function money(n) {
+    var a = Math.abs(n).toLocaleString('en-US');
+    return (n < 0 ? '−$' : '$') + a;
+  }
+  function pill(active) {
+    return { flex: 1, height: 34, borderRadius: 999, display: 'grid', placeItems: 'center', cursor: 'pointer',
+      fontSize: 13, fontWeight: active ? 700 : 600, letterSpacing: '0.01em',
+      transition: 'background 180ms ease, color 180ms ease',
+      background: active ? '#fff' : 'transparent',
+      color: active ? '#16295C' : 'rgba(255,255,255,0.74)' };
+  }
+  function viewPill(active) {
+    return { padding: '6px 13px', borderRadius: 999, cursor: 'pointer', fontSize: 11.5, fontWeight: 700,
+      letterSpacing: '0.04em',
+      background: active ? '#17255A' : 'transparent',
+      color: active ? '#fff' : '#5C688A' };
+  }
+
+  /* Style object -> inline CSS string (mirrors React's style prop rules). */
+  var UNITLESS = { fontWeight: 1, flex: 1, lineHeight: 1, opacity: 1, zIndex: 1, order: 1,
+    flexGrow: 1, flexShrink: 1, fontVariantNumeric: 1 };
+  function css(o) {
+    if (typeof o === 'string') return o;
+    var out = '';
+    for (var k in o) {
+      if (!Object.prototype.hasOwnProperty.call(o, k)) continue;
+      var v = o[k];
+      if (v === null || v === undefined || v === '') continue;
+      if (typeof v === 'number' && !UNITLESS[k]) v = v + 'px';
+      out += k.replace(/[A-Z]/g, function (m) { return '-' + m.toLowerCase(); }) + ':' + v + ';';
+    }
+    return out;
+  }
+
+  function H(s) {
+    return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     STATE
+     ══════════════════════════════════════════════════════════════════════ */
+
+  var STORE_KEY = 'ledgerlab.session.v1';
+
+  var state = {
+    screen: 'home', lockNote: '',
+    tab: 'lesson', mode: 'guided', started: false, txIndex: 0, instrIndex: 0, view: 'stack',
+    posted: [], current: [],
+    sheet: null, feedback: null, hintOpen: false, instrOpen: true, menuOpen: false,
+    errors: 0, hints: 0, graded: null
+  };
+
+  function setState(patch) {
+    var next = typeof patch === 'function' ? patch(state) : patch;
+    for (var k in next) {
+      if (Object.prototype.hasOwnProperty.call(next, k)) state[k] = next[k];
+    }
+    persist();
+    render();
+  }
+
+  function persist() {
+    try {
+      window.localStorage.setItem(STORE_KEY, JSON.stringify({
+        screen: state.screen, tab: state.tab, mode: state.mode, started: state.started,
+        txIndex: state.txIndex, instrIndex: state.instrIndex, view: state.view,
+        posted: state.posted, current: state.current, errors: state.errors, hints: state.hints,
+        graded: state.graded, instrOpen: state.instrOpen
+      }));
+    } catch (e) { /* storage unavailable */ }
+  }
+
+  function restore() {
+    try {
+      var raw = window.localStorage.getItem(STORE_KEY);
+      if (!raw) return;
+      var s = JSON.parse(raw);
+      if (s && Array.isArray(s.posted)) {
+        for (var k in s) {
+          if (Object.prototype.hasOwnProperty.call(s, k)) state[k] = s[k];
+        }
+      }
+    } catch (e) { /* no stored session */ }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     ACTIONS
+     ══════════════════════════════════════════════════════════════════════ */
+
+  function start(mode) {
+    setState({
+      tab: 'work', mode: mode, started: true, txIndex: 0, instrIndex: 0, posted: [], current: [],
+      sheet: null, feedback: null, errors: 0, hints: 0, graded: null, menuOpen: false,
+      instrOpen: true,
+      hintOpen: mode === 'guided' && !!PROPS.hintsOpenByDefault
+    });
+  }
+  function setTab(tab) { setState({ tab: tab, menuOpen: false, sheet: null }); }
+  function openExercise(tab) { setState({ screen: 'exercise', tab: tab, menuOpen: false, lockNote: '' }); }
+  function goHomeScreen() { setState({ screen: 'home', menuOpen: false, sheet: null, lockNote: '' }); }
+  function lock(text) { setState({ lockNote: text }); }
+
+  function goToStep(i) {
+    setState(function (s) {
+      if (s.mode === 'guided' || s.graded) return { instrIndex: i };
+      if (s.current.length) return { instrIndex: i };
+      if (s.posted.some(function (p) { return p.txIndex === i; })) return { instrIndex: i };
+      return { instrIndex: i, txIndex: i, feedback: null };
+    });
+  }
+
+  function unpost(i) {
+    setState(function (s) {
+      return {
+        posted: s.posted.filter(function (p) { return p.txIndex !== i; }),
+        txIndex: i, instrIndex: i, current: [], feedback: null, graded: null
+      };
+    });
+  }
+
+  function openSheet() { setState({ sheet: { stage: 'account', col: null, digits: '', sign: 1 }, feedback: null }); }
+  function closeSheet() { setState({ sheet: null }); }
+  function pickCol(k) {
+    setState(function (s) {
+      return { sheet: { stage: 'amount', col: k, digits: '', sign: 1 } };
+    });
+  }
+  function backToAccounts() {
+    setState(function (s) {
+      var sh = s.sheet || {};
+      return { sheet: { stage: 'account', col: sh.col, digits: sh.digits, sign: sh.sign } };
+    });
+  }
+  function setSign(sign) {
+    setState(function (s) {
+      var sh = s.sheet || {};
+      return { sheet: { stage: sh.stage, col: sh.col, digits: sh.digits, sign: sign } };
+    });
+  }
+  function press(key) {
+    setState(function (s) {
+      var sh = s.sheet || {};
+      var d = sh.digits || '';
+      if (key === 'del') d = d.slice(0, -1);
+      else if (d.length < 8) d = (d + key).replace(/^0+(?=\d)/, '');
+      return { sheet: { stage: sh.stage, col: sh.col, digits: d, sign: sh.sign } };
+    });
+  }
+
+  function submitEntry() {
+    var sheet = state.sheet, mode = state.mode, txIndex = state.txIndex, current = state.current;
+    if (!sheet) return;
+    var amt = sheet.sign * parseInt(sheet.digits || '0', 10);
+    if (!amt) return;
+    var entry = { col: sheet.col, amt: amt };
+
+    if (mode === 'independent') {
+      setState({ current: current.concat([entry]), sheet: null, feedback: null });
+      return;
+    }
+
+    var expected = TX[txIndex].entries;
+    var remaining = expected.slice();
+    current.forEach(function (e) {
+      var i = remaining.findIndex(function (r) { return r.col === e.col && r.amt === e.amt; });
+      if (i > -1) remaining.splice(i, 1);
+    });
+
+    var exact = remaining.findIndex(function (r) { return r.col === entry.col && r.amt === entry.amt; });
+    if (exact > -1) {
+      var next = current.concat([entry]);
+      var done = next.length === expected.length;
+      setState({
+        current: next, sheet: null, hintOpen: false,
+        feedback: { kind: 'ok', text: done
+          ? 'Both sides recorded and the equation still balances. Post the row to the summary.'
+          : NAME[entry.col] + ' ' + money(amt) + ' recorded. Now the other side of the same transaction.' }
+      });
+      return;
+    }
+
+    var msg;
+    if (remaining.some(function (r) { return r.col === entry.col && Math.abs(r.amt) === Math.abs(amt); }))
+      msg = 'Right account, wrong direction. Ask yourself whether ' + NAME[entry.col] + ' goes up or down here.';
+    else if (remaining.some(function (r) { return r.col === entry.col; }))
+      msg = 'Right account — check the amount against the transaction.';
+    else if (current.some(function (e) { return e.col === entry.col && e.amt === amt; }))
+      msg = 'You already posted that side of this transaction.';
+    else
+      msg = NAME[entry.col] + ' is not affected by this transaction. Open the hint if you need a nudge.';
+
+    setState(function (s) {
+      return { sheet: null, errors: s.errors + 1, feedback: { kind: 'err', text: msg } };
+    });
+  }
+
+  function undoEntry() {
+    setState(function (s) { return { current: s.current.slice(0, -1), feedback: null }; });
+  }
+  function toggleHint() {
+    setState(function (s) { return { hintOpen: !s.hintOpen, hints: s.hintOpen ? s.hints : s.hints + 1 }; });
+  }
+
+  function postTx() {
+    setState(function (s) {
+      var posted = s.posted.concat([{ n: TX[s.txIndex].n, entries: s.current, txIndex: s.txIndex }]);
+      var last = s.txIndex >= TX.length - 1;
+      if (last && s.mode === 'guided') return { posted: posted, current: [], tab: 'out', feedback: null, sheet: null };
+      var i = last ? s.txIndex : s.txIndex + 1;
+      return { posted: posted, current: [], txIndex: i, instrIndex: i, feedback: null, hintOpen: false };
+    });
+  }
+
+  function submitWork() {
+    var graded = TX.map(function (t, i) {
+      var row = state.posted.find(function (p) { return p.txIndex === i; });
+      var yours = row ? group(row.entries) : null;
+      var want = group(t.entries);
+      var ok = !!yours && COLS.every(function (c) { return yours[c.k] === want[c.k]; });
+      return { i: i, ok: ok, yours: yours, want: want };
+    });
+    setState({ tab: 'out', graded: graded, sheet: null, feedback: null });
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     DERIVED VALUES
+     ══════════════════════════════════════════════════════════════════════ */
+
+  function statements(tot) {
+    var revenue = tot.rev;
+    var net = revenue + tot.exp;
+    var expLines = [];
+    (state.posted || []).forEach(function (p) {
+      p.entries.forEach(function (e) {
+        if (e.col !== 'exp' || !e.amt) return;
+        var a = Math.abs(e.amt);
+        var label = EXP_LABELS[a] || 'Operating expense';
+        var hit = expLines.find(function (l) { return l.label === label; });
+        if (hit) hit.amt += a; else expLines.push({ label: label, amt: a });
+      });
+    });
+    return {
+      isRevAmt: money(revenue),
+      isExpLines: expLines.map(function (l) { return { label: l.label, amt: money(l.amt) }; }),
+      isExpTotal: money(-tot.exp),
+      isNet: money(net),
+      isNetLabel: net < 0 ? 'Net loss' : 'Net income',
+      isNetStyle: { fontSize: 19, fontWeight: 800, letterSpacing: '-0.01em', fontVariantNumeric: 'tabular-nums',
+        color: net < 0 ? ERR : OK },
+      reNetLabel: net < 0 ? 'Less: Net loss' : 'Add: Net income',
+      reNet: money(Math.abs(net)), reDiv: money(-tot.div), reEnd: money(net + tot.div),
+      reNetStyle: { fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: net < 0 ? ERR : '#17255A' },
+      bsAssets: [
+        { label: 'Cash', amt: money(tot.cash) },
+        { label: 'Accounts receivable', amt: money(tot.ar) },
+        { label: 'Equipment', amt: money(tot.equip) }
+      ],
+      bsAssetTotal: money(tot.cash + tot.ar + tot.equip),
+      bsLiab: [
+        { label: 'Notes payable', amt: money(tot.np) },
+        { label: 'Accounts payable', amt: money(tot.ap) }
+      ],
+      bsLiabTotal: money(tot.np + tot.ap),
+      bsEquity: [
+        { label: 'Common stock', amt: money(tot.cs) },
+        { label: 'Retained earnings', amt: money(net + tot.div) }
+      ],
+      bsEquityTotal: money(tot.cs + tot.rev + tot.exp + tot.div),
+      bsTotal: money(tot.np + tot.ap + tot.cs + tot.rev + tot.exp + tot.div)
+    };
+  }
+
+  function renderVals() {
+    var s = state;
+    var guided = s.mode === 'guided';
+    var tx = TX[s.txIndex];
+    var expected = tx ? tx.entries : [];
+    var complete = s.posted.length === TX.length;
+
+    var allEntries = [];
+    s.posted.forEach(function (p) { p.entries.forEach(function (e) { allEntries.push(e); }); });
+    s.current.forEach(function (e) { allEntries.push(e); });
+    var tot = group(allEntries);
+    var assets = tot.cash + tot.ar + tot.equip;
+    var liab = tot.np + tot.ap;
+    var equity = tot.cs + tot.rev + tot.exp + tot.div;
+
+    var ledgerRows = s.posted.slice().sort(function (a, b) { return a.txIndex - b.txIndex; }).map(function (p) {
+      var g = group(p.entries);
+      var row = { n: '(' + p.n + ')', memo: guided || s.graded ? TX[p.txIndex].memo : '' };
+      COLS.forEach(function (c) { row[c.k] = num(g[c.k]); });
+      return row;
+    });
+
+    var pg = group(s.current);
+    var pendingRow = { n: tx ? '(' + tx.n + ')' : '' };
+    COLS.forEach(function (c) { pendingRow[c.k] = num(pg[c.k]); });
+
+    var balRow = { memo: assets === liab + equity && assets !== 0 ? 'In balance' : '' };
+    COLS.forEach(function (c) { balRow[c.k] = tot[c.k] ? money(tot[c.k]) : '—'; });
+
+    var GROUPS = [
+      { label: 'ASSETS', mark: '', keys: ['cash', 'ar', 'equip'] },
+      { label: 'LIABILITIES', mark: '=', keys: ['np', 'ap'] },
+      { label: 'STOCKHOLDERS’ EQUITY', mark: '+', keys: ['cs', 'rev', 'exp', 'div'] }
+    ];
+    var balGroups = GROUPS.map(function (g) {
+      return {
+        label: g.label, mark: g.mark,
+        total: money(g.keys.reduce(function (n, k) { return n + tot[k]; }, 0)),
+        rows: g.keys.map(function (k) {
+          return {
+            label: NAME[k], amt: tot[k] ? money(tot[k]) : '—',
+            style: { display: 'flex', justifyContent: 'space-between', gap: 10, padding: '9px 0',
+              fontSize: 14.5, fontWeight: tot[k] ? 600 : 500, fontVariantNumeric: 'tabular-nums',
+              borderBottom: '1px solid #EDF1F9',
+              color: tot[k] ? '#2A3557' : '#B3BACB' }
+          };
+        })
+      };
+    });
+
+    var txCards = s.posted.slice().sort(function (a, b) { return a.txIndex - b.txIndex; }).map(function (p) {
+      return {
+        n: '(' + p.n + ')',
+        memo: guided || s.graded ? TX[p.txIndex].memo : '—',
+        canEdit: !guided && !s.graded,
+        edit: (function (i) { return function () { unpost(i); }; })(p.txIndex),
+        lines: p.entries.map(function (e) {
+          return { label: NAME[e.col], amt: money(e.amt),
+            style: { fontWeight: 700, color: e.amt < 0 ? ERR : OK } };
+        })
+      };
+    });
+
+    var keys = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '00', '0', 'del'].map(function (k) {
+      return { label: k === 'del' ? '⌫' : k, press: function () { press(k); } };
+    });
+
+    var accountGroups = [
+      { label: 'ASSETS', cols: COLS.filter(function (c) { return c.grp === 'A'; }) },
+      { label: 'LIABILITIES', cols: COLS.filter(function (c) { return c.grp === 'L'; }) },
+      { label: 'STOCKHOLDERS’ EQUITY', cols: COLS.filter(function (c) { return c.grp === 'E'; }) }
+    ].map(function (g) {
+      return { label: g.label, cols: g.cols.map(function (c) {
+        return { full: c.full, pick: function () { pickCol(c.k); } };
+      }) };
+    });
+
+    var sheet = s.sheet || {};
+    var digits = sheet.digits || '';
+    var amtVal = (sheet.sign || 1) * parseInt(digits || '0', 10);
+
+    var guidedDone = guided && s.current.length === expected.length && expected.length > 0;
+    var indepReady = !guided && s.current.length > 0;
+    var lastTx = s.txIndex >= TX.length - 1;
+
+    var gradedSource = s.graded || TX.map(function (t, i) {
+      return { i: i, ok: true, yours: group((s.posted[i] || { entries: [] }).entries), want: group(t.entries) };
+    });
+    var reviewRows = gradedSource.map(function (g) {
+      var fmt = function (m) {
+        return COLS.filter(function (c) { return m && m[c.k]; })
+          .map(function (c) { return NAME[c.k] + ' ' + money(m[c.k]); }).join('   ');
+      };
+      return {
+        text: '(' + TX[g.i].n + ') ' + TX[g.i].text,
+        mark: g.ok ? '✓' : '✕',
+        line: g.ok ? OK : ERR,
+        yours: g.yours ? fmt(g.yours) : 'Not posted',
+        boxStyle: { padding: '13px 14px', borderRadius: 18, background: '#fff', display: 'flex', gap: 11,
+          alignItems: 'flex-start', boxShadow: '0 3px 14px rgba(20,41,92,0.06)',
+          borderLeft: '4px solid ' + (g.ok ? OK : ERR) },
+        markStyle: { width: 22, height: 22, flex: 'none', borderRadius: 999, display: 'grid', placeItems: 'center',
+          fontSize: 11.5, fontWeight: 700, color: '#fff', background: g.ok ? OK : ERR },
+        answer: 'Correct: ' + fmt(g.want) + '  ·  ' + TX[g.i].memo,
+        showAnswer: !g.ok
+      };
+    });
+    var correct = (s.graded || []).filter(function (g) { return g.ok; }).length;
+
+    var postedHere = s.posted.some(function (p) { return p.txIndex === s.instrIndex; });
+    var inBalance = assets === liab + equity;
+
+    var v = {
+      companyName: PROPS.companyName,
+      isHomeScreen: s.screen === 'home', isExercise: s.screen !== 'home',
+      goHomeScreen: goHomeScreen,
+      studentName: PROPS.studentName,
+      courseName: PROPS.courseName,
+      openLesson: function () { openExercise('lesson'); },
+      homeCta: complete ? 'Review the statements' : s.started ? 'Resume the worksheet' : 'Start this practice set',
+      homeCtaGo: function () { openExercise(complete ? 'out' : s.started ? 'work' : 'lesson'); },
+      setStatus: complete ? 'Complete' : s.started ? s.posted.length + ' of 7 posted' : 'Not started',
+      setStatusStyle: { padding: '5px 11px', borderRadius: 999, fontSize: 11.5, fontWeight: 700,
+        fontVariantNumeric: 'tabular-nums',
+        background: complete ? '#E9F7F0' : s.started ? '#EEF4FF' : '#F1F4FA',
+        color: complete ? '#12764F' : s.started ? '#2C63CE' : '#5C688A' },
+      setMeter: { position: 'absolute', top: 0, bottom: 0, left: 0, borderRadius: 999,
+        background: 'linear-gradient(90deg,#2C63CE,#16A96D)', transition: 'width 320ms ease',
+        width: Math.round((s.posted.length / TX.length) * 100) + '%' },
+      statPosted: s.posted.length + '/7',
+      statEntries: String(allEntries.length),
+      statAccuracy: guided
+        ? (s.errors === 0 && s.posted.length === 0 ? '—' : Math.round((s.posted.length * 2 / Math.max(1, s.posted.length * 2 + s.errors)) * 100) + '%')
+        : (s.graded ? Math.round((correct / TX.length) * 100) + '%' : '—'),
+      upNext: [
+        { title: 'LO 2.2 · Journalize transactions', note: 'Opens after this set' },
+        { title: 'LO 2.3 · Post to the ledger', note: 'Opens after LO 2.2' },
+        { title: 'Chapter 2 checkpoint quiz', note: '12 questions · opens after LO 2.3' }
+      ].map(function (u) {
+        return { title: u.title, note: u.note,
+          tap: function () { lock(u.title.split(' · ')[0] + ' unlocks once you finish LO 2.1.'); } };
+      }),
+      lockNote: s.lockNote, hasLockNote: !!s.lockNote,
+
+      isHome: s.tab === 'lesson', isWork: s.tab === 'work', isSummary: s.tab === 'out',
+      goLesson: function () { setTab('lesson'); }, goWork: function () { setTab('work'); }, goOut: function () { setTab('out'); },
+      pillLesson: pill(s.tab === 'lesson'), pillWork: pill(s.tab === 'work'), pillOut: pill(s.tab === 'out'),
+      started: s.started,
+      menuOpen: s.menuOpen,
+      toggleMenu: function () { setState(function (m) { return { menuOpen: !m.menuOpen }; }); },
+      closeMenu: function () { setState({ menuOpen: false }); },
+
+      instrOpen: s.instrOpen, instrClosed: !s.instrOpen,
+      toggleInstr: function () { setState(function (m) { return { instrOpen: !m.instrOpen }; }); },
+      instrLabel: s.instrOpen ? 'Hide' : 'Show',
+      instrText: TX[s.instrIndex].text,
+      instrHint: TX[s.instrIndex].hint,
+      instrCount: (s.instrIndex + 1) + '/7',
+      instrMark: postedHere ? '✓' : String(s.instrIndex + 1),
+      instrMarkStyle: { width: 23, height: 23, flex: 'none', marginTop: 1, borderRadius: 8, display: 'grid',
+        placeItems: 'center', fontSize: 12, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
+        background: postedHere ? OK : '#EDF1F9',
+        color: postedHere ? '#fff' : '#5C688A' },
+      continueToWork: function () { if (s.started) setTab('work'); else start('guided'); },
+      continueLabel: s.started ? 'Continue to worksheet' : 'Start guided walkthrough',
+      instrPrev: function () { goToStep(Math.max(0, s.instrIndex - 1)); },
+      instrNext: function () { goToStep(Math.min(TX.length - 1, s.instrIndex + 1)); },
+      offCurrent: guided && !complete && s.instrIndex !== s.txIndex,
+      backToCurrent: function () { setState({ instrIndex: s.txIndex }); },
+      jumpLabel: postedHere ? 'Edit transaction ' + (s.instrIndex + 1) : 'Work on transaction ' + (s.instrIndex + 1),
+      showJump: !guided && !s.graded && s.instrIndex !== s.txIndex && s.current.length === 0,
+      jumpToStep: function () {
+        if (postedHere) unpost(s.instrIndex);
+        else setState({ txIndex: s.instrIndex, feedback: null });
+      },
+
+      progressCount: s.posted.length + ' of 7 posted',
+      checklist: TX.map(function (t, i) {
+        var done = s.posted.some(function (p) { return p.txIndex === i; });
+        return {
+          n: t.n + '.', text: t.text, mark: done ? '✓' : String(t.n),
+          markStyle: { width: 21, height: 21, flex: 'none', marginTop: 1, borderRadius: 7, display: 'grid',
+            placeItems: 'center', fontSize: 11.5, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
+            background: done ? OK : '#EDF1F9',
+            color: done ? '#fff' : '#6B7592' }
+        };
+      }),
+      showReview: complete && (guided || !!s.graded),
+      statementsReady: complete,
+      statementsNote: complete
+        ? 'Prepared from your completed tabular summary.'
+        : s.posted.length + ' of 7 transactions posted — the statements update as you post.',
+
+      startGuided: function () { start('guided'); },
+      startIndependent: function () { start('independent'); },
+      factList: TX.map(function (t) { return { n: t.n + '.', text: t.text }; }),
+      modeLabel: guided ? 'GUIDED' : 'INDEPENDENT',
+      showMeter: !!PROPS.showEquationMeter,
+      meterFill: { position: 'absolute', top: 0, bottom: 0, left: 0, borderRadius: 999,
+        background: 'linear-gradient(90deg,#2C63CE,#16A96D)', transition: 'width 320ms ease',
+        width: Math.round((s.posted.length / TX.length) * 100) + '%' },
+      balanceNote: inBalance ? 'In balance · ' + s.posted.length + '/7' : 'Off by ' + money(assets - liab - equity),
+      balanceChip: { padding: '6px 12px', borderRadius: 999, fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap',
+        fontVariantNumeric: 'tabular-nums',
+        background: inBalance ? 'rgba(34,197,124,0.22)' : 'rgba(255,138,128,0.24)',
+        color: inBalance ? '#B9F6D4' : '#FFD9D5' },
+      totalAssets: money(assets), totalLiab: money(liab), totalEquity: money(equity),
+
+      hasCurrentTx: !!tx && !complete,
+      stepLabel: tx ? 'POSTING · TRANSACTION ' + tx.n : '',
+      txText: tx ? tx.text : '',
+      txHint: tx ? tx.hint : '',
+      entryProgress: guided ? s.current.length + ' of ' + expected.length + ' entries' : s.current.length + ' entries',
+      hintVisible: guided && s.hintOpen, showHintBtn: guided,
+      hintBtnLabel: s.hintOpen ? 'Hide hint' : 'Show hint',
+      canUndo: s.current.length > 0,
+      toggleHint: toggleHint, undoEntry: undoEntry,
+      pendingChips: s.current.map(function (e) {
+        return {
+          name: NAME[e.col], amt: money(e.amt),
+          icon: e.amt < 0 ? '↓' : '↑',
+          iconStyle: { width: 26, height: 26, flex: 'none', borderRadius: 9, display: 'grid', placeItems: 'center',
+            fontSize: 13, fontWeight: 700,
+            background: e.amt < 0 ? '#FDECEB' : '#E9F7F0', color: e.amt < 0 ? ERR : OK },
+          amtStyle: { fontSize: 15, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
+            color: e.amt < 0 ? ERR : OK }
+        };
+      }),
+      noEntries: s.current.length === 0,
+
+      ledgerRows: ledgerRows, pendingRow: pendingRow, balRow: balRow, hasPendingRow: s.current.length > 0,
+      balGroups: balGroups, txCards: txCards, hasTxCards: s.posted.length > 0,
+      isStack: s.view !== 'grid', isGrid: s.view === 'grid',
+      pillStack: viewPill(s.view !== 'grid'), pillGrid: viewPill(s.view === 'grid'),
+      setStack: function () { setState({ view: 'stack' }); }, setGrid: function () { setState({ view: 'grid' }); },
+
+      feedbackOk: !!s.feedback && s.feedback.kind === 'ok',
+      feedbackErr: !!s.feedback && s.feedback.kind === 'err',
+      feedbackText: s.feedback ? s.feedback.text : '',
+
+      showAddEntry: !complete && !guidedDone,
+      showPost: guidedDone || indepReady,
+      postLabel: guided ? (lastTx ? 'Post · finish' : 'Post to summary') : (lastTx ? 'Post row' : 'Post · next'),
+      postTx: postTx,
+      showSubmit: !guided && complete && !s.graded,
+      showBackToResults: complete && (guided || !!s.graded),
+      backToResults: function () { setTab('out'); },
+      submitLabel: 'Submit for grading',
+      submitWork: submitWork,
+      openSheet: openSheet,
+
+      sheetOpen: !!s.sheet,
+      pickingAccount: sheet.stage === 'account', enteringAmount: sheet.stage === 'amount',
+      sheetTitle: sheet.stage === 'amount' ? 'Enter the amount' : 'Which account changed?',
+      sheetSub: tx ? 'TRANSACTION ' + tx.n + ' · ' + (guided ? s.current.length + '/' + expected.length + ' POSTED' : s.current.length + ' POSTED') : '',
+      accountGroups: accountGroups, keys: keys,
+      sheetColName: sheet.col ? NAME[sheet.col] : '',
+      amountDisplay: digits ? money(amtVal) : '$0',
+      amountStyle: { fontSize: 30, fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1,
+        fontVariantNumeric: 'tabular-nums',
+        color: digits ? (amtVal < 0 ? ERR : OK) : '#C3C9D8' },
+      plusStyle: { flex: 1, height: 44, border: 0, borderRadius: 14, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+        background: (sheet.sign || 1) > 0 ? '#E9F7F0' : '#F4F7FC',
+        color: (sheet.sign || 1) > 0 ? OK : '#5C688A',
+        boxShadow: (sheet.sign || 1) > 0 ? 'inset 0 0 0 2px ' + OK : 'none' },
+      minusStyle: { flex: 1, height: 44, border: 0, borderRadius: 14, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+        background: (sheet.sign || 1) < 0 ? '#FDECEB' : '#F4F7FC',
+        color: (sheet.sign || 1) < 0 ? ERR : '#5C688A',
+        boxShadow: (sheet.sign || 1) < 0 ? 'inset 0 0 0 2px ' + ERR : 'none' },
+      postEntryStyle: { width: '100%', height: 50, marginTop: 12, border: 0, borderRadius: 16,
+        fontSize: 15.5, fontWeight: 700, color: '#fff',
+        cursor: digits ? 'pointer' : 'not-allowed',
+        background: digits ? 'linear-gradient(150deg,#2C63CE,#1B4193)' : '#C3C9D8',
+        boxShadow: digits ? '0 8px 18px rgba(28,60,140,0.28)' : 'none' },
+      setPlus: function () { setSign(1); }, setMinus: function () { setSign(-1); },
+      submitEntry: submitEntry, closeSheet: closeSheet, backToAccounts: backToAccounts,
+      entryDisabled: !digits,
+
+      resultTitle: guided ? 'Walkthrough complete' : correct === TX.length ? 'Summary correct' : 'Summary graded',
+      resultBlurb: guided
+        ? 'All seven transactions are posted and the summary balances at ' + money(assets) + ' on both sides.'
+        : correct + ' of 7 transactions match the solution. Misses are shown with the correct entry.',
+      scoreValue: guided ? s.posted.length + '/7' : correct + '/7',
+      scoreLabel: guided ? 'posted' : 'correct',
+      secondValue: guided ? String(s.errors) : (inBalance ? 'YES' : 'NO'),
+      secondLabel: guided ? 'corrections' : 'in balance',
+      reviewRows: reviewRows,
+      reviewTable: function () { setTab('work'); },
+      revise: function () { setState({ graded: null, tab: 'work', feedback: null }); },
+      graded: !!s.graded,
+      restart: function () { start(s.mode); },
+      switchMode: function () { start(guided ? 'independent' : 'guided'); },
+      switchLabel: guided ? 'Try it independently →' : 'Run the guided walkthrough →'
+    };
+
+    var st = statements(tot);
+    for (var key in st) {
+      if (Object.prototype.hasOwnProperty.call(st, key)) v[key] = st[key];
+    }
+    return v;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RENDERING
+     ══════════════════════════════════════════════════════════════════════ */
+
+  var root = document.getElementById('app');
+  var handlers = {};
+  var handlerSeq = 0;
+
+  /* Register a click handler and return the attribute that binds it. */
+  function act(fn) {
+    if (typeof fn !== 'function') return '';
+    var id = 'h' + (handlerSeq++);
+    handlers[id] = fn;
+    return ' data-act="' + id + '"';
+  }
+
+  /* Entry animations should play once, when the element first appears —
+     not on every re-render. Keys seen last pass are remembered. */
+  var prevAnimKeys = Object.create(null);
+  var animKeys = Object.create(null);
+  function anim(key, value) {
+    animKeys[key] = true;
+    return prevAnimKeys[key] ? '' : 'animation:' + value + ';';
+  }
+
+  var GRIDCOLS = 'display:grid;grid-template-columns:46px 76px 78px 74px 78px 82px 84px 72px 74px 62px 122px;';
+  var THCELL = 'padding:5px 8px;text-align:right;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#5C688A;font-weight:600';
+  var TDCELL = 'padding:8px;text-align:right;font-size:13.5px;font-variant-numeric:tabular-nums';
+  var BALCELL = 'padding:9px 8px;text-align:right;font-size:14px;font-weight:500;font-variant-numeric:tabular-nums';
+
+  /* ── Home screen ─────────────────────────────────────────────────────── */
+  function homeScreen(v) {
+    return '' +
+    '<div style="flex:none;padding:var(--hdr-top) 20px 22px;background:linear-gradient(158deg,#2A5DC4 0%,#1B4193 45%,#15316E 100%);color:#fff;border-radius:0 0 26px 26px;box-shadow:0 10px 26px rgba(19,44,104,0.24)">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">' +
+        '<div>' +
+          '<div style="font-size:12px;font-weight:600;letter-spacing:0.06em;color:rgba(255,255,255,0.68)">' + H(v.courseName) + '</div>' +
+          '<div style="font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-top:3px">Hi, ' + H(v.studentName) + '</div>' +
+        '</div>' +
+        '<div style="width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,0.18);display:grid;place-items:center;font-size:15px;font-weight:700">L=</div>' +
+      '</div>' +
+      '<div style="margin-top:18px;padding:14px;border-radius:18px;background:rgba(255,255,255,0.13)">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:rgba(255,255,255,0.7)">TRANSACTIONS POSTED</span>' +
+          '<span style="font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums">' + H(v.statPosted) + '</span>' +
+        '</div>' +
+        '<div style="height:5px;border-radius:999px;background:rgba(255,255,255,0.2);position:relative;margin-top:10px">' +
+          '<div style="' + css(v.setMeter) + '"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div data-sk="homeScroll" style="flex:1;overflow-y:auto;padding:16px 16px 22px;display:flex;flex-direction:column;gap:14px">' +
+
+      '<div style="border-radius:20px;background:#fff;padding:17px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em;color:#2C63CE">ASSIGNED PRACTICE</span>' +
+          '<span style="' + css(v.setStatusStyle) + '">' + H(v.setStatus) + '</span>' +
+        '</div>' +
+        '<div style="font-size:19px;font-weight:800;letter-spacing:-0.02em;line-height:1.2">Analyze transactions using the accounting equation</div>' +
+        '<div style="font-size:13px;font-weight:600;color:#5C688A;margin-top:5px">LO 2.1 · ' + H(v.companyName) + ' · 7 transactions</div>' +
+        '<div style="display:flex;gap:8px;margin-top:14px">' +
+          '<button' + act(v.homeCtaGo) + ' class="hv-grad-blue" style="flex:1;height:46px;border:0;border-radius:15px;background:linear-gradient(150deg,#2C63CE,#1B4193);color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(28,60,140,0.26)">' + H(v.homeCta) + '</button>' +
+          '<button' + act(v.openLesson) + ' class="hv-chip" style="width:112px;height:46px;border:0;border-radius:15px;background:#F1F4FA;color:#2A3557;font-size:14px;font-weight:700;cursor:pointer">Read lesson</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:flex;gap:9px">' +
+        statCard(v.statPosted, 'posted') + statCard(v.statEntries, 'entries') + statCard(v.statAccuracy, 'accuracy') +
+      '</div>' +
+
+      '<div>' +
+        '<div style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em;margin-bottom:9px">Up next</div>' +
+        '<div style="display:flex;flex-direction:column;gap:9px">' +
+          v.upNext.map(function (u) {
+            return '<div' + act(u.tap) + ' class="hv-lift-sm" style="border-radius:18px;background:#fff;padding:14px;box-shadow:0 3px 14px rgba(20,41,92,0.06);display:flex;align-items:center;gap:12px;cursor:pointer">' +
+              '<div style="width:38px;height:38px;flex:none;border-radius:13px;background:#F1F4FA;color:#6B7592;display:grid;place-items:center">' +
+                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 018 0v4"></path></svg>' +
+              '</div>' +
+              '<div style="flex:1;min-width:0">' +
+                '<div style="font-size:14.5px;font-weight:700;color:#5C688A">' + H(u.title) + '</div>' +
+                '<div style="font-size:12px;font-weight:600;color:#6B7592;margin-top:2px">' + H(u.note) + '</div>' +
+              '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+        (v.hasLockNote
+          ? '<div style="margin-top:10px;padding:11px 12px;border-radius:14px;background:#EEF4FF;font-size:12.5px;line-height:1.5;color:#1B4193;' + anim('lockNote', 'fadeIn 160ms ease') + '">' + H(v.lockNote) + '</div>'
+          : '') +
+      '</div>' +
+
+      '<div style="border-radius:18px;background:#EAEEF7;padding:14px;display:flex;flex-direction:column;gap:4px">' +
+        '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:#5C688A">ASSETS = LIABILITIES + STOCKHOLDERS’ EQUITY</span>' +
+        '<span style="font-size:11.5px;line-height:1.5;color:#5C688A">Keep the equation in balance after every transaction you post.</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function statCard(value, label) {
+    return '<div style="flex:1;border-radius:18px;background:#fff;padding:13px;box-shadow:0 3px 14px rgba(20,41,92,0.06)">' +
+      '<div style="font-size:20px;font-weight:800;font-variant-numeric:tabular-nums">' + H(value) + '</div>' +
+      '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#6B7592;margin-top:2px">' + H(label) + '</div>' +
+    '</div>';
+  }
+
+  /* ── App bar ─────────────────────────────────────────────────────────── */
+  function appBar(v) {
+    return '' +
+    '<div style="flex:none;padding:var(--hdr-top) 20px 18px;background:linear-gradient(158deg,#2A5DC4 0%,#1B4193 45%,#15316E 100%);color:#fff;border-radius:0 0 26px 26px;box-shadow:0 10px 26px rgba(19,44,104,0.24)">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">' +
+        '<div style="display:flex;align-items:center;gap:9px">' +
+          '<button' + act(v.goHomeScreen) + ' class="hv-glass" aria-label="Back to home" style="width:28px;height:28px;border:0;border-radius:9px;background:rgba(255,255,255,0.16);color:#fff;font-size:14px;font-weight:700;cursor:pointer">‹</button>' +
+          '<span style="font-size:13.5px;font-weight:600;letter-spacing:0.02em;color:rgba(255,255,255,0.9)">LO 2.1 Practice</span>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:8px">' +
+          '<span style="padding:4px 10px;border-radius:999px;background:rgba(255,255,255,0.16);font-size:11px;font-weight:700;letter-spacing:0.08em">' + H(v.modeLabel) + '</span>' +
+          '<button' + act(v.toggleMenu) + ' class="hv-glass" aria-label="Session menu" style="width:30px;height:30px;border-radius:10px;border:0;background:rgba(255,255,255,0.16);color:#fff;display:grid;place-items:center;cursor:pointer">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="margin-top:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">' +
+        '<div>' +
+          '<div style="font-size:11.5px;font-weight:600;letter-spacing:0.1em;color:rgba(255,255,255,0.68)">TOTAL ASSETS</div>' +
+          '<div style="font-size:33px;font-weight:800;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.15">' + H(v.totalAssets) + '</div>' +
+        '</div>' +
+        '<span style="' + css(v.balanceChip) + '">' + H(v.balanceNote) + '</span>' +
+      '</div>' +
+
+      '<div style="margin-top:14px;display:flex;align-items:center;gap:10px">' +
+        '<div style="flex:1;padding:9px 12px;border-radius:14px;background:rgba(255,255,255,0.13)">' +
+          '<div style="font-size:10.5px;font-weight:600;letter-spacing:0.08em;color:rgba(255,255,255,0.66)">LIABILITIES</div>' +
+          '<div style="font-size:16.5px;font-weight:700;font-variant-numeric:tabular-nums">' + H(v.totalLiab) + '</div>' +
+        '</div>' +
+        '<span style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.6)">+</span>' +
+        '<div style="flex:1;padding:9px 12px;border-radius:14px;background:rgba(255,255,255,0.13)">' +
+          '<div style="font-size:10.5px;font-weight:600;letter-spacing:0.08em;color:rgba(255,255,255,0.66)">EQUITY</div>' +
+          '<div style="font-size:16.5px;font-weight:700;font-variant-numeric:tabular-nums">' + H(v.totalEquity) + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="margin-top:16px;display:flex;gap:5px;padding:4px;border-radius:999px;background:rgba(255,255,255,0.13)">' +
+        '<div' + act(v.goLesson) + ' style="' + css(v.pillLesson) + '">Lesson</div>' +
+        '<div' + act(v.goWork) + ' style="' + css(v.pillWork) + '">Worksheet</div>' +
+        '<div' + act(v.goOut) + ' style="' + css(v.pillOut) + '">Statements</div>' +
+      '</div>' +
+    '</div>' +
+
+    (v.menuOpen
+      ? '<div style="position:absolute;top:88px;right:18px;z-index:90;width:214px;border-radius:16px;background:#fff;padding:6px;box-shadow:0 18px 40px rgba(17,35,84,0.24);' + anim('menu', 'fadeIn 140ms ease') + '">' +
+          '<div style="padding:9px 12px 6px;font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592">SESSION</div>' +
+          '<button' + act(v.startGuided) + ' class="hv-menu" style="width:100%;text-align:left;padding:11px 12px;border:0;border-radius:11px;background:transparent;color:#17255A;font-size:13.5px;font-weight:600;cursor:pointer">Restart guided walkthrough</button>' +
+          '<button' + act(v.startIndependent) + ' class="hv-menu" style="width:100%;text-align:left;padding:11px 12px;border:0;border-radius:11px;background:transparent;color:#17255A;font-size:13.5px;font-weight:600;cursor:pointer">Restart independent practice</button>' +
+          '<button' + act(v.closeMenu) + ' class="hv-menu" style="width:100%;text-align:left;padding:11px 12px;border:0;border-radius:11px;background:transparent;color:#5C688A;font-size:13.5px;font-weight:600;cursor:pointer">Close</button>' +
+        '</div>'
+      : '');
+  }
+
+  /* ── Lesson tab ──────────────────────────────────────────────────────── */
+  function lessonTab(v) {
+    return '' +
+    '<div data-sk="lessonScroll" style="flex:1;overflow-y:auto;padding:16px 16px 22px;display:flex;flex-direction:column;gap:14px">' +
+
+      '<div style="border-radius:20px;background:#fff;padding:18px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+        '<div style="display:flex;align-items:center;gap:8px;color:#2C63CE">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 5h8a2 2 0 012 2v12a2 2 0 00-2-2H2zM22 5h-8a2 2 0 00-2 2v12a2 2 0 012-2h8z"></path></svg>' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em">LEARN · LO 2.1</span>' +
+        '</div>' +
+        '<h3 style="font-family:inherit;font-size:26px;font-weight:800;letter-spacing:-0.02em;margin:8px 0 10px;text-wrap:pretty">The accounting equation</h3>' +
+        '<p style="font-size:14.5px;line-height:1.65;margin:0 0 14px;color:#43506F">Every business owns things and owes things. What it owns are its <strong style="color:#17255A">assets</strong>; the claims against them belong either to creditors — <strong style="color:#17255A">liabilities</strong> — or to the owners, as <strong style="color:#17255A">stockholders’ equity</strong>.</p>' +
+
+        '<div style="display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;padding:14px 10px;border-radius:16px;background:#F1F5FD">' +
+          '<span style="font-size:14px;font-weight:700;color:#17255A">ASSETS</span>' +
+          '<span style="font-size:15px;font-weight:800;color:#2C63CE">=</span>' +
+          '<span style="font-size:14px;font-weight:700;color:#17255A">LIABILITIES</span>' +
+          '<span style="font-size:15px;font-weight:800;color:#2C63CE">+</span>' +
+          '<span style="font-size:14px;font-weight:700;color:#17255A">EQUITY</span>' +
+        '</div>' +
+
+        '<p style="font-size:14.5px;line-height:1.65;margin:14px 0 12px;color:#43506F">The two sides stay equal after every transaction — which is why each transaction moves at least two accounts. An increase on one side is always matched somewhere else.</p>' +
+        '<p style="font-size:14.5px;line-height:1.65;margin:0;color:#43506F">Inside equity, <strong style="color:#17255A">revenues</strong> raise retained earnings while <strong style="color:#17255A">expenses</strong> and <strong style="color:#17255A">dividends</strong> lower it, so equity reads Common stock + Revenues − Expenses − Dividends.</p>' +
+      '</div>' +
+
+      '<div style="border-radius:20px;background:#fff;padding:18px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em;color:#2C63CE">THE FACTS</span>' +
+          '<span style="font-size:11.5px;font-weight:600;color:#6B7592;font-variant-numeric:tabular-nums">Month ended Jul 31, 2025</span>' +
+        '</div>' +
+        '<p style="font-size:14px;line-height:1.6;margin:0 0 12px;color:#43506F">' + H(v.companyName) + ' was incorporated on July 1, 2025. During its first month of operations, these transactions occurred.</p>' +
+        '<div style="display:flex;flex-direction:column;gap:8px">' +
+          v.factList.map(function (f) {
+            return '<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border-radius:13px;background:#F7F9FD">' +
+              '<span style="width:20px;height:20px;flex:none;border-radius:7px;background:#E3EBFB;color:#2C63CE;display:grid;place-items:center;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums">' + H(f.n) + '</span>' +
+              '<span style="font-size:13.5px;line-height:1.5;font-variant-numeric:tabular-nums;color:#43506F">' + H(f.text) + '</span>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+
+      '<div style="border-radius:20px;background:#fff;padding:18px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px">' +
+          '<div style="display:flex;align-items:center;gap:8px;color:#2C63CE">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg>' +
+            '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em">YOUR TASK</span>' +
+          '</div>' +
+          '<span style="font-size:11.5px;font-weight:700;color:#6B7592;font-variant-numeric:tabular-nums">' + H(v.progressCount) + '</span>' +
+        '</div>' +
+        '<p style="font-size:14px;line-height:1.6;margin:0 0 12px;color:#43506F">Post all seven transactions in the worksheet, then read the statements they produce.</p>' +
+        '<div style="display:flex;flex-direction:column;gap:9px">' +
+          v.checklist.map(function (c) {
+            return '<div style="display:flex;gap:10px;align-items:flex-start">' +
+              '<span style="' + css(c.markStyle) + '">' + H(c.mark) + '</span>' +
+              '<span style="font-size:13.5px;line-height:1.5;font-variant-numeric:tabular-nums;color:#43506F">' + H(c.text) + '</span>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:flex;flex-direction:column;gap:11px">' +
+        '<div' + act(v.startGuided) + ' class="hv-lift" style="border-radius:20px;background:#fff;padding:16px;cursor:pointer;box-shadow:0 4px 18px rgba(20,41,92,0.07);display:flex;gap:13px;align-items:center">' +
+          '<div style="width:42px;height:42px;flex:none;border-radius:14px;background:#E3EBFB;color:#2C63CE;display:grid;place-items:center">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M5 8l3 3M19 8l-3 3M12 22a7 7 0 100-14 7 7 0 000 14zM12 12v3"></path></svg>' +
+          '</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div style="font-size:16px;font-weight:700">Guided walkthrough</div>' +
+            '<div style="font-size:12.5px;line-height:1.45;color:#5C688A">Every entry checked, hints on call</div>' +
+          '</div>' +
+          '<span style="font-size:19px;font-weight:700;color:#2C63CE">›</span>' +
+        '</div>' +
+        '<div' + act(v.startIndependent) + ' class="hv-lift" style="border-radius:20px;background:#fff;padding:16px;cursor:pointer;box-shadow:0 4px 18px rgba(20,41,92,0.07);display:flex;gap:13px;align-items:center">' +
+          '<div style="width:42px;height:42px;flex:none;border-radius:14px;background:#E9F7F0;color:#16A96D;display:grid;place-items:center">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6M9 15l2 2 4-4"></path></svg>' +
+          '</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div style="font-size:16px;font-weight:700">Independent practice</div>' +
+            '<div style="font-size:12.5px;line-height:1.45;color:#5C688A">No feedback until you submit</div>' +
+          '</div>' +
+          '<span style="font-size:19px;font-weight:700;color:#16A96D">›</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div style="flex:none;padding:12px 16px var(--bar-bottom);background:#fff;box-shadow:0 -8px 22px rgba(20,41,92,0.08)">' +
+      '<button' + act(v.continueToWork) + ' class="hv-grad-blue" style="width:100%;height:50px;border:0;border-radius:16px;background:linear-gradient(150deg,#2C63CE,#1B4193);color:#fff;font-size:15.5px;font-weight:700;letter-spacing:0.01em;cursor:pointer;box-shadow:0 8px 18px rgba(28,60,140,0.28)">' + H(v.continueLabel) + '</button>' +
+    '</div>';
+  }
+
+  /* ── Worksheet tab ───────────────────────────────────────────────────── */
+  function worksheetTab(v) {
+    return '' +
+    /* Instructions header */
+    '<div style="flex:none;background:#fff;box-shadow:0 6px 18px rgba(20,41,92,0.07);z-index:5">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px 8px">' +
+        '<div style="display:flex;align-items:center;gap:8px;color:#2C63CE">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg>' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em">INSTRUCTIONS</span>' +
+        '</div>' +
+        '<button' + act(v.toggleInstr) + ' class="hv-link" style="border:0;background:transparent;color:#5C688A;font-size:12.5px;font-weight:700;cursor:pointer">' + H(v.instrLabel) + '</button>' +
+      '</div>' +
+      (v.instrOpen ? '<div>' +
+        '<div style="display:flex;gap:11px;align-items:flex-start;padding:0 16px 10px">' +
+          '<span style="' + css(v.instrMarkStyle) + '">' + H(v.instrMark) + '</span>' +
+          '<span style="font-size:14.5px;line-height:1.5;font-weight:500;font-variant-numeric:tabular-nums;text-wrap:pretty;color:#2A3557">' + H(v.instrText) + '</span>' +
+        '</div>' +
+        (v.showJump
+          ? '<div style="padding:0 16px 10px"><button' + act(v.jumpToStep) + ' class="hv-chip2" style="width:100%;height:38px;border:0;border-radius:12px;background:#E3EBFB;color:#1B4193;font-size:13px;font-weight:700;cursor:pointer">' + H(v.jumpLabel) + '</button></div>'
+          : '') +
+        (v.offCurrent
+          ? '<div style="padding:0 16px 10px"><button' + act(v.backToCurrent) + ' class="hv-chip2" style="width:100%;height:38px;border:0;border-radius:12px;background:#E3EBFB;color:#1B4193;font-size:13px;font-weight:700;cursor:pointer">Back to the step you’re on</button></div>'
+          : '') +
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:0 10px 10px">' +
+          '<button' + act(v.instrPrev) + ' class="hv-nav" aria-label="Previous transaction" style="width:32px;height:28px;border:0;border-radius:9px;background:#F1F4FA;color:#5C688A;font-size:15px;font-weight:700;cursor:pointer">‹</button>' +
+          '<span style="font-size:12px;font-weight:700;color:#6B7592;font-variant-numeric:tabular-nums">' + H(v.instrCount) + '</span>' +
+          '<button' + act(v.instrNext) + ' class="hv-nav" aria-label="Next transaction" style="width:32px;height:28px;border:0;border-radius:9px;background:#F1F4FA;color:#5C688A;font-size:15px;font-weight:700;cursor:pointer">›</button>' +
+        '</div>' +
+      '</div>' : '') +
+      (v.showMeter
+        ? '<div style="height:4px;background:#EDF1F9;position:relative"><div style="' + css(v.meterFill) + '"></div></div>'
+        : '') +
+    '</div>' +
+
+    /* Scroll area */
+    '<div data-sk="workScroll" style="flex:1;overflow-y:auto;padding:14px 0 10px">' +
+
+      (v.hasCurrentTx ? '<div style="padding:0 16px 14px">' +
+        '<div style="border-radius:20px;background:#fff;padding:15px;box-shadow:0 4px 18px rgba(20,41,92,0.07);display:flex;flex-direction:column;gap:10px">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">' +
+            '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.09em;color:#2C63CE;font-variant-numeric:tabular-nums">' + H(v.stepLabel) + '</span>' +
+            '<span style="padding:4px 10px;border-radius:999px;background:#F1F4FA;font-size:11.5px;font-weight:700;color:#5C688A;font-variant-numeric:tabular-nums">' + H(v.entryProgress) + '</span>' +
+          '</div>' +
+          (v.instrClosed
+            ? '<p style="margin:0;font-size:15.5px;line-height:1.5;font-weight:500;font-variant-numeric:tabular-nums;text-wrap:pretty">' + H(v.txText) + '</p>'
+            : '') +
+          (v.hintVisible
+            ? '<div style="padding:12px 13px;border-radius:14px;background:#EEF4FF;' + anim('hint', 'fadeIn 200ms ease') + '">' +
+                '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#2C63CE;margin-bottom:4px">HINT</div>' +
+                '<p style="margin:0;font-size:13.5px;line-height:1.55;color:#43506F">' + H(v.txHint) + '</p>' +
+              '</div>'
+            : '') +
+          (v.noEntries
+            ? '<p style="margin:0;font-size:13.5px;line-height:1.5;color:#6B7592">No entries yet — tap <strong style="color:#5C688A">Add entry</strong> to record the first side of this transaction.</p>'
+            : '') +
+          '<div style="display:flex;flex-direction:column;gap:8px">' +
+            v.pendingChips.map(function (chip, i) {
+              return '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:14px;background:#F7F9FD;' + anim('chip' + i + chip.name + chip.amt, 'chipIn 180ms ease') + '">' +
+                '<div style="display:flex;align-items:center;gap:10px;min-width:0">' +
+                  '<span style="' + css(chip.iconStyle) + '">' + H(chip.icon) + '</span>' +
+                  '<span style="font-size:14px;font-weight:600">' + H(chip.name) + '</span>' +
+                '</div>' +
+                '<span style="' + css(chip.amtStyle) + '">' + H(chip.amt) + '</span>' +
+              '</div>';
+            }).join('') +
+          '</div>' +
+          '<div style="display:flex;gap:14px;align-items:center">' +
+            (v.showHintBtn ? '<button' + act(v.toggleHint) + ' style="border:0;background:transparent;padding:0;color:#2C63CE;font-size:13px;font-weight:700;cursor:pointer">' + H(v.hintBtnLabel) + '</button>' : '') +
+            (v.canUndo ? '<button' + act(v.undoEntry) + ' style="border:0;background:transparent;padding:0;color:#5C688A;font-size:13px;font-weight:700;cursor:pointer">Undo last entry</button>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div>' : '') +
+
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 16px 10px">' +
+        '<span style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em">Account balances</span>' +
+        '<div style="display:flex;gap:3px;padding:3px;border-radius:999px;background:#E9EDF6">' +
+          '<div' + act(v.setStack) + ' style="' + css(v.pillStack) + '">Accounts</div>' +
+          '<div' + act(v.setGrid) + ' style="' + css(v.pillGrid) + '">Grid</div>' +
+        '</div>' +
+      '</div>' +
+
+      (v.isStack ? stackView(v) : '') +
+      (v.isGrid ? gridView(v) : '') +
+
+      '<div style="margin:16px 16px 0;padding:13px 14px;border-radius:16px;background:#EAEEF7;display:flex;flex-direction:column;gap:4px">' +
+        '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:#5C688A">ASSETS = LIABILITIES + STOCKHOLDERS’ EQUITY</span>' +
+        '<span style="font-size:11.5px;line-height:1.5;color:#5C688A">Revenues increase retained earnings; expenses and dividends decrease it. Every transaction touches at least two accounts.</span>' +
+      '</div>' +
+    '</div>' +
+
+    /* Action bar */
+    '<div style="flex:none;padding:12px 16px var(--bar-bottom);background:#fff;box-shadow:0 -8px 22px rgba(20,41,92,0.08)">' +
+      (v.feedbackOk
+        ? '<div style="display:flex;gap:10px;align-items:flex-start;padding:11px 12px;margin-bottom:11px;border-radius:14px;background:#E9F7F0;' + anim('fbok' + v.feedbackText, 'fadeIn 160ms ease') + '">' +
+            '<span style="width:20px;height:20px;flex:none;border-radius:999px;background:#16A96D;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700">✓</span>' +
+            '<span style="font-size:13px;line-height:1.5;color:#1C6B4A">' + H(v.feedbackText) + '</span>' +
+          '</div>'
+        : '') +
+      (v.feedbackErr
+        ? '<div style="display:flex;gap:10px;align-items:flex-start;padding:11px 12px;margin-bottom:11px;border-radius:14px;background:#FDECEB;' + anim('fberr' + v.feedbackText, 'nudge 260ms ease') + '">' +
+            '<span style="width:20px;height:20px;flex:none;border-radius:999px;background:#D9534F;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700">✕</span>' +
+            '<span style="font-size:13px;line-height:1.5;color:#8E3A37">' + H(v.feedbackText) + '</span>' +
+          '</div>'
+        : '') +
+      '<div style="display:flex;gap:9px">' +
+        (v.showAddEntry ? '<button' + act(v.openSheet) + ' class="hv-grad-blue" style="flex:1;height:50px;border:0;border-radius:16px;background:linear-gradient(150deg,#2C63CE,#1B4193);color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(28,60,140,0.28)">+ Add entry</button>' : '') +
+        (v.showPost ? '<button' + act(v.postTx) + ' class="hv-grad-green" style="flex:1;height:50px;border:0;border-radius:16px;background:linear-gradient(150deg,#19B979,#128A58);color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(18,138,88,0.26)">' + H(v.postLabel) + '</button>' : '') +
+        (v.showSubmit ? '<button' + act(v.submitWork) + ' class="hv-grad-green" style="flex:1;height:50px;border:0;border-radius:16px;background:linear-gradient(150deg,#19B979,#128A58);color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(18,138,88,0.26)">' + H(v.submitLabel) + '</button>' : '') +
+        (v.showBackToResults ? '<button' + act(v.backToResults) + ' class="hv-grad-blue" style="flex:1;height:50px;border:0;border-radius:16px;background:linear-gradient(150deg,#2C63CE,#1B4193);color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(28,60,140,0.28)">Back to statements</button>' : '') +
+      '</div>' +
+    '</div>' +
+
+    (v.sheetOpen ? entrySheet(v) : '');
+  }
+
+  function stackView(v) {
+    return '<div style="padding:0 16px 4px;display:flex;flex-direction:column;gap:14px">' +
+      v.balGroups.map(function (g) {
+        return '<div style="border-radius:20px;background:#fff;padding:15px 16px 6px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:9px">' +
+            '<div style="display:flex;align-items:center;gap:8px">' +
+              '<span style="font-size:14px;font-weight:800;color:#2C63CE;min-width:9px">' + H(g.mark) + '</span>' +
+              '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em;color:#5C688A">' + H(g.label) + '</span>' +
+            '</div>' +
+            '<span style="font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-0.01em">' + H(g.total) + '</span>' +
+          '</div>' +
+          g.rows.map(function (r) {
+            return '<div style="' + css(r.style) + '"><span>' + H(r.label) + '</span><span>' + H(r.amt) + '</span></div>';
+          }).join('') +
+        '</div>';
+      }).join('') +
+
+      (v.hasTxCards
+        ? '<div style="margin-top:2px">' +
+            '<div style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em;margin-bottom:9px">Posted transactions</div>' +
+            '<div style="display:flex;flex-direction:column;gap:9px">' +
+              v.txCards.map(function (t) {
+                return '<div style="border-radius:18px;background:#fff;padding:13px 14px;box-shadow:0 3px 14px rgba(20,41,92,0.06);display:flex;flex-direction:column;gap:7px">' +
+                  '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">' +
+                    '<span style="padding:3px 9px;border-radius:999px;background:#EEF2FB;font-size:11.5px;font-weight:700;color:#2C63CE;font-variant-numeric:tabular-nums">' + H(t.n) + '</span>' +
+                    '<div style="display:flex;align-items:center;gap:9px">' +
+                      '<span style="font-size:12px;font-weight:600;color:#6B7592">' + H(t.memo) + '</span>' +
+                      (t.canEdit ? '<button' + act(t.edit) + ' class="hv-chip3" style="border:0;border-radius:8px;padding:4px 9px;background:#F1F4FA;color:#2C63CE;font-size:11.5px;font-weight:700;cursor:pointer">Edit</button>' : '') +
+                    '</div>' +
+                  '</div>' +
+                  t.lines.map(function (l) {
+                    return '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14px;font-variant-numeric:tabular-nums">' +
+                      '<span style="color:#5C688A">' + H(l.label) + '</span>' +
+                      '<span style="' + css(l.style) + '">' + H(l.amt) + '</span>' +
+                    '</div>';
+                  }).join('') +
+                '</div>';
+              }).join('') +
+            '</div>' +
+          '</div>'
+        : '') +
+    '</div>';
+  }
+
+  function gridView(v) {
+    var cells = function (r, cellStyle, memoStyle, stickyBg, stickyColor) {
+      return '<div style="position:sticky;left:0;background:' + stickyBg + ';padding:8px 6px;font-size:12px;font-variant-numeric:tabular-nums;color:' + stickyColor + ';font-weight:600;border-right:1px solid #E7EBF3;z-index:3">' + H(r.n) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.cash) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.ar) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.equip) + '</div>' +
+        '<div style="' + cellStyle + ';border-left:1px solid #E7EBF3">' + H(r.np) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.ap) + '</div>' +
+        '<div style="' + cellStyle + ';border-left:1px solid #E7EBF3">' + H(r.cs) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.rev) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.exp) + '</div>' +
+        '<div style="' + cellStyle + '">' + H(r.div) + '</div>' +
+        '<div style="' + memoStyle + '">' + H(r.memo) + '</div>';
+    };
+
+    return '<div data-sk="gridScroll" style="overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch">' +
+      '<div style="min-width:836px;padding:0 16px">' +
+
+        '<div style="' + GRIDCOLS + '">' +
+          '<div></div>' +
+          '<div style="grid-column:span 3;padding:0 8px 3px;text-align:center;font-weight:700;font-size:10.5px;letter-spacing:0.12em;color:#5C688A;border-bottom:1px solid #C7CFE0">ASSETS</div>' +
+          '<div style="grid-column:span 2;padding:0 8px 3px;text-align:center;font-weight:700;font-size:10.5px;letter-spacing:0.12em;color:#5C688A;border-bottom:1px solid #C7CFE0">= LIABILITIES</div>' +
+          '<div style="grid-column:span 4;padding:0 8px 3px;text-align:center;font-weight:700;font-size:10.5px;letter-spacing:0.12em;color:#5C688A;border-bottom:1px solid #C7CFE0">+ STOCKHOLDERS’ EQUITY</div>' +
+          '<div></div>' +
+        '</div>' +
+
+        '<div style="' + GRIDCOLS + 'border-bottom:1px solid #C7CFE0">' +
+          '<div style="position:sticky;left:0;background:#F3F5FA;padding:5px 6px;font-size:9.5px;letter-spacing:0.06em;text-transform:uppercase;color:#5C688A;font-weight:600;z-index:3">Trans.</div>' +
+          '<div style="' + THCELL + '">Cash</div>' +
+          '<div style="' + THCELL + '">Accts. Rec.</div>' +
+          '<div style="' + THCELL + '">Equip.</div>' +
+          '<div style="' + THCELL + ';border-left:1px solid #E7EBF3">Notes Pay.</div>' +
+          '<div style="' + THCELL + '">Accts. Pay.</div>' +
+          '<div style="' + THCELL + ';border-left:1px solid #E7EBF3">Com. Stock</div>' +
+          '<div style="' + THCELL + '">Rev.</div>' +
+          '<div style="' + THCELL + '">Exp.</div>' +
+          '<div style="' + THCELL + '">Div.</div>' +
+          '<div style="padding:5px 10px;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#5C688A;font-weight:600">Account titles</div>' +
+        '</div>' +
+
+        v.ledgerRows.map(function (r) {
+          return '<div style="' + GRIDCOLS + 'border-bottom:1px solid #EDF1F9">' +
+            cells(r, TDCELL, 'padding:8px 10px;font-size:11.5px;line-height:1.35;color:#5C688A;font-weight:600', '#F3F5FA', '#6B7592') +
+          '</div>';
+        }).join('') +
+
+        (v.hasPendingRow
+          ? '<div style="' + GRIDCOLS + 'border-bottom:1px solid #2C63CE;background:#EAF1FE;' + anim('pendingRow', 'fadeIn 180ms ease') + '">' +
+              cells({ n: v.pendingRow.n, cash: v.pendingRow.cash, ar: v.pendingRow.ar, equip: v.pendingRow.equip,
+                      np: v.pendingRow.np, ap: v.pendingRow.ap, cs: v.pendingRow.cs, rev: v.pendingRow.rev,
+                      exp: v.pendingRow.exp, div: v.pendingRow.div, memo: 'posting…' },
+                    TDCELL, 'padding:8px 10px;font-size:11.5px;line-height:1.35;color:#1B4193;font-weight:600', '#EAF1FE', '#1B4193') +
+            '</div>'
+          : '') +
+
+        '<div style="' + GRIDCOLS + 'border-top:1px solid #C7CFE0;border-bottom:3px double #C7CFE0">' +
+          '<div style="position:sticky;left:0;background:#F3F5FA;padding:9px 6px;font-weight:700;font-size:10.5px;letter-spacing:0.08em;border-right:1px solid #E7EBF3;z-index:3">BAL.</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.cash) + '</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.ar) + '</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.equip) + '</div>' +
+          '<div style="' + BALCELL + ';border-left:1px solid #E7EBF3">' + H(v.balRow.np) + '</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.ap) + '</div>' +
+          '<div style="' + BALCELL + ';border-left:1px solid #E7EBF3">' + H(v.balRow.cs) + '</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.rev) + '</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.exp) + '</div>' +
+          '<div style="' + BALCELL + '">' + H(v.balRow.div) + '</div>' +
+          '<div style="padding:9px 10px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#6B7592;font-weight:600">' + H(v.balRow.memo) + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div style="padding:8px 16px 0;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#6B7592">Swipe the table sideways to see every column</div>';
+  }
+
+  /* ── Entry sheet ─────────────────────────────────────────────────────── */
+  function entrySheet(v) {
+    return '<div style="position:absolute;inset:0;z-index:80">' +
+      '<div' + act(v.closeSheet) + ' style="position:absolute;inset:0;background:rgba(14,26,58,0.45);' + anim('scrim', 'fadeIn 160ms ease') + '"></div>' +
+      '<div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -14px 40px rgba(14,26,58,0.24);' + anim('sheet', 'sheetUp 240ms cubic-bezier(0.22,0.7,0.25,1)') + 'padding:12px 18px var(--bar-bottom)">' +
+        '<div style="width:40px;height:4px;border-radius:999px;background:#E1E6F0;margin:0 auto 12px"></div>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">' +
+          '<div style="display:flex;flex-direction:column;gap:2px">' +
+            '<span style="font-size:17px;font-weight:700;letter-spacing:-0.01em">' + H(v.sheetTitle) + '</span>' +
+            '<span style="font-size:11.5px;font-weight:600;color:#6B7592;font-variant-numeric:tabular-nums">' + H(v.sheetSub) + '</span>' +
+          '</div>' +
+          '<button' + act(v.closeSheet) + ' class="hv-nav" aria-label="Close" style="width:32px;height:32px;border:0;border-radius:11px;background:#F1F4FA;color:#5C688A;font-size:13px;font-weight:700;cursor:pointer">✕</button>' +
+        '</div>' +
+
+        (v.pickingAccount
+          ? '<div style="display:flex;flex-direction:column;gap:13px">' +
+              v.accountGroups.map(function (g) {
+                return '<div>' +
+                  '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592;margin-bottom:7px">' + H(g.label) + '</div>' +
+                  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+                    g.cols.map(function (c) {
+                      return '<button' + act(c.pick) + ' class="hv-chip" style="height:46px;border:0;border-radius:14px;background:#F4F7FC;color:#2A3557;font-size:13.5px;font-weight:600;text-align:left;padding:0 12px;cursor:pointer">' + H(c.full) + '</button>';
+                    }).join('') +
+                  '</div>' +
+                '</div>';
+              }).join('') +
+            '</div>'
+          : '') +
+
+        (v.enteringAmount
+          ? '<div>' +
+              '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border-radius:18px;background:#F4F7FC;margin-bottom:12px">' +
+                '<div style="display:flex;flex-direction:column;gap:2px">' +
+                  '<span style="font-size:10.5px;font-weight:700;letter-spacing:0.1em;color:#6B7592">ACCOUNT</span>' +
+                  '<span style="font-size:15.5px;font-weight:700">' + H(v.sheetColName) + '</span>' +
+                '</div>' +
+                '<span style="' + css(v.amountStyle) + '">' + H(v.amountDisplay) + '</span>' +
+              '</div>' +
+
+              '<div style="display:flex;gap:8px;margin-bottom:10px">' +
+                '<button' + act(v.setPlus) + ' style="' + css(v.plusStyle) + '">Increase +</button>' +
+                '<button' + act(v.setMinus) + ' style="' + css(v.minusStyle) + '">Decrease −</button>' +
+              '</div>' +
+              '<p style="margin:0 0 12px;font-size:12px;line-height:1.5;color:#6B7592">Expenses and dividends reduce retained earnings — enter them as decreases.</p>' +
+
+              '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">' +
+                v.keys.map(function (k) {
+                  return '<button' + act(k.press) + ' class="hv-chip" style="height:50px;border:0;border-radius:14px;background:#F4F7FC;color:#17255A;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;cursor:pointer">' + H(k.label) + '</button>';
+                }).join('') +
+              '</div>' +
+
+              '<button' + act(v.submitEntry) + (v.entryDisabled ? ' disabled' : '') + ' style="' + css(v.postEntryStyle) + '">Post entry</button>' +
+              '<button' + act(v.backToAccounts) + ' style="width:100%;margin-top:7px;border:0;background:transparent;color:#5C688A;font-size:13px;font-weight:700;cursor:pointer">← Choose a different account</button>' +
+            '</div>'
+          : '') +
+      '</div>' +
+    '</div>';
+  }
+
+  /* ── Statements tab ──────────────────────────────────────────────────── */
+  function summaryTab(v) {
+    return '<div data-sk="outScroll" style="flex:1;overflow-y:auto">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 6px">' +
+        '<div style="display:flex;align-items:center;gap:8px;color:#2C63CE">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l3.5-4 3 3L18 8"></path></svg>' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em">OUTPUT</span>' +
+        '</div>' +
+        '<span style="font-size:11.5px;font-weight:700;color:#6B7592;font-variant-numeric:tabular-nums">' + H(v.progressCount) + '</span>' +
+      '</div>' +
+      '<div style="padding:0 16px;font-size:12.5px;line-height:1.5;color:#5C688A">' + H(v.statementsNote) + '</div>' +
+
+      '<div style="padding:14px 16px 20px;display:flex;flex-direction:column;gap:16px">' +
+
+        /* Income statement */
+        '<div style="border-radius:20px;background:#fff;padding:16px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+          stmtHead(v.companyName, 'Income Statement', 'For the Month Ended July 31, 2025') +
+          '<div style="display:flex;flex-direction:column;gap:7px;padding-top:12px">' +
+            '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592">REVENUES</div>' +
+            stmtLine('Service revenue', v.isRevAmt) +
+            '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592;margin-top:5px">EXPENSES</div>' +
+            v.isExpLines.map(function (e) { return stmtLine(e.label, e.amt); }).join('') +
+            '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14.5px;border-top:1px solid #EDF1F9;padding-top:7px">' +
+              '<span style="color:#43506F">Total expenses</span>' +
+              '<span style="font-weight:600;font-variant-numeric:tabular-nums">' + H(v.isExpTotal) + '</span>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:14px;background:#F1F5FD;margin-top:6px">' +
+              '<span style="font-size:14.5px;font-weight:700">' + H(v.isNetLabel) + '</span>' +
+              '<span style="' + css(v.isNetStyle) + '">' + H(v.isNet) + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        /* Retained earnings */
+        '<div style="border-radius:20px;background:#fff;padding:16px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+          stmtHead(v.companyName, 'Retained Earnings', 'For the Month Ended July 31, 2025') +
+          '<div style="display:flex;flex-direction:column;gap:8px;padding-top:12px">' +
+            stmtLine('Retained earnings, July 1', '$0') +
+            '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14.5px">' +
+              '<span style="color:#43506F">' + H(v.reNetLabel) + '</span><span style="' + css(v.reNetStyle) + '">' + H(v.reNet) + '</span>' +
+            '</div>' +
+            '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14.5px;border-bottom:1px solid #EDF1F9;padding-bottom:8px">' +
+              '<span style="color:#43506F">Less: Dividends</span><span style="font-weight:600;font-variant-numeric:tabular-nums">' + H(v.reDiv) + '</span>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:14px;background:#F1F5FD">' +
+              '<span style="font-size:14px;font-weight:700">Retained earnings, July 31</span>' +
+              '<span style="font-size:19px;font-weight:800;letter-spacing:-0.01em;font-variant-numeric:tabular-nums">' + H(v.reEnd) + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        /* Balance sheet */
+        '<div style="border-radius:20px;background:#fff;padding:16px;box-shadow:0 4px 18px rgba(20,41,92,0.07)">' +
+          stmtHead(v.companyName, 'Balance Sheet', 'July 31, 2025') +
+          '<div style="display:flex;flex-direction:column;gap:8px;padding-top:12px">' +
+            '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592">ASSETS</div>' +
+            v.bsAssets.map(function (a) { return stmtLine(a.label, a.amt); }).join('') +
+            '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:14px;background:#F1F5FD">' +
+              '<span style="font-size:14px;font-weight:700">Total assets</span>' +
+              '<span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;font-variant-numeric:tabular-nums">' + H(v.bsAssetTotal) + '</span>' +
+            '</div>' +
+            '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592;margin-top:6px">LIABILITIES</div>' +
+            v.bsLiab.map(function (l) { return stmtLine(l.label, l.amt); }).join('') +
+            '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14.5px;border-top:1px solid #EDF1F9;padding-top:8px">' +
+              '<span style="color:#43506F">Total liabilities</span>' +
+              '<span style="font-weight:600;font-variant-numeric:tabular-nums">' + H(v.bsLiabTotal) + '</span>' +
+            '</div>' +
+            '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#6B7592;margin-top:6px">STOCKHOLDERS’ EQUITY</div>' +
+            v.bsEquity.map(function (q) { return stmtLine(q.label, q.amt); }).join('') +
+            '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14.5px;border-top:1px solid #EDF1F9;padding-top:8px">' +
+              '<span style="color:#43506F">Total stockholders’ equity</span>' +
+              '<span style="font-weight:600;font-variant-numeric:tabular-nums">' + H(v.bsEquityTotal) + '</span>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:14px;background:#17255A;color:#fff;margin-top:6px">' +
+              '<span style="font-size:13.5px;font-weight:700">Total liabilities and equity</span>' +
+              '<span style="font-size:18px;font-weight:800;letter-spacing:-0.01em;font-variant-numeric:tabular-nums">' + H(v.bsTotal) + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        /* Session summary */
+        '<div style="border-radius:20px;background:#fff;padding:16px;box-shadow:0 4px 18px rgba(20,41,92,0.07);display:flex;flex-direction:column;gap:11px">' +
+          '<span style="font-size:11.5px;font-weight:700;letter-spacing:0.1em;color:#2C63CE">YOUR SESSION</span>' +
+          '<p style="margin:0;font-size:13.5px;line-height:1.55;color:#43506F">' + H(v.resultBlurb) + '</p>' +
+          '<div style="display:flex;gap:8px">' +
+            miniStat(v.scoreValue, v.scoreLabel) + miniStat(v.secondValue, v.secondLabel) + miniStat(v.totalAssets, 'total assets') +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="padding:0 16px 24px">' +
+        (v.showReview
+          ? '<div style="font-size:15.5px;font-weight:700;letter-spacing:-0.01em;margin-bottom:9px">Transaction review</div>' +
+            '<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:20px">' +
+              v.reviewRows.map(function (r) {
+                return '<div style="' + css(r.boxStyle) + '">' +
+                  '<span style="' + css(r.markStyle) + '">' + H(r.mark) + '</span>' +
+                  '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">' +
+                    '<span style="font-size:13px;line-height:1.45;font-weight:500;font-variant-numeric:tabular-nums">' + H(r.text) + '</span>' +
+                    '<span style="font-size:12.5px;font-variant-numeric:tabular-nums;color:#5C688A">' + H(r.yours) + '</span>' +
+                    (r.showAnswer ? '<span style="font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;color:#2C63CE;padding-top:5px;border-top:1px solid #EDF1F9">' + H(r.answer) + '</span>' : '') +
+                  '</div>' +
+                '</div>';
+              }).join('') +
+            '</div>'
+          : '') +
+
+        '<button' + act(v.reviewTable) + ' class="hv-grad-blue" style="width:100%;height:50px;border:0;border-radius:16px;background:linear-gradient(150deg,#2C63CE,#1B4193);color:#fff;font-size:15.5px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px rgba(28,60,140,0.28)">Back to worksheet</button>' +
+        (v.graded ? '<button' + act(v.revise) + ' class="hv-green-soft" style="width:100%;height:46px;margin-top:9px;border:0;border-radius:16px;background:#E9F7F0;color:#12764F;font-size:14.5px;font-weight:700;cursor:pointer">Revise and resubmit</button>' : '') +
+        '<button' + act(v.restart) + ' class="hv-white" style="width:100%;height:46px;margin-top:9px;border:0;border-radius:16px;background:#fff;color:#2A3557;font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:0 3px 12px rgba(20,41,92,0.08)">Start over</button>' +
+        '<button' + act(v.switchMode) + ' style="width:100%;margin-top:10px;border:0;background:transparent;color:#2C63CE;font-size:13.5px;font-weight:700;cursor:pointer">' + H(v.switchLabel) + '</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function stmtHead(company, title, period) {
+    return '<div style="text-align:center;padding-bottom:12px;border-bottom:1px solid #EDF1F9">' +
+      '<div style="font-size:15px;font-weight:700">' + H(company) + '</div>' +
+      '<div style="font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2C63CE;margin-top:2px">' + H(title) + '</div>' +
+      '<div style="font-size:11.5px;color:#6B7592;margin-top:2px">' + H(period) + '</div>' +
+    '</div>';
+  }
+  function stmtLine(label, amt) {
+    return '<div style="display:flex;justify-content:space-between;gap:10px;font-size:14.5px">' +
+      '<span style="color:#43506F">' + H(label) + '</span>' +
+      '<span style="font-weight:600;font-variant-numeric:tabular-nums">' + H(amt) + '</span>' +
+    '</div>';
+  }
+  function miniStat(value, label) {
+    return '<div style="flex:1;padding:11px 12px;border-radius:14px;background:#F4F7FC">' +
+      '<div style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums">' + H(value) + '</div>' +
+      '<div style="font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#6B7592">' + H(label) + '</div>' +
+    '</div>';
+  }
+
+  /* ── Render driver ───────────────────────────────────────────────────── */
+  function render() {
+    /* Remember scroll offsets so a re-render does not jump the view. */
+    var scrolls = {};
+    Array.prototype.forEach.call(root.querySelectorAll('[data-sk]'), function (el) {
+      scrolls[el.getAttribute('data-sk')] = { top: el.scrollTop, left: el.scrollLeft };
+    });
+
+    handlers = {};
+    handlerSeq = 0;
+    animKeys = Object.create(null);
+
+    var v = renderVals();
+    var html = '';
+    if (v.isHomeScreen) html += homeScreen(v);
+    if (v.isExercise) {
+      html += appBar(v);
+      if (v.isHome) html += lessonTab(v);
+      if (v.isWork) html += worksheetTab(v);
+      if (v.isSummary) html += summaryTab(v);
+    }
+    root.innerHTML = html;
+
+    prevAnimKeys = animKeys;
+
+    Array.prototype.forEach.call(root.querySelectorAll('[data-sk]'), function (el) {
+      var s = scrolls[el.getAttribute('data-sk')];
+      if (s) { el.scrollTop = s.top; el.scrollLeft = s.left; }
+    });
+  }
+
+  root.addEventListener('click', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-act]') : null;
+    if (!el || !root.contains(el)) return;
+    if (el.disabled) return;
+    var fn = handlers[el.getAttribute('data-act')];
+    if (fn) { ev.preventDefault(); fn(); }
+  });
+
+  restore();
+  render();
+
+  /* Offline support, when served over https or from localhost. */
+  if ('serviceWorker' in navigator &&
+      (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () { /* offline support is optional */ });
+    });
+  }
+}());
+</script>
+</body>
+</html>
