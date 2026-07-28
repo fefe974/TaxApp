@@ -1,8 +1,10 @@
-const CACHE_NAME = 'ledgerlab-classroom-v1';
+const CACHE_NAME = 'ledgerlab-classroom-v2';
 const APP_SHELL = [
   './',
   './index.html',
+  './ledger-lab.html',
   './manifest.webmanifest',
+  './ledger-lab.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
