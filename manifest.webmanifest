@@ -1,7 +1,7 @@
 {
-  "name": "Ledgerly — Learn accounting by doing it",
+  "name": "Ledgerly · Accounting workflow guide",
   "short_name": "Ledgerly",
-  "description": "Short explanations, clear diagrams, then real accounting work. Build the tabular summary, journalize a month, and assemble financial statements yourself.",
+  "description": "A comprehensive accounting problem worked end to end in 17 annotated steps, from the first transaction to a proved balance sheet.",
   "start_url": "./index.html",
   "scope": "./",
   "id": "./index.html",
