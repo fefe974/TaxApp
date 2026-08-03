@@ -76,7 +76,11 @@
   --display: 'Literata', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
   --mono: 'Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Strong custom curves: the built-in CSS easings are too weak to read
+     as intentional. ease-out for entering, ease-in-out for on-screen movement. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease: var(--ease-out);
 }
 
 html[data-theme="dark"] {
@@ -192,7 +196,7 @@ html[data-theme="dark"] .ghost-btn { background: var(--surface-2); color: var(--
   display: flex; align-items: center; justify-content: center; gap: 8px;
   font-size: 13.5px; font-weight: 700;
   color: var(--muted);
-  transition: color 0.18s;
+  transition: color 180ms var(--ease-out);
 }
 .tab svg { width: 18px; height: 18px; }
 .tab.on { color: var(--brand); }
@@ -561,7 +565,7 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 .rail i {
   flex: 1; height: 6px; border-radius: 2px;
   background: var(--surface-3);
-  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+  transition: background 200ms var(--ease-out), transform 200ms var(--ease-in-out);
   transform-origin: bottom;
 }
 .rail i.lec.done { background: var(--brand-line); }
@@ -589,7 +593,7 @@ table.led .lab { box-shadow: 1px 0 0 var(--line); }
   0%   { background: color-mix(in srgb, var(--brand) 22%, transparent); }
   100% { background: var(--brand-soft); }
 }
-table.led tr.fresh td { animation: land 0.7s var(--ease); }
+table.led tr.fresh td { animation: land 260ms var(--ease-out); }
 table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4px; }
 
 /* The proof bar reads like a stamp on the page. */
@@ -628,7 +632,7 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   background: var(--surface);
   color: var(--text-dim);
   box-shadow: var(--shadow-sm);
-  transition: transform 0.15s var(--ease), background 0.15s, opacity 0.15s;
+  transition: transform 150ms var(--ease-out), background 150ms var(--ease-out), opacity 150ms var(--ease-out);
 }
 .nav-btn:active { transform: scale(0.97); }
 .nav-btn svg { width: 19px; height: 19px; }
@@ -650,13 +654,19 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   box-shadow: var(--shadow-sm);
 }
 
-.fade { animation: fade 0.34s var(--ease); }
-@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.pop { animation: pop 0.3s var(--ease); }
+.fade { animation: fade 180ms var(--ease-out); }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.pop { animation: pop 200ms var(--ease-out); }
 @keyframes pop { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
 
+@keyframes rm-fade { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  .fade, .pop { animation: rm-fade 140ms var(--ease-out) both; }
+  table.led tr.fresh td { animation: none; background: var(--brand-soft); }
+  .rail i { transition: background 140ms var(--ease-out); }
+  .rail i.now { transform: none; }
+  .nav-btn:active { transform: none; }
+  html { scroll-behavior: auto; }
 }
 @media (min-width: 700px) {
   .step-title { font-size: 32px; }
@@ -1302,7 +1312,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var fresh = $('table-slot').querySelector('tr.fresh, tr.totals');
     if (fresh) {
       window.setTimeout(function () {
-        sc.scrollTo({ top: sc.scrollHeight, behavior: 'smooth' });
+        /* Honour the reduced-motion preference for programmatic scrolling too. */
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        sc.scrollTo({ top: sc.scrollHeight, behavior: reduce ? 'auto' : 'smooth' });
       }, 90);
     }
   }
