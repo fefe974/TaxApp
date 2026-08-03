@@ -465,39 +465,8 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 }
 .viz-cap { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 
-.eqbar { display: flex; gap: 6px; align-items: stretch; min-width: 0; }
-.eqbar-seg {
-  /* min-width:0 lets a segment shrink below its longest word instead of
-     pushing the row past a 320px viewport. */
-  min-width: 0;
-  border-radius: var(--r-md); padding: 12px 11px;
-  border: 1px solid; display: grid; gap: 3px; align-content: center; min-height: 78px;
-}
-.eqbar-seg b, .eqbar-seg span { overflow-wrap: anywhere; }
-.eqbar-seg b { font-size: 14px; font-weight: 800; letter-spacing: -0.01em; }
-.eqbar-seg span { font-size: 11.5px; line-height: 1.35; opacity: 0.9; }
-.seg-a { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
-.seg-l { background: var(--amber-soft); border-color: var(--amber-line); color: var(--amber-ink); }
-.seg-e { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
-.eqbar-op { display: grid; place-items: center; font-size: 18px; font-weight: 800; color: var(--muted); }
 
-.flow { display: grid; gap: 8px; }
-.flow-node { border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--surface-2); padding: 12px 14px; }
-.flow-node b { display: block; font-size: 14px; font-weight: 750; }
-.flow-node span { font-size: 12.5px; color: var(--muted); }
-.flow-arrow { display: grid; place-items: center; color: var(--brand); }
-.flow-arrow svg { width: 18px; height: 18px; }
 
-.rules { display: grid; gap: 10px; }
-.rule { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); padding: 12px 14px; }
-.rule b { display: block; font-size: 13.5px; font-weight: 750; margin-bottom: 3px; }
-.rule span { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.rule.up b { color: var(--good-deep); }
-.rule.down b { color: var(--bad); }
-.rule.hot { border-color: var(--bad-line); background: var(--bad-soft); }
-.rule.hot b { color: var(--bad); }
-.rule.hot span { color: var(--text-dim); }
-@media (min-width: 560px) { .rules.two { grid-template-columns: 1fr 1fr; } }
 
 
 /* ---------- visual teaching devices ---------- */
@@ -684,8 +653,6 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 }
 .progress-wrap { flex: 1; min-width: 0; display: grid; justify-items: center; gap: 6px; }
 .progress-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.progress-track { width: 100%; max-width: 210px; height: 7px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
-.progress-track i { display: block; height: 100%; width: 100%; border-radius: 999px; background: var(--brand); transform-origin: left center; transform: scaleX(0); transition: transform 0.35s var(--ease); }
 
 /* ---------- table pane ---------- */
 #pane-table .scroll { padding: 14px; background: var(--surface-2); }
