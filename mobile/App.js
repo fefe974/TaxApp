@@ -7,10 +7,12 @@ import { WEB_APP_HTML } from './assets/web/webAppHtml';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="light" backgroundColor="#00264F" />
+      <StatusBar style="light" backgroundColor="#080b10" />
       <WebView
         originWhitelist={['*']}
-        source={{ html: WEB_APP_HTML }}
+        // baseUrl gives the page a real origin so localStorage works and
+        // lesson progress survives between launches.
+        source={{ html: WEB_APP_HTML, baseUrl: 'https://ledgerly.app/' }}
         style={styles.webview}
         allowFileAccess
         domStorageEnabled
@@ -23,7 +25,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00264F',
+    backgroundColor: '#080b10',
   },
   webview: {
     flex: 1,
