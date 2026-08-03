@@ -219,88 +219,6 @@ html[data-theme="dark"] .ghost-btn { background: var(--surface-2); color: var(--
 }
 #pane-guide .scroll { padding: 22px 18px 30px; }
 
-/* ---------- step ---------- */
-.step-eyebrow {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 10px; border-bottom: 1px solid var(--line);
-}
-.step-title {
-  font-family: var(--display);
-  font-size: 31px; line-height: 1.1; font-weight: 600; letter-spacing: -0.015em;
-  margin-top: 10px;
-  text-wrap: balance;
-}
-.stack { display: grid; gap: 22px; margin-top: 26px; }
-/* Grid items default to min-width:auto, so a wide table would blow the
-   column out past the viewport instead of scrolling inside its own box. */
-.stack > * { min-width: 0; }
-.wrap { min-width: 0; }
-
-/* Boxes with the label riding the top edge. */
-.box { position: relative; border-radius: var(--r-xl); padding: 20px 18px 18px; }
-.box-tag {
-  position: absolute; top: -11px; left: 18px;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 3px 11px;
-  border-radius: 999px;
-  font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
-  box-shadow: var(--shadow-sm);
-  white-space: nowrap;
-  max-width: calc(100% - 36px);
-  overflow: hidden; text-overflow: ellipsis;
-}
-.box-tag svg { width: 13px; height: 13px; flex: 0 0 auto; }
-
-.box-fact { background: var(--amber-soft); border: 1px solid var(--amber-line); }
-.box-fact .box-tag { background: var(--surface); color: var(--amber); border: 1px solid var(--amber-line); }
-.box-fact p { font-family: var(--display); font-size: 19px; line-height: 1.4; font-weight: 500; color: var(--amber-ink); }
-
-.box-concept { background: var(--surface); border: 1px solid var(--brand-line); box-shadow: var(--shadow); }
-.box-concept .box-tag { background: var(--brand); color: var(--on-brand); }
-.box-concept p { font-size: 16px; line-height: 1.66; color: var(--text-dim); white-space: pre-line; }
-.box-concept p + p { margin-top: 12px; }
-.box-concept b { color: var(--text); font-weight: 700; }
-
-
-.concept-name {
-  font-family: var(--display);
-  font-size: 21px; font-weight: 600; line-height: 1.2; letter-spacing: -0.012em;
-  color: var(--text);
-  margin-bottom: 12px;
-  text-wrap: balance;
-}
-.box-impact { background: var(--brand-soft); border: 1px solid var(--brand-line); padding: 18px 16px; }
-.box-impact .impact-cap {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--brand-ink); margin-bottom: 13px;
-}
-.box-impact .impact-cap svg { width: 15px; height: 15px; }
-
-.equation {
-  display: flex; align-items: stretch; gap: 10px;
-  margin-top: 14px;
-  padding: 14px;
-  border-radius: var(--r-md);
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-.eq-side { flex: 1; min-width: 0; display: grid; gap: 6px; align-content: start; }
-.eq-side:last-child { justify-items: end; text-align: right; }
-.eq-cap { font-size: 10px; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.eq-item { font-size: 13.5px; font-weight: 650; line-height: 1.35; }
-.eq-item b { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-.eq-op { display: grid; place-items: center; font-size: 18px; font-weight: 800; color: var(--muted); }
-
-.note-warn {
-  display: flex; gap: 10px; margin-top: 14px;
-  padding: 12px 14px; border-radius: var(--r-md);
-  background: var(--bad-soft); border: 1px solid var(--bad-line);
-}
-.note-warn svg { flex: 0 0 auto; width: 17px; height: 17px; color: var(--bad); margin-top: 2px; }
-.note-warn p { font-size: 14px; line-height: 1.5; color: var(--text-dim); }
-
 /* ---------- source document ---------- */
 .doc {
   margin-top: 14px;
@@ -426,30 +344,6 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 .stmt-line.hit .amt { color: var(--brand-ink); font-weight: 800; }
 .stmt-gap { height: 10px; }
 
-/* ---------- facts list ---------- */
-.facts { display: grid; gap: 10px; }
-.fact { display: flex; gap: 11px; font-size: 14.5px; line-height: 1.45; color: var(--text-dim); }
-.fact i {
-  flex: 0 0 auto; width: 22px; height: 22px; border-radius: 7px;
-  display: grid; place-items: center; font-style: normal;
-  font-size: 11px; font-weight: 800;
-  background: var(--brand-soft); color: var(--brand);
-}
-
-
-/* ---------- lecture ---------- */
-.lec-lede { font-family: var(--display); font-size: 20px; line-height: 1.42; font-weight: 400; color: var(--text-dim); margin-top: 14px; }
-.lec-body { display: grid; gap: 14px; margin-top: 20px; }
-.lec-body p { font-size: 15.5px; line-height: 1.62; color: var(--text-dim); }
-.lec-body b { color: var(--text); font-weight: 700; }
-.keypoint {
-  display: flex; gap: 11px; margin-top: 20px;
-  padding: 14px 15px; border-radius: var(--r-md);
-  background: var(--amber-soft); border: 1px solid var(--amber-line);
-}
-.keypoint svg { flex: 0 0 auto; width: 17px; height: 17px; color: var(--amber); margin-top: 2px; }
-.keypoint p { font-size: 14.5px; line-height: 1.55; color: var(--amber-ink); }
-
 .viz {
   margin-top: 20px; padding: 18px 16px;
   border-radius: var(--r-lg);
@@ -465,38 +359,6 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 /* ---------- visual teaching devices ---------- */
 
 /* Pipeline: one real event carried through to one real report line. */
-.pipe { display: grid; gap: 8px; }
-.pipe-stage { border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--surface-2); padding: 12px 13px; }
-.pipe-hd { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
-.pipe-n {
-  flex: 0 0 auto; width: 21px; height: 21px; border-radius: 6px;
-  display: grid; place-items: center; font-size: 11px; font-weight: 800;
-  background: var(--brand); color: var(--on-brand);
-}
-.pipe-hd b { font-size: 13px; font-weight: 750; }
-.pipe-art {
-  border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--line);
-  padding: 9px 11px; font-size: 12.5px; color: var(--text-dim);
-}
-.pipe-art.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; gap: 12px; }
-.pipe-down { display: grid; place-items: center; color: var(--brand); }
-.pipe-down svg { width: 17px; height: 17px; }
-
-/* Balance: two pans with real totals, and what it looks like when it breaks. */
-.scale { display: flex; align-items: stretch; gap: 8px; }
-.pan {
-  flex: 1; min-width: 0;
-  border-radius: var(--r-md); border: 1px solid; padding: 11px 12px;
-  display: grid; gap: 4px; align-content: start;
-}
-.pan-cap { font-size: 10px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; opacity: 0.85; }
-.pan b { font-family: var(--mono); font-size: 19px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.pan-items { display: grid; gap: 2px; margin-top: 4px; }
-.pan-items span { font-family: var(--mono); font-size: 11px; opacity: 0.82; font-variant-numeric: tabular-nums; }
-.pan-a { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
-.pan-c { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
-.pan-bad { background: var(--bad-soft); border-color: var(--bad-line); color: var(--bad); }
-.scale-op { display: grid; place-items: center; font-size: 17px; font-weight: 800; color: var(--muted); }
 .verdict {
   margin-top: 10px; padding: 9px 12px; border-radius: var(--r-sm);
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -505,6 +367,7 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 .verdict svg { width: 15px; height: 15px; }
 .verdict.ok { background: var(--good-soft); color: var(--good-deep); border: 1px solid var(--good-line); }
 .verdict.no { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-line); }
+.verdict.idle { background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
 .viz-sub { font-size: 12.5px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
 
 /* Decomposition: one figure splitting into the parts it is made of. */
@@ -542,22 +405,9 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 .vs-q { font-size: 13.5px; font-weight: 750; margin: 16px 0 10px; }
 .vs-q:first-child { margin-top: 0; }
 
-/* Four steps building one row. */
-.build { display: grid; gap: 8px; }
-.build-row { display: flex; align-items: center; gap: 11px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface-2); padding: 10px 12px; }
-.build-n {
-  flex: 0 0 auto; width: 21px; height: 21px; border-radius: 6px;
-  display: grid; place-items: center; font-size: 11px; font-weight: 800;
-  background: var(--brand-soft); color: var(--brand);
-}
-.build-txt { flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-dim); }
-.build-out { font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: var(--text); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.build-out.ok { color: var(--good-deep); }
 /* An inline SVG with no width falls back to its intrinsic size and pushes
    the row past the viewport. Size every icon inside a visual. */
-.build-out svg { width: 14px; height: 14px; vertical-align: -2px; }
 .viz svg { max-width: 100%; }
-.build-txt { min-width: 0; }
 .viz { min-width: 0; }
 
 
@@ -595,19 +445,14 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
   transition: background 200ms var(--ease-out), transform 200ms var(--ease-in-out);
   transform-origin: bottom;
 }
-.rail i.lec.done { background: var(--brand-line); }
-.rail i.stp.done { background: var(--brand); }
+.rail i.done { background: var(--brand); }
 .rail i.now { background: var(--brand); transform: scaleY(1.7); }
-.rail i.gap { flex: 0 0 6px; background: transparent; }
 
 /* ---------- refinement ---------- */
 .appbar { border-bottom: 1px solid rgba(0,0,0,0.12); }
 html[data-theme="dark"] .appbar { border-bottom-color: var(--line); }
 .mark { border-radius: 12px; }
 
-.box { box-shadow: var(--shadow-sm); }
-.box-concept { box-shadow: var(--shadow); }
-.box-tag { letter-spacing: 0.1em; }
 
 /* Hairline rules instead of heavy borders on data surfaces. */
 table.led thead .acct th { border-bottom: 1.5px solid var(--line-strong); }
@@ -634,8 +479,245 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 
 /* Give the guide column a printed measure. */
 #pane-guide .wrap { max-width: 640px; }
-.lec-body p { max-width: 62ch; }
-.box-concept p { max-width: 62ch; }
+
+/* ---------- dashboard ----------
+   The entry list is the spine of the app: every transaction visible at
+   once, with what it moved and where the equation stood afterwards. */
+#pane-guide .scroll { padding: 20px 16px 28px; }
+.dash-head { display: grid; gap: 10px; }
+.dash-head h1 {
+  font-family: var(--display);
+  font-size: 29px; line-height: 1.08; font-weight: 600; letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.dash-head p { font-size: 14.5px; line-height: 1.55; color: var(--text-dim); max-width: 56ch; }
+
+/* The live state of the equation, recomputed from every entry read so far. */
+.state {
+  margin-top: 18px; padding: 15px 15px 13px;
+  border-radius: var(--r-lg);
+  background: var(--surface); border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.state-cap {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.state-cap svg { width: 14px; height: 14px; }
+
+
+.sect {
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 26px 0 12px;
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.sect i { flex: 1; height: 1px; background: var(--line); font-style: normal; }
+
+.cards { display: grid; gap: 9px; }
+.card-e {
+  display: grid; gap: 9px;
+  width: 100%; text-align: left;
+  padding: 13px 14px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 160ms var(--ease-out), border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.card-e:active { transform: scale(0.988); }
+.card-e.read { border-color: var(--good-line); }
+.card-e-top { display: flex; align-items: center; gap: 10px; }
+.card-n {
+  flex: 0 0 auto; width: 27px; height: 27px; border-radius: 8px;
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+  background: var(--surface-3); color: var(--text-dim);
+}
+.card-e.read .card-n { background: var(--good); color: var(--on-brand); }
+.card-n svg { width: 14px; height: 14px; }
+.card-e-top b { flex: 1; min-width: 0; font-size: 14.5px; font-weight: 700; }
+.card-go { flex: 0 0 auto; color: var(--muted); display: grid; place-items: center; }
+.card-go svg { width: 17px; height: 17px; }
+.card-e p { font-size: 13px; line-height: 1.45; color: var(--text-dim); }
+
+/* What the entry moved, and where the equation stood after it. */
+.card-fx { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 3px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 650;
+  border: 1px solid;
+}
+.chip b { font-family: var(--mono); font-weight: 750; font-variant-numeric: tabular-nums; }
+.chip.a { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
+.chip.c { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.card-run {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  padding-top: 8px; border-top: 1px dashed var(--line);
+}
+.card-run em { font-style: normal; color: var(--text-dim); font-weight: 700; }
+
+/* The four moves that record any transaction. Kept on the dashboard so it
+   is available from anywhere rather than buried in a lecture page. */
+.method { display: grid; gap: 7px; }
+.method-row {
+  display: flex; align-items: center; gap: 11px;
+  border-radius: var(--r-md); border: 1px solid var(--line);
+  background: var(--surface); padding: 10px 12px;
+}
+.method-n {
+  flex: 0 0 auto; width: 21px; height: 21px; border-radius: 6px;
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  background: var(--brand-soft); color: var(--brand-ink);
+}
+.method-row span { flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-dim); }
+.method-row em {
+  font-style: normal; font-family: var(--mono); font-size: 12px; font-weight: 700;
+  color: var(--text); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+
+/* ---------- an entry's explanation ---------- */
+.ex-eyebrow {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 10px; border-bottom: 1px solid var(--line);
+}
+.ex-eyebrow i { font-style: normal; color: var(--brand); }
+.ex-title {
+  font-family: var(--display);
+  font-size: 27px; line-height: 1.12; font-weight: 600; letter-spacing: -0.015em;
+  margin-top: 11px; text-wrap: balance;
+}
+.ex-fact {
+  margin-top: 14px; padding: 13px 14px;
+  border-radius: var(--r-md);
+  background: var(--amber-soft); border: 1px solid var(--amber-line);
+  color: var(--amber-ink);
+  font-size: 14.5px; line-height: 1.5;
+}
+.ex-why { display: grid; gap: 12px; margin-top: 18px; }
+.ex-why p { font-size: 15px; line-height: 1.6; color: var(--text-dim); max-width: 62ch; }
+.ex-why b { color: var(--text); font-weight: 700; }
+.ex-rule {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-top: 18px; padding: 13px 14px;
+  border-radius: var(--r-md);
+  background: var(--brand-soft); border: 1px solid var(--brand-line);
+}
+.ex-rule svg { flex: 0 0 auto; width: 16px; height: 16px; color: var(--brand); margin-top: 2px; }
+.ex-rule p { font-size: 14px; line-height: 1.5; color: var(--brand-ink); font-weight: 600; }
+
+/* ---------- illustration: the balance board ----------
+   The same component on every entry, driven from LEDGER. Chips land on
+   the side they belong to and the bars grow to the new totals, so
+   "both sides move together" is something you watch rather than read. */
+.bb { display: flex; align-items: stretch; gap: 8px; }
+.bb-side {
+  flex: 1; min-width: 0;
+  border-radius: var(--r-md); border: 1px solid;
+  padding: 11px 12px;
+  display: grid; gap: 7px; align-content: start;
+}
+.bb-a { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
+.bb-c { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.bb-cap { font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.85; }
+.bb-num {
+  font-family: var(--mono); font-size: 19px; font-weight: 800;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.bb-chips { display: grid; gap: 4px; min-width: 0; }
+.bb-chip {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 2px 8px; min-width: 0;
+  padding: 5px 8px; border-radius: var(--r-sm);
+  background: var(--surface); border: 1px solid currentColor;
+  font-size: 11.5px; font-weight: 650;
+}
+.bb-chip u { text-decoration: none; opacity: 0.9; min-width: 0; }
+.bb-chip b { font-family: var(--mono); font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bb-chip.dn b { color: var(--bad); }
+.bb-op { display: grid; place-items: center; font-size: 17px; font-weight: 800; color: var(--muted); }
+.bb-bars { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+.bb-track { flex: 1; height: 7px; border-radius: 4px; background: var(--surface-3); overflow: hidden; }
+.bb-fill { display: block; height: 100%; width: 0; border-radius: 4px; }
+.bb-track.a .bb-fill { background: var(--brand); }
+.bb-track.c .bb-fill { background: var(--good); }
+.bb-gap { width: 17px; }
+
+/* ---------- illustration: the event itself ----------
+   Who the other party was, what crossed in each direction, and whether
+   anything has to come back. */
+.fx-scene { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+.fx-node {
+  border-radius: var(--r-md); border: 1px solid var(--line-strong);
+  background: var(--surface-2); padding: 11px 10px;
+  display: grid; gap: 3px; justify-items: center; text-align: center;
+}
+.fx-node.self { background: var(--brand); border-color: transparent; color: var(--on-brand); }
+.fx-node span { font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.72; }
+.fx-node b { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+.fx-wires { display: grid; gap: 9px; min-width: 96px; }
+.fx-wire { position: relative; display: grid; gap: 3px; justify-items: center; }
+.fx-rail {
+  position: relative; width: 100%; height: 2px; border-radius: 2px;
+  background: var(--line-strong);
+}
+.fx-tok {
+  position: absolute; top: -3px; left: 0;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--brand);
+}
+.fx-wire.back .fx-rail { background: var(--bad-line); }
+.fx-wire.back .fx-tok { background: var(--bad); }
+.fx-lab { font-size: 11px; font-weight: 650; color: var(--text-dim); text-align: center; line-height: 1.3; }
+.fx-wire.back .fx-lab { color: var(--bad); }
+
+/* ---------- illustration: which columns feed a statement ---------- */
+.route { display: grid; gap: 8px; }
+.route-cols { display: flex; flex-wrap: wrap; gap: 5px; }
+.route-col {
+  padding: 5px 9px; border-radius: var(--r-sm);
+  border: 1px solid var(--line); background: var(--surface-2);
+  font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+}
+.route-col.on { border-color: var(--brand-line); background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; }
+.route-down { display: grid; place-items: center; color: var(--brand); height: 18px; }
+.route-down svg { width: 16px; height: 16px; }
+
+/* Illustration motion. These are content, not interface feedback, so they
+   are allowed to run longer than a control's response — and they run once
+   on open rather than looping, so nothing keeps moving while you read. */
+@keyframes bb-chip-in {
+  from { opacity: 0; transform: translateY(7px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+/* Percentages on `left` resolve against the rail, so the token crosses it
+   whatever the width. Reversing the direction sends it the other way. */
+@keyframes fx-travel {
+  0%   { left: 0;                  opacity: 0; }
+  14%  { opacity: 1; }
+  86%  { opacity: 1; }
+  100% { left: calc(100% - 8px);   opacity: 0; }
+}
+.viz .bb-chip { animation: bb-chip-in 260ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
+.viz .bb-fill { transition: width 520ms var(--ease-in-out); }
+.viz .fx-tok { animation: fx-travel 1400ms var(--ease-in-out) 200ms both; }
+.viz .fx-wire.rtl .fx-tok { animation-direction: reverse; }
+
+@media (prefers-reduced-motion: reduce) {
+  .viz .bb-chip { animation: none; }
+  .viz .bb-fill { transition: none; }
+  .viz .fx-tok { animation: none; opacity: 1; }
+  .card-e { transition: none; }
+  .card-e:active { transform: none; }
+}
+
 
 /* ---------- solve it yourself ----------
    Every class is ws-prefixed: the worksheet shares a stylesheet with the
@@ -787,18 +869,12 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   box-shadow: 0 4px 12px -4px var(--brand);
 }
 .progress-wrap { flex: 1; min-width: 0; display: grid; justify-items: center; gap: 6px; }
+.progress-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 479px) { #prev-label { display: none; } }
 .progress-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
 /* ---------- table pane ---------- */
 #pane-table .scroll { padding: 14px; background: var(--surface-2); }
-.hint {
-  margin: 16px auto 0; max-width: 420px;
-  padding: 14px 16px; border-radius: var(--r-md);
-  background: var(--surface); border: 1px solid var(--line);
-  font-size: 14px; color: var(--muted); text-align: center;
-  box-shadow: var(--shadow-sm);
-}
-
 .fade { animation: fade 180ms var(--ease-out); }
 @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .pop { animation: pop 200ms var(--ease-out); }
@@ -814,11 +890,13 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   html { scroll-behavior: auto; }
 }
 @media (min-width: 700px) {
-  .step-title { font-size: 32px; }
+  .ex-title { font-size: 30px; }
+  .dash-head h1 { font-size: 32px; }
   #pane-guide .scroll { padding: 30px 24px 40px; }
 }
 @media (max-width: 360px) {
-  .step-title { font-size: 23px; }
+  .ex-title { font-size: 23px; }
+  .dash-head h1 { font-size: 24px; }
   .nav-btn span { display: none; }
 }
 </style>
@@ -830,7 +908,7 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
       <span class="mark" id="mark"></span>
       <div class="appbar-title">
         <b>Speedy Delivery Inc.</b>
-        <span>Lecture, then a guided walkthrough</span>
+        <span>Nine entries, explained and worked</span>
       </div>
       <button class="ghost-btn" id="btn-theme" aria-label="Switch colour theme"></button>
     </div>
@@ -860,7 +938,7 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 
   <div class="controls">
     <div class="controls-inner">
-      <button class="nav-btn" id="btn-prev"><span id="prev-icon"></span><span>Previous</span></button>
+      <button class="nav-btn" id="btn-prev"><span id="prev-icon"></span><span id="prev-label">All entries</span></button>
       <div class="progress-wrap">
         <div class="progress-label" id="prog-label">Step 0</div>
         <div class="rail" id="rail"></div>
@@ -1117,267 +1195,187 @@ var WORK_FIELDS = [
             '$10,000 + $1,800.'] }
 ];
 
-/* ============================================================
-   THE WALKTHROUGH
-   ============================================================ */
 
 /* ============================================================
-   THE LECTURE
-   Diagram first, prose second. Every screen shows a concrete
-   artefact with real figures from the problem, marks what goes
-   wrong in it, and shows the corrected version beside it.
+   THE ENTRIES
+   One card per ledger row. The figures are never written here —
+   every effect shown is read back out of LEDGER, so an entry and
+   the workpaper it produces cannot drift apart.
    ============================================================ */
-var LECTURE = [
+
+/* An account's effect on its own side of the equation. Expenses and
+   dividends sit inside equity but reduce it, which is the one place
+   the arithmetic stops matching the plus sign on screen. */
+function sideOf(k) { return COLS.filter(function (c) { return c.k === k; })[0].grp === 'a' ? 'a' : 'c'; }
+function claimSign(k) { return (k === 'exp' || k === 'div') ? -1 : 1; }
+
+/* [{k, name, side, delta, shown}] for one ledger row. */
+function effectsOf(row) {
+  return COLS.filter(function (c) { return row[c.k]; }).map(function (c) {
+    var v = row[c.k];
+    var side = sideOf(c.k);
+    return {
+      k: c.k,
+      name: ACCOUNT[c.k],
+      side: side,
+      shown: v,                                     // what the workpaper prints
+      delta: side === 'a' ? v : claimSign(c.k) * v  // what it does to that side
+    };
+  });
+}
+
+var ENTRIES = [
   {
-    title: 'What accounting is for',
-    lede: 'Follow one real event all the way through. This is the whole machine in miniature.',
-    viz: { cap: 'One event, recorded, then reported', html:
-      '<div class="pipe">' +
-        '<div class="pipe-stage"><div class="pipe-hd"><span class="pipe-n">1</span><b>Something happens</b></div>' +
-        '<div class="pipe-art">Speedy pays $800 for July rent.</div></div>' +
-        '<div class="pipe-down">' + ICON.down + '</div>' +
-        '<div class="pipe-stage"><div class="pipe-hd"><span class="pipe-n">2</span><b>It gets recorded</b></div>' +
-        '<div class="pipe-art mono"><span>Cash</span><span>&minus;800</span></div>' +
-        '<div class="pipe-art mono" style="margin-top:5px"><span>Expenses</span><span>+800</span></div></div>' +
-        '<div class="pipe-down">' + ICON.down + '</div>' +
-        '<div class="pipe-stage"><div class="pipe-hd"><span class="pipe-n">3</span><b>It shows up in a report</b></div>' +
-        '<div class="pipe-art mono"><span>Rent expense</span><span>800</span></div></div>' +
-      '</div>' },
-    body: [
-      'Someone always needs two answers about a business: <b>what does it own and owe right now</b>, and <b>did it do well over the last stretch of time</b>.',
-      'Every rule in this course exists so that path above stays reliable enough for a stranger to trust the number at the end of it.'
-    ],
-    key: 'Speedy Delivery Inc. had seven events in July. You are about to push all of them down that path.'
+    id: '1', short: 'The owners invest', rule: 'Investment by owners is never revenue.',
+    concept: 'An asset arrives, and a new claim on it arrives with it',
+    why: ['The company receives $10,000, so <b>Cash</b> rises. In exchange the owners hold a claim on the business, recorded as <b>Common Stock</b>.',
+          'Nothing was earned. The company did no work for this money, so it never touches revenue &mdash; and the two sides rise together because the same $10,000 is being described twice.'],
+    scene: { other: 'Founders', give: 'Cash $10,000', get: 'Shares' },
+    doc: doc('Share certificate &middot; No. 001', CO.name,
+      [['Issued to', 'Founders'], ['Consideration', 'Cash'], ['Date', 'July 1, 2025']],
+      ['Amount', '$10,000.00'], 'Cash received by the company in exchange for shares.')
   },
   {
-    title: 'The accounting equation',
-    lede: 'Two sides, always equal. Here is Speedy on July 31, and here is what it looks like when a recording goes wrong.',
-    viz: { cap: 'Balanced', html:
-      '<div class="scale">' +
-        '<div class="pan pan-a"><span class="pan-cap">Assets</span><b>$15,500</b>' +
-        '<div class="pan-items"><span>Cash 10,500</span><span>Receivable 2,000</span><span>Equipment 3,000</span></div></div>' +
-        '<div class="scale-op">=</div>' +
-        '<div class="pan pan-c"><span class="pan-cap">Liabilities + Equity</span><b>$15,500</b>' +
-        '<div class="pan-items"><span>Payables 3,700</span><span>Stock 10,000</span><span>Earnings 1,800</span></div></div>' +
-      '</div>' +
-      '<div class="verdict ok">' + ICON.check + ' The two sides agree, so the books hold together</div>' +
-      '<p class="viz-sub">Now suppose the $800 rent payment is recorded as a fall in cash, and nothing else:</p>' +
-      '<div class="scale" style="margin-top:10px">' +
-        '<div class="pan pan-a"><span class="pan-cap">Assets</span><b>$14,700</b>' +
-        '<div class="pan-items"><span>Cash 9,700</span><span>Receivable 2,000</span><span>Equipment 3,000</span></div></div>' +
-        '<div class="scale-op">=</div>' +
-        '<div class="pan pan-bad"><span class="pan-cap">Liabilities + Equity</span><b>$15,500</b>' +
-        '<div class="pan-items"><span>Payables 3,700</span><span>Stock 10,000</span><span>Earnings 1,800</span></div></div>' +
-      '</div>' +
-      '<div class="verdict no">' + ICON.warn + ' Out by $800, so something was recorded wrong</div>' },
-    body: [
-      '<b>Assets</b> are resources the business controls. <b>Liabilities</b> are what outsiders can claim. <b>Equity</b> is whatever is left for the owners.',
-      'The equality is not a rule somebody imposed. Equity is <em>defined</em> as assets minus liabilities, so both sides describe the same pile of resources: once by what it is, once by who has a claim on it.'
-    ],
-    key: 'The gap is the alarm. A transaction that moves only one side has to be wrong, and the equation tells you before anyone else notices.'
+    id: '2', short: 'Paying the rent', rule: 'A cost is an expense once the benefit is used up.',
+    concept: 'An asset leaves and never comes back',
+    why: ['Cash falls by $800. The payment bought occupancy for July, and by July 31 that benefit is entirely gone.',
+          'That is what makes it an <b>expense</b> rather than an asset. Expenses are subtracted inside equity, so both sides of the equation come down together.'],
+    scene: { other: 'Harbour Street Properties', give: 'Cash $800', get: 'Use of the premises for July' },
+    doc: doc('Receipt &middot; Rent', 'Harbour Street Properties',
+      [['Tenant', CO.name], ['Period covered', 'July 2025']],
+      ['Amount', '$800.00'], 'Covers occupancy for July only.')
   },
   {
-    title: 'Equity has moving parts',
-    lede: 'That $11,800 of equity is not one thing. Break it open and it is four different stories.',
-    viz: { cap: 'Speedy&rsquo;s equity at July 31, decomposed', html:
-      '<div class="decomp">' +
-        '<div class="dc-node dc-top"><em>Stockholders&rsquo; Equity</em><b>$11,800</b></div>' +
-        '<div class="dc-link">' + ICON.down + '</div>' +
-        '<div class="dc-row two">' +
-          '<div class="dc-node"><span><em>Common Stock</em><small>What owners put in</small></span><b>$10,000</b></div>' +
-          '<div class="dc-node"><span><em>Retained Earnings</em><small>What the business kept</small></span><b>$1,800</b></div>' +
-        '</div>' +
-        '<div class="dc-link">' + ICON.down + '</div>' +
-        '<div class="dc-row three">' +
-          '<div class="dc-node sm"><em>Revenues</em><b>$3,500</b></div>' +
-          '<div class="dc-node sm minus"><em>&minus; Expenses</em><b>$1,700</b></div>' +
-          '<div class="dc-node sm minus"><em>&minus; Dividends</em><b>$0</b></div>' +
-        '</div>' +
-      '</div>' },
-    body: [
-      'Contributed capital and earned capital are different facts about the business, and collapsing them into one number destroys both.',
-      '&ldquo;Equity is $11,800&rdquo; is true and useless. <b>$10,000 was handed over and $1,800 was earned</b> is the sentence that tells you how the month actually went.'
-    ],
-    key: 'A dividend is not an expense. An expense helps produce revenue; a dividend hands out profit that already exists.'
+    id: '3', short: 'Buying on account', rule: 'Buy now, pay later: the asset and the debt both arrive today.',
+    concept: 'Nothing was paid, and both sides still moved',
+    why: ['The equipment arrived, so that asset rises by $3,000. Because it was bought on account, no cash moved at all.',
+          'The company now owes the supplier, which is a liability: <b>Accounts Payable</b> rises by the same $3,000.'],
+    scene: { other: 'Meridian Office Supply', give: 'A promise to pay in 30 days', get: 'Equipment $3,000', cash: false },
+    trap: { q: 'Rent was an expense. Why is equipment not?',
+            bad: { t: 'Equipment &rarr; Expense', p: 'Understates July&rsquo;s profit by $3,000 and loses an asset the company still owns.' },
+            good: { t: 'Equipment &rarr; Asset', p: 'July&rsquo;s rent is used up by July 31. The equipment will still be working for years.' } },
+    doc: doc('Invoice &middot; INV-4471', 'Meridian Office Supply',
+      [['Sold to', CO.name], ['Item', 'Office equipment'], ['Terms', 'Net 30 days']],
+      ['Amount due', '$3,000.00'], 'Goods delivered July 3. Payment due in August.')
   },
   {
-    title: 'Three decisions that settle everything',
-    lede: 'Almost every mistake in a problem like this is one of three judgements. Each one looks the same in the bank and different in the books.',
-    viz: { cap: 'Wrong beside right', html:
-      '<div class="vs-q">1. The work is done, but the client has not paid.</div>' +
-      '<div class="vs">' +
-        '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>No entry yet</em>' +
-        '<p>Waiting for the cash. July&rsquo;s income statement loses $2,000 it genuinely earned.</p></div>' +
-        '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>Receivable +2,000<br>Revenue +2,000</em>' +
-        '<p>The work is what earns it. The right to collect is the asset.</p></div>' +
-      '</div>' +
-      '<div class="vs-q">2. Speedy pays $800 rent and $3,000 for equipment.</div>' +
-      '<div class="vs">' +
-        '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>Both are expenses</em>' +
-        '<p>Treating the equipment as a July cost understates profit by $3,000 and loses the asset.</p></div>' +
-        '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>Rent &rarr; Expense<br>Equipment &rarr; Asset</em>' +
-        '<p>July&rsquo;s rent is used up by July 31. The equipment lasts for years.</p></div>' +
-      '</div>' +
-      '<div class="vs-q">3. $700 arrives from the bank. $700 arrives from a client.</div>' +
-      '<div class="vs">' +
-        '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>Both are revenue</em>' +
-        '<p>The company looks profitable while it is quietly going into debt.</p></div>' +
-        '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>Bank &rarr; Notes Payable<br>Client &rarr; Revenue</em>' +
-        '<p>One has to be repaid. The test is the obligation, never the cash.</p></div>' +
-      '</div>' },
-    body: [
-      'None of these is arithmetic. Each asks what actually happened in the business, and the recording follows from the answer.'
-    ],
-    key: 'The third one is the trap in this problem. Identical cash in the bank, opposite meanings, and only the equation notices.'
+    id: '4', short: 'Earning cash revenue', rule: 'Performing the service is what earns the money.',
+    concept: 'The first profit the business has made',
+    why: ['The work was done and the clients paid on the spot, so <b>Cash</b> rises by $1,500.',
+          'Performing the service is what earns it, so <b>Service Revenue</b> rises by $1,500 too. Revenue adds to equity, so both sides go up.'],
+    scene: { other: 'Clients', give: 'Delivery services', get: 'Cash $1,500' },
+    doc: doc('Cash receipt &middot; No. 1042', CO.name,
+      [['Received from', 'Various clients'], ['For', 'Delivery services performed']],
+      ['Amount', '$1,500.00'], 'Services completed and settled the same day.')
   },
   {
-    title: 'How a transaction gets recorded',
-    lede: 'Four steps, every time. Here they are on the rent payment you just saw.',
-    viz: { cap: 'Building one row', html:
-      '<div class="build">' +
-        '<div class="build-row"><span class="build-n">1</span><span class="build-txt">Name the accounts it touches</span><span class="build-out">Cash &middot; Expenses</span></div>' +
-        '<div class="build-row"><span class="build-n">2</span><span class="build-txt">Decide each direction</span><span class="build-out">Cash &darr; &nbsp;Exp &uarr;</span></div>' +
-        '<div class="build-row"><span class="build-n">3</span><span class="build-txt">Attach the amount</span><span class="build-out">&minus;800 &nbsp; +800</span></div>' +
-        '<div class="build-row"><span class="build-n">4</span><span class="build-txt">Check the equation still holds</span><span class="build-out ok">&minus;800 = &minus;800 ' + ICON.check + '</span></div>' +
-      '</div>' },
-    vizFn: 'emptyLedger',
-    vizCap: 'The workpaper you are about to fill',
-    body: [
-      'At least two items always move, because recording one side alone would break the equation. Sometimes both sit on the same side, as when cash buys equipment. Sometimes one sits on each, as when borrowing raises cash and a debt together.',
-      'The summary gives every account a column, grouped into assets, liabilities and equity. Each transaction gets a row, and the columns are totalled at the end.'
-    ],
-    key: 'That is the whole method. The next twelve steps run it on Speedy&rsquo;s July, one transaction at a time.'
+    id: '5', short: 'Borrowing from the bank', rule: 'The test is never whether cash arrived. It is whether it has to go back.',
+    concept: 'Cash in, but nothing earned',
+    why: ['The bank handed over $700, so <b>Cash</b> rises exactly as it did in the entry above.',
+          'The difference is that this money has to be repaid, so signing the note raises a liability: <b>Notes Payable</b> rises by $700. Equity does not move at all.'],
+    scene: { other: 'Northgate Bank', give: 'A signed note', get: 'Cash $700', back: 'Repayable in full' },
+    trap: { q: '$700 arrives from a bank. $1,500 arrived from a client. Identical in the bank account.',
+            bad: { t: 'Both &rarr; Revenue', p: 'The company looks profitable while it is quietly going into debt.' },
+            good: { t: 'Bank &rarr; Notes Payable<br>Client &rarr; Revenue', p: 'One has to be repaid. The obligation decides it, never the cash.' } },
+    doc: doc('Promissory note', 'Northgate Bank',
+      [['Borrower', CO.name], ['Repayable', 'On demand'], ['Date', 'July 9, 2025']],
+      ['Principal', '$700.00'], 'The company promises to repay the principal in full.')
+  },
+  {
+    id: '6', short: 'Revenue before the cash', rule: 'Revenue is recorded when the work is done, not when the money lands.',
+    concept: 'Earned in July, collected in August',
+    why: ['The service was performed but the client will pay next month. The company holds a right to collect, and that right is an asset: <b>Accounts Receivable</b> rises by $2,000.',
+          'The revenue was earned in July, so it belongs to July. Collecting the cash in August will not be revenue a second time.'],
+    scene: { other: 'Client on account', give: 'Delivery services', get: 'A right to collect $2,000', cash: false },
+    trap: { q: 'The work is finished. The client has not paid.',
+            bad: { t: 'No entry yet', p: 'Waiting for the cash costs July&rsquo;s income statement $2,000 it genuinely earned.' },
+            good: { t: 'Receivable +2,000<br>Revenue +2,000', p: 'The work is what earns it. The right to collect is the asset.' } },
+    doc: doc('Sales invoice &middot; SD-0006', CO.name,
+      [['Billed to', 'Client account'], ['For', 'Delivery services performed'], ['Terms', 'Net 30 days']],
+      ['Amount due', '$2,000.00'], 'Services completed July 14. Payment expected in August.')
+  },
+  {
+    id: '7a', short: 'Paying salaries', rule: 'One payment, one row, one named expense.',
+    concept: 'Three costs on one day, kept apart',
+    why: ['Three payments went out together on July 31, but each is a different kind of cost, so each gets its own row and its own expense account.',
+          'A single $900 line would hide whether the company is overspending on wages or on advertising. The income statement reports expenses by nature.'],
+    scene: { other: 'Employees', give: 'Cash $500', get: 'Work performed in July' },
+    doc: doc('Payroll &middot; July', CO.name,
+      [['Paid to', 'Employees'], ['Period', 'July 2025']],
+      ['Amount', '$500.00'], 'Salaries and wages for the month.')
+  },
+  {
+    id: '7b', short: 'Paying the utilities', rule: 'Same shape as the row above it.',
+    concept: 'The second of the three costs',
+    why: ['Cash falls $300 and <b>Expenses</b> rise $300. July&rsquo;s power and water are consumed in July, so there is no asset left at month end.'],
+    scene: { other: 'Utility provider', give: 'Cash $300', get: 'Power and water for July' },
+    doc: doc('Utility bill &middot; July', 'Citywide Utilities',
+      [['Account', CO.name], ['Period', 'July 2025']],
+      ['Amount', '$300.00'], 'Settled on July 31.')
+  },
+  {
+    id: '7c', short: 'Paying for advertising', rule: 'The last of the three, and the month is closed.',
+    concept: 'The final cost of the month',
+    why: ['Cash falls $100 and <b>Expenses</b> rise $100. With this row recorded, every July event is in the workpaper and the columns can be totalled.'],
+    scene: { other: 'Advertising agency', give: 'Cash $100', get: 'Advertising run during July' },
+    doc: doc('Invoice &middot; ADV-118', 'Kestrel Media',
+      [['Billed to', CO.name], ['Campaign', 'July local press']],
+      ['Amount', '$100.00'], 'Paid on receipt.')
   }
 ];
 
-var STEPS = [
+/* ============================================================
+   THE REPORTS
+   What the finished columns are turned into. `feeds` marks the
+   columns each statement draws on, for the routing illustration.
+   ============================================================ */
+var REPORTS = [
   {
-    title: 'Start the walkthrough',
-    fact: 'Track how nine transactions affect ' + CO.name + ' during its first month of operations.',
-    concept: 'The accounting equation',
-    why: 'Every business transaction has to leave this equation in balance:\n\n<b>Assets = Liabilities + Stockholders&rsquo; Equity</b>\n\nAssets are what the company controls. Liabilities are what outsiders can claim. Equity is what the owners are left with. Work through the transactions one at a time and watch the two sides move together.',
-    extra: '<div class="box box-impact"><div class="impact-cap">' + ICON.pulse + 'The seven events</div>' +
-      '<div class="facts">' + FACTS.map(function (f, i) {
-        return '<div class="fact"><i>' + (i + 1) + '</i><span>' + f + '</span></div>';
-      }).join('') + '</div></div>',
-    hits: []
+    id: 'proof', short: 'Total and prove the columns', title: 'Total the columns and prove it',
+    rule: 'Nothing can be reported until the two sides agree.',
+    concept: 'The equation, checked',
+    why: ['<b>Total assets</b> = $10,500 cash + $2,000 receivables + $3,000 equipment = <b>$15,500</b>.',
+          '<b>Total liabilities and equity</b> = $700 + $3,000 + $10,000 + ($3,500 revenue &minus; $1,700 expenses) = <b>$15,500</b>.',
+          'The two sides agree, so the summary is arithmetically sound. It does not prove every account was chosen correctly &mdash; only that nothing was recorded on one side alone.'],
+    totals: true, feeds: null
   },
   {
-    title: 'Transaction 1: the owners invest',
-    fact: 'Stockholders invested $10,000 cash in exchange for common stock.',
-    concept: 'Asset up, equity up',
-    why: 'The company receives cash, so <b>Cash</b> increases by $10,000. In exchange the owners hold a claim on the business, recorded as <b>Common Stock</b>, which increases by the same $10,000.\n\nNothing has been earned here. The company did no work for this money, so it never touches revenue.',
-    eq: [[['Cash', '+10,000']], [['Common Stock', '+10,000']]],
-    doc: doc('Share certificate &middot; No. 001', CO.name,
-      [['Issued to', 'Founders'], ['Consideration', 'Cash'], ['Date', 'July 1, 2025']],
-      ['Amount', '$10,000.00'], 'Cash received by the company in exchange for shares.'),
-    hits: ['cash', 'cs']
-  },
-  {
-    title: 'Transaction 2: paying the rent',
-    fact: 'Paid $800 for July rent.',
-    concept: 'Asset down, equity down',
-    why: 'Cash left the business, so <b>Cash</b> decreases by $800. The payment bought occupancy for July, and by July 31 that benefit is entirely used up, which makes it an expense rather than an asset.\n\n<b>Expenses</b> increase by $800, and because expenses are subtracted inside equity, equity falls by $800. Both sides of the equation come down together.',
-    eq: [[['Cash', '&minus;800']], [['Expenses', '+800']]],
-    doc: doc('Receipt &middot; Rent', 'Harbour Street Properties',
-      [['Tenant', CO.name], ['Period covered', 'July 2025']],
-      ['Amount', '$800.00'], 'Covers occupancy for July only.'),
-    hits: ['cash', 'exp']
-  },
-  {
-    title: 'Transaction 3: buying on account',
-    fact: 'Purchased office equipment on account, $3,000.',
-    concept: 'Asset up, liability up',
-    why: 'The company received <b>Equipment</b> worth $3,000, so that asset increases. Because it was bought on account, no cash moved. The company now owes the supplier, which creates a liability: <b>Accounts Payable</b> increases by $3,000.\n\nEquipment is an asset, not an expense. It will be used for years, so its cost is not consumed in July.',
-    eq: [[['Equipment', '+3,000']], [['Accounts Payable', '+3,000']]],
-    doc: doc('Invoice &middot; INV-4471', 'Meridian Office Supply',
-      [['Sold to', CO.name], ['Item', 'Office equipment'], ['Terms', 'Net 30 days']],
-      ['Amount due', '$3,000.00'], 'Goods delivered July 3. Payment due in August.'),
-    hits: ['eq', 'ap']
-  },
-  {
-    title: 'Transaction 4: earning cash revenue',
-    fact: 'Performed delivery services for clients for cash, $1,500.',
-    concept: 'Asset up, equity up',
-    why: 'The work was done and the clients paid on the spot, so <b>Cash</b> increases by $1,500. Performing the service is what earns the money, so <b>Service Revenue</b> increases by $1,500 as well.\n\nRevenue adds to equity, so both sides of the equation rise together. This is the first profit the business has made.',
-    eq: [[['Cash', '+1,500']], [['Service Revenue', '+1,500']]],
-    doc: doc('Cash receipt &middot; No. 1042', CO.name,
-      [['Received from', 'Various clients'], ['For', 'Delivery services performed']],
-      ['Amount', '$1,500.00'], 'Services completed and settled the same day.'),
-    hits: ['cash', 'rev']
-  },
-  {
-    title: 'Transaction 5: borrowing from the bank',
-    fact: 'Borrowed $700 cash from a bank on a note payable.',
-    concept: 'Asset up, liability up',
-    why: 'The bank handed over $700, so <b>Cash</b> increases exactly as it did in the previous transaction. The difference is that this money has to be repaid, so signing the note raises a liability: <b>Notes Payable</b> increases by $700.\n\nThe test is never whether cash arrived. It is whether the company has to give it back.',
-    eq: [[['Cash', '+700']], [['Notes Payable', '+700']]],
-    warn: 'The most common error in this problem is recording the $700 as Service Revenue. The company performed no service for the bank, so nothing was earned and equity does not move at all.',
-    doc: doc('Promissory note', 'Northgate Bank',
-      [['Borrower', CO.name], ['Repayable', 'On demand'], ['Date', 'July 9, 2025']],
-      ['Principal', '$700.00'], 'The company promises to repay the principal in full.'),
-    hits: ['cash', 'np']
-  },
-  {
-    title: 'Transaction 6: revenue before the cash',
-    fact: 'Performed delivery services for a client on account, $2,000.',
-    concept: 'Asset up, equity up',
-    why: 'The service was performed, but the client will pay next month. The company holds a right to collect, and that right is an asset: <b>Accounts Receivable</b> increases by $2,000.\n\nThe revenue was earned in July, so <b>Service Revenue</b> increases now rather than when the cash arrives. Collecting the money in August will not be revenue a second time.',
-    eq: [[['Accounts Receivable', '+2,000']], [['Service Revenue', '+2,000']]],
-    doc: doc('Sales invoice &middot; SD-0006', CO.name,
-      [['Billed to', 'Client account'], ['For', 'Delivery services performed'], ['Terms', 'Net 30 days']],
-      ['Amount due', '$2,000.00'], 'Services completed July 14. Payment expected in August.'),
-    hits: ['ar', 'rev']
-  },
-  {
-    title: 'Transaction 7: paying monthly expenses',
-    fact: 'Paid monthly expenses: salaries $500, utilities $300, and advertising $100.',
-    concept: 'One event, three expenses',
-    why: 'Three payments went out on the same day, totalling $900, so <b>Cash</b> decreases three separate times. Each payment is a different kind of cost, so each gets its own row and its own expense account.\n\nKeeping them apart matters: the income statement reports expenses by nature, and a single $900 line would hide whether the company is overspending on wages or on advertising.',
-    eq: [[['Cash', '&minus;900']], [['Expenses', '+900']]],
-    doc: doc('Payment run &middot; July 31', 'Three suppliers',
-      [['Salaries and wages', '$500.00'], ['Utilities', '$300.00'], ['Advertising', '$100.00']],
-      ['Total paid', '$900.00'], 'Three separate costs settled in one batch.'),
-    hits: ['cash', 'exp']
-  },
-  {
-    title: 'Total the columns and prove it',
-    fact: 'Add every column down and check that the accounting equation still holds.',
-    concept: 'The equation balances',
-    why: '<b>Total assets</b> = $10,500 cash + $2,000 receivables + $3,000 equipment = <b>$15,500</b>.\n\n<b>Total liabilities and equity</b> = $700 + $3,000 + $10,000 + ($3,500 revenue &minus; $1,700 expenses) = <b>$15,500</b>.\n\nThe two sides agree, so the summary is arithmetically sound. It does not prove every account was chosen correctly, but nothing can be reported until this check passes.',
-    totals: true,
-    hits: ['all']
-  },
-  {
-    title: 'Build the income statement',
-    fact: 'Report the revenues earned and the expenses incurred during July.',
+    id: 'income', short: 'The income statement', title: 'Build the income statement',
+    rule: 'Only what was earned and what was consumed. Nothing else.',
     concept: 'Performance over a period',
-    why: 'Only two columns of the summary belong here: <b>Revenue</b> and <b>Expenses</b>. List revenues first, then expenses by name, and subtract.\n\nThe $10,000 stock issue and the $700 bank loan appear nowhere on this statement. Neither was earned, so neither is revenue.',
-    totals: true,
-    hits: ['rev', 'exp'],
-    after: stmt('income', ['Total expenses', 'Net income']),
+    why: ['Two columns of the summary belong here and no others: <b>Revenue</b> and <b>Expenses</b>. List revenues first, then expenses by name, and subtract.',
+          'The $10,000 stock issue and the $700 bank loan appear nowhere on this statement. Neither was earned.'],
+    feeds: ['rev', 'exp'],
+    stmt: 'income', hits: ['Total expenses', 'Net income'],
     result: 'Net income for July is $1,800.'
   },
   {
-    title: 'Carry the profit into retained earnings',
-    fact: 'Work out how much of July&rsquo;s profit the business kept.',
+    id: 'retained', short: 'Retained earnings', title: 'Carry the profit into retained earnings',
+    rule: 'A dividend is not an expense. It hands out profit that already exists.',
     concept: 'The bridge between two statements',
-    why: 'Start with retained earnings at the beginning of the period. The company was incorporated on July 1, so it opens at <b>$0</b>.\n\nAdd the <b>$1,800</b> of net income from the income statement, then subtract dividends. None were declared, which is why the Dividends column stayed empty all month.',
-    totals: true,
-    hits: ['div'],
-    after: stmt('retained', ['Add: Net income', 'Retained earnings, July 31']),
+    why: ['The company was incorporated on July 1, so retained earnings open at <b>$0</b>. Add the <b>$1,800</b> of net income, then subtract dividends &mdash; none were declared, which is why that column stayed empty all month.',
+          'Equity is not one number. <b>$10,000 was handed over by the owners and $1,800 was earned by the business</b>, and collapsing the two would destroy both facts.'],
+    feeds: ['rev', 'exp', 'div'],
+    equity: true,
+    stmt: 'retained', hits: ['Add: Net income', 'Retained earnings, July 31'],
     result: 'Retained earnings at July 31 is $1,800.'
   },
   {
-    title: 'Build the balance sheet',
-    fact: 'Report what the company owns and owes on July 31.',
+    id: 'balance', short: 'The balance sheet', title: 'Build the balance sheet',
+    rule: 'The same equation you started with, written out for a reader.',
     concept: 'The equation, published',
-    why: 'List the assets and total them. List the liabilities and total them. Then build equity from its two sources: <b>Common Stock</b> of $10,000 that the owners put in, plus <b>Retained Earnings</b> of $1,800 that the business earned and kept.\n\nThis is the same equation you started with in step 0, now written out for a reader.',
-    totals: true,
-    hits: ['all'],
-    after: stmt('balance', ['Total assets', 'Total liabilities and equity']),
+    why: ['List the assets and total them. List the liabilities and total them. Then build equity from its two sources: <b>Common Stock</b> the owners put in, plus <b>Retained Earnings</b> the business earned and kept.'],
+    feeds: ['cash', 'ar', 'eq', 'np', 'ap', 'cs'],
+    stmt: 'balance', hits: ['Total assets', 'Total liabilities and equity'],
     result: 'Total assets $15,500 = total liabilities and equity $15,500. The problem is complete.'
   }
+];
+
+var METHOD = [
+  ['Name the accounts it touches', 'Cash &middot; Expenses'],
+  ['Decide each direction', 'Cash &darr; &nbsp;Exp &uarr;'],
+  ['Attach the amount', '&minus;800 &nbsp; +800'],
+  ['Check the equation still holds', '&minus;800 = &minus;800']
 ];
 
 /* Icons into the static chrome. */
@@ -1396,11 +1394,11 @@ document.getElementById('next-icon').innerHTML = ICON.next;
    it produces, in both the guide and the full table.
    ============================================================ */
 (function () {
-  var STORE = 'speedy.walkthrough.v2';
-  var LEC = LECTURE.length;          // lecture screens come first
-  var LAST = STEPS.length - 1;       // highest walkthrough step number
-  var TOTAL = LEC + STEPS.length;    // combined page count
-  var cur = 0;                       // index into the combined flow
+  var STORE = 'speedy.walkthrough.v3';
+  var view = 'dash';                 // 'dash' the entry list, 'detail' one entry
+  var at = 0;                        // index into FLOW while in detail
+  var read = {};                     // which entries have been opened
+  var dashScroll = 0;                // so returning to the list lands where you left
   var tab = 'guide';
   var theme = '';
 
@@ -1409,13 +1407,15 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function load() {
     try {
       var p = JSON.parse(window.localStorage.getItem(STORE) || '{}');
-      if (typeof p.step === 'number' && p.step >= 0 && p.step < TOTAL) cur = p.step;
+      if (typeof p.at === 'number' && p.at >= 0 && p.at < FLOW.length) at = p.at;
+      if (p.view === 'detail') view = 'detail';
+      if (p.read && typeof p.read === 'object') read = p.read;
       if (p.tab === 'table' || p.tab === 'guide' || p.tab === 'solve') tab = p.tab;
       theme = p.theme || '';
     } catch (e) { /* private mode: run without persistence */ }
   }
   function save() {
-    try { window.localStorage.setItem(STORE, JSON.stringify({ step: cur, tab: tab, theme: theme })); } catch (e) {}
+    try { window.localStorage.setItem(STORE, JSON.stringify({ view: view, at: at, read: read, tab: tab, theme: theme })); } catch (e) {}
   }
 
   /* ---------- the ledger table ----------
@@ -1447,15 +1447,16 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var head = '<tr class="acct"><th class="lab">Trans.</th>' + headCells() +
       (opts.remarks === false ? '' : '<th style="text-align:left">Remark</th>') + '</tr>';
 
-    var rows = LEDGER.filter(function (r) { return r.step <= upto; });
-    var body = rows.map(function (r) {
-      var fresh = r.step === upto ? ' class="fresh"' : '';
+    var rows = opts.only != null ? [LEDGER[opts.only]] : LEDGER.filter(function (r) { return r.step <= upto; });
+    var body = rows.map(function (r, ri) {
+      var mine = opts.only != null || (opts.mark != null && LEDGER[opts.mark] === r);
+      var fresh = (mine || r.step === upto) ? ' class="fresh"' : '';
       var out = '<tr' + fresh + '><td class="lab">' + (r.trans || '') + '</td>';
       COLS.forEach(function (c, i) {
         if (i === 3) out += '<td class="op"></td>';
         if (i === 5) out += '<td class="op"></td>';
         var v = r[c.k];
-        var hit = (r.step === upto && hits && hits.indexOf(c.k) !== -1) ? ' class="hit"' : '';
+        var hit = ((mine || r.step === upto) && hits && hits.indexOf(c.k) !== -1) ? ' class="hit"' : '';
         out += '<td' + hit + '>' + (v ? money(v) : '') + '</td>';
       });
       if (opts.remarks !== false) out += '<td class="rem">' + (r.rem || '') + '</td>';
@@ -1489,95 +1490,294 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       '</table></div>' + proof + '</div>';
   }
 
-  /* ---------- guide pane ---------- */
-  function inLecture() { return cur < LEC; }
-  function stepNo() { return cur - LEC; }
+  /* ---------- guide pane: a dashboard over the entries ----------
+     The old build marched through seventeen pages in a fixed order. This
+     one puts every entry on one screen with what it moved and where the
+     equation stood after it, and opens a short illustrated explanation
+     on demand. */
 
-  function renderLecture() {
-    var l = LECTURE[cur];
-    var viz = '';
-    if (l.viz) {
-      viz += '<div class="viz"><div class="viz-cap">' + l.viz.cap + '</div>' + l.viz.html + '</div>';
+  var FLOW = ENTRIES.concat(REPORTS);        // 9 entries, then 4 reports
+  var GRAND = assetsOf(totalsUpTo(999));     // the scale every bar is drawn against
+
+  function reduceMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  /* Cumulative column totals through ledger row i. totalsUpTo works in
+     steps, and transaction 7 is three rows inside one step. */
+  function totalsThrough(i) {
+    var t = {};
+    COLS.forEach(function (c) { t[c.k] = 0; });
+    LEDGER.slice(0, i + 1).forEach(function (r) {
+      COLS.forEach(function (c) { if (r[c.k]) t[c.k] += r[c.k]; });
+    });
+    return t;
+  }
+
+  function isRead(id) { return !!read[id]; }
+  function readCount() { return FLOW.filter(function (f) { return isRead(f.id); }).length; }
+
+  /* ---------- illustration: the balance board ---------- */
+  function balanceBoard(before, after, effects, capA, capC) {
+    function side(cls, cap, from, to, list) {
+      var chips = list.map(function (e, i) {
+        return '<span class="bb-chip' + (e.delta < 0 ? ' dn' : '') + '" style="--i:' + i + '">' +
+          '<u>' + e.name + '</u><b>' + (e.shown > 0 ? '+' : '&minus;') + Math.abs(e.shown).toLocaleString('en-US') + '</b></span>';
+      }).join('');
+      return '<div class="bb-side ' + cls + '">' +
+        '<span class="bb-cap">' + cap + '</span>' +
+        '<b class="bb-num" data-from="' + from + '" data-count="' + to + '">' + dollars(from) + '</b>' +
+        (chips ? '<div class="bb-chips">' + chips + '</div>' : '') +
+        '</div>';
     }
-    if (l.vizFn === 'emptyLedger') {
-      viz += '<div class="viz"><div class="viz-cap">' + l.vizCap + '</div>' + ledgerTable(0, [], { remarks: false }) + '</div>';
+    function bar(cls, from, to) {
+      return '<div class="bb-track ' + cls + '"><i class="bb-fill" style="width:' +
+        pct(from) + '" data-w="' + pct(to) + '"></i></div>';
     }
+    function pct(v) { return Math.max(0, Math.min(100, (v / GRAND) * 100)).toFixed(2) + '%'; }
+
+    var a0 = assetsOf(before), a1 = assetsOf(after);
+    var c0 = claimsOf(before), c1 = claimsOf(after);
+    return '<div class="bb">' +
+        side('bb-a', capA || 'Assets', a0, a1, effects.filter(function (e) { return e.side === 'a'; })) +
+        '<div class="bb-op">=</div>' +
+        side('bb-c', capC || 'Liabilities + Equity', c0, c1, effects.filter(function (e) { return e.side === 'c'; })) +
+      '</div>' +
+      '<div class="bb-bars">' + bar('a', a0, a1) + '<span class="bb-gap"></span>' + bar('c', c0, c1) + '</div>' +
+      '<div class="verdict ' + verdictKind(a1, c1, effects.length) + '">' +
+        (verdictKind(a1, c1, effects.length) === 'idle' ? '' : (a1 === c1 ? ICON.check : ICON.warn) + ' ') +
+        verdictLine(a0, a1, c1, effects.length) + '</div>';
+  }
+
+  function verdictKind(a1, c1, moves) {
+    if (a1 !== c1) return 'no';
+    return (!moves && a1 === 0) ? 'idle' : 'ok';
+  }
+
+  function verdictLine(a0, a1, c1, moves) {
+    if (a1 !== c1) return 'Out by ' + dollars(Math.abs(a1 - c1));
+    if (!moves) return a1 === 0
+      ? 'Nothing recorded yet &mdash; open an entry and this fills in'
+      : 'Both sides stand at ' + dollars(a1);
+    var d = a1 - a0;
+    if (d === 0) return 'Both sides stay at ' + dollars(a1) + ', because the movement was within one side';
+    return 'Each side ' + (d < 0 ? 'falls' : 'rises') + ' by ' + dollars(Math.abs(d)) +
+      ', landing on ' + dollars(a1);
+  }
+
+  /* ---------- illustration: what actually crossed ---------- */
+  function flowScene(s) {
+    function wire(cls, label) {
+      return '<div class="fx-wire ' + cls + '">' +
+        '<div class="fx-lab">' + label + '</div>' +
+        '<div class="fx-rail"><i class="fx-tok"></i></div>' +
+        '</div>';
+    }
+    return '<div class="fx-scene">' +
+        '<div class="fx-node"><span>Other party</span><b>' + s.other + '</b></div>' +
+        '<div class="fx-wires">' +
+          wire('', s.get) +
+          wire('rtl', s.give) +
+          (s.back ? wire('back rtl', s.back) : '') +
+        '</div>' +
+        '<div class="fx-node self"><span>The business</span><b>' + CO.name + '</b></div>' +
+      '</div>' +
+      (s.cash === false ? '<p class="viz-sub">No cash moved in either direction. The entry is recorded anyway, because the resources and the claims on them both changed.</p>' : '');
+  }
+
+  /* ---------- illustration: which columns feed a statement ---------- */
+  function routeViz(feeds, label) {
+    return '<div class="route"><div class="route-cols">' +
+      COLS.map(function (c) {
+        return '<span class="route-col' + (feeds.indexOf(c.k) !== -1 ? ' on' : '') + '">' + ACCOUNT[c.k] + '</span>';
+      }).join('') +
+      '</div><div class="route-down">' + ICON.down + '</div>' +
+      '<div class="route-col on" style="text-align:center">' + label + '</div></div>';
+  }
+
+  function viz(cap, html) {
+    return '<div class="viz"><div class="viz-cap">' + cap + '</div>' + html + '</div>';
+  }
+
+  /* ---------- the dashboard ---------- */
+  function renderDash() {
+    var done = readCount();
+    var last = -1;
+    ENTRIES.forEach(function (e, i) { if (isRead(e.id)) last = i; });
+    var t = totalsThrough(last);              // the equation as far as you have read
+
+    var cards = ENTRIES.map(function (e, i) {
+      var fx = effectsOf(LEDGER[i]);
+      var run = totalsThrough(i);
+      return '<button class="card-e' + (isRead(e.id) ? ' read' : '') + '" data-open="' + i + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(e.id) ? ICON.check : e.id) + '</span>' +
+          '<b>' + e.short + '</b>' +
+          '<span class="card-go">' + ICON.next + '</span>' +
+        '</span>' +
+        '<p>' + WORK_TX[e.id] + '</p>' +
+        '<span class="card-fx">' + fx.map(function (f) {
+          return '<span class="chip ' + f.side + '">' + f.name +
+            ' <b>' + (f.shown > 0 ? '+' : '&minus;') + Math.abs(f.shown).toLocaleString('en-US') + '</b></span>';
+        }).join('') + '</span>' +
+        '<span class="card-run">after this entry &nbsp;<em>' + dollars(assetsOf(run)) + '</em> = <em>' + dollars(claimsOf(run)) + '</em></span>' +
+        '</button>';
+    }).join('');
+
+    var reports = REPORTS.map(function (r, i) {
+      return '<button class="card-e' + (isRead(r.id) ? ' read' : '') + '" data-open="' + (ENTRIES.length + i) + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(r.id) ? ICON.check : ICON.table) + '</span>' +
+          '<b>' + r.short + '</b>' +
+          '<span class="card-go">' + ICON.next + '</span>' +
+        '</span>' +
+        '<p>' + r.rule + '</p>' +
+        '</button>';
+    }).join('');
+
     $('guide').innerHTML =
       '<div class="wrap fade">' +
-      '<div class="step-eyebrow">Lecture ' + (cur + 1) + ' of ' + LEC + '</div>' +
-      '<h1 class="step-title">' + l.title + '</h1>' +
-      '<p class="lec-lede">' + l.lede + '</p>' +
-      viz +
-      '<div class="lec-body">' + l.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
-      (l.key ? '<div class="keypoint">' + ICON.bulb + '<p>' + l.key + '</p></div>' : '') +
-      '<div style="height:8px"></div></div>';
+        '<div class="dash-head">' +
+          '<h1>' + CO.name + ' &middot; July</h1>' +
+          '<p>Nine entries and four reports. Open any one to see what happened, why it is recorded that way, and what it does to the equation. The figures below are live: they follow what you have read.</p>' +
+        '</div>' +
+        '<div class="state">' +
+          '<div class="state-cap">' + ICON.pulse + (last < 0 ? 'Before any entry is recorded' : 'The equation after entry (' + LEDGER[last].id + ')') + '</div>' +
+          balanceBoard(t, t, []) +
+        '</div>' +
+        '<div class="sect">The entries<i></i></div>' +
+        '<div class="cards">' + cards + '</div>' +
+        '<div class="sect">Closing the month<i></i></div>' +
+        '<div class="cards">' + reports + '</div>' +
+        '<div class="sect">How any entry is recorded<i></i></div>' +
+        '<div class="method">' + METHOD.map(function (m, i) {
+          return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
+            '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
+        }).join('') + '</div>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = dashScroll;
+  }
+
+  /* ---------- one entry, explained ---------- */
+  function renderDetail() {
+    var item = FLOW[at];
+    var body;
+
+    if (at < ENTRIES.length) {
+      var row = LEDGER[at];
+      var fx = effectsOf(row);
+      body =
+        '<div class="ex-eyebrow">Entry <i>(' + row.id + ')</i> &middot; ' + (at + 1) + ' of ' + FLOW.length + '</div>' +
+        '<h1 class="ex-title">' + item.concept + '</h1>' +
+        '<div class="ex-fact">' + WORK_TX[item.id] + '</div>' +
+        viz('What crossed, and in which direction', flowScene(item.scene)) +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        viz('What it does to the equation', balanceBoard(totalsThrough(at - 1), totalsThrough(at), fx)) +
+        (item.trap ? viz('The judgement call', trapViz(item.trap)) : '') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.doc || '') +
+        viz('The row it produces', ledgerTable(99, fx.map(function (f) { return f.k; }), { remarks: true, only: at }));
+    } else {
+      var fin = totalsUpTo(999);
+      body =
+        '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW.length + '</div>' +
+        '<h1 class="ex-title">' + item.title + '</h1>' +
+        '<div class="ex-fact">' + item.concept + '</div>' +
+        (item.feeds ? viz('Which columns feed this statement', routeViz(item.feeds, item.short)) : '') +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        (item.totals ? viz('The equation, totalled', balanceBoard(zeroTotals(), fin, allEffects())) : '') +
+        (item.equity ? viz('Equity, decomposed', equityViz()) : '') +
+        (item.stmt ? stmt(item.stmt, item.hits) : '') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
+    }
+
+    $('guide').innerHTML = '<div class="wrap fade">' + body + '<div style="height:10px"></div></div>';
+    animateViz($('guide'));
     $('guide').parentNode.scrollTop = 0;
+  }
+
+  function zeroTotals() { var t = {}; COLS.forEach(function (c) { t[c.k] = 0; }); return t; }
+  function allEffects() {
+    var t = totalsUpTo(999);
+    return COLS.filter(function (c) { return t[c.k]; }).map(function (c) {
+      return { k: c.k, name: ACCOUNT[c.k], side: sideOf(c.k), shown: t[c.k], delta: sideOf(c.k) === 'a' ? t[c.k] : claimSign(c.k) * t[c.k] };
+    });
+  }
+
+  function trapViz(t) {
+    return '<div class="vs-q">' + t.q + '</div><div class="vs">' +
+      '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>' + t.bad.t + '</em><p>' + t.bad.p + '</p></div>' +
+      '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>' + t.good.t + '</em><p>' + t.good.p + '</p></div>' +
+      '</div>';
+  }
+
+  function equityViz() {
+    var t = totalsUpTo(999);
+    var re = t.rev - t.exp - t.div;
+    return '<div class="decomp">' +
+      '<div class="dc-node dc-top"><em>Stockholders&rsquo; Equity</em><b>' + dollars(t.cs + re) + '</b></div>' +
+      '<div class="dc-link">' + ICON.down + '</div>' +
+      '<div class="dc-row two">' +
+        '<div class="dc-node"><span><em>Common Stock</em><small>What owners put in</small></span><b>' + dollars(t.cs) + '</b></div>' +
+        '<div class="dc-node"><span><em>Retained Earnings</em><small>What the business kept</small></span><b>' + dollars(re) + '</b></div>' +
+      '</div>' +
+      '<div class="dc-link">' + ICON.down + '</div>' +
+      '<div class="dc-row three">' +
+        '<div class="dc-node sm"><em>Revenues</em><b>' + dollars(t.rev) + '</b></div>' +
+        '<div class="dc-node sm minus"><em>&minus; Expenses</em><b>' + dollars(t.exp) + '</b></div>' +
+        '<div class="dc-node sm minus"><em>&minus; Dividends</em><b>' + dollars(t.div) + '</b></div>' +
+      '</div></div>';
+  }
+
+  /* Bars grow from where they were and figures count up to where they land.
+     Under reduced motion both are simply set to their final values. */
+  function animateViz(root) {
+    var slow = reduceMotion();
+    Array.prototype.forEach.call(root.querySelectorAll('[data-count]'), function (el) {
+      var to = Number(el.getAttribute('data-count'));
+      var from = Number(el.getAttribute('data-from'));
+      if (slow || from === to) { el.innerHTML = dollars(to); return; }
+      var t0 = null;
+      requestAnimationFrame(function tick(now) {
+        if (t0 === null) t0 = now;
+        var p = Math.min(1, (now - t0) / 280);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.innerHTML = dollars(Math.round(from + (to - from) * e));
+        if (p < 1) requestAnimationFrame(tick);
+      });
+    });
+    var fills = root.querySelectorAll('.bb-fill[data-w]');
+    if (!fills.length) return;
+    if (slow) {
+      Array.prototype.forEach.call(fills, function (f) { f.style.width = f.getAttribute('data-w'); });
+      return;
+    }
+    requestAnimationFrame(function () {
+      Array.prototype.forEach.call(fills, function (f) { f.style.width = f.getAttribute('data-w'); });
+    });
   }
 
   function renderGuide() {
-    if (inLecture()) return renderLecture();
-    var s = STEPS[stepNo()];
-    var impact = '';
-
-    if (s.hits && s.hits.length) {
-      impact = '<div class="box box-impact"><div class="impact-cap">' + ICON.pulse +
-        (s.totals ? 'The summary so far' : 'Changes in this step') + '</div>' +
-        ledgerTable(stepNo(), s.hits, { totals: !!s.totals, remarks: !s.totals }) + '</div>';
-    }
-
-    $('guide').innerHTML =
-      '<div class="wrap fade">' +
-      '<div class="step-eyebrow">Step ' + stepNo() + ' of ' + LAST + '</div>' +
-      '<h1 class="step-title">' + s.title + '</h1>' +
-      '<div class="stack">' +
-      '<div class="box box-fact"><span class="box-tag">The fact</span><p>' + s.fact + '</p></div>' +
-      '<div class="box box-concept"><span class="box-tag">' + ICON.bulb + 'Key concept</span>' +
-      '<h2 class="concept-name">' + s.concept + '</h2>' +
-      '<p>' + s.why + '</p></div>' +
-      (s.eq ? equationStrip(s.eq[0], s.eq[1]) : '') +
-      (s.warn ? '<div class="note-warn">' + ICON.warn + '<p>' + s.warn + '</p></div>' : '') +
-      (s.doc || '') +
-      (s.extra || '') +
-      impact +
-      (s.after || '') +
-      (s.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + s.result + '</span></div>' : '') +
-      '</div><div style="height:8px"></div></div>';
-    $('guide').parentNode.scrollTop = 0;
-  }
-
-  function equationStrip(left, right) {
-    function side(cap, items) {
-      return '<div class="eq-side"><span class="eq-cap">' + cap + '</span>' +
-        items.map(function (i) { return '<span class="eq-item">' + i[0] + ' <b>' + i[1] + '</b></span>'; }).join('') +
-        '</div>';
-    }
-    return '<div class="equation">' + side('Assets', left) + '<div class="eq-op">=</div>' +
-      side('Liabilities + Equity', right) + '</div>';
+    if (view === 'dash') renderDash();
+    else renderDetail();
   }
 
   /* ---------- table pane ---------- */
   function renderTable() {
-    if (inLecture()) {
-      $('table-slot').innerHTML =
-        '<div class="hint">The lecture comes first. Once the walkthrough starts, this table will build itself one transaction at a time.</div>';
-      return;
-    }
-    var s = STEPS[stepNo()];
-    if (stepNo() === 0) {
-      $('table-slot').innerHTML =
-        '<div class="hint">Advance the walkthrough with the controls below and this table will build itself, one transaction at a time.</div>';
-      return;
-    }
-    $('table-slot').innerHTML = ledgerTable(stepNo(), s.hits, { totals: !!s.totals });
+    var open = (view === 'detail' && at < ENTRIES.length) ? at : null;
+    var hits = open === null ? [] : effectsOf(LEDGER[open]).map(function (e) { return e.k; });
+    $('table-slot').innerHTML = ledgerTable(99, hits, { totals: true, mark: open });
+    if (open === null) return;
     var sc = $('table-scroll');
-    var fresh = $('table-slot').querySelector('tr.fresh, tr.totals');
-    if (fresh) {
-      window.setTimeout(function () {
-        /* Honour the reduced-motion preference for programmatic scrolling too. */
-        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        sc.scrollTo({ top: sc.scrollHeight, behavior: reduce ? 'auto' : 'smooth' });
-      }, 90);
-    }
+    var row = $('table-slot').querySelector('tr.fresh');
+    if (!row) return;
+    window.setTimeout(function () {
+      /* Honour the reduced-motion preference for programmatic scrolling too. */
+      sc.scrollTo({ top: Math.max(0, row.offsetTop - sc.clientHeight / 2), behavior: reduceMotion() ? 'auto' : 'smooth' });
+    }, 90);
   }
 
 
@@ -1976,20 +2176,22 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       $('btn-check').textContent = sc.got === sc.total ? 'All correct' : 'Check my work';
       return;
     }
-    $('btn-prev').disabled = cur === 0;
-    $('btn-next').disabled = cur === TOTAL - 1;
-    $('next-label').textContent =
-      cur === TOTAL - 1 ? 'Done' : (cur === LEC - 1 ? 'Start' : 'Next');
-    $('prog-label').textContent = inLecture()
-      ? 'Lecture ' + (cur + 1) + ' of ' + LEC
-      : 'Step ' + stepNo() + ' of ' + LAST;
-    var rail = '';
-    for (var i = 0; i < TOTAL; i++) {
-      if (i === LEC) rail += '<i class="gap"></i>';
-      rail += '<i class="' + (i < LEC ? 'lec' : 'stp') +
-        (i < cur ? ' done' : '') + (i === cur ? ' now' : '') + '"></i>';
+    var dash = view === 'dash';
+    var done = readCount();
+    $('btn-prev').hidden = dash;
+    $('btn-prev').disabled = false;
+    $('btn-next').disabled = false;
+    $('prev-label').textContent = 'All entries';
+    if (dash) {
+      $('prog-label').textContent = done + ' of ' + FLOW.length + ' explained';
+      $('next-label').textContent = done === 0 ? 'Start' : (done === FLOW.length ? 'Review' : 'Continue');
+    } else {
+      $('prog-label').textContent = (at < ENTRIES.length ? 'Entry ' : 'Report ') + (at + 1) + ' of ' + FLOW.length;
+      $('next-label').textContent = at === FLOW.length - 1 ? 'Finish' : 'Next';
     }
-    $('rail').innerHTML = rail;
+    $('rail').innerHTML = FLOW.map(function (f, i) {
+      return '<i class="stp' + (isRead(f.id) ? ' done' : '') + (!dash && i === at ? ' now' : '') + '"></i>';
+    }).join('');
   }
 
   function renderTabs() {
@@ -2012,34 +2214,56 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   /* ---------- navigation ---------- */
-  function hashFor(n) {
-    return n < LEC ? 'lecture-' + (n + 1) : 'step-' + (n - LEC);
-  }
-  function indexFromHash() {
+  function hashFor() { return view === 'dash' ? 'entries' : 'entry-' + FLOW[at].id; }
+  function stateFromHash() {
     var h = (location.hash || '').replace('#', '');
-    var m = /^lecture-(\d+)$/.exec(h);
-    if (m) return Math.min(LEC - 1, Math.max(0, Number(m[1]) - 1));
-    m = /^step-(\d+)$/.exec(h);
-    if (m) return Math.min(TOTAL - 1, LEC + Math.max(0, Number(m[1])));
+    if (h === 'entries') return { view: 'dash', at: at };
+    var m = /^entry-(.+)$/.exec(h);
+    if (!m) return null;
+    for (var i = 0; i < FLOW.length; i++) if (FLOW[i].id === m[1]) return { view: 'detail', at: i };
     return null;
   }
-  function go(n, fromHistory) {
-    var next = Math.max(0, Math.min(TOTAL - 1, n));
-    if (next === cur) return;
-    cur = next;
+  function apply(st, fromHistory) {
+    if (!st || (st.view === view && st.at === at)) return;
+    if (view === 'dash') dashScroll = $('guide').parentNode.scrollTop;
+    view = st.view;
+    at = st.at;
+    if (view === 'detail') read[FLOW[at].id] = 1;
     save();
     render();
     if (!fromHistory && window.history && history.pushState) {
-      history.pushState({ step: cur }, '', '#' + hashFor(cur));
+      history.pushState({ view: view, at: at }, '', '#' + hashFor());
     }
   }
+  function openAt(n) { apply({ view: 'detail', at: Math.max(0, Math.min(FLOW.length - 1, n))}); }
+  function toDash() { apply({ view: 'dash', at: at }); }
+
   window.addEventListener('popstate', function () {
-    var n = indexFromHash();
-    if (n !== null && n !== cur) { cur = n; save(); render(); }
+    var st = stateFromHash();
+    if (!st) return;
+    if (st.view === view && st.at === at) return;
+    view = st.view; at = st.at;
+    if (view === 'detail') read[FLOW[at].id] = 1;
+    save(); render();
   });
 
-  $('btn-prev').addEventListener('click', function () { go(cur - 1); });
-  $('btn-next').addEventListener('click', function () { go(cur + 1); });
+  /* Opening an entry from the dashboard. */
+  $('guide').addEventListener('click', function (e) {
+    var card = e.target.closest('[data-open]');
+    if (card) openAt(Number(card.getAttribute('data-open')));
+  });
+
+  $('btn-prev').addEventListener('click', toDash);
+  $('btn-next').addEventListener('click', function () {
+    if (view === 'dash') {
+      var next = 0;
+      while (next < FLOW.length && isRead(FLOW[next].id)) next++;
+      openAt(next === FLOW.length ? 0 : next);
+      return;
+    }
+    if (at === FLOW.length - 1) toDash();
+    else openAt(at + 1);
+  });
   $('tab-guide').addEventListener('click', function () { tab = 'guide'; save(); render(); });
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
   $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });
@@ -2048,8 +2272,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input, textarea, select')) return;
     if (tab === 'solve') return;
-    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+    if (view === 'dash') return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); openAt(at + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); openAt(at - 1); }
+    if (e.key === 'Escape') { e.preventDefault(); toDash(); }
   });
 
   function applyTheme(t) {
@@ -2070,12 +2296,12 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
   applyTheme(theme);
-  var fromUrl = indexFromHash();
-  if (fromUrl !== null) cur = fromUrl;
+  var fromUrl = stateFromHash();
+  if (fromUrl) { view = fromUrl.view; at = fromUrl.at; if (view === 'detail') read[FLOW[at].id] = 1; }
   render();
   bindSolve();
   if (window.history && history.replaceState) {
-    history.replaceState({ step: cur }, '', '#' + hashFor(cur));
+    history.replaceState({ view: view, at: at }, '', '#' + hashFor());
   }
 })();
 

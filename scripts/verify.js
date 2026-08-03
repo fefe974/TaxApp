@@ -82,66 +82,193 @@ function check(name, ok, detail) {
     acct.bs.tle + ' vs assets ' + acct.bs.ta);
 
   // ---------------------------------------------------------------
-  console.log('\nSTEP WIRING');
+  console.log('\nENTRY WIRING');
   // ---------------------------------------------------------------
+  // Every figure an entry shows has to come out of LEDGER, not out of prose
+  // typed beside it. This walks the two together.
   const wiring = await page.evaluate(() => {
     const bad = [];
-    STEPS.forEach((s, i) => {
-      if (!s.hits || !s.hits.length || s.hits[0] === 'all') return;
-      // Which columns does this step's ledger rows actually move?
-      const moved = new Set();
-      LEDGER.filter(r => r.step === i).forEach(r => COLS.forEach(c => { if (r[c.k]) moved.add(c.k); }));
-      if (!moved.size) return;                       // statement steps move nothing
-      s.hits.forEach(h => { if (!moved.has(h)) bad.push('step ' + i + ' highlights ' + h + ' but that column does not change'); });
-      moved.forEach(m => { if (s.hits.indexOf(m) === -1) bad.push('step ' + i + ' changes ' + m + ' but does not highlight it'); });
+    if (ENTRIES.length !== LEDGER.length) bad.push('ENTRIES and LEDGER are different lengths');
+    ENTRIES.forEach((e, i) => {
+      const row = LEDGER[i];
+      if (!row) return;
+      if (e.id !== row.id) bad.push('entry ' + i + ' is id ' + e.id + ' but ledger row ' + i + ' is ' + row.id);
+      const moved = COLS.filter(c => row[c.k]).map(c => c.k).sort().join(',');
+      const shown = effectsOf(row).map(x => x.k).sort().join(',');
+      if (moved !== shown) bad.push('entry ' + e.id + ' shows ' + shown + ' but moves ' + moved);
+      // The two effects have to land on opposite sides, or on the same side
+      // netting to zero — anything else would not balance.
+      const d = effectsOf(row).reduce((n, x) => n + (x.side === 'a' ? x.delta : -x.delta), 0);
+      if (d !== 0) bad.push('entry ' + e.id + ' leaves the equation out by ' + d);
+      if (!WORK_TX[e.id]) bad.push('entry ' + e.id + ' has no transaction text');
+      if (!e.rule || !e.concept || !e.why.length) bad.push('entry ' + e.id + ' is missing its explanation');
+      if (!e.scene || !e.scene.other || !e.scene.give || !e.scene.get) bad.push('entry ' + e.id + ' has no complete flow scene');
     });
     return bad;
   });
-  check('every step highlights exactly the columns it changes', wiring.length === 0, wiring.join('; '));
+  check('every entry is wired to the ledger row it describes', wiring.length === 0, wiring.join('; '));
 
-  const coverage = await page.evaluate(() => {
-    const steps = new Set(LEDGER.map(r => r.step));
-    return { rows: LEDGER.length, steps: [...steps].sort((a, b) => a - b), total: LECTURE.length + STEPS.length };
-  });
-  check('all 9 ledger rows are reachable', coverage.rows === 9, 'rows=' + coverage.rows);
-  check('ledger rows are spread across steps 1-7', coverage.steps.join(',') === '1,2,3,4,5,6,7', coverage.steps.join(','));
-  check('17 pages total (5 lecture + 12 steps)', coverage.total === 17, 'total=' + coverage.total);
+  const coverage = await page.evaluate(() => ({
+    rows: LEDGER.length, entries: ENTRIES.length, reports: REPORTS.length,
+    // Reports name the columns they draw on; those have to be real columns.
+    badFeeds: REPORTS.filter(r => r.feeds).flatMap(r =>
+      r.feeds.filter(k => !COLS.some(c => c.k === k)).map(k => r.id + ':' + k))
+  }));
+  check('all 9 ledger rows have an entry', coverage.rows === 9 && coverage.entries === 9,
+    'rows=' + coverage.rows + ' entries=' + coverage.entries);
+  check('13 screens replace the old 17', coverage.entries + coverage.reports === 13,
+    'total=' + (coverage.entries + coverage.reports));
+  check('every report draws on real columns', coverage.badFeeds.length === 0, coverage.badFeeds.join(','));
 
   // ---------------------------------------------------------------
-  console.log('\nNAVIGATION');
+  console.log('\nDASHBOARD');
   // ---------------------------------------------------------------
   await page.evaluate(() => localStorage.clear());
   await page.goto(FILE);
   await page.waitForTimeout(500);
-  const N = await page.evaluate(() => LECTURE.length + STEPS.length);
+
+  const dash = await page.evaluate(() => {
+    const sc = document.querySelector('#pane-guide .scroll');
+    const cards = [...document.querySelectorAll('[data-open]')];
+    return {
+      cards: cards.length,
+      x: sc.scrollWidth - sc.clientWidth,
+      d: document.documentElement.scrollWidth - window.innerWidth,
+      label: document.getElementById('prog-label').textContent,
+      rail: document.querySelectorAll('#rail i').length,
+      read: document.querySelectorAll('[data-open].read').length,
+      // Each card states the running position after its own entry.
+      runs: [...document.querySelectorAll('.card-run')].map(el => el.textContent.replace(/\s+/g, ' ').trim()),
+      next: document.getElementById('next-label').textContent,
+      backHidden: document.getElementById('btn-prev').hidden
+    };
+  });
+  check('the dashboard lists every entry and report', dash.cards === 13, 'cards=' + dash.cards);
+  check('the dashboard does not overflow at 390px', dash.x <= 0 && dash.d <= 0, `pane +${dash.x}, doc +${dash.d}`);
+  check('nothing is marked read before anything is opened',
+    dash.read === 0 && /0 of 13/.test(dash.label), dash.read + ' / ' + dash.label);
+  check('the rail has one tick per screen', dash.rail === 13, 'rail=' + dash.rail);
+  check('the dashboard offers Start, not Back', dash.next === 'Start' && dash.backHidden);
+
+  // The running balance on each card must match the ledger cumulatively.
+  const runsOk = await page.evaluate(() => {
+    const bad = [];
+    const cards = [...document.querySelectorAll('.card-run')];
+    let t = {};
+    COLS.forEach(c => (t[c.k] = 0));
+    LEDGER.forEach((r, i) => {
+      COLS.forEach(c => { if (r[c.k]) t[c.k] += r[c.k]; });
+      const want = '$' + assetsOf(t).toLocaleString('en-US');
+      const got = (cards[i] || {}).textContent || '';
+      if (got.split(want).length - 1 !== 2) bad.push('row ' + r.id + ' should read ' + want + ' twice, got "' + got.trim() + '"');
+    });
+    return bad;
+  });
+  check('each card shows the running balance after its own entry', runsOk.length === 0, runsOk.slice(0, 2).join('; '));
+
+  // ---------------------------------------------------------------
+  console.log('\nNAVIGATION');
+  // ---------------------------------------------------------------
+  const N = await page.evaluate(() => ENTRIES.length + REPORTS.length);
   let navOk = true, overflow = [];
+  await page.click('#btn-next');                    // Start → first entry
   for (let i = 0; i < N; i++) {
+    await page.waitForTimeout(60);
     const o = await page.evaluate(() => {
       const sc = document.querySelector('#pane-guide .scroll');
       return {
         x: sc.scrollWidth - sc.clientWidth,
         d: document.documentElement.scrollWidth - window.innerWidth,
         label: document.getElementById('prog-label').textContent,
-        rail: document.querySelectorAll('#rail i').length
+        h1: document.querySelectorAll('h1').length,
+        viz: document.querySelectorAll('.viz').length
       };
     });
-    if (o.x > 0 || o.d > 0) { overflow.push('page ' + i + ' +' + o.x); navOk = false; }
-    if (o.rail !== 18) { overflow.push('page ' + i + ' rail=' + o.rail); navOk = false; }
-    if (i < N - 1) await page.evaluate(() => document.getElementById('btn-next').click());
-    await page.waitForTimeout(40);
+    if (o.x > 0 || o.d > 0) { overflow.push('screen ' + i + ' +' + o.x); navOk = false; }
+    if (o.h1 !== 1) { overflow.push('screen ' + i + ' h1=' + o.h1); navOk = false; }
+    if (o.viz < 1) { overflow.push('screen ' + i + ' has no illustration'); navOk = false; }
+    if (!new RegExp('\\b' + (i + 1) + ' of ' + N + '\\b').test(o.label)) {
+      overflow.push('screen ' + i + ' labelled "' + o.label + '"'); navOk = false;
+    }
+    if (i < N - 1) await page.click('#btn-next');
   }
-  check('all ' + N + ' pages advance with no overflow and a full rail', navOk, overflow.join(', '));
+  check('all ' + N + ' screens open with an illustration, one h1 and no overflow', navOk, overflow.slice(0, 3).join(', '));
 
-  await page.goto(FILE + '#step-9');
+  const finished = await page.evaluate(() => document.getElementById('next-label').textContent);
+  check('the last screen finishes rather than dead-ending', finished === 'Finish', finished);
+  await page.click('#btn-next');
+  await page.waitForTimeout(150);
+  const afterFinish = await page.evaluate(() => ({
+    cards: document.querySelectorAll('[data-open]').length,
+    read: document.querySelectorAll('[data-open].read').length,
+    label: document.getElementById('prog-label').textContent
+  }));
+  check('Finish returns to the dashboard with everything marked read',
+    afterFinish.cards === 13 && afterFinish.read === 13 && /13 of 13/.test(afterFinish.label),
+    JSON.stringify(afterFinish));
+
+  await page.goto(FILE + '#entry-5');
   await page.waitForTimeout(500);
-  check('deep link #step-9 opens step 9',
-    (await page.evaluate(() => document.getElementById('prog-label').textContent)) === 'Step 9 of 11');
-  await page.evaluate(() => document.getElementById('btn-next').click());
+  check('deep link #entry-5 opens that entry',
+    (await page.evaluate(() => document.getElementById('prog-label').textContent)) === 'Entry 5 of 13');
+  await page.click('#btn-next');
   await page.waitForTimeout(150);
   await page.goBack();
+  await page.waitForTimeout(250);
+  check('browser Back returns to the previous entry',
+    (await page.evaluate(() => document.getElementById('prog-label').textContent)) === 'Entry 5 of 13');
+  await page.click('#btn-prev');
   await page.waitForTimeout(200);
-  check('browser Back returns to the previous step',
-    (await page.evaluate(() => document.getElementById('prog-label').textContent)) === 'Step 9 of 11');
+  check('the back button returns to the dashboard',
+    (await page.evaluate(() => document.querySelectorAll('[data-open]').length)) === 13);
+
+  // ---------------------------------------------------------------
+  console.log('\nILLUSTRATIONS');
+  // ---------------------------------------------------------------
+  await page.goto(FILE + '#entry-3');
+  await page.waitForTimeout(1400);
+  const il = await page.evaluate(() => {
+    const chips = [...document.querySelectorAll('.bb-chip')];
+    // A long account name used to widen its panel rather than wrap, which
+    // pushed the whole board past the card holding it. Measure the board
+    // against its container, not the chip against the panel it grew.
+    const spill = [...document.querySelectorAll('.viz .bb')].filter(bb => {
+      const box = bb.parentNode.getBoundingClientRect();
+      const r = bb.getBoundingClientRect();
+      return r.right > box.right + 0.5 || r.left < box.left - 0.5 || bb.scrollWidth > bb.clientWidth;
+    }).length;
+    const fills = [...document.querySelectorAll('.bb-fill')].map(f => f.style.width);
+    return {
+      chips: chips.length,
+      spill,
+      fills,
+      nums: [...document.querySelectorAll('.bb-num')].map(n => n.textContent),
+      tokens: document.querySelectorAll('.fx-tok').length,
+      verdict: (document.querySelector('.viz .verdict') || {}).textContent || ''
+    };
+  });
+  check('the balance board shows both effects of the entry', il.chips === 2, 'chips=' + il.chips);
+  check('no chip escapes its panel', il.spill === 0, 'spill=' + il.spill);
+  check('the bars are driven to their end width', il.fills.every(w => w && w !== '0%'), il.fills.join(','));
+  check('the figures land on the running totals', il.nums.join(' ') === '$12,200 $12,200', il.nums.join(' '));
+  check('the flow scene draws a token per direction', il.tokens === 2, 'tokens=' + il.tokens);
+  check('the verdict names what this entry did to each side',
+    /rises by \$3,000, landing on \$12,200/.test(il.verdict), il.verdict.trim());
+
+  // Under reduced motion the same figures must be there without the animation.
+  const still = await browser.newPage({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce' });
+  await still.goto(FILE + '#entry-3');
+  await still.waitForTimeout(300);
+  const rmViz = await still.evaluate(() => ({
+    nums: [...document.querySelectorAll('.bb-num')].map(n => n.textContent),
+    fills: [...document.querySelectorAll('.bb-fill')].map(f => f.style.width),
+    anim: getComputedStyle(document.querySelector('.bb-chip')).animationName
+  }));
+  check('reduced motion still shows the final figures and bars',
+    rmViz.nums.join(' ') === '$12,200 $12,200' && rmViz.fills.every(w => w && w !== '0%'),
+    JSON.stringify(rmViz));
+  check('reduced motion drops the illustration animation', rmViz.anim === 'none', rmViz.anim);
+  await still.close();
 
   // ---------------------------------------------------------------
   console.log('\nACCESSIBILITY');
@@ -433,25 +560,49 @@ function check(name, ok, detail) {
   // Read the raw stylesheet text, not CSSOM longhands: a shorthand containing
   // var() is a pending-substitution value, so style.animationDuration comes
   // back empty and a CSSOM-based check passes vacuously.
+  //
+  // Selectors are captured alongside the declaration because the two kinds of
+  // motion here answer to different limits. Interface feedback has to keep up
+  // with the finger; an illustration inside a .viz is content being explained,
+  // and a token crossing a wire is meant to be watchable.
   const durations = await page.evaluate(() => {
     const css = Array.from(document.querySelectorAll('style'))
       .map(s => s.textContent).join('\n')
       .replace(/@font-face\s*\{[\s\S]*?\}/g, '');   // base64 payloads look like durations
     const out = [];
-    const re = /(?:transition|animation)\s*:\s*([^;}]+)[;}]/g;
+    const re = /([^{}]+)\{([^{}]*)\}/g;
     let m;
     while ((m = re.exec(css))) {
-      const decl = m[1];
-      (decl.match(/(\d*\.?\d+)(ms|s)\b/g) || []).forEach(v => {
-        const ms = v.endsWith('ms') ? parseFloat(v) : parseFloat(v) * 1000;
-        if (ms > 0) out.push({ sel: decl.trim().slice(0, 44), ms });
+      const sel = m[1].replace(/\s+/g, ' ').trim();
+      if (sel.startsWith('@')) continue;            // keyframe stops carry no duration
+      const decls = m[2].match(/(?:transition|animation)\s*:\s*[^;]+/g) || [];
+      decls.forEach(d => {
+        (d.match(/(\d*\.?\d+)(ms|s)\b/g) || []).forEach(v => {
+          const ms = v.endsWith('ms') ? parseFloat(v) : parseFloat(v) * 1000;
+          if (ms > 0) out.push({ sel, ms, viz: /\.viz\b/.test(sel) });
+        });
       });
     }
     return out;
   });
-  const overLimit = durations.filter(d => d.ms > 300);
-  check('no UI animation exceeds 300ms', overLimit.length === 0,
-    overLimit.map(d => d.sel + ' ' + d.ms + 'ms').join(', '));
+  const ui = durations.filter(d => !d.viz);
+  const art = durations.filter(d => d.viz);
+  check('no interface animation exceeds 300ms', ui.every(d => d.ms <= 300),
+    ui.filter(d => d.ms > 300).map(d => d.sel + ' ' + d.ms + 'ms').join(', '));
+  check('illustration animations stay watchable and bounded (<=2s)',
+    art.length > 0 && art.every(d => d.ms <= 2000),
+    'found ' + art.length + ', over: ' + art.filter(d => d.ms > 2000).map(d => d.sel).join(','));
+
+  // Every illustration animation must have a reduced-motion counterpart,
+  // or the exemption above becomes a way to smuggle motion past the check.
+  const rmCovered = await page.evaluate(() => {
+    const css = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+    const block = css.match(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/g) || [];
+    const body = block.join('\n');
+    return ['.bb-chip', '.bb-fill', '.fx-tok'].filter(sel => body.indexOf(sel) === -1);
+  });
+  check('every illustration animation is answered under reduced motion',
+    rmCovered.length === 0, 'uncovered: ' + rmCovered.join(','));
 
   // ---------------------------------------------------------------
   console.log('\nRUNTIME');
