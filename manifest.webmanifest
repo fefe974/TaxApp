@@ -1,20 +1,48 @@
 {
-  "name": "Ledgerly · Accounting workflow guide",
-  "short_name": "Ledgerly",
-  "description": "A comprehensive accounting problem worked end to end in 17 annotated steps, from the first transaction to a proved balance sheet.",
+  "name": "Speedy Delivery Inc. · Accounting workflow",
+  "short_name": "Workflow",
+  "description": "A comprehensive accounting problem worked one step at a time. Watch the tabular summary build itself, then turn it into the three financial statements.",
   "start_url": "./index.html",
   "scope": "./",
   "id": "./index.html",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui", "browser"],
-  "background_color": "#080b10",
-  "theme_color": "#080b10",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
   "orientation": "portrait-primary",
-  "categories": ["education", "finance", "productivity"],
+  "categories": [
+    "education",
+    "finance",
+    "productivity"
+  ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

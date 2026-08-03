@@ -1,109 +1,118 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8" />
-<!-- No maximum-scale: capping zoom breaks accessibility for low-vision users. -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Speedy Delivery Inc. · Complete accounting workflow</title>
-<meta name="description" content="Short explanations, clear diagrams, then real accounting work. Build the tabular summary, journalize, and assemble financial statements yourself." />
-<meta name="theme-color" content="#080B10" />
+<title>Speedy Delivery Inc. · Accounting workflow</title>
+<meta name="description" content="A comprehensive accounting problem worked one step at a time. Watch the tabular summary build itself, then turn it into the three financial statements." />
+<meta name="theme-color" content="#f8fafc" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Ledgerly" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Workflow" />
 <meta name="mobile-web-app-capable" content="yes" />
 <style>
 /* ============================================================
-   Ledgerly design system
+   Tokens — light by default. Students read dense tables in
+   daylight, so the ground is paper, not ink.
    ============================================================ */
 :root {
-  --bg: #080b10;
-  --bg-2: #0c1219;
-  --surface: #121a23;
-  --surface-2: #18232f;
-  --surface-3: #1f2c3a;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --text: #e9f1f8;
-  --text-dim: #a8bacb;
-  --muted: #7d92a6;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-3: #e2e8f0;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --text: #1e293b;
+  --text-dim: #475569;
+  --muted: #64748b;
 
-  --brand: #3ddc97;
-  --brand-deep: #12b981;
-  --brand-soft: rgba(61, 220, 151, 0.14);
-  --cyan: #62e0f5;
-  --violet: #9d8cff;
-  --violet-soft: rgba(157, 140, 255, 0.14);
-  --amber: #ffc46b;
-  --amber-soft: rgba(255, 196, 107, 0.14);
-  --rose: #ff7a85;
-  --rose-soft: rgba(255, 122, 133, 0.14);
-  --on-brand: #04140d;
+  --brand: #2563eb;
+  --brand-deep: #1d4ed8;
+  --brand-soft: #eff6ff;
+  --brand-line: #bfdbfe;
+  --brand-ink: #1e3a8a;
+  --on-brand: #ffffff;
 
-  --asset: #62e0f5;
-  --liability: #ffc46b;
-  --equity: #9d8cff;
-  /* Annotation orange: a distinct role, never a semantic state. */
-  --anno: #ff8a4c;
-  --anno-soft: rgba(255, 138, 76, 0.16);
+  --amber: #b45309;
+  --amber-soft: #fffbeb;
+  --amber-line: #fcd34d;
+  --amber-ink: #78350f;
 
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
-  /* Neutral elevation only. Coloured haloes read as decoration, not depth. */
-  --shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.75);
-  --shadow-lift: 0 14px 34px -16px rgba(0, 0, 0, 0.85);
+  --good: #059669;
+  --good-soft: #ecfdf5;
+  --good-line: #6ee7b7;
+  --good-deep: #047857;
+
+  --bad: #dc2626;
+  --bad-soft: #fef2f2;
+  --bad-line: #fecaca;
+
+  --head-bar: #334155;
+  --head-bar-2: #475569;
+  --head-ink: #ffffff;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 12px 28px -12px rgba(15, 23, 42, 0.22);
+  --shadow-up: 0 -8px 24px -12px rgba(15, 23, 42, 0.15);
 
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-
-  --bar-h: 76px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html[data-theme="light"] {
-  --bg: #f4f7fa;
-  --bg-2: #eaeff5;
-  --surface: #ffffff;
-  --surface-2: #f2f6fa;
-  --surface-3: #e6edf4;
-  --line: rgba(11, 20, 32, 0.09);
-  --line-strong: rgba(11, 20, 32, 0.18);
-  --text: #0b1420;
-  --text-dim: #3d4d5f;
-  --muted: #61748a;
+html[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface: #131c2e;
+  --surface-2: #1a2438;
+  --surface-3: #243047;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --text: #e8eef7;
+  --text-dim: #b3c1d4;
+  --muted: #8496ad;
 
-  --brand: #0d9b6c;
-  --brand-deep: #067a54;
-  --brand-soft: rgba(13, 155, 108, 0.12);
-  --cyan: #0d8fb3;
-  --violet: #6a55e8;
-  --violet-soft: rgba(106, 85, 232, 0.12);
-  --amber: #a9720b;
-  --amber-soft: rgba(169, 114, 11, 0.14);
-  --rose: #d63a52;
-  --rose-soft: rgba(214, 58, 82, 0.12);
-  --on-brand: #ffffff;
+  --brand: #60a5fa;
+  --brand-deep: #3b82f6;
+  --brand-soft: rgba(96, 165, 250, 0.13);
+  --brand-line: rgba(96, 165, 250, 0.36);
+  --brand-ink: #bfdbfe;
+  --on-brand: #06152e;
 
-  --asset: #0d8fb3;
-  --liability: #a9720b;
-  --equity: #6a55e8;
-  --anno: #d2560a;
-  --anno-soft: rgba(210, 86, 10, 0.14);
-  --shadow: 0 16px 36px -24px rgba(11, 20, 32, 0.5);
-  --shadow-lift: 0 22px 50px -26px rgba(11, 20, 32, 0.45);
+  --amber: #fbbf24;
+  --amber-soft: rgba(251, 191, 36, 0.11);
+  --amber-line: rgba(251, 191, 36, 0.34);
+  --amber-ink: #fde68a;
+
+  --good: #34d399;
+  --good-soft: rgba(52, 211, 153, 0.12);
+  --good-line: rgba(52, 211, 153, 0.34);
+  --good-deep: #10b981;
+
+  --bad: #f87171;
+  --bad-soft: rgba(248, 113, 113, 0.12);
+  --bad-line: rgba(248, 113, 113, 0.32);
+
+  --head-bar: #1e293b;
+  --head-bar-2: #263349;
+  --head-ink: #e8eef7;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 14px 32px -14px rgba(0, 0, 0, 0.75);
+  --shadow-up: 0 -8px 24px -14px rgba(0, 0, 0, 0.6);
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -112,810 +121,520 @@ html, body {
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(70% 45% at 12% -6%, rgba(61, 220, 151, 0.12), transparent 68%),
-    radial-gradient(60% 40% at 92% 4%, rgba(157, 140, 255, 0.11), transparent 66%);
-}
-html[data-theme="light"] body::before {
-  background:
-    radial-gradient(70% 45% at 12% -6%, rgba(13, 155, 108, 0.09), transparent 68%),
-    radial-gradient(60% 40% at 92% 4%, rgba(106, 85, 232, 0.08), transparent 66%);
-}
-
-h1, h2, h3, h4, p { margin: 0; }
-button, input, select, textarea { font: inherit; color: inherit; }
-button { cursor: pointer; border: 0; background: none; }
-a { color: var(--brand); }
-
-/* Keyboard focus must stay visible everywhere. tap-highlight is suppressed
-   above for touch, which would otherwise leave keyboard users with nothing. */
-:focus-visible {
-  outline: 2px solid var(--ring, var(--brand));
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-.opt:focus-visible, .sortrow:focus-visible, .seqitem:focus-visible,
-.mission:focus-visible, .hero:focus-visible { outline-offset: 2px; }
+h1, h2, h3, p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
 
 .app {
-  position: relative;
-  z-index: 1;
-  /* vh first as a fallback for WebViews without dvh support — without a
-     resolved height the scroll containers below would collapse. */
-  height: 100vh;
-  max-height: 100vh;
-  height: 100dvh;
-  max-height: 100dvh;
+  height: 100vh; height: 100dvh;
+  max-height: 100vh; max-height: 100dvh;
+  display: flex; flex-direction: column;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
+.wrap { width: 100%; max-width: 720px; margin: 0 auto; }
 
-.wrap {
-  width: 100%;
-  max-width: 620px;
-  margin: 0 auto;
-  padding: 0 18px;
-}
-
-.screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
-.screen.is-active { display: flex; animation: screen-in 0.34s var(--ease); }
-@keyframes screen-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-
-.scroller {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-top: max(14px, env(safe-area-inset-top));
-  padding-bottom: 26px;
-}
-.screen > .scroller:last-child { padding-bottom: calc(26px + env(safe-area-inset-bottom)); }
-
-/* ---------- typography helpers ---------- */
-.eyebrow {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.display { font-size: 30px; line-height: 1.14; font-weight: 760; letter-spacing: -0.028em; }
-.title { font-size: 22px; line-height: 1.22; font-weight: 720; letter-spacing: -0.02em; }
-.subtitle { font-size: 17px; font-weight: 680; letter-spacing: -0.012em; }
-.body { color: var(--text-dim); font-size: 15.5px; line-height: 1.62; }
-.small { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.num { font-variant-numeric: tabular-nums; font-family: var(--mono); }
-.pos { color: var(--brand); }
-.neg { color: var(--rose); }
-
-/* ---------- cards ---------- */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  padding: 18px;
+/* ---------- header ---------- */
+.appbar {
+  flex: 0 0 auto;
+  background: var(--brand);
+  color: #fff;
+  padding: max(14px, env(safe-area-inset-top)) 18px 14px;
   box-shadow: var(--shadow);
-}
-.card + .card { margin-top: 14px; }
-
-/* ---------- buttons ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 50px;
-  padding: 0 20px;
-  border-radius: 15px;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--line);
-  transition: transform 0.16s var(--ease), opacity 0.16s, background 0.16s;
-}
-.btn:active { transform: scale(0.975); }
-.btn[disabled] { opacity: 0.42; pointer-events: none; }
-.btn-primary {
-  background: linear-gradient(180deg, var(--brand), var(--brand-deep));
-  color: var(--on-brand);
-  border-color: transparent;
-  box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.55);
-}
-.btn-ghost { background: transparent; border-color: var(--line-strong); }
-.btn-quiet { background: transparent; border-color: transparent; color: var(--muted); font-weight: 640; }
-.btn-block { width: 100%; }
-.btn-sm { min-height: 44px; font-size: 14px; padding: 0 14px; border-radius: 11px; }
-
-/* ---------- bottom action bar ---------- */
-.actionbar {
-  position: sticky;
-  bottom: 0;
   z-index: 20;
-  padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
-  background: linear-gradient(180deg, transparent, var(--bg) 34%);
 }
-.actionbar-inner {
-  max-width: 620px;
-  margin: 0 auto;
-  display: flex;
-  gap: 10px;
-  align-items: center;
+html[data-theme="dark"] .appbar { background: var(--surface); border-bottom: 1px solid var(--line); color: var(--text); }
+.appbar-inner { display: flex; align-items: center; gap: 12px; max-width: 720px; margin: 0 auto; }
+.mark {
+  flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff; color: var(--brand);
+  box-shadow: var(--shadow-sm);
 }
-.actionbar-inner .btn-primary, .actionbar-inner .grow { flex: 1; }
+html[data-theme="dark"] .mark { background: var(--brand); color: var(--on-brand); }
+.mark svg { width: 22px; height: 22px; }
+.appbar-title { flex: 1; min-width: 0; }
+.appbar-title b { display: block; font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+.appbar-title span { display: block; font-size: 12px; font-weight: 500; opacity: 0.82; }
+.ghost-btn {
+  flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+html[data-theme="dark"] .ghost-btn { background: var(--surface-2); color: var(--text-dim); border: 1px solid var(--line); }
+.ghost-btn svg { width: 19px; height: 19px; }
 
-/* ---------- tab bar ---------- */
-.tabbar {
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
+/* ---------- tabs ---------- */
+.tabs {
+  flex: 0 0 auto;
   display: flex;
-  justify-content: center;
-  gap: 6px;
-  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-top: 1px solid var(--line);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  z-index: 15;
 }
+.tabs-inner { display: flex; width: 100%; max-width: 720px; margin: 0 auto; }
 .tab {
   flex: 1;
-  max-width: 130px;
-  display: grid;
-  justify-items: center;
-  gap: 3px;
-  padding: 7px 4px;
-  border-radius: 13px;
+  position: relative;
+  min-height: 54px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 13.5px; font-weight: 700;
   color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  transition: color 0.18s, background 0.18s;
+  transition: color 0.18s;
 }
-.tab svg { width: 21px; height: 21px; }
-.tab.is-active { color: var(--brand); background: var(--brand-soft); }
+.tab svg { width: 18px; height: 18px; }
+.tab.on { color: var(--brand); }
+.tab.on::after {
+  content: ""; position: absolute; left: 12%; right: 12%; bottom: 0;
+  height: 3px; border-radius: 3px 3px 0 0; background: var(--brand);
+}
+.tab-sep { width: 1px; background: var(--line); margin: 12px 0; }
 
-/* ---------- diagrams ---------- */
-.figure {
-  background: var(--surface-2);
+/* ---------- panes ---------- */
+.pane { flex: 1; min-height: 0; display: none; flex-direction: column; }
+.pane.on { display: flex; }
+.scroll {
+  flex: 1; min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#pane-guide .scroll { padding: 22px 18px 30px; }
+
+/* ---------- step ---------- */
+.step-eyebrow {
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.step-title {
+  font-size: 27px; line-height: 1.16; font-weight: 800; letter-spacing: -0.03em;
+  margin-top: 8px;
+  text-wrap: balance;
+}
+.stack { display: grid; gap: 22px; margin-top: 26px; }
+/* Grid items default to min-width:auto, so a wide table would blow the
+   column out past the viewport instead of scrolling inside its own box. */
+.stack > * { min-width: 0; }
+.wrap { min-width: 0; }
+
+/* Boxes with the label riding the top edge. */
+.box { position: relative; border-radius: var(--r-xl); padding: 20px 18px 18px; }
+.box-tag {
+  position: absolute; top: -11px; left: 18px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  max-width: calc(100% - 36px);
+  overflow: hidden; text-overflow: ellipsis;
+}
+.box-tag svg { width: 13px; height: 13px; flex: 0 0 auto; }
+
+.box-fact { background: var(--amber-soft); border: 1px solid var(--amber-line); }
+.box-fact .box-tag { background: var(--surface); color: var(--amber); border: 1px solid var(--amber-line); }
+.box-fact p { font-size: 16.5px; line-height: 1.55; font-weight: 550; color: var(--amber-ink); }
+
+.box-concept { background: var(--surface); border: 1px solid var(--brand-line); box-shadow: var(--shadow); }
+.box-concept .box-tag { background: var(--brand); color: var(--on-brand); }
+.box-concept p { font-size: 16px; line-height: 1.62; color: var(--text-dim); white-space: pre-line; }
+.box-concept p + p { margin-top: 12px; }
+.box-concept b { color: var(--text); font-weight: 700; }
+
+.box-impact { background: var(--brand-soft); border: 1px solid var(--brand-line); padding: 18px 16px; }
+.box-impact .impact-cap {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--brand-ink); margin-bottom: 13px;
+}
+.box-impact .impact-cap svg { width: 15px; height: 15px; }
+
+.equation {
+  display: flex; align-items: stretch; gap: 10px;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: var(--r-md);
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  padding: 16px;
 }
-.figure-cap { font-size: 11.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted); margin-bottom: 13px; }
+.eq-side { flex: 1; min-width: 0; display: grid; gap: 6px; align-content: start; }
+.eq-side:last-child { justify-items: end; text-align: right; }
+.eq-cap { font-size: 10px; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.eq-item { font-size: 13.5px; font-weight: 650; line-height: 1.35; }
+.eq-item b { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.eq-op { display: grid; place-items: center; font-size: 18px; font-weight: 800; color: var(--muted); }
 
-.eqbar { display: grid; gap: 8px; }
-.eqbar-row { display: flex; align-items: stretch; gap: 8px; }
-.eqbar-seg {
-  border-radius: var(--r-sm);
-  padding: 11px 12px;
-  display: grid;
-  gap: 2px;
-  align-content: center;
-  border: 1px solid;
-  min-height: 62px;
+.note-warn {
+  display: flex; gap: 10px; margin-top: 14px;
+  padding: 12px 14px; border-radius: var(--r-md);
+  background: var(--bad-soft); border: 1px solid var(--bad-line);
 }
-.eqbar-seg b { font-size: 14.5px; font-weight: 740; letter-spacing: -0.01em; }
-.eqbar-seg span { font-size: 11.5px; opacity: 0.82; line-height: 1.35; }
-.seg-asset { background: color-mix(in srgb, var(--asset) 15%, transparent); border-color: color-mix(in srgb, var(--asset) 40%, transparent); color: var(--asset); }
-.seg-liability { background: color-mix(in srgb, var(--liability) 15%, transparent); border-color: color-mix(in srgb, var(--liability) 40%, transparent); color: var(--liability); }
-.seg-equity { background: color-mix(in srgb, var(--equity) 15%, transparent); border-color: color-mix(in srgb, var(--equity) 40%, transparent); color: var(--equity); }
-.eq-op { display: grid; place-items: center; font-size: 19px; font-weight: 800; color: var(--muted); padding: 0 2px; }
+.note-warn svg { flex: 0 0 auto; width: 17px; height: 17px; color: var(--bad); margin-top: 2px; }
+.note-warn p { font-size: 14px; line-height: 1.5; color: var(--text-dim); }
 
-.flow { display: grid; gap: 8px; }
-.flow-node {
+/* ---------- source document ---------- */
+.doc {
+  margin-top: 14px;
   border-radius: var(--r-md);
   border: 1px solid var(--line-strong);
   background: var(--surface);
-  padding: 12px 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
-.flow-node b { font-size: 14.5px; font-weight: 720; display: block; }
-.flow-node span { font-size: 12.5px; color: var(--muted); }
-.flow-arrow { display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--brand); font-size: 12px; font-weight: 640; line-height: 1; }
-.flow-arrow svg { width: 16px; height: 16px; }
-
-.tgrid { display: grid; grid-template-columns: 1fr 1fr; }
-.taccount { border: 1px solid var(--line-strong); border-radius: var(--r-md); overflow: hidden; background: var(--surface); }
-.taccount-name { padding: 9px 12px; font-weight: 720; font-size: 14px; text-align: center; border-bottom: 1px solid var(--line-strong); background: var(--surface-2); }
-.taccount-cols { display: grid; grid-template-columns: 1fr 1fr; min-height: 92px; }
-.taccount-col { padding: 9px 10px; display: grid; gap: 5px; align-content: start; }
-.taccount-col:first-child { border-right: 1px solid var(--line-strong); }
-.taccount-head { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: center; }
-.taccount-val { font-family: var(--mono); font-size: 13.5px; text-align: right; font-variant-numeric: tabular-nums; }
-.taccount-total { border-top: 1px solid var(--line-strong); padding-top: 5px; font-weight: 700; }
-
-.rulegrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.rule {
-  border-radius: var(--r-sm);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  padding: 10px 12px;
-}
-.rule b { display: block; font-size: 12.5px; font-weight: 760; margin-bottom: 3px; }
-.rule span { font-size: 12px; color: var(--muted); line-height: 1.45; }
-
-.cyclewheel { display: grid; gap: 7px; }
-.cyclephase {
-  display: flex; gap: 11px; align-items: center;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  padding: 10px 12px;
-}
-.cyclephase i {
-  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 9px;
-  display: grid; place-items: center; font-style: normal;
-  font-size: 12px; font-weight: 800;
-  background: var(--brand-soft); color: var(--brand);
-}
-.cyclephase b { font-size: 13.5px; font-weight: 720; display: block; }
-.cyclephase span { font-size: 12px; color: var(--muted); }
-
-/* ============================================================
-   Accounting document language
-   Ruled paper, source documents, and statements set the way an
-   accountant sets them: right-aligned tabular figures, a single
-   rule above a subtotal, a double rule under a final total.
-   ============================================================ */
-
-/* --- source documents (receipt, invoice, note) --- */
-.doc {
-  position: relative;
-  border-radius: 4px;
+.doc-bar {
+  padding: 8px 13px;
   background: var(--surface-2);
-  border: 1px solid var(--line-strong);
-  padding: 14px 16px 16px;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  line-height: 1.7;
-  font-variant-numeric: tabular-nums;
-}
-.doc::before {
-  content: "";
-  position: absolute; inset: 0 0 auto 0; height: 3px;
-  border-radius: 4px 4px 0 0;
-  background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px);
-}
-.doc-kind {
-  font-family: var(--font);
-  font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  border-bottom: 1px solid var(--line);
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 8px;
 }
-.doc-issuer { font-weight: 700; color: var(--text); }
-.doc-row { display: flex; justify-content: space-between; gap: 14px; }
+.doc-body { padding: 13px 15px 15px; font-family: var(--mono); font-size: 12.5px; line-height: 1.75; font-variant-numeric: tabular-nums; }
+.doc-issuer { font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.doc-row { display: flex; justify-content: space-between; gap: 14px; color: var(--text-dim); }
 .doc-row span:last-child { white-space: nowrap; }
 .doc-total {
   display: flex; justify-content: space-between; gap: 14px;
-  margin-top: 7px; padding-top: 7px;
+  margin-top: 8px; padding-top: 8px;
   border-top: 1px solid var(--line-strong);
   font-weight: 700; color: var(--text);
 }
-.doc-note { font-family: var(--font); font-size: 12px; color: var(--muted); margin-top: 9px; font-style: italic; }
+.doc-note { font-family: var(--font); font-size: 12px; font-style: italic; color: var(--muted); margin-top: 9px; }
 
-/* --- financial statements in proper form --- */
-.stmt {
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--r-md);
-  padding: 16px 14px;
+/* ---------- tables ---------- */
+.tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.led {
+  border-collapse: separate; border-spacing: 0;
+  width: max-content; min-width: 100%;
+  font-size: 12.5px;
   font-variant-numeric: tabular-nums;
-}
-.stmt-head { text-align: center; margin-bottom: 14px; }
-.stmt-head b { display: block; font-size: 13.5px; font-weight: 780; letter-spacing: 0.02em; }
-.stmt-head span { display: block; font-size: 12.5px; color: var(--text-dim); }
-.stmt-head i { display: block; font-size: 11.5px; color: var(--muted); font-style: normal; }
-.stmt-line { display: flex; align-items: baseline; gap: 10px; font-size: 13px; padding: 2px 0; }
-.stmt-line .lbl { flex: 1; min-width: 0; }
-.stmt-line .amt { font-family: var(--mono); text-align: right; white-space: nowrap; min-width: 74px; }
-.stmt-line.indent .lbl { padding-left: 16px; }
-.stmt-line.head-line { font-weight: 700; }
-.stmt-line.total { font-weight: 700; }
-.stmt-line.total .amt { border-top: 1px solid var(--line-strong); padding-top: 3px; }
-.stmt-line.grand .amt {
-  border-top: 1px solid var(--line-strong);
-  border-bottom: 3px double var(--line-strong);
-  padding: 3px 0;
-  font-weight: 780;
-}
-.stmt-gap { height: 9px; }
-.stmt-tie {
-  margin-top: 12px; padding: 9px 11px;
-  border-radius: var(--r-sm);
-  background: var(--brand-soft);
-  border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
-  font-size: 12.5px; color: var(--text-dim);
-}
-.stmt-tie b { color: var(--brand); }
-
-/* --- running summary strip --- */
-
-/* --- guided walkthrough --- */
-.wt-source { margin-bottom: 4px; }
-.wt-steps { display: grid; gap: 10px; margin-top: 14px; }
-.wt-step {
-  border: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--surface-2);
-  padding: 13px 14px;
-}
-.wt-step.is-locked { opacity: 0.42; pointer-events: none; }
-.wt-step.is-done { border-color: color-mix(in srgb, var(--brand) 42%, transparent); }
-.wt-head { display: flex; gap: 10px; align-items: flex-start; }
-.wt-no {
-  flex: 0 0 auto; width: 22px; height: 22px; border-radius: 7px;
-  display: grid; place-items: center;
-  font-size: 11px; font-weight: 800;
-  background: var(--surface-3); color: var(--text-dim);
-}
-.wt-step.is-done .wt-no { background: var(--brand); color: var(--on-brand); }
-.wt-no svg { width: 13px; height: 13px; }
-.wt-ask { font-size: 14.5px; font-weight: 640; line-height: 1.42; flex: 1; }
-.wt-body { margin-top: 11px; }
-.wt-opts { display: flex; flex-wrap: wrap; gap: 7px; }
-.wt-opt {
-  padding: 0 13px; min-height: 44px;
-  border-radius: 11px;
-  border: 1.5px solid var(--line-strong);
   background: var(--surface);
-  font-size: 13.5px; font-weight: 620;
-  transition: border-color 0.16s, background 0.16s, transform 0.16s var(--ease);
 }
-.wt-opt:active { transform: scale(0.98); }
-.wt-opt.picked { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
-.wt-opt.right { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
-.wt-opt.wrong { border-color: var(--rose); background: var(--rose-soft); color: var(--rose); }
-.wt-why {
-  margin-top: 11px; padding: 10px 12px;
-  border-radius: var(--r-sm);
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-  font-size: 13px; line-height: 1.55; color: var(--text-dim);
-  animation: pop 0.26s var(--ease);
-}
-.wt-why b { color: var(--text); }
-.wt-why.miss { background: var(--rose-soft); border-color: color-mix(in srgb, var(--rose) 32%, transparent); }
-.wt-post {
-  margin-top: 12px; padding: 11px 13px;
-  border-radius: var(--r-md);
-  border: 1px solid color-mix(in srgb, var(--brand) 36%, transparent);
-  background: var(--brand-soft);
-  font-size: 13.5px; line-height: 1.5;
-}
-.wt-post b { color: var(--brand); }
-
-/* Source data the task needs, shown with the task. */
-.task-context {
-  margin-top: 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--surface-2);
-  padding: 13px 14px;
-}
-.task-context .facts { margin-top: 0; }
-.task-context .ctx-cap {
-  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 10px;
-}
-
-/* Blank amount slot on an unfilled statement form. */
-.amt-blank {
-  display: inline-block;
-  width: 58px;
-  border-bottom: 1px dotted var(--line-strong);
-  height: 1em;
-  vertical-align: -0.15em;
-}
-
-.reveal { margin-top: 14px; animation: pop 0.32s var(--ease); }
-
-/* ============================================================
-   Workflow guide
-   Numbered steps down a rail. Each step frames the accounting
-   artefact it acts on and rings the exact cell it fills.
-   ============================================================ */
-.wf-head {
-  position: sticky; top: 0; z-index: 15;
-  padding: max(12px, env(safe-area-inset-top)) 18px 12px;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+table.led th, table.led td { padding: 9px 10px; text-align: right; white-space: nowrap; }
+table.led thead .grp {
+  background: var(--head-bar); color: var(--head-ink);
+  text-align: center; font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
   border-bottom: 1px solid var(--line);
 }
-.wf-head-inner { max-width: 660px; margin: 0 auto; display: flex; align-items: center; gap: 11px; }
-.wf-head-title { flex: 1; min-width: 0; }
-.wf-head-title b { display: block; font-size: 14.5px; font-weight: 740; letter-spacing: -0.015em; }
-.wf-head-title span { display: block; font-size: 12px; color: var(--muted); }
+table.led thead .grp .op { background: var(--head-bar-2); }
+table.led thead .acct th {
+  background: var(--surface-2);
+  font-size: 11px; font-weight: 700; color: var(--text-dim);
+  border-bottom: 2px solid var(--line-strong);
+}
+table.led .op { color: var(--muted); font-weight: 700; padding-left: 4px; padding-right: 4px; }
+table.led tbody td { border-bottom: 1px solid var(--line); color: var(--text-dim); font-family: var(--mono); }
+table.led .lab {
+  position: sticky; left: 0; z-index: 2;
+  text-align: left; font-family: var(--font); font-weight: 700; font-size: 11.5px;
+  background: var(--surface-2); color: var(--text-dim);
+  border-right: 1px solid var(--line);
+  box-shadow: 2px 0 4px rgba(15, 23, 42, 0.04);
+}
+table.led thead .lab { z-index: 4; }
+table.led thead .grp .lab { background: var(--head-bar); }
+table.led .rem { text-align: left; font-family: var(--font); font-style: italic; font-size: 11.5px; color: var(--muted); }
 
-.wf-phase {
-  display: flex; align-items: center; gap: 11px;
-  margin: 26px 0 14px;
+/* the row that just landed */
+table.led tr.fresh td { background: var(--brand-soft); }
+table.led tr.fresh .lab { background: var(--brand-soft); color: var(--brand); }
+/* the cells this step produced */
+table.led td.hit {
+  font-weight: 800; color: var(--brand-ink);
+  background: var(--brand-soft);
+  box-shadow: inset 0 0 0 2px var(--brand);
+  border-radius: 5px;
 }
-.wf-phase b { font-size: 12px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; color: var(--brand); }
-.wf-phase i {
-  flex: 1; height: 1px; font-style: normal;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 40%, transparent), transparent);
+table.led tr.totals td {
+  background: var(--good-soft); color: var(--good-deep);
+  font-weight: 800; border-top: 2px solid var(--good-line); border-bottom: 0;
 }
+table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep); }
 
-.wf-step { position: relative; display: flex; gap: 14px; padding-bottom: 18px; }
-/* The rail reads the list as a sequence rather than a stack of cards. */
-.wf-step::before {
-  content: ""; position: absolute; left: 15px; top: 34px; bottom: 0;
-  width: 2px; background: var(--line);
-}
-.wf-step:last-child::before { display: none; }
-.wf-badge {
-  position: relative; z-index: 1;
-  flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
-  display: grid; place-items: center;
-  font-size: 13px; font-weight: 800;
+.proof {
+  display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+  padding: 14px;
+  background: var(--good);
+  color: #fff;
+  font-family: var(--mono); font-weight: 800; font-size: 14px;
   font-variant-numeric: tabular-nums;
-  background: var(--surface-3); color: var(--text-dim);
-  border: 2px solid var(--bg);
 }
-.wf-step.is-key .wf-badge { background: var(--brand); color: var(--on-brand); }
-.wf-main { flex: 1; min-width: 0; padding-top: 4px; }
-.wf-do { font-size: 15.5px; font-weight: 660; line-height: 1.4; letter-spacing: -0.012em; }
-.wf-note { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin-top: 6px; }
-.wf-note b { color: var(--text-dim); }
+.proof span { display: inline-flex; align-items: center; gap: 8px; }
+.proof svg { width: 17px; height: 17px; }
 
-/* Framed artefact, the way Scribe frames a screenshot. */
-.shot {
-  margin-top: 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line-strong);
+.card {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
   background: var(--surface);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-.shot-bar {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 11px;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface-2);
-  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--muted);
-}
-.shot-dots { display: flex; gap: 4px; }
-.shot-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
-.shot-body { padding: 0; }
-.shot-body .wp-table { font-size: 11.5px; }
-.shot-body .stmt { border: 0; border-radius: 0; }
-.shot-body .doc { border: 0; border-radius: 0; }
-.shot-body .doc::before { display: none; }
-.shot .balance-line { border-radius: 0; }
 
-/* The ring. One annotation role, one colour, never semantic. */
-.wp-table td.anno, .stmt-line.anno .amt { position: relative; color: var(--anno) !important; font-weight: 700; }
-.wp-table td.anno::after {
-  content: ""; position: absolute; inset: -2px 0;
-  border: 2px solid var(--anno); border-radius: 50%;
-  pointer-events: none;
-}
-.stmt-line.anno { background: var(--anno-soft); border-radius: 5px; }
-.stmt-line.anno .lbl { color: var(--anno); font-weight: 700; }
-.wp-table tr.anno-row td { background: var(--anno-soft); }
-.wp-table col.anno-col { background: var(--anno-soft); }
+/* ---------- statements ---------- */
+.stmt { padding: 18px 16px; font-variant-numeric: tabular-nums; background: var(--surface); }
+.stmt-head { text-align: center; margin-bottom: 15px; }
+.stmt-head b { display: block; font-size: 14px; font-weight: 800; }
+.stmt-head span { display: block; font-size: 13px; color: var(--text-dim); }
+.stmt-head i { display: block; font-size: 12px; color: var(--muted); font-style: normal; }
+.stmt-line { display: flex; align-items: baseline; gap: 10px; font-size: 13.5px; padding: 3px 4px; border-radius: 5px; }
+.stmt-line .lbl { flex: 1; min-width: 0; }
+.stmt-line .amt { font-family: var(--mono); text-align: right; white-space: nowrap; min-width: 78px; }
+.stmt-line.ind .lbl { padding-left: 16px; }
+.stmt-line.hd { font-weight: 700; }
+.stmt-line.tot { font-weight: 700; }
+.stmt-line.tot .amt { border-top: 1px solid var(--line-strong); padding-top: 3px; }
+.stmt-line.grand { font-weight: 800; }
+.stmt-line.grand .amt { border-top: 1px solid var(--line-strong); border-bottom: 3px double var(--line-strong); padding: 3px 0; }
+.stmt-line.hit { background: var(--brand-soft); box-shadow: inset 0 0 0 1.5px var(--brand-line); }
+.stmt-line.hit .lbl { color: var(--brand-ink); font-weight: 700; }
+.stmt-line.hit .amt { color: var(--brand-ink); font-weight: 800; }
+.stmt-gap { height: 10px; }
 
-.wf-tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 10px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--anno-soft);
-  color: var(--anno);
-  font-size: 12px; font-weight: 700;
-}
-.wf-tag svg { width: 13px; height: 13px; }
-
-.wf-result {
-  margin-top: 12px; padding: 11px 13px;
-  border-radius: var(--r-md);
-  border: 1px solid color-mix(in srgb, var(--brand) 34%, transparent);
-  background: var(--brand-soft);
-  font-size: 13.5px; line-height: 1.5; color: var(--text-dim);
-}
-.wf-result b { color: var(--brand); }
-
-/* --- What / Why / How --- */
-.wwh { display: grid; gap: 12px; }
-.wwh-block {
-  border-radius: var(--r-lg);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  padding: 15px 16px;
-}
-.wwh-tag {
-  display: inline-block;
-  font-size: 12px; font-weight: 800; letter-spacing: 0.02em;
-  margin-bottom: 7px;
-}
-.wwh-what .wwh-tag { color: var(--asset); }
-.wwh-why .wwh-tag { color: var(--liability); }
-.wwh-how .wwh-tag { color: var(--equity); }
-.wwh-block p { font-size: 15px; line-height: 1.6; color: var(--text-dim); }
-.wwh-block p + p { margin-top: 10px; }
-.wwh-block strong { color: var(--text); font-weight: 700; }
-.howlist { display: grid; gap: 9px; counter-reset: how; margin-top: 2px; }
-.howstep { display: flex; gap: 11px; font-size: 14.5px; line-height: 1.5; color: var(--text-dim); }
-.howstep i {
+/* ---------- facts list ---------- */
+.facts { display: grid; gap: 10px; }
+.fact { display: flex; gap: 11px; font-size: 14.5px; line-height: 1.45; color: var(--text-dim); }
+.fact i {
   flex: 0 0 auto; width: 22px; height: 22px; border-radius: 7px;
   display: grid; place-items: center; font-style: normal;
   font-size: 11px; font-weight: 800;
-  background: var(--violet-soft); color: var(--violet);
+  background: var(--brand-soft); color: var(--brand);
 }
 
-/* ---------- misc ---------- */
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 24px 0 12px; }
+/* ---------- bottom controls ---------- */
+.controls {
+  flex: 0 0 auto;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  box-shadow: var(--shadow-up);
+  z-index: 20;
+}
+.controls-inner { display: flex; align-items: center; gap: 12px; width: 100%; max-width: 720px; margin: 0 auto; }
+.nav-btn {
+  flex: 0 0 auto;
+  min-height: 48px; min-width: 48px;
+  padding: 0 15px;
+  border-radius: var(--r-md);
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  font-size: 14.5px; font-weight: 700;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-dim);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s var(--ease), background 0.15s, opacity 0.15s;
+}
+.nav-btn:active { transform: scale(0.97); }
+.nav-btn svg { width: 19px; height: 19px; }
+.nav-btn[disabled] { opacity: 0.4; pointer-events: none; box-shadow: none; }
+.nav-next {
+  background: var(--brand); color: var(--on-brand); border-color: transparent;
+  box-shadow: 0 4px 12px -4px var(--brand);
+}
+.progress-wrap { flex: 1; min-width: 0; display: grid; justify-items: center; gap: 6px; }
+.progress-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.progress-track { width: 100%; max-width: 210px; height: 7px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+.progress-track i { display: block; height: 100%; width: 100%; border-radius: 999px; background: var(--brand); transform-origin: left center; transform: scaleX(0); transition: transform 0.35s var(--ease); }
+
+/* ---------- table pane ---------- */
+#pane-table .scroll { padding: 14px; background: var(--surface-2); }
+.hint {
+  margin: 16px auto 0; max-width: 420px;
+  padding: 14px 16px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--line);
+  font-size: 14px; color: var(--muted); text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.fade { animation: fade 0.34s var(--ease); }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.pop { animation: pop 0.3s var(--ease); }
+@keyframes pop { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
-
-@media (min-width: 720px) {
-  .display { font-size: 34px; }
-  .wrap { max-width: 660px; }
-  .actionbar-inner, .lesson-head-inner { max-width: 660px; }
-  .rulegrid { grid-template-columns: repeat(2, 1fr); }
-  .effect-line { flex-wrap: nowrap; }
+@media (min-width: 700px) {
+  .step-title { font-size: 32px; }
+  #pane-guide .scroll { padding: 30px 24px 40px; }
 }
 @media (max-width: 360px) {
-  .amount-wrap { flex-basis: 96px; }
-  .display { font-size: 26px; }
+  .step-title { font-size: 23px; }
+  .nav-btn span { display: none; }
 }
-
-
-/* ---------- the tabular summary ---------- */
-.wp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.wp-table {
-  border-collapse: collapse;
-  width: max-content; min-width: 100%;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-.wp-table th, .wp-table td { padding: 7px 9px; text-align: right; white-space: nowrap; }
-.wp-table thead th {
-  font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--muted); font-weight: 700;
-  border-bottom: 1px solid var(--line-strong);
-  font-family: var(--font);
-}
-.wp-table th.group { text-align: center; padding-bottom: 3px; border-bottom: 1px solid var(--line); }
-.wp-table .c-asset { color: var(--asset); }
-.wp-table .c-liability { color: var(--liability); }
-.wp-table .c-equity { color: var(--equity); }
-.wp-table tfoot td { border-top: 1.5px solid var(--line-strong); font-weight: 700; padding-top: 8px; }
-.wp-table td.rowlabel, .wp-table th.rowlabel {
-  text-align: left; color: var(--muted);
-  font-family: var(--font); font-size: 11px;
-  position: sticky; left: 0; background: var(--surface);
-}
-.wp-table td.sep, .wp-table th.sep { border-left: 1px solid var(--line); }
-.wp-table td.zero { color: var(--line-strong); }
-
-.balance-line {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  padding: 11px 12px;
-  border-top: 1px solid var(--line-strong);
-  background: var(--surface-2);
-  font-family: var(--mono); font-size: 13.5px;
-  font-variant-numeric: tabular-nums; font-weight: 700;
-}
-.balance-line.ok { color: var(--brand); background: var(--brand-soft); }
-.balance-line svg { width: 15px; height: 15px; vertical-align: -2px; }
-.bal-ok { display: inline-flex; align-items: center; }
-
-/* ---------- app chrome ---------- */
-.brand-dot {
-  flex: 0 0 auto;
-  display: grid; place-items: center;
-  background: linear-gradient(150deg, var(--brand), var(--cyan));
-  color: var(--on-brand);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.icon-btn {
-  flex: 0 0 auto;
-  width: 44px; height: 44px;
-  border-radius: 13px;
-  display: grid; place-items: center;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text-dim);
-}
-.icon-btn svg { width: 18px; height: 18px; }
-
-.wf-progress { max-width: 660px; margin: 10px auto 0; height: 3px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
-.wf-progress i { display: block; height: 100%; width: 100%; border-radius: 999px; transform-origin: left center; transform: scaleX(0); background: linear-gradient(90deg, var(--brand), var(--cyan)); transition: transform 0.45s var(--ease); }
-
-.phase-nav {
-  position: sticky; top: 0; z-index: 14;
-  display: flex; gap: 7px;
-  padding: 11px 18px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--line);
-}
-.phase-nav::-webkit-scrollbar { display: none; }
-.pchip {
-  flex: 0 0 auto;
-  min-height: 44px;
-  padding: 0 14px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 13px; font-weight: 700;
-  white-space: nowrap;
-  transition: color 0.18s, background 0.18s, border-color 0.18s;
-}
-.pchip.on { color: var(--brand); background: var(--brand-soft); border-color: color-mix(in srgb, var(--brand) 40%, transparent); }
-
-/* ---------- intro ---------- */
-#intro { padding: 26px 0 4px; }
-.lede { font-size: 15px; color: var(--muted); margin-top: 7px; }
-.deliver {
-  margin-top: 16px;
-  display: flex; gap: 11px;
-  padding: 13px 15px;
-  border-radius: var(--r-md);
-  border: 1px solid color-mix(in srgb, var(--amber) 32%, transparent);
-  background: var(--amber-soft);
-}
-.deliver svg { flex: 0 0 auto; width: 17px; height: 17px; color: var(--amber); margin-top: 2px; }
-.deliver p { font-size: 14.5px; line-height: 1.55; color: var(--text-dim); }
-.deliver b { color: var(--text); }
-.meta-row { display: flex; gap: 18px; flex-wrap: wrap; margin: 18px 0 4px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
-.meta { font-size: 13px; color: var(--muted); }
-.meta b { font-size: 17px; font-weight: 760; color: var(--text); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-
-/* ---------- problem facts ---------- */
-.factbox {
-  margin-top: 12px;
-  border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  background: var(--surface);
-  padding: 14px 15px;
-}
-.ctx-cap { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 11px; }
-.facts { display: grid; gap: 9px; }
-.fact { display: flex; gap: 11px; font-size: 14px; line-height: 1.45; color: var(--text-dim); }
-.fact i {
-  flex: 0 0 auto; width: 21px; height: 21px; border-radius: 7px;
-  display: grid; place-items: center; font-style: normal;
-  font-size: 11px; font-weight: 800;
-  background: var(--violet-soft); color: var(--violet);
-}
-
-/* ---------- transaction effect strip ---------- */
-.fx {
-  display: flex; align-items: stretch; gap: 9px;
-  margin-top: 12px;
-  padding: 12px 13px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--line);
-  background: var(--surface-2);
-}
-.fx-side { flex: 1; min-width: 0; display: grid; gap: 5px; align-content: start; }
-.fx-side:last-child { text-align: right; justify-items: end; }
-.fx-cap { font-size: 10px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.fx-item { font-size: 13px; font-weight: 620; line-height: 1.35; }
-.fx-item b { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 700; }
-.fx-eq { display: grid; place-items: center; font-size: 17px; font-weight: 800; color: var(--muted); }
-
-/* ---------- warning callout ---------- */
-.wf-warn {
-  display: flex; gap: 10px;
-  margin-top: 12px; padding: 11px 13px;
-  border-radius: var(--r-md);
-  border: 1px solid color-mix(in srgb, var(--rose) 34%, transparent);
-  background: var(--rose-soft);
-}
-.wf-warn svg { flex: 0 0 auto; width: 16px; height: 16px; color: var(--rose); margin-top: 2px; }
-.wf-warn p { font-size: 13.5px; line-height: 1.5; color: var(--text-dim); }
-
-/* ---------- step tick ---------- */
-.wf-badge { cursor: pointer; }
-/* Visual circle stays 32px; the hit area is padded out to the 44px floor. */
-.wf-badge::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; }
-.wf-badge svg { display: none; width: 15px; height: 15px; }
-.wf-step.is-done .wf-badge { background: var(--brand); color: var(--on-brand); }
-.wf-step.is-done .wf-badge .wf-n { display: none; }
-.wf-step.is-done .wf-badge svg { display: block; }
-.wf-step.is-done .wf-do { color: var(--muted); }
-.wf-phase-block { scroll-margin-top: 78px; }
-.wf-blurb { font-size: 14px; color: var(--muted); margin: -6px 0 16px; line-height: 1.5; }
-
-.foot { display: grid; gap: 14px; justify-items: start; padding: 22px 0 8px; margin-top: 12px; border-top: 1px solid var(--line); }
-
 </style>
 </head>
-<body>
-<div class="app" id="app">
 
-  <header class="wf-head">
-    <div class="wf-head-inner">
-      <div class="brand-dot" style="width:34px;height:34px;border-radius:11px;font-size:16px">L</div>
-      <div class="wf-head-title">
+<body>
+<div class="app">
+
+  <header class="appbar">
+    <div class="appbar-inner">
+      <span class="mark" id="mark"></span>
+      <div class="appbar-title">
         <b>Speedy Delivery Inc.</b>
-        <span id="head-sub">17 steps</span>
+        <span>Accounting workflow walkthrough</span>
       </div>
-      <button class="icon-btn" id="theme-toggle" aria-label="Switch colour theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      </button>
+      <button class="ghost-btn" id="btn-theme" aria-label="Switch colour theme"></button>
     </div>
-    <div class="wf-progress"><i id="wf-fill"></i></div>
   </header>
 
-  <div class="scroller" id="scroller">
-    <nav class="phase-nav" id="phase-nav"></nav>
-    <div class="wrap">
-      <div id="intro"></div>
-      <div id="flow-slot"></div>
-      <div id="wf-foot"></div>
+  <nav class="tabs">
+    <div class="tabs-inner">
+      <button class="tab on" id="tab-guide"></button>
+      <div class="tab-sep"></div>
+      <button class="tab" id="tab-table"></button>
+    </div>
+  </nav>
+
+  <section class="pane on" id="pane-guide">
+    <div class="scroll"><div id="guide"></div></div>
+  </section>
+
+  <section class="pane" id="pane-table">
+    <div class="scroll" id="table-scroll"><div id="table-slot"></div></div>
+  </section>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <button class="nav-btn" id="btn-prev"><span id="prev-icon"></span><span>Previous</span></button>
+      <div class="progress-wrap">
+        <div class="progress-label" id="prog-label">Step 0</div>
+        <div class="progress-track"><i id="prog-fill"></i></div>
+      </div>
+      <button class="nav-btn nav-next" id="btn-next"><span id="next-label">Start</span><span id="next-icon"></span></button>
     </div>
   </div>
 
 </div>
 <script>
 /* ============================================================
-   THE COMPREHENSIVE PROBLEM — one source of truth.
-   The workpaper, every annotated snapshot and all three
-   statements derive from this, so they cannot disagree.
+   THE PROBLEM — one source of truth.
+   Ledger rows, the running totals and all three statements are
+   derived from LEDGER, so they cannot disagree.
    ============================================================ */
-var EQ_ACCOUNTS = [
-  { k: 'cash',  n: 'Cash',                g: 'asset',     abbr: 'Cash' },
-  { k: 'ar',    n: 'Accounts Receivable', g: 'asset',     abbr: 'A/R' },
-  { k: 'equip', n: 'Equipment',           g: 'asset',     abbr: 'Equip.' },
-  { k: 'np',    n: 'Notes Payable',       g: 'liability', abbr: 'N/P' },
-  { k: 'ap',    n: 'Accounts Payable',    g: 'liability', abbr: 'A/P' },
-  { k: 'cs',    n: 'Common Stock',        g: 'equity',    abbr: 'Com. Stock' },
-  { k: 'rev',   n: 'Service Revenue',     g: 'equity',    abbr: 'Rev.' },
-  { k: 'exp',   n: 'Expenses',            g: 'equity',    abbr: '&minus; Exp.' },
-  { k: 'div',   n: 'Dividends',           g: 'equity',    abbr: '&minus; Div.' }
+var CO = {
+  name: 'Speedy Delivery Inc.',
+  period: 'For the Month Ended July 31, 2025',
+  asAt: 'July 31, 2025'
+};
+
+var COLS = [
+  { k: 'cash',  head: 'Cash',        grp: 'a' },
+  { k: 'ar',    head: '+ Accts Rec.', grp: 'a' },
+  { k: 'eq',    head: '+ Equip.',     grp: 'a' },
+  { k: 'np',    head: 'Notes Pay.',   grp: 'l' },
+  { k: 'ap',    head: '+ Accts Pay.', grp: 'l' },
+  { k: 'cs',    head: 'Com. Stock',   grp: 'e' },
+  { k: 'rev',   head: 'Rev.',         grp: 'e' },
+  { k: 'exp',   head: '&minus; Exp.', grp: 'e' },
+  { k: 'div',   head: '&minus; Div.', grp: 'e' }
 ];
 
-var SVG = {
-  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
-  ring:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>',
-  bulb:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M11 21h2"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6h5.4c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg>',
-  warn:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
-  sun:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+/* step = which walkthrough step reveals the row. */
+var LEDGER = [
+  { id: '1',  step: 1, trans: '(1)', cash:  10000, cs: 10000,  rem: 'Issued stock' },
+  { id: '2',  step: 2, trans: '(2)', cash:   -800, exp:   800, rem: 'Rent expense' },
+  { id: '3',  step: 3, trans: '(3)', eq:    3000,  ap:   3000, rem: 'Purch. equipment' },
+  { id: '4',  step: 4, trans: '(4)', cash:  1500,  rev:  1500, rem: 'Service revenue' },
+  { id: '5',  step: 5, trans: '(5)', cash:   700,  np:    700, rem: 'Borrowing' },
+  { id: '6',  step: 6, trans: '(6)', ar:    2000,  rev:  2000, rem: 'Service revenue' },
+  { id: '7a', step: 7, trans: '(7)', cash:  -500,  exp:   500, rem: 'Sal./wages exp.' },
+  { id: '7b', step: 7, trans: '',    cash:  -300,  exp:   300, rem: 'Utilities exp.' },
+  { id: '7c', step: 7, trans: '',    cash:  -100,  exp:   100, rem: 'Advertising exp.' }
+];
+
+function totalsUpTo(step) {
+  var t = {};
+  COLS.forEach(function (c) { t[c.k] = 0; });
+  LEDGER.forEach(function (r) {
+    if (r.step > step) return;
+    COLS.forEach(function (c) { if (r[c.k]) t[c.k] += r[c.k]; });
+  });
+  return t;
+}
+function assetsOf(t) { return t.cash + t.ar + t.eq; }
+function claimsOf(t) { return t.np + t.ap + t.cs + t.rev - t.exp - t.div; }
+function money(n) { return (n < 0 ? '&minus;' : '') + Math.abs(n).toLocaleString('en-US'); }
+function dollars(n) { return '$' + Math.abs(n).toLocaleString('en-US'); }
+
+var ICON = {
+  check:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
+  badge:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.9"/></svg>',
+  book:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>',
+  table:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>',
+  bulb:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M11 21h2"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6h5.4c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg>',
+  pulse:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>',
+  warn:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
+  prev:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+  next:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>',
+  sun:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
 };
 
-var SPEEDY = {
-  company: 'Speedy Delivery Inc.',
-  period: 'For the Month Ended July 31, 2025',
-  asAt: 'July 31, 2025',
-  rows: [
-    { no: '1',  text: 'Stockholders invested $10,000 cash in exchange for common stock.', fx: [['cash', 1, 10000], ['cs', 1, 10000]] },
-    { no: '2',  text: 'Paid $800 for July rent.',                                          fx: [['cash', -1, 800], ['exp', 1, 800]] },
-    { no: '3',  text: 'Purchased office equipment on account, $3,000.',                    fx: [['equip', 1, 3000], ['ap', 1, 3000]] },
-    { no: '4',  text: 'Performed delivery services for clients for cash, $1,500.',         fx: [['cash', 1, 1500], ['rev', 1, 1500]] },
-    { no: '5',  text: 'Borrowed $700 cash from a bank on a note payable.',                 fx: [['cash', 1, 700], ['np', 1, 700]] },
-    { no: '6',  text: 'Performed delivery services for a client on account, $2,000.',      fx: [['ar', 1, 2000], ['rev', 1, 2000]] },
-    { no: '7a', text: 'Paid salaries, $500.',                                              fx: [['cash', -1, 500], ['exp', 1, 500]] },
-    { no: '7b', text: 'Paid utilities, $300.',                                             fx: [['cash', -1, 300], ['exp', 1, 300]] },
-    { no: '7c', text: 'Paid advertising, $100.',                                           fx: [['cash', -1, 100], ['exp', 1, 100]] }
-  ]
+/* ---------- source documents ---------- */
+function doc(kind, issuer, rows, total, note) {
+  return '<div class="doc"><div class="doc-bar">' + kind + '</div><div class="doc-body">' +
+    '<div class="doc-issuer">' + issuer + '</div>' +
+    rows.map(function (r) { return '<div class="doc-row"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>'; }).join('') +
+    (total ? '<div class="doc-total"><span>' + total[0] + '</span><span>' + total[1] + '</span></div>' : '') +
+    (note ? '<div class="doc-note">' + note + '</div>' : '') + '</div></div>';
+}
+
+/* ---------- statements ---------- */
+var STMT = {
+  income: { name: 'Income Statement', date: CO.period, lines: [
+    ['Revenues', '', 'hd'],
+    ['Service revenue', '$3,500', 'ind'],
+    'gap',
+    ['Expenses', '', 'hd'],
+    ['Rent expense', '800', 'ind'],
+    ['Salaries and wages expense', '500', 'ind'],
+    ['Utilities expense', '300', 'ind'],
+    ['Advertising expense', '100', 'ind'],
+    ['Total expenses', '1,700', 'tot'],
+    'gap',
+    ['Net income', '$1,800', 'grand']
+  ]},
+  retained: { name: 'Retained Earnings Statement', date: CO.period, lines: [
+    ['Retained earnings, July 1', '$0', ''],
+    ['Add: Net income', '1,800', ''],
+    ['', '1,800', 'tot'],
+    ['Less: Dividends', '0', ''],
+    ['Retained earnings, July 31', '$1,800', 'grand']
+  ]},
+  balance: { name: 'Balance Sheet', date: CO.asAt, lines: [
+    ['Assets', '', 'hd'],
+    ['Cash', '$10,500', 'ind'],
+    ['Accounts receivable', '2,000', 'ind'],
+    ['Equipment', '3,000', 'ind'],
+    ['Total assets', '$15,500', 'grand'],
+    'gap',
+    ['Liabilities and Stockholders&rsquo; Equity', '', 'hd'],
+    ['Notes payable', '$700', 'ind'],
+    ['Accounts payable', '3,000', 'ind'],
+    ['Total liabilities', '3,700', 'tot'],
+    'gap',
+    ['Common stock', '10,000', 'ind'],
+    ['Retained earnings', '1,800', 'ind'],
+    ['Total stockholders&rsquo; equity', '11,800', 'tot'],
+    'gap',
+    ['Total liabilities and equity', '$15,500', 'grand']
+  ]}
 };
 
-var PROBLEM_FACTS = [
+function stmt(key, hits) {
+  hits = hits || [];
+  var d = STMT[key];
+  return '<div class="card pop"><div class="stmt">' +
+    '<div class="stmt-head"><b>' + CO.name + '</b><span>' + d.name + '</span><i>' + d.date + '</i></div>' +
+    d.lines.map(function (l) {
+      if (l === 'gap') return '<div class="stmt-gap"></div>';
+      var cls = (l[2] || '') + (hits.indexOf(l[0]) !== -1 ? ' hit' : '');
+      return '<div class="stmt-line ' + cls + '"><span class="lbl">' + l[0] + '</span><span class="amt">' + l[1] + '</span></div>';
+    }).join('') + '</div></div>';
+}
+
+var FACTS = [
   'Stockholders invested $10,000 cash in exchange for common stock.',
   'Paid $800 for July rent.',
   'Purchased office equipment on account, $3,000.',
@@ -925,518 +644,364 @@ var PROBLEM_FACTS = [
   'Paid monthly expenses: salaries $500, utilities $300, and advertising $100.'
 ];
 
-function speedyBalances(upto) {
-  var bal = {};
-  EQ_ACCOUNTS.forEach(function (a) { bal[a.k] = 0; });
-  SPEEDY.rows.slice(0, upto).forEach(function (r) {
-    r.fx.forEach(function (e) { bal[e[0]] += e[1] * e[2]; });
-  });
-  return bal;
-}
-function assetsOf(b) { return b.cash + b.ar + b.equip; }
-function claimsOf(b) { return b.np + b.ap + b.cs + b.rev - b.exp - b.div; }
-function num(n) { return Math.abs(n).toLocaleString('en-US'); }
-
-/* ---------- accounting artefacts ---------- */
-
-function docFig(kind, issuer, rows, total, note) {
-  return '<div class="doc"><div class="doc-kind">' + kind + '</div>' +
-    '<div class="doc-issuer">' + issuer + '</div>' +
-    rows.map(function (r) {
-      return '<div class="doc-row"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>';
-    }).join('') +
-    (total ? '<div class="doc-total"><span>' + total[0] + '</span><span>' + total[1] + '</span></div>' : '') +
-    (note ? '<div class="doc-note">' + note + '</div>' : '') + '</div>';
-}
-
-function stmtFig(name, dateline, lines) {
-  return '<div class="stmt">' +
-    '<div class="stmt-head"><b>' + SPEEDY.company + '</b><span>' + name + '</span><i>' + dateline + '</i></div>' +
-    lines.map(function (l) {
-      if (l === 'gap') return '<div class="stmt-gap"></div>';
-      return '<div class="stmt-line ' + (l[2] || '') + '"><span class="lbl">' + l[0] + '</span>' +
-        '<span class="amt">' + l[1] + '</span></div>';
-    }).join('') + '</div>';
-}
-
-var STMT = {
-  income: {
-    name: 'Income Statement', dateline: SPEEDY.period,
-    lines: [
-      ['Revenues', '', 'head-line'],
-      ['Service revenue', '$3,500', 'indent'],
-      'gap',
-      ['Expenses', '', 'head-line'],
-      ['Rent expense', '800', 'indent'],
-      ['Salaries and wages expense', '500', 'indent'],
-      ['Utilities expense', '300', 'indent'],
-      ['Advertising expense', '100', 'indent'],
-      ['Total expenses', '1,700', 'total'],
-      'gap',
-      ['Net income', '$1,800', 'grand']
-    ]
-  },
-  retained: {
-    name: 'Retained Earnings Statement', dateline: SPEEDY.period,
-    lines: [
-      ['Retained earnings, July 1', '$0', ''],
-      ['Add: Net income', '1,800', ''],
-      ['', '1,800', 'total'],
-      ['Less: Dividends', '0', ''],
-      ['Retained earnings, July 31', '$1,800', 'grand']
-    ]
-  },
-  balance: {
-    name: 'Balance Sheet', dateline: SPEEDY.asAt,
-    lines: [
-      ['Assets', '', 'head-line'],
-      ['Cash', '$10,500', 'indent'],
-      ['Accounts receivable', '2,000', 'indent'],
-      ['Equipment', '3,000', 'indent'],
-      ['Total assets', '$15,500', 'grand'],
-      'gap',
-      ['Liabilities and Stockholders&rsquo; Equity', '', 'head-line'],
-      ['Notes payable', '$700', 'indent'],
-      ['Accounts payable', '3,000', 'indent'],
-      ['Total liabilities', '3,700', 'total'],
-      'gap',
-      ['Common stock', '10,000', 'indent'],
-      ['Retained earnings', '1,800', 'indent'],
-      ['Total stockholders&rsquo; equity', '11,800', 'total'],
-      'gap',
-      ['Total liabilities and equity', '$15,500', 'grand']
-    ]
-  }
-};
-
-/* A framed artefact, the way a guide frames a screenshot. */
-function shot(cap, inner) {
-  return '<div class="shot"><div class="shot-bar"><span class="shot-dots"><i></i><i></i><i></i></span>' +
-    cap + '</div><div class="shot-body">' + inner + '</div></div>';
-}
-
-/* marks address a cell as [rowIndex, accountKey]; 'T' is the totals row. */
-function wpShot(upto, marks, cap) {
-  marks = marks || [];
-  var has = function (r, k) {
-    return marks.some(function (m) { return String(m[0]) === String(r) && m[1] === k; });
-  };
-  var bal = speedyBalances(upto);
-  var groups = '<tr><th class="rowlabel"></th>' +
-    '<th class="group c-asset" colspan="3">Assets</th>' +
-    '<th class="group c-liability sep" colspan="2">Liabilities</th>' +
-    '<th class="group c-equity sep" colspan="4">Stockholders&rsquo; Equity</th></tr>';
-  var heads = '<tr><th class="rowlabel">Txn</th>' + EQ_ACCOUNTS.map(function (a) {
-    var cls = 'c-' + (a.g === 'asset' ? 'asset' : a.g === 'liability' ? 'liability' : 'equity');
-    return '<th class="' + cls + ((a.k === 'np' || a.k === 'cs') ? ' sep' : '') + '">' + a.abbr + '</th>';
-  }).join('') + '</tr>';
-
-  var body = SPEEDY.rows.slice(0, upto).map(function (r, ri) {
-    var line = {};
-    r.fx.forEach(function (e) { line[e[0]] = (line[e[0]] || 0) + e[1] * e[2]; });
-    var cells = EQ_ACCOUNTS.map(function (a) {
-      var v = line[a.k];
-      var sep = (a.k === 'np' || a.k === 'cs') ? ' sep' : '';
-      var anno = has(ri, a.k) ? ' anno' : '';
-      if (!v) return '<td class="zero' + sep + anno + '">&middot;</td>';
-      var cls = 'c-' + (a.g === 'asset' ? 'asset' : a.g === 'liability' ? 'liability' : 'equity');
-      return '<td class="' + cls + sep + anno + '">' + (v < 0 ? '&minus;' : '+') + num(v) + '</td>';
-    }).join('');
-    return '<tr><td class="rowlabel">(' + r.no + ')</td>' + cells + '</tr>';
-  }).join('');
-
-  var foot = '<tr><td class="rowlabel">Total</td>' + EQ_ACCOUNTS.map(function (a) {
-    var sep = (a.k === 'np' || a.k === 'cs') ? ' sep' : '';
-    var anno = has('T', a.k) ? ' anno' : '';
-    var cls = 'c-' + (a.g === 'asset' ? 'asset' : a.g === 'liability' ? 'liability' : 'equity');
-    return '<td class="' + cls + sep + anno + '">' + (bal[a.k] ? num(bal[a.k]) : '&mdash;') + '</td>';
-  }).join('') + '</tr>';
-
-  var A = assetsOf(bal), C = claimsOf(bal);
-  var table = '<div class="wp-scroll"><table class="wp-table"><thead>' + groups + heads + '</thead>' +
-    '<tbody>' + body + '</tbody>' + (upto ? '<tfoot>' + foot + '</tfoot>' : '') + '</table></div>' +
-    (upto ? '<div class="balance-line ok">$' + num(A) + '&nbsp; = &nbsp;$' + num(C) +
-      ' <span class="bal-ok">' + SVG.check + '</span></div>' : '');
-  return shot(cap || 'Tabular summary', table);
-}
-
-function stmtShot(key, markLabels, cap) {
-  markLabels = markLabels || [];
-  var d = STMT[key];
-  var lines = d.lines.map(function (l) {
-    if (l === 'gap') return l;
-    return markLabels.indexOf(l[0]) !== -1 ? [l[0], l[1], (l[2] || '') + ' anno'] : l;
-  });
-  return shot(cap || d.name, stmtFig(d.name, d.dateline, lines));
-}
-
-function docShot(kind, issuer, rows, total, note) {
-  return shot('Source document', docFig(kind, issuer, rows, total, note));
-}
-
-/* The equation restated for a single transaction. */
-function fxStrip(left, right) {
-  function side(cap, items) {
-    return '<div class="fx-side"><span class="fx-cap">' + cap + '</span>' +
-      items.map(function (i) {
-        return '<span class="fx-item c-' + i[2] + '">' + i[0] + ' <b>' + i[1] + '</b></span>';
-      }).join('') + '</div>';
-  }
-  return '<div class="fx">' + side('Assets', left) + '<div class="fx-eq">=</div>' +
-    side('Liabilities + Equity', right) + '</div>';
-}
-
 /* ============================================================
-   THE WORKFLOW
-   Speedy Delivery's first month, worked end to end. Each step
-   names one action, restates the equation for it, and rings the
-   exact figures it produces on the workpaper.
+   THE WALKTHROUGH
    ============================================================ */
-var WORKFLOW = {
-  company: SPEEDY.company,
-  subtitle: 'First month of operations &middot; July 2025',
-  deliverable: 'Prepare a tabular summary of the effects on the accounting equation, then produce the financial statements.',
-  phases: [
-    {
-      id: 'setup',
-      name: 'Set up',
-      blurb: 'Read the problem and build the frame you will post into.',
-      steps: [
-        {
-          do: 'Read every transaction and list the accounts it names.',
-          note: 'Work through the seven events once before writing anything down. You are looking for account titles, not amounts.',
-          art: ['<div class="factbox"><div class="ctx-cap">Speedy&rsquo;s July transactions</div><div class="facts">' +
-            PROBLEM_FACTS.map(function (f, i) { return '<div class="fact"><i>' + (i + 1) + '</i><span>' + f + '</span></div>'; }).join('') +
-            '</div></div>'],
-          result: 'Eight accounts appear: Cash, Accounts Receivable, Equipment, Notes Payable, Accounts Payable, Common Stock, Service Revenue and Expenses.'
-        },
-        {
-          do: 'Draw the workpaper with one column per account, grouped by family.',
-          note: 'Assets sit left of the equals sign, liabilities and equity right of it. Keep the Dividends column even though Speedy declares none, so the shape matches the equation.',
-          art: [wpShot(0, [], 'Empty workpaper')],
-          key: true
-        }
-      ]
-    },
-    {
-      id: 'post',
-      name: 'Post each transaction',
-      blurb: 'Nine rows. Name the accounts, set the direction, attach the amount.',
-      steps: [
-        {
-          do: 'Post transaction 1: the $10,000 stock issue.',
-          note: 'Speedy received cash, and the owners received a claim on the business. No work was done, so nothing is revenue.',
-          fx: [[['Cash', '+10,000', 'asset']], [['Common Stock', '+10,000', 'equity']]],
-          ring: 'Cash and Common Stock, row 1',
-          art: [
-            docShot('Share certificate &middot; No. 001', SPEEDY.company,
-              [['Issued to', 'Founders'], ['Consideration', 'Cash'], ['Date', 'July 1, 2025']],
-              ['Amount', '$10,000.00'], 'Cash received by the company in exchange for shares.'),
-            wpShot(1, [[0, 'cash'], [0, 'cs']])
-          ]
-        },
-        {
-          do: 'Post transaction 2: the $800 rent payment.',
-          note: 'July&rsquo;s occupancy is used up by July 31, so the payment is an expense rather than an asset. Expenses subtract from equity, so both sides fall.',
-          fx: [[['Cash', '&minus;800', 'asset']], [['Expenses', '+800', 'equity']]],
-          ring: 'Cash and Expenses, row 2',
-          art: [
-            docShot('Receipt &middot; Rent', 'Harbour Street Properties',
-              [['Tenant', SPEEDY.company], ['Period covered', 'July 2025']],
-              ['Amount', '$800.00'], 'Covers occupancy for July only.'),
-            wpShot(2, [[1, 'cash'], [1, 'exp']])
-          ]
-        },
-        {
-          do: 'Post transaction 3: the $3,000 equipment purchase on account.',
-          note: 'Control passed on delivery, so the asset and the obligation are both recorded on July 3. Nothing was paid, so Cash is untouched.',
-          fx: [[['Equipment', '+3,000', 'asset']], [['Accounts Payable', '+3,000', 'liability']]],
-          ring: 'Equipment and Accounts Payable, row 3',
-          art: [
-            docShot('Invoice &middot; INV-4471', 'Meridian Office Supply',
-              [['Sold to', SPEEDY.company], ['Item', 'Office equipment'], ['Terms', 'Net 30 days']],
-              ['Amount due', '$3,000.00'], 'Goods delivered July 3. Payment due in August.'),
-            wpShot(3, [[2, 'equip'], [2, 'ap']])
-          ]
-        },
-        {
-          do: 'Post transaction 4: $1,500 of deliveries settled in cash.',
-          note: 'The work is complete, so the revenue is earned. Revenue raises equity, so both sides rise together.',
-          fx: [[['Cash', '+1,500', 'asset']], [['Service Revenue', '+1,500', 'equity']]],
-          ring: 'Cash and Service Revenue, row 4',
-          art: [
-            docShot('Cash receipt &middot; No. 1042', SPEEDY.company,
-              [['Received from', 'Various clients'], ['For', 'Delivery services performed']],
-              ['Amount', '$1,500.00'], 'Services completed and settled the same day.'),
-            wpShot(4, [[3, 'cash'], [3, 'rev']])
-          ]
-        },
-        {
-          do: 'Post transaction 5: the $700 bank loan.',
-          note: 'Cash rises exactly as it did in the previous step, but Speedy has to repay this. The test is never the cash, it is whether the money must be given back.',
-          fx: [[['Cash', '+700', 'asset']], [['Notes Payable', '+700', 'liability']]],
-          ring: 'Cash and Notes Payable, row 5',
-          warn: 'The most common error in this problem is crediting Service Revenue here. Speedy performed no service for the bank, so nothing was earned.',
-          art: [
-            docShot('Promissory note', 'Northgate Bank',
-              [['Borrower', SPEEDY.company], ['Repayable', 'On demand'], ['Date', 'July 9, 2025']],
-              ['Principal', '$700.00'], 'Speedy promises to repay the principal in full.'),
-            wpShot(5, [[4, 'cash'], [4, 'np']])
-          ]
-        },
-        {
-          do: 'Post transaction 6: $2,000 of deliveries billed on account.',
-          note: 'The work is done, so the revenue belongs to July. Speedy holds a right to collect instead of cash, and that right is the asset that keeps the equation balanced.',
-          fx: [[['Accounts Receivable', '+2,000', 'asset']], [['Service Revenue', '+2,000', 'equity']]],
-          ring: 'Accounts Receivable and Service Revenue, row 6',
-          art: [
-            docShot('Sales invoice &middot; SD-0006', SPEEDY.company,
-              [['Billed to', 'Client account'], ['For', 'Delivery services performed'], ['Terms', 'Net 30 days']],
-              ['Amount due', '$2,000.00'], 'Services completed July 14. Payment expected in August.'),
-            wpShot(6, [[5, 'ar'], [5, 'rev']])
-          ]
-        },
-        {
-          do: 'Split transaction 7 into its three separate costs.',
-          note: 'Salaries $500, utilities $300 and advertising $100 are three different kinds of cost paid on one day. Each gets its own row so the income statement can report them by name.',
-          fx: [[['Cash', '&minus;900', 'asset']], [['Expenses', '+900', 'equity']]],
-          ring: 'Rows 7a, 7b and 7c',
-          art: [
-            shot('Three bills, one payment run',
-              '<div style="display:grid;gap:1px;background:var(--line)">' +
-              docFig('Payroll register', 'July salaries', [['Drivers and staff', '']], ['Total', '$500.00']) +
-              docFig('Utility bill', 'Metro Power &amp; Water', [['Service period', 'July 2025']], ['Total', '$300.00']) +
-              docFig('Advertising invoice', 'Citywide Media', [['Campaign', 'July local listings']], ['Total', '$100.00']) +
-              '</div>'),
-            wpShot(9, [[6, 'cash'], [6, 'exp'], [7, 'cash'], [7, 'exp'], [8, 'cash'], [8, 'exp']])
-          ],
-          key: true
-        }
-      ]
-    },
-    {
-      id: 'prove',
-      name: 'Total and prove',
-      blurb: 'Add the columns down and confirm the equation still holds.',
-      steps: [
-        {
-          do: 'Total every column.',
-          note: 'Add each column downward. Cash nets to $10,500 after three receipts and four payments.',
-          ring: 'The totals row',
-          art: [wpShot(9, [['T', 'cash'], ['T', 'ar'], ['T', 'equip'], ['T', 'np'], ['T', 'ap'], ['T', 'cs'], ['T', 'rev'], ['T', 'exp']], 'Column totals')]
-        },
-        {
-          do: 'Prove the equation.',
-          note: 'Add the three asset columns. Then add the liabilities, common stock and revenue, and subtract expenses. <b>$10,500 + $2,000 + $3,000</b> against <b>$700 + $3,000 + $10,000 + $3,500 &minus; $1,700</b>.',
-          art: [wpShot(9, [], 'Proved')],
-          result: 'Assets $15,500 = liabilities $3,700 + equity $11,800. The workpaper is ready to report from.',
-          key: true
-        }
-      ]
-    },
-    {
-      id: 'report',
-      name: 'Report',
-      blurb: 'Turn the proved workpaper into three connected statements.',
-      steps: [
-        {
-          do: 'Pull the Revenue and Expenses columns into the income statement.',
-          note: 'Only these two columns belong on it. The stock issue and the bank loan were never earned, so neither appears anywhere on this statement.',
-          ring: 'Service Revenue and Expenses totals',
-          art: [wpShot(9, [['T', 'rev'], ['T', 'exp']], 'Source columns')]
-        },
-        {
-          do: 'List the revenues, then the expenses by name, and subtract.',
-          note: 'Report each expense by its nature so a reader can see where the money went. One combined $1,700 line would hide that.',
-          art: [stmtShot('income', ['Total expenses', 'Net income'])],
-          result: 'Net income for July is $1,800.',
-          key: true
-        },
-        {
-          do: 'Carry net income into the retained earnings statement.',
-          note: 'Speedy was incorporated on July 1, so it opens at $0. It declared no dividends, which is why that workpaper column stayed empty.',
-          ring: 'Net income in, ending balance out',
-          art: [stmtShot('retained', ['Add: Net income', 'Retained earnings, July 31'])],
-          result: 'Retained earnings at July 31 is $1,800.'
-        },
-        {
-          do: 'Take the asset columns onto the balance sheet.',
-          note: 'Cash, receivables and equipment, at their July 31 totals.',
-          ring: 'The asset section',
-          art: [stmtShot('balance', ['Cash', 'Accounts receivable', 'Equipment', 'Total assets'])]
-        },
-        {
-          do: 'List the liabilities, then build equity from its two sources.',
-          note: 'Common stock is what the owners put in. Retained earnings is what the business earned and kept, taken straight from the previous statement.',
-          ring: 'Liabilities and equity',
-          art: [stmtShot('balance', ['Total liabilities', 'Common stock', 'Retained earnings', 'Total stockholders&rsquo; equity'])]
-        },
-        {
-          do: 'Confirm the balance sheet balances.',
-          note: 'This is the same equation you drew the columns from in step 2, now published for a reader.',
-          art: [stmtShot('balance', ['Total assets', 'Total liabilities and equity'])],
-          result: 'Total assets $15,500 = total liabilities and equity $15,500. The problem is complete.',
-          key: true
-        }
-      ]
-    }
-  ]
-};
+var STEPS = [
+  {
+    title: 'Start the walkthrough',
+    fact: 'Track how nine transactions affect ' + CO.name + ' during its first month of operations.',
+    concept: 'The accounting equation',
+    why: 'Every business transaction has to leave this equation in balance:\n\n<b>Assets = Liabilities + Stockholders&rsquo; Equity</b>\n\nAssets are what the company controls. Liabilities are what outsiders can claim. Equity is what the owners are left with. Work through the transactions one at a time and watch the two sides move together.',
+    extra: '<div class="box box-impact"><div class="impact-cap">' + ICON.pulse + 'The seven events</div>' +
+      '<div class="facts">' + FACTS.map(function (f, i) {
+        return '<div class="fact"><i>' + (i + 1) + '</i><span>' + f + '</span></div>';
+      }).join('') + '</div></div>',
+    hits: []
+  },
+  {
+    title: 'Transaction 1: the owners invest',
+    fact: 'Stockholders invested $10,000 cash in exchange for common stock.',
+    concept: 'Asset up, equity up',
+    why: 'The company receives cash, so <b>Cash</b> increases by $10,000. In exchange the owners hold a claim on the business, recorded as <b>Common Stock</b>, which increases by the same $10,000.\n\nNothing has been earned here. The company did no work for this money, so it never touches revenue.',
+    eq: [[['Cash', '+10,000']], [['Common Stock', '+10,000']]],
+    doc: doc('Share certificate &middot; No. 001', CO.name,
+      [['Issued to', 'Founders'], ['Consideration', 'Cash'], ['Date', 'July 1, 2025']],
+      ['Amount', '$10,000.00'], 'Cash received by the company in exchange for shares.'),
+    hits: ['cash', 'cs']
+  },
+  {
+    title: 'Transaction 2: paying the rent',
+    fact: 'Paid $800 for July rent.',
+    concept: 'Asset down, equity down',
+    why: 'Cash left the business, so <b>Cash</b> decreases by $800. The payment bought occupancy for July, and by July 31 that benefit is entirely used up, which makes it an expense rather than an asset.\n\n<b>Expenses</b> increase by $800, and because expenses are subtracted inside equity, equity falls by $800. Both sides of the equation come down together.',
+    eq: [[['Cash', '&minus;800']], [['Expenses', '+800']]],
+    doc: doc('Receipt &middot; Rent', 'Harbour Street Properties',
+      [['Tenant', CO.name], ['Period covered', 'July 2025']],
+      ['Amount', '$800.00'], 'Covers occupancy for July only.'),
+    hits: ['cash', 'exp']
+  },
+  {
+    title: 'Transaction 3: buying on account',
+    fact: 'Purchased office equipment on account, $3,000.',
+    concept: 'Asset up, liability up',
+    why: 'The company received <b>Equipment</b> worth $3,000, so that asset increases. Because it was bought on account, no cash moved. The company now owes the supplier, which creates a liability: <b>Accounts Payable</b> increases by $3,000.\n\nEquipment is an asset, not an expense. It will be used for years, so its cost is not consumed in July.',
+    eq: [[['Equipment', '+3,000']], [['Accounts Payable', '+3,000']]],
+    doc: doc('Invoice &middot; INV-4471', 'Meridian Office Supply',
+      [['Sold to', CO.name], ['Item', 'Office equipment'], ['Terms', 'Net 30 days']],
+      ['Amount due', '$3,000.00'], 'Goods delivered July 3. Payment due in August.'),
+    hits: ['eq', 'ap']
+  },
+  {
+    title: 'Transaction 4: earning cash revenue',
+    fact: 'Performed delivery services for clients for cash, $1,500.',
+    concept: 'Asset up, equity up',
+    why: 'The work was done and the clients paid on the spot, so <b>Cash</b> increases by $1,500. Performing the service is what earns the money, so <b>Service Revenue</b> increases by $1,500 as well.\n\nRevenue adds to equity, so both sides of the equation rise together. This is the first profit the business has made.',
+    eq: [[['Cash', '+1,500']], [['Service Revenue', '+1,500']]],
+    doc: doc('Cash receipt &middot; No. 1042', CO.name,
+      [['Received from', 'Various clients'], ['For', 'Delivery services performed']],
+      ['Amount', '$1,500.00'], 'Services completed and settled the same day.'),
+    hits: ['cash', 'rev']
+  },
+  {
+    title: 'Transaction 5: borrowing from the bank',
+    fact: 'Borrowed $700 cash from a bank on a note payable.',
+    concept: 'Asset up, liability up',
+    why: 'The bank handed over $700, so <b>Cash</b> increases exactly as it did in the previous transaction. The difference is that this money has to be repaid, so signing the note raises a liability: <b>Notes Payable</b> increases by $700.\n\nThe test is never whether cash arrived. It is whether the company has to give it back.',
+    eq: [[['Cash', '+700']], [['Notes Payable', '+700']]],
+    warn: 'The most common error in this problem is recording the $700 as Service Revenue. The company performed no service for the bank, so nothing was earned and equity does not move at all.',
+    doc: doc('Promissory note', 'Northgate Bank',
+      [['Borrower', CO.name], ['Repayable', 'On demand'], ['Date', 'July 9, 2025']],
+      ['Principal', '$700.00'], 'The company promises to repay the principal in full.'),
+    hits: ['cash', 'np']
+  },
+  {
+    title: 'Transaction 6: revenue before the cash',
+    fact: 'Performed delivery services for a client on account, $2,000.',
+    concept: 'Asset up, equity up',
+    why: 'The service was performed, but the client will pay next month. The company holds a right to collect, and that right is an asset: <b>Accounts Receivable</b> increases by $2,000.\n\nThe revenue was earned in July, so <b>Service Revenue</b> increases now rather than when the cash arrives. Collecting the money in August will not be revenue a second time.',
+    eq: [[['Accounts Receivable', '+2,000']], [['Service Revenue', '+2,000']]],
+    doc: doc('Sales invoice &middot; SD-0006', CO.name,
+      [['Billed to', 'Client account'], ['For', 'Delivery services performed'], ['Terms', 'Net 30 days']],
+      ['Amount due', '$2,000.00'], 'Services completed July 14. Payment expected in August.'),
+    hits: ['ar', 'rev']
+  },
+  {
+    title: 'Transaction 7: paying monthly expenses',
+    fact: 'Paid monthly expenses: salaries $500, utilities $300, and advertising $100.',
+    concept: 'One event, three expenses',
+    why: 'Three payments went out on the same day, totalling $900, so <b>Cash</b> decreases three separate times. Each payment is a different kind of cost, so each gets its own row and its own expense account.\n\nKeeping them apart matters: the income statement reports expenses by nature, and a single $900 line would hide whether the company is overspending on wages or on advertising.',
+    eq: [[['Cash', '&minus;900']], [['Expenses', '+900']]],
+    doc: doc('Payment run &middot; July 31', 'Three suppliers',
+      [['Salaries and wages', '$500.00'], ['Utilities', '$300.00'], ['Advertising', '$100.00']],
+      ['Total paid', '$900.00'], 'Three separate costs settled in one batch.'),
+    hits: ['cash', 'exp']
+  },
+  {
+    title: 'Total the columns and prove it',
+    fact: 'Add every column down and check that the accounting equation still holds.',
+    concept: 'The equation balances',
+    why: '<b>Total assets</b> = $10,500 cash + $2,000 receivables + $3,000 equipment = <b>$15,500</b>.\n\n<b>Total liabilities and equity</b> = $700 + $3,000 + $10,000 + ($3,500 revenue &minus; $1,700 expenses) = <b>$15,500</b>.\n\nThe two sides agree, so the summary is arithmetically sound. It does not prove every account was chosen correctly, but nothing can be reported until this check passes.',
+    totals: true,
+    hits: ['all']
+  },
+  {
+    title: 'Build the income statement',
+    fact: 'Report the revenues earned and the expenses incurred during July.',
+    concept: 'Performance over a period',
+    why: 'Only two columns of the summary belong here: <b>Revenue</b> and <b>Expenses</b>. List revenues first, then expenses by name, and subtract.\n\nThe $10,000 stock issue and the $700 bank loan appear nowhere on this statement. Neither was earned, so neither is revenue.',
+    totals: true,
+    hits: ['rev', 'exp'],
+    after: stmt('income', ['Total expenses', 'Net income']),
+    result: 'Net income for July is $1,800.'
+  },
+  {
+    title: 'Carry the profit into retained earnings',
+    fact: 'Work out how much of July&rsquo;s profit the business kept.',
+    concept: 'The bridge between two statements',
+    why: 'Start with retained earnings at the beginning of the period. The company was incorporated on July 1, so it opens at <b>$0</b>.\n\nAdd the <b>$1,800</b> of net income from the income statement, then subtract dividends. None were declared, which is why the Dividends column stayed empty all month.',
+    totals: true,
+    hits: ['div'],
+    after: stmt('retained', ['Add: Net income', 'Retained earnings, July 31']),
+    result: 'Retained earnings at July 31 is $1,800.'
+  },
+  {
+    title: 'Build the balance sheet',
+    fact: 'Report what the company owns and owes on July 31.',
+    concept: 'The equation, published',
+    why: 'List the assets and total them. List the liabilities and total them. Then build equity from its two sources: <b>Common Stock</b> of $10,000 that the owners put in, plus <b>Retained Earnings</b> of $1,800 that the business earned and kept.\n\nThis is the same equation you started with in step 0, now written out for a reader.',
+    totals: true,
+    hits: ['all'],
+    after: stmt('balance', ['Total assets', 'Total liabilities and equity']),
+    result: 'Total assets $15,500 = total liabilities and equity $15,500. The problem is complete.'
+  }
+];
 
+/* Icons into the static chrome. */
+document.getElementById('mark').innerHTML = ICON.badge;
+document.getElementById('btn-theme').innerHTML = ICON.sun;
+document.getElementById('tab-guide').innerHTML = ICON.book + ' Step-by-step guide';
+document.getElementById('tab-table').innerHTML = ICON.table + ' Full data table';
+document.getElementById('prev-icon').innerHTML = ICON.prev;
+document.getElementById('next-icon').innerHTML = ICON.next;
 </script>
 <script>
 /* ============================================================
    APP SHELL
-   One screen: the workflow guide. Steps can be ticked off as you
-   follow along, and the tick state is all that persists.
+   A paged walkthrough. Advancing a step reveals the ledger row
+   it produces, in both the guide and the full table.
    ============================================================ */
 (function () {
-  var STORE = 'ledgerly.flow.v1';
-  var state = { done: {}, theme: '' };
-  var TOTAL = 0;
+  var STORE = 'speedy.walkthrough.v1';
+  var LAST = STEPS.length - 1;
+  var cur = 0;
+  var tab = 'guide';
+  var theme = '';
 
   function $(id) { return document.getElementById(id); }
 
   function load() {
     try {
-      var raw = window.localStorage.getItem(STORE);
-      if (raw) {
-        var p = JSON.parse(raw);
-        if (p && typeof p === 'object') { state.done = p.done || {}; state.theme = p.theme || ''; }
-      }
+      var p = JSON.parse(window.localStorage.getItem(STORE) || '{}');
+      if (typeof p.step === 'number' && p.step >= 0 && p.step <= LAST) cur = p.step;
+      if (p.tab === 'table' || p.tab === 'guide') tab = p.tab;
+      theme = p.theme || '';
     } catch (e) { /* private mode: run without persistence */ }
   }
   function save() {
-    try { window.localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {}
+    try { window.localStorage.setItem(STORE, JSON.stringify({ step: cur, tab: tab, theme: theme })); } catch (e) {}
   }
 
-  /* ---------- build ---------- */
-  function render() {
-    var n = 0;
-    WORKFLOW.phases.forEach(function (ph) { ph.steps.forEach(function () { n++; }); });
-    TOTAL = n;
+  /* ---------- the ledger table ----------
+     `upto` reveals rows; `hits` rings the cells this step produced. */
+  function ledgerTable(upto, hits, opts) {
+    opts = opts || {};
+    var showTotals = !!opts.totals;
+    var all = hits && hits.indexOf('all') !== -1;
 
-    $('intro').innerHTML =
-      '<h1 class="display">' + WORKFLOW.company + '</h1>' +
-      '<p class="lede">' + WORKFLOW.subtitle + '</p>' +
-      '<div class="deliver">' + SVG.bulb + '<p><b>The task.</b> ' + WORKFLOW.deliverable + '</p></div>' +
-      '<div class="meta-row">' +
-      '<span class="meta"><b>' + TOTAL + '</b> steps</span>' +
-      '<span class="meta"><b>' + WORKFLOW.phases.length + '</b> phases</span>' +
-      '<span class="meta"><b>9</b> workpaper rows</span>' +
-      '</div>';
+    var grp = '<tr class="grp">' +
+      '<th class="lab"></th>' +
+      '<th colspan="3">ASSETS</th>' +
+      '<th class="op">=</th>' +
+      '<th colspan="2">LIABILITIES</th>' +
+      '<th class="op">+</th>' +
+      '<th colspan="4">STOCKHOLDERS&rsquo; EQUITY</th>' +
+      (opts.remarks === false ? '' : '<th></th>') +
+      '</tr>';
 
-    $('phase-nav').innerHTML = WORKFLOW.phases.map(function (ph, i) {
-      return '<button class="pchip" data-jump="' + ph.id + '">' + (i + 1) + '. ' + ph.name + '</button>';
-    }).join('');
-
-    var step = 0;
-    $('flow-slot').innerHTML = WORKFLOW.phases.map(function (ph) {
-      return '<section class="wf-phase-block" id="ph-' + ph.id + '" data-phase="' + ph.id + '">' +
-        '<div class="wf-phase"><b>' + ph.name + '</b><i></i></div>' +
-        '<p class="wf-blurb">' + ph.blurb + '</p>' +
-        ph.steps.map(function (st) {
-          step++;
-          var id = 's' + step;
-          return '<div class="wf-step' + (st.key ? ' is-key' : '') + (state.done[id] ? ' is-done' : '') + '" data-step="' + id + '">' +
-            '<button class="wf-badge" data-tick="' + id + '" aria-pressed="' + (!!state.done[id]) + '" ' +
-            'aria-label="Mark step ' + step + ' complete"><span class="wf-n">' + step + '</span>' + SVG.check + '</button>' +
-            '<div class="wf-main">' +
-            '<div class="wf-do">' + st.do + '</div>' +
-            (st.note ? '<p class="wf-note">' + st.note + '</p>' : '') +
-            (st.fx ? fxStrip(st.fx[0], st.fx[1]) : '') +
-            (st.warn ? '<div class="wf-warn">' + SVG.warn + '<p>' + st.warn + '</p></div>' : '') +
-            (st.ring ? '<span class="wf-tag">' + SVG.ring + st.ring + '</span>' : '') +
-            (st.art || []).join('') +
-            (st.result ? '<div class="wf-result"><b>Result.</b> ' + st.result + '</div>' : '') +
-            '</div></div>';
-        }).join('') +
-        '</section>';
-    }).join('');
-
-    $('wf-foot').innerHTML =
-      '<div class="foot"><p class="small">Every figure on this page is derived from the nine transactions above, so the workpaper, the snapshots and the three statements can never disagree.</p>' +
-      '<button class="btn btn-ghost btn-sm" id="reset">Clear ticks</button></div>';
-
-    $('reset').addEventListener('click', function () {
-      state.done = {}; save(); render(); bind(); updateProgress();
-    });
-  }
-
-  /* ---------- interaction ---------- */
-  function bind() {
-    $('flow-slot').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-tick]');
-      if (!b) return;
-      var id = b.getAttribute('data-tick');
-      state.done[id] = !state.done[id];
-      b.setAttribute('aria-pressed', String(!!state.done[id]));
-      b.closest('.wf-step').classList.toggle('is-done', !!state.done[id]);
-      save();
-      updateProgress();
-    });
-    $('phase-nav').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-jump]');
-      if (!b) return;
-      var el = $('ph-' + b.getAttribute('data-jump'));
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  function updateProgress() {
-    var n = 0, i;
-    for (i = 1; i <= TOTAL; i++) if (state.done['s' + i]) n++;
-    $('wf-fill').style.transform = 'scaleX(' + (TOTAL ? n / TOTAL : 0) + ')';
-    $('head-sub').textContent = n ? n + ' of ' + TOTAL + ' steps done' : TOTAL + ' steps';
-  }
-
-  /* Highlight the phase chip for whatever is on screen. */
-  function spy() {
-    if (!('IntersectionObserver' in window)) return;
-    var chips = {};
-    Array.prototype.forEach.call(document.querySelectorAll('[data-jump]'), function (c) {
-      chips[c.getAttribute('data-jump')] = c;
-    });
-    var visible = {};
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        visible[en.target.getAttribute('data-phase')] = en.isIntersecting;
-      });
-      var first = null;
-      WORKFLOW.phases.forEach(function (ph) { if (!first && visible[ph.id]) first = ph.id; });
-      Object.keys(chips).forEach(function (k) { chips[k].classList.toggle('on', k === first); });
-      /* Keep the active chip reachable — the nav scrolls sideways on a phone. */
-      if (first && chips[first]) {
-        var nav = $('phase-nav'), c = chips[first];
-        var left = c.offsetLeft - 18;
-        if (Math.abs(nav.scrollLeft - left) > 8) nav.scrollTo({ left: left, behavior: 'smooth' });
+    function headCells() {
+      var out = '', i;
+      for (i = 0; i < COLS.length; i++) {
+        if (i === 3) out += '<th class="op">=</th>';
+        if (i === 5) out += '<th class="op">+</th>';
+        out += '<th>' + COLS[i].head + '</th>';
       }
-    }, { root: $('scroller'), rootMargin: '-72px 0px -55% 0px' });
-    Array.prototype.forEach.call(document.querySelectorAll('[data-phase]'), function (s) { io.observe(s); });
+      return out;
+    }
+    var head = '<tr class="acct"><th class="lab">Trans.</th>' + headCells() +
+      (opts.remarks === false ? '' : '<th style="text-align:left">Remark</th>') + '</tr>';
+
+    var rows = LEDGER.filter(function (r) { return r.step <= upto; });
+    var body = rows.map(function (r) {
+      var fresh = r.step === upto ? ' class="fresh"' : '';
+      var out = '<tr' + fresh + '><td class="lab">' + (r.trans || '') + '</td>';
+      COLS.forEach(function (c, i) {
+        if (i === 3) out += '<td class="op"></td>';
+        if (i === 5) out += '<td class="op"></td>';
+        var v = r[c.k];
+        var hit = (r.step === upto && hits && hits.indexOf(c.k) !== -1) ? ' class="hit"' : '';
+        out += '<td' + hit + '>' + (v ? money(v) : '') + '</td>';
+      });
+      if (opts.remarks !== false) out += '<td class="rem">' + (r.rem || '') + '</td>';
+      return out + '</tr>';
+    }).join('');
+
+    var foot = '';
+    if (showTotals) {
+      var t = totalsUpTo(upto);
+      foot = '<tr class="totals"><td class="lab">Totals</td>';
+      COLS.forEach(function (c, i) {
+        if (i === 3) foot += '<td class="op">=</td>';
+        if (i === 5) foot += '<td class="op">+</td>';
+        var hit = (all || (hits && hits.indexOf(c.k) !== -1)) ? ' class="hit"' : '';
+        foot += '<td' + hit + '>' + (t[c.k] ? dollars(t[c.k]) : '&mdash;') + '</td>';
+      });
+      if (opts.remarks !== false) foot += '<td class="rem"></td>';
+      foot += '</tr>';
+    }
+
+    var proof = '';
+    if (showTotals) {
+      var tt = totalsUpTo(upto);
+      proof = '<div class="proof"><span>Assets ' + dollars(assetsOf(tt)) + '</span>' +
+        '<span>=</span><span>Liabilities + Equity ' + dollars(claimsOf(tt)) + '</span>' +
+        '<span>' + ICON.check + '</span></div>';
+    }
+
+    return '<div class="card pop"><div class="tbl-scroll"><table class="led"><thead>' + grp + head +
+      '</thead><tbody>' + body + '</tbody>' + (foot ? '<tfoot>' + foot + '</tfoot>' : '') +
+      '</table></div>' + proof + '</div>';
   }
 
-  /* ---------- theme ---------- */
+  /* ---------- guide pane ---------- */
+  function renderGuide() {
+    var s = STEPS[cur];
+    var impact = '';
+
+    if (s.hits && s.hits.length) {
+      impact = '<div class="box box-impact"><div class="impact-cap">' + ICON.pulse +
+        (s.totals ? 'The summary so far' : 'Changes in this step') + '</div>' +
+        ledgerTable(cur, s.hits, { totals: !!s.totals, remarks: !s.totals }) + '</div>';
+    }
+
+    $('guide').innerHTML =
+      '<div class="wrap fade">' +
+      '<div class="step-eyebrow">Step ' + cur + ' of ' + LAST + '</div>' +
+      '<h2 class="step-title">' + s.title + '</h2>' +
+      '<div class="stack">' +
+      '<div class="box box-fact"><span class="box-tag">The fact</span><p>' + s.fact + '</p></div>' +
+      '<div class="box box-concept"><span class="box-tag">' + ICON.bulb + 'Key concept: ' + s.concept + '</span>' +
+      '<p>' + s.why + '</p></div>' +
+      (s.eq ? equationStrip(s.eq[0], s.eq[1]) : '') +
+      (s.warn ? '<div class="note-warn">' + ICON.warn + '<p>' + s.warn + '</p></div>' : '') +
+      (s.doc || '') +
+      (s.extra || '') +
+      impact +
+      (s.after || '') +
+      (s.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + s.result + '</span></div>' : '') +
+      '</div><div style="height:8px"></div></div>';
+    $('guide').parentNode.scrollTop = 0;
+  }
+
+  function equationStrip(left, right) {
+    function side(cap, items) {
+      return '<div class="eq-side"><span class="eq-cap">' + cap + '</span>' +
+        items.map(function (i) { return '<span class="eq-item">' + i[0] + ' <b>' + i[1] + '</b></span>'; }).join('') +
+        '</div>';
+    }
+    return '<div class="equation">' + side('Assets', left) + '<div class="eq-op">=</div>' +
+      side('Liabilities + Equity', right) + '</div>';
+  }
+
+  /* ---------- table pane ---------- */
+  function renderTable() {
+    var s = STEPS[cur];
+    if (cur === 0) {
+      $('table-slot').innerHTML =
+        '<div class="hint">Advance the walkthrough with the controls below and this table will build itself, one transaction at a time.</div>';
+      return;
+    }
+    $('table-slot').innerHTML = ledgerTable(cur, s.hits, { totals: !!s.totals });
+    var sc = $('table-scroll');
+    var fresh = $('table-slot').querySelector('tr.fresh, tr.totals');
+    if (fresh) {
+      window.setTimeout(function () {
+        sc.scrollTo({ top: sc.scrollHeight, behavior: 'smooth' });
+      }, 90);
+    }
+  }
+
+  /* ---------- chrome ---------- */
+  function renderControls() {
+    $('btn-prev').disabled = cur === 0;
+    $('btn-next').disabled = cur === LAST;
+    $('next-label').textContent = cur === 0 ? 'Start' : (cur === LAST ? 'Done' : 'Next');
+    $('prog-label').textContent = 'Step ' + cur + ' of ' + LAST;
+    $('prog-fill').style.transform = 'scaleX(' + (cur / LAST) + ')';
+  }
+
+  function renderTabs() {
+    $('tab-guide').classList.toggle('on', tab === 'guide');
+    $('tab-table').classList.toggle('on', tab === 'table');
+    $('pane-guide').classList.toggle('on', tab === 'guide');
+    $('pane-table').classList.toggle('on', tab === 'table');
+  }
+
+  function render() {
+    renderTabs();
+    renderGuide();
+    renderTable();
+    renderControls();
+  }
+
+  /* ---------- navigation ---------- */
+  function go(n) {
+    var next = Math.max(0, Math.min(LAST, n));
+    if (next === cur) return;
+    cur = next;
+    save();
+    render();
+  }
+
+  $('btn-prev').addEventListener('click', function () { go(cur - 1); });
+  $('btn-next').addEventListener('click', function () { go(cur + 1); });
+  $('tab-guide').addEventListener('click', function () { tab = 'guide'; save(); render(); });
+  $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest('input, textarea, select')) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+  });
+
   function applyTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', t === 'light' ? '#f4f7fa' : '#080b10');
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'dark' ? '#0b1220' : '#2563eb');
   }
-  $('theme-toggle').addEventListener('click', function () {
-    state.theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    applyTheme(state.theme);
+  $('btn-theme').addEventListener('click', function () {
+    theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(theme);
     save();
   });
 
   /* ---------- boot ---------- */
   load();
-  if (!state.theme) {
-    state.theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  if (!theme) {
+    theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
-  applyTheme(state.theme);
+  applyTheme(theme);
   render();
-  bind();
-  updateProgress();
-  spy();
 
   if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
     window.addEventListener('load', function () {

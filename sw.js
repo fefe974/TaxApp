@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ledgerly-v2';
+const CACHE_NAME = 'speedy-walkthrough-v3';
 const APP_SHELL = [
   './',
   './index.html',

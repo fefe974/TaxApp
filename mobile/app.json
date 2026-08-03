@@ -1,18 +1,18 @@
 {
   "expo": {
-    "name": "Ledgerly",
-    "slug": "ledgerly",
+    "name": "Accounting Workflow",
+    "slug": "accounting-workflow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#080b10",
+    "backgroundColor": "#f8fafc",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#080b10",
+        "backgroundColor": "#2563eb",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"

@@ -25,8 +25,12 @@ const swBlock = /\n\s*if \('serviceWorker' in navigator[\s\S]*?\n  \}\n/;
 if (!swBlock.test(body)) throw new Error('service-worker block not found — check build script against index.html');
 body = body.replace(swBlock, '\n');
 
+// Derive the title from index.html so the two can never disagree.
+const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/);
+if (!titleMatch) throw new Error('no <title> found in index.html');
+
 const out = [
-  '<title>Ledgerly — Learn accounting by doing it</title>',
+  '<title>' + titleMatch[1] + '</title>',
   styleMatch[0],
   body.trim(),
   ''
