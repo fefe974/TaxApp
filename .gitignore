@@ -1,0 +1,4 @@
+
+# Python bytecode from skill tooling
+__pycache__/
+*.pyc
