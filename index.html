@@ -1007,10 +1007,10 @@ var FIG = {
     '<div class="eq-op">+</div>' +
     '<div class="eqbar-seg seg-equity" style="flex:0.9"><b>Equity</b><span>Owner claims</span></div>' +
     '</div></div>' +
-    '<p class="small" style="margin-top:11px">Creditors are paid first. Owners hold whatever remains — which is why the two sides can never drift apart.</p></div>',
+    '<p class="small" style="margin-top:11px">Creditors are paid first. Owners hold whatever remains, which is why the two sides cannot drift apart.</p></div>',
 
   expanded:
-    '<div class="figure"><div class="figure-cap">Where equity actually moves</div>' +
+    '<div class="figure"><div class="figure-cap">Where equity moves</div>' +
     '<div class="flow">' +
     '<div class="flow-node" style="border-color:color-mix(in srgb, var(--equity) 42%, transparent)"><b>Stockholders&rsquo; Equity</b><span>Common Stock + Retained Earnings</span></div>' +
     '<div class="flow-arrow">' + SVG.down + '</div>' +
@@ -1020,13 +1020,13 @@ var FIG = {
     '<div class="rule"><b style="color:var(--rose)">Expenses &darr;</b><span>The cost of producing that revenue</span></div>' +
     '<div class="rule"><b style="color:var(--rose)">Dividends &darr;</b><span>Profit handed back to owners</span></div>' +
     '</div></div>' +
-    '<p class="small" style="margin-top:11px">Revenues, expenses and dividends all land in <b>Retained Earnings</b> — the profit the company has kept.</p></div>',
+    '<p class="small" style="margin-top:11px">Revenues, expenses and dividends all land in <b>Retained Earnings</b>, the profit the company has kept.</p></div>',
 
   patterns:
     '<div class="figure"><div class="figure-cap">Three patterns cover nearly everything</div>' +
     '<div class="cyclewheel">' +
-    '<div class="cyclephase"><i>1</i><div><b>Asset &uarr; &nbsp;Asset &darr;</b><span>Pay cash for equipment — resources swap form</span></div></div>' +
-    '<div class="cyclephase"><i>2</i><div><b>Asset &uarr; &nbsp;Liability &uarr;</b><span>Buy on account — the resource arrives with an obligation</span></div></div>' +
+    '<div class="cyclephase"><i>1</i><div><b>Asset &uarr; &nbsp;Asset &darr;</b><span>Pay cash for equipment &middot; resources swap form</span></div></div>' +
+    '<div class="cyclephase"><i>2</i><div><b>Asset &uarr; &nbsp;Liability &uarr;</b><span>Buy on account &middot; the resource arrives with an obligation</span></div></div>' +
     '<div class="cyclephase"><i>3</i><div><b>Asset &uarr;&darr; &nbsp;Equity &uarr;&darr;</b><span>Earn revenue, pay an expense, issue shares</span></div></div>' +
     '</div>' +
     '<p class="small" style="margin-top:11px">Whichever pattern applies, the totals on both sides move by the same amount.</p></div>',
@@ -1111,7 +1111,7 @@ var COURSE = {
     {
       id: 'm1',
       name: 'The Accounting Equation',
-      tagline: 'Analyze what a transaction actually does before you record anything.',
+      tagline: 'Analyze what a transaction does before you record anything.',
       minutes: 22,
       cando: [
         'Classify any item as an asset, a liability, or equity',
@@ -1124,9 +1124,9 @@ var COURSE = {
           id: '1.1',
           title: 'Two claims on one pile of resources',
           concept: [
-            'A company controls resources — cash in the bank, a delivery van, amounts clients still owe it. Accountants call these <strong>assets</strong>.',
+            'A company controls resources: cash in the bank, a delivery van, amounts clients still owe it. Accountants call these <strong>assets</strong>.',
             'Every asset is claimed by somebody. Creditors have the first claim, and those claims are <strong>liabilities</strong>. Owners get whatever is left over, and that leftover is <strong>stockholders&rsquo; equity</strong>.',
-            'So the two sides always agree. Not by coincidence — equity is <em>defined</em> as assets minus liabilities.'
+            'So the two sides always agree. Equity is <em>defined</em> as assets minus liabilities, so the equality holds by construction.'
           ],
           figure: FIG.equation,
           keyidea: 'Equity is a residual, not a pot of cash. If assets are $15,500 and liabilities are $3,700, equity is $11,800 whether anyone writes it down or not.',
@@ -1138,13 +1138,13 @@ var COURSE = {
             items: [
               { t: 'Cash sitting in the company bank account', k: 'a' },
               { t: '$3,000 still owed to the office equipment supplier', k: 'l', why: 'A supplier is a creditor, so this is a liability.' },
-              { t: 'Shares issued to the founders for $10,000', k: 'e', why: 'Money invested by owners raises equity, not liabilities — the company has no obligation to repay it.' },
+              { t: 'Shares issued to the founders for $10,000', k: 'e', why: 'Money invested by owners raises equity. The company never has to repay it, so it is not a liability.' },
               { t: 'The delivery van the company owns', k: 'a' },
               { t: 'A $700 bank loan due in six months', k: 'l' },
               { t: 'Amounts clients owe for deliveries already made', k: 'a', why: 'A receivable is a resource: a right to collect cash later.' }
             ],
             hint: 'Two of these are claims by outsiders. Only one is a claim by the owners.',
-            explain: 'Speedy controls the cash, the van and the receivable — three assets. The supplier and the bank hold liabilities. The founders&rsquo; $10,000 is equity: they are owners, not creditors, so nothing has to be repaid to them.'
+            explain: 'Speedy controls three assets: the cash, the van and the receivable. The supplier and the bank hold liabilities. The founders&rsquo; $10,000 is equity, because owners hold no right to repayment.'
           }
         },
         {
@@ -1153,18 +1153,18 @@ var COURSE = {
           concept: [
             'Equity is never one lump. It changes for four distinct reasons, and confusing them is the most expensive early mistake in accounting.',
             '<strong>Common stock</strong> rises when investors put money in. <strong>Revenues</strong> rise when the company earns. <strong>Expenses</strong> are what it costs to earn that revenue. <strong>Dividends</strong> hand profit back to owners.',
-            'Revenues, expenses and dividends all run through <strong>retained earnings</strong> — the running total of profit the company has kept rather than distributed.'
+            'Revenues, expenses and dividends all run through <strong>retained earnings</strong>, the running total of profit the company has kept rather than distributed.'
           ],
           figure: FIG.expanded,
           keyidea: 'A dividend is not an expense. An expense helps produce revenue; a dividend distributes profit that already exists. Put a dividend on the income statement and net income is wrong.',
           task: {
             type: 'sort',
             prompt: 'Which part of equity does each event move?',
-            sub: 'Every one of these changes equity — the question is which component.',
+            sub: 'Every one of these changes equity. Name the component it moves.',
             buckets: [ { k: 'cs', label: 'Stock' }, { k: 'rev', label: 'Revenue' }, { k: 'exp', label: 'Expense' }, { k: 'div', label: 'Dividend' } ],
             items: [
               { t: 'Investors pay $10,000 for newly issued shares', k: 'cs' },
-              { t: 'Speedy completes a delivery and bills the client $2,000', k: 'rev', why: 'Revenue is recorded when the service is performed — not when the cash arrives.' },
+              { t: 'Speedy completes a delivery and bills the client $2,000', k: 'rev', why: 'Revenue is recorded when the service is performed, not when the cash arrives.' },
               { t: 'The July rent of $800 is paid', k: 'exp' },
               { t: 'The board pays $400 of profit out to shareholders', k: 'div', why: 'A distribution of profit, not a cost of earning it.' },
               { t: 'A driver is paid $500 of wages', k: 'exp' }
@@ -1178,7 +1178,7 @@ var COURSE = {
           title: 'Every transaction moves at least two things',
           concept: [
             'Record a transaction and the equation still has to balance afterwards. That single requirement forces at least two changes on every entry.',
-            'Three patterns cover almost everything you will meet: one asset swaps for another, an asset arrives together with an obligation, or an asset moves and equity moves with it.',
+            'Three patterns cover the transactions in this course: one asset swaps for another, an asset arrives together with an obligation, or an asset moves and equity moves with it.',
             'Analyze first, record second. Name the accounts, then decide the direction of each one.'
           ],
           figure: FIG.patterns,
@@ -1212,7 +1212,7 @@ var COURSE = {
           id: '1.4',
           title: 'A balanced answer can still be wrong',
           concept: [
-            'The equation balancing is a <em>mechanical</em> check. It confirms your arithmetic — it says nothing about whether you picked the right accounts.',
+            'The equation balancing is a <em>mechanical</em> check. It confirms your arithmetic. It says nothing about whether you picked the right accounts.',
             'The classic trap: treating a payment that settles an old debt as though it were a new cost.',
             'The cost was incurred when the goods or services arrived. Paying later just swaps one item for another.'
           ],
@@ -1220,21 +1220,21 @@ var COURSE = {
           figure:
             '<div class="figure"><div class="figure-cap">Same cash outflow, different meaning</div>' +
             '<div class="rulegrid">' +
-            '<div class="rule"><b>Pay July rent, $800</b><span>Cash &darr; &nbsp;Expense &uarr; — a new cost is incurred</span></div>' +
-            '<div class="rule"><b>Pay the supplier, $3,000</b><span>Cash &darr; &nbsp;Payable &darr; — an old obligation is settled</span></div>' +
+            '<div class="rule"><b>Pay July rent, $800</b><span>Cash &darr; &nbsp;Expense &uarr; &middot; a new cost is incurred</span></div>' +
+            '<div class="rule"><b>Pay the supplier, $3,000</b><span>Cash &darr; &nbsp;Payable &darr; &middot; an old obligation is settled</span></div>' +
             '</div></div>',
           task: {
             type: 'choice',
             prompt: 'Speedy pays the $3,000 it owes for the office equipment. Which analysis is correct?',
             sub: 'Three of these balance. Only one of them is right.',
             options: [
-              { t: 'Cash decreases $3,000; Accounts Payable decreases $3,000', ok: true, why: 'The obligation is settled and no new cost is incurred — the equipment was already recorded back in transaction 3.' },
+              { t: 'Cash decreases $3,000; Accounts Payable decreases $3,000', ok: true, why: 'The obligation is settled and no new cost is incurred. Speedy recorded the equipment back in transaction 3.' },
               { t: 'Cash decreases $3,000; Expenses increase $3,000', ok: false, why: 'This records the equipment&rsquo;s cost a second time. Equipment is an asset the company keeps using, not a July expense.' },
               { t: 'Cash decreases $3,000; Equipment decreases $3,000', ok: false, why: 'Speedy still owns the equipment. Paying for it does not make the asset disappear.' },
-              { t: 'Cash decreases $3,000; Accounts Payable increases $3,000', ok: false, why: 'Assets fall $3,000 while liabilities rise $3,000 — the equation would be out by $6,000.' }
+              { t: 'Cash decreases $3,000; Accounts Payable increases $3,000', ok: false, why: 'Assets fall $3,000 while liabilities rise $3,000, putting the equation out by $6,000.' }
             ],
-            hint: 'What did Speedy receive in exchange for the $3,000? Nothing new — the equipment arrived earlier.',
-            explain: 'Both sides fall by $3,000. Total assets drop, total liabilities drop, and equity is untouched — as it should be, because nothing was earned or consumed.'
+            hint: 'Ask what Speedy received in exchange for the $3,000. Nothing new: the equipment arrived earlier.',
+            explain: 'Both sides fall by $3,000. Total assets drop, total liabilities drop, and equity holds steady, because Speedy earned nothing and consumed nothing.'
           }
         },
         {
@@ -1258,20 +1258,20 @@ var COURSE = {
             type: 'equation',
             mode: 'workpaper',
             prompt: 'Build the tabular summary.',
-            sub: 'The last transaction covers three separate payments, so it is split into rows 7&ndash;9. The workpaper adds up as you go — the accounts are yours to choose.',
+            sub: 'The last transaction covers three separate payments, so it is split into rows 7&ndash;9. The workpaper adds up as you go. You choose the accounts.',
             txns: [
               { text: 'Stockholders invested $10,000 cash in exchange for common stock.', effects: [ { acct: 'cash', dir: 1, amt: 10000 }, { acct: 'cs', dir: 1, amt: 10000 } ], note: 'Issued stock' },
               { text: 'Paid $800 for July rent.', effects: [ { acct: 'cash', dir: -1, amt: 800 }, { acct: 'exp', dir: 1, amt: 800 } ], note: 'Rent expense' },
               { text: 'Purchased office equipment on account, $3,000.', effects: [ { acct: 'equip', dir: 1, amt: 3000 }, { acct: 'ap', dir: 1, amt: 3000 } ], note: 'Purchased equipment' },
               { text: 'Performed delivery services for clients for cash, $1,500.', effects: [ { acct: 'cash', dir: 1, amt: 1500 }, { acct: 'rev', dir: 1, amt: 1500 } ], note: 'Service revenue' },
-              { text: 'Borrowed $700 cash from a bank on a note payable.', effects: [ { acct: 'cash', dir: 1, amt: 700 }, { acct: 'np', dir: 1, amt: 700 } ], note: 'Borrowing — not revenue. Speedy has to pay it back.' },
+              { text: 'Borrowed $700 cash from a bank on a note payable.', effects: [ { acct: 'cash', dir: 1, amt: 700 }, { acct: 'np', dir: 1, amt: 700 } ], note: 'Borrowing, not revenue. Speedy has to pay it back.' },
               { text: 'Performed delivery services for a client on account, $2,000.', effects: [ { acct: 'ar', dir: 1, amt: 2000 }, { acct: 'rev', dir: 1, amt: 2000 } ], note: 'Service revenue, collected later' },
               { text: 'Paid salaries, $500.', effects: [ { acct: 'cash', dir: -1, amt: 500 }, { acct: 'exp', dir: 1, amt: 500 } ], note: 'Salaries and wages expense' },
               { text: 'Paid utilities, $300.', effects: [ { acct: 'cash', dir: -1, amt: 300 }, { acct: 'exp', dir: 1, amt: 300 } ], note: 'Utilities expense' },
               { text: 'Paid advertising, $100.', effects: [ { acct: 'cash', dir: -1, amt: 100 }, { acct: 'exp', dir: 1, amt: 100 } ], note: 'Advertising expense' }
             ],
-            hint: 'Row 5 is the one that catches people. Borrowed money is not earned — it creates an obligation, not revenue.',
-            explain: 'Assets of $15,500 against claims of $15,500. Cash finished at $10,500, receivables at $2,000 and equipment at $3,000 — matched by $3,700 of debt and $11,800 of equity.'
+            hint: 'Row 5 is the one that catches people. Speedy has to repay the $700, so it creates an obligation rather than revenue.',
+            explain: 'Assets of $15,500 against claims of $15,500. Cash finished at $10,500, receivables at $2,000 and equipment at $3,000, matched by $3,700 of debt and $11,800 of equity.'
           }
         }
       ]
@@ -1284,7 +1284,7 @@ var COURSE = {
       tagline: 'Stop memorising the rules and derive them from the equation instead.',
       minutes: 24,
       cando: [
-        'Say what a debit and a credit actually are',
+        'Say what a debit and a credit are',
         'Derive every debit/credit rule from the accounting equation',
         'Post to a T-account and take out its balance',
         'Journalize a month of transactions in proper form'
@@ -1295,11 +1295,11 @@ var COURSE = {
           title: 'Debit means left. That is all it means.',
           concept: [
             'A <strong>debit</strong> is an amount entered on the left side of an account. A <strong>credit</strong> is an amount entered on the right side.',
-            'Neither one is good or bad, and neither one means increase. Whether a debit raises or lowers an account depends entirely on which kind of account it is.',
+            'Neither one is good or bad, and neither one means increase. Whether a debit raises or lowers an account depends on which kind of account it is.',
             'Getting this straight now saves months of confusion later.'
           ],
           figure: FIG.tblank,
-          keyidea: 'Your bank &ldquo;credits&rdquo; your account when money comes in — because from the bank&rsquo;s books you are a liability, and liabilities increase with credits. Your own books work the other way round.',
+          keyidea: 'Your bank &ldquo;credits&rdquo; your account when money comes in, because on the bank&rsquo;s books you are a liability, and liabilities increase with credits. Your own books work the other way round.',
           task: {
             type: 'sort',
             prompt: 'Which side does each account increase on?',
@@ -1311,7 +1311,7 @@ var COURSE = {
               { t: 'Service Revenue', k: 'cr' },
               { t: 'Rent Expense', k: 'dr', why: 'Expenses reduce equity, and a reduction of a right-side item is recorded on the left.' },
               { t: 'Common Stock', k: 'cr' },
-              { t: 'Dividends', k: 'dr', why: 'Like expenses, dividends reduce equity — so they increase with debits.' }
+              { t: 'Dividends', k: 'dr', why: 'Like expenses, dividends reduce equity, so they increase with debits.' }
             ],
             hint: 'Assets, expenses and dividends behave one way. Liabilities, stock and revenues behave the other.',
             explain: 'Assets, expenses and dividends increase with debits. Liabilities, common stock, retained earnings and revenues increase with credits.'
@@ -1321,12 +1321,12 @@ var COURSE = {
           id: '2.2',
           title: 'The rules come straight from the equation',
           concept: [
-            'Assets sit to the <em>left</em> of the equal sign, so they increase on the <em>left</em> — with debits.',
-            'Liabilities and equity sit to the <em>right</em>, so they increase on the <em>right</em> — with credits.',
+            'Assets sit to the <em>left</em> of the equal sign. They increase on the left, with debits.',
+            'Liabilities and equity sit to the <em>right</em>. They increase on the right, with credits.',
             'Expenses and dividends reduce equity. Reducing a right-side item is recorded on the left, which is why both of them increase with debits.'
           ],
           figure: FIG.drcr,
-          keyidea: 'There are not eight rules to memorise. There is one question: which side of the equation does this account live on — and is it pushing equity up or down?',
+          keyidea: 'There are not eight rules to memorise. There is one question: which side of the equation does this account live on, and is it pushing equity up or down?',
           task: {
             type: 'sort',
             prompt: 'Debit or credit? Watch the direction carefully.',
@@ -1341,7 +1341,7 @@ var COURSE = {
               { t: 'Utilities Expense <b>increases</b> when the bill is paid', k: 'dr' }
             ],
             hint: 'Find the account&rsquo;s normal side first, then flip it if the item says <b>decreases</b>.',
-            explain: 'Notice the pattern: paying a bill always credits Cash, and it debits whatever the payment was for — an expense if the cost is new, a payable if the debt already existed.'
+            explain: 'Notice the pattern: paying a bill credits Cash, and it debits whatever the payment was for: an expense if the cost is new, a payable if the debt already existed.'
           }
         },
         {
@@ -1350,7 +1350,7 @@ var COURSE = {
           concept: [
             'A ledger account collects every debit on its left and every credit on its right. Sketched quickly, that is a <strong>T-account</strong>.',
             'The balance is the difference between the two sides, written on whichever side is larger.',
-            'Cash almost always ends with a debit balance. If yours does not, either the company is overdrawn or you made a posting error.'
+            'Cash ends with a debit balance in a solvent company. If yours does not, either the company is overdrawn or you misposted an entry.'
           ],
           figure:
             '<div class="figure"><div class="figure-cap">Speedy&rsquo;s Cash account for July</div>' +
@@ -1366,7 +1366,7 @@ var COURSE = {
               { label: 'Ending balance', answer: 10500, why: 'Debits exceed credits, so Cash carries a debit balance of $10,500.' }
             ],
             hint: 'Receipts: 10,000 + 1,500 + 700. Payments: 800 + 500 + 300 + 100.',
-            explain: 'Cash of $10,500 — the same figure the tabular summary produced in Project 1. Two different tools, one underlying system.'
+            explain: 'Cash of $10,500, the same figure the tabular summary produced in Project 1. Two different tools, one underlying system.'
           }
         },
         {
@@ -1375,7 +1375,7 @@ var COURSE = {
           concept: [
             'The journal is where a transaction is recorded first, in date order, with both sides of it in one place.',
             'Debits are listed first and flush left. Credits are indented beneath them. The two totals must agree.',
-            'Account names matter. Write <em>Rent Expense</em>, not <em>Expense</em> — that name is what eventually appears on the financial statements.'
+            'Account names matter. Write <em>Rent Expense</em>, not <em>Expense</em>. That name is what appears on the financial statements.'
           ],
           figure: FIG.journalform,
           task: {
@@ -1384,14 +1384,14 @@ var COURSE = {
             sub: 'Pick the account for each line and enter the amount. Debits go on top.',
             txns: [
               {
-                text: 'July 1 — Stockholders invest $10,000 cash in exchange for common stock.',
+                text: 'July 1. Stockholders invest $10,000 cash in exchange for common stock.',
                 lines: [ { acct: 'Cash', side: 'dr', amt: 10000 }, { acct: 'Common Stock', side: 'cr', amt: 10000 } ],
                 note: 'Cash comes in, so it is debited. The claim created belongs to owners, so Common Stock is credited.'
               },
               {
-                text: 'July 6 — Speedy performs $2,000 of delivery services for a client on account.',
+                text: 'July 6. Speedy performs $2,000 of delivery services for a client on account.',
                 lines: [ { acct: 'Accounts Receivable', side: 'dr', amt: 2000 }, { acct: 'Service Revenue', side: 'cr', amt: 2000 } ],
-                note: 'No cash yet. The company earned the revenue and holds a right to collect — that right is the asset.'
+                note: 'No cash yet. The company earned the revenue and holds a right to collect. That right is the asset.'
               }
             ],
             hint: 'The second entry does not touch Cash at all.',
@@ -1403,7 +1403,7 @@ var COURSE = {
           kind: 'project',
           title: 'Project: Journalize Speedy&rsquo;s July',
           brief: {
-            lead: 'Same company, same seven transactions — recorded the way a real ledger records them.',
+            lead: 'Same company, same seven transactions, recorded the way a real ledger records them.',
             facts: [
               'You already know the effects from Project 1.',
               'Now name the specific account for each expense: rent, salaries and wages, utilities, advertising.',
@@ -1420,7 +1420,7 @@ var COURSE = {
               { text: 'Paid $800 for July rent.', lines: [ { acct: 'Rent Expense', side: 'dr', amt: 800 }, { acct: 'Cash', side: 'cr', amt: 800 } ] },
               { text: 'Purchased office equipment on account, $3,000.', lines: [ { acct: 'Equipment', side: 'dr', amt: 3000 }, { acct: 'Accounts Payable', side: 'cr', amt: 3000 } ] },
               { text: 'Performed delivery services for clients for cash, $1,500.', lines: [ { acct: 'Cash', side: 'dr', amt: 1500 }, { acct: 'Service Revenue', side: 'cr', amt: 1500 } ] },
-              { text: 'Borrowed $700 cash from a bank on a note payable.', lines: [ { acct: 'Cash', side: 'dr', amt: 700 }, { acct: 'Notes Payable', side: 'cr', amt: 700 } ], note: 'Credit Notes Payable, never Service Revenue — borrowing is not earning.' },
+              { text: 'Borrowed $700 cash from a bank on a note payable.', lines: [ { acct: 'Cash', side: 'dr', amt: 700 }, { acct: 'Notes Payable', side: 'cr', amt: 700 } ], note: 'Credit Notes Payable, not Service Revenue. Borrowing is not earning.' },
               { text: 'Performed delivery services for a client on account, $2,000.', lines: [ { acct: 'Accounts Receivable', side: 'dr', amt: 2000 }, { acct: 'Service Revenue', side: 'cr', amt: 2000 } ] },
               { text: 'Paid salaries, $500.', lines: [ { acct: 'Salaries and Wages Expense', side: 'dr', amt: 500 }, { acct: 'Cash', side: 'cr', amt: 500 } ] },
               { text: 'Paid utilities, $300.', lines: [ { acct: 'Utilities Expense', side: 'dr', amt: 300 }, { acct: 'Cash', side: 'cr', amt: 300 } ] },
@@ -1437,10 +1437,10 @@ var COURSE = {
     {
       id: 'm3',
       name: 'From Accounts to Statements',
-      tagline: 'Turn a ledger into three connected reports — and know what they do not prove.',
+      tagline: 'Turn a ledger into three connected reports, and know what they do not prove.',
       minutes: 20,
       cando: [
-        'Explain exactly what a trial balance does and does not catch',
+        'Explain what a trial balance does and does not catch',
         'Trace net income from the income statement to the balance sheet',
         'Separate temporary accounts from permanent ones',
         'Produce a full set of statements from a tabular summary'
@@ -1451,13 +1451,13 @@ var COURSE = {
           title: 'The trial balance proves less than you think',
           concept: [
             'List every account with its balance, debits in one column and credits in the other. If the columns disagree, something is mechanically wrong.',
-            'If they agree, you have proved one thing only: total debits equal total credits. An amount posted to entirely the wrong account still balances perfectly.',
-            'When the difference divides evenly by 9, suspect a transposition — $540 keyed as $450.'
+            'If they agree, you have proved one thing only: total debits equal total credits. An amount posted to the wrong account still balances.',
+            'When the difference divides evenly by 9, suspect a transposition: $540 keyed as $450.'
           ],
           figure:
             '<div class="figure"><div class="figure-cap">What a trial balance cannot see</div>' +
             '<div class="rulegrid">' +
-            '<div class="rule"><b style="color:var(--rose)">Invisible</b><span>Entry omitted entirely</span></div>' +
+            '<div class="rule"><b style="color:var(--rose)">Invisible</b><span>Entry never recorded</span></div>' +
             '<div class="rule"><b style="color:var(--rose)">Invisible</b><span>Correct amount, wrong account</span></div>' +
             '<div class="rule"><b style="color:var(--rose)">Invisible</b><span>Same entry recorded twice</span></div>' +
             '<div class="rule"><b style="color:var(--brand)">Caught</b><span>One side posted, the other missed</span></div>' +
@@ -1467,13 +1467,13 @@ var COURSE = {
             prompt: 'Speedy&rsquo;s trial balance will not balance. Debits total $16,200; credits total $15,300. What should you check first?',
             sub: 'Work out the size of the gap before you look at the options.',
             options: [
-              { t: 'A transposed figure — the $900 gap divides evenly by 9', ok: true, why: 'Any single transposition produces a difference that is a multiple of 9. It is the cheapest thing to check first.' },
+              { t: 'A transposed figure: the $900 gap divides evenly by 9', ok: true, why: 'Any single transposition produces a difference that is a multiple of 9. It is the cheapest thing to check first.' },
               { t: 'A journal entry that was never recorded', ok: false, why: 'A missing entry drops a debit <em>and</em> its matching credit, so the columns would still agree.' },
-              { t: 'An amount posted to the wrong account', ok: false, why: 'Wrong account, but the right side and the right amount — the totals are unaffected.' },
+              { t: 'An amount posted to the wrong account', ok: false, why: 'Wrong account, but the right side and the right amount, so the columns still agree.' },
               { t: 'A dividend recorded as an expense', ok: false, why: 'Both are debit-balance accounts. Net income would be wrong, but the trial balance would look perfect.' }
             ],
             hint: '16,200 &minus; 15,300 = 900. What is special about 900?',
-            explain: 'The three wrong answers are exactly the errors a trial balance <em>cannot</em> detect. That is the real lesson: balancing is necessary, not sufficient.'
+            explain: 'The three wrong answers are the errors a trial balance <em>cannot</em> detect. That is the real lesson: balancing is necessary, not sufficient.'
           }
         },
         {
@@ -1481,7 +1481,7 @@ var COURSE = {
           title: 'The statements are one chain',
           concept: [
             'The income statement comes first: revenues minus expenses gives net income for the period.',
-            'That net income drops straight into the retained earnings statement — beginning balance, plus net income, minus dividends.',
+            'That net income drops into the retained earnings statement: beginning balance, plus net income, minus dividends.',
             'Ending retained earnings then appears inside equity on the balance sheet. One number ties all three reports together.'
           ],
           figure: FIG.statements,
@@ -1497,7 +1497,7 @@ var COURSE = {
               { t: 'Salaries and Wages Expense', k: 'is' },
               { t: 'Dividends', k: 're', why: 'Dividends are deducted in the retained earnings statement, never on the income statement.' },
               { t: 'Notes Payable', k: 'bs' },
-              { t: 'Common Stock', k: 'bs', why: 'Common Stock is an equity account reported on the balance sheet — only retained earnings gets its own statement.' }
+              { t: 'Common Stock', k: 'bs', why: 'Common Stock is an equity account reported on the balance sheet. Only retained earnings gets its own statement.' }
             ],
             hint: 'Only one of these six sits on the retained earnings statement.',
             explain: 'Revenues and expenses measure the period. Dividends reduce the profit kept. Everything else describes the company as at a moment in time.'
@@ -1507,7 +1507,7 @@ var COURSE = {
           id: '3.3',
           title: 'Temporary and permanent accounts',
           concept: [
-            'Revenue, expense and dividend accounts measure a single period. At period end they are closed to retained earnings and restart at zero — these are <strong>temporary</strong> accounts.',
+            'Revenue, expense and dividend accounts measure a single period. At period end they are closed to retained earnings and restart at zero. Accountants call these <strong>temporary</strong> accounts.',
             'Assets, liabilities and equity accounts carry their balances into the next period. These are <strong>permanent</strong>.',
             'Retained Earnings is the hinge: permanent itself, but it absorbs every temporary balance when the books are closed.'
           ],
@@ -1607,7 +1607,7 @@ var COURSE = {
           concept: [
             'Closing entries move every temporary balance into Retained Earnings and leave those accounts at zero.',
             'Revenues are debited to close them out; expenses and dividends are credited. Retained Earnings takes up the difference.',
-            'The post-closing trial balance therefore contains permanent accounts only — it is effectively the balance sheet in trial-balance form.'
+            'The post-closing trial balance therefore contains permanent accounts only. It is the balance sheet in trial-balance form.'
           ],
           figure: FIG.closing,
           keyidea: 'If a revenue or expense account still shows a balance on the post-closing trial balance, the close was not completed.',
@@ -1621,13 +1621,13 @@ var COURSE = {
               { t: 'Service Revenue', ok: false, why: 'Closed to Retained Earnings and reset to zero.' },
               { t: 'Accounts Payable', ok: true },
               { t: 'Retained Earnings', ok: true, why: 'It carries the $1,800 of July profit forward.' },
-              { t: 'Dividends', ok: false, why: 'Temporary — closed directly to Retained Earnings.' },
+              { t: 'Dividends', ok: false, why: 'Temporary. Speedy closes it straight to Retained Earnings.' },
               { t: 'Equipment', ok: true },
               { t: 'Rent Expense', ok: false, why: 'Every expense account starts August at zero.' },
               { t: 'Common Stock', ok: true }
             ],
             hint: 'Five accounts survive. Every one of them appears on the balance sheet.',
-            explain: 'Cash, Equipment, Accounts Payable, Common Stock and Retained Earnings — the balance sheet, restated as debits and credits.'
+            explain: 'Cash, Equipment, Accounts Payable, Common Stock and Retained Earnings: the balance sheet, restated as debits and credits.'
           }
         },
         {
@@ -1644,12 +1644,12 @@ var COURSE = {
             sub: 'The workpaper opens with July&rsquo;s closing balances already in place.',
             opening: { cash: 10500, ar: 2000, equip: 3000, np: 700, ap: 3000, cs: 10000, rev: 3500, exp: 1700, div: 0 },
             txns: [
-              { text: 'Speedy pays $1,200 of the amount owed on the office equipment.', effects: [ { acct: 'cash', dir: -1, amt: 1200 }, { acct: 'ap', dir: -1, amt: 1200 } ], note: 'Settling an old debt. No expense — the equipment was recorded in July.' },
+              { text: 'Speedy pays $1,200 of the amount owed on the office equipment.', effects: [ { acct: 'cash', dir: -1, amt: 1200 }, { acct: 'ap', dir: -1, amt: 1200 } ], note: 'Settling an old debt. Speedy recorded the equipment in July, so no new cost arises.' },
               { text: 'A client pays $900 of the amount previously billed on account.', effects: [ { acct: 'cash', dir: 1, amt: 900 }, { acct: 'ar', dir: -1, amt: 900 } ], note: 'No revenue here. It was earned in July when the delivery was made; this is only a collection.' },
-              { text: 'The board declares and immediately pays a $400 cash dividend.', effects: [ { acct: 'cash', dir: -1, amt: 400 }, { acct: 'div', dir: 1, amt: 400 } ], note: 'A distribution of profit, not a cost of earning it — so it never touches the income statement.' }
+              { text: 'The board declares and immediately pays a $400 cash dividend.', effects: [ { acct: 'cash', dir: -1, amt: 400 }, { acct: 'div', dir: 1, amt: 400 } ], note: 'A distribution of profit, not a cost of earning it, so it never reaches the income statement.' }
             ],
             hint: 'Only one of these three changes the total of the equation. The other two just move items around within it.',
-            explain: 'Two of the three left total assets and total claims unchanged in <em>net</em> terms — only the dividend reduced both sides, by $400.'
+            explain: 'Two of the three left total assets and total claims unchanged in <em>net</em> terms. Only the dividend reduced both sides, by $400.'
           }
         }
       ]
@@ -1658,11 +1658,11 @@ var COURSE = {
 };
 
 var GLOSSARY = [
-  ['Asset', 'A resource the company controls that is expected to produce future benefit — cash, receivables, equipment.'],
+  ['Asset', 'A resource the company controls that will produce future benefit: cash, receivables, equipment.'],
   ['Liability', 'A present obligation to an outside party. Creditors hold the first claim on assets.'],
   ['Stockholders&rsquo; equity', 'The owners&rsquo; residual claim: assets minus liabilities. Made up of common stock plus retained earnings.'],
   ['Retained earnings', 'Cumulative profit the company has kept. Increased by net income, reduced by dividends.'],
-  ['Revenue', 'Recorded when the service is performed or the goods are delivered — not when the cash arrives.'],
+  ['Revenue', 'Recorded when the service is performed or the goods are delivered, not when the cash arrives.'],
   ['Expense', 'The cost of earning revenue in the period. Settling an old payable is not an expense.'],
   ['Dividend', 'A distribution of profit to owners. Reduces retained earnings; never appears on the income statement.'],
   ['Debit', 'An entry on the left side of an account. Increases assets, expenses and dividends.'],
@@ -1764,7 +1764,7 @@ RENDER.choice = {
     var bits = [];
     if (wrong.length) bits.push(wrong.length + (wrong.length === 1 ? ' account does not belong' : ' accounts do not belong'));
     if (missed.length) bits.push(missed.length + ' still missing');
-    return { ok: false, body: 'Close — ' + bits.join(', ') + '.' };
+    return { ok: false, body: 'Close. ' + bits.join(', ') + '.' };
   },
   paint: function (root, task, s, result) {
     Array.prototype.forEach.call(root.querySelectorAll('[data-opt]'), function (btn) {
@@ -1879,7 +1879,7 @@ RENDER.numeric = {
       ok: false,
       body: wrong.length === 1
         ? 'One figure is off. Check the line highlighted in red.'
-        : wrong.length + ' of the ' + task.fields.length + ' figures are off — and remember each one feeds the next.'
+        : wrong.length + ' of the ' + task.fields.length + ' figures are off. Each one feeds the next, so start at the top.'
     };
   },
   paint: function (root, task, s) {
@@ -2132,7 +2132,7 @@ RENDER.equation = {
     return {
       ok: false,
       body: bad.length === 1
-        ? 'Transaction ' + bad[0] + ' is not right yet — see the note under it.'
+        ? 'Transaction ' + bad[0] + ' is not right yet. Read the note under it.'
         : bad.length + ' transactions need another look: ' + bad.join(', ') + '.'
     };
   },
@@ -2259,7 +2259,7 @@ RENDER.journal = {
     return {
       ok: false,
       body: bad.length === 1
-        ? 'Entry ' + bad[0] + ' is not right yet — see the note under it.'
+        ? 'Entry ' + bad[0] + ' is not right yet. Read the note under it.'
         : bad.length + ' entries need another look: ' + bad.join(', ') + '.'
     };
   },
