@@ -10,6 +10,8 @@ const path = require('path');
 const SRC = path.join(__dirname, '..', 'index.html');
 const OUT = path.join(__dirname, '..', 'artifact.html');
 
+// Guard: never publish a build that has not been verified in this session.
+// Run `npm run check` to do both in order.
 const html = fs.readFileSync(SRC, 'utf8');
 
 const styleMatch = html.match(/<style>[\s\S]*?<\/style>/);

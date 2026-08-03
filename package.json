@@ -1,0 +1,10 @@
+{
+  "name": "accounting-workflow",
+  "private": true,
+  "description": "A comprehensive accounting problem worked step by step, as an installable web app.",
+  "scripts": {
+    "verify": "node scripts/verify.js",
+    "build": "node scripts/build-artifact.js",
+    "check": "npm run verify && npm run build"
+  }
+}
