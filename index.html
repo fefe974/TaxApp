@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Speedy Delivery Inc. · Accounting workflow</title>
-<meta name="description" content="A comprehensive accounting problem worked one step at a time. Watch the tabular summary build itself, then turn it into the three financial statements." />
+<meta name="description" content="A short lecture on the accounting equation, then a comprehensive problem worked one step at a time as the tabular summary builds itself into three financial statements." />
 <meta name="theme-color" content="#f8fafc" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png" />
@@ -400,6 +400,62 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
   background: var(--brand-soft); color: var(--brand);
 }
 
+
+/* ---------- lecture ---------- */
+.lec-lede { font-size: 17px; line-height: 1.55; color: var(--text-dim); margin-top: 12px; }
+.lec-body { display: grid; gap: 14px; margin-top: 20px; }
+.lec-body p { font-size: 15.5px; line-height: 1.62; color: var(--text-dim); }
+.lec-body b { color: var(--text); font-weight: 700; }
+.keypoint {
+  display: flex; gap: 11px; margin-top: 20px;
+  padding: 14px 15px; border-radius: var(--r-md);
+  background: var(--amber-soft); border: 1px solid var(--amber-line);
+}
+.keypoint svg { flex: 0 0 auto; width: 17px; height: 17px; color: var(--amber); margin-top: 2px; }
+.keypoint p { font-size: 14.5px; line-height: 1.55; color: var(--amber-ink); }
+
+.viz {
+  margin-top: 20px; padding: 18px 16px;
+  border-radius: var(--r-lg);
+  background: var(--surface); border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+.viz-cap { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+
+.eqbar { display: flex; gap: 6px; align-items: stretch; min-width: 0; }
+.eqbar-seg {
+  /* min-width:0 lets a segment shrink below its longest word instead of
+     pushing the row past a 320px viewport. */
+  min-width: 0;
+  border-radius: var(--r-md); padding: 12px 11px;
+  border: 1px solid; display: grid; gap: 3px; align-content: center; min-height: 78px;
+}
+.eqbar-seg b, .eqbar-seg span { overflow-wrap: anywhere; }
+.eqbar-seg b { font-size: 14px; font-weight: 800; letter-spacing: -0.01em; }
+.eqbar-seg span { font-size: 11.5px; line-height: 1.35; opacity: 0.9; }
+.seg-a { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
+.seg-l { background: var(--amber-soft); border-color: var(--amber-line); color: var(--amber-ink); }
+.seg-e { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.eqbar-op { display: grid; place-items: center; font-size: 18px; font-weight: 800; color: var(--muted); }
+
+.flow { display: grid; gap: 8px; }
+.flow-node { border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--surface-2); padding: 12px 14px; }
+.flow-node b { display: block; font-size: 14px; font-weight: 750; }
+.flow-node span { font-size: 12.5px; color: var(--muted); }
+.flow-arrow { display: grid; place-items: center; color: var(--brand); }
+.flow-arrow svg { width: 18px; height: 18px; }
+
+.rules { display: grid; gap: 10px; }
+.rule { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); padding: 12px 14px; }
+.rule b { display: block; font-size: 13.5px; font-weight: 750; margin-bottom: 3px; }
+.rule span { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.rule.up b { color: var(--good-deep); }
+.rule.down b { color: var(--bad); }
+.rule.hot { border-color: var(--bad-line); background: var(--bad-soft); }
+.rule.hot b { color: var(--bad); }
+.rule.hot span { color: var(--text-dim); }
+@media (min-width: 560px) { .rules.two { grid-template-columns: 1fr 1fr; } }
+
 /* ---------- bottom controls ---------- */
 .controls {
   flex: 0 0 auto;
@@ -473,7 +529,7 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
       <span class="mark" id="mark"></span>
       <div class="appbar-title">
         <b>Speedy Delivery Inc.</b>
-        <span>Accounting workflow walkthrough</span>
+        <span>Lecture, then a guided walkthrough</span>
       </div>
       <button class="ghost-btn" id="btn-theme" aria-label="Switch colour theme"></button>
     </div>
@@ -568,6 +624,7 @@ var ICON = {
   warn:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
   prev:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
   next:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>',
+  down:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>',
   sun:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
 };
 
@@ -647,6 +704,95 @@ var FACTS = [
 /* ============================================================
    THE WALKTHROUGH
    ============================================================ */
+
+/* ============================================================
+   THE LECTURE
+   Five short screens of context before the problem starts, so
+   the walkthrough is applying ideas rather than introducing them.
+   ============================================================ */
+var LECTURE = [
+  {
+    title: 'What accounting is for',
+    lede: 'A business does things all month. Accounting exists to turn those events into two answers.',
+    body: [
+      'Someone always needs to know two things. <b>What does the business own and owe right now?</b> And <b>did it do well over the last stretch of time?</b>',
+      'Every rule you are about to meet exists to answer one of those two questions reliably enough that a stranger can trust the answer.',
+      'The path is always the same. Events happen, they get recorded as they happen, the records get totalled, and the totals become financial statements.'
+    ],
+    viz: { cap: 'The path from event to report', html:
+      '<div class="flow">' +
+      '<div class="flow-node"><b>Business events</b><span>An investment, a purchase, a job completed, a bill paid</span></div>' +
+      '<div class="flow-arrow">' + ICON.down + '</div>' +
+      '<div class="flow-node"><b>Tabular summary</b><span>Every event recorded against the accounts it affects</span></div>' +
+      '<div class="flow-arrow">' + ICON.down + '</div>' +
+      '<div class="flow-node"><b>Financial statements</b><span>Income statement, retained earnings, balance sheet</span></div>' +
+      '</div>' },
+    key: 'Speedy Delivery Inc. had seven events in July. By the end of this walkthrough you will have turned them into three statements.'
+  },
+  {
+    title: 'The accounting equation',
+    lede: 'One equation sits underneath everything, and it can never fail to balance.',
+    body: [
+      '<b>Assets</b> are resources the business controls and expects future benefit from: cash, equipment, amounts customers still owe it.',
+      '<b>Liabilities</b> are what outsiders can claim against those resources: a supplier waiting to be paid, a bank loan.',
+      '<b>Stockholders&rsquo; equity</b> is whatever is left for the owners once the liabilities are settled.',
+      'The equality is not a rule somebody imposed. Equity is <em>defined</em> as assets minus liabilities, so the two sides describe the same pile of resources twice: once by what it is, once by who has a claim on it.'
+    ],
+    viz: { cap: 'Assets = Liabilities + Stockholders&rsquo; Equity', html:
+      '<div class="eqbar">' +
+      '<div class="eqbar-seg seg-a" style="flex:1.1"><b>Assets</b><span>What the business controls</span></div>' +
+      '<div class="eqbar-op">=</div>' +
+      '<div class="eqbar-seg seg-l" style="flex:0.8"><b>Liabilities</b><span>Creditor claims</span></div>' +
+      '<div class="eqbar-op">+</div>' +
+      '<div class="eqbar-seg seg-e" style="flex:0.9"><b>Equity</b><span>Owner claims</span></div>' +
+      '</div>' },
+    key: 'If the two sides ever disagree, something was recorded wrong. That is exactly what makes the equation worth keeping.'
+  },
+  {
+    title: 'Equity has moving parts',
+    lede: 'Equity is never one number. Four different things move it, and telling them apart is what makes profit measurable at all.',
+    body: [
+      'Equity splits in two. <b>Common stock</b> is capital the owners put in. <b>Retained earnings</b> is profit the business made and kept.',
+      'Retained earnings is itself made of three things: <b>revenues, less expenses, less dividends</b>.',
+      '&ldquo;Equity rose $11,800&rdquo; tells you nothing on its own. A business that was handed $10,000 and earned $1,800 is a completely different business from one that earned $11,800.'
+    ],
+    viz: { cap: 'What moves stockholders&rsquo; equity', html:
+      '<div class="rules two">' +
+      '<div class="rule up"><b>Common stock &uarr;</b><span>Owners put resources in</span></div>' +
+      '<div class="rule up"><b>Revenues &uarr;</b><span>The business earns from its work</span></div>' +
+      '<div class="rule down"><b>Expenses &darr;</b><span>Resources used up earning it</span></div>' +
+      '<div class="rule down"><b>Dividends &darr;</b><span>Profit handed back to owners</span></div>' +
+      '</div>' },
+    key: 'A dividend is not an expense. An expense helps produce revenue; a dividend hands out profit that already exists.'
+  },
+  {
+    title: 'Three decisions that settle everything',
+    lede: 'Almost every mistake in a problem like this comes from one of three judgements.',
+    body: [
+      'None of them is about arithmetic. Each one asks what actually happened in the business, and the recording follows from the answer.'
+    ],
+    viz: { cap: 'The three questions', html:
+      '<div class="rules">' +
+      '<div class="rule"><b>1. When is revenue earned?</b><span>When the work is performed, not when the cash arrives. A completed job that has not been paid for is still revenue today.</span></div>' +
+      '<div class="rule"><b>2. When is a cost an expense?</b><span>When the benefit is used up inside this period. If it lasts beyond it, the cost bought an asset instead.</span></div>' +
+      '<div class="rule hot"><b>3. Is the cash earned or borrowed?</b><span>If the business has to give it back it is a liability. Borrowed money is never revenue, however much it looks like it in the bank.</span></div>' +
+      '</div>' },
+    key: 'The third one is the trap in this problem. A $700 bank loan and $700 of delivery work put identical cash in the bank and mean opposite things.'
+  },
+  {
+    title: 'How a transaction gets recorded',
+    lede: 'Every transaction changes at least two things, and the tabular summary is where you show it.',
+    body: [
+      'Recording only one side would break the equation, so at least two items always move. Sometimes both sit on the same side, as when cash buys equipment. Sometimes one sits on each, as when borrowing raises cash and a debt together.',
+      'The summary gives every account its own column, grouped into assets, liabilities and equity. Each transaction gets a row. Total the columns at the end and the two sides have to agree.',
+      'Four steps, every time: <b>name the accounts, decide the direction, attach the amount, check the equation still holds.</b>'
+    ],
+    vizFn: 'emptyLedger',
+    vizCap: 'The workpaper you are about to fill',
+    key: 'That is the whole method. The next twelve steps apply it to Speedy&rsquo;s July, one transaction at a time.'
+  }
+];
+
 var STEPS = [
   {
     title: 'Start the walkthrough',
@@ -792,9 +938,11 @@ document.getElementById('next-icon').innerHTML = ICON.next;
    it produces, in both the guide and the full table.
    ============================================================ */
 (function () {
-  var STORE = 'speedy.walkthrough.v1';
-  var LAST = STEPS.length - 1;
-  var cur = 0;
+  var STORE = 'speedy.walkthrough.v2';
+  var LEC = LECTURE.length;          // lecture screens come first
+  var LAST = STEPS.length - 1;       // highest walkthrough step number
+  var TOTAL = LEC + STEPS.length;    // combined page count
+  var cur = 0;                       // index into the combined flow
   var tab = 'guide';
   var theme = '';
 
@@ -803,7 +951,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function load() {
     try {
       var p = JSON.parse(window.localStorage.getItem(STORE) || '{}');
-      if (typeof p.step === 'number' && p.step >= 0 && p.step <= LAST) cur = p.step;
+      if (typeof p.step === 'number' && p.step >= 0 && p.step < TOTAL) cur = p.step;
       if (p.tab === 'table' || p.tab === 'guide') tab = p.tab;
       theme = p.theme || '';
     } catch (e) { /* private mode: run without persistence */ }
@@ -884,19 +1032,43 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   /* ---------- guide pane ---------- */
+  function inLecture() { return cur < LEC; }
+  function stepNo() { return cur - LEC; }
+
+  function renderLecture() {
+    var l = LECTURE[cur];
+    var viz = '';
+    if (l.vizFn === 'emptyLedger') {
+      viz = '<div class="viz"><div class="viz-cap">' + l.vizCap + '</div>' + ledgerTable(0, [], { remarks: false }) + '</div>';
+    } else if (l.viz) {
+      viz = '<div class="viz"><div class="viz-cap">' + l.viz.cap + '</div>' + l.viz.html + '</div>';
+    }
+    $('guide').innerHTML =
+      '<div class="wrap fade">' +
+      '<div class="step-eyebrow">Lecture ' + (cur + 1) + ' of ' + LEC + '</div>' +
+      '<h2 class="step-title">' + l.title + '</h2>' +
+      '<p class="lec-lede">' + l.lede + '</p>' +
+      viz +
+      '<div class="lec-body">' + l.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+      (l.key ? '<div class="keypoint">' + ICON.bulb + '<p>' + l.key + '</p></div>' : '') +
+      '<div style="height:8px"></div></div>';
+    $('guide').parentNode.scrollTop = 0;
+  }
+
   function renderGuide() {
-    var s = STEPS[cur];
+    if (inLecture()) return renderLecture();
+    var s = STEPS[stepNo()];
     var impact = '';
 
     if (s.hits && s.hits.length) {
       impact = '<div class="box box-impact"><div class="impact-cap">' + ICON.pulse +
         (s.totals ? 'The summary so far' : 'Changes in this step') + '</div>' +
-        ledgerTable(cur, s.hits, { totals: !!s.totals, remarks: !s.totals }) + '</div>';
+        ledgerTable(stepNo(), s.hits, { totals: !!s.totals, remarks: !s.totals }) + '</div>';
     }
 
     $('guide').innerHTML =
       '<div class="wrap fade">' +
-      '<div class="step-eyebrow">Step ' + cur + ' of ' + LAST + '</div>' +
+      '<div class="step-eyebrow">Step ' + stepNo() + ' of ' + LAST + '</div>' +
       '<h2 class="step-title">' + s.title + '</h2>' +
       '<div class="stack">' +
       '<div class="box box-fact"><span class="box-tag">The fact</span><p>' + s.fact + '</p></div>' +
@@ -925,13 +1097,18 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   /* ---------- table pane ---------- */
   function renderTable() {
-    var s = STEPS[cur];
-    if (cur === 0) {
+    if (inLecture()) {
+      $('table-slot').innerHTML =
+        '<div class="hint">The lecture comes first. Once the walkthrough starts, this table will build itself one transaction at a time.</div>';
+      return;
+    }
+    var s = STEPS[stepNo()];
+    if (stepNo() === 0) {
       $('table-slot').innerHTML =
         '<div class="hint">Advance the walkthrough with the controls below and this table will build itself, one transaction at a time.</div>';
       return;
     }
-    $('table-slot').innerHTML = ledgerTable(cur, s.hits, { totals: !!s.totals });
+    $('table-slot').innerHTML = ledgerTable(stepNo(), s.hits, { totals: !!s.totals });
     var sc = $('table-scroll');
     var fresh = $('table-slot').querySelector('tr.fresh, tr.totals');
     if (fresh) {
@@ -944,10 +1121,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* ---------- chrome ---------- */
   function renderControls() {
     $('btn-prev').disabled = cur === 0;
-    $('btn-next').disabled = cur === LAST;
-    $('next-label').textContent = cur === 0 ? 'Start' : (cur === LAST ? 'Done' : 'Next');
-    $('prog-label').textContent = 'Step ' + cur + ' of ' + LAST;
-    $('prog-fill').style.transform = 'scaleX(' + (cur / LAST) + ')';
+    $('btn-next').disabled = cur === TOTAL - 1;
+    $('next-label').textContent =
+      cur === TOTAL - 1 ? 'Done' : (cur === LEC - 1 ? 'Start' : 'Next');
+    $('prog-label').textContent = inLecture()
+      ? 'Lecture ' + (cur + 1) + ' of ' + LEC
+      : 'Step ' + stepNo() + ' of ' + LAST;
+    $('prog-fill').style.transform = 'scaleX(' + (cur / (TOTAL - 1)) + ')';
   }
 
   function renderTabs() {
@@ -966,7 +1146,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   /* ---------- navigation ---------- */
   function go(n) {
-    var next = Math.max(0, Math.min(LAST, n));
+    var next = Math.max(0, Math.min(TOTAL - 1, n));
     if (next === cur) return;
     cur = next;
     save();
