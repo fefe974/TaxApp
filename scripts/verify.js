@@ -176,6 +176,246 @@ function check(name, ok, detail) {
   check('pinch zoom not disabled', a11y.zoom);
 
   // ---------------------------------------------------------------
+  console.log('\nWORKSHEET');
+  // ---------------------------------------------------------------
+  // Drive the worksheet the way a learner does — through real DOM events on
+  // real controls. Reading the module's own functions would only prove the
+  // answer key agrees with itself.
+  const ws = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  const wsErrors = [];
+  ws.on('pageerror', e => wsErrors.push('pageerror: ' + e.message));
+  ws.on('console', m => { if (m.type() === 'error') wsErrors.push('console: ' + m.text()); });
+  await ws.goto(FILE);
+  await ws.evaluate(() => localStorage.clear());
+  await ws.goto(FILE);
+  await ws.waitForTimeout(400);
+  await ws.click('#tab-solve');
+  await ws.waitForTimeout(200);
+
+  // A helper that types one effect through the controls, not into the model.
+  // The direction control is a toggle, so clicking it when it is already set
+  // would clear it. Press it only when it is not already in the wanted state.
+  const fill = async (ri, i, key, dir, amt) => {
+    await ws.selectOption(`[data-fx="${ri}.${i}"]`, key);
+    const sel = `[data-dir="${ri}.${i}.${dir}"]`;
+    if (await ws.getAttribute(sel, 'aria-pressed') !== 'true') await ws.click(sel);
+    await ws.fill(`[data-amt="${ri}.${i}"]`, String(amt));
+  };
+
+  const shape = await ws.evaluate(() => ({
+    cards: document.querySelectorAll('#solve .ws-tx').length,
+    fields: document.querySelectorAll('#solve .ws-field').length,
+    slots: document.querySelectorAll('#solve [data-fx]').length,
+    h1: document.querySelectorAll('h1').length,
+    score: document.getElementById('ws-score').textContent.trim(),
+    // Nothing may be pre-filled, and no hint may be showing.
+    prefilled: Array.from(document.querySelectorAll('#solve input')).filter(el => el.value).length,
+    tips: document.querySelectorAll('#solve .ws-note').length,
+    navHidden: document.getElementById('btn-next').hidden && document.getElementById('btn-prev').hidden,
+    checkShown: !document.getElementById('btn-check').hidden
+  }));
+  check('worksheet has one card per ledger row and one field per figure',
+    shape.cards === 9 && shape.fields === 5 && shape.slots === 18,
+    `cards=${shape.cards} fields=${shape.fields} slots=${shape.slots}`);
+  check('still exactly one h1 while solving', shape.h1 === 1, 'found ' + shape.h1);
+  check('worksheet starts blank with no hint revealed',
+    shape.prefilled === 0 && shape.tips === 0, `prefilled=${shape.prefilled} tips=${shape.tips}`);
+  check('score starts at 0 of 14', /0\s*of\s*14/.test(shape.score), shape.score);
+  check('walkthrough nav gives way to Check my work', shape.navHidden && shape.checkShown);
+
+  const wsLayout = await ws.evaluate(() => {
+    const sc = document.querySelector('#pane-solve .scroll');
+    const small = [];
+    document.querySelectorAll('#solve button, .controls button').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height && (r.height < 44 || r.width < 44)) small.push(el.className || el.id);
+    });
+    const unnamed = [];
+    document.querySelectorAll('#solve button, #solve select, #solve input').forEach(el => {
+      const name = (el.getAttribute('aria-label') || '') + el.textContent.trim() +
+        (el.labels && el.labels.length ? 'labelled' : '');
+      if (!name) unnamed.push(el.tagName + '.' + el.className);
+    });
+    return {
+      x: sc.scrollWidth - sc.clientWidth,
+      doc: document.documentElement.scrollWidth - window.innerWidth,
+      small, unnamed
+    };
+  });
+  check('worksheet does not overflow horizontally at 390px',
+    wsLayout.x <= 0 && wsLayout.doc <= 0, `pane +${wsLayout.x}, doc +${wsLayout.doc}`);
+  check('no worksheet control under 44px', wsLayout.small.length === 0, wsLayout.small.join(','));
+  check('every worksheet control has an accessible name', wsLayout.unnamed.length === 0, wsLayout.unnamed.join(','));
+
+  // --- checking a blank sheet must not shout at the learner ---
+  await ws.click('#btn-check');
+  await ws.waitForTimeout(150);
+  const blank = await ws.evaluate(() => ({
+    wrong: document.querySelectorAll('#solve .ws-tx.wrong, #solve .ws-field.wrong').length,
+    bad: document.querySelectorAll('#solve .ws-note.bad').length
+  }));
+  check('checking an untouched sheet marks nothing wrong',
+    blank.wrong === 0 && blank.bad === 0, JSON.stringify(blank));
+
+  // --- but a half-finished row is a real attempt and gets told so ---
+  await ws.selectOption('[data-fx="3.0"]', 'cash');
+  await ws.click('#btn-check');
+  await ws.waitForTimeout(150);
+  const partial = await ws.evaluate(() => ({
+    wrong: document.querySelector('[data-tx="3"]').classList.contains('wrong'),
+    note: (document.querySelector('[data-note="3"]') || {}).textContent || '',
+    others: document.querySelectorAll('#solve .ws-tx.wrong').length
+  }));
+  check('a half-finished row is marked and the rest are left alone',
+    partial.wrong && partial.others === 1, `others=${partial.others}`);
+  check('the half-finished row counts what is done rather than calling it empty',
+    /0 of 2 done so far/.test(partial.note), partial.note.slice(0, 80));
+  await ws.selectOption('[data-fx="3.0"]', '');
+
+  // --- a deliberately wrong entry has to be caught and explained ---
+  await fill(0, 0, 'cash', 1, 10000);
+  await fill(0, 1, 'rev', 1, 10000);              // financing recorded as earning
+  await ws.click('#btn-check');
+  await ws.waitForTimeout(150);
+  const wrong = await ws.evaluate(() => ({
+    marked: document.querySelector('[data-tx="0"]').classList.contains('wrong'),
+    note: (document.querySelector('[data-note="0"]') || {}).textContent || '',
+    score: document.getElementById('ws-score').textContent
+  }));
+  check('a wrong entry is marked wrong', wrong.marked);
+  check('the diagnosis names the actual fault without giving the answer',
+    /at least one account is wrong/.test(wrong.note) && !/common stock/i.test(wrong.note), wrong.note.slice(0, 90));
+  check('a wrong entry does not score', /0\s*of\s*14/.test(wrong.score), wrong.score);
+
+  // --- balance bar reads the learner's own workpaper ---
+  await ws.selectOption('[data-fx="0.1"]', 'cs');
+  await ws.fill('[data-amt="0.1"]', '9000');       // now unbalanced by 1,000
+  await ws.waitForTimeout(120);
+  const bar = await ws.evaluate(() => document.querySelector('#solve-table .proof').textContent);
+  check('the balance bar reports the learner\'s own shortfall', /out by\s*\$?1,000/.test(bar), bar.trim());
+  check('editing a row withdraws its mark',
+    await ws.evaluate(() => !document.querySelector('[data-tx="0"]').classList.contains('wrong')));
+
+  // --- hints escalate one level at a time and stop ---
+  const hints = [];
+  for (let i = 0; i < 4; i++) {
+    await ws.click('[data-hint="1"]').catch(() => {});
+    await ws.waitForTimeout(60);
+    hints.push(await ws.evaluate(() => ({
+      text: (document.querySelector('[data-note="1"] .ws-note') || {}).textContent || '',
+      label: document.querySelector('[data-hint="1"]').textContent.trim(),
+      done: document.querySelector('[data-hint="1"]').disabled
+    })));
+  }
+  check('each press of Hint reveals exactly one new level',
+    hints[0].text && hints[1].text && hints[2].text &&
+    hints[0].text !== hints[1].text && hints[1].text !== hints[2].text,
+    hints.map(h => h.text.slice(0, 24)).join(' | '));
+  check('only the last hint states the answer',
+    !/\$800/.test(hints[0].text) && /\$800/.test(hints[2].text), hints[0].text.slice(0, 60));
+  check('the Hint button stops at the last level', hints[2].done && hints[3].text === hints[2].text);
+  check('the Hint button says whether more are left',
+    hints[0].label === 'Another hint' && hints[2].label === 'No more hints',
+    hints.map(h => h.label).join(' / '));
+
+  // --- Part 2 is graded against the ledger, not against the learner's totals ---
+  // Total assets on the learner's own (still incomplete) workpaper is the
+  // $10,000 of cash — right for what they entered, wrong for the problem.
+  await ws.fill('[data-fld="ta"]', '10000');
+  await ws.click('#btn-check');
+  await ws.waitForTimeout(120);
+  const derived = await ws.evaluate(() => ({
+    wrong: document.querySelector('[data-field="ta"]').classList.contains('wrong'),
+    note: (document.querySelector('[data-fnote="ta"]') || {}).textContent || ''
+  }));
+  check('a figure that follows from a wrong workpaper is still marked wrong', derived.wrong);
+  check('and the diagnosis says the workpaper is the problem',
+    /follows correctly from your workpaper/.test(derived.note), derived.note.slice(0, 80));
+
+  // --- work survives a reload ---
+  await ws.reload();
+  await ws.waitForTimeout(400);
+  const restored = await ws.evaluate(() => ({
+    tab: document.getElementById('pane-solve').classList.contains('on'),
+    amt: (document.querySelector('[data-amt="0.0"]') || {}).value,
+    acct: (document.querySelector('[data-fx="0.1"]') || {}).value,
+    dir: document.querySelector('[data-dir="0.0.1"]').classList.contains('on-up'),
+    hint: !!document.querySelector('[data-note="1"] .ws-note')
+  }));
+  check('the worksheet reopens on reload with entries and hints intact',
+    restored.tab && restored.amt === '10000' && restored.acct === 'cs' && restored.dir && restored.hint,
+    JSON.stringify(restored));
+
+  // --- a fully correct sheet scores 14 of 14 ---
+  const plan = await ws.evaluate(() =>
+    LEDGER.map((r, ri) => ({ ri, fx: expectedFor(r) })));
+  for (const row of plan) {
+    for (let i = 0; i < row.fx.length; i++) {
+      await fill(row.ri, i, row.fx[i].k, row.fx[i].dir, row.fx[i].amt);
+    }
+  }
+  const answers = await ws.evaluate(() => {
+    const t = totalsUpTo(999);
+    return { ni: t.rev - t.exp, re: t.rev - t.exp - t.div, ta: t.cash + t.ar + t.eq,
+             tl: t.np + t.ap, te: t.cs + t.rev - t.exp - t.div };
+  });
+  for (const [id, v] of Object.entries(answers)) await ws.fill(`[data-fld="${id}"]`, String(v));
+  await ws.click('#btn-check');
+  await ws.waitForTimeout(200);
+  const solved = await ws.evaluate(() => ({
+    score: document.getElementById('ws-score').textContent,
+    right: document.querySelectorAll('#solve .ws-tx.right').length,
+    wrong: document.querySelectorAll('#solve .ws-tx.wrong, #solve .ws-field.wrong').length,
+    label: document.getElementById('btn-check').textContent,
+    proof: document.querySelector('#solve-table .proof').textContent
+  }));
+  check('a correct sheet scores 14 of 14', /14\s*of\s*14/.test(solved.score), solved.score);
+  check('every card and field is marked right', solved.right === 9 && solved.wrong === 0,
+    `right=${solved.right} wrong=${solved.wrong}`);
+  check('the button acknowledges completion', /All correct/.test(solved.label), solved.label);
+  check('the learner\'s own workpaper balances at $15,500',
+    /Assets\s*\$15,500/.test(solved.proof) && /\$15,500/.test(solved.proof.split('=')[1] || ''),
+    solved.proof.trim());
+
+  // --- the widest state of the widest labels, on the narrowest phone ---
+  const narrow = await browser.newPage({ viewport: { width: 320, height: 720 } });
+  await narrow.goto(FILE);
+  await narrow.waitForTimeout(400);
+  await narrow.click('#tab-solve');
+  await narrow.waitForTimeout(200);
+  await narrow.click('[data-fhint="4"]');            // longest field label + "Another hint"
+  await narrow.click('[data-hint="0"]');
+  await narrow.waitForTimeout(150);
+  const tight = await narrow.evaluate(() => {
+    const sc = document.querySelector('#pane-solve .scroll');
+    const input = document.querySelector('[data-fld="te"]').getBoundingClientRect();
+    return {
+      x: sc.scrollWidth - sc.clientWidth,
+      doc: document.documentElement.scrollWidth - window.innerWidth,
+      input: Math.round(input.width),
+      tabs: Array.from(document.querySelectorAll('.tab')).map(t =>
+        Math.round(t.scrollWidth - t.clientWidth))
+    };
+  });
+  check('worksheet still fits at 320px with hints open',
+    tight.x <= 0 && tight.doc <= 0, `pane +${tight.x}, doc +${tight.doc}`);
+  check('the amount field stays usable beside a hint button', tight.input >= 100, tight.input + 'px');
+  check('no tab label is clipped at 320px', tight.tabs.every(v => v <= 0), tight.tabs.join(','));
+  await narrow.close();
+
+  // --- leaving the worksheet restores the walkthrough controls ---
+  await ws.click('#tab-guide');
+  await ws.waitForTimeout(150);
+  const back = await ws.evaluate(() => ({
+    nav: !document.getElementById('btn-next').hidden,
+    check: document.getElementById('btn-check').hidden,
+    h1: document.querySelectorAll('h1').length
+  }));
+  check('leaving the worksheet restores Prev/Next and hides Check',
+    back.nav && back.check && back.h1 === 1, JSON.stringify(back));
+  check('no worksheet console or page errors', wsErrors.length === 0, wsErrors.slice(0, 3).join(' | '));
+
+  // ---------------------------------------------------------------
   console.log('\nMOTION');
   // ---------------------------------------------------------------
   const reduced = await browser.newPage({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce' });

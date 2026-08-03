@@ -154,6 +154,7 @@ body {
 }
 h1, h2, h3, p { margin: 0; font-size: inherit; font-weight: inherit; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; touch-action: manipulation; }
+[hidden] { display: none !important; }
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
 
 .app {
@@ -650,6 +651,124 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 .lec-body p { max-width: 62ch; }
 .box-concept p { max-width: 62ch; }
 
+/* ---------- solve it yourself ----------
+   Every class is ws-prefixed: the worksheet shares a stylesheet with the
+   walkthrough, and a bare `.amt` here would put a `$` glyph in front of
+   every statement figure over there. */
+#pane-solve .scroll { padding: 22px 18px 30px; }
+.ws-head { padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.ws-head h1 {
+  font-family: var(--display);
+  font-size: 28px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.12;
+}
+.ws-head p { font-size: 15px; color: var(--text-dim); margin-top: 10px; line-height: 1.55; }
+.ws-sect {
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 26px 0 14px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ws-sect i { flex: 1; height: 1px; background: var(--line); font-style: normal; }
+
+.ws-tx {
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: var(--surface); padding: 15px 14px; box-shadow: var(--shadow-sm);
+}
+.ws-tx + .ws-tx { margin-top: 12px; }
+.ws-tx.right { border-color: var(--good-line); background: var(--good-soft); }
+.ws-tx.wrong { border-color: var(--bad-line); }
+.ws-tx-head { display: flex; gap: 11px; align-items: flex-start; }
+.ws-no {
+  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 7px;
+  display: grid; place-items: center;
+  font-size: 11.5px; font-weight: 800; font-family: var(--mono);
+  background: var(--surface-3); color: var(--text-dim);
+}
+.ws-tx.right .ws-no { background: var(--good); color: var(--on-brand); }
+.ws-tx.wrong .ws-no { background: var(--bad); color: var(--on-brand); }
+.ws-no svg { width: 14px; height: 14px; }
+.ws-text { flex: 1; font-size: 14.5px; line-height: 1.45; }
+.ws-set { display: grid; gap: 10px; margin-top: 13px; }
+.ws-fx { display: grid; gap: 7px; }
+.ws-fx + .ws-fx { padding-top: 10px; border-top: 1px dashed var(--line); }
+.ws-line { display: flex; gap: 7px; align-items: center; }
+.ws-sel {
+  flex: 1; min-width: 0; min-height: 46px; padding: 0 34px 0 12px;
+  border-radius: var(--r-md); border: 1.5px solid var(--line);
+  background: var(--surface-2); color: var(--text); font: inherit; font-size: 14.5px;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2379808d' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 11px center; background-size: 15px;
+}
+.ws-dir {
+  display: flex; gap: 4px; flex: 0 0 auto;
+  background: var(--surface-3); border-radius: var(--r-md); padding: 3px;
+}
+.ws-dir button {
+  min-width: 44px; min-height: 44px; border-radius: 8px;
+  font-size: 17px; font-weight: 800; color: var(--muted);
+  transition: background 140ms var(--ease-out), color 140ms var(--ease-out);
+}
+.ws-dir button.on-up { background: var(--good); color: var(--on-brand); }
+.ws-dir button.on-dn { background: var(--bad); color: var(--on-brand); }
+.ws-amt { position: relative; flex: 1 1 110px; min-width: 0; }
+.ws-amt::before {
+  content: "\0024"; position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); font-family: var(--mono); font-size: 14px; pointer-events: none;
+}
+.ws-amt input {
+  width: 100%; min-height: 46px; padding: 0 12px 0 26px;
+  border-radius: var(--r-md); border: 1.5px solid var(--line);
+  background: var(--surface-2); color: var(--text);
+  font-family: var(--mono); font-size: 14.5px; font-variant-numeric: tabular-nums;
+}
+.ws-sel:focus, .ws-amt input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+.ws-foot { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.ws-hint {
+  min-height: 44px; padding: 0 14px;
+  border-radius: var(--r-md); border: 1px solid var(--line-strong); background: var(--surface);
+  font-size: 13px; font-weight: 700; color: var(--text-dim);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.ws-hint svg { width: 15px; height: 15px; color: var(--amber); }
+.ws-hint[disabled] { opacity: 0.45; pointer-events: none; }
+.ws-note {
+  margin-top: 11px; padding: 11px 13px;
+  border-radius: var(--r-md); font-size: 13.5px; line-height: 1.5;
+}
+.ws-note.tip { background: var(--amber-soft); border: 1px solid var(--amber-line); color: var(--amber-ink); }
+.ws-note.bad { background: var(--bad-soft); border: 1px solid var(--bad-line); color: var(--text-dim); }
+
+.ws-fields { display: grid; gap: 14px; }
+.ws-field label { display: block; font-size: 13.5px; font-weight: 650; color: var(--text-dim); margin-bottom: 8px; }
+.ws-field.right .ws-amt input { border-color: var(--good-line); background: var(--good-soft); }
+.ws-field.wrong .ws-amt input { border-color: var(--bad-line); background: var(--bad-soft); }
+
+.ws-reset {
+  margin: 26px auto 0; display: block;
+  min-height: 44px; padding: 0 16px;
+  font-size: 13px; font-weight: 650; color: var(--muted);
+  border-bottom: 1px solid var(--line-strong); border-radius: 0;
+}
+
+.ws-score { flex: 1; min-width: 0; display: grid; justify-items: center; gap: 5px; }
+.ws-score b { font-size: 15px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.ws-score span {
+  font-size: 10.5px; color: var(--muted);
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
+}
+.ws-score.done b { color: var(--good-deep); }
+
+@media (min-width: 620px) {
+  .ws-fx { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 9px; }
+  .ws-amt { flex: 0 0 148px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-dir button { transition: none; }
+}
+
+
 /* ---------- bottom controls ---------- */
 .controls {
   flex: 0 0 auto;
@@ -739,6 +858,8 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
       <button class="tab on" id="tab-guide"></button>
       <div class="tab-sep"></div>
       <button class="tab" id="tab-table"></button>
+      <div class="tab-sep"></div>
+      <button class="tab" id="tab-solve"></button>
     </div>
   </nav>
 
@@ -750,6 +871,10 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
     <div class="scroll" id="table-scroll"><div id="table-slot"></div></div>
   </section>
 
+  <section class="pane" id="pane-solve">
+    <div class="scroll"><div id="solve" tabindex="-1"></div></div>
+  </section>
+
   <div class="controls">
     <div class="controls-inner">
       <button class="nav-btn" id="btn-prev"><span id="prev-icon"></span><span>Previous</span></button>
@@ -758,6 +883,8 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
         <div class="rail" id="rail"></div>
       </div>
       <button class="nav-btn nav-next" id="btn-next"><span id="next-label">Start</span><span id="next-icon"></span></button>
+      <div class="ws-score" id="ws-score" hidden aria-live="polite"><b>0 of 14</b><span>correct</span></div>
+      <button class="nav-btn nav-next" id="btn-check" hidden>Check my work</button>
     </div>
   </div>
 
@@ -818,6 +945,7 @@ var ICON = {
   badge:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.9"/></svg>',
   book:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>',
   table:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>',
+  pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.4 3.6a2.1 2.1 0 1 1 3 3L7.5 18.5 3 20l1.5-4.5z"/></svg>',
   bulb:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M11 21h2"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6h5.4c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg>',
   pulse:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>',
   warn:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
@@ -899,6 +1027,111 @@ var FACTS = [
   'Borrowed $700 cash from a bank on a note payable.',
   'Performed delivery services for a client on account, $2,000.',
   'Paid monthly expenses: salaries $500, utilities $300, and advertising $100.'
+];
+
+
+/* ============================================================
+   THE WORKSHEET
+   The learner rebuilds the same problem with nothing filled in.
+   Expected effects are derived from LEDGER, so the answer key
+   cannot drift away from the walkthrough it grades against.
+   ============================================================ */
+
+/* Full account names — the workpaper headings are abbreviated to fit
+   a phone, but a dropdown should say what the account actually is. */
+var ACCOUNT = {
+  cash: 'Cash',
+  ar:   'Accounts Receivable',
+  eq:   'Equipment',
+  np:   'Notes Payable',
+  ap:   'Accounts Payable',
+  cs:   'Common Stock',
+  rev:  'Service Revenue',
+  exp:  'Expenses',
+  div:  'Dividends'
+};
+
+/* Transaction (7) is three separate payments, so it occupies three
+   ledger rows and three worksheet cards. */
+var WORK_TX = {
+  '1':  FACTS[0],
+  '2':  FACTS[1],
+  '3':  FACTS[2],
+  '4':  FACTS[3],
+  '5':  FACTS[4],
+  '6':  FACTS[5],
+  '7a': 'Of the monthly expenses, paid salaries and wages of $500.',
+  '7b': 'Paid the July utilities bill, $300.',
+  '7c': 'Paid for July advertising, $100.'
+};
+
+function expectedFor(row) {
+  return COLS.filter(function (c) { return row[c.k]; }).map(function (c) {
+    return { k: c.k, dir: row[c.k] > 0 ? 1 : -1, amt: Math.abs(row[c.k]) };
+  });
+}
+
+/* Three levels, in escalating order: a question, then the accounts,
+   then the directions and figures. Nothing appears until asked for. */
+var WORK_HINTS = {
+  '1':  ['Two things changed: what the company now holds, and who has a claim on it. Nothing was sold, so ask whether anything was earned.',
+         'Cash and Common Stock. Investment by owners is not revenue.',
+         'Cash increases $10,000. Common stock increases $10,000.'],
+  '2':  ['The payment bought the use of a building for July. On July 31, is any of that benefit still left?',
+         'Cash and Expenses. July is used up, so the cost is not an asset.',
+         'Cash decreases $800. Expenses increase $800.'],
+  '3':  ['Nothing was paid. Something arrived and something is now owed.',
+         'Equipment and Accounts Payable. Cash does not move at all.',
+         'Equipment increases $3,000. Accounts payable increases $3,000.'],
+  '4':  ['The service is performed and the cash is in hand. Both halves of the sale happened at once.',
+         'Cash and Service Revenue.',
+         'Cash increases $1,500. Service revenue increases $1,500.'],
+  '5':  ['Cash came in. Ask the financing question: does the company have to give it back?',
+         'Cash and Notes Payable. Borrowing is not earning, so no revenue.',
+         'Cash increases $700. Notes payable increases $700.'],
+  '6':  ['The work is finished but no cash arrived. What does the company hold instead of cash?',
+         'Accounts Receivable and Service Revenue. Revenue is recorded when the work is done, not when the money lands.',
+         'Accounts receivable increases $2,000. Service revenue increases $2,000.'],
+  '7a': ['A cost was incurred and cash left the business on the same day.',
+         'Cash and Expenses.',
+         'Cash decreases $500. Expenses increase $500.'],
+  '7b': ['The same shape as the row above it.',
+         'Cash and Expenses.',
+         'Cash decreases $300. Expenses increase $300.'],
+  '7c': ['The same shape once more, for the last of the three payments.',
+         'Cash and Expenses.',
+         'Cash decreases $100. Expenses increase $100.']
+};
+
+/* Part 2: the five figures the three statements are built from.
+   Each answer is a function of column totals, so it is checked
+   against the ledger rather than against a typed-in constant. */
+var WORK_FIELDS = [
+  { id: 'ni', label: 'Net income for July',
+    answer: function (t) { return t.rev - t.exp; },
+    hints: ['Only two of the nine column totals belong on the income statement.',
+            'Revenue less expenses. Nothing the owners put in or took out belongs here.',
+            'Revenue $3,500 less expenses $1,700.'] },
+  { id: 're', label: 'Retained earnings at July 31',
+    answer: function (t) { return t.rev - t.exp - t.div; },
+    hints: ['Speedy was incorporated on July 1, so what did it start the month with?',
+            'Beginning balance, plus net income, less dividends.',
+            '$0 opening, plus net income $1,800, less dividends of $0.'] },
+  { id: 'ta', label: 'Total assets at July 31',
+    answer: function (t) { return t.cash + t.ar + t.eq; },
+    hints: ['Add across the left of the equation only.',
+            'Cash plus accounts receivable plus equipment.',
+            '$10,500 + $2,000 + $3,000.'] },
+  { id: 'tl', label: 'Total liabilities at July 31',
+    answer: function (t) { return t.np + t.ap; },
+    hints: ['Claims of people outside the business, and nobody else.',
+            'Notes payable plus accounts payable.',
+            '$700 + $3,000.'] },
+  { id: 'te', label: 'Total stockholders&rsquo; equity at July 31',
+    answer: function (t) { return t.cs + t.rev - t.exp - t.div; },
+    hints: ['Equity arrives from two directions: what the owners put in, and what the business kept.',
+            'Common stock plus the retained earnings you worked out above.',
+            '$10,000 + $1,800.'] }
 ];
 
 /* ============================================================
@@ -1167,8 +1400,9 @@ var STEPS = [
 /* Icons into the static chrome. */
 document.getElementById('mark').innerHTML = ICON.badge;
 document.getElementById('btn-theme').innerHTML = ICON.sun;
-document.getElementById('tab-guide').innerHTML = ICON.book + ' Step-by-step guide';
-document.getElementById('tab-table').innerHTML = ICON.table + ' Full data table';
+document.getElementById('tab-guide').innerHTML = ICON.book + ' Guide';
+document.getElementById('tab-table').innerHTML = ICON.table + ' Data';
+document.getElementById('tab-solve').innerHTML = ICON.pencil + ' Solve';
 document.getElementById('prev-icon').innerHTML = ICON.prev;
 document.getElementById('next-icon').innerHTML = ICON.next;
 </script>
@@ -1193,7 +1427,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     try {
       var p = JSON.parse(window.localStorage.getItem(STORE) || '{}');
       if (typeof p.step === 'number' && p.step >= 0 && p.step < TOTAL) cur = p.step;
-      if (p.tab === 'table' || p.tab === 'guide') tab = p.tab;
+      if (p.tab === 'table' || p.tab === 'guide' || p.tab === 'solve') tab = p.tab;
       theme = p.theme || '';
     } catch (e) { /* private mode: run without persistence */ }
   }
@@ -1363,8 +1597,402 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     }
   }
 
+
+  /* ---------- the worksheet ----------
+     Part 1 records the nine ledger rows, Part 2 reports the five figures
+     the statements need. The workpaper in the middle is built from what
+     the learner typed, not from the answer key, so a wrong entry shows up
+     as an out-of-balance total before anything is graded. */
+  var work = { fx: {}, fld: {}, hint: {} };
+  var KEY = totalsUpTo(999);          // the column totals a correct sheet reaches
+
+  function loadWork() {
+    try {
+      var w = JSON.parse(window.localStorage.getItem(STORE + '.work') || '{}');
+      if (w && typeof w === 'object') {
+        work.fx = w.fx || {};
+        work.fld = w.fld || {};
+        work.hint = w.hint || {};
+      }
+    } catch (e) { /* private mode: run without persistence */ }
+  }
+  function saveWork() {
+    try { window.localStorage.setItem(STORE + '.work', JSON.stringify(work)); } catch (e) {}
+  }
+
+  function fxKey(ri, n, part) { return ri + '.' + n + '.' + part; }
+  function amountOf(v) {
+    if (v === undefined || v === null) return NaN;
+    var c = String(v).replace(/[$,\s]/g, '');
+    return c === '' ? NaN : Number(c);
+  }
+  function signed(n) { return (n < 0 ? '&minus;' : '') + '$' + Math.abs(n).toLocaleString('en-US'); }
+
+  /* One entered effect, or null when the learner has not finished it. */
+  function effect(ri, i) {
+    var k = work.fx[fxKey(ri, i, 'k')];
+    var d = work.fx[fxKey(ri, i, 'd')];
+    var a = amountOf(work.fx[fxKey(ri, i, 'a')]);
+    if (!k || !d || isNaN(a)) return null;
+    return { k: k, d: Number(d), a: a };
+  }
+  function slotsFor(ri) { return expectedFor(LEDGER[ri]).length; }
+
+  /* Column totals from what the learner entered, never from LEDGER. */
+  function workTotals() {
+    var t = {};
+    COLS.forEach(function (c) { t[c.k] = 0; });
+    LEDGER.forEach(function (r, ri) {
+      for (var i = 0; i < slotsFor(ri); i++) {
+        var e = effect(ri, i);
+        if (e) t[e.k] += e.d * e.a;
+      }
+    });
+    return t;
+  }
+
+  function rowRight(ri) {
+    var want = expectedFor(LEDGER[ri])
+      .map(function (e) { return e.k + ':' + e.dir + ':' + e.amt; }).sort().join('|');
+    var got = [];
+    for (var i = 0; i < slotsFor(ri); i++) {
+      var e = effect(ri, i);
+      if (!e) return false;
+      got.push(e.k + ':' + e.d + ':' + e.a);
+    }
+    return got.sort().join('|') === want;
+  }
+
+  /* Name what is wrong without naming the answer. */
+  function rowDiagnosis(ri) {
+    var n = slotsFor(ri), left = 0, right = 0, started = 0, done = 0, amts = [];
+    for (var i = 0; i < n; i++) {
+      // An effect can be started without being finished, and saying
+      // "nothing recorded" over a visibly chosen account is just wrong.
+      if (work.fx[fxKey(ri, i, 'k')] || work.fx[fxKey(ri, i, 'd')] ||
+          !isNaN(amountOf(work.fx[fxKey(ri, i, 'a')]))) started++;
+      var e = effect(ri, i);
+      if (!e) continue;
+      done++; amts.push(e.a);
+      var col = COLS.filter(function (c) { return c.k === e.k; })[0];
+      if (col.grp === 'a') left += e.d * e.a;
+      else right += (e.k === 'exp' || e.k === 'div' ? -1 : 1) * e.d * e.a;
+    }
+    if (!started) return 'Nothing recorded yet. This transaction has ' + n + ' effects.';
+    if (done < n) return 'Each effect needs an account, a direction and an amount &mdash; ' + done + ' of ' + n + ' done so far.';
+    if (left !== right) return 'This row leaves the equation out by ' + signed(Math.abs(left - right)) + '. Whatever happens on one side has to be matched on the other.';
+    var wanted = expectedFor(LEDGER[ri]).map(function (e) { return e.amt; }).sort().join(',');
+    if (amts.sort().join(',') !== wanted) return 'It balances, but the figures are not the ones in the transaction. Read the amounts again.';
+    return 'It balances and the amounts are right, so at least one account is wrong. Ask what the business actually received, and what it gave up or now owes.';
+  }
+
+  /* Part 2 is graded against the real answer, not against the learner's
+     own totals — otherwise a wrong workpaper would grade its own errors
+     as correct. When the two disagree, say which one is the problem. */
+  function fieldRight(f) { return amountOf(work.fld[f.id]) === f.answer(KEY); }
+  function fieldDiagnosis(f) {
+    if (isNaN(amountOf(work.fld[f.id]))) return 'Nothing entered yet.';
+    if (amountOf(work.fld[f.id]) === f.answer(workTotals())) {
+      return 'This follows correctly from your workpaper, but the workpaper is not right yet. Fix Part 1 and this figure will come out right on its own.';
+    }
+    return 'Not yet. Work it out from your own column totals above rather than from memory.';
+  }
+
+  function scoreNow() {
+    var rows = 0;
+    LEDGER.forEach(function (r, ri) { if (rowRight(ri)) rows++; });
+    return { got: rows + WORK_FIELDS.filter(fieldRight).length, total: LEDGER.length + WORK_FIELDS.length };
+  }
+
+  function renderSolve() {
+    if (tab !== 'solve') { $('solve').innerHTML = ''; return; }
+
+    var opts = '<option value="">Choose an account&hellip;</option>' + COLS.map(function (c) {
+      return '<option value="' + c.k + '">' + ACCOUNT[c.k] + '</option>';
+    }).join('');
+
+    var cards = LEDGER.map(function (r, ri) {
+      var sets = '';
+      for (var i = 0; i < slotsFor(ri); i++) {
+        var who = 'effect ' + (i + 1) + ' of transaction ' + r.id;
+        sets +=
+          '<div class="ws-fx">' +
+            '<div class="ws-line">' +
+              '<select class="ws-sel" data-fx="' + ri + '.' + i + '" aria-label="Account for ' + who + '">' + opts + '</select>' +
+            '</div>' +
+            '<div class="ws-line">' +
+              '<div class="ws-dir">' +
+                '<button type="button" data-dir="' + ri + '.' + i + '.1" aria-label="Increase, ' + who + '">+</button>' +
+                '<button type="button" data-dir="' + ri + '.' + i + '.-1" aria-label="Decrease, ' + who + '">&minus;</button>' +
+              '</div>' +
+              '<div class="ws-amt"><input data-amt="' + ri + '.' + i + '" inputmode="decimal" autocomplete="off" aria-label="Amount for ' + who + '" /></div>' +
+            '</div>' +
+          '</div>';
+      }
+      return '<div class="ws-tx" data-tx="' + ri + '">' +
+        '<div class="ws-tx-head"><span class="ws-no">' + r.id + '</span><p class="ws-text">' + WORK_TX[r.id] + '</p></div>' +
+        '<div class="ws-set">' + sets + '</div>' +
+        '<div class="ws-foot"><button type="button" class="ws-hint" data-hint="' + ri + '">' + ICON.bulb + 'Hint</button></div>' +
+        '<div data-note="' + ri + '"></div>' +
+      '</div>';
+    }).join('');
+
+    var fields = WORK_FIELDS.map(function (f, fi) {
+      return '<div class="ws-field" data-field="' + f.id + '">' +
+        '<label for="ws-' + f.id + '">' + f.label + '</label>' +
+        '<div class="ws-line">' +
+          '<div class="ws-amt"><input id="ws-' + f.id + '" data-fld="' + f.id + '" inputmode="decimal" autocomplete="off" /></div>' +
+          '<button type="button" class="ws-hint" data-fhint="' + fi + '">' + ICON.bulb + 'Hint</button>' +
+        '</div>' +
+        '<div data-fnote="' + f.id + '"></div>' +
+      '</div>';
+    }).join('');
+
+    $('solve').innerHTML =
+      '<div class="wrap">' +
+        '<div class="ws-head">' +
+          '<h1>Solve it yourself</h1>' +
+          '<p>Seven transactions, nothing filled in. Record each one and watch your own workpaper balance &mdash; or fail to. Then report the five figures the three statements are built from. Every line has a hint, and none of them give anything away until you ask.</p>' +
+        '</div>' +
+        '<div class="ws-sect">Part 1 &middot; Record the transactions<i></i></div>' + cards +
+        '<div class="ws-sect">Your workpaper<i></i></div><div id="solve-table"></div>' +
+        '<div class="ws-sect">Part 2 &middot; Report the results<i></i></div>' +
+        '<div class="ws-fields">' + fields + '</div>' +
+        '<button type="button" class="ws-reset" id="ws-reset">Clear my work and start again</button>' +
+      '</div>';
+
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-fx]'), function (el) {
+      var p = el.getAttribute('data-fx').split('.');
+      var v = work.fx[fxKey(p[0], p[1], 'k')];
+      if (v) el.value = v;
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-amt]'), function (el) {
+      var p = el.getAttribute('data-amt').split('.');
+      var v = work.fx[fxKey(p[0], p[1], 'a')];
+      if (v !== undefined) el.value = v;
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-fld]'), function (el) {
+      var v = work.fld[el.getAttribute('data-fld')];
+      if (v !== undefined) el.value = v;
+    });
+    Object.keys(work.hint).forEach(paintHint);
+    paintDirs();
+    renderSolveTable();
+  }
+
+  function paintDirs() {
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-dir]'), function (b) {
+      var p = b.getAttribute('data-dir').split('.');
+      var on = String(work.fx[fxKey(p[0], p[1], 'd')]) === p[2];
+      b.classList.toggle(p[2] === '1' ? 'on-up' : 'on-dn', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  /* Hint keys are the row index, or 'f' + field index. */
+  function paintHint(key) {
+    var lvl = work.hint[key];
+    if (!lvl) return;
+    var host = $('solve'), text, slot, btn, max;
+    if (key.charAt(0) === 'f') {
+      var f = WORK_FIELDS[Number(key.slice(1))];
+      if (!f) return;
+      max = f.hints.length;
+      text = f.hints[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-fnote="' + f.id + '"]');
+      btn = host.querySelector('[data-fhint="' + key.slice(1) + '"]');
+    } else {
+      var row = LEDGER[Number(key)];
+      if (!row) return;
+      var hints = WORK_HINTS[row.id] || [];
+      max = hints.length;
+      text = hints[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-note="' + key + '"]');
+      btn = host.querySelector('[data-hint="' + key + '"]');
+    }
+    if (!slot || !text) return;
+    slot.innerHTML = '<div class="ws-note tip">' + text + '</div>';
+    if (!btn) return;
+    btn.innerHTML = ICON.bulb + (lvl >= max ? 'No more hints' : 'Another hint');
+    btn.disabled = lvl >= max;
+  }
+
+  /* The learner's own workpaper: their entries, their totals, their proof. */
+  function renderSolveTable() {
+    var t = workTotals();
+    var head = '<tr class="grp"><th class="lab"></th><th colspan="3">ASSETS</th><th class="op">=</th>' +
+      '<th colspan="2">LIABILITIES</th><th class="op">+</th><th colspan="4">STOCKHOLDERS&rsquo; EQUITY</th></tr>';
+
+    var acct = '<tr class="acct"><th class="lab">Trans.</th>';
+    COLS.forEach(function (c, i) {
+      if (i === 3) acct += '<th class="op">=</th>';
+      if (i === 5) acct += '<th class="op">+</th>';
+      acct += '<th>' + c.head + '</th>';
+    });
+    acct += '</tr>';
+
+    var body = LEDGER.map(function (r, ri) {
+      var line = {};
+      for (var i = 0; i < slotsFor(ri); i++) {
+        var e = effect(ri, i);
+        if (e) line[e.k] = (line[e.k] || 0) + e.d * e.a;
+      }
+      var out = '<tr><td class="lab">(' + r.id + ')</td>';
+      COLS.forEach(function (c, i) {
+        if (i === 3) out += '<td class="op"></td>';
+        if (i === 5) out += '<td class="op"></td>';
+        out += '<td>' + (line[c.k] ? money(line[c.k]) : '') + '</td>';
+      });
+      return out + '</tr>';
+    }).join('');
+
+    var foot = '<tr class="totals"><td class="lab">Totals</td>';
+    COLS.forEach(function (c, i) {
+      if (i === 3) foot += '<td class="op">=</td>';
+      if (i === 5) foot += '<td class="op">+</td>';
+      foot += '<td>' + (t[c.k] ? signed(t[c.k]) : '&mdash;') + '</td>';
+    });
+    foot += '</tr>';
+
+    var A = assetsOf(t), C = claimsOf(t);
+    var bar;
+    if (A === 0 && C === 0) {
+      bar = '<div class="proof" style="background:var(--surface-3);color:var(--muted)">' +
+        '<span>Record an effect above and this workpaper fills itself in</span></div>';
+    } else if (A === C) {
+      bar = '<div class="proof"><span>Assets ' + signed(A) + '</span><span>=</span>' +
+        '<span>Liabilities + Equity ' + signed(C) + '</span><span>' + ICON.check + '</span></div>';
+    } else {
+      bar = '<div class="proof" style="background:var(--bad)"><span>Assets ' + signed(A) + '</span>' +
+        '<span>vs</span><span>' + signed(C) + '</span><span>out by ' + signed(Math.abs(A - C)) + '</span></div>';
+    }
+
+    $('solve-table').innerHTML =
+      '<div class="card"><div class="tbl-scroll"><table class="led"><thead>' + head + acct +
+      '</thead><tbody>' + body + '</tbody><tfoot>' + foot + '</tfoot></table></div>' + bar + '</div>';
+  }
+
+  function rowTouched(ri) {
+    for (var i = 0; i < slotsFor(ri); i++) {
+      if (work.fx[fxKey(ri, i, 'k')] || work.fx[fxKey(ri, i, 'd')] || work.fx[fxKey(ri, i, 'a')]) return true;
+    }
+    return false;
+  }
+
+  function gradeSolve() {
+    LEDGER.forEach(function (r, ri) {
+      var card = $('solve').querySelector('[data-tx="' + ri + '"]');
+      var note = $('solve').querySelector('[data-note="' + ri + '"]');
+      var ok = rowRight(ri);
+      var touched = rowTouched(ri);
+      card.classList.toggle('right', ok);
+      card.classList.toggle('wrong', !ok && touched);
+      card.querySelector('.ws-no').innerHTML = ok ? ICON.check : r.id;
+      if (ok || !touched) { var stale = card.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
+      else if (!work.hint[ri]) note.innerHTML = '<div class="ws-note bad">' + rowDiagnosis(ri) + '</div>';
+    });
+    WORK_FIELDS.forEach(function (f, fi) {
+      var box = $('solve').querySelector('[data-field="' + f.id + '"]');
+      var note = $('solve').querySelector('[data-fnote="' + f.id + '"]');
+      var ok = fieldRight(f);
+      var touched = String(work.fld[f.id] === undefined ? '' : work.fld[f.id]).trim() !== '';
+      box.classList.toggle('right', ok);
+      box.classList.toggle('wrong', !ok && touched);
+      if (ok || !touched) { var old = box.querySelector('.ws-note.bad'); if (old) old.remove(); }
+      else if (!work.hint['f' + fi]) note.innerHTML = '<div class="ws-note bad">' + fieldDiagnosis(f) + '</div>';
+    });
+    renderControls();
+    var first = $('solve').querySelector('.ws-tx.wrong, .ws-field.wrong');
+    if (first) first.scrollIntoView({ behavior: motionOK() ? 'smooth' : 'auto', block: 'center' });
+  }
+
+  function motionOK() {
+    return !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  /* Editing a row withdraws the mark on it: a red border that survives the
+     correction would be telling the learner about a mistake they just fixed. */
+  function clearMark(ri) {
+    var card = $('solve').querySelector('[data-tx="' + ri + '"]');
+    if (!card) return;
+    card.classList.remove('right', 'wrong');
+    card.querySelector('.ws-no').textContent = LEDGER[ri].id;
+    var bad = card.querySelector('.ws-note.bad');
+    if (bad) bad.remove();
+  }
+
+  function bindSolve() {
+    var host = $('solve');
+
+    host.addEventListener('change', function (e) {
+      var sel = e.target.closest('[data-fx]');
+      if (!sel) return;
+      var p = sel.getAttribute('data-fx').split('.');
+      work.fx[fxKey(p[0], p[1], 'k')] = sel.value;
+      clearMark(p[0]); saveWork(); renderSolveTable(); renderControls();
+    });
+
+    host.addEventListener('input', function (e) {
+      var a = e.target.closest('[data-amt]');
+      if (a) {
+        var p = a.getAttribute('data-amt').split('.');
+        work.fx[fxKey(p[0], p[1], 'a')] = a.value;
+        clearMark(p[0]); saveWork(); renderSolveTable(); renderControls();
+        return;
+      }
+      var f = e.target.closest('[data-fld]');
+      if (!f) return;
+      work.fld[f.getAttribute('data-fld')] = f.value;
+      var box = f.closest('.ws-field');
+      box.classList.remove('right', 'wrong');
+      var bad = box.querySelector('.ws-note.bad');
+      if (bad) bad.remove();
+      saveWork(); renderControls();
+    });
+
+    host.addEventListener('click', function (e) {
+      var d = e.target.closest('[data-dir]');
+      if (d) {
+        var p = d.getAttribute('data-dir').split('.');
+        var cur = String(work.fx[fxKey(p[0], p[1], 'd')]);
+        work.fx[fxKey(p[0], p[1], 'd')] = cur === p[2] ? '' : Number(p[2]);
+        clearMark(p[0]); paintDirs(); saveWork(); renderSolveTable(); renderControls();
+        return;
+      }
+      var h = e.target.closest('[data-hint]');
+      if (h) { bumpHint(h.getAttribute('data-hint'), WORK_HINTS[LEDGER[Number(h.getAttribute('data-hint'))].id].length); return; }
+      var fh = e.target.closest('[data-fhint]');
+      if (fh) { bumpHint('f' + fh.getAttribute('data-fhint'), WORK_FIELDS[Number(fh.getAttribute('data-fhint'))].hints.length); return; }
+      if (e.target.closest('#ws-reset')) {
+        if (!window.confirm('Clear every answer and hint on this worksheet?')) return;
+        work.fx = {}; work.fld = {}; work.hint = {};
+        saveWork(); renderSolve(); renderControls();
+        $('solve').scrollIntoView({ block: 'start' });
+      }
+    });
+  }
+
+  function bumpHint(key, max) {
+    work.hint[key] = Math.min((work.hint[key] || 0) + 1, max);
+    paintHint(key);
+    saveWork();
+  }
+
   /* ---------- chrome ---------- */
   function renderControls() {
+    var solving = tab === 'solve';
+    $('btn-prev').hidden = solving;
+    $('btn-next').hidden = solving;
+    $('prog-label').parentNode.hidden = solving;
+    $('ws-score').hidden = !solving;
+    $('btn-check').hidden = !solving;
+    if (solving) {
+      var sc = scoreNow();
+      $('ws-score').querySelector('b').innerHTML = sc.got + ' of ' + sc.total;
+      $('ws-score').classList.toggle('done', sc.got === sc.total);
+      $('btn-check').textContent = sc.got === sc.total ? 'All correct' : 'Check my work';
+      return;
+    }
     $('btn-prev').disabled = cur === 0;
     $('btn-next').disabled = cur === TOTAL - 1;
     $('next-label').textContent =
@@ -1382,16 +2010,21 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderTabs() {
-    $('tab-guide').classList.toggle('on', tab === 'guide');
-    $('tab-table').classList.toggle('on', tab === 'table');
-    $('pane-guide').classList.toggle('on', tab === 'guide');
-    $('pane-table').classList.toggle('on', tab === 'table');
+    ['guide', 'table', 'solve'].forEach(function (t) {
+      $('tab-' + t).classList.toggle('on', tab === t);
+      $('pane-' + t).classList.toggle('on', tab === t);
+      // aria-selected needs role="tab"; aria-current is valid on a plain button.
+      if (tab === t) $('tab-' + t).setAttribute('aria-current', 'true');
+      else $('tab-' + t).removeAttribute('aria-current');
+    });
   }
 
   function render() {
     renderTabs();
-    renderGuide();
+    if (tab === 'solve') $('guide').innerHTML = '';
+    else renderGuide();
     renderTable();
+    renderSolve();
     renderControls();
   }
 
@@ -1426,9 +2059,12 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   $('btn-next').addEventListener('click', function () { go(cur + 1); });
   $('tab-guide').addEventListener('click', function () { tab = 'guide'; save(); render(); });
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
+  $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });
+  $('btn-check').addEventListener('click', gradeSolve);
 
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input, textarea, select')) return;
+    if (tab === 'solve') return;
     if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
   });
@@ -1446,6 +2082,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   /* ---------- boot ---------- */
   load();
+  loadWork();
   if (!theme) {
     theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
@@ -1453,6 +2090,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   var fromUrl = indexFromHash();
   if (fromUrl !== null) cur = fromUrl;
   render();
+  bindSolve();
   if (window.history && history.replaceState) {
     history.replaceState({ step: cur }, '', '#' + hashFor(cur));
   }
