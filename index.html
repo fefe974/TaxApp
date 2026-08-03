@@ -456,6 +456,105 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 .rule.hot span { color: var(--text-dim); }
 @media (min-width: 560px) { .rules.two { grid-template-columns: 1fr 1fr; } }
 
+
+/* ---------- visual teaching devices ---------- */
+
+/* Pipeline: one real event carried through to one real report line. */
+.pipe { display: grid; gap: 8px; }
+.pipe-stage { border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--surface-2); padding: 12px 13px; }
+.pipe-hd { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.pipe-n {
+  flex: 0 0 auto; width: 21px; height: 21px; border-radius: 6px;
+  display: grid; place-items: center; font-size: 11px; font-weight: 800;
+  background: var(--brand); color: var(--on-brand);
+}
+.pipe-hd b { font-size: 13px; font-weight: 750; }
+.pipe-art {
+  border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--line);
+  padding: 9px 11px; font-size: 12.5px; color: var(--text-dim);
+}
+.pipe-art.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; gap: 12px; }
+.pipe-down { display: grid; place-items: center; color: var(--brand); }
+.pipe-down svg { width: 17px; height: 17px; }
+
+/* Balance: two pans with real totals, and what it looks like when it breaks. */
+.scale { display: flex; align-items: stretch; gap: 8px; }
+.pan {
+  flex: 1; min-width: 0;
+  border-radius: var(--r-md); border: 1px solid; padding: 11px 12px;
+  display: grid; gap: 4px; align-content: start;
+}
+.pan-cap { font-size: 10px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; opacity: 0.85; }
+.pan b { font-family: var(--mono); font-size: 18px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.pan-items { display: grid; gap: 2px; margin-top: 4px; }
+.pan-items span { font-family: var(--mono); font-size: 11px; opacity: 0.82; font-variant-numeric: tabular-nums; }
+.pan-a { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
+.pan-c { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.pan-bad { background: var(--bad-soft); border-color: var(--bad-line); color: var(--bad); }
+.scale-op { display: grid; place-items: center; font-size: 17px; font-weight: 800; color: var(--muted); }
+.verdict {
+  margin-top: 10px; padding: 9px 12px; border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 13px; font-weight: 750;
+}
+.verdict svg { width: 15px; height: 15px; }
+.verdict.ok { background: var(--good-soft); color: var(--good-deep); border: 1px solid var(--good-line); }
+.verdict.no { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-line); }
+.viz-sub { font-size: 12.5px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+
+/* Decomposition: one figure splitting into the parts it is made of. */
+.decomp { display: grid; gap: 0; }
+.dc-node {
+  border-radius: var(--r-md); border: 1px solid var(--line-strong);
+  background: var(--surface-2); padding: 10px 12px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+}
+.dc-node em { font-style: normal; font-size: 13px; font-weight: 700; }
+.dc-node b { font-family: var(--mono); font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dc-node small { display: block; font-size: 11.5px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+.dc-top { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.dc-row { display: grid; gap: 8px; }
+@media (min-width: 480px) { .dc-row.two { grid-template-columns: 1fr 1fr; } .dc-row.three { grid-template-columns: repeat(3, 1fr); } }
+.dc-link { display: grid; place-items: center; height: 22px; color: var(--muted); }
+.dc-link svg { width: 16px; height: 16px; }
+.dc-node.sm { padding: 8px 11px; }
+.dc-node.sm em { font-size: 12px; }
+.dc-node.sm b { font-size: 12.5px; }
+.dc-node.minus b { color: var(--bad); }
+
+/* Wrong beside right. */
+.vs { display: grid; gap: 10px; }
+@media (min-width: 520px) { .vs { grid-template-columns: 1fr 1fr; } }
+.vs-col { border-radius: var(--r-md); border: 1px solid; padding: 12px 13px; }
+.vs-col.bad { background: var(--bad-soft); border-color: var(--bad-line); }
+.vs-col.good { background: var(--good-soft); border-color: var(--good-line); }
+.vs-tag { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.vs-tag svg { width: 14px; height: 14px; }
+.vs-col.bad .vs-tag { color: var(--bad); }
+.vs-col.good .vs-tag { color: var(--good-deep); }
+.vs-col em { font-style: normal; display: block; font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.vs-col p { font-size: 12.5px; line-height: 1.5; color: var(--text-dim); margin-top: 6px; }
+.vs-q { font-size: 13.5px; font-weight: 750; margin: 16px 0 10px; }
+.vs-q:first-child { margin-top: 0; }
+
+/* Four steps building one row. */
+.build { display: grid; gap: 8px; }
+.build-row { display: flex; align-items: center; gap: 11px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface-2); padding: 10px 12px; }
+.build-n {
+  flex: 0 0 auto; width: 21px; height: 21px; border-radius: 6px;
+  display: grid; place-items: center; font-size: 11px; font-weight: 800;
+  background: var(--brand-soft); color: var(--brand);
+}
+.build-txt { flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-dim); }
+.build-out { font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: var(--text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.build-out.ok { color: var(--good-deep); }
+/* An inline SVG with no width falls back to its intrinsic size and pushes
+   the row past the viewport. Size every icon inside a visual. */
+.build-out svg { width: 14px; height: 14px; vertical-align: -2px; }
+.viz svg { max-width: 100%; }
+.build-txt { min-width: 0; }
+.viz { min-width: 0; }
+
 /* ---------- bottom controls ---------- */
 .controls {
   flex: 0 0 auto;
@@ -624,6 +723,7 @@ var ICON = {
   warn:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
   prev:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
   next:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>',
+  x:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>',
   down:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>',
   sun:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
 };
@@ -707,89 +807,130 @@ var FACTS = [
 
 /* ============================================================
    THE LECTURE
-   Five short screens of context before the problem starts, so
-   the walkthrough is applying ideas rather than introducing them.
+   Diagram first, prose second. Every screen shows a concrete
+   artefact with real figures from the problem, marks what goes
+   wrong in it, and shows the corrected version beside it.
    ============================================================ */
 var LECTURE = [
   {
     title: 'What accounting is for',
-    lede: 'A business does things all month. Accounting exists to turn those events into two answers.',
-    body: [
-      'Someone always needs to know two things. <b>What does the business own and owe right now?</b> And <b>did it do well over the last stretch of time?</b>',
-      'Every rule you are about to meet exists to answer one of those two questions reliably enough that a stranger can trust the answer.',
-      'The path is always the same. Events happen, they get recorded as they happen, the records get totalled, and the totals become financial statements.'
-    ],
-    viz: { cap: 'The path from event to report', html:
-      '<div class="flow">' +
-      '<div class="flow-node"><b>Business events</b><span>An investment, a purchase, a job completed, a bill paid</span></div>' +
-      '<div class="flow-arrow">' + ICON.down + '</div>' +
-      '<div class="flow-node"><b>Tabular summary</b><span>Every event recorded against the accounts it affects</span></div>' +
-      '<div class="flow-arrow">' + ICON.down + '</div>' +
-      '<div class="flow-node"><b>Financial statements</b><span>Income statement, retained earnings, balance sheet</span></div>' +
+    lede: 'Follow one real event all the way through. This is the whole machine in miniature.',
+    viz: { cap: 'One event, recorded, then reported', html:
+      '<div class="pipe">' +
+        '<div class="pipe-stage"><div class="pipe-hd"><span class="pipe-n">1</span><b>Something happens</b></div>' +
+        '<div class="pipe-art">Speedy pays $800 for July rent.</div></div>' +
+        '<div class="pipe-down">' + ICON.down + '</div>' +
+        '<div class="pipe-stage"><div class="pipe-hd"><span class="pipe-n">2</span><b>It gets recorded</b></div>' +
+        '<div class="pipe-art mono"><span>Cash</span><span>&minus;800</span></div>' +
+        '<div class="pipe-art mono" style="margin-top:5px"><span>Expenses</span><span>+800</span></div></div>' +
+        '<div class="pipe-down">' + ICON.down + '</div>' +
+        '<div class="pipe-stage"><div class="pipe-hd"><span class="pipe-n">3</span><b>It shows up in a report</b></div>' +
+        '<div class="pipe-art mono"><span>Rent expense</span><span>800</span></div></div>' +
       '</div>' },
-    key: 'Speedy Delivery Inc. had seven events in July. By the end of this walkthrough you will have turned them into three statements.'
+    body: [
+      'Someone always needs two answers about a business: <b>what does it own and owe right now</b>, and <b>did it do well over the last stretch of time</b>.',
+      'Every rule in this course exists so that path above stays reliable enough for a stranger to trust the number at the end of it.'
+    ],
+    key: 'Speedy Delivery Inc. had seven events in July. You are about to push all of them down that path.'
   },
   {
     title: 'The accounting equation',
-    lede: 'One equation sits underneath everything, and it can never fail to balance.',
+    lede: 'Two sides, always equal. Here is Speedy on July 31, and here is what it looks like when a recording goes wrong.',
+    viz: { cap: 'Balanced', html:
+      '<div class="scale">' +
+        '<div class="pan pan-a"><span class="pan-cap">Assets</span><b>$15,500</b>' +
+        '<div class="pan-items"><span>Cash 10,500</span><span>Receivable 2,000</span><span>Equipment 3,000</span></div></div>' +
+        '<div class="scale-op">=</div>' +
+        '<div class="pan pan-c"><span class="pan-cap">Liabilities + Equity</span><b>$15,500</b>' +
+        '<div class="pan-items"><span>Payables 3,700</span><span>Stock 10,000</span><span>Earnings 1,800</span></div></div>' +
+      '</div>' +
+      '<div class="verdict ok">' + ICON.check + ' The two sides agree, so the books hold together</div>' +
+      '<p class="viz-sub">Now suppose the $800 rent payment is recorded as a fall in cash, and nothing else:</p>' +
+      '<div class="scale" style="margin-top:10px">' +
+        '<div class="pan pan-a"><span class="pan-cap">Assets</span><b>$14,700</b>' +
+        '<div class="pan-items"><span>Cash 9,700</span><span>Receivable 2,000</span><span>Equipment 3,000</span></div></div>' +
+        '<div class="scale-op">=</div>' +
+        '<div class="pan pan-bad"><span class="pan-cap">Liabilities + Equity</span><b>$15,500</b>' +
+        '<div class="pan-items"><span>Payables 3,700</span><span>Stock 10,000</span><span>Earnings 1,800</span></div></div>' +
+      '</div>' +
+      '<div class="verdict no">' + ICON.warn + ' Out by $800, so something was recorded wrong</div>' },
     body: [
-      '<b>Assets</b> are resources the business controls and expects future benefit from: cash, equipment, amounts customers still owe it.',
-      '<b>Liabilities</b> are what outsiders can claim against those resources: a supplier waiting to be paid, a bank loan.',
-      '<b>Stockholders&rsquo; equity</b> is whatever is left for the owners once the liabilities are settled.',
-      'The equality is not a rule somebody imposed. Equity is <em>defined</em> as assets minus liabilities, so the two sides describe the same pile of resources twice: once by what it is, once by who has a claim on it.'
+      '<b>Assets</b> are resources the business controls. <b>Liabilities</b> are what outsiders can claim. <b>Equity</b> is whatever is left for the owners.',
+      'The equality is not a rule somebody imposed. Equity is <em>defined</em> as assets minus liabilities, so both sides describe the same pile of resources: once by what it is, once by who has a claim on it.'
     ],
-    viz: { cap: 'Assets = Liabilities + Stockholders&rsquo; Equity', html:
-      '<div class="eqbar">' +
-      '<div class="eqbar-seg seg-a" style="flex:1.1"><b>Assets</b><span>What the business controls</span></div>' +
-      '<div class="eqbar-op">=</div>' +
-      '<div class="eqbar-seg seg-l" style="flex:0.8"><b>Liabilities</b><span>Creditor claims</span></div>' +
-      '<div class="eqbar-op">+</div>' +
-      '<div class="eqbar-seg seg-e" style="flex:0.9"><b>Equity</b><span>Owner claims</span></div>' +
-      '</div>' },
-    key: 'If the two sides ever disagree, something was recorded wrong. That is exactly what makes the equation worth keeping.'
+    key: 'The gap is the alarm. A transaction that moves only one side has to be wrong, and the equation tells you before anyone else notices.'
   },
   {
     title: 'Equity has moving parts',
-    lede: 'Equity is never one number. Four different things move it, and telling them apart is what makes profit measurable at all.',
-    body: [
-      'Equity splits in two. <b>Common stock</b> is capital the owners put in. <b>Retained earnings</b> is profit the business made and kept.',
-      'Retained earnings is itself made of three things: <b>revenues, less expenses, less dividends</b>.',
-      '&ldquo;Equity rose $11,800&rdquo; tells you nothing on its own. A business that was handed $10,000 and earned $1,800 is a completely different business from one that earned $11,800.'
-    ],
-    viz: { cap: 'What moves stockholders&rsquo; equity', html:
-      '<div class="rules two">' +
-      '<div class="rule up"><b>Common stock &uarr;</b><span>Owners put resources in</span></div>' +
-      '<div class="rule up"><b>Revenues &uarr;</b><span>The business earns from its work</span></div>' +
-      '<div class="rule down"><b>Expenses &darr;</b><span>Resources used up earning it</span></div>' +
-      '<div class="rule down"><b>Dividends &darr;</b><span>Profit handed back to owners</span></div>' +
+    lede: 'That $11,800 of equity is not one thing. Break it open and it is four different stories.',
+    viz: { cap: 'Speedy&rsquo;s equity at July 31, decomposed', html:
+      '<div class="decomp">' +
+        '<div class="dc-node dc-top"><em>Stockholders&rsquo; Equity</em><b>$11,800</b></div>' +
+        '<div class="dc-link">' + ICON.down + '</div>' +
+        '<div class="dc-row two">' +
+          '<div class="dc-node"><span><em>Common Stock</em><small>What owners put in</small></span><b>$10,000</b></div>' +
+          '<div class="dc-node"><span><em>Retained Earnings</em><small>What the business kept</small></span><b>$1,800</b></div>' +
+        '</div>' +
+        '<div class="dc-link">' + ICON.down + '</div>' +
+        '<div class="dc-row three">' +
+          '<div class="dc-node sm"><em>Revenues</em><b>$3,500</b></div>' +
+          '<div class="dc-node sm minus"><em>&minus; Expenses</em><b>$1,700</b></div>' +
+          '<div class="dc-node sm minus"><em>&minus; Dividends</em><b>$0</b></div>' +
+        '</div>' +
       '</div>' },
+    body: [
+      'Contributed capital and earned capital are different facts about the business, and collapsing them into one number destroys both.',
+      '&ldquo;Equity is $11,800&rdquo; is true and useless. <b>$10,000 was handed over and $1,800 was earned</b> is the sentence that tells you how the month actually went.'
+    ],
     key: 'A dividend is not an expense. An expense helps produce revenue; a dividend hands out profit that already exists.'
   },
   {
     title: 'Three decisions that settle everything',
-    lede: 'Almost every mistake in a problem like this comes from one of three judgements.',
-    body: [
-      'None of them is about arithmetic. Each one asks what actually happened in the business, and the recording follows from the answer.'
-    ],
-    viz: { cap: 'The three questions', html:
-      '<div class="rules">' +
-      '<div class="rule"><b>1. When is revenue earned?</b><span>When the work is performed, not when the cash arrives. A completed job that has not been paid for is still revenue today.</span></div>' +
-      '<div class="rule"><b>2. When is a cost an expense?</b><span>When the benefit is used up inside this period. If it lasts beyond it, the cost bought an asset instead.</span></div>' +
-      '<div class="rule hot"><b>3. Is the cash earned or borrowed?</b><span>If the business has to give it back it is a liability. Borrowed money is never revenue, however much it looks like it in the bank.</span></div>' +
+    lede: 'Almost every mistake in a problem like this is one of three judgements. Each one looks the same in the bank and different in the books.',
+    viz: { cap: 'Wrong beside right', html:
+      '<div class="vs-q">1. The work is done, but the client has not paid.</div>' +
+      '<div class="vs">' +
+        '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>No entry yet</em>' +
+        '<p>Waiting for the cash. July&rsquo;s income statement loses $2,000 it genuinely earned.</p></div>' +
+        '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>Receivable +2,000<br>Revenue +2,000</em>' +
+        '<p>The work is what earns it. The right to collect is the asset.</p></div>' +
+      '</div>' +
+      '<div class="vs-q">2. Speedy pays $800 rent and $3,000 for equipment.</div>' +
+      '<div class="vs">' +
+        '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>Both are expenses</em>' +
+        '<p>Treating the equipment as a July cost understates profit by $3,000 and loses the asset.</p></div>' +
+        '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>Rent &rarr; Expense<br>Equipment &rarr; Asset</em>' +
+        '<p>July&rsquo;s rent is used up by July 31. The equipment lasts for years.</p></div>' +
+      '</div>' +
+      '<div class="vs-q">3. $700 arrives from the bank. $700 arrives from a client.</div>' +
+      '<div class="vs">' +
+        '<div class="vs-col bad"><div class="vs-tag">' + ICON.x + ' Wrong</div><em>Both are revenue</em>' +
+        '<p>The company looks profitable while it is quietly going into debt.</p></div>' +
+        '<div class="vs-col good"><div class="vs-tag">' + ICON.check + ' Right</div><em>Bank &rarr; Notes Payable<br>Client &rarr; Revenue</em>' +
+        '<p>One has to be repaid. The test is the obligation, never the cash.</p></div>' +
       '</div>' },
-    key: 'The third one is the trap in this problem. A $700 bank loan and $700 of delivery work put identical cash in the bank and mean opposite things.'
+    body: [
+      'None of these is arithmetic. Each asks what actually happened in the business, and the recording follows from the answer.'
+    ],
+    key: 'The third one is the trap in this problem. Identical cash in the bank, opposite meanings, and only the equation notices.'
   },
   {
     title: 'How a transaction gets recorded',
-    lede: 'Every transaction changes at least two things, and the tabular summary is where you show it.',
-    body: [
-      'Recording only one side would break the equation, so at least two items always move. Sometimes both sit on the same side, as when cash buys equipment. Sometimes one sits on each, as when borrowing raises cash and a debt together.',
-      'The summary gives every account its own column, grouped into assets, liabilities and equity. Each transaction gets a row. Total the columns at the end and the two sides have to agree.',
-      'Four steps, every time: <b>name the accounts, decide the direction, attach the amount, check the equation still holds.</b>'
-    ],
+    lede: 'Four steps, every time. Here they are on the rent payment you just saw.',
+    viz: { cap: 'Building one row', html:
+      '<div class="build">' +
+        '<div class="build-row"><span class="build-n">1</span><span class="build-txt">Name the accounts it touches</span><span class="build-out">Cash &middot; Expenses</span></div>' +
+        '<div class="build-row"><span class="build-n">2</span><span class="build-txt">Decide each direction</span><span class="build-out">Cash &darr; &nbsp;Exp &uarr;</span></div>' +
+        '<div class="build-row"><span class="build-n">3</span><span class="build-txt">Attach the amount</span><span class="build-out">&minus;800 &nbsp; +800</span></div>' +
+        '<div class="build-row"><span class="build-n">4</span><span class="build-txt">Check the equation still holds</span><span class="build-out ok">&minus;800 = &minus;800 ' + ICON.check + '</span></div>' +
+      '</div>' },
     vizFn: 'emptyLedger',
     vizCap: 'The workpaper you are about to fill',
-    key: 'That is the whole method. The next twelve steps apply it to Speedy&rsquo;s July, one transaction at a time.'
+    body: [
+      'At least two items always move, because recording one side alone would break the equation. Sometimes both sit on the same side, as when cash buys equipment. Sometimes one sits on each, as when borrowing raises cash and a debt together.',
+      'The summary gives every account a column, grouped into assets, liabilities and equity. Each transaction gets a row, and the columns are totalled at the end.'
+    ],
+    key: 'That is the whole method. The next twelve steps run it on Speedy&rsquo;s July, one transaction at a time.'
   }
 ];
 
@@ -1038,10 +1179,11 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function renderLecture() {
     var l = LECTURE[cur];
     var viz = '';
+    if (l.viz) {
+      viz += '<div class="viz"><div class="viz-cap">' + l.viz.cap + '</div>' + l.viz.html + '</div>';
+    }
     if (l.vizFn === 'emptyLedger') {
-      viz = '<div class="viz"><div class="viz-cap">' + l.vizCap + '</div>' + ledgerTable(0, [], { remarks: false }) + '</div>';
-    } else if (l.viz) {
-      viz = '<div class="viz"><div class="viz-cap">' + l.viz.cap + '</div>' + l.viz.html + '</div>';
+      viz += '<div class="viz"><div class="viz-cap">' + l.vizCap + '</div>' + ledgerTable(0, [], { remarks: false }) + '</div>';
     }
     $('guide').innerHTML =
       '<div class="wrap fade">' +
