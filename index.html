@@ -45,6 +45,9 @@
   --asset: #62e0f5;
   --liability: #ffc46b;
   --equity: #9d8cff;
+  /* Annotation orange: a distinct role, never a semantic state. */
+  --anno: #ff8a4c;
+  --anno-soft: rgba(255, 138, 76, 0.16);
 
   --r-sm: 10px;
   --r-md: 14px;
@@ -88,6 +91,8 @@ html[data-theme="light"] {
   --asset: #0d8fb3;
   --liability: #a9720b;
   --equity: #6a55e8;
+  --anno: #d2560a;
+  --anno-soft: rgba(210, 86, 10, 0.14);
   --shadow: 0 16px 36px -24px rgba(11, 20, 32, 0.5);
   --shadow-lift: 0 22px 50px -26px rgba(11, 20, 32, 0.45);
 }
@@ -701,6 +706,113 @@ a { color: var(--brand); }
 
 .reveal { margin-top: 14px; animation: pop 0.32s var(--ease); }
 
+/* ============================================================
+   Workflow guide
+   Numbered steps down a rail. Each step frames the accounting
+   artefact it acts on and rings the exact cell it fills.
+   ============================================================ */
+.wf-head {
+  position: sticky; top: 0; z-index: 15;
+  padding: max(12px, env(safe-area-inset-top)) 18px 12px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.wf-head-inner { max-width: 660px; margin: 0 auto; display: flex; align-items: center; gap: 11px; }
+.wf-head-title { flex: 1; min-width: 0; }
+.wf-head-title b { display: block; font-size: 14.5px; font-weight: 740; letter-spacing: -0.015em; }
+.wf-head-title span { display: block; font-size: 12px; color: var(--muted); }
+
+.wf-phase {
+  display: flex; align-items: center; gap: 11px;
+  margin: 26px 0 14px;
+}
+.wf-phase b { font-size: 12px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; color: var(--brand); }
+.wf-phase i {
+  flex: 1; height: 1px; font-style: normal;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 40%, transparent), transparent);
+}
+
+.wf-step { position: relative; display: flex; gap: 14px; padding-bottom: 18px; }
+/* The rail reads the list as a sequence rather than a stack of cards. */
+.wf-step::before {
+  content: ""; position: absolute; left: 15px; top: 34px; bottom: 0;
+  width: 2px; background: var(--line);
+}
+.wf-step:last-child::before { display: none; }
+.wf-badge {
+  position: relative; z-index: 1;
+  flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 13px; font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  background: var(--surface-3); color: var(--text-dim);
+  border: 2px solid var(--bg);
+}
+.wf-step.is-key .wf-badge { background: var(--brand); color: var(--on-brand); }
+.wf-main { flex: 1; min-width: 0; padding-top: 4px; }
+.wf-do { font-size: 15.5px; font-weight: 660; line-height: 1.4; letter-spacing: -0.012em; }
+.wf-note { font-size: 13.5px; color: var(--muted); line-height: 1.55; margin-top: 6px; }
+.wf-note b { color: var(--text-dim); }
+
+/* Framed artefact, the way Scribe frames a screenshot. */
+.shot {
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.shot-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 11px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted);
+}
+.shot-dots { display: flex; gap: 4px; }
+.shot-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
+.shot-body { padding: 0; }
+.shot-body .wp-table { font-size: 11.5px; }
+.shot-body .stmt { border: 0; border-radius: 0; }
+.shot-body .doc { border: 0; border-radius: 0; }
+.shot-body .doc::before { display: none; }
+.shot .balance-line { border-radius: 0; }
+
+/* The ring. One annotation role, one colour, never semantic. */
+.wp-table td.anno, .stmt-line.anno .amt { position: relative; color: var(--anno) !important; font-weight: 700; }
+.wp-table td.anno::after {
+  content: ""; position: absolute; inset: -2px 0;
+  border: 2px solid var(--anno); border-radius: 50%;
+  pointer-events: none;
+}
+.stmt-line.anno { background: var(--anno-soft); border-radius: 5px; }
+.stmt-line.anno .lbl { color: var(--anno); font-weight: 700; }
+.wp-table tr.anno-row td { background: var(--anno-soft); }
+.wp-table col.anno-col { background: var(--anno-soft); }
+
+.wf-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--anno-soft);
+  color: var(--anno);
+  font-size: 12px; font-weight: 700;
+}
+.wf-tag svg { width: 13px; height: 13px; }
+
+.wf-result {
+  margin-top: 12px; padding: 11px 13px;
+  border-radius: var(--r-md);
+  border: 1px solid color-mix(in srgb, var(--brand) 34%, transparent);
+  background: var(--brand-soft);
+  font-size: 13.5px; line-height: 1.5; color: var(--text-dim);
+}
+.wf-result b { color: var(--brand); }
+
 /* --- What / Why / How --- */
 .wwh { display: grid; gap: 12px; }
 .wwh-block {
@@ -1153,6 +1265,20 @@ a { color: var(--brand); }
     </div>
   </section>
 
+  <!-- ============ WORKFLOW ============ -->
+  <section class="screen" id="screen-flow">
+    <div class="wf-head">
+      <div class="wf-head-inner">
+        <div class="brand-dot" style="width:30px;height:30px;border-radius:9px;font-size:15px">L</div>
+        <div class="wf-head-title" id="flow-head"></div>
+      </div>
+    </div>
+    <div class="scroller">
+      <div class="wrap" id="flow-slot"></div>
+    </div>
+    <nav class="tabbar" id="tabbar-flow"></nav>
+  </section>
+
   <!-- ============ REFERENCE ============ -->
   <section class="screen" id="screen-ref">
     <div class="scroller">
@@ -1370,6 +1496,7 @@ var GLOSSARY = [
   ['Note payable', 'A written promise to repay borrowed money. Financing, never revenue.'],
   ['Net income', 'Revenues minus expenses for the period. The figure that carries into retained earnings.']
 ];
+
 
 
 /* Statement layouts, defined once. Rendered blank as the teaching illustration,
@@ -2071,6 +2198,216 @@ var COURSE = {
     }
   ]
 };
+
+/* ============================================================
+   WORKFLOW GUIDE
+   The whole comprehensive problem, worked end to end as a
+   numbered procedure. Each step frames the artefact it acts on
+   and rings the exact figures that step produces.
+   ============================================================ */
+
+/* marks: [[rowIndex | 'T', accountKey], ...] — 'T' rings the totals row. */
+function wpShot(upto, marks, cap) {
+  marks = marks || [];
+  var has = function (r, k) {
+    return marks.some(function (m) { return String(m[0]) === String(r) && m[1] === k; });
+  };
+  var bal = speedyBalances(upto);
+  var groups = '<tr><th class="rowlabel"></th>' +
+    '<th class="group c-asset" colspan="3">Assets</th>' +
+    '<th class="group c-liability sep" colspan="2">Liabilities</th>' +
+    '<th class="group c-equity sep" colspan="4">Stockholders&rsquo; Equity</th></tr>';
+  var heads = '<tr><th class="rowlabel">Txn</th>' + EQ_ACCOUNTS.map(function (a) {
+    var cls = 'c-' + (a.g === 'asset' ? 'asset' : a.g === 'liability' ? 'liability' : 'equity');
+    return '<th class="' + cls + ((a.k === 'np' || a.k === 'cs') ? ' sep' : '') + '">' + a.abbr + '</th>';
+  }).join('') + '</tr>';
+
+  var body = SPEEDY.rows.slice(0, upto).map(function (r, ri) {
+    var line = {};
+    r.fx.forEach(function (e) { line[e[0]] = (line[e[0]] || 0) + e[1] * e[2]; });
+    var cells = EQ_ACCOUNTS.map(function (a) {
+      var v = line[a.k];
+      var sep = (a.k === 'np' || a.k === 'cs') ? ' sep' : '';
+      var anno = has(ri, a.k) ? ' anno' : '';
+      if (!v) return '<td class="zero' + sep + anno + '">&middot;</td>';
+      var cls = 'c-' + (a.g === 'asset' ? 'asset' : a.g === 'liability' ? 'liability' : 'equity');
+      return '<td class="' + cls + sep + anno + '">' + (v < 0 ? '&minus;' : '+') + Math.abs(v).toLocaleString('en-US') + '</td>';
+    }).join('');
+    return '<tr><td class="rowlabel">(' + r.no + ')</td>' + cells + '</tr>';
+  }).join('');
+
+  var foot = '<tr><td class="rowlabel">Total</td>' + EQ_ACCOUNTS.map(function (a) {
+    var sep = (a.k === 'np' || a.k === 'cs') ? ' sep' : '';
+    var anno = has('T', a.k) ? ' anno' : '';
+    var cls = 'c-' + (a.g === 'asset' ? 'asset' : a.g === 'liability' ? 'liability' : 'equity');
+    return '<td class="' + cls + sep + anno + '">' + (bal[a.k] ? Math.abs(bal[a.k]).toLocaleString('en-US') : '&mdash;') + '</td>';
+  }).join('') + '</tr>';
+
+  var A = assetsOf(bal), C = claimsOf(bal);
+  return '<div class="shot"><div class="shot-bar"><span class="shot-dots"><i></i><i></i><i></i></span>' +
+    (cap || 'Tabular summary') + '</div><div class="shot-body">' +
+    '<div class="wp-scroll"><table class="wp-table"><thead>' + groups + heads + '</thead>' +
+    '<tbody>' + body + '</tbody><tfoot>' + foot + '</tfoot></table></div>' +
+    '<div class="balance-line ' + (A === C ? 'ok' : 'off') + '">$' + A.toLocaleString('en-US') +
+    '&nbsp; = &nbsp;$' + C.toLocaleString('en-US') + ' <span class="bal-ok">' + SVG.check + '</span></div>' +
+    '</div></div>';
+}
+
+/* markLabels: line labels to ring on a statement. */
+function stmtShot(key, markLabels, cap) {
+  markLabels = markLabels || [];
+  var d = STMT[key];
+  var lines = d.lines.map(function (l) {
+    if (l === 'gap') return l;
+    return markLabels.indexOf(l[0]) !== -1 ? [l[0], l[1], (l[2] || '') + ' anno'] : l;
+  });
+  return '<div class="shot"><div class="shot-bar"><span class="shot-dots"><i></i><i></i><i></i></span>' +
+    (cap || d.name) + '</div><div class="shot-body">' +
+    stmtFig(d.name, d.dateline, lines) + '</div></div>';
+}
+
+function docShot(kind, issuer, rows, total, note, cap) {
+  return '<div class="shot"><div class="shot-bar"><span class="shot-dots"><i></i><i></i><i></i></span>' +
+    (cap || 'Source document') + '</div><div class="shot-body">' +
+    docFig(kind, issuer, rows, total, note) + '</div></div>';
+}
+
+var WORKFLOW = {
+  title: 'Speedy Delivery Inc.',
+  subtitle: 'Complete workflow &middot; 17 steps',
+  phases: [
+    {
+      name: 'Set up',
+      steps: [
+        {
+          do: 'Read every transaction and list the accounts it names.',
+          note: 'Work through the seven events once before writing anything. You are looking for account titles, not amounts.',
+          art: '<div class="task-context"><div class="ctx-cap">Speedy&rsquo;s July transactions</div><div class="facts">' +
+            COURSE_FACTS.map(function (f, i) { return '<div class="fact"><i>' + (i + 1) + '</i><span>' + f + '</span></div>'; }).join('') +
+            '</div></div>',
+          result: 'Eight accounts appear: Cash, Accounts Receivable, Equipment, Notes Payable, Accounts Payable, Common Stock, Service Revenue and Expenses.'
+        },
+        {
+          do: 'Draw the workpaper with one column per account, grouped by family.',
+          note: 'Assets on the left of the equals sign. Liabilities and equity on the right. Leave the Dividends column in place even though Speedy declares none.',
+          art: wpShot(0, [], 'Empty workpaper'),
+          key: true
+        }
+      ]
+    },
+    {
+      name: 'Post each transaction',
+      steps: [
+        {
+          do: 'Post transaction 1: the $10,000 stock issue.',
+          note: 'Cash rises and the owners&rsquo; claim rises with it. <b>Both sides move up by $10,000.</b>',
+          art: wpShot(1, [[0, 'cash'], [0, 'cs']]),
+          ring: 'Cash and Common Stock, row 1'
+        },
+        {
+          do: 'Post transaction 2: the $800 rent payment.',
+          note: 'July&rsquo;s occupancy is consumed by July 31, so this is an expense rather than an asset. <b>Both sides fall by $800.</b>',
+          art: wpShot(2, [[1, 'cash'], [1, 'exp']]),
+          ring: 'Cash and Expenses, row 2'
+        },
+        {
+          do: 'Post transaction 3: the $3,000 equipment purchase on account.',
+          note: 'Nothing was paid, so Cash is untouched. <b>An asset and a liability both rise by $3,000.</b>',
+          art: wpShot(3, [[2, 'equip'], [2, 'ap']]),
+          ring: 'Equipment and Accounts Payable, row 3'
+        },
+        {
+          do: 'Post transaction 4: $1,500 of deliveries settled in cash.',
+          note: 'The work is done, so the revenue is earned. <b>Cash and Service Revenue both rise by $1,500.</b>',
+          art: wpShot(4, [[3, 'cash'], [3, 'rev']]),
+          ring: 'Cash and Service Revenue, row 4'
+        },
+        {
+          do: 'Post transaction 5: the $700 bank loan.',
+          note: 'Cash rises exactly as it did in the previous step, but Speedy has to repay this. <b>Credit Notes Payable, never Service Revenue.</b>',
+          art: wpShot(5, [[4, 'cash'], [4, 'np']]),
+          ring: 'Cash and Notes Payable, row 5',
+          warn: true
+        },
+        {
+          do: 'Post transaction 6: $2,000 of deliveries billed on account.',
+          note: 'The work is complete, so the revenue belongs to July. Speedy holds a right to collect instead of cash. <b>Cash does not move.</b>',
+          art: wpShot(6, [[5, 'ar'], [5, 'rev']]),
+          ring: 'Accounts Receivable and Service Revenue, row 6'
+        },
+        {
+          do: 'Split transaction 7 into its three separate costs.',
+          note: 'Salaries $500, utilities $300 and advertising $100 are three different expenses paid on one day. Each gets its own row.',
+          art: wpShot(9, [[6, 'cash'], [6, 'exp'], [7, 'cash'], [7, 'exp'], [8, 'cash'], [8, 'exp']]),
+          ring: 'Rows 7a, 7b and 7c',
+          key: true
+        }
+      ]
+    },
+    {
+      name: 'Total and prove',
+      steps: [
+        {
+          do: 'Total every column.',
+          note: 'Add each column down. Cash nets to $10,500 after three receipts and four payments.',
+          art: wpShot(9, [['T', 'cash'], ['T', 'ar'], ['T', 'equip'], ['T', 'np'], ['T', 'ap'], ['T', 'cs'], ['T', 'rev'], ['T', 'exp']], 'Column totals'),
+          ring: 'The totals row'
+        },
+        {
+          do: 'Prove the equation.',
+          note: 'Add the three asset columns. Then add the liabilities, common stock and revenue, and subtract expenses. <b>$10,500 + $2,000 + $3,000 = $15,500</b> against <b>$700 + $3,000 + $10,000 + $3,500 &minus; $1,700 = $15,500</b>.',
+          art: wpShot(9, [], 'Proved'),
+          result: 'Assets $15,500 = Liabilities $3,700 + Equity $11,800. The workpaper is ready to report.',
+          key: true
+        }
+      ]
+    },
+    {
+      name: 'Report',
+      steps: [
+        {
+          do: 'Pull the Revenue and Expenses columns into the income statement.',
+          note: 'Only these two columns belong on it. The stock issue and the bank loan were never earned, so neither appears.',
+          art: wpShot(9, [['T', 'rev'], ['T', 'exp']], 'Source columns'),
+          ring: 'Service Revenue and Expenses totals'
+        },
+        {
+          do: 'List the revenues, then the expenses by name, and subtract.',
+          note: 'Report each expense by its nature so a reader can see where the money went.',
+          art: stmtShot('income', ['Total expenses', 'Net income']),
+          result: 'Net income for July is $1,800.',
+          key: true
+        },
+        {
+          do: 'Carry net income into the retained earnings statement.',
+          note: 'Speedy was incorporated on July 1, so it opens at $0. It declared no dividends.',
+          art: stmtShot('retained', ['Add: Net income', 'Retained earnings, July 31']),
+          ring: 'Net income in, ending balance out',
+          result: 'Retained earnings at July 31 is $1,800.'
+        },
+        {
+          do: 'Take the asset columns onto the balance sheet.',
+          note: 'Cash, receivables and equipment, at their July 31 totals.',
+          art: stmtShot('balance', ['Cash', 'Accounts receivable', 'Equipment', 'Total assets']),
+          ring: 'The asset section'
+        },
+        {
+          do: 'Take the liabilities, then build equity from two sources.',
+          note: 'Common stock is what the owners put in. Retained earnings is what the business earned and kept, straight from the previous statement.',
+          art: stmtShot('balance', ['Total liabilities', 'Common stock', 'Retained earnings', 'Total stockholders&rsquo; equity']),
+          ring: 'Liabilities and equity'
+        },
+        {
+          do: 'Confirm the balance sheet balances.',
+          note: 'This is the same equation you drew the columns from in step 2, now published.',
+          art: stmtShot('balance', ['Total assets', 'Total liabilities and equity']),
+          result: 'Total assets $15,500 = total liabilities and equity $15,500. The problem is complete.',
+          key: true
+        }
+      ]
+    }
+  ]
+};
 </script>
 <script>
 /* ============================================================
@@ -2715,20 +3052,22 @@ RENDER.walkthrough = {
   }
   var ICON = {
     path: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 8h9a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h12"/></svg>',
+    flow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M6 8.4v7.2"/><path d="M11 6h7M11 18h7"/></svg>',
     ref: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>',
     you: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20a8 8 0 0 1 16 0"/><circle cx="12" cy="8" r="4"/></svg>',
     check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
     trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/><path d="M12 14v4M9 21h6"/></svg>',
+    ring: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg>',
     bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6h5.4c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg>'
   };
 
   /* ---------- tab bar ---------- */
-  var TABS = [ ['home', 'Path', ICON.path], ['ref', 'Reference', ICON.ref], ['you', 'Progress', ICON.you] ];
+  var TABS = [ ['home', 'Path', ICON.path], ['flow', 'Workflow', ICON.flow], ['ref', 'Reference', ICON.ref], ['you', 'Progress', ICON.you] ];
   function renderTabs(activeKey) {
     var html = TABS.map(function (t) {
       return '<button class="tab' + (t[0] === activeKey ? ' is-active' : '') + '" data-tab="' + t[0] + '">' + t[2] + '<span>' + t[1] + '</span></button>';
     }).join('');
-    ['tabbar', 'tabbar-ref', 'tabbar-you'].forEach(function (id) {
+    ['tabbar', 'tabbar-flow', 'tabbar-ref', 'tabbar-you'].forEach(function (id) {
       var el = $(id);
       if (el) el.innerHTML = html;
     });
@@ -2741,6 +3080,7 @@ RENDER.walkthrough = {
   function goTab(k) {
     renderTabs(k);
     if (k === 'home') { renderHome(); show('screen-home'); }
+    if (k === 'flow') { renderFlow(); show('screen-flow'); }
     if (k === 'ref') { renderRef(); show('screen-ref'); }
     if (k === 'you') { renderYou(); show('screen-you'); }
   }
@@ -2819,6 +3159,33 @@ RENDER.walkthrough = {
         openStep(mi, si);
       });
     });
+  }
+
+  /* ---------- workflow guide ---------- */
+  function renderFlow() {
+    var n = 0;
+    $('flow-head').innerHTML = '<b>' + WORKFLOW.title + '</b><span>' + WORKFLOW.subtitle + '</span>';
+    $('flow-slot').innerHTML =
+      '<div style="padding:18px 0 2px">' +
+      '<h1 class="display">How the whole problem gets solved</h1>' +
+      '<p class="body" style="margin-top:9px">Every step, in order, with the exact figures it produces ringed on the workpaper. Read it straight through, or come back to any step while you work.</p>' +
+      '</div>' +
+      WORKFLOW.phases.map(function (ph) {
+        return '<div class="wf-phase"><b>' + ph.name + '</b><i></i></div>' +
+          ph.steps.map(function (st) {
+            n++;
+            return '<div class="wf-step' + (st.key ? ' is-key' : '') + '">' +
+              '<span class="wf-badge">' + n + '</span>' +
+              '<div class="wf-main">' +
+              '<div class="wf-do">' + st.do + '</div>' +
+              (st.note ? '<p class="wf-note">' + st.note + '</p>' : '') +
+              (st.ring ? '<span class="wf-tag">' + ICON.ring + st.ring + '</span>' : '') +
+              (st.art || '') +
+              (st.result ? '<div class="wf-result"><b>Result.</b> ' + st.result + '</div>' : '') +
+              '</div></div>';
+          }).join('');
+      }).join('') +
+      '<div style="height:14px"></div>';
   }
 
   /* ---------- reference ---------- */
