@@ -1,4 +1,4 @@
-const CACHE_NAME = 'speedy-walkthrough-v3';
+const CACHE_NAME = 'speedy-walkthrough-v4';
 const APP_SHELL = [
   './',
   './index.html',

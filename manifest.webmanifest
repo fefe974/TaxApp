@@ -11,8 +11,8 @@
     "minimal-ui",
     "browser"
   ],
-  "background_color": "#f8fafc",
-  "theme_color": "#2563eb",
+  "background_color": "#faf8f4",
+  "theme_color": "#1e3a5f",
   "orientation": "portrait-primary",
   "categories": [
     "education",

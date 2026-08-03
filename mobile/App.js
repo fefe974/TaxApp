@@ -7,7 +7,7 @@ import { WEB_APP_HTML } from './assets/web/webAppHtml';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="light" backgroundColor="#2563eb" />
+      <StatusBar style="light" backgroundColor="#1e3a5f" />
       <WebView
         originWhitelist={['*']}
         // baseUrl gives the page a real origin so localStorage works and
@@ -25,7 +25,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2563eb',
+    backgroundColor: '#1e3a5f',
   },
   webview: {
     flex: 1,
