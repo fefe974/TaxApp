@@ -303,127 +303,98 @@ function check(name, ok, detail) {
   check('pinch zoom not disabled', a11y.zoom);
 
   // ---------------------------------------------------------------
-  console.log('\nWORKSHEET');
+  console.log('\nWORKING PAPER (2.1)');
   // ---------------------------------------------------------------
-  // Drive the worksheet the way a learner does — through real DOM events on
-  // real controls. Reading the module's own functions would only prove the
-  // answer key agrees with itself.
+  // The 2.1 worksheet is the tabular summary itself: a cell per account per
+  // transaction, footed live. Drive it through the cells, not the model.
   const ws = await browser.newPage({ viewport: { width: 390, height: 900 } });
   const wsErrors = [];
   ws.on('pageerror', e => wsErrors.push('pageerror: ' + e.message));
   ws.on('console', m => { if (m.type() === 'error') wsErrors.push('console: ' + m.text()); });
   await ws.goto(FILE);
   await ws.evaluate(() => localStorage.clear());
-  await ws.goto(FILE);
+  await ws.goto(FILE + '#lo21');
   await ws.waitForTimeout(400);
   await ws.click('#tab-solve');
-  await ws.waitForTimeout(200);
+  await ws.waitForTimeout(300);
 
-  // A helper that types one effect through the controls, not into the model.
-  // The direction control is a toggle, so clicking it when it is already set
-  // would clear it. Press it only when it is not already in the wanted state.
-  const fill = async (ri, i, key, dir, amt) => {
-    await ws.selectOption(`[data-fx="${ri}.${i}"]`, key);
-    const sel = `[data-dir="${ri}.${i}.${dir}"]`;
-    if (await ws.getAttribute(sel, 'aria-pressed') !== 'true') await ws.click(sel);
-    await ws.fill(`[data-amt="${ri}.${i}"]`, String(amt));
-  };
-
-  const shape = await ws.evaluate(() => ({
-    cards: document.querySelectorAll('#solve .ws-tx').length,
-    fields: document.querySelectorAll('#solve .ws-field').length,
-    slots: document.querySelectorAll('#solve [data-fx]').length,
-    h1: document.querySelectorAll('h1').length,
-    score: document.getElementById('ws-score').textContent.trim(),
-    // Nothing may be pre-filled, and no hint may be showing.
-    prefilled: Array.from(document.querySelectorAll('#solve input')).filter(el => el.value).length,
-    tips: document.querySelectorAll('#solve .ws-note').length,
-    navHidden: document.getElementById('btn-next').hidden && document.getElementById('btn-prev').hidden,
-    checkShown: !document.getElementById('btn-check').hidden
-  }));
-  check('worksheet has one card per ledger row and one field per figure',
-    shape.cards === 9 && shape.fields === 5 && shape.slots === 18,
-    `cards=${shape.cards} fields=${shape.fields} slots=${shape.slots}`);
-  check('still exactly one h1 while solving', shape.h1 === 1, 'found ' + shape.h1);
-  check('worksheet starts blank with no hint revealed',
-    shape.prefilled === 0 && shape.tips === 0, `prefilled=${shape.prefilled} tips=${shape.tips}`);
-  check('score starts at 0 of 14', /0\s*of\s*14/.test(shape.score), shape.score);
-  check('walkthrough nav gives way to Check my work', shape.navHidden && shape.checkShown);
-
-  const wsLayout = await ws.evaluate(() => {
+  const shape = await ws.evaluate(() => {
     const sc = document.querySelector('#pane-solve .scroll');
-    const small = [];
-    document.querySelectorAll('#solve button, .controls button').forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.width && r.height && (r.height < 44 || r.width < 44)) small.push(el.className || el.id);
-    });
-    const unnamed = [];
-    document.querySelectorAll('#solve button, #solve select, #solve input').forEach(el => {
-      const name = (el.getAttribute('aria-label') || '') + el.textContent.trim() +
-        (el.labels && el.labels.length ? 'labelled' : '');
-      if (!name) unnamed.push(el.tagName + '.' + el.className);
-    });
     return {
-      x: sc.scrollWidth - sc.clientWidth,
-      doc: document.documentElement.scrollWidth - window.innerWidth,
-      small, unnamed
+      cells: document.querySelectorAll('.cell').length,
+      cols: document.querySelectorAll('table.wp thead .acct th').length - 1,
+      rows: document.querySelectorAll('.wp-row').length,
+      sources: document.querySelectorAll('#solve .ws-tx').length,
+      fields: document.querySelectorAll('#solve .ws-field').length,
+      h1: document.querySelectorAll('h1').length,
+      prefilled: [...document.querySelectorAll('.cell')].filter(c => c.value).length,
+      tips: document.querySelectorAll('#solve .ws-note').length,
+      score: document.getElementById('ws-score').textContent,
+      // The page must not scroll sideways; the working paper scrolls inside
+      // its own box, which is what a nine-column paper does.
+      pageX: sc.scrollWidth - sc.clientWidth,
+      docX: document.documentElement.scrollWidth - window.innerWidth,
+      gridX: (() => { const g = document.querySelector('.wp-scroll'); return g.scrollWidth - g.clientWidth; })()
     };
   });
-  check('worksheet does not overflow horizontally at 390px',
-    wsLayout.x <= 0 && wsLayout.doc <= 0, `pane +${wsLayout.x}, doc +${wsLayout.doc}`);
-  check('no worksheet control under 44px', wsLayout.small.length === 0, wsLayout.small.join(','));
-  check('every worksheet control has an accessible name', wsLayout.unnamed.length === 0, wsLayout.unnamed.join(','));
+  check('the working paper is a full grid: 9 rows by 9 columns',
+    shape.cells === 81 && shape.cols === 9 && shape.rows === 9,
+    `cells=${shape.cells} cols=${shape.cols} rows=${shape.rows}`);
+  check('every transaction is listed as a source document', shape.sources === 9, 'sources=' + shape.sources);
+  check('the grid scrolls sideways inside its own box, not the page',
+    shape.pageX <= 0 && shape.docX <= 0 && shape.gridX > 0,
+    `page +${shape.pageX} doc +${shape.docX} grid +${shape.gridX}`);
+  check('the working paper starts blank with no hint shown',
+    shape.prefilled === 0 && shape.tips === 0 && /0 of 14/.test(shape.score), shape.score);
+  check('still exactly one h1 on the working paper', shape.h1 === 1, 'found ' + shape.h1);
 
-  // --- checking a blank sheet must not shout at the learner ---
-  await ws.click('#btn-check');
-  await ws.waitForTimeout(150);
-  const blank = await ws.evaluate(() => ({
-    wrong: document.querySelectorAll('#solve .ws-tx.wrong, #solve .ws-field.wrong').length,
-    bad: document.querySelectorAll('#solve .ws-note.bad').length
+  // Columns foot themselves as cells are filled, and a decrease is typed
+  // with a minus sign the way it is written on a summary.
+  await ws.fill('[data-cell="0.cash"]', '10000');
+  await ws.fill('[data-cell="0.cs"]', '10000');
+  await ws.fill('[data-cell="1.cash"]', '-800');
+  await ws.fill('[data-cell="1.exp"]', '800');
+  await ws.waitForTimeout(200);
+  const footed = await ws.evaluate(() => ({
+    foot: [...document.querySelectorAll('#solve tfoot td')].map(t => t.textContent.trim()),
+    proof: document.querySelector('.sw-panel-bd .gl-off').textContent.replace(/\s+/g, ' ').trim(),
+    ok: document.querySelector('.sw-panel-bd .gl-off').classList.contains('ok'),
+    count: document.getElementById('wp-count').textContent.replace(/\s+/g, ' ').trim()
   }));
-  check('checking an untouched sheet marks nothing wrong',
-    blank.wrong === 0 && blank.bad === 0, JSON.stringify(blank));
+  check('the columns foot themselves as cells are filled',
+    footed.foot[1] === '9,200' && footed.foot[8] === '800', footed.foot.join(' | '));
+  check('a decrease typed with a minus sign reduces the column',
+    /Assets \$9,200 = Liabilities \+ Equity \$9,200/.test(footed.proof) && footed.ok, footed.proof);
+  check('the toolbar counts the lines started', /^2\s*of 9 lines$/.test(footed.count), footed.count);
 
-  // --- but a half-finished row is a real attempt and gets told so ---
-  await ws.selectOption('[data-fx="3.0"]', 'cash');
-  await ws.click('#btn-check');
+  // An entry that does not balance is reported before anything is graded.
+  await ws.fill('[data-cell="1.exp"]', '900');
   await ws.waitForTimeout(150);
-  const partial = await ws.evaluate(() => ({
-    wrong: document.querySelector('[data-tx="3"]').classList.contains('wrong'),
-    note: (document.querySelector('[data-note="3"]') || {}).textContent || '',
-    others: document.querySelectorAll('#solve .ws-tx.wrong').length
-  }));
-  check('a half-finished row is marked and the rest are left alone',
-    partial.wrong && partial.others === 1, `others=${partial.others}`);
-  check('the half-finished row counts what is done rather than calling it empty',
-    /0 of 2 done so far/.test(partial.note), partial.note.slice(0, 80));
-  await ws.selectOption('[data-fx="3.0"]', '');
+  const outBy = await ws.evaluate(() => document.querySelector('.sw-panel-bd .gl-off').textContent.replace(/\s+/g, ' ').trim());
+  check('an out-of-balance working paper says by how much', /\$100/.test(outBy), outBy);
+  await ws.fill('[data-cell="1.exp"]', '800');
 
-  // --- a deliberately wrong entry has to be caught and explained ---
-  await fill(0, 0, 'cash', 1, 10000);
-  await fill(0, 1, 'rev', 1, 10000);              // financing recorded as earning
+  // Grading: a wrong column is told apart from a wrong figure.
+  await ws.fill('[data-cell="2.eq"]', '3000');
+  await ws.fill('[data-cell="2.np"]', '3000');          // should be Accounts Payable
   await ws.click('#btn-check');
-  await ws.waitForTimeout(150);
-  const wrong = await ws.evaluate(() => ({
-    marked: document.querySelector('[data-tx="0"]').classList.contains('wrong'),
-    note: (document.querySelector('[data-note="0"]') || {}).textContent || '',
-    score: document.getElementById('ws-score').textContent
+  await ws.waitForTimeout(200);
+  const graded = await ws.evaluate(() => ({
+    rowWrong: document.querySelector('[data-row="2"]').classList.contains('wrong'),
+    cardWrong: document.querySelector('#solve [data-tx="2"]').classList.contains('wrong'),
+    note: (document.querySelector('[data-note="2"]') || {}).textContent || '',
+    rightRows: document.querySelectorAll('.wp-row.right').length,
+    untouched: document.querySelectorAll('.wp-row.wrong').length
   }));
-  check('a wrong entry is marked wrong', wrong.marked);
-  check('the diagnosis names the actual fault without giving the answer',
-    /at least one account is wrong/.test(wrong.note) && !/common stock/i.test(wrong.note), wrong.note.slice(0, 90));
-  check('a wrong entry does not score', /0\s*of\s*14/.test(wrong.score), wrong.score);
+  check('a wrong column is marked on the grid line and its source document',
+    graded.rowWrong && graded.cardWrong);
+  check('and is diagnosed as a wrong column, not a wrong figure',
+    /at least one column is wrong/.test(graded.note), graded.note.trim().slice(0, 80));
+  check('correct lines are marked right and untouched lines are left alone',
+    graded.rightRows === 2 && graded.untouched === 1,
+    `right=${graded.rightRows} wrong=${graded.untouched}`);
 
-  // --- balance bar reads the learner's own workpaper ---
-  await ws.selectOption('[data-fx="0.1"]', 'cs');
-  await ws.fill('[data-amt="0.1"]', '9000');       // now unbalanced by 1,000
-  await ws.waitForTimeout(120);
-  const bar = await ws.evaluate(() => document.querySelector('#solve-table .proof').textContent);
-  check('the balance bar reports the learner\'s own shortfall', /out by\s*\$?1,000/.test(bar), bar.trim());
-  check('editing a row withdraws its mark',
-    await ws.evaluate(() => !document.querySelector('[data-tx="0"]').classList.contains('wrong')));
-
-  // --- hints escalate one level at a time and stop ---
+  // Hints still escalate one level at a time.
   const hints = [];
   for (let i = 0; i < 4; i++) {
     await ws.click('[data-hint="1"]').catch(() => {});
@@ -435,51 +406,35 @@ function check(name, ok, detail) {
     })));
   }
   check('each press of Hint reveals exactly one new level',
-    hints[0].text && hints[1].text && hints[2].text &&
-    hints[0].text !== hints[1].text && hints[1].text !== hints[2].text,
-    hints.map(h => h.text.slice(0, 24)).join(' | '));
-  check('only the last hint states the answer',
+    hints[0].text && hints[0].text !== hints[1].text && hints[1].text !== hints[2].text,
+    hints.map(h => h.text.slice(0, 20)).join(' | '));
+  check('only the last hint states the figures',
     !/\$800/.test(hints[0].text) && /\$800/.test(hints[2].text), hints[0].text.slice(0, 60));
-  check('the Hint button stops at the last level', hints[2].done && hints[3].text === hints[2].text);
-  check('the Hint button says whether more are left',
-    hints[0].label === 'Another hint' && hints[2].label === 'No more hints',
+  check('the Hint button says whether more are left and then stops',
+    hints[0].label === 'Another hint' && hints[2].label === 'No more hints' && hints[2].done,
     hints.map(h => h.label).join(' / '));
 
-  // --- Part 2 is graded against the ledger, not against the learner's totals ---
-  // Total assets on the learner's own (still incomplete) workpaper is the
-  // $10,000 of cash — right for what they entered, wrong for the problem.
-  await ws.fill('[data-fld="ta"]', '10000');
-  await ws.click('#btn-check');
-  await ws.waitForTimeout(120);
-  const derived = await ws.evaluate(() => ({
-    wrong: document.querySelector('[data-field="ta"]').classList.contains('wrong'),
-    note: (document.querySelector('[data-fnote="ta"]') || {}).textContent || ''
-  }));
-  check('a figure that follows from a wrong workpaper is still marked wrong', derived.wrong);
-  check('and the diagnosis says the workpaper is the problem',
-    /follows correctly from your workpaper/.test(derived.note), derived.note.slice(0, 80));
-
-  // --- work survives a reload ---
+  // Work survives a reload.
   await ws.reload();
-  await ws.waitForTimeout(400);
+  await ws.waitForTimeout(500);
   const restored = await ws.evaluate(() => ({
-    tab: document.getElementById('pane-solve').classList.contains('on'),
-    amt: (document.querySelector('[data-amt="0.0"]') || {}).value,
-    acct: (document.querySelector('[data-fx="0.1"]') || {}).value,
-    dir: document.querySelector('[data-dir="0.0.1"]').classList.contains('on-up'),
+    solving: document.getElementById('pane-solve').classList.contains('on'),
+    cash: (document.querySelector('[data-cell="0.cash"]') || {}).value,
+    minus: (document.querySelector('[data-cell="1.cash"]') || {}).value,
     hint: !!document.querySelector('[data-note="1"] .ws-note')
   }));
-  check('the worksheet reopens on reload with entries and hints intact',
-    restored.tab && restored.amt === '10000' && restored.acct === 'cs' && restored.dir && restored.hint,
+  check('the working paper reopens with its cells and hints intact',
+    restored.solving && restored.cash === '10000' && restored.minus === '-800' && restored.hint,
     JSON.stringify(restored));
 
-  // --- a fully correct sheet scores 14 of 14 ---
-  const plan = await ws.evaluate(() =>
-    LEDGER.map((r, ri) => ({ ri, fx: expectedFor(r) })));
+  // Fill the whole paper correctly and report the five figures.
+  const { keys, plan } = await ws.evaluate(() => ({
+    keys: COLS.map(c => c.k),
+    plan: LEDGER.map((r, ri) => ({ ri, cells: COLS.filter(c => r[c.k]).map(c => ({ k: c.k, v: r[c.k] })) }))
+  }));
   for (const row of plan) {
-    for (let i = 0; i < row.fx.length; i++) {
-      await fill(row.ri, i, row.fx[i].k, row.fx[i].dir, row.fx[i].amt);
-    }
+    for (const k of keys) await ws.fill(`[data-cell="${row.ri}.${k}"]`, '');
+    for (const c of row.cells) await ws.fill(`[data-cell="${row.ri}.${c.k}"]`, String(c.v));
   }
   const answers = await ws.evaluate(() => {
     const t = totalsUpTo(999);
@@ -488,60 +443,58 @@ function check(name, ok, detail) {
   });
   for (const [id, v] of Object.entries(answers)) await ws.fill(`[data-fld="${id}"]`, String(v));
   await ws.click('#btn-check');
-  await ws.waitForTimeout(200);
+  await ws.waitForTimeout(250);
   const solved = await ws.evaluate(() => ({
     score: document.getElementById('ws-score').textContent,
-    right: document.querySelectorAll('#solve .ws-tx.right').length,
-    wrong: document.querySelectorAll('#solve .ws-tx.wrong, #solve .ws-field.wrong').length,
-    label: document.getElementById('btn-check').textContent,
-    proof: document.querySelector('#solve-table .proof').textContent
+    right: document.querySelectorAll('.wp-row.right').length,
+    wrong: document.querySelectorAll('.wp-row.wrong, #solve .ws-field.wrong').length,
+    proof: document.querySelector('.sw-panel-bd .gl-off').textContent.replace(/\s+/g, ' ').trim(),
+    label: document.getElementById('btn-check').textContent
   }));
-  check('a correct sheet scores 14 of 14', /14\s*of\s*14/.test(solved.score), solved.score);
-  check('every card and field is marked right', solved.right === 9 && solved.wrong === 0,
+  check('a correctly filled working paper scores 14 of 14', /14 of 14/.test(solved.score), solved.score);
+  check('every grid line and field is marked right', solved.right === 9 && solved.wrong === 0,
     `right=${solved.right} wrong=${solved.wrong}`);
+  check('the finished paper foots to $15,500 on both sides',
+    /Assets \$15,500 = Liabilities \+ Equity \$15,500/.test(solved.proof), solved.proof);
   check('the button acknowledges completion', /All correct/.test(solved.label), solved.label);
-  check('the learner\'s own workpaper balances at $15,500',
-    /Assets\s*\$15,500/.test(solved.proof) && /\$15,500/.test(solved.proof.split('=')[1] || ''),
-    solved.proof.trim());
 
-  // --- the widest state of the widest labels, on the narrowest phone ---
-  const narrow = await browser.newPage({ viewport: { width: 320, height: 720 } });
-  await narrow.goto(FILE);
-  await narrow.waitForTimeout(400);
-  await narrow.click('#tab-solve');
-  await narrow.waitForTimeout(200);
-  await narrow.click('[data-fhint="4"]');            // longest field label + "Another hint"
-  await narrow.click('[data-hint="0"]');
-  await narrow.waitForTimeout(150);
-  const tight = await narrow.evaluate(() => {
-    const sc = document.querySelector('#pane-solve .scroll');
-    const input = document.querySelector('[data-fld="te"]').getBoundingClientRect();
-    return {
-      x: sc.scrollWidth - sc.clientWidth,
-      doc: document.documentElement.scrollWidth - window.innerWidth,
-      input: Math.round(input.width),
-      tabs: Array.from(document.querySelectorAll('.tab')).map(t =>
-        Math.round(t.scrollWidth - t.clientWidth))
-    };
+  const wsLayout = await ws.evaluate(() => {
+    const small = [], unnamed = [];
+    document.querySelectorAll('#solve button, .controls button').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height && (r.height < 44 || r.width < 44)) small.push(el.className || el.id);
+      const name = (el.getAttribute('aria-label') || '') + el.textContent.trim();
+      if (!name) unnamed.push(el.className);
+    });
+    const noLabel = [...document.querySelectorAll('#solve input, #solve select')]
+      .filter(e => !e.getAttribute('aria-label') && !(e.labels && e.labels.length)).length;
+    return { small, unnamed, noLabel };
   });
-  check('worksheet still fits at 320px with hints open',
-    tight.x <= 0 && tight.doc <= 0, `pane +${tight.x}, doc +${tight.doc}`);
-  check('the amount field stays usable beside a hint button', tight.input >= 100, tight.input + 'px');
-  check('no tab label is clipped at 320px', tight.tabs.every(v => v <= 0), tight.tabs.join(','));
-  await narrow.close();
+  // A sticky column must be opaque in both themes, or the cells scrolling
+  // under it show through. The green and red tints are translucent in dark.
+  const sticky = await ws.evaluate(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    const out = [];
+    document.querySelectorAll('#solve table.wp .rowlab').forEach(el => {
+      const bg = getComputedStyle(el).background;
+      const rgba = bg.match(/rgba?\(([^)]+)\)/);
+      const parts = rgba ? rgba[1].split(',').map(s => parseFloat(s)) : [];
+      const alpha = parts.length === 4 ? parts[3] : 1;
+      const layered = /gradient/.test(bg);
+      if (alpha < 1 && !layered) out.push(el.textContent.trim() + ' a=' + alpha);
+    });
+    document.documentElement.setAttribute('data-theme', 'light');
+    return out;
+  });
+  check('the sticky transaction column is opaque in dark mode too',
+    sticky.length === 0, sticky.join(', '));
 
-  // --- leaving the worksheet restores the walkthrough controls ---
-  await ws.click('#tab-guide');
-  await ws.waitForTimeout(150);
-  const back = await ws.evaluate(() => ({
-    nav: !document.getElementById('btn-next').hidden,
-    check: document.getElementById('btn-check').hidden,
-    h1: document.querySelectorAll('h1').length
-  }));
-  check('leaving the worksheet restores Prev/Next and hides Check',
-    back.nav && back.check && back.h1 === 1, JSON.stringify(back));
-  check('no worksheet console or page errors', wsErrors.length === 0, wsErrors.slice(0, 3).join(' | '));
-
+  check('no working-paper control is under 44px', wsLayout.small.length === 0, wsLayout.small.join(','));
+  check('every working-paper control has an accessible name',
+    wsLayout.unnamed.length === 0 && wsLayout.noLabel === 0,
+    wsLayout.unnamed.join(',') + ' unlabelled inputs=' + wsLayout.noLabel);
+  check('no working-paper console or page errors', wsErrors.length === 0, wsErrors.slice(0, 3).join(' | '));
+  await ws.close();
   // ---------------------------------------------------------------
   console.log('\nMODULE 2.2 — JOURNALIZE, POST, TRIAL BALANCE');
   // ---------------------------------------------------------------
@@ -656,36 +609,152 @@ function check(name, ok, detail) {
     posting.down.length === 1 && /Cash/.test(posting.down[0]) && /2,000/.test(posting.down[0]),
     JSON.stringify(posting.down));
 
-  // The 2.2 worksheet.
+  // The 2.2 worksheet, as a ledger package.
   await k.goto(FILE + '#lo22');
   await k.waitForTimeout(400);
   await k.click('#tab-solve');
   await k.waitForTimeout(400);
   const ws2 = await k.evaluate(() => ({
-    cards: document.querySelectorAll('[data-tx2]').length,
-    slots: document.querySelectorAll('[data-fx2]').length,
+    vouchers: document.querySelectorAll('.doc-je').length,
+    lines: document.querySelectorAll('[data-a2]').length,
     fields: document.querySelectorAll('[data-field2]').length,
-    prefilled: [...document.querySelectorAll('#solve input')].filter(e => e.value).length,
+    // Accounts are addressed by number, the way a chart of accounts is.
+    firstOpt: document.querySelector('[data-a2="0.0"]').options[1].textContent.trim(),
+    numbered: [...document.querySelector('[data-a2="0.0"]').options].slice(1)
+      .every(o => /^\d{3}\s/.test(o.textContent.trim())),
+    prefilled: [...document.querySelectorAll('.gl-amt')].filter(e => e.value).length,
+    postDisabled: [...document.querySelectorAll('[data-post]')].every(b => b.disabled),
+    pills: [...new Set([...document.querySelectorAll('.pill')].map(p => p.textContent.trim()))],
     score: document.getElementById('ws-score').textContent,
     x: (() => { const s = document.querySelector('#pane-solve .scroll'); return s.scrollWidth - s.clientWidth; })()
   }));
-  check('the 2.2 worksheet has a card per entry and a slot per line',
-    ws2.cards === 11 && ws2.slots === 23 && ws2.fields === 4,
-    `cards=${ws2.cards} slots=${ws2.slots} fields=${ws2.fields}`);
-  check('the 2.2 worksheet starts blank', ws2.prefilled === 0 && /0 of 15/.test(ws2.score), ws2.score);
-  check('the 2.2 worksheet does not overflow at 390px', ws2.x <= 0, '+' + ws2.x);
+  check('the journal has a voucher per transaction and a line per posting',
+    ws2.vouchers === 11 && ws2.lines === 23 && ws2.fields === 4,
+    `vouchers=${ws2.vouchers} lines=${ws2.lines} fields=${ws2.fields}`);
+  check('accounts are selected by number and name', ws2.numbered && /^101\s+Cash$/.test(ws2.firstOpt), ws2.firstOpt);
+  check('the journal starts blank with every voucher in draft',
+    ws2.prefilled === 0 && ws2.pills.join() === 'Draft' && /0 of 15/.test(ws2.score),
+    ws2.pills.join('/') + ' ' + ws2.score);
+  check('nothing can be posted before anything is entered', ws2.postDisabled);
+  check('the journal does not overflow at 390px', ws2.x <= 0, '+' + ws2.x);
 
-  // Fill it correctly, through the controls.
+  // A half-entered voucher reports what it is out by, and stays unpostable.
+  await k.selectOption('[data-a2="0.0"]', 'cash');
+  await k.fill('[data-d2="0.0"]', '12000');
+  await k.waitForTimeout(200);
+  const half = await k.evaluate(() => ({
+    off: document.querySelector('[data-tx2="0"] .gl-off').textContent.replace(/\s+/g, ' ').trim(),
+    pill: document.querySelector('[data-tx2="0"] .pill').textContent.trim(),
+    post: document.querySelector('[data-post="0"]').disabled
+  }));
+  check('a one-sided voucher says how far out of balance it is',
+    /Out of balance/.test(half.off) && /12,000/.test(half.off), half.off);
+  check('and cannot be posted', half.post && half.pill === 'Out of balance', half.pill);
+
+  // The debit and credit columns are mutually exclusive.
+  await k.fill('[data-c2="0.0"]', '500');
+  await k.waitForTimeout(200);
+  const excl = await k.evaluate(() => ({
+    dr: document.querySelector('[data-d2="0.0"]').value,
+    cr: document.querySelector('[data-c2="0.0"]').value,
+    muted: document.querySelector('[data-d2="0.0"]').classList.contains('muted')
+  }));
+  check('typing in one amount column clears the other',
+    excl.dr === '' && excl.cr === '500' && excl.muted, JSON.stringify(excl));
+  await k.fill('[data-c2="0.0"]', '');
+  await k.fill('[data-d2="0.0"]', '12000');
+
+  // Both lines complete but the amounts disagree. Post has to stay blocked
+  // for that reason alone — an incomplete line would block it anyway and
+  // would not prove the balance rule is being applied.
+  await k.selectOption('[data-a2="0.1"]', 'cs');
+  await k.fill('[data-c2="0.1"]', '10000');
+  await k.waitForTimeout(200);
+  const lop = await k.evaluate(() => ({
+    post: document.querySelector('[data-post="0"]').disabled,
+    off: document.querySelector('[data-tx2="0"] .gl-off').textContent.replace(/\s+/g, ' ').trim(),
+    complete: [...document.querySelectorAll('[data-tx2="0"] .gl-acct')].every(s => s.value)
+  }));
+  check('a complete but unbalanced voucher is blocked from posting',
+    lop.complete && lop.post && /\$2,000/.test(lop.off), JSON.stringify(lop));
+
+  // Balanced: the software allows the post.
+  await k.fill('[data-c2="0.1"]', '12000');
+  await k.waitForTimeout(200);
+  const bal = await k.evaluate(() => ({
+    pill: document.querySelector('[data-tx2="0"] .pill').textContent.trim(),
+    post: document.querySelector('[data-post="0"]').disabled,
+    off: document.querySelector('[data-tx2="0"] .gl-off').classList.contains('ok')
+  }));
+  check('a balanced voucher becomes postable', !bal.post && bal.pill === 'Balanced' && bal.off, JSON.stringify(bal));
+  await k.click('[data-post="0"]');
+  await k.waitForTimeout(300);
+  const posted = await k.evaluate(() => ({
+    pill: document.querySelector('[data-tx2="0"] .pill').textContent.trim(),
+    locked: document.querySelector('[data-a2="0.0"]').disabled,
+    readonly: document.querySelector('[data-d2="0.0"]').readOnly,
+    reg: document.querySelector('.sw-panel-hd span').textContent.trim(),
+    counts: [...document.querySelectorAll('.sw-count b')].map(b => b.textContent)
+  }));
+  check('posting locks the voucher and moves it into the register',
+    posted.pill === 'Posted' && posted.locked && posted.readonly && /1 of 11/.test(posted.reg),
+    JSON.stringify(posted));
+  check('the toolbar counts unposted and posted', posted.counts.join('/') === '10/1', posted.counts.join('/'));
+
+  // The lesson the guide states, met first-hand: the software will post a
+  // balanced entry that uses entirely the wrong accounts, and the register
+  // still reports debits equal to credits.
+  await k.selectOption('[data-a2="1.0"]', 'supx');       // should be Equipment
+  await k.fill('[data-d2="1.0"]', '8000');
+  await k.selectOption('[data-a2="1.1"]', 'ap');
+  await k.fill('[data-c2="1.1"]', '6000');
+  await k.selectOption('[data-a2="1.2"]', 'cash');
+  await k.fill('[data-c2="1.2"]', '2000');
+  await k.waitForTimeout(250);
+  const wrongOk = await k.evaluate(() => document.querySelector('[data-post="1"]').disabled);
+  check('a balanced but wrong voucher is still postable, as in real software', !wrongOk);
+  await k.click('[data-post="1"]');
+  await k.waitForTimeout(300);
+  const reg2 = await k.evaluate(() => ({
+    verdict: document.querySelector('.sw-panel .verdict').textContent.replace(/\s+/g, ' ').trim(),
+    ok: document.querySelector('.sw-panel .verdict').classList.contains('ok')
+  }));
+  check('and the register still says debits equal credits',
+    reg2.ok && /does not make them the right accounts/.test(reg2.verdict), reg2.verdict.slice(0, 90));
+  await k.click('#btn-check');
+  await k.waitForTimeout(250);
+  const caught = await k.evaluate(() => ({
+    flagged: document.querySelector('[data-tx2="1"]').classList.contains('graded-bad'),
+    note: (document.querySelector('[data-note2="1"]') || {}).textContent || ''
+  }));
+  check('but Check my work catches the wrong account the register could not',
+    caught.flagged && /at least one account is wrong/.test(caught.note), caught.note.trim().slice(0, 80));
+
+  // Unposting returns a voucher to draft.
+  await k.click('[data-unpost="1"]');
+  await k.waitForTimeout(300);
+  const un = await k.evaluate(() => ({
+    locked: document.querySelector('[data-a2="1.0"]').disabled,
+    reg: document.querySelector('.sw-panel-hd span').textContent.trim()
+  }));
+  check('unposting reopens the voucher and pulls it back out of the register',
+    !un.locked && /1 of 11/.test(un.reg), JSON.stringify(un));
+
+  // Fill every voucher correctly, through the grid.
   const plan2 = await k.evaluate(() => JOURNAL.map((j, ji) => ({
-    ji, lines: j.lines.map(l => ({ k: l[0], s: l[1] ? 'D' : 'C', n: l[1] || l[2] }))
+    ji, lines: j.lines.map(l => ({ k: l[0], col: l[1] ? 'd' : 'c', n: l[1] || l[2] }))
   })));
   for (const e of plan2) {
     for (let i = 0; i < e.lines.length; i++) {
-      await k.selectOption(`[data-fx2="${e.ji}.${i}"]`, e.lines[i].k);
-      const sel = `[data-side="${e.ji}.${i}.${e.lines[i].s}"]`;
-      if (await k.getAttribute(sel, 'aria-pressed') !== 'true') await k.click(sel);
-      await k.fill(`[data-amt2="${e.ji}.${i}"]`, String(e.lines[i].n));
+      const locked = await k.evaluate(ji => !!document.querySelector('[data-unpost="' + ji + '"]'), e.ji);
+      if (locked) await k.click(`[data-unpost="${e.ji}"]`);
+      await k.selectOption(`[data-a2="${e.ji}.${i}"]`, e.lines[i].k);
+      await k.fill(`[data-d2="${e.ji}.${i}"]`, '');
+      await k.fill(`[data-c2="${e.ji}.${i}"]`, '');
+      await k.fill(`[data-${e.lines[i].col}2="${e.ji}.${i}"]`, String(e.lines[i].n));
     }
+    await k.click(`[data-post="${e.ji}"]`);
+    await k.waitForTimeout(40);
   }
   const ans2 = await k.evaluate(() => {
     const f = postedThrough(999);
@@ -693,29 +762,35 @@ function check(name, ok, detail) {
   });
   for (const [id, v] of Object.entries(ans2)) await k.fill(`[data-fld2="${id}"]`, String(v));
   await k.click('#btn-check');
-  await k.waitForTimeout(250);
+  await k.waitForTimeout(300);
   const solved2 = await k.evaluate(() => ({
     score: document.getElementById('ws-score').textContent,
-    right: document.querySelectorAll('#solve .ws-tx.right').length,
-    wrong: document.querySelectorAll('#solve .ws-tx.wrong, #solve .ws-field.wrong').length
+    bad: document.querySelectorAll('.doc-je.graded-bad, .ws-field.wrong').length,
+    posted: document.querySelectorAll('[data-unpost]').length,
+    reg: document.querySelector('.sw-panel .tb-tot').textContent.replace(/\s+/g, ' ').trim()
   }));
-  check('a correctly journalized sheet scores 15 of 15', /15 of 15/.test(solved2.score), solved2.score);
-  check('every 2.2 entry and field is marked right', solved2.right === 11 && solved2.wrong === 0,
-    `right=${solved2.right} wrong=${solved2.wrong}`);
+  check('a correctly journalized book scores 15 of 15', /15 of 15/.test(solved2.score), solved2.score);
+  check('every voucher is posted and none is flagged',
+    solved2.posted === 11 && solved2.bad === 0, `posted=${solved2.posted} bad=${solved2.bad}`);
+  // A journal report totals everything journalized; a trial balance totals
+  // net account balances. 34,890 and 23,600 are both right, and different.
+  check('the register foots to the total journalized on both sides',
+    (solved2.reg.match(/34,890/g) || []).length === 2 && /Total journalized/.test(solved2.reg), solved2.reg);
 
-  // A right-account-wrong-side error has to be told apart from a wrong
-  // account. Both lines have to flip: flipping one would simply unbalance the
-  // entry, and the harness would be testing the equal-sides message instead.
-  await k.click(`[data-side="0.0.D"]`);              // Cash: debit off
-  await k.click(`[data-side="0.0.C"]`);              // Cash: credited instead
-  await k.click(`[data-side="0.1.C"]`);              // Common Stock: credit off
-  await k.click(`[data-side="0.1.D"]`);              // Common Stock: debited instead
-  await k.click('#btn-check');
-  await k.waitForTimeout(200);
-  const sideErr = await k.evaluate(() =>
-    (document.querySelector('[data-note2="0"]') || {}).textContent || '');
-  check('crediting an account that should be debited is diagnosed as a side error',
-    /wrong side/.test(sideErr) && !/wrong account/.test(sideErr), sideErr.trim().slice(0, 90));
+  const l2 = await k.evaluate(() => {
+    const small = [], unnamed = [];
+    document.querySelectorAll('#solve button').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height && (r.height < 44 || r.width < 44)) small.push(el.className);
+      if (!((el.getAttribute('aria-label') || '') + el.textContent.trim())) unnamed.push(el.className);
+    });
+    const noLabel = [...document.querySelectorAll('#solve input, #solve select')]
+      .filter(e => !e.getAttribute('aria-label') && !(e.labels && e.labels.length)).length;
+    return { small, unnamed, noLabel };
+  });
+  check('no journal control is under 44px', l2.small.length === 0, l2.small.join(','));
+  check('every journal control has an accessible name',
+    l2.unnamed.length === 0 && l2.noLabel === 0, l2.unnamed.join(',') + ' unlabelled=' + l2.noLabel);
 
   // Module isolation, measured the way a learner sees it rather than by the
   // shape of what is in localStorage: reading 2.2 must show up as progress in
