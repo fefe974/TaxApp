@@ -1183,6 +1183,85 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 .sw-panel-bd { padding: 10px 11px 11px; }
 .sw-empty { font-size: 12.5px; color: var(--muted); text-align: center; padding: 12px 4px; line-height: 1.5; }
 
+/* ---------- the problem's instructions, kept in view ---------- */
+.instr {
+  margin-top: 14px; border-radius: var(--r-md);
+  border: 1px solid var(--line-strong); background: var(--surface);
+  overflow: hidden;
+}
+.instr-cap {
+  padding: 7px 11px; background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.instr-row {
+  display: flex; align-items: baseline; gap: 9px;
+  padding: 8px 11px; border-bottom: 1px solid var(--line);
+  font-size: 13px; color: var(--text-dim);
+}
+.instr-row:last-child { border-bottom: 0; }
+.instr-k {
+  flex: 0 0 auto; width: 17px; font-family: var(--mono); font-weight: 800;
+  color: var(--brand); display: inline-flex; align-items: center;
+}
+.instr-k svg { width: 13px; height: 13px; color: var(--good-deep); }
+.instr-t { flex: 1; min-width: 0; line-height: 1.4; }
+.instr-n {
+  flex: 0 0 auto; font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.instr-row.done { color: var(--good-deep); }
+.instr-row.done .instr-n { color: var(--good-deep); }
+
+/* ---------- a T-account the learner foots ---------- */
+.ta-box {
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 9px 10px 10px; background: var(--surface);
+}
+.ta-box.right { border-color: var(--good-line); background: var(--good-soft); }
+.ta-box.wrong { border-color: var(--bad-line); background: var(--bad-soft); }
+.ta-box .ta-name { font-family: var(--mono); font-size: 11px; }
+.ta-box .ta-side { min-height: 40px; }
+.ta-foot { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.ta-foot label {
+  flex: 0 0 auto; font-size: 10.5px; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+}
+.ta-foot .gl-amt { flex: 1; min-width: 0; }
+.ws-hint.sm {
+  flex: 0 0 auto; min-width: 44px; min-height: 44px; padding: 0;
+  justify-content: center; gap: 0;
+}
+
+/* ---------- the trial balance form ---------- */
+.tbf { font-family: var(--mono); font-size: 12px; }
+.tbf-hd {
+  display: grid; grid-template-columns: 1fr 76px 76px 44px; gap: 5px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--muted); padding-bottom: 5px; border-bottom: 1.5px solid var(--line-strong);
+}
+.tbf-hd span:nth-child(2), .tbf-hd span:nth-child(3) { text-align: right; }
+.tbf-row, .tbf-tot {
+  display: grid; grid-template-columns: 1fr 76px 76px 44px; gap: 5px;
+  align-items: center; padding: 3px 0;
+}
+.tbf-name {
+  font-size: 11px; color: var(--text-dim); line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.tbf-row.right { background: var(--good-soft); border-radius: 4px; }
+.tbf-row.wrong { background: var(--bad-soft); border-radius: 4px; }
+.tbf-tot { margin-top: 6px; padding-top: 7px; border-top: 1px solid var(--line-strong); }
+.tbf-tot .tbf-name { font-weight: 800; color: var(--text); font-size: 12px; }
+.tbf-tot .gl-amt { border-bottom: 3px double var(--line-strong); font-weight: 800; }
+.tbf-tot.right .gl-amt { border-color: var(--good-line); background: var(--good-soft); }
+.tbf-tot.wrong .gl-amt { border-color: var(--bad-line); background: var(--bad-soft); }
+
+@media (max-width: 400px) {
+  .tbf-hd, .tbf-row, .tbf-tot { grid-template-columns: 1fr 64px 64px 44px; }
+}
+
 /* ---------- workpaper cells (module 2.1) ---------- */
 .wp-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table.wp { border-collapse: separate; border-spacing: 0; width: 100%; }
@@ -2968,9 +3047,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         (item.ledger ? viz('Every account in the ledger', '<div class="tas two">' +
             ACCT.filter(function (a) { return full[a.k].lines.length; })
                 .map(function (a) { return tAccount(full, a.k); }).join('') + '</div>') : '') +
-        (item.trial ? '<div class="stmt-doc">' +
-            '<div class="stmt-hd"><b>' + CO2.name + '</b><span>Trial Balance</span><span>' + CO2.asAt + '</span></div>' +
-            trialBalance(full) + '</div>' : '') +
+        (item.trial ? '<div class="card"><div class="stmt">' +
+            '<div class="stmt-head"><b>' + CO2.name + '</b><span>Trial Balance</span><i>' + CO2.asAt + '</i></div>' +
+            trialBalance(full) + '</div></div>' : '') +
         (item.caveat ? viz('What a trial balance does not prove', trapViz(item.caveat)) : '') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
@@ -3039,33 +3118,14 @@ document.getElementById('next-icon').innerHTML = ICON.next;
           'Debit Dividends 600. Credit Cash 600.']
   };
 
-  var FIELDS2 = [
-    { id: 'cash', label: 'Cash balance at July 31', acct: 'cash',
-      hints: ['Foot both sides of your Cash T-account and take the difference.',
-              'Six entries credited Cash and two debited it.',
-              'Debits 13,600 less credits 8,190.'] },
-    { id: 'ar', label: 'Accounts Receivable balance at July 31', acct: 'ar',
-      hints: ['Two entries billed customers, one collected from them.',
-              '3,700 and 2,500 billed, 1,600 collected.',
-              '6,200 less 1,600.'] },
-    { id: 'ap', label: 'Accounts Payable balance at July 31', acct: 'ap',
-      hints: ['A liability increases on the credit side and decreases on the debit side.',
-              '6,000 for the truck and 900 for supplies, less the 1,500 paid.',
-              '6,900 less 1,500.'] },
-    { id: 'tot', label: 'Total of each trial balance column', total: true,
-      hints: ['Add every debit balance. The credit column has to come to the same figure.',
-              'Assets plus dividends plus expenses on one side; liabilities, equity and revenue on the other.',
-              '5,410 + 4,600 + 900 + 1,800 + 8,000 + 600 + 290 + 2,000.'] }
-  ];
-
-  var w2 = { fx: {}, fld: {}, hint: {}, posted: {} };
+  var w2 = { fx: {}, hint: {}, posted: {}, bal: {}, tb: {}, tbt: {} };
 
   function loadWork2() {
     try {
       var w = JSON.parse(window.localStorage.getItem(STORE + '.work2') || '{}');
       if (w && typeof w === 'object') {
-        w2.fx = w.fx || {}; w2.fld = w.fld || {};
-        w2.hint = w.hint || {}; w2.posted = w.posted || {};
+        w2.fx = w.fx || {}; w2.hint = w.hint || {}; w2.posted = w.posted || {};
+        w2.bal = w.bal || {}; w2.tb = w.tb || {}; w2.tbt = w.tbt || {};
       }
     } catch (e) { /* private mode: run without persistence */ }
   }
@@ -3073,51 +3133,70 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     try { window.localStorage.setItem(STORE + '.work2', JSON.stringify(w2)); } catch (e) {}
   }
   function slots2(ji) { return JOURNAL[ji].lines.length; }
-  function field2Answer(f) {
-    var full = postedThrough(999);
-    return f.total ? trialTotals(full).dr : balOf(full, f.acct);
-  }
-  function field2Right(f) { return amountOf(w2.fld[f.id]) === field2Answer(f); }
 
+  /* Hint keys: a voucher index, 'b' + account for a ledger balance, 't' +
+     account for a trial balance row, all three levels deep. */
   function paintHint2(key) {
     var lvl = w2.hint[key];
     if (!lvl) return;
-    var host = $('solve'), text, slot, btn, max;
-    if (key.charAt(0) === 'f') {
-      var f = FIELDS2[Number(key.slice(1))];
-      if (!f) return;
-      max = f.hints.length; text = f.hints[Math.min(lvl, max) - 1];
-      slot = host.querySelector('[data-fnote2="' + f.id + '"]');
-      btn = host.querySelector('[data-fhint2="' + key.slice(1) + '"]');
+    var host = $('solve'), text, slot, btn, max = 3;
+    if (key.charAt(0) === 'b' && acct(key.slice(1))) {
+      var bk = key.slice(1);
+      text = balHints(bk)[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-bnote="' + bk + '"]');
+      btn = host.querySelector('[data-bhint="' + bk + '"]');
+    } else if (key.charAt(0) === 't' && acct(key.slice(1))) {
+      var tk = key.slice(1);
+      text = tbHints(tk)[Math.min(lvl, max) - 1];
+      btn = host.querySelector('[data-thint="' + tk + '"]');
+      var row = host.querySelector('[data-tbrow="' + tk + '"]');
+      if (row) {
+        var after = row.nextElementSibling;
+        if (!after || !after.classList.contains('tbf-note')) {
+          after = document.createElement('div');
+          after.className = 'tbf-note';
+          row.parentNode.insertBefore(after, row.nextSibling);
+        }
+        slot = after;
+      }
     } else {
       var j = JOURNAL[Number(key)];
       if (!j) return;
       var hints = HINTS2[j.id] || [];
-      max = hints.length; text = hints[Math.min(lvl, max) - 1];
+      max = hints.length;
+      text = hints[Math.min(lvl, max) - 1];
       slot = host.querySelector('[data-note2="' + key + '"]');
       btn = host.querySelector('[data-hint2="' + key + '"]');
     }
     if (!slot || !text) return;
     slot.innerHTML = '<div class="ws-note tip">' + text + '</div>';
     if (!btn) return;
-    btn.innerHTML = ICON.bulb + (lvl >= max ? 'No more hints' : 'Another hint');
+    // The compact buttons beside a balance or a trial balance row are icon-only.
+    if (!btn.classList.contains('sm')) btn.innerHTML = ICON.bulb + (lvl >= max ? 'No more hints' : 'Another hint');
     btn.disabled = lvl >= max;
   }
 
-  /* ---------- module 2.2 worksheet, as a ledger package ----------
-     Numbered accounts, a debit column and a credit column, and a post
-     action the software refuses to run until the entry balances. Posting
-     a balanced-but-wrong entry is allowed, exactly as it would be in
-     practice — which is the trial balance lesson from the guide, met
-     first-hand instead of read about. */
+  /* ---------- module 2.2 worksheet: the problem's own instructions ----------
+     a. Journalize the July transactions.
+     b. Post to the ledger accounts. (Use T-accounts.)
+     c. Prepare a trial balance at July 31.
+
+     All three are the learner's work. The software posts the amounts across
+     when a voucher is posted, because that is what posting mechanically is,
+     but footing each account and building the trial balance are done by
+     hand — those are the deliverables the problem asks for. */
+
+  var INSTRUCTIONS2 = [
+    { id: 'a', text: 'Journalize the July transactions.' },
+    { id: 'b', text: 'Post to the ledger accounts. (Use T-accounts.)' },
+    { id: 'c', text: 'Prepare a trial balance at July 31.' }
+  ];
 
   function accNo(k) { return acct(k).no; }
-  function accLabel(k) { return acct(k).no + '  ' + acct(k).name; }
 
   function cell2(ji, li, col) { return w2.fx[ji + '.' + li + '.' + col]; }
   function amt2(v) { var n = amountOf(v); return isNaN(n) ? 0 : n; }
 
-  /* What the learner has typed on one line, or null if it is unusable. */
   function jline(ji, li) {
     var k = cell2(ji, li, 'k');
     var d = amt2(cell2(ji, li, 'd')), c = amt2(cell2(ji, li, 'c'));
@@ -3135,7 +3214,6 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     }
     return { d: d, c: c, off: d - c, filled: filled };
   }
-  /* The software's own rule, which is only ever about equality. */
   function canPost(ji) {
     var t = jtotals(ji);
     if (!t.d || t.off !== 0) return false;
@@ -3174,22 +3252,119 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     return 'It balances and the amounts are right, so at least one account is wrong. Ask what the business received, and what it gave up or now owes.';
   }
 
-  /* The ledger the learner's own posted vouchers build. */
-  function postedRegister() {
-    var rows = [], dr = 0, cr = 0;
+  /* ---------- (b) the ledger the learner's own postings build ----------
+     Built from posted vouchers only, so an unposted or wrong voucher shows
+     up here rather than being quietly corrected. */
+  function myLedger() {
+    var t = {};
+    ACCT.forEach(function (a) { t[a.k] = { d: 0, c: 0, lines: [] }; });
     JOURNAL.forEach(function (j, ji) {
       if (!isPosted(ji)) return;
-      var t = jtotals(ji);
-      dr += t.d; cr += t.c;
-      rows.push({ ref: 'JE-' + String(ji + 1).padStart(2, '0'), date: j.date, d: t.d, c: t.c });
+      for (var i = 0; i < slots2(ji); i++) {
+        var l = jline(ji, i);
+        if (!l) continue;
+        if (l.s === 'D') t[l.k].d += l.n; else t[l.k].c += l.n;
+        t[l.k].lines.push({ ref: jeRef(ji), date: j.date, s: l.s, n: l.n });
+      }
     });
-    return { rows: rows, dr: dr, cr: cr };
+    return t;
+  }
+  function jeRef(ji) { return 'JE-' + String(ji + 1).padStart(2, '0'); }
+  function myBal(t, k) {
+    var a = acct(k);
+    return a.up === 'D' ? t[k].d - t[k].c : t[k].c - t[k].d;
+  }
+  /* The ledger shows the accounts the learner has actually posted to. */
+  function ledgerAccts() {
+    var t = myLedger();
+    return ACCT.filter(function (a) { return t[a.k].lines.length; }).map(function (a) { return a.k; });
+  }
+  /* The accounts the finished problem carries a balance in — a fixed target,
+     so the count does not move as vouchers are posted. */
+  function keyAccts() {
+    var key = postedThrough(999);
+    return ACCT.filter(function (a) { return balOf(key, a.k); }).map(function (a) { return a.k; });
+  }
+  function balRight(k) {
+    var key = postedThrough(999);
+    return amountOf(w2.bal[k]) === balOf(key, k);
+  }
+  function balTouched(k) { return String(w2.bal[k] === undefined ? '' : w2.bal[k]).trim() !== ''; }
+
+  /* ---------- (c) the trial balance the learner writes ---------- */
+  function tbVal(k, col) { return w2.tb[k + '.' + col]; }
+  function tbRight(k) {
+    var key = postedThrough(999), want = balOf(key, k), a = acct(k);
+    var d = amountOf(tbVal(k, 'd')), c = amountOf(tbVal(k, 'c'));
+    if (!want) return isNaN(d) && isNaN(c);            // unused accounts stay blank
+    if (a.up === 'D') return d === want && isNaN(c);
+    return c === want && isNaN(d);
+  }
+  function tbTouched(k) {
+    return String(tbVal(k, 'd') || '').trim() !== '' || String(tbVal(k, 'c') || '').trim() !== '';
+  }
+  function tbGraded() { return ACCT.filter(function (a) { return balOf(postedThrough(999), a.k); }); }
+  function tbTotalRight(col) {
+    return amountOf(w2.tbt[col]) === trialTotals(postedThrough(999)).dr;
+  }
+  function myTbTotals() {
+    var d = 0, c = 0;
+    ACCT.forEach(function (a) {
+      var x = amountOf(tbVal(a.k, 'd')), y = amountOf(tbVal(a.k, 'c'));
+      if (!isNaN(x)) d += x;
+      if (!isNaN(y)) c += y;
+    });
+    return { d: d, c: c };
+  }
+
+  /* Hints for (b) and (c) are derived rather than written out, so they can
+     speak about the learner's own ledger. */
+  function balHints(k) {
+    var t = myLedger(), a = acct(k);
+    return [
+      'Add the debit side, add the credit side, and take the difference. The balance sits on the side that is larger.',
+      'In your ledger this account has debits of ' + dollars(t[k].d) + ' and credits of ' + dollars(t[k].c) + '.',
+      a.up === 'D' ? dollars(t[k].d) + ' less ' + dollars(t[k].c) + '.'
+                   : dollars(t[k].c) + ' less ' + dollars(t[k].d) + '.'
+    ];
+  }
+  function tbHints(k) {
+    var a = acct(k);
+    return [
+      'Which column does this account normally sit in?',
+      a.fam + ' accounts increase on the ' + (a.up === 'D' ? 'debit' : 'credit') + ' side, so they carry a ' + (a.up === 'D' ? 'debit' : 'credit') + ' balance.',
+      'Put its balance in the ' + (a.up === 'D' ? 'debit' : 'credit') + ' column and leave the other blank.'
+    ];
   }
 
   function score2() {
-    var n = 0;
-    JOURNAL.forEach(function (j, i) { if (entryRight2(i)) n++; });
-    return { got: n + FIELDS2.filter(field2Right).length, total: JOURNAL.length + FIELDS2.length };
+    var a = 0, b = 0, c = 0;
+    JOURNAL.forEach(function (j, i) { if (entryRight2(i)) a++; });
+    keyAccts().forEach(function (k) { if (balRight(k)) b++; });
+    tbGraded().forEach(function (x) { if (tbRight(x.k)) c++; });
+    if (tbTotalRight('d')) c++;
+    if (tbTotalRight('c')) c++;
+    return {
+      got: a + b + c,
+      total: JOURNAL.length + keyAccts().length + tbGraded().length + 2,
+      parts: { a: a, b: b, c: c },
+      caps: { a: JOURNAL.length, b: keyAccts().length, c: tbGraded().length + 2 }
+    };
+  }
+
+  function instrPanel() {
+    var sc = score2();
+    return '<div class="instr">' +
+      '<div class="instr-cap">Instructions</div>' +
+      INSTRUCTIONS2.map(function (x) {
+        var got = sc.parts[x.id], cap = sc.caps[x.id];
+        var done = cap > 0 && got === cap;
+        return '<div class="instr-row' + (done ? ' done' : '') + '">' +
+          '<span class="instr-k">' + (done ? ICON.check : x.id + '.') + '</span>' +
+          '<span class="instr-t">' + x.text + '</span>' +
+          '<span class="instr-n">' + got + '/' + cap + '</span></div>';
+      }).join('') +
+      '</div>';
   }
 
   function renderSolve2() {
@@ -3200,6 +3375,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var posted = 0;
     JOURNAL.forEach(function (j, i) { if (isPosted(i)) posted++; });
 
+    /* ---- (a) the general journal ---- */
     var docs = JOURNAL.map(function (j, ji) {
       var t = jtotals(ji), locked = isPosted(ji);
       var rows = '';
@@ -3216,12 +3392,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
             ' aria-label="Credit for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '" />' +
           '</div>';
       }
-
       var pill = locked ? '<span class="pill posted">' + ICON.check + 'Posted</span>'
         : !t.filled ? '<span class="pill draft">Draft</span>'
         : t.off === 0 && t.d ? '<span class="pill ready">Balanced</span>'
         : '<span class="pill off">Out of balance</span>';
-
       var off = !t.filled
         ? '<div class="gl-off idle"><span>Enter the debit and the credit</span><span>&mdash;</span></div>'
         : t.off === 0 && t.d
@@ -3229,12 +3403,11 @@ document.getElementById('next-icon').innerHTML = ICON.next;
           : '<div class="gl-off off"><span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span></div>';
 
       return '<div class="doc-je' + (locked ? ' posted' : '') + '" data-tx2="' + ji + '">' +
-        '<div class="je-top"><span class="je-ref">JE-' + String(ji + 1).padStart(2, '0') + '</span>' +
+        '<div class="je-top"><span class="je-ref">' + jeRef(ji) + '</span>' +
           '<span class="je-date">' + j.date + ', 2025</span>' + pill + '</div>' +
         '<div class="je-memo"><u>Source document</u>' + FACTS2[j.id] + '</div>' +
         '<div class="gl">' +
-          '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' +
-          rows +
+          '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
           '<div class="gl-foot"><span class="lbl">Totals</span><span>' + (t.d ? money2(t.d) : '&mdash;') + '</span><span>' + (t.c ? money2(t.c) : '&mdash;') + '</span></div>' +
           off +
         '</div>' +
@@ -3242,33 +3415,47 @@ document.getElementById('next-icon').innerHTML = ICON.next;
           '<button type="button" class="ws-hint" data-hint2="' + ji + '">' + ICON.bulb + 'Hint</button>' +
           (locked
             ? '<button type="button" class="btn-post undo" data-unpost="' + ji + '">Unpost</button>'
-            : '<button type="button" class="btn-post" data-post="' + ji + '"' + (canPost(ji) ? '' : ' disabled') + '>' + ICON.check + 'Post entry</button>') +
+            : '<button type="button" class="btn-post" data-post="' + ji + '"' + (canPost(ji) ? '' : ' disabled') + '>' + ICON.check + 'Post to ledger</button>') +
         '</div>' +
         '<div data-note2="' + ji + '" style="padding:0 11px 11px"></div>' +
         '</div>';
     }).join('');
 
-    var reg = postedRegister();
-    var register = !reg.rows.length
-      ? '<div class="sw-empty">Nothing posted yet. A voucher reaches the ledger only once it balances and you post it.</div>'
-      : '<div class="tb">' +
-          '<div class="tb-hd"><span>Reference</span><span>Debit</span><span>Credit</span></div>' +
-          reg.rows.map(function (r) {
-            return '<div class="tb-row"><span class="tb-name">' + r.ref + ' &middot; ' + r.date + '</span>' +
-              '<span>' + money2(r.d) + '</span><span>' + money2(r.c) + '</span></div>';
-          }).join('') +
-          '<div class="tb-tot"><span>Total journalized</span><span>' + money2(reg.dr) + '</span><span>' + money2(reg.cr) + '</span></div>' +
-        '</div>' +
-        '<div class="verdict ' + (reg.dr === reg.cr ? 'ok' : 'no') + '" style="margin-top:9px">' +
-          (reg.dr === reg.cr ? ICON.check + ' Debits equal credits &mdash; but that alone does not make them the right accounts'
-                             : ICON.warn + ' The ledger is out by ' + dollars(Math.abs(reg.dr - reg.cr))) + '</div>';
+    /* ---- (b) the ledger: postings arrive, the learner foots each account ---- */
+    var led = myLedger();
+    var accts = ledgerAccts();
+    var ledger = !posted
+      ? '<div class="sw-empty">Nothing posted yet. Post a voucher above and its amounts arrive here, on the side the entry put them.</div>'
+      : '<div class="tas two">' + accts.map(function (k) {
+          var a = acct(k), rec = led[k];
+          function side(which) {
+            return '<div class="ta-side ' + which + '">' + rec.lines.filter(function (x) {
+              return which === 'd' ? x.s === 'D' : x.s === 'C';
+            }).map(function (x) {
+              return '<div class="ta-line"><u>' + x.ref.replace('JE-', '') + '</u><span>' + money2(x.n) + '</span></div>';
+            }).join('') + '</div>';
+          }
+          return '<div class="ta-box" data-acct="' + k + '">' +
+            '<div class="ta"><div class="ta-name">' + a.no + ' &nbsp;' + a.name + '</div>' +
+            '<div class="ta-body">' + side('d') + side('c') + '</div></div>' +
+            '<div class="ta-foot">' +
+              '<label for="bal-' + k + '">Balance</label>' +
+              '<input class="gl-amt" id="bal-' + k + '" data-bal="' + k + '" value="' + (w2.bal[k] === undefined ? '' : w2.bal[k]) + '"' +
+                ' inputmode="decimal" autocomplete="off" aria-label="Balance of ' + a.name + '" />' +
+              '<button type="button" class="ws-hint sm" data-bhint="' + k + '" aria-label="Hint for ' + a.name + '">' + ICON.bulb + '</button>' +
+            '</div>' +
+            '<div data-bnote="' + k + '"></div></div>';
+        }).join('') + '</div>';
 
-    var fields = FIELDS2.map(function (f, fi) {
-      return '<div class="ws-field" data-field2="' + f.id + '">' +
-        '<label for="w2-' + f.id + '">' + f.label + '</label>' +
-        '<div class="ws-line"><div class="ws-amt"><input id="w2-' + f.id + '" data-fld2="' + f.id + '" inputmode="decimal" autocomplete="off" /></div>' +
-        '<button type="button" class="ws-hint" data-fhint2="' + fi + '">' + ICON.bulb + 'Hint</button></div>' +
-        '<div data-fnote2="' + f.id + '"></div></div>';
+    /* ---- (c) the trial balance the learner writes out ---- */
+    var mt = myTbTotals();
+    var tbRows = ACCT.map(function (a) {
+      return '<div class="tbf-row" data-tbrow="' + a.k + '">' +
+        '<span class="tbf-name">' + a.no + ' &nbsp;' + a.name + '</span>' +
+        '<input class="gl-amt" data-tb="' + a.k + '.d" value="' + (tbVal(a.k, 'd') || '') + '" inputmode="decimal" autocomplete="off" aria-label="Debit balance of ' + a.name + '" />' +
+        '<input class="gl-amt" data-tb="' + a.k + '.c" value="' + (tbVal(a.k, 'c') || '') + '" inputmode="decimal" autocomplete="off" aria-label="Credit balance of ' + a.name + '" />' +
+        '<button type="button" class="ws-hint sm" data-thint="' + a.k + '" aria-label="Hint for ' + a.name + '">' + ICON.bulb + '</button>' +
+        '</div>';
     }).join('');
 
     $('solve').innerHTML =
@@ -3280,14 +3467,38 @@ document.getElementById('next-icon').innerHTML = ICON.next;
             '<span class="sw-count' + (posted === JOURNAL.length ? ' done' : '') + '"><b>' + posted + '</b><u>posted</u></span>' +
           '</span>' +
         '</div>' +
-        '<div class="ws-sect">Vouchers to enter<i></i></div>' + docs +
+        instrPanel() +
+
+        '<div class="ws-sect">a &middot; Journalize the transactions<i></i></div>' + docs +
+
+        '<div class="ws-sect">b &middot; Post to the ledger accounts<i></i></div>' +
+        '<p class="wp-tip">' + ICON.bulb + 'Posting a voucher copies its amounts here, on the side the entry put them. Foot each account and enter its balance.</p>' +
+        '<div class="sw-panel"><div class="sw-panel-hd"><b>General ledger</b><span>' + posted + ' of ' + JOURNAL.length + ' vouchers posted</span></div>' +
+          '<div class="sw-panel-bd">' + ledger + '</div></div>' +
+
+        '<div class="ws-sect">c &middot; Prepare a trial balance at July 31<i></i></div>' +
+        '<p class="wp-tip">' + ICON.bulb + 'Copy each balance into its normal column. Leave an account blank if it has no balance, then total both columns.</p>' +
         '<div class="sw-panel">' +
-          '<div class="sw-panel-hd"><b>Posting register</b><span>' + reg.rows.length + ' of ' + JOURNAL.length + ' posted</span></div>' +
-          '<div class="sw-panel-bd">' + register + '</div>' +
+          '<div class="stmt" style="padding:12px 11px 0"><div class="stmt-head"><b>' + CO2.name + '</b><span>Trial Balance</span><i>' + CO2.asAt + '</i></div></div>' +
+          '<div class="sw-panel-bd">' +
+            '<div class="tbf">' +
+              '<div class="tbf-hd"><span>Account</span><span>Debit</span><span>Credit</span><span></span></div>' +
+              tbRows +
+              '<div class="tbf-tot">' +
+                '<span class="tbf-name">Totals</span>' +
+                '<input class="gl-amt" data-tbt="d" value="' + (w2.tbt.d || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the debit column" />' +
+                '<input class="gl-amt" data-tbt="c" value="' + (w2.tbt.c || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the credit column" />' +
+                '<span></span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="gl-off ' + (!mt.d && !mt.c ? 'idle' : (mt.d === mt.c ? 'ok' : 'off')) + '" id="tb-proof">' +
+              (!mt.d && !mt.c ? '<span>Fill the columns and they will foot themselves</span><span>&mdash;</span>'
+                : mt.d === mt.c ? '<span>Your columns agree at ' + dollars(mt.d) + '</span><span>' + ICON.check + '</span>'
+                : '<span>Your columns are out by</span><span>' + dollars(Math.abs(mt.d - mt.c)) + '</span>') +
+            '</div>' +
+          '</div>' +
         '</div>' +
-        '<div class="ws-sect">Trial balance at July 31<i></i></div>' +
-        '<p class="wp-tip">' + ICON.bulb + 'The register above proves only that your vouchers balance. Foot each account to get these.</p>' +
-        '<div class="ws-fields">' + fields + '</div>' +
+
         '<button type="button" class="ws-reset" id="ws-reset2">Clear my work and start again</button>' +
       '</div>';
 
@@ -3295,14 +3506,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       var v = w2.fx[el.getAttribute('data-a2') + '.k'];
       if (v) el.value = v;
     });
-    Array.prototype.forEach.call($('solve').querySelectorAll('[data-fld2]'), function (el) {
-      var v = w2.fld[el.getAttribute('data-fld2')]; if (v !== undefined) el.value = v;
-    });
     Object.keys(w2.hint).forEach(paintHint2);
   }
 
-  /* Re-render only the voucher that changed, so typing does not rebuild the
-     page and lose the caret. */
   function refreshDoc(ji) {
     var t = jtotals(ji);
     var doc = $('solve').querySelector('[data-tx2="' + ji + '"]');
@@ -3329,16 +3535,30 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (bad) bad.remove();
   }
 
-  function refreshRegister() {
-    var reg = postedRegister(), posted = reg.rows.length;
-    var hd = $('solve').querySelector('.sw-panel-hd span');
-    if (hd) hd.textContent = posted + ' of ' + JOURNAL.length + ' posted';
-    var counts = $('solve').querySelectorAll('.sw-count b');
-    if (counts.length === 2) {
-      counts[0].textContent = JOURNAL.length - posted;
-      counts[1].textContent = posted;
-      counts[1].parentNode.classList.toggle('done', posted === JOURNAL.length);
-    }
+  /* The trial balance columns foot themselves as they are filled. */
+  function refreshTb() {
+    var mt = myTbTotals();
+    var p = $('tb-proof');
+    if (!p) return;
+    p.className = 'gl-off ' + (!mt.d && !mt.c ? 'idle' : (mt.d === mt.c ? 'ok' : 'off'));
+    p.innerHTML = !mt.d && !mt.c
+      ? '<span>Fill the columns and they will foot themselves</span><span>&mdash;</span>'
+      : mt.d === mt.c
+        ? '<span>Your columns agree at ' + dollars(mt.d) + '</span><span>' + ICON.check + '</span>'
+        : '<span>Your columns are out by</span><span>' + dollars(Math.abs(mt.d - mt.c)) + '</span>';
+  }
+
+  function refreshInstr() {
+    var host = $('solve').querySelector('.instr');
+    if (!host) return;
+    var sc = score2();
+    Array.prototype.forEach.call(host.querySelectorAll('.instr-row'), function (row, i) {
+      var x = INSTRUCTIONS2[i], got = sc.parts[x.id], cap = sc.caps[x.id];
+      var done = cap > 0 && got === cap;
+      row.classList.toggle('done', done);
+      row.querySelector('.instr-k').innerHTML = done ? ICON.check : x.id + '.';
+      row.querySelector('.instr-n').textContent = got + '/' + cap;
+    });
   }
 
   function gradeSolve2() {
@@ -3350,18 +3570,48 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       if (ok || !touched) { var stale = doc.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
       else if (!w2.hint[ji]) note.innerHTML = '<div class="ws-note bad">' + entryDiag2(ji) + '</div>';
     });
-    FIELDS2.forEach(function (f, fi) {
-      var box = $('solve').querySelector('[data-field2="' + f.id + '"]');
-      var note = $('solve').querySelector('[data-fnote2="' + f.id + '"]');
-      var ok = field2Right(f);
-      var touched = String(w2.fld[f.id] === undefined ? '' : w2.fld[f.id]).trim() !== '';
+
+    var led = myLedger(), key = postedThrough(999);
+    ledgerAccts().forEach(function (k) {
+      var box = $('solve').querySelector('[data-acct="' + k + '"]');
+      if (!box) return;
+      var note = $('solve').querySelector('[data-bnote="' + k + '"]');
+      var ok = balRight(k), touched = balTouched(k);
       box.classList.toggle('right', ok);
       box.classList.toggle('wrong', !ok && touched);
-      if (ok || !touched) { var old = box.querySelector('.ws-note.bad'); if (old) old.remove(); }
-      else if (!w2.hint['f' + fi]) note.innerHTML = '<div class="ws-note bad">Not yet. Foot the account in your own ledger rather than working from memory.</div>';
+      var old = box.querySelector('.ws-note.bad');
+      if (old) old.remove();
+      if (ok || !touched || w2.hint['b' + k]) return;
+      // A balance that is right for the learner's own ledger points upstream.
+      note.innerHTML = '<div class="ws-note bad">' +
+        (amountOf(w2.bal[k]) === myBal(led, k)
+          ? 'That is the correct balance for your ledger, but your ledger is not right yet. Check the vouchers that touch this account.'
+          : 'Not yet. Foot the debit side, foot the credit side, and take the difference.') + '</div>';
     });
+
+    tbGraded().forEach(function (a) {
+      var row = $('solve').querySelector('[data-tbrow="' + a.k + '"]');
+      if (!row) return;
+      var ok = tbRight(a.k), touched = tbTouched(a.k);
+      row.classList.toggle('right', ok);
+      row.classList.toggle('wrong', !ok && touched);
+    });
+    // An account with no balance must be left blank, not filled with a zero.
+    ACCT.forEach(function (a) {
+      if (balOf(key, a.k)) return;
+      var row = $('solve').querySelector('[data-tbrow="' + a.k + '"]');
+      if (row) row.classList.toggle('wrong', tbTouched(a.k));
+    });
+    var tot = $('solve').querySelector('.tbf-tot');
+    if (tot) {
+      tot.classList.toggle('right', tbTotalRight('d') && tbTotalRight('c'));
+      tot.classList.toggle('wrong', (String(w2.tbt.d || '').trim() !== '' || String(w2.tbt.c || '').trim() !== '') &&
+        !(tbTotalRight('d') && tbTotalRight('c')));
+    }
+
+    refreshInstr();
     renderControls();
-    var first = $('solve').querySelector('.doc-je.graded-bad, .ws-field.wrong');
+    var first = $('solve').querySelector('.doc-je.graded-bad, .ta-box.wrong, .tbf-row.wrong');
     if (first) first.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
   }
 
@@ -3373,7 +3623,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       if (!sel) return;
       w2.fx[sel.getAttribute('data-a2') + '.k'] = sel.value;
       refreshDoc(sel.getAttribute('data-a2').split('.')[0]);
-      saveWork2(); renderControls();
+      saveWork2(); refreshInstr(); renderControls();
     });
 
     host.addEventListener('input', function (e) {
@@ -3382,23 +3632,43 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         var el = d || c, key = el.getAttribute(d ? 'data-d2' : 'data-c2');
         var col = d ? 'd' : 'c', other = d ? 'c' : 'd';
         w2.fx[key + '.' + col] = el.value;
-        // An amount belongs in one column. Typing in one clears the other.
         var twin = host.querySelector('[data-' + other + '2="' + key + '"]');
         if (el.value && twin && twin.value) { twin.value = ''; w2.fx[key + '.' + other] = ''; }
         if (twin) twin.classList.toggle('muted', !!el.value);
         el.classList.remove('muted');
         refreshDoc(key.split('.')[0]);
-        saveWork2(); renderControls();
+        saveWork2(); refreshInstr(); renderControls();
         return;
       }
-      var f = e.target.closest('[data-fld2]');
-      if (!f) return;
-      w2.fld[f.getAttribute('data-fld2')] = f.value;
-      var box = f.closest('.ws-field');
-      box.classList.remove('right', 'wrong');
-      var bad = box.querySelector('.ws-note.bad');
-      if (bad) bad.remove();
-      saveWork2(); renderControls();
+      var b = e.target.closest('[data-bal]');
+      if (b) {
+        var bk = b.getAttribute('data-bal');
+        w2.bal[bk] = b.value;
+        var box = host.querySelector('[data-acct="' + bk + '"]');
+        if (box) {
+          box.classList.remove('right', 'wrong');
+          var stale = box.querySelector('.ws-note.bad');
+          if (stale) stale.remove();
+        }
+        saveWork2(); refreshInstr(); renderControls();
+        return;
+      }
+      var t = e.target.closest('[data-tb]');
+      if (t) {
+        var tk = t.getAttribute('data-tb');
+        w2.tb[tk] = t.value;
+        var row = host.querySelector('[data-tbrow="' + tk.split('.')[0] + '"]');
+        if (row) row.classList.remove('right', 'wrong');
+        refreshTb(); saveWork2(); refreshInstr(); renderControls();
+        return;
+      }
+      var tt = e.target.closest('[data-tbt]');
+      if (tt) {
+        w2.tbt[tt.getAttribute('data-tbt')] = tt.value;
+        var totRow = host.querySelector('.tbf-tot');
+        if (totRow) totRow.classList.remove('right', 'wrong');
+        refreshTb(); saveWork2(); refreshInstr(); renderControls();
+      }
     });
 
     host.addEventListener('click', function (e) {
@@ -3407,13 +3677,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         var ji = p.getAttribute('data-post');
         if (!canPost(ji)) return;
         w2.posted[ji] = 1;
-        saveWork2(); renderSolve2(); refreshRegister(); renderControls();
+        saveWork2(); renderSolve2(); renderControls();
         return;
       }
       var u = e.target.closest('[data-unpost]');
       if (u) {
         delete w2.posted[u.getAttribute('data-unpost')];
-        saveWork2(); renderSolve2(); refreshRegister(); renderControls();
+        saveWork2(); renderSolve2(); renderControls();
         return;
       }
       var h = e.target.closest('[data-hint2]');
@@ -3424,16 +3694,23 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         paintHint2(key); saveWork2();
         return;
       }
-      var fh = e.target.closest('[data-fhint2]');
-      if (fh) {
-        var fi = fh.getAttribute('data-fhint2');
-        w2.hint['f' + fi] = Math.min((w2.hint['f' + fi] || 0) + 1, FIELDS2[Number(fi)].hints.length);
-        paintHint2('f' + fi); saveWork2();
+      var bh = e.target.closest('[data-bhint]');
+      if (bh) {
+        var bk = 'b' + bh.getAttribute('data-bhint');
+        w2.hint[bk] = Math.min((w2.hint[bk] || 0) + 1, 3);
+        paintHint2(bk); saveWork2();
+        return;
+      }
+      var th = e.target.closest('[data-thint]');
+      if (th) {
+        var tk = 't' + th.getAttribute('data-thint');
+        w2.hint[tk] = Math.min((w2.hint[tk] || 0) + 1, 3);
+        paintHint2(tk); saveWork2();
         return;
       }
       if (e.target.closest('#ws-reset2')) {
-        if (!window.confirm('Clear every voucher, posting and hint?')) return;
-        w2.fx = {}; w2.fld = {}; w2.hint = {}; w2.posted = {};
+        if (!window.confirm('Clear every voucher, posting, balance and hint?')) return;
+        w2.fx = {}; w2.hint = {}; w2.posted = {}; w2.bal = {}; w2.tb = {}; w2.tbt = {};
         saveWork2(); renderSolve2(); renderControls();
       }
     });

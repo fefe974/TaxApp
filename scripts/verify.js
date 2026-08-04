@@ -609,47 +609,61 @@ function check(name, ok, detail) {
     posting.down.length === 1 && /Cash/.test(posting.down[0]) && /2,000/.test(posting.down[0]),
     JSON.stringify(posting.down));
 
-  // The 2.2 worksheet, as a ledger package.
+  // The 2.2 worksheet follows the comprehensive problem's own instructions:
+  // (a) journalize, (b) post to the ledger accounts, (c) prepare a trial
+  // balance. All three are the learner's work.
   await k.goto(FILE + '#lo22');
   await k.waitForTimeout(400);
   await k.click('#tab-solve');
   await k.waitForTimeout(400);
+
   const ws2 = await k.evaluate(() => ({
+    instr: [...document.querySelectorAll('.instr-row')].map(r => ({
+      k: r.querySelector('.instr-k').textContent.trim(),
+      t: r.querySelector('.instr-t').textContent.trim(),
+      n: r.querySelector('.instr-n').textContent.trim()
+    })),
     vouchers: document.querySelectorAll('.doc-je').length,
     lines: document.querySelectorAll('[data-a2]').length,
-    fields: document.querySelectorAll('[data-field2]').length,
-    // Accounts are addressed by number, the way a chart of accounts is.
-    firstOpt: document.querySelector('[data-a2="0.0"]').options[1].textContent.trim(),
+    tbRows: document.querySelectorAll('[data-tbrow]').length,
+    ledger: document.querySelectorAll('[data-acct]').length,
     numbered: [...document.querySelector('[data-a2="0.0"]').options].slice(1)
       .every(o => /^\d{3}\s/.test(o.textContent.trim())),
-    prefilled: [...document.querySelectorAll('.gl-amt')].filter(e => e.value).length,
-    postDisabled: [...document.querySelectorAll('[data-post]')].every(b => b.disabled),
-    pills: [...new Set([...document.querySelectorAll('.pill')].map(p => p.textContent.trim()))],
     score: document.getElementById('ws-score').textContent,
     x: (() => { const s = document.querySelector('#pane-solve .scroll'); return s.scrollWidth - s.clientWidth; })()
   }));
-  check('the journal has a voucher per transaction and a line per posting',
-    ws2.vouchers === 11 && ws2.lines === 23 && ws2.fields === 4,
-    `vouchers=${ws2.vouchers} lines=${ws2.lines} fields=${ws2.fields}`);
-  check('accounts are selected by number and name', ws2.numbered && /^101\s+Cash$/.test(ws2.firstOpt), ws2.firstOpt);
-  check('the journal starts blank with every voucher in draft',
-    ws2.prefilled === 0 && ws2.pills.join() === 'Draft' && /0 of 15/.test(ws2.score),
-    ws2.pills.join('/') + ' ' + ws2.score);
-  check('nothing can be posted before anything is entered', ws2.postDisabled);
-  check('the journal does not overflow at 390px', ws2.x <= 0, '+' + ws2.x);
+  check('the three instructions of the problem are stated and tracked',
+    ws2.instr.length === 3 &&
+    /Journalize the July transactions/.test(ws2.instr[0].t) &&
+    /Post to the ledger accounts/.test(ws2.instr[1].t) &&
+    /Prepare a trial balance at July 31/.test(ws2.instr[2].t),
+    ws2.instr.map(i => i.k + i.t).join(' | '));
+  check('each instruction carries its own progress, all starting at zero',
+    ws2.instr.map(i => i.n).join(' ') === '0/11 0/11 0/13',
+    ws2.instr.map(i => i.n).join(' '));
+  check('(a) has a voucher per transaction and a line per posting',
+    ws2.vouchers === 11 && ws2.lines === 23, `vouchers=${ws2.vouchers} lines=${ws2.lines}`);
+  check('(b) starts with an empty ledger — nothing is posted for the learner',
+    ws2.ledger === 0, 'accounts=' + ws2.ledger);
+  check('(c) is a full trial balance form over the whole chart of accounts',
+    ws2.tbRows === 16, 'rows=' + ws2.tbRows);
+  check('accounts are addressed by number', ws2.numbered);
+  check('the whole problem is worth 35 marks', /0 of 35/.test(ws2.score), ws2.score);
+  check('the worksheet does not overflow at 390px', ws2.x <= 0, '+' + ws2.x);
 
-  // A half-entered voucher reports what it is out by, and stays unpostable.
+  // (a) Post is gated on balance, and only on balance.
   await k.selectOption('[data-a2="0.0"]', 'cash');
   await k.fill('[data-d2="0.0"]', '12000');
+  await k.selectOption('[data-a2="0.1"]', 'cs');
+  await k.fill('[data-c2="0.1"]', '10000');
   await k.waitForTimeout(200);
-  const half = await k.evaluate(() => ({
+  const lop = await k.evaluate(() => ({
+    post: document.querySelector('[data-post="0"]').disabled,
     off: document.querySelector('[data-tx2="0"] .gl-off').textContent.replace(/\s+/g, ' ').trim(),
-    pill: document.querySelector('[data-tx2="0"] .pill').textContent.trim(),
-    post: document.querySelector('[data-post="0"]').disabled
+    complete: [...document.querySelectorAll('[data-tx2="0"] .gl-acct')].every(s => s.value)
   }));
-  check('a one-sided voucher says how far out of balance it is',
-    /Out of balance/.test(half.off) && /12,000/.test(half.off), half.off);
-  check('and cannot be posted', half.post && half.pill === 'Out of balance', half.pill);
+  check('a complete but unbalanced voucher is blocked from posting',
+    lop.complete && lop.post && /\$2,000/.test(lop.off), JSON.stringify(lop));
 
   // The debit and credit columns are mutually exclusive.
   await k.fill('[data-c2="0.0"]', '500');
@@ -663,119 +677,123 @@ function check(name, ok, detail) {
     excl.dr === '' && excl.cr === '500' && excl.muted, JSON.stringify(excl));
   await k.fill('[data-c2="0.0"]', '');
   await k.fill('[data-d2="0.0"]', '12000');
-
-  // Both lines complete but the amounts disagree. Post has to stay blocked
-  // for that reason alone — an incomplete line would block it anyway and
-  // would not prove the balance rule is being applied.
-  await k.selectOption('[data-a2="0.1"]', 'cs');
-  await k.fill('[data-c2="0.1"]', '10000');
-  await k.waitForTimeout(200);
-  const lop = await k.evaluate(() => ({
-    post: document.querySelector('[data-post="0"]').disabled,
-    off: document.querySelector('[data-tx2="0"] .gl-off').textContent.replace(/\s+/g, ' ').trim(),
-    complete: [...document.querySelectorAll('[data-tx2="0"] .gl-acct')].every(s => s.value)
-  }));
-  check('a complete but unbalanced voucher is blocked from posting',
-    lop.complete && lop.post && /\$2,000/.test(lop.off), JSON.stringify(lop));
-
-  // Balanced: the software allows the post.
   await k.fill('[data-c2="0.1"]', '12000');
   await k.waitForTimeout(200);
-  const bal = await k.evaluate(() => ({
-    pill: document.querySelector('[data-tx2="0"] .pill').textContent.trim(),
-    post: document.querySelector('[data-post="0"]').disabled,
-    off: document.querySelector('[data-tx2="0"] .gl-off').classList.contains('ok')
-  }));
-  check('a balanced voucher becomes postable', !bal.post && bal.pill === 'Balanced' && bal.off, JSON.stringify(bal));
+  check('a balanced voucher becomes postable',
+    !(await k.evaluate(() => document.querySelector('[data-post="0"]').disabled)));
+
+  // (b) Posting is what puts amounts in the ledger, on the side the entry set.
   await k.click('[data-post="0"]');
   await k.waitForTimeout(300);
-  const posted = await k.evaluate(() => ({
-    pill: document.querySelector('[data-tx2="0"] .pill').textContent.trim(),
-    locked: document.querySelector('[data-a2="0.0"]').disabled,
-    readonly: document.querySelector('[data-d2="0.0"]').readOnly,
-    reg: document.querySelector('.sw-panel-hd span').textContent.trim(),
-    counts: [...document.querySelectorAll('.sw-count b')].map(b => b.textContent)
-  }));
-  check('posting locks the voucher and moves it into the register',
-    posted.pill === 'Posted' && posted.locked && posted.readonly && /1 of 11/.test(posted.reg),
-    JSON.stringify(posted));
-  check('the toolbar counts unposted and posted', posted.counts.join('/') === '10/1', posted.counts.join('/'));
+  const led = await k.evaluate(() => {
+    const boxes = [...document.querySelectorAll('[data-acct]')];
+    const cash = document.querySelector('[data-acct="cash"]');
+    return {
+      accounts: boxes.map(b => b.getAttribute('data-acct')),
+      cashDr: cash.querySelector('.ta-side.d').textContent.replace(/\s+/g, ' ').trim(),
+      cashCr: cash.querySelector('.ta-side.c').textContent.trim(),
+      balBlank: cash.querySelector('[data-bal="cash"]').value,
+      instrB: document.querySelectorAll('.instr-n')[1].textContent.trim()
+    };
+  });
+  check('posting puts the amounts into the ledger, and only the accounts used',
+    led.accounts.join() === 'cash,cs', led.accounts.join());
+  check('each amount lands on the side the voucher put it',
+    /12,000/.test(led.cashDr) && led.cashCr === '', `dr=${led.cashDr} cr=${led.cashCr}`);
+  check('the balance is left for the learner to foot',
+    led.balBlank === '' && led.instrB === '0/11', led.balBlank + ' ' + led.instrB);
 
-  // The lesson the guide states, met first-hand: the software will post a
-  // balanced entry that uses entirely the wrong accounts, and the register
-  // still reports debits equal to credits.
-  await k.selectOption('[data-a2="1.0"]', 'supx');       // should be Equipment
-  await k.fill('[data-d2="1.0"]', '8000');
-  await k.selectOption('[data-a2="1.1"]', 'ap');
-  await k.fill('[data-c2="1.1"]', '6000');
-  await k.selectOption('[data-a2="1.2"]', 'cash');
-  await k.fill('[data-c2="1.2"]', '2000');
-  await k.waitForTimeout(250);
-  const wrongOk = await k.evaluate(() => document.querySelector('[data-post="1"]').disabled);
-  check('a balanced but wrong voucher is still postable, as in real software', !wrongOk);
-  await k.click('[data-post="1"]');
-  await k.waitForTimeout(300);
-  const reg2 = await k.evaluate(() => ({
-    verdict: document.querySelector('.sw-panel .verdict').textContent.replace(/\s+/g, ' ').trim(),
-    ok: document.querySelector('.sw-panel .verdict').classList.contains('ok')
-  }));
-  check('and the register still says debits equal credits',
-    reg2.ok && /does not make them the right accounts/.test(reg2.verdict), reg2.verdict.slice(0, 90));
+  // A balance that is right for the learner's own ledger points upstream.
+  await k.fill('[data-bal="cash"]', '12000');
   await k.click('#btn-check');
   await k.waitForTimeout(250);
-  const caught = await k.evaluate(() => ({
-    flagged: document.querySelector('[data-tx2="1"]').classList.contains('graded-bad'),
-    note: (document.querySelector('[data-note2="1"]') || {}).textContent || ''
+  const upstream = await k.evaluate(() => ({
+    wrong: document.querySelector('[data-acct="cash"]').classList.contains('wrong'),
+    note: (document.querySelector('[data-bnote="cash"]') || {}).textContent || ''
   }));
-  check('but Check my work catches the wrong account the register could not',
-    caught.flagged && /at least one account is wrong/.test(caught.note), caught.note.trim().slice(0, 80));
+  check('a balance correct for an incomplete ledger is marked wrong',
+    upstream.wrong);
+  check('and the diagnosis points at the ledger rather than the arithmetic',
+    /correct balance for your ledger/.test(upstream.note), upstream.note.trim().slice(0, 70));
 
-  // Unposting returns a voucher to draft.
-  await k.click('[data-unpost="1"]');
-  await k.waitForTimeout(300);
-  const un = await k.evaluate(() => ({
-    locked: document.querySelector('[data-a2="1.0"]').disabled,
-    reg: document.querySelector('.sw-panel-hd span').textContent.trim()
+  // The derived hints speak about the learner's own ledger.
+  await k.click('[data-bhint="cash"]');
+  await k.waitForTimeout(100);
+  await k.click('[data-bhint="cash"]');
+  await k.waitForTimeout(150);
+  const bh = await k.evaluate(() => (document.querySelector('[data-bnote="cash"]') || {}).textContent || '');
+  check('the balance hint quotes the learner\'s own footings',
+    /debits of \$12,000/.test(bh) && /credits of \$0/.test(bh), bh.trim().slice(0, 90));
+
+  // (c) A balance has to go in its normal column, and unused accounts blank.
+  await k.fill('[data-tb="cash.c"]', '5410');            // right figure, wrong column
+  await k.fill('[data-tb="swp.d"]', '0');                // an account with no balance
+  await k.click('#btn-check');
+  await k.waitForTimeout(250);
+  const tb = await k.evaluate(() => ({
+    cashWrong: document.querySelector('[data-tbrow="cash"]').classList.contains('wrong'),
+    swpWrong: document.querySelector('[data-tbrow="swp"]').classList.contains('wrong')
   }));
-  check('unposting reopens the voucher and pulls it back out of the register',
-    !un.locked && /1 of 11/.test(un.reg), JSON.stringify(un));
+  check('a balance in the wrong column is marked wrong', tb.cashWrong);
+  check('an account with no balance must be left blank, not zeroed', tb.swpWrong);
+  await k.fill('[data-tb="cash.c"]', '');
+  await k.fill('[data-tb="swp.d"]', '');
 
-  // Fill every voucher correctly, through the grid.
+  const th = await k.evaluate(async () => {
+    document.querySelector('[data-thint="ap"]').click();
+    document.querySelector('[data-thint="ap"]').click();
+    return (document.querySelector('.tbf-note') || {}).textContent || '';
+  });
+  check('the trial balance hint names the account family and its normal side',
+    /Liability/.test(th) && /credit/.test(th), th.trim().slice(0, 90));
+
+  // Work the whole problem: journalize, post, foot, and write the trial balance.
   const plan2 = await k.evaluate(() => JOURNAL.map((j, ji) => ({
     ji, lines: j.lines.map(l => ({ k: l[0], col: l[1] ? 'd' : 'c', n: l[1] || l[2] }))
   })));
   for (const e of plan2) {
+    const locked = await k.evaluate(ji => !!document.querySelector('[data-unpost="' + ji + '"]'), e.ji);
+    if (locked) await k.click(`[data-unpost="${e.ji}"]`);
     for (let i = 0; i < e.lines.length; i++) {
-      const locked = await k.evaluate(ji => !!document.querySelector('[data-unpost="' + ji + '"]'), e.ji);
-      if (locked) await k.click(`[data-unpost="${e.ji}"]`);
       await k.selectOption(`[data-a2="${e.ji}.${i}"]`, e.lines[i].k);
       await k.fill(`[data-d2="${e.ji}.${i}"]`, '');
       await k.fill(`[data-c2="${e.ji}.${i}"]`, '');
       await k.fill(`[data-${e.lines[i].col}2="${e.ji}.${i}"]`, String(e.lines[i].n));
     }
     await k.click(`[data-post="${e.ji}"]`);
-    await k.waitForTimeout(40);
+    await k.waitForTimeout(30);
   }
-  const ans2 = await k.evaluate(() => {
+  const key = await k.evaluate(() => {
     const f = postedThrough(999);
-    return { cash: balOf(f, 'cash'), ar: balOf(f, 'ar'), ap: balOf(f, 'ap'), tot: trialTotals(f).dr };
+    return {
+      bals: ACCT.filter(a => balOf(f, a.k)).map(a => ({ k: a.k, v: balOf(f, a.k), col: a.up === 'D' ? 'd' : 'c' })),
+      total: trialTotals(f).dr
+    };
   });
-  for (const [id, v] of Object.entries(ans2)) await k.fill(`[data-fld2="${id}"]`, String(v));
+  for (const b of key.bals) await k.fill(`[data-bal="${b.k}"]`, String(b.v));
+  for (const b of key.bals) await k.fill(`[data-tb="${b.k}.${b.col}"]`, String(b.v));
+  await k.fill('[data-tbt="d"]', String(key.total));
+  await k.fill('[data-tbt="c"]', String(key.total));
+  await k.waitForTimeout(200);
+  const proof = await k.evaluate(() => document.getElementById('tb-proof').textContent.replace(/\s+/g, ' ').trim());
+  check('the learner\'s own trial balance columns foot and agree',
+    /agree at \$23,600/.test(proof), proof);
+
   await k.click('#btn-check');
   await k.waitForTimeout(300);
-  const solved2 = await k.evaluate(() => ({
+  const done2 = await k.evaluate(() => ({
     score: document.getElementById('ws-score').textContent,
-    bad: document.querySelectorAll('.doc-je.graded-bad, .ws-field.wrong').length,
-    posted: document.querySelectorAll('[data-unpost]').length,
-    reg: document.querySelector('.sw-panel .tb-tot').textContent.replace(/\s+/g, ' ').trim()
+    instr: [...document.querySelectorAll('.instr-n')].map(e => e.textContent.trim()),
+    allDone: document.querySelectorAll('.instr-row.done').length,
+    bad: document.querySelectorAll('.doc-je.graded-bad, .ta-box.wrong, .tbf-row.wrong').length,
+    posted: document.querySelectorAll('[data-unpost]').length
   }));
-  check('a correctly journalized book scores 15 of 15', /15 of 15/.test(solved2.score), solved2.score);
-  check('every voucher is posted and none is flagged',
-    solved2.posted === 11 && solved2.bad === 0, `posted=${solved2.posted} bad=${solved2.bad}`);
-  // A journal report totals everything journalized; a trial balance totals
-  // net account balances. 34,890 and 23,600 are both right, and different.
-  check('the register foots to the total journalized on both sides',
-    (solved2.reg.match(/34,890/g) || []).length === 2 && /Total journalized/.test(solved2.reg), solved2.reg);
+  check('working the problem through scores 35 of 35', /35 of 35/.test(done2.score), done2.score);
+  check('all three instructions read as complete',
+    done2.instr.join(' ') === '11/11 11/11 13/13' && done2.allDone === 3,
+    done2.instr.join(' ') + ' done=' + done2.allDone);
+  check('nothing is left flagged and every voucher is posted',
+    done2.bad === 0 && done2.posted === 11, `bad=${done2.bad} posted=${done2.posted}`);
 
   const l2 = await k.evaluate(() => {
     const small = [], unnamed = [];
@@ -786,11 +804,12 @@ function check(name, ok, detail) {
     });
     const noLabel = [...document.querySelectorAll('#solve input, #solve select')]
       .filter(e => !e.getAttribute('aria-label') && !(e.labels && e.labels.length)).length;
-    return { small, unnamed, noLabel };
+    return { small, unnamed, noLabel, h1: document.querySelectorAll('h1').length };
   });
-  check('no journal control is under 44px', l2.small.length === 0, l2.small.join(','));
-  check('every journal control has an accessible name',
+  check('no worksheet control is under 44px', l2.small.length === 0, l2.small.join(','));
+  check('every worksheet control has an accessible name',
     l2.unnamed.length === 0 && l2.noLabel === 0, l2.unnamed.join(',') + ' unlabelled=' + l2.noLabel);
+  check('exactly one h1 on the worksheet', l2.h1 === 1, 'found ' + l2.h1);
 
   // Module isolation, measured the way a learner sees it rather than by the
   // shape of what is in localStorage: reading 2.2 must show up as progress in
