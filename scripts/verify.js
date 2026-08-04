@@ -414,6 +414,31 @@ function check(name, ok, detail) {
     hints[0].label === 'Another hint' && hints[2].label === 'No more hints' && hints[2].done,
     hints.map(h => h.label).join(' / '));
 
+  // A hint has to be dismissable, including once it is at its last level —
+  // where the button is otherwise disabled and the note would be permanent.
+  const hintState = () => ws.evaluate(() => ({
+    note: !!document.querySelector('[data-note="1"] .ws-note'),
+    text: (document.querySelector('[data-note="1"] .ws-note') || {}).textContent || '',
+    label: document.querySelector('[data-hint="1"]').textContent.trim(),
+    disabled: document.querySelector('[data-hint="1"]').disabled,
+    closer: !!document.querySelector('[data-note="1"] [data-hclose]')
+  }));
+  const atMax = await hintState();
+  check('an open hint carries a close control', atMax.note && atMax.closer);
+  await ws.click('[data-hclose="1"]');
+  await ws.waitForTimeout(120);
+  const closed = await hintState();
+  check('closing a hint puts it away and re-enables the button',
+    !closed.note && closed.label === 'Show hint' && !closed.disabled, JSON.stringify(closed));
+  await ws.click('[data-hint="1"]');
+  await ws.waitForTimeout(120);
+  const reopened = await hintState();
+  check('re-opening brings back the level already reached, not the first one',
+    reopened.note && reopened.text === atMax.text && reopened.disabled,
+    reopened.text.slice(0, 40));
+  await ws.click('[data-hclose="1"]');
+  await ws.waitForTimeout(120);
+
   // Work survives a reload.
   await ws.reload();
   await ws.waitForTimeout(500);
@@ -421,11 +446,14 @@ function check(name, ok, detail) {
     solving: document.getElementById('pane-solve').classList.contains('on'),
     cash: (document.querySelector('[data-cell="0.cash"]') || {}).value,
     minus: (document.querySelector('[data-cell="1.cash"]') || {}).value,
-    hint: !!document.querySelector('[data-note="1"] .ws-note')
+    hint: !!document.querySelector('[data-note="1"] .ws-note'),
+    hintLabel: document.querySelector('[data-hint="1"]').textContent.trim()
   }));
-  check('the working paper reopens with its cells and hints intact',
-    restored.solving && restored.cash === '10000' && restored.minus === '-800' && restored.hint,
+  check('the working paper reopens with its cells intact',
+    restored.solving && restored.cash === '10000' && restored.minus === '-800',
     JSON.stringify(restored));
+  check('a hint that was closed stays closed across a reload',
+    !restored.hint && restored.hintLabel === 'Show hint', JSON.stringify(restored));
 
   // Fill the whole paper correctly and report the five figures.
   const { keys, plan } = await ws.evaluate(() => ({
@@ -746,6 +774,36 @@ function check(name, ok, detail) {
   });
   check('the trial balance hint names the account family and its normal side',
     /Liability/.test(th) && /credit/.test(th), th.trim().slice(0, 90));
+
+  // Every hint surface in 2.2 closes too: vouchers, ledger balances and
+  // trial balance rows.
+  const closable = await k.evaluate(() => {
+    const shut = sel => {
+      const x = document.querySelector(sel + ' [data-hclose]') ||
+                document.querySelector('[data-hclose="' + sel + '"]');
+      if (x) x.click();
+    };
+    const before = {
+      voucher: !!document.querySelector('[data-note2="0"] .ws-note'),
+      balance: !!document.querySelector('[data-bnote="cash"] .ws-note'),
+      tbrow: !!document.querySelector('.tbf-note .ws-note')
+    };
+    document.querySelectorAll('[data-hclose]').forEach(b => b.click());
+    return {
+      before,
+      after: {
+        voucher: !!document.querySelector('[data-note2="0"] .ws-note'),
+        balance: !!document.querySelector('[data-bnote="cash"] .ws-note'),
+        tbrow: !!document.querySelector('.tbf-note .ws-note')
+      },
+      // The icon-only buttons stop showing their open state.
+      lit: document.querySelectorAll('#solve .ws-hint.sm.on').length
+    };
+  });
+  check('every kind of hint in 2.2 can be closed',
+    closable.before.balance && closable.before.tbrow &&
+    !closable.after.voucher && !closable.after.balance && !closable.after.tbrow &&
+    closable.lit === 0, JSON.stringify(closable));
 
   // Work the whole problem: journalize, post, foot, and write the trial balance.
   const plan2 = await k.evaluate(() => JOURNAL.map((j, ji) => ({

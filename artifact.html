@@ -985,7 +985,20 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   margin-top: 11px; padding: 11px 13px;
   border-radius: var(--r-md); font-size: 13.5px; line-height: 1.5;
 }
-.ws-note.tip { background: var(--amber-soft); border: 1px solid var(--amber-line); color: var(--amber-ink); }
+.ws-note.tip {
+  position: relative; padding-right: 46px;
+  background: var(--amber-soft); border: 1px solid var(--amber-line); color: var(--amber-ink);
+}
+.tip-x {
+  position: absolute; top: 50%; right: 2px; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  color: var(--amber); opacity: 0.75;
+}
+.tip-x svg { width: 15px; height: 15px; }
+.tip-x:hover, .tip-x:focus-visible { opacity: 1; }
+/* The icon-only hint buttons show whether their hint is open. */
+.ws-hint.sm.on { background: var(--amber-soft); border-color: var(--amber-line); }
 .ws-note.bad { background: var(--bad-soft); border: 1px solid var(--bad-line); color: var(--text-dim); }
 
 .ws-fields { display: grid; gap: 14px; }
@@ -2511,7 +2524,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
      the statements need. The workpaper in the middle is built from what
      the learner typed, not from the answer key, so a wrong entry shows up
      as an out-of-balance total before anything is graded. */
-  var work = { fx: {}, fld: {}, hint: {} };
+  var work = { cell: {}, fld: {}, hint: {}, shut: {} };
   var KEY = totalsUpTo(999);          // the column totals a correct sheet reaches
 
   function loadWork() {
@@ -2521,6 +2534,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         work.cell = w.cell || {};
         work.fld = w.fld || {};
         work.hint = w.hint || {};
+        work.shut = w.shut || {};
       }
     } catch (e) { /* private mode: run without persistence */ }
   }
@@ -2536,6 +2550,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     return Number(c);
   }
   function motionOK() { return !reduceMotion(); }
+
+  /* A hint can always be put away again. Closing keeps the level, so the
+     button re-opens it rather than losing the learner's place. */
+  function tipHtml(key, text) {
+    return '<div class="ws-note tip"><span>' + text + '</span>' +
+      '<button type="button" class="tip-x" data-hclose="' + key + '" aria-label="Close hint">' + ICON.x + '</button></div>';
+  }
 
   /* Hint keys are the row index, or 'f' + field index. */
   function paintHint(key) {
@@ -2559,14 +2580,24 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       btn = host.querySelector('[data-hint="' + key + '"]');
     }
     if (!slot || !text) return;
-    slot.innerHTML = '<div class="ws-note tip">' + text + '</div>';
+    var shut = !!work.shut[key];
+    slot.innerHTML = shut ? '' : tipHtml(key, text);
     if (!btn) return;
-    btn.innerHTML = ICON.bulb + (lvl >= max ? 'No more hints' : 'Another hint');
-    btn.disabled = lvl >= max;
+    btn.classList.toggle('on', !shut);
+    btn.innerHTML = ICON.bulb + (shut ? 'Show hint' : (lvl >= max ? 'No more hints' : 'Another hint'));
+    btn.disabled = !shut && lvl >= max;
   }
 
+  /* Pressing Hint on a closed hint brings it back at the level already
+     reached; pressing it on an open one goes a level deeper. */
   function bumpHint(key, max) {
-    work.hint[key] = Math.min((work.hint[key] || 0) + 1, max);
+    if (work.shut[key]) delete work.shut[key];
+    else work.hint[key] = Math.min((work.hint[key] || 0) + 1, max);
+    paintHint(key);
+    saveWork();
+  }
+  function shutHint(key) {
+    work.shut[key] = 1;
     paintHint(key);
     saveWork();
   }
@@ -2809,13 +2840,15 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         if (row) { row.scrollIntoView({ behavior: motionOK() ? 'smooth' : 'auto', block: 'center' }); row.focus(); }
         return;
       }
+      var x = e.target.closest('[data-hclose]');
+      if (x) { shutHint(x.getAttribute('data-hclose')); return; }
       var h = e.target.closest('[data-hint]');
       if (h) { bumpHint(h.getAttribute('data-hint'), WORK_HINTS[LEDGER[Number(h.getAttribute('data-hint'))].id].length); return; }
       var fh = e.target.closest('[data-fhint]');
       if (fh) { bumpHint('f' + fh.getAttribute('data-fhint'), WORK_FIELDS[Number(fh.getAttribute('data-fhint'))].hints.length); return; }
       if (e.target.closest('#ws-reset')) {
         if (!window.confirm('Clear every answer and hint on this working paper?')) return;
-        work.cell = {}; work.fld = {}; work.hint = {};
+        work.cell = {}; work.fld = {}; work.hint = {}; work.shut = {};
         saveWork(); renderSolve(); renderControls();
       }
     });
@@ -3101,13 +3134,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
           'Debit Dividends 600. Credit Cash 600.']
   };
 
-  var w2 = { fx: {}, hint: {}, posted: {}, bal: {}, tb: {}, tbt: {} };
+  var w2 = { fx: {}, hint: {}, shut: {}, posted: {}, bal: {}, tb: {}, tbt: {} };
 
   function loadWork2() {
     try {
       var w = JSON.parse(window.localStorage.getItem(STORE + '.work2') || '{}');
       if (w && typeof w === 'object') {
-        w2.fx = w.fx || {}; w2.hint = w.hint || {}; w2.posted = w.posted || {};
+        w2.fx = w.fx || {}; w2.hint = w.hint || {}; w2.shut = w.shut || {}; w2.posted = w.posted || {};
         w2.bal = w.bal || {}; w2.tb = w.tb || {}; w2.tbt = w.tbt || {};
       }
     } catch (e) { /* private mode: run without persistence */ }
@@ -3152,11 +3185,28 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       btn = host.querySelector('[data-hint2="' + key + '"]');
     }
     if (!slot || !text) return;
-    slot.innerHTML = '<div class="ws-note tip">' + text + '</div>';
+    var shut = !!w2.shut[key];
+    slot.innerHTML = shut ? '' : tipHtml(key, text);
     if (!btn) return;
+    btn.classList.toggle('on', !shut);
     // The compact buttons beside a balance or a trial balance row are icon-only.
-    if (!btn.classList.contains('sm')) btn.innerHTML = ICON.bulb + (lvl >= max ? 'No more hints' : 'Another hint');
-    btn.disabled = lvl >= max;
+    if (!btn.classList.contains('sm')) {
+      btn.innerHTML = ICON.bulb + (shut ? 'Show hint' : (lvl >= max ? 'No more hints' : 'Another hint'));
+    }
+    btn.disabled = !shut && lvl >= max;
+  }
+
+  /* Same rule as module 2.1: closed re-opens, open goes deeper. */
+  function bump2(key, max) {
+    if (w2.shut[key]) delete w2.shut[key];
+    else w2.hint[key] = Math.min((w2.hint[key] || 0) + 1, max);
+    paintHint2(key);
+    saveWork2();
+  }
+  function shut2(key) {
+    w2.shut[key] = 1;
+    paintHint2(key);
+    saveWork2();
   }
 
   /* ---------- module 2.2 worksheet: the problem's own instructions ----------
@@ -3669,31 +3719,21 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         saveWork2(); renderSolve2(); renderControls();
         return;
       }
+      var x = e.target.closest('[data-hclose]');
+      if (x) { shut2(x.getAttribute('data-hclose')); return; }
       var h = e.target.closest('[data-hint2]');
       if (h) {
         var key = h.getAttribute('data-hint2');
-        var max = (HINTS2[JOURNAL[Number(key)].id] || []).length;
-        w2.hint[key] = Math.min((w2.hint[key] || 0) + 1, max);
-        paintHint2(key); saveWork2();
+        bump2(key, (HINTS2[JOURNAL[Number(key)].id] || []).length);
         return;
       }
       var bh = e.target.closest('[data-bhint]');
-      if (bh) {
-        var bk = 'b' + bh.getAttribute('data-bhint');
-        w2.hint[bk] = Math.min((w2.hint[bk] || 0) + 1, 3);
-        paintHint2(bk); saveWork2();
-        return;
-      }
+      if (bh) { bump2('b' + bh.getAttribute('data-bhint'), 3); return; }
       var th = e.target.closest('[data-thint]');
-      if (th) {
-        var tk = 't' + th.getAttribute('data-thint');
-        w2.hint[tk] = Math.min((w2.hint[tk] || 0) + 1, 3);
-        paintHint2(tk); saveWork2();
-        return;
-      }
+      if (th) { bump2('t' + th.getAttribute('data-thint'), 3); return; }
       if (e.target.closest('#ws-reset2')) {
         if (!window.confirm('Clear every voucher, posting, balance and hint?')) return;
-        w2.fx = {}; w2.hint = {}; w2.posted = {}; w2.bal = {}; w2.tb = {}; w2.tbt = {};
+        w2.fx = {}; w2.hint = {}; w2.shut = {}; w2.posted = {}; w2.bal = {}; w2.tb = {}; w2.tbt = {};
         saveWork2(); renderSolve2(); renderControls();
       }
     });
