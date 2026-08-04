@@ -1,4 +1,4 @@
-<title>Speedy Delivery Inc. · Accounting workflow</title>
+<title>Financial Accounting &middot; Chapter 2</title>
 <style>
 /* ============================================================
    Type. Self-hosted and inlined: the artifact CSP blocks font
@@ -719,6 +719,182 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 }
 
 
+/* ---------- module switcher ---------- */
+.mod-btn {
+  flex: 1; min-width: 0; text-align: left;
+  display: flex; align-items: center; gap: 9px;
+  padding: 2px 6px 2px 0; border-radius: var(--r-md);
+}
+.mod-btn .mod-txt { flex: 1; min-width: 0; }
+.mod-btn b, .mod-btn .mod-txt > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mod-btn b { display: block; font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.mod-btn span { display: block; font-size: 12px; font-weight: 500; opacity: 0.82; }
+.mod-btn svg { flex: 0 0 auto; width: 16px; height: 16px; opacity: 0.75; }
+
+.sheet {
+  position: fixed; inset: 0; z-index: 60;
+  display: none; align-items: flex-end; justify-content: center;
+  background: rgba(12, 14, 20, 0.45);
+}
+.sheet.on { display: flex; }
+.sheet-inner {
+  width: 100%; max-width: 560px;
+  background: var(--bg);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: 8px 14px calc(16px + env(safe-area-inset-bottom));
+  box-shadow: var(--shadow-lg);
+  animation: sheet-up 220ms var(--ease-out);
+  max-height: 88dvh; overflow: auto;
+}
+@keyframes sheet-up { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sheet-grab { width: 36px; height: 4px; border-radius: 2px; background: var(--line-strong); margin: 6px auto 12px; }
+.sheet-cap {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin: 4px 4px 10px;
+}
+.mod-card {
+  display: grid; gap: 5px; width: 100%; text-align: left;
+  padding: 14px 15px; margin-bottom: 9px;
+  border-radius: var(--r-lg); border: 1px solid var(--line);
+  background: var(--surface); box-shadow: var(--shadow-sm);
+}
+.mod-card.on { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+.mod-card i {
+  font-style: normal; font-family: var(--mono);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--brand); text-transform: uppercase;
+}
+.mod-card b { font-size: 15px; font-weight: 700; }
+.mod-card span { font-size: 13px; color: var(--text-dim); line-height: 1.45; }
+.mod-card em { font-style: normal; font-size: 11.5px; color: var(--muted); font-family: var(--mono); }
+
+/* ---------- the debit and credit board ----------
+   The one picture the whole of this module rests on: which side of an
+   account an increase lands. */
+.rule-b { display: flex; gap: 8px; align-items: stretch; }
+.rule-col {
+  flex: 1; min-width: 0;
+  border-radius: var(--r-md); border: 1px solid;
+  padding: 10px 11px; display: grid; gap: 7px; align-content: start;
+}
+.rule-col.d { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
+.rule-col.c { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.rule-hd { display: grid; gap: 1px; }
+.rule-hd b { font-size: 12.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.rule-hd span { font-size: 10.5px; opacity: 0.8; }
+.rule-fams { display: grid; gap: 3px; }
+.rule-fam {
+  display: flex; align-items: center; justify-content: space-between; gap: 7px;
+  padding: 4px 7px; border-radius: var(--r-sm);
+  font-size: 11.5px; font-weight: 600;
+  border: 1px dashed transparent;
+}
+.rule-fam u { text-decoration: none; }
+.rule-fam em { font-style: normal; font-family: var(--mono); font-weight: 800; }
+.rule-fam.on { background: var(--surface); border-color: currentColor; border-style: solid; font-weight: 750; }
+.rule-hit { display: grid; gap: 3px; margin-top: 2px; }
+.rule-acct {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 6px;
+  flex-wrap: wrap;
+  padding: 5px 8px; border-radius: var(--r-sm);
+  background: var(--surface); border: 1px solid currentColor;
+  font-size: 11.5px; font-weight: 650;
+}
+.rule-acct b { font-family: var(--mono); font-weight: 800; font-variant-numeric: tabular-nums; }
+.rule-acct em { font-style: normal; font-weight: 800; }
+.rule-acct.down { border-style: dashed; }
+.rule-acct.down em { color: var(--bad); }
+
+/* ---------- a journal entry in proper form ---------- */
+.je {
+  border-radius: var(--r-md); border: 1px solid var(--line-strong);
+  background: var(--surface); overflow: hidden;
+}
+.je-bar {
+  padding: 7px 12px; background: var(--head-bar); color: var(--head-ink);
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.je-grid { padding: 10px 12px 12px; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.je-head {
+  display: grid; grid-template-columns: 54px 1fr 62px 62px; gap: 6px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--muted); padding-bottom: 5px; border-bottom: 1px solid var(--line-strong);
+}
+.je-head span:nth-child(3), .je-head span:nth-child(4) { text-align: right; }
+.je-row {
+  display: grid; grid-template-columns: 54px 1fr 62px 62px; gap: 6px;
+  padding: 4px 0; color: var(--text-dim);
+}
+.je-row .je-amt { text-align: right; white-space: nowrap; }
+.je-row.cr .je-acct { padding-left: 16px; }         /* credits are indented */
+.je-row.on { color: var(--text); font-weight: 700; }
+.je-note { font-family: var(--font); font-size: 11.5px; color: var(--muted); padding: 6px 0 0 54px; line-height: 1.45; }
+
+/* ---------- T-accounts ---------- */
+.tas { display: grid; gap: 10px; }
+@media (min-width: 560px) { .tas.two { grid-template-columns: 1fr 1fr; } }
+.ta { display: grid; gap: 0; }
+.ta-name {
+  text-align: center; font-size: 12px; font-weight: 750;
+  padding-bottom: 4px; border-bottom: 1.5px solid var(--text);
+}
+.ta-body { display: grid; grid-template-columns: 1fr 1fr; }
+.ta-side { padding: 6px 8px; display: grid; gap: 3px; align-content: start; min-height: 46px; }
+.ta-side.d { border-right: 1.5px solid var(--text); }
+.ta-line {
+  display: flex; justify-content: space-between; gap: 8px;
+  font-family: var(--mono); font-size: 11.5px; font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+.ta-line u { text-decoration: none; color: var(--muted); font-size: 10.5px; }
+.ta-line.fresh { color: var(--brand); font-weight: 800; }
+.ta-bal {
+  display: flex; justify-content: space-between; gap: 8px;
+  margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--line-strong);
+  font-family: var(--mono); font-size: 11.5px; font-weight: 800;
+  font-variant-numeric: tabular-nums; color: var(--good-deep);
+}
+.ta-bal u { text-decoration: none; font-size: 10px; color: var(--muted); font-weight: 700; }
+
+/* Posting: the journal line drops into the side of the T it belongs on. */
+.post-wrap { display: grid; gap: 9px; }
+.post-drop { display: grid; place-items: center; height: 20px; color: var(--brand); }
+.post-drop svg { width: 16px; height: 16px; }
+
+/* ---------- trial balance ---------- */
+.tb { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.tb-hd {
+  display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--muted); padding-bottom: 5px; border-bottom: 1.5px solid var(--line-strong);
+}
+.tb-hd span:not(:first-child) { text-align: right; }
+.tb-row { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 3px 0; color: var(--text-dim); }
+.tb-row span:not(:first-child) { text-align: right; }
+.tb-row.zero { color: var(--muted); opacity: 0.75; }
+.tb-row.on { color: var(--text); font-weight: 700; background: var(--brand-soft); border-radius: 4px; }
+.tb-tot {
+  display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px;
+  margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--line-strong);
+  font-weight: 800; color: var(--text);
+}
+.tb-tot span:not(:first-child) { text-align: right; border-bottom: 3px double var(--line-strong); padding-bottom: 2px; }
+.tb-name { font-family: var(--font); font-size: 12px; }
+
+/* ---------- entry card, module 2.2 ---------- */
+.card-je {
+  display: grid; gap: 3px; padding-top: 8px; border-top: 1px dashed var(--line);
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+.card-je i { font-style: normal; color: var(--muted); }
+.card-je .cr { padding-left: 14px; }
+.card-je span { display: flex; justify-content: space-between; gap: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-inner { animation: none; }
+}
+
 /* ---------- solve it yourself ----------
    Every class is ws-prefixed: the worksheet shares a stylesheet with the
    walkthrough, and a bare `.amt` here would put a `$` glyph in front of
@@ -906,10 +1082,10 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   <header class="appbar">
     <div class="appbar-inner">
       <span class="mark" id="mark"></span>
-      <div class="appbar-title">
-        <b>Speedy Delivery Inc.</b>
-        <span>Nine entries, explained and worked</span>
-      </div>
+      <button class="mod-btn" id="mod-btn" aria-haspopup="dialog">
+        <span class="mod-txt"><b id="mod-name">&nbsp;</b><span id="mod-sub">&nbsp;</span></span>
+        <span id="mod-caret"></span>
+      </button>
       <button class="ghost-btn" id="btn-theme" aria-label="Switch colour theme"></button>
     </div>
   </header>
@@ -935,6 +1111,14 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   <section class="pane" id="pane-solve">
     <div class="scroll"><div id="solve" tabindex="-1"></div></div>
   </section>
+
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Choose a module">
+    <div class="sheet-inner">
+      <div class="sheet-grab"></div>
+      <div class="sheet-cap">Chapter 2 &middot; The accounting information system</div>
+      <div id="mod-list"></div>
+    </div>
+  </div>
 
   <div class="controls">
     <div class="controls-inner">
@@ -1007,6 +1191,7 @@ var ICON = {
   book:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>',
   table:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>',
   pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.4 3.6a2.1 2.1 0 1 1 3 3L7.5 18.5 3 20l1.5-4.5z"/></svg>',
+  chev:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>',
   bulb:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M11 21h2"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .8 1.6h5.4c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg>',
   pulse:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>',
   warn:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
@@ -1378,8 +1563,240 @@ var METHOD = [
   ['Check the equation still holds', '&minus;800 = &minus;800']
 ];
 
+
+/* ============================================================
+   MODULE 2.2 — Kleene Window Washing Inc.
+   Journalize, post, and prepare a trial balance.
+
+   JOURNAL is the only place a figure is written down. The
+   T-accounts and the trial balance are both derived from it, so
+   a posting and a balance cannot disagree.
+   ============================================================ */
+var CO2 = {
+  name: 'Kleene Window Washing Inc.',
+  owner: 'Mike Greenberg',
+  period: 'For the Month Ended July 31, 2025',
+  asAt: 'July 31, 2025'
+};
+
+/* fam drives the debit/credit rules: which side an increase lands on.
+   `up` is the side that increases the account. */
+var ACCT = [
+  { k: 'cash', name: 'Cash',                          fam: 'Asset',     up: 'D' },
+  { k: 'ar',   name: 'Accounts Receivable',           fam: 'Asset',     up: 'D' },
+  { k: 'sup',  name: 'Supplies',                      fam: 'Asset',     up: 'D' },
+  { k: 'ppi',  name: 'Prepaid Insurance',             fam: 'Asset',     up: 'D' },
+  { k: 'eqp',  name: 'Equipment',                     fam: 'Asset',     up: 'D' },
+  { k: 'ap',   name: 'Accounts Payable',              fam: 'Liability', up: 'C' },
+  { k: 'swp',  name: 'Salaries and Wages Payable',    fam: 'Liability', up: 'C' },
+  { k: 'cs',   name: 'Common Stock',                  fam: 'Equity',    up: 'C' },
+  { k: 're',   name: 'Retained Earnings',             fam: 'Equity',    up: 'C' },
+  { k: 'div',  name: 'Dividends',                     fam: 'Dividends', up: 'D' },
+  { k: 'rev',  name: 'Service Revenue',               fam: 'Revenue',   up: 'C' },
+  { k: 'mre',  name: 'Maintenance and Repairs Expense', fam: 'Expense', up: 'D' },
+  { k: 'supx', name: 'Supplies Expense',              fam: 'Expense',   up: 'D' },
+  { k: 'depx', name: 'Depreciation Expense',          fam: 'Expense',   up: 'D' },
+  { k: 'insx', name: 'Insurance Expense',             fam: 'Expense',   up: 'D' },
+  { k: 'swx',  name: 'Salaries and Wages Expense',    fam: 'Expense',   up: 'D' }
+];
+function acct(k) { return ACCT.filter(function (a) { return a.k === k; })[0]; }
+
+/* Each line is [account, debit, credit]. Debits are listed first and
+   credits second, which is the order they are written in. */
+var JOURNAL = [
+  { id: 'j1',  date: 'July 1',  lines: [['cash', 12000, 0], ['cs', 0, 12000]] },
+  { id: 'j2',  date: 'July 1',  lines: [['eqp', 8000, 0], ['ap', 0, 6000], ['cash', 0, 2000]] },
+  { id: 'j3',  date: 'July 3',  lines: [['sup', 900, 0], ['ap', 0, 900]] },
+  { id: 'j4',  date: 'July 5',  lines: [['ppi', 1800, 0], ['cash', 0, 1800]] },
+  { id: 'j5',  date: 'July 12', lines: [['ar', 3700, 0], ['rev', 0, 3700]] },
+  { id: 'j6',  date: 'July 18', lines: [['ap', 1500, 0], ['cash', 0, 1500]] },
+  { id: 'j7',  date: 'July 20', lines: [['swx', 2000, 0], ['cash', 0, 2000]] },
+  { id: 'j8',  date: 'July 21', lines: [['cash', 1600, 0], ['ar', 0, 1600]] },
+  { id: 'j9',  date: 'July 25', lines: [['ar', 2500, 0], ['rev', 0, 2500]] },
+  { id: 'j10', date: 'July 31', lines: [['mre', 290, 0], ['cash', 0, 290]] },
+  { id: 'j11', date: 'July 31', lines: [['div', 600, 0], ['cash', 0, 600]] }
+];
+
+/* Post every journal line through entry index `upto` (999 for all). */
+function postedThrough(upto) {
+  var t = {};
+  ACCT.forEach(function (a) { t[a.k] = { d: 0, c: 0, lines: [] }; });
+  JOURNAL.slice(0, upto + 1).forEach(function (j) {
+    j.lines.forEach(function (l) {
+      t[l[0]].d += l[1];
+      t[l[0]].c += l[2];
+      t[l[0]].lines.push({ id: j.id, date: j.date, d: l[1], c: l[2] });
+    });
+  });
+  return t;
+}
+/* A balance always sits on the account's normal side. */
+function balOf(t, k) {
+  var a = acct(k);
+  return a.up === 'D' ? t[k].d - t[k].c : t[k].c - t[k].d;
+}
+function trialTotals(t) {
+  var dr = 0, cr = 0;
+  ACCT.forEach(function (a) {
+    var b = balOf(t, a.k);
+    if (!b) return;
+    if (a.up === 'D') dr += b; else cr += b;
+  });
+  return { dr: dr, cr: cr };
+}
+function jDebits(j)  { return j.lines.reduce(function (n, l) { return n + l[1]; }, 0); }
+function jCredits(j) { return j.lines.reduce(function (n, l) { return n + l[2]; }, 0); }
+
+var FACTS2 = {
+  j1:  'Issued 12,000 shares of common stock for $12,000 cash.',
+  j2:  'Purchased a used truck for $8,000, paying $2,000 cash and the balance on account.',
+  j3:  'Purchased cleaning supplies for $900 on account.',
+  j4:  'Paid $1,800 cash on a 1-year insurance policy effective July 1.',
+  j5:  'Billed customers $3,700 for cleaning services performed.',
+  j6:  'Paid $1,000 cash on the amount owed on the truck and $500 on the amount owed on cleaning supplies.',
+  j7:  'Paid $2,000 cash for employee salaries.',
+  j8:  'Collected $1,600 cash from customers billed on July 12.',
+  j9:  'Billed customers $2,500 for cleaning services performed.',
+  j10: 'Paid $290 for maintenance of the truck during the month.',
+  j11: 'Declared and paid a $600 cash dividend.'
+};
+
+var ENTRIES2 = [
+  { id: 'j1', short: 'The owners invest',
+    concept: 'Two accounts, two sides, one amount',
+    rule: 'Every entry debits at least one account and credits at least one, for the same total.',
+    why: ['Cash is an asset, and assets increase on the <b>debit</b> side, so Cash is debited $12,000.',
+          'The owners now hold a claim on the business. Common Stock is equity, and equity increases on the <b>credit</b> side.'],
+    take: 'Debit is simply the left side of an account and credit the right. Neither means good or bad.' },
+
+  { id: 'j2', short: 'Buying the truck',
+    concept: 'One debit, two credits',
+    rule: 'A compound entry has more than two lines, and still balances.',
+    why: ['The truck cost $8,000, so <b>Equipment</b> is debited for the full price &mdash; not for the cash paid.',
+          'The payment came from two places: $2,000 of cash left, and $6,000 is owed. Both are credits, and together they equal the single $8,000 debit.'],
+    take: 'The asset is recorded at what it cost, whoever ends up funding it.',
+    trap: { q: 'Only $2,000 of cash actually moved.',
+            bad: { t: 'Dr Equipment 2,000', p: 'Understates the asset by $6,000 and hides a debt the business really owes.' },
+            good: { t: 'Dr Equipment 8,000<br>Cr A/P 6,000, Cr Cash 2,000', p: 'The truck is worth its price. How it was paid for is a separate fact.' } } },
+
+  { id: 'j3', short: 'Supplies on account',
+    concept: 'Something arrives, nothing is paid',
+    rule: 'Supplies are an asset until they are used up.',
+    why: ['Supplies is an asset, so it is debited $900. They are still on the shelf on July 31.',
+          'Nothing was paid, so <b>Accounts Payable</b> is credited: a liability increasing on its normal side.'],
+    take: 'Buying supplies is not an expense. Using them is, and that comes later.' },
+
+  { id: 'j4', short: 'Paying a year of insurance',
+    concept: 'Cash out, but an asset in',
+    rule: 'A payment that buys future benefit is an asset, not an expense.',
+    why: ['The $1,800 buys twelve months of cover starting July 1. On July 31 eleven of those months are still ahead, so the payment bought something the business still holds.',
+          'That is why it is debited to <b>Prepaid Insurance</b>, an asset. Cash is credited because the asset went down.'],
+    take: 'One month of it will become Insurance Expense — but only through an adjusting entry, which is the next module.',
+    trap: { q: 'The cash is gone. Is it an expense?',
+            bad: { t: 'Dr Insurance Expense 1,800', p: 'Charges the whole year to July and wipes out an asset the company owns for eleven more months.' },
+            good: { t: 'Dr Prepaid Insurance 1,800', p: 'The benefit has not been used yet. It is stored on the balance sheet until it is.' } } },
+
+  { id: 'j5', short: 'Billing for work done',
+    concept: 'Earned now, paid later',
+    rule: 'Revenue is recorded when the service is performed.',
+    why: ['The cleaning was done, so the revenue belongs to July. <b>Service Revenue</b> is a revenue account and increases on the credit side.',
+          'No cash arrived, but the business holds a right to collect. That right is an asset: <b>Accounts Receivable</b>, debited $3,700.'],
+    take: 'Billing is the moment of revenue. Collecting is only the cash catching up.' },
+
+  { id: 'j6', short: 'Paying down the payables',
+    concept: 'A liability comes down',
+    rule: 'Settling a debt is not an expense — it removes an obligation.',
+    why: ['$1,000 was owed on the truck and $500 on the supplies. Both sit in the same <b>Accounts Payable</b> account, so one debit of $1,500 clears them.',
+          'A liability decreases on its <em>opposite</em> side, so Accounts Payable is debited. Cash is credited $1,500.'],
+    take: 'Nothing was earned or consumed here. Two balance sheet accounts simply both went down.' },
+
+  { id: 'j7', short: 'Paying the salaries',
+    concept: 'An expense, settled the same day',
+    rule: 'Expenses increase on the debit side, the same as assets.',
+    why: ['Employees worked in July and were paid in July, so the cost belongs to July. <b>Salaries and Wages Expense</b> is debited $2,000.',
+          'Cash is credited. Expenses reduce equity, but the entry never touches an equity account directly &mdash; that is what closing is for.'],
+    take: 'Expense accounts are debited to increase, which surprises people who expect a cost to be a credit.' },
+
+  { id: 'j8', short: 'Collecting from customers',
+    concept: 'Cash arrives, nothing is earned',
+    rule: 'Collecting a receivable is not revenue. The revenue was recorded when the work was billed.',
+    why: ['$1,600 of cash came in, so Cash is debited. But this money was already recorded as revenue on July 12.',
+          '<b>Accounts Receivable</b> is credited to remove the right to collect, now that it has been collected. One asset simply turned into another.'],
+    take: 'Recording revenue again here would count the same $1,600 twice.',
+    trap: { q: 'Cash came in from a customer.',
+            bad: { t: 'Cr Service Revenue 1,600', p: 'Counts the same sale twice: once when billed on July 12, once when collected.' },
+            good: { t: 'Cr Accounts Receivable 1,600', p: 'The revenue is already on the books. This entry only swaps a receivable for cash.' } } },
+
+  { id: 'j9', short: 'Billing again',
+    concept: 'The same shape as July 12',
+    rule: 'Recurring transactions get the same entry every time.',
+    why: ['Another $2,500 of cleaning was performed on account. Accounts Receivable is debited and Service Revenue is credited, exactly as before.'],
+    take: 'Once the pattern for a kind of transaction is settled, it does not need rethinking.' },
+
+  { id: 'j10', short: 'Truck maintenance',
+    concept: 'A cost consumed on the spot',
+    rule: 'Repairs keep an asset running; they do not create a new one.',
+    why: ['The $290 kept the truck working during July, and that benefit is gone at month end. It is debited to <b>Maintenance and Repairs Expense</b>.',
+          'Cash is credited. Compare this with the $8,000 truck itself, which will serve for years and stays an asset.'],
+    take: 'The question is always how long the benefit lasts, not how the money left.' },
+
+  { id: 'j11', short: 'Paying a dividend',
+    concept: 'Profit handed out, not a cost of earning it',
+    rule: 'A dividend is a distribution to owners. It is never an expense.',
+    why: ['<b>Dividends</b> is debited $600 and Cash credited. Dividends reduce equity, so like expenses it increases on the debit side.',
+          'It is kept in its own account rather than lumped with expenses, because it never belongs on the income statement.'],
+    take: 'Expenses help produce revenue. A dividend distributes profit that already exists.',
+    trap: { q: 'Money left the business, the same as with salaries.',
+            bad: { t: 'Dr Dividends Expense 600', p: 'Puts a distribution of profit onto the income statement and understates net income.' },
+            good: { t: 'Dr Dividends 600', p: 'It reduces retained earnings directly, without ever passing through profit.' } } }
+];
+
+var REPORTS2 = [
+  { id: 'ledger', short: 'Post to the ledger', title: 'Post every entry to the ledger',
+    concept: 'The journal is chronological; the ledger is by account',
+    rule: 'Posting does not change anything. It reorganises the same figures by account.',
+    why: ['The journal records the whole of each transaction in one place, in date order. That is useless for answering &ldquo;how much cash is there?&rdquo;',
+          'The ledger answers that: every amount is copied to its own account, debits on the left and credits on the right, and each account is footed to a balance.'],
+    ledger: true },
+  { id: 'trial', short: 'The trial balance', title: 'Prepare a trial balance at July 31',
+    concept: 'A list of every balance, proving the debits equal the credits',
+    rule: 'A trial balance proves the ledger is in balance. It does not prove it is right.',
+    why: ['Every account balance goes in its normal column: assets, dividends and expenses on the left, liabilities, equity and revenue on the right.',
+          'Both columns total <b>$23,600</b>. Accounts with no activity in July are still listed, because the adjusting entries in the next module will fill several of them in.'],
+    trial: true,
+    caveat: { q: 'The columns agree. Is the ledger correct?',
+              bad: { t: 'Dr Supplies 2,000<br>Cr Cash 2,000', p: 'If the July 20 salaries had been debited to Supplies, the trial balance would still total $23,600 exactly.' },
+              good: { t: 'Dr Salaries Expense 2,000<br>Cr Cash 2,000', p: 'Equal columns only prove that every entry had matching sides. A wrong account, a missed entry, or a doubled entry can all survive it.' } },
+    result: 'Total debits $23,600 = total credits $23,600.' }
+];
+
+var METHOD2 = [
+  ['Decide which accounts change', 'Cash &middot; Common Stock'],
+  ['Name each one&rsquo;s family', 'Asset &middot; Equity'],
+  ['Debit to increase an asset, credit to increase equity', 'Dr &middot; Cr'],
+  ['Check the debits equal the credits', '12,000 = 12,000']
+];
+
+/* ============================================================
+   THE MODULES
+   Two problems from the same chapter. 2.1 records transactions in
+   a tabular summary; 2.2 records the same kind of events in a
+   journal, posts them, and proves the ledger.
+   ============================================================ */
+var MODULES = [
+  { id: 'lo21', code: 'LO 2.1', name: 'The accounting equation',
+    co: 'Speedy Delivery Inc.', sub: 'Nine entries in a tabular summary',
+    blurb: 'Record seven July transactions in a tabular summary and turn the totals into three financial statements.',
+    count: '13 screens' },
+  { id: 'lo22', code: 'LO 2.2', name: 'Journalize, post, trial balance',
+    co: 'Kleene Window Washing Inc.', sub: 'Eleven journal entries',
+    blurb: 'Record eleven July transactions as journal entries, post them to the ledger, and prove it with a trial balance.',
+    count: '13 screens' }
+];
+
 /* Icons into the static chrome. */
 document.getElementById('mark').innerHTML = ICON.badge;
+document.getElementById('mod-caret').innerHTML = ICON.chev;
 document.getElementById('btn-theme').innerHTML = ICON.sun;
 document.getElementById('tab-guide').innerHTML = ICON.book + ' Guide';
 document.getElementById('tab-table').innerHTML = ICON.table + ' Data';
@@ -1394,9 +1811,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
    it produces, in both the guide and the full table.
    ============================================================ */
 (function () {
-  var STORE = 'speedy.walkthrough.v3';
+  var STORE = 'accounting.course.v4';
+  var mod = 0;                       // which module of the chapter is open
   var view = 'dash';                 // 'dash' the entry list, 'detail' one entry
-  var at = 0;                        // index into FLOW while in detail
+  var at = 0;                        // index into the open module's flow
   var read = {};                     // which entries have been opened
   var dashScroll = 0;                // so returning to the list lands where you left
   var tab = 'guide';
@@ -1407,7 +1825,8 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function load() {
     try {
       var p = JSON.parse(window.localStorage.getItem(STORE) || '{}');
-      if (typeof p.at === 'number' && p.at >= 0 && p.at < FLOW.length) at = p.at;
+      if (typeof p.mod === 'number' && p.mod >= 0 && p.mod < MODULES.length) mod = p.mod;
+      if (typeof p.at === 'number' && p.at >= 0 && p.at < flow().length) at = p.at;
       if (p.view === 'detail') view = 'detail';
       if (p.read && typeof p.read === 'object') read = p.read;
       if (p.tab === 'table' || p.tab === 'guide' || p.tab === 'solve') tab = p.tab;
@@ -1415,7 +1834,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     } catch (e) { /* private mode: run without persistence */ }
   }
   function save() {
-    try { window.localStorage.setItem(STORE, JSON.stringify({ view: view, at: at, read: read, tab: tab, theme: theme })); } catch (e) {}
+    try { window.localStorage.setItem(STORE, JSON.stringify({ mod: mod, view: view, at: at, read: read, tab: tab, theme: theme })); } catch (e) {}
   }
 
   /* ---------- the ledger table ----------
@@ -1496,8 +1915,16 @@ document.getElementById('next-icon').innerHTML = ICON.next;
      equation stood after it, and opens a short illustrated explanation
      on demand. */
 
-  var FLOW = ENTRIES.concat(REPORTS);        // 9 entries, then 4 reports
+  var FLOW21 = ENTRIES.concat(REPORTS);      // 9 entries, then 4 reports
   var GRAND = assetsOf(totalsUpTo(999));     // the scale every bar is drawn against
+
+  /* The open module's screens, and its read-state. */
+  function flow() { return mod === 0 ? FLOW21 : FLOW2; }
+  function modId() { return MODULES[mod].id; }
+  function readSet() {
+    if (!read[modId()]) read[modId()] = {};
+    return read[modId()];
+  }
 
   function reduceMotion() {
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -1514,8 +1941,8 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     return t;
   }
 
-  function isRead(id) { return !!read[id]; }
-  function readCount() { return FLOW.filter(function (f) { return isRead(f.id); }).length; }
+  function isRead(id) { return !!readSet()[id]; }
+  function readCount() { return flow().filter(function (f) { return isRead(f.id); }).length; }
 
   /* ---------- illustration: the balance board ---------- */
   function balanceBoard(before, after, effects, capA, capC) {
@@ -1662,14 +2089,14 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   /* ---------- one entry, explained ---------- */
   function renderDetail() {
-    var item = FLOW[at];
+    var item = FLOW21[at];
     var body;
 
     if (at < ENTRIES.length) {
       var row = LEDGER[at];
       var fx = effectsOf(row);
       body =
-        '<div class="ex-eyebrow">Entry <i>(' + row.id + ')</i> &middot; ' + (at + 1) + ' of ' + FLOW.length + '</div>' +
+        '<div class="ex-eyebrow">Entry <i>(' + row.id + ')</i> &middot; ' + (at + 1) + ' of ' + FLOW21.length + '</div>' +
         '<h1 class="ex-title">' + item.concept + '</h1>' +
         '<div class="ex-fact">' + WORK_TX[item.id] + '</div>' +
         viz('What crossed, and in which direction', flowScene(item.scene)) +
@@ -1682,7 +2109,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     } else {
       var fin = totalsUpTo(999);
       body =
-        '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW.length + '</div>' +
+        '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW21.length + '</div>' +
         '<h1 class="ex-title">' + item.title + '</h1>' +
         '<div class="ex-fact">' + item.concept + '</div>' +
         (item.feeds ? viz('Which columns feed this statement', routeViz(item.feeds, item.short)) : '') +
@@ -1761,8 +2188,8 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderGuide() {
-    if (view === 'dash') renderDash();
-    else renderDetail();
+    if (mod === 0) { if (view === 'dash') renderDash(); else renderDetail(); }
+    else { if (view === 'dash') renderDash2(); else renderDetail2(); }
   }
 
   /* ---------- table pane ---------- */
@@ -1888,7 +2315,6 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderSolve() {
-    if (tab !== 'solve') { $('solve').innerHTML = ''; return; }
 
     var opts = '<option value="">Choose an account&hellip;</option>' + COLS.map(function (c) {
       return '<option value="' + c.k + '">' + ACCOUNT[c.k] + '</option>';
@@ -2161,7 +2587,590 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     saveWork();
   }
 
+  /* ---------- module 2.2: journalize, post, trial balance ---------- */
+
+  var FLOW2 = ENTRIES2.concat(REPORTS2);
+
+  function money2(n) { return n.toLocaleString('en-US'); }
+  function jIndex(id) { for (var i = 0; i < JOURNAL.length; i++) if (JOURNAL[i].id === id) return i; return -1; }
+
+  /* ---------- illustration: which side an increase lands on ----------
+     Families the entry touches are lit; the accounts themselves drop in
+     underneath the side they landed on. */
+  function ruleBoard(j) {
+    var FAM_D = ['Asset', 'Expense', 'Dividends'];
+    var FAM_C = ['Liability', 'Equity', 'Revenue'];
+    var hit = {};
+    (j ? j.lines : []).forEach(function (l) { hit[acct(l[0]).fam] = true; });
+
+    function col(cls, cap, sub, fams, side) {
+      var rows = fams.map(function (f) {
+        return '<div class="rule-fam' + (hit[f] ? ' on' : '') + '"><u>' + f + '</u><em>&uarr;</em></div>';
+      }).join('');
+      var lands = (j ? j.lines : []).filter(function (l) {
+        return (l[1] ? 'D' : 'C') === side;
+      }).map(function (l, i) {
+        var a = acct(l[0]);
+        var up = side === a.up;          // its own increase side, or the other one
+        return '<div class="rule-acct' + (up ? '' : ' down') + '" style="--i:' + i + '">' +
+          '<span>' + a.name + ' <em>' + (up ? '&uarr;' : '&darr;') + '</em></span>' +
+          '<b>' + money2(l[1] || l[2]) + '</b></div>';
+      }).join('');
+      return '<div class="rule-col ' + cls + '">' +
+        '<div class="rule-hd"><b>' + cap + '</b><span>' + sub + '</span></div>' +
+        '<div class="rule-fams">' + rows + '</div>' +
+        (lands ? '<div class="rule-hit">' + lands + '</div>' : '') +
+        '</div>';
+    }
+    return '<div class="rule-b">' +
+      col('d', 'Debit', 'the left side', FAM_D, 'D') +
+      col('c', 'Credit', 'the right side', FAM_C, 'C') +
+      '</div>' +
+      '<p class="viz-sub">The families above show which side <em>increases</em> each kind of account. ' +
+      'An account lands on that side when it goes up (&uarr;) and on the opposite side when it goes down (&darr;).</p>';
+  }
+
+  /* ---------- illustration: the entry as it is actually written ---------- */
+  function journalEntry(j, opts) {
+    opts = opts || {};
+    var rows = j.lines.map(function (l, i) {
+      var isDr = !!l[1];
+      return '<div class="je-row ' + (isDr ? 'dr' : 'cr') + (opts.live ? ' on' : '') + '" style="--i:' + i + '">' +
+        '<span>' + (i === 0 ? j.date : '') + '</span>' +
+        '<span class="je-acct">' + acct(l[0]).name + '</span>' +
+        '<span class="je-amt">' + (l[1] ? money2(l[1]) : '') + '</span>' +
+        '<span class="je-amt">' + (l[2] ? money2(l[2]) : '') + '</span>' +
+        '</div>';
+    }).join('');
+    return '<div class="je"><div class="je-bar">General Journal</div><div class="je-grid">' +
+      '<div class="je-head"><span>Date</span><span>Account Titles</span><span>Debit</span><span>Credit</span></div>' +
+      rows +
+      (opts.note ? '<div class="je-note">' + opts.note + '</div>' : '') +
+      '</div></div>';
+  }
+
+  /* ---------- illustration: posting into the ledger ---------- */
+  function tAccount(t, k, freshId) {
+    var a = acct(k), rec = t[k];
+    function side(which) {
+      var lines = rec.lines.filter(function (x) { return which === 'd' ? x.d : x.c; }).map(function (x) {
+        return '<div class="ta-line' + (x.id === freshId ? ' fresh' : '') + '">' +
+          '<u>' + x.date.replace('July ', '7/') + '</u><span>' + money2(which === 'd' ? x.d : x.c) + '</span></div>';
+      }).join('');
+      var b = balOf(t, k);
+      var showBal = b !== 0 && ((a.up === 'D') === (which === 'd'));
+      return '<div class="ta-side ' + which + '">' + lines +
+        (showBal ? '<div class="ta-bal"><u>Bal.</u><span>' + money2(b) + '</span></div>' : '') +
+        '</div>';
+    }
+    return '<div class="ta"><div class="ta-name">' + a.name + '</div>' +
+      '<div class="ta-body">' + side('d') + side('c') + '</div></div>';
+  }
+
+  function postingViz(j) {
+    var t = postedThrough(jIndex(j.id));
+    var keys = j.lines.map(function (l) { return l[0]; });
+    return '<div class="post-wrap">' +
+      journalEntry(j, { note: 'Each amount below is copied to the same side of its own account.' }) +
+      '<div class="post-drop">' + ICON.down + '</div>' +
+      '<div class="tas' + (keys.length === 2 ? ' two' : '') + '">' +
+        keys.map(function (k) { return tAccount(t, k, j.id); }).join('') +
+      '</div></div>';
+  }
+
+  /* ---------- illustration: the trial balance ---------- */
+  function trialBalance(t, hits) {
+    hits = hits || [];
+    var rows = ACCT.map(function (a) {
+      var b = balOf(t, a.k);
+      var cls = !b ? ' zero' : (hits.indexOf(a.k) !== -1 ? ' on' : '');
+      return '<div class="tb-row' + cls + '"><span class="tb-name">' + a.name + '</span>' +
+        '<span>' + (b && a.up === 'D' ? money2(b) : '') + '</span>' +
+        '<span>' + (b && a.up === 'C' ? money2(b) : '') + '</span></div>';
+    }).join('');
+    var tot = trialTotals(t);
+    return '<div class="tb">' +
+      '<div class="tb-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
+      '<div class="tb-tot"><span>Totals</span><span>' + money2(tot.dr) + '</span><span>' + money2(tot.cr) + '</span></div>' +
+      '</div>' +
+      '<div class="verdict ' + (tot.dr === tot.cr ? 'ok' : 'no') + '">' +
+        (tot.dr === tot.cr ? ICON.check + ' The two columns agree at ' + dollars(tot.dr)
+                           : ICON.warn + ' Out by ' + dollars(Math.abs(tot.dr - tot.cr))) + '</div>';
+  }
+
+  /* ---------- dashboard ---------- */
+  function renderDash2() {
+    var done = readCount();
+    var last = -1;
+    ENTRIES2.forEach(function (e, i) { if (isRead(e.id)) last = i; });
+    var t = postedThrough(last);
+    var tot = trialTotals(t);
+
+    var cards = ENTRIES2.map(function (e, i) {
+      var j = JOURNAL[i];
+      var lines = j.lines.map(function (l) {
+        return '<span class="' + (l[1] ? 'dr' : 'cr') + '"><i>' + (l[1] ? 'Dr' : 'Cr') + '</i> ' +
+          acct(l[0]).name + '<b>' + money2(l[1] || l[2]) + '</b></span>';
+      }).join('');
+      return '<button class="card-e' + (isRead(e.id) ? ' read' : '') + '" data-open="' + i + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(e.id) ? ICON.check : (i + 1)) + '</span>' +
+          '<b>' + e.short + '</b>' +
+          '<span class="card-go">' + ICON.next + '</span>' +
+        '</span>' +
+        '<p>' + j.date + ' &middot; ' + FACTS2[e.id] + '</p>' +
+        '<span class="card-je">' + lines + '</span>' +
+        '</button>';
+    }).join('');
+
+    var reports = REPORTS2.map(function (r, i) {
+      return '<button class="card-e' + (isRead(r.id) ? ' read' : '') + '" data-open="' + (ENTRIES2.length + i) + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(r.id) ? ICON.check : ICON.table) + '</span>' +
+          '<b>' + r.short + '</b>' +
+          '<span class="card-go">' + ICON.next + '</span>' +
+        '</span><p>' + r.rule + '</p></button>';
+    }).join('');
+
+    $('guide').innerHTML =
+      '<div class="wrap fade">' +
+        '<div class="dash-head">' +
+          '<h1>' + CO2.name + '</h1>' +
+          '<p>Eleven journal entries, posted to the ledger and proved with a trial balance. Open any entry to see which accounts move, which side each one lands on, and why.</p>' +
+        '</div>' +
+        '<div class="state">' +
+          '<div class="state-cap">' + ICON.pulse + (last < 0 ? 'Before anything is journalized' : 'The ledger after ' + JOURNAL[last].date) + '</div>' +
+          '<div class="bb">' +
+            '<div class="bb-side bb-a"><span class="bb-cap">Total debits</span>' +
+              '<b class="bb-num" data-from="' + tot.dr + '" data-count="' + tot.dr + '">' + dollars(tot.dr) + '</b></div>' +
+            '<div class="bb-op">=</div>' +
+            '<div class="bb-side bb-c"><span class="bb-cap">Total credits</span>' +
+              '<b class="bb-num" data-from="' + tot.cr + '" data-count="' + tot.cr + '">' + dollars(tot.cr) + '</b></div>' +
+          '</div>' +
+          '<div class="verdict ' + (tot.dr === 0 ? 'idle' : 'ok') + '">' +
+            (tot.dr === 0 ? 'Nothing journalized yet &mdash; open an entry and this fills in'
+                          : ICON.check + ' Every entry so far has matching sides') + '</div>' +
+        '</div>' +
+        '<div class="sect">The journal entries<i></i></div>' +
+        '<div class="cards">' + cards + '</div>' +
+        '<div class="sect">Posting and proving<i></i></div>' +
+        '<div class="cards">' + reports + '</div>' +
+        '<div class="sect">How any entry is decided<i></i></div>' +
+        '<div class="method">' + METHOD2.map(function (m, i) {
+          return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
+            '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
+        }).join('') + '</div>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = dashScroll;
+  }
+
+  /* ---------- one entry, explained ---------- */
+  function renderDetail2() {
+    var item = FLOW2[at], body;
+
+    if (at < ENTRIES2.length) {
+      var j = JOURNAL[at];
+      body =
+        '<div class="ex-eyebrow">Entry <i>' + (at + 1) + '</i> &middot; ' + j.date + ' &middot; ' + (at + 1) + ' of ' + FLOW2.length + '</div>' +
+        '<h1 class="ex-title">' + item.concept + '</h1>' +
+        '<div class="ex-fact">' + FACTS2[item.id] + '</div>' +
+        viz('Which side each account lands on', ruleBoard(j)) +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        viz('The entry as it is written', journalEntry(j, {
+          note: 'Debits are listed first and flush left; credits are listed second and indented. ' +
+                'Debits ' + money2(jDebits(j)) + ' = credits ' + money2(jCredits(j)) + '.'
+        })) +
+        (item.trap ? viz('The judgement call', trapViz(item.trap)) : '') +
+        viz('Posted to the ledger', postingViz(j)) +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
+    } else {
+      var full = postedThrough(999);
+      body =
+        '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW2.length + '</div>' +
+        '<h1 class="ex-title">' + item.title + '</h1>' +
+        '<div class="ex-fact">' + item.concept + '</div>' +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        (item.ledger ? viz('Every account in the ledger', '<div class="tas two">' +
+            ACCT.filter(function (a) { return full[a.k].lines.length; })
+                .map(function (a) { return tAccount(full, a.k); }).join('') + '</div>') : '') +
+        (item.trial ? '<div class="stmt-doc">' +
+            '<div class="stmt-hd"><b>' + CO2.name + '</b><span>Trial Balance</span><span>' + CO2.asAt + '</span></div>' +
+            trialBalance(full) + '</div>' : '') +
+        (item.caveat ? viz('What a trial balance does not prove', trapViz(item.caveat)) : '') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
+    }
+
+    $('guide').innerHTML = '<div class="wrap fade">' + body + '<div style="height:10px"></div></div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = 0;
+  }
+
+  /* ---------- data tab: the whole ledger and the trial balance ---------- */
+  function renderTable2() {
+    var open = (view === 'detail' && at < ENTRIES2.length) ? JOURNAL[at] : null;
+    var full = postedThrough(999);
+    $('table-slot').innerHTML =
+      '<div class="card" style="padding:14px">' +
+        '<div class="viz-cap">General journal</div>' +
+        JOURNAL.map(function (j) {
+          return '<div style="margin-bottom:8px">' + journalEntry(j, { live: open && open.id === j.id }) + '</div>';
+        }).join('') +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="viz-cap">Trial balance &middot; ' + CO2.asAt + '</div>' +
+        trialBalance(full, open ? open.lines.map(function (l) { return l[0]; }) : []) +
+      '</div>';
+  }
+
+  /* ---------- module 2.2 worksheet ----------
+     Journalize all eleven transactions unaided, then report four balances
+     the ledger produces. Graded against JOURNAL, so the answer key is the
+     same data the explanations are built from. */
+
+  var HINTS2 = {
+    j1:  ['Two accounts change: what the business now holds, and who has a claim on it.',
+          'Cash and Common Stock. Ask which family each belongs to.',
+          'Debit Cash 12,000. Credit Common Stock 12,000.'],
+    j2:  ['Three lines, not two. What arrived, and what were the two ways it was paid for?',
+          'Equipment, Accounts Payable and Cash. The truck is recorded at its full price.',
+          'Debit Equipment 8,000. Credit Accounts Payable 6,000 and Cash 2,000.'],
+    j3:  ['Nothing was paid. Something arrived and something is now owed.',
+          'Supplies and Accounts Payable. Supplies are an asset while they sit unused.',
+          'Debit Supplies 900. Credit Accounts Payable 900.'],
+    j4:  ['On July 31, how many of the twelve months of cover are still to come?',
+          'Prepaid Insurance and Cash. The benefit has not been used, so it is not an expense yet.',
+          'Debit Prepaid Insurance 1,800. Credit Cash 1,800.'],
+    j5:  ['The work is finished but nobody has paid. What does the business hold instead of cash?',
+          'Accounts Receivable and Service Revenue.',
+          'Debit Accounts Receivable 3,700. Credit Service Revenue 3,700.'],
+    j6:  ['Two debts were settled, but check whether they sit in two different accounts.',
+          'Both were Accounts Payable, so one debit covers them. Cash is the other side.',
+          'Debit Accounts Payable 1,500. Credit Cash 1,500.'],
+    j7:  ['A cost was incurred and settled on the same day.',
+          'Salaries and Wages Expense and Cash. Expenses increase on the debit side.',
+          'Debit Salaries and Wages Expense 2,000. Credit Cash 2,000.'],
+    j8:  ['Cash arrived &mdash; but was anything earned today that was not earned already?',
+          'Cash and Accounts Receivable. The revenue went on the books on July 12.',
+          'Debit Cash 1,600. Credit Accounts Receivable 1,600.'],
+    j9:  ['The same shape as the July 12 entry.',
+          'Accounts Receivable and Service Revenue.',
+          'Debit Accounts Receivable 2,500. Credit Service Revenue 2,500.'],
+    j10: ['Did the $290 create something the business still owns on July 31?',
+          'Maintenance and Repairs Expense and Cash. Repairs keep an asset going, they do not make one.',
+          'Debit Maintenance and Repairs Expense 290. Credit Cash 290.'],
+    j11: ['Money left the business, but not in order to earn anything.',
+          'Dividends and Cash. It is a distribution, so it never touches an expense account.',
+          'Debit Dividends 600. Credit Cash 600.']
+  };
+
+  var FIELDS2 = [
+    { id: 'cash', label: 'Cash balance at July 31', acct: 'cash',
+      hints: ['Foot both sides of your Cash T-account and take the difference.',
+              'Six entries credited Cash and two debited it.',
+              'Debits 13,600 less credits 8,190.'] },
+    { id: 'ar', label: 'Accounts Receivable balance at July 31', acct: 'ar',
+      hints: ['Two entries billed customers, one collected from them.',
+              '3,700 and 2,500 billed, 1,600 collected.',
+              '6,200 less 1,600.'] },
+    { id: 'ap', label: 'Accounts Payable balance at July 31', acct: 'ap',
+      hints: ['A liability increases on the credit side and decreases on the debit side.',
+              '6,000 for the truck and 900 for supplies, less the 1,500 paid.',
+              '6,900 less 1,500.'] },
+    { id: 'tot', label: 'Total of each trial balance column', total: true,
+      hints: ['Add every debit balance. The credit column has to come to the same figure.',
+              'Assets plus dividends plus expenses on one side; liabilities, equity and revenue on the other.',
+              '5,410 + 4,600 + 900 + 1,800 + 8,000 + 600 + 290 + 2,000.'] }
+  ];
+
+  var w2 = { fx: {}, fld: {}, hint: {} };
+
+  function loadWork2() {
+    try {
+      var w = JSON.parse(window.localStorage.getItem(STORE + '.work2') || '{}');
+      if (w && typeof w === 'object') { w2.fx = w.fx || {}; w2.fld = w.fld || {}; w2.hint = w.hint || {}; }
+    } catch (e) { /* private mode: run without persistence */ }
+  }
+  function saveWork2() {
+    try { window.localStorage.setItem(STORE + '.work2', JSON.stringify(w2)); } catch (e) {}
+  }
+
+  function k2(ji, li, part) { return ji + '.' + li + '.' + part; }
+  function line2(ji, li) {
+    var a = w2.fx[k2(ji, li, 'k')], s = w2.fx[k2(ji, li, 's')], n = amountOf(w2.fx[k2(ji, li, 'a')]);
+    if (!a || !s || isNaN(n)) return null;
+    return { k: a, s: s, n: n };
+  }
+  function slots2(ji) { return JOURNAL[ji].lines.length; }
+
+  function entryRight2(ji) {
+    var want = JOURNAL[ji].lines.map(function (l) {
+      return l[0] + ':' + (l[1] ? 'D' : 'C') + ':' + (l[1] || l[2]);
+    }).sort().join('|');
+    var got = [];
+    for (var i = 0; i < slots2(ji); i++) {
+      var l = line2(ji, i);
+      if (!l) return false;
+      got.push(l.k + ':' + l.s + ':' + l.n);
+    }
+    return got.sort().join('|') === want;
+  }
+  function entryTouched2(ji) {
+    for (var i = 0; i < slots2(ji); i++) {
+      if (w2.fx[k2(ji, i, 'k')] || w2.fx[k2(ji, i, 's')] || w2.fx[k2(ji, i, 'a')]) return true;
+    }
+    return false;
+  }
+
+  /* Diagnose without giving the answer away. */
+  function entryDiag2(ji) {
+    var n = slots2(ji), done = 0, started = 0, dr = 0, cr = 0;
+    for (var i = 0; i < n; i++) {
+      if (w2.fx[k2(ji, i, 'k')] || w2.fx[k2(ji, i, 's')] || !isNaN(amountOf(w2.fx[k2(ji, i, 'a')]))) started++;
+      var l = line2(ji, i);
+      if (!l) continue;
+      done++;
+      if (l.s === 'D') dr += l.n; else cr += l.n;
+    }
+    if (!started) return 'Nothing recorded yet. This transaction needs ' + n + ' lines.';
+    if (done < n) return 'Each line needs an account, a side and an amount &mdash; ' + done + ' of ' + n + ' done so far.';
+    if (dr !== cr) return 'Debits come to ' + dollars(dr) + ' and credits to ' + dollars(cr) + '. Every entry has to have equal sides.';
+    if (dr !== jDebits(JOURNAL[ji])) return 'The sides balance, but the amounts are not the ones in the transaction. Read the figures again.';
+    var mine = [], theirs = [];
+    for (var x = 0; x < n; x++) { var q = line2(ji, x); mine.push(q.k + q.s); }
+    JOURNAL[ji].lines.forEach(function (l) { theirs.push(l[0] + (l[1] ? 'D' : 'C')); });
+    var sameAccts = mine.map(function (m) { return m.slice(0, -1); }).sort().join() ===
+                    theirs.map(function (m) { return m.slice(0, -1); }).sort().join();
+    if (sameAccts) return 'The right accounts, but at least one is on the wrong side. Ask which family it belongs to and whether it went up or down.';
+    return 'It balances and the amounts are right, so at least one account is wrong. Ask what the business received, and what it gave up or now owes.';
+  }
+
+  function field2Answer(f) {
+    var full = postedThrough(999);
+    return f.total ? trialTotals(full).dr : balOf(full, f.acct);
+  }
+  function field2Right(f) { return amountOf(w2.fld[f.id]) === field2Answer(f); }
+
+  function score2() {
+    var n = 0;
+    JOURNAL.forEach(function (j, i) { if (entryRight2(i)) n++; });
+    return { got: n + FIELDS2.filter(field2Right).length, total: JOURNAL.length + FIELDS2.length };
+  }
+
+  function renderSolve2() {
+    var opts = '<option value="">Choose an account&hellip;</option>' + ACCT.map(function (a) {
+      return '<option value="' + a.k + '">' + a.name + '</option>';
+    }).join('');
+
+    var cards = JOURNAL.map(function (j, ji) {
+      var sets = '';
+      for (var i = 0; i < slots2(ji); i++) {
+        var who = 'line ' + (i + 1) + ' of entry ' + (ji + 1);
+        sets += '<div class="ws-fx">' +
+          '<div class="ws-line"><select class="ws-sel" data-fx2="' + ji + '.' + i + '" aria-label="Account for ' + who + '">' + opts + '</select></div>' +
+          '<div class="ws-line">' +
+            '<div class="ws-dir">' +
+              '<button type="button" data-side="' + ji + '.' + i + '.D" aria-label="Debit, ' + who + '">Dr</button>' +
+              '<button type="button" data-side="' + ji + '.' + i + '.C" aria-label="Credit, ' + who + '">Cr</button>' +
+            '</div>' +
+            '<div class="ws-amt"><input data-amt2="' + ji + '.' + i + '" inputmode="decimal" autocomplete="off" aria-label="Amount for ' + who + '" /></div>' +
+          '</div></div>';
+      }
+      return '<div class="ws-tx" data-tx2="' + ji + '">' +
+        '<div class="ws-tx-head"><span class="ws-no">' + (ji + 1) + '</span>' +
+        '<p class="ws-text"><b>' + j.date + '</b> &middot; ' + FACTS2[j.id] + '</p></div>' +
+        '<div class="ws-set">' + sets + '</div>' +
+        '<div class="ws-foot"><button type="button" class="ws-hint" data-hint2="' + ji + '">' + ICON.bulb + 'Hint</button></div>' +
+        '<div data-note2="' + ji + '"></div></div>';
+    }).join('');
+
+    var fields = FIELDS2.map(function (f, fi) {
+      return '<div class="ws-field" data-field2="' + f.id + '">' +
+        '<label for="w2-' + f.id + '">' + f.label + '</label>' +
+        '<div class="ws-line"><div class="ws-amt"><input id="w2-' + f.id + '" data-fld2="' + f.id + '" inputmode="decimal" autocomplete="off" /></div>' +
+        '<button type="button" class="ws-hint" data-fhint2="' + fi + '">' + ICON.bulb + 'Hint</button></div>' +
+        '<div data-fnote2="' + f.id + '"></div></div>';
+    }).join('');
+
+    $('solve').innerHTML =
+      '<div class="wrap">' +
+        '<div class="ws-head"><h1>Journalize it yourself</h1>' +
+        '<p>The same eleven transactions, with nothing filled in. Record each one &mdash; account, side, amount &mdash; then report the balances the ledger comes to. Every line has a hint that gives nothing away until you ask.</p></div>' +
+        '<div class="ws-sect">Part 1 &middot; Journalize the transactions<i></i></div>' + cards +
+        '<div class="ws-sect">Part 2 &middot; Report the balances<i></i></div>' +
+        '<div class="ws-fields">' + fields + '</div>' +
+        '<button type="button" class="ws-reset" id="ws-reset2">Clear my work and start again</button>' +
+      '</div>';
+
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-fx2]'), function (el) {
+      var p = el.getAttribute('data-fx2').split('.');
+      var v = w2.fx[k2(p[0], p[1], 'k')]; if (v) el.value = v;
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-amt2]'), function (el) {
+      var p = el.getAttribute('data-amt2').split('.');
+      var v = w2.fx[k2(p[0], p[1], 'a')]; if (v !== undefined) el.value = v;
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-fld2]'), function (el) {
+      var v = w2.fld[el.getAttribute('data-fld2')]; if (v !== undefined) el.value = v;
+    });
+    Object.keys(w2.hint).forEach(paintHint2);
+    paintSides2();
+  }
+
+  function paintSides2() {
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-side]'), function (b) {
+      var p = b.getAttribute('data-side').split('.');
+      var on = w2.fx[k2(p[0], p[1], 's')] === p[2];
+      b.classList.toggle(p[2] === 'D' ? 'on-up' : 'on-dn', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  function paintHint2(key) {
+    var lvl = w2.hint[key];
+    if (!lvl) return;
+    var host = $('solve'), text, slot, btn, max;
+    if (key.charAt(0) === 'f') {
+      var f = FIELDS2[Number(key.slice(1))];
+      if (!f) return;
+      max = f.hints.length; text = f.hints[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-fnote2="' + f.id + '"]');
+      btn = host.querySelector('[data-fhint2="' + key.slice(1) + '"]');
+    } else {
+      var j = JOURNAL[Number(key)];
+      if (!j) return;
+      var hints = HINTS2[j.id] || [];
+      max = hints.length; text = hints[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-note2="' + key + '"]');
+      btn = host.querySelector('[data-hint2="' + key + '"]');
+    }
+    if (!slot || !text) return;
+    slot.innerHTML = '<div class="ws-note tip">' + text + '</div>';
+    if (!btn) return;
+    btn.innerHTML = ICON.bulb + (lvl >= max ? 'No more hints' : 'Another hint');
+    btn.disabled = lvl >= max;
+  }
+
+  function gradeSolve2() {
+    JOURNAL.forEach(function (j, ji) {
+      var card = $('solve').querySelector('[data-tx2="' + ji + '"]');
+      var note = $('solve').querySelector('[data-note2="' + ji + '"]');
+      var ok = entryRight2(ji), touched = entryTouched2(ji);
+      card.classList.toggle('right', ok);
+      card.classList.toggle('wrong', !ok && touched);
+      card.querySelector('.ws-no').innerHTML = ok ? ICON.check : (ji + 1);
+      if (ok || !touched) { var stale = card.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
+      else if (!w2.hint[ji]) note.innerHTML = '<div class="ws-note bad">' + entryDiag2(ji) + '</div>';
+    });
+    FIELDS2.forEach(function (f, fi) {
+      var box = $('solve').querySelector('[data-field2="' + f.id + '"]');
+      var note = $('solve').querySelector('[data-fnote2="' + f.id + '"]');
+      var ok = field2Right(f);
+      var touched = String(w2.fld[f.id] === undefined ? '' : w2.fld[f.id]).trim() !== '';
+      box.classList.toggle('right', ok);
+      box.classList.toggle('wrong', !ok && touched);
+      if (ok || !touched) { var old = box.querySelector('.ws-note.bad'); if (old) old.remove(); }
+      else if (!w2.hint['f' + fi]) note.innerHTML = '<div class="ws-note bad">Not yet. Work it out from your own entries above.</div>';
+    });
+    renderControls();
+    var first = $('solve').querySelector('.ws-tx.wrong, .ws-field.wrong');
+    if (first) first.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+  }
+
+  function clearMark2(ji) {
+    var card = $('solve').querySelector('[data-tx2="' + ji + '"]');
+    if (!card) return;
+    card.classList.remove('right', 'wrong');
+    card.querySelector('.ws-no').textContent = Number(ji) + 1;
+    var bad = card.querySelector('.ws-note.bad');
+    if (bad) bad.remove();
+  }
+
+  function bindSolve2() {
+    var host = $('solve');
+    host.addEventListener('change', function (e) {
+      var sel = e.target.closest('[data-fx2]');
+      if (!sel) return;
+      var p = sel.getAttribute('data-fx2').split('.');
+      w2.fx[k2(p[0], p[1], 'k')] = sel.value;
+      clearMark2(p[0]); saveWork2(); renderControls();
+    });
+    host.addEventListener('input', function (e) {
+      var a = e.target.closest('[data-amt2]');
+      if (a) {
+        var p = a.getAttribute('data-amt2').split('.');
+        w2.fx[k2(p[0], p[1], 'a')] = a.value;
+        clearMark2(p[0]); saveWork2(); renderControls();
+        return;
+      }
+      var f = e.target.closest('[data-fld2]');
+      if (!f) return;
+      w2.fld[f.getAttribute('data-fld2')] = f.value;
+      var box = f.closest('.ws-field');
+      box.classList.remove('right', 'wrong');
+      var bad = box.querySelector('.ws-note.bad');
+      if (bad) bad.remove();
+      saveWork2(); renderControls();
+    });
+    host.addEventListener('click', function (e) {
+      var d = e.target.closest('[data-side]');
+      if (d) {
+        var p = d.getAttribute('data-side').split('.');
+        var cur = w2.fx[k2(p[0], p[1], 's')];
+        w2.fx[k2(p[0], p[1], 's')] = cur === p[2] ? '' : p[2];
+        clearMark2(p[0]); paintSides2(); saveWork2(); renderControls();
+        return;
+      }
+      var h = e.target.closest('[data-hint2]');
+      if (h) {
+        var key = h.getAttribute('data-hint2');
+        var max = (HINTS2[JOURNAL[Number(key)].id] || []).length;
+        w2.hint[key] = Math.min((w2.hint[key] || 0) + 1, max);
+        paintHint2(key); saveWork2();
+        return;
+      }
+      var fh = e.target.closest('[data-fhint2]');
+      if (fh) {
+        var fi = fh.getAttribute('data-fhint2');
+        w2.hint['f' + fi] = Math.min((w2.hint['f' + fi] || 0) + 1, FIELDS2[Number(fi)].hints.length);
+        paintHint2('f' + fi); saveWork2();
+        return;
+      }
+      if (e.target.closest('#ws-reset2')) {
+        if (!window.confirm('Clear every answer and hint on this worksheet?')) return;
+        w2.fx = {}; w2.fld = {}; w2.hint = {};
+        saveWork2(); renderSolve2(); renderControls();
+      }
+    });
+  }
+
   /* ---------- chrome ---------- */
+  function renderModBtn() {
+    var m = MODULES[mod];
+    $('mod-name').textContent = m.co;
+    $('mod-sub').innerHTML = m.code + ' &middot; ' + m.sub;
+  }
+
+  function renderSheet() {
+    $('mod-list').innerHTML = MODULES.map(function (m, i) {
+      var f = i === 0 ? FLOW21 : FLOW2;
+      var n = f.filter(function (x) { return read[m.id] && read[m.id][x.id]; }).length;
+      return '<button class="mod-card' + (i === mod ? ' on' : '') + '" data-mod="' + i + '">' +
+        '<i>' + m.code + '</i><b>' + m.name + '</b>' +
+        '<span>' + m.blurb + '</span>' +
+        '<em>' + m.co + ' &middot; ' + n + ' of ' + f.length + ' explained</em>' +
+        '</button>';
+    }).join('');
+  }
+
+  function openSheet(on) {
+    if (on) renderSheet();
+    $('sheet').classList.toggle('on', on);
+  }
+
   function renderControls() {
     var solving = tab === 'solve';
     $('btn-prev').hidden = solving;
@@ -2170,7 +3179,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     $('ws-score').hidden = !solving;
     $('btn-check').hidden = !solving;
     if (solving) {
-      var sc = scoreNow();
+      var sc = mod === 0 ? scoreNow() : score2();
       $('ws-score').querySelector('b').innerHTML = sc.got + ' of ' + sc.total;
       $('ws-score').classList.toggle('done', sc.got === sc.total);
       $('btn-check').textContent = sc.got === sc.total ? 'All correct' : 'Check my work';
@@ -2178,6 +3187,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     }
     var dash = view === 'dash';
     var done = readCount();
+    var FLOW = flow();
     $('btn-prev').hidden = dash;
     $('btn-prev').disabled = false;
     $('btn-next').disabled = false;
@@ -2206,44 +3216,51 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   function render() {
     renderTabs();
+    renderModBtn();
     if (tab === 'solve') $('guide').innerHTML = '';
     else renderGuide();
-    renderTable();
-    renderSolve();
+    if (mod === 0) renderTable(); else renderTable2();
+    if (tab !== 'solve') $('solve').innerHTML = '';
+    else if (mod === 0) renderSolve(); else renderSolve2();
     renderControls();
   }
 
   /* ---------- navigation ---------- */
-  function hashFor() { return view === 'dash' ? 'entries' : 'entry-' + FLOW[at].id; }
+  function hashFor() { return MODULES[mod].id + (view === 'dash' ? '' : '-' + flow()[at].id); }
   function stateFromHash() {
     var h = (location.hash || '').replace('#', '');
-    if (h === 'entries') return { view: 'dash', at: at };
-    var m = /^entry-(.+)$/.exec(h);
+    var m = /^(lo2[12])(?:-(.+))?$/.exec(h);
     if (!m) return null;
-    for (var i = 0; i < FLOW.length; i++) if (FLOW[i].id === m[1]) return { view: 'detail', at: i };
-    return null;
+    var mi = MODULES[0].id === m[1] ? 0 : 1;
+    if (!m[2]) return { mod: mi, view: 'dash', at: 0 };
+    var f = mi === 0 ? FLOW21 : FLOW2;
+    for (var i = 0; i < f.length; i++) if (f[i].id === m[2]) return { mod: mi, view: 'detail', at: i };
+    return { mod: mi, view: 'dash', at: 0 };
   }
   function apply(st, fromHistory) {
-    if (!st || (st.view === view && st.at === at)) return;
+    if (!st) return;
+    if (st.mod === undefined) st.mod = mod;
+    if (st.mod === mod && st.view === view && st.at === at) return;
     if (view === 'dash') dashScroll = $('guide').parentNode.scrollTop;
+    if (st.mod !== mod) { mod = st.mod; dashScroll = 0; }
     view = st.view;
     at = st.at;
-    if (view === 'detail') read[FLOW[at].id] = 1;
+    if (view === 'detail') readSet()[flow()[at].id] = 1;
     save();
     render();
     if (!fromHistory && window.history && history.pushState) {
-      history.pushState({ view: view, at: at }, '', '#' + hashFor());
+      history.pushState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
     }
   }
-  function openAt(n) { apply({ view: 'detail', at: Math.max(0, Math.min(FLOW.length - 1, n))}); }
+  function openAt(n) { apply({ view: 'detail', at: Math.max(0, Math.min(flow().length - 1, n)) }); }
   function toDash() { apply({ view: 'dash', at: at }); }
 
   window.addEventListener('popstate', function () {
     var st = stateFromHash();
     if (!st) return;
-    if (st.view === view && st.at === at) return;
-    view = st.view; at = st.at;
-    if (view === 'detail') read[FLOW[at].id] = 1;
+    if (st.mod === mod && st.view === view && st.at === at) return;
+    mod = st.mod; view = st.view; at = st.at;
+    if (view === 'detail') readSet()[flow()[at].id] = 1;
     save(); render();
   });
 
@@ -2253,24 +3270,37 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (card) openAt(Number(card.getAttribute('data-open')));
   });
 
+  $('mod-btn').addEventListener('click', function () { openSheet(true); });
+  $('sheet').addEventListener('click', function (e) {
+    var card = e.target.closest('[data-mod]');
+    if (card) {
+      var n = Number(card.getAttribute('data-mod'));
+      openSheet(false);
+      if (n !== mod) apply({ mod: n, view: 'dash', at: 0 });
+      return;
+    }
+    if (e.target === $('sheet')) openSheet(false);   // tapping the scrim closes it
+  });
+
   $('btn-prev').addEventListener('click', toDash);
   $('btn-next').addEventListener('click', function () {
     if (view === 'dash') {
-      var next = 0;
-      while (next < FLOW.length && isRead(FLOW[next].id)) next++;
-      openAt(next === FLOW.length ? 0 : next);
+      var f = flow(), next = 0;
+      while (next < f.length && isRead(f[next].id)) next++;
+      openAt(next === f.length ? 0 : next);
       return;
     }
-    if (at === FLOW.length - 1) toDash();
+    if (at === flow().length - 1) toDash();
     else openAt(at + 1);
   });
   $('tab-guide').addEventListener('click', function () { tab = 'guide'; save(); render(); });
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
   $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });
-  $('btn-check').addEventListener('click', gradeSolve);
+  $('btn-check').addEventListener('click', function () { if (mod === 0) gradeSolve(); else gradeSolve2(); });
 
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input, textarea, select')) return;
+    if (e.key === 'Escape' && $('sheet').classList.contains('on')) { openSheet(false); return; }
     if (tab === 'solve') return;
     if (view === 'dash') return;
     if (e.key === 'ArrowRight') { e.preventDefault(); openAt(at + 1); }
@@ -2292,16 +3322,18 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* ---------- boot ---------- */
   load();
   loadWork();
+  loadWork2();
   if (!theme) {
     theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
   applyTheme(theme);
   var fromUrl = stateFromHash();
-  if (fromUrl) { view = fromUrl.view; at = fromUrl.at; if (view === 'detail') read[FLOW[at].id] = 1; }
+  if (fromUrl) { mod = fromUrl.mod; view = fromUrl.view; at = fromUrl.at; if (view === 'detail') readSet()[flow()[at].id] = 1; }
   render();
   bindSolve();
+  bindSolve2();
   if (window.history && history.replaceState) {
-    history.replaceState({ view: view, at: at }, '', '#' + hashFor());
+    history.replaceState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
   }
 })();
 

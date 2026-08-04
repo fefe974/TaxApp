@@ -207,9 +207,9 @@ function check(name, ok, detail) {
     afterFinish.cards === 13 && afterFinish.read === 13 && /13 of 13/.test(afterFinish.label),
     JSON.stringify(afterFinish));
 
-  await page.goto(FILE + '#entry-5');
+  await page.goto(FILE + '#lo21-5');
   await page.waitForTimeout(500);
-  check('deep link #entry-5 opens that entry',
+  check('deep link #lo21-5 opens that entry',
     (await page.evaluate(() => document.getElementById('prog-label').textContent)) === 'Entry 5 of 13');
   await page.click('#btn-next');
   await page.waitForTimeout(150);
@@ -225,7 +225,7 @@ function check(name, ok, detail) {
   // ---------------------------------------------------------------
   console.log('\nILLUSTRATIONS');
   // ---------------------------------------------------------------
-  await page.goto(FILE + '#entry-3');
+  await page.goto(FILE + '#lo21-3');
   await page.waitForTimeout(1400);
   const il = await page.evaluate(() => {
     const chips = [...document.querySelectorAll('.bb-chip')];
@@ -257,7 +257,7 @@ function check(name, ok, detail) {
 
   // Under reduced motion the same figures must be there without the animation.
   const still = await browser.newPage({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce' });
-  await still.goto(FILE + '#entry-3');
+  await still.goto(FILE + '#lo21-3');
   await still.waitForTimeout(300);
   const rmViz = await still.evaluate(() => ({
     nums: [...document.querySelectorAll('.bb-num')].map(n => n.textContent),
@@ -541,6 +541,235 @@ function check(name, ok, detail) {
   check('leaving the worksheet restores Prev/Next and hides Check',
     back.nav && back.check && back.h1 === 1, JSON.stringify(back));
   check('no worksheet console or page errors', wsErrors.length === 0, wsErrors.slice(0, 3).join(' | '));
+
+  // ---------------------------------------------------------------
+  console.log('\nMODULE 2.2 — JOURNALIZE, POST, TRIAL BALANCE');
+  // ---------------------------------------------------------------
+  const k = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  const kErr = [];
+  k.on('pageerror', e => kErr.push('pageerror: ' + e.message));
+  k.on('console', m => { if (m.type() === 'error') kErr.push('console: ' + m.text()); });
+  await k.goto(FILE);
+  await k.evaluate(() => localStorage.clear());
+  await k.goto(FILE + '#lo22');
+  await k.waitForTimeout(500);
+
+  // Arithmetic first: everything downstream is derived from JOURNAL, so if
+  // the journal does not balance nothing else can be trusted.
+  const arith = await k.evaluate(() => {
+    const bad = [];
+    JOURNAL.forEach(j => {
+      if (jDebits(j) !== jCredits(j)) bad.push(j.id + ' Dr ' + jDebits(j) + ' Cr ' + jCredits(j));
+      j.lines.forEach(l => {
+        if (!acct(l[0])) bad.push(j.id + ' posts to unknown account ' + l[0]);
+        if (l[1] && l[2]) bad.push(j.id + ' has a line that is both a debit and a credit');
+      });
+    });
+    const full = postedThrough(999);
+    const t = trialTotals(full);
+    return {
+      bad,
+      dr: t.dr, cr: t.cr,
+      // The figures the textbook prints for this problem.
+      bals: { cash: balOf(full, 'cash'), ar: balOf(full, 'ar'), sup: balOf(full, 'sup'),
+              ppi: balOf(full, 'ppi'), eqp: balOf(full, 'eqp'), ap: balOf(full, 'ap'),
+              cs: balOf(full, 'cs'), div: balOf(full, 'div'), rev: balOf(full, 'rev'),
+              mre: balOf(full, 'mre'), swx: balOf(full, 'swx') },
+      unused: ACCT.filter(a => !full[a.k].lines.length).map(a => a.k),
+      entries: ENTRIES2.length, reports: REPORTS2.length, journal: JOURNAL.length
+    };
+  });
+  check('every journal entry has equal debits and credits and real accounts',
+    arith.bad.length === 0, arith.bad.join('; '));
+  check('the trial balance columns both total 23,600',
+    arith.dr === 23600 && arith.cr === 23600, arith.dr + ' / ' + arith.cr);
+  const WANT = { cash: 5410, ar: 4600, sup: 900, ppi: 1800, eqp: 8000, ap: 5400,
+                 cs: 12000, div: 600, rev: 6200, mre: 290, swx: 2000 };
+  const wrongBal = Object.keys(WANT).filter(a => arith.bals[a] !== WANT[a]);
+  check('every posted balance matches the textbook solution', wrongBal.length === 0,
+    wrongBal.map(a => a + ' ' + arith.bals[a] + ' vs ' + WANT[a]).join(', '));
+  check('the accounts awaiting adjustment are still listed and empty',
+    ['swp', 're', 'supx', 'depx', 'insx'].every(x => arith.unused.indexOf(x) !== -1), arith.unused.join(','));
+  check('11 journal entries have 11 explanations', arith.entries === arith.journal && arith.journal === 11,
+    arith.entries + ' vs ' + arith.journal);
+
+  const kDash = await k.evaluate(() => {
+    const sc = document.querySelector('#pane-guide .scroll');
+    return {
+      cards: document.querySelectorAll('[data-open]').length,
+      x: sc.scrollWidth - sc.clientWidth,
+      d: document.documentElement.scrollWidth - window.innerWidth,
+      label: document.getElementById('prog-label').textContent,
+      name: document.getElementById('mod-name').textContent,
+      // The appbar wrapped to three lines before the labels were clamped.
+      barH: Math.round(document.querySelector('.appbar').getBoundingClientRect().height)
+    };
+  });
+  check('the 2.2 dashboard lists 11 entries and 2 reports', kDash.cards === 13, 'cards=' + kDash.cards);
+  check('the 2.2 dashboard does not overflow at 390px', kDash.x <= 0 && kDash.d <= 0, `+${kDash.x} / +${kDash.d}`);
+  check('the appbar stays two lines with the longer company name', kDash.barH <= 92, kDash.barH + 'px');
+
+  // Walk all 13 screens.
+  let kOk = true, kBad = [];
+  await k.click('#btn-next');
+  for (let i = 0; i < 13; i++) {
+    await k.waitForTimeout(60);
+    const o = await k.evaluate(() => {
+      const sc = document.querySelector('#pane-guide .scroll');
+      return {
+        x: sc.scrollWidth - sc.clientWidth,
+        d: document.documentElement.scrollWidth - window.innerWidth,
+        h1: document.querySelectorAll('h1').length,
+        viz: document.querySelectorAll('.viz').length,
+        label: document.getElementById('prog-label').textContent
+      };
+    });
+    if (o.x > 0 || o.d > 0) { kBad.push('screen ' + i + ' +' + o.x); kOk = false; }
+    if (o.h1 !== 1) { kBad.push('screen ' + i + ' h1=' + o.h1); kOk = false; }
+    if (o.viz < 1) { kBad.push('screen ' + i + ' has no illustration'); kOk = false; }
+    if (i < 12) await k.click('#btn-next');
+  }
+  check('all 13 of the 2.2 screens open cleanly with an illustration', kOk, kBad.slice(0, 3).join(', '));
+
+  // The posting illustration must show the entry landing in the right side
+  // of each T-account it touches.
+  await k.goto(FILE + '#lo22-j2');
+  await k.waitForTimeout(600);
+  const posting = await k.evaluate(() => {
+    const tas = [...document.querySelectorAll('.post-wrap .ta')];
+    return {
+      count: tas.length,
+      names: tas.map(t => t.querySelector('.ta-name').textContent),
+      // Equipment 8,000 must sit on the debit side; A/P and Cash on credit.
+      eqpDr: (tas[0].querySelector('.ta-side.d') || {}).textContent || '',
+      apCr: (tas[1].querySelector('.ta-side.c') || {}).textContent || '',
+      apDr: (tas[1].querySelector('.ta-side.d') || {}).textContent || '',
+      // The board must say Cash went DOWN even though it landed on credit.
+      down: [...document.querySelectorAll('.rule-acct.down')].map(e => e.textContent.replace(/\s+/g, ' ').trim())
+    };
+  });
+  check('a compound entry posts to all three of its accounts', posting.count === 3, 'ts=' + posting.count);
+  check('each amount lands on the side the journal put it',
+    /8,000/.test(posting.eqpDr) && /6,000/.test(posting.apCr) && !/6,000/.test(posting.apDr),
+    posting.names.join(' / '));
+  check('an account credited because it fell is marked as falling, not rising',
+    posting.down.length === 1 && /Cash/.test(posting.down[0]) && /2,000/.test(posting.down[0]),
+    JSON.stringify(posting.down));
+
+  // The 2.2 worksheet.
+  await k.goto(FILE + '#lo22');
+  await k.waitForTimeout(400);
+  await k.click('#tab-solve');
+  await k.waitForTimeout(400);
+  const ws2 = await k.evaluate(() => ({
+    cards: document.querySelectorAll('[data-tx2]').length,
+    slots: document.querySelectorAll('[data-fx2]').length,
+    fields: document.querySelectorAll('[data-field2]').length,
+    prefilled: [...document.querySelectorAll('#solve input')].filter(e => e.value).length,
+    score: document.getElementById('ws-score').textContent,
+    x: (() => { const s = document.querySelector('#pane-solve .scroll'); return s.scrollWidth - s.clientWidth; })()
+  }));
+  check('the 2.2 worksheet has a card per entry and a slot per line',
+    ws2.cards === 11 && ws2.slots === 23 && ws2.fields === 4,
+    `cards=${ws2.cards} slots=${ws2.slots} fields=${ws2.fields}`);
+  check('the 2.2 worksheet starts blank', ws2.prefilled === 0 && /0 of 15/.test(ws2.score), ws2.score);
+  check('the 2.2 worksheet does not overflow at 390px', ws2.x <= 0, '+' + ws2.x);
+
+  // Fill it correctly, through the controls.
+  const plan2 = await k.evaluate(() => JOURNAL.map((j, ji) => ({
+    ji, lines: j.lines.map(l => ({ k: l[0], s: l[1] ? 'D' : 'C', n: l[1] || l[2] }))
+  })));
+  for (const e of plan2) {
+    for (let i = 0; i < e.lines.length; i++) {
+      await k.selectOption(`[data-fx2="${e.ji}.${i}"]`, e.lines[i].k);
+      const sel = `[data-side="${e.ji}.${i}.${e.lines[i].s}"]`;
+      if (await k.getAttribute(sel, 'aria-pressed') !== 'true') await k.click(sel);
+      await k.fill(`[data-amt2="${e.ji}.${i}"]`, String(e.lines[i].n));
+    }
+  }
+  const ans2 = await k.evaluate(() => {
+    const f = postedThrough(999);
+    return { cash: balOf(f, 'cash'), ar: balOf(f, 'ar'), ap: balOf(f, 'ap'), tot: trialTotals(f).dr };
+  });
+  for (const [id, v] of Object.entries(ans2)) await k.fill(`[data-fld2="${id}"]`, String(v));
+  await k.click('#btn-check');
+  await k.waitForTimeout(250);
+  const solved2 = await k.evaluate(() => ({
+    score: document.getElementById('ws-score').textContent,
+    right: document.querySelectorAll('#solve .ws-tx.right').length,
+    wrong: document.querySelectorAll('#solve .ws-tx.wrong, #solve .ws-field.wrong').length
+  }));
+  check('a correctly journalized sheet scores 15 of 15', /15 of 15/.test(solved2.score), solved2.score);
+  check('every 2.2 entry and field is marked right', solved2.right === 11 && solved2.wrong === 0,
+    `right=${solved2.right} wrong=${solved2.wrong}`);
+
+  // A right-account-wrong-side error has to be told apart from a wrong
+  // account. Both lines have to flip: flipping one would simply unbalance the
+  // entry, and the harness would be testing the equal-sides message instead.
+  await k.click(`[data-side="0.0.D"]`);              // Cash: debit off
+  await k.click(`[data-side="0.0.C"]`);              // Cash: credited instead
+  await k.click(`[data-side="0.1.C"]`);              // Common Stock: credit off
+  await k.click(`[data-side="0.1.D"]`);              // Common Stock: debited instead
+  await k.click('#btn-check');
+  await k.waitForTimeout(200);
+  const sideErr = await k.evaluate(() =>
+    (document.querySelector('[data-note2="0"]') || {}).textContent || '');
+  check('crediting an account that should be debited is diagnosed as a side error',
+    /wrong side/.test(sideErr) && !/wrong account/.test(sideErr), sideErr.trim().slice(0, 90));
+
+  // Module isolation, measured the way a learner sees it rather than by the
+  // shape of what is in localStorage: reading 2.2 must show up as progress in
+  // 2.2 and must leave 2.1 untouched.
+  // Navigate the way a person would. A goto that only changes the hash does
+  // not reload the document or fire popstate, and the Solve tab empties
+  // #guide — measuring through either would report on the wrong screen.
+  const dashState = () => k.evaluate(() => ({
+    label: document.getElementById('prog-label').textContent,
+    read: document.querySelectorAll('[data-open].read').length,
+    name: document.getElementById('mod-name').textContent
+  }));
+  await k.click('#tab-guide');
+  await k.waitForTimeout(300);
+  const seen22 = await dashState();
+  await k.click('#mod-btn');
+  await k.waitForTimeout(250);
+  await k.click('[data-mod="0"]');
+  await k.waitForTimeout(400);
+  const seen21 = await dashState();
+  check('progress made in 2.2 shows up in 2.2',
+    seen22.read === 13 && /13 of 13/.test(seen22.label), JSON.stringify(seen22));
+  check('and leaves module 2.1 untouched',
+    seen21.read === 0 && /0 of 13/.test(seen21.label), JSON.stringify(seen21));
+
+  // The switcher.
+  await k.goto(FILE + '#lo21');
+  await k.waitForTimeout(400);
+  await k.click('#mod-btn');
+  await k.waitForTimeout(300);
+  const sheet = await k.evaluate(() => ({
+    open: document.getElementById('sheet').classList.contains('on'),
+    cards: document.querySelectorAll('[data-mod]').length,
+    current: document.querySelectorAll('[data-mod].on').length,
+    counts: [...document.querySelectorAll('[data-mod] em')].map(e => e.textContent)
+  }));
+  check('the switcher lists both modules and marks the open one',
+    sheet.open && sheet.cards === 2 && sheet.current === 1, JSON.stringify(sheet));
+  check('the switcher reports progress per module',
+    sheet.counts.some(c => /13 of 13|[1-9]\d* of 13/.test(c)), sheet.counts.join(' | '));
+  await k.keyboard.press('Escape');
+  await k.waitForTimeout(200);
+  check('Escape closes the switcher',
+    !(await k.evaluate(() => document.getElementById('sheet').classList.contains('on'))));
+  await k.click('#mod-btn');
+  await k.waitForTimeout(250);
+  await k.click('[data-mod="1"]');
+  await k.waitForTimeout(400);
+  check('choosing a module switches to it and updates the URL',
+    (await k.evaluate(() => location.hash)) === '#lo22' &&
+    /Kleene/.test(await k.evaluate(() => document.getElementById('mod-name').textContent)));
+
+  check('no console or page errors across module 2.2', kErr.length === 0, kErr.slice(0, 3).join(' | '));
+  await k.close();
 
   // ---------------------------------------------------------------
   console.log('\nMOTION');
