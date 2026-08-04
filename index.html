@@ -358,8 +358,13 @@ table.led tr.totals .lab { background: var(--good-soft); color: var(--good-deep)
 .stmt-line.hit .amt { color: var(--brand-ink); font-weight: 800; }
 .stmt-gap { height: 10px; }
 
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; border: 0;
+}
 .viz {
-  margin-top: 20px; padding: 18px 16px;
+  margin: 20px 0 0; padding: 18px 16px;
   border-radius: var(--r-lg);
   background: var(--surface); border: 1px solid var(--line);
   box-shadow: var(--shadow-sm);
@@ -2776,8 +2781,17 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       '<div class="route-col on" style="text-align:center">' + label + '</div></div>';
   }
 
-  function viz(cap, html) {
-    return '<div class="viz"><div class="viz-cap">' + cap + '</div>' + html + '</div>';
+  /* An aria-label is an attribute, so a stray quote in a claim would end it. */
+  function attr(t) { return String(t).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/<[^>]*>/g, ''); }
+
+  /* cap is the visible title; claim is the sentence a reader who cannot see
+     the picture gets instead of it. keepText spares figures whose text is the
+     content — role="img" would hide a whole trial balance to say one line. */
+  function viz(cap, html, claim, keepText) {
+    var body = html;
+    if (claim && keepText) body = '<p class="sr-only">' + claim + '</p>' + html;
+    else if (claim) body = '<div role="img" aria-label="' + attr(claim) + '">' + html + '</div>';
+    return '<figure class="viz"><figcaption class="viz-cap">' + cap + '</figcaption>' + body + '</figure>';
   }
 
   /* ---------- the dashboard ---------- */
@@ -2853,23 +2867,32 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         '<div class="ex-eyebrow">Entry <i>(' + row.id + ')</i> &middot; ' + (at + 1) + ' of ' + FLOW21.length + '</div>' +
         '<h1 class="ex-title">' + item.concept + '</h1>' +
         '<div class="ex-fact">' + WORK_TX[item.id] + '</div>' +
-        viz('What crossed, and in which direction', flowScene(item.scene)) +
+        viz('What crossed, and in which direction', flowScene(item.scene),
+          item.concept + ': what the business gave up, and what it received in return.') +
         '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
-        viz('What it does to the equation', balanceBoard(totalsThrough(at - 1), totalsThrough(at), fx)) +
-        (item.trap ? viz('The judgement call', trapViz(item.trap)) : '') +
+        viz('What it does to the equation', balanceBoard(totalsThrough(at - 1), totalsThrough(at), fx),
+          'After this entry, assets of ' + dollars(assetsOf(totalsThrough(at))) +
+          ' equal liabilities plus equity of ' + dollars(claimsOf(totalsThrough(at))) + '.') +
+        (item.trap ? viz('The judgement call', trapViz(item.trap),
+          'The tempting wrong treatment set beside the correct one.', true) : '') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.doc || '') +
-        viz('The row it produces', ledgerTable(99, fx.map(function (f) { return f.k; }), { remarks: true, only: at }));
+        viz('The row it produces', ledgerTable(99, fx.map(function (f) { return f.k; }), { remarks: true, only: at }),
+          'The single row this transaction adds to the tabular summary.', true);
     } else {
       var fin = totalsUpTo(999);
       body =
         '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW21.length + '</div>' +
         '<h1 class="ex-title">' + item.title + '</h1>' +
         '<div class="ex-fact">' + item.concept + '</div>' +
-        (item.feeds ? viz('Which columns feed this statement', routeViz(item.feeds, item.short)) : '') +
+        (item.feeds ? viz('Which columns feed this statement', routeViz(item.feeds, item.short),
+          'Which columns of the tabular summary flow into the ' + item.short + '.') : '') +
         '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
-        (item.totals ? viz('The equation, totalled', balanceBoard(zeroTotals(), fin, allEffects())) : '') +
-        (item.equity ? viz('Equity, decomposed', equityViz()) : '') +
+        (item.totals ? viz('The equation, totalled', balanceBoard(zeroTotals(), fin, allEffects()),
+          'With every transaction recorded, assets of ' + dollars(assetsOf(fin)) +
+          ' equal liabilities plus equity of ' + dollars(claimsOf(fin)) + '.') : '') +
+        (item.equity ? viz('Equity, decomposed', equityViz(),
+          'Equity splits into common stock and retained earnings, and retained earnings into revenue less expenses less dividends.') : '') +
         (item.stmt ? stmt(item.stmt, item.hits) : '') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
@@ -3550,14 +3573,19 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         '<div class="ex-eyebrow">Entry <i>' + (at + 1) + '</i> &middot; ' + j.date + ' &middot; ' + (at + 1) + ' of ' + FLOW2.length + '</div>' +
         '<h1 class="ex-title">' + item.concept + '</h1>' +
         '<div class="ex-fact">' + FACTS2[item.id] + '</div>' +
-        viz('Which side each account lands on', ruleBoard(j)) +
+        viz('Which side each account lands on', ruleBoard(j),
+          j.lines.map(function (l) {
+            return (l[1] ? 'Debit ' : 'Credit ') + acct(l[0]).name + ' ' + money2(l[1] || l[2]);
+          }).join('; ') + '.') +
         '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
         viz('The entry as it is written', journalEntry(j, {
           note: 'Debits are listed first and flush left; credits are listed second and indented. ' +
                 'Debits ' + money2(jDebits(j)) + ' = credits ' + money2(jCredits(j)) + '.'
-        })) +
-        (item.trap ? viz('The judgement call', trapViz(item.trap)) : '') +
-        viz('Posted to the ledger', postingViz(j)) +
+        }), 'The entry as it is written in the general journal.', true) +
+        (item.trap ? viz('The judgement call', trapViz(item.trap),
+          'The tempting wrong treatment set beside the correct one.', true) : '') +
+        viz('Posted to the ledger', postingViz(j),
+          'Each amount leaves the journal and lands in its own ledger account, on the same side it was written.') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
     } else {
@@ -3569,11 +3597,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
         (item.ledger ? viz('Every account in the ledger', '<div class="tas two">' +
             ACCT.filter(function (a) { return full[a.k].lines.length; })
-                .map(function (a) { return tAccount(full, a.k); }).join('') + '</div>') : '') +
+                .map(function (a) { return tAccount(full, a.k); }).join('') + '</div>',
+            'Every ledger account that was used, with its debits, its credits and the balance they leave.', true) : '') +
         (item.trial ? '<div class="card"><div class="stmt">' +
             '<div class="stmt-head"><b>' + CO2.name + '</b><span>Trial Balance</span><i>' + CO2.asAt + '</i></div>' +
             trialBalance(full) + '</div></div>' : '') +
-        (item.caveat ? viz('What a trial balance does not prove', trapViz(item.caveat)) : '') +
+        (item.caveat ? viz('What a trial balance does not prove', trapViz(item.caveat),
+          'Errors a trial balance still balances through.', true) : '') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
     }
@@ -4338,14 +4368,19 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var deferral = a.kind === 'deferral';
     var cashPct = deferral ? 8 : 82;
     var usePct = deferral ? 52 : 40;
+    var cashMark = '<span class="tl-mark cash" style="left:' + cashPct + '%">' +
+      '<b>Cash moves</b><u>' + (deferral ? 'already paid' : 'not yet') + '</u></span>';
+    var useMark = '<span class="tl-mark use" style="left:' + usePct + '%">' +
+      '<b>' + (a.lines[0][0] === 'ar' ? 'Service performed' : 'Benefit used') + '</b><u>during July</u></span>';
+    /* Emitted left to right. On an accrual the cash sits after the work, and
+       a reader going through this linearly has to meet them in that order or
+       the picture says the opposite of what it shows. */
+    var marks = cashPct < usePct ? cashMark + useMark : useMark + cashMark;
     return '<div class="tl">' +
         '<div class="tl-bar">' +
           '<i class="tl-tick" style="left:0"></i>' +
           '<i class="tl-tick" style="left:100%"></i>' +
-          '<span class="tl-mark cash" style="left:' + cashPct + '%">' +
-            '<b>Cash moves</b><u>' + (deferral ? 'already paid' : 'not yet') + '</u></span>' +
-          '<span class="tl-mark use" style="left:' + usePct + '%">' +
-            '<b>' + (a.lines[0][0] === 'ar' ? 'Service performed' : 'Benefit used') + '</b><u>during July</u></span>' +
+          marks +
         '</div>' +
         '<div class="tl-ends"><span>July 1</span><span>July 31</span></div>' +
       '</div>' +
@@ -4514,12 +4549,26 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         '<div class="ex-eyebrow">Adjustment <i>' + a.n + '</i> &middot; ' + (at + 1) + ' of ' + FLOW3.length + '</div>' +
         '<h1 class="ex-title">' + item.concept + '</h1>' +
         '<div class="ex-fact">' + a.fact + '</div>' +
-        viz('When the cash moved, and when it counted', timeline(a)) +
+        viz('When the cash moved, and when it counted', timeline(a),
+          a.kind === 'deferral'
+            ? 'On a July timeline the cash moved first, and the benefit was used up later. That makes this a deferral.'
+            : 'On a July timeline the work came first and the cash has still not moved. That makes this an accrual.') +
         '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
-        viz('The entry', journalEntry3(a)) +
-        viz('One of each, and never Cash', pairViz(a)) +
-        (item.contra ? viz('Why the credit does not go to Equipment', contraViz()) : '') +
-        viz('What it does to the trial balance', rowViz(a)) +
+        viz('The entry', journalEntry3(a), 'The adjusting entry as it is written.', true) +
+        viz('One of each, and never Cash', pairViz(a),
+          (function () {
+            var is = a.lines.filter(function (l) { return acct3(l[0]).stmt === 'I'; })[0];
+            var bs = a.lines.filter(function (l) { return acct3(l[0]).stmt === 'B'; })[0];
+            return 'This entry changes one income statement account, ' + acct3(is[0]).name.replace('&mdash;', ' ') +
+              ', and one balance sheet account, ' + acct3(bs[0]).name.replace('&mdash;', ' ') + '. It does not touch Cash.';
+          })()) +
+        (item.contra ? viz('Why the credit does not go to Equipment', contraViz(),
+          'Equipment stays on the books at its cost of $8,000; the $180 of depreciation sits beneath it in a separate account, leaving a book value of $7,820.', true) : '') +
+        viz('What it does to the trial balance', rowViz(a),
+          a.lines.map(function (l) {
+            var t = adjustedThrough(ADJ.indexOf(a));
+            return acct3(l[0]).name.replace('&mdash;', ' ') + ' becomes ' + dollars(t[l[0]] || 0);
+          }).join(', and ') + '.') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
     } else {
@@ -4528,8 +4577,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
         '<h1 class="ex-title">' + item.title + '</h1>' +
         '<div class="ex-fact">' + item.concept + '</div>' +
         '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
-        (item.families ? viz('The two kinds of gap', familiesViz()) : '') +
-        (item.worksheet ? viz('Unadjusted, adjustments, adjusted', worksheet3(999)) : '') +
+        (item.families ? viz('The two kinds of gap', familiesViz(),
+          'A deferral is cash that already moved and now has to be split between used and not yet used. An accrual is the reverse: something has happened that no cash has touched yet.', true) : '') +
+        (item.worksheet ? viz('Unadjusted, adjustments, adjusted', worksheet3(999),
+          'The trial balance carried across three column pairs: unadjusted, the adjustments, and the adjusted balances totalling $25,880 on each side.', true) : '') +
         '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
         (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
     }

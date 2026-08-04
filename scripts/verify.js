@@ -1533,6 +1533,80 @@ function check(name, ok, detail) {
   await cc.close();
 
   // ---------------------------------------------------------------
+  console.log('\nILLUSTRATIONS SAY WHAT THEY SHOW');
+  // ---------------------------------------------------------------
+  const v = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const vErr = [];
+  v.on('pageerror', e => vErr.push('pageerror: ' + e.message));
+
+  // A picture whose meaning is carried by position says nothing to a reader
+  // who cannot see it unless the figure states its claim.
+  const SCREENS = ['#lo21-t1', '#lo21-t5', '#lo21-r1', '#lo21-r4',
+                   '#lo22-j1', '#lo22-j5', '#lo22-r1', '#lo22-r2',
+                   '#lo23-a1', '#lo23-a2', '#lo23-a3', '#lo23-a5', '#lo23-why', '#lo23-atb'];
+  let mute = [], thin = [], notFigure = [];
+  for (const h of SCREENS) {
+    await v.goto(FILE + h);
+    await v.waitForTimeout(250);
+    const figs = await v.evaluate(() => [...document.querySelectorAll('#guide .viz')].map(f => {
+      const img = f.querySelector('[role="img"][aria-label]');
+      const sr = f.querySelector('.sr-only');
+      return {
+        tag: f.tagName,
+        caption: !!f.querySelector('figcaption'),
+        claim: img ? img.getAttribute('aria-label') : (sr ? sr.textContent : null),
+        cap: (f.querySelector('.viz-cap') || {}).textContent || ''
+      };
+    }));
+    figs.forEach(f => {
+      if (f.tag !== 'FIGURE' || !f.caption) notFigure.push(h + ' ' + f.cap);
+      if (!f.claim) mute.push(h + ' :: ' + f.cap);
+      // A claim has to be a sentence about the picture, not the title again.
+      else if (f.claim.trim().length < 25 || f.claim.trim() === f.cap.trim()) thin.push(h + ' :: ' + f.claim);
+    });
+  }
+  check('every illustration is a figure with a caption', notFigure.length === 0, notFigure.slice(0, 4).join(' | '));
+  check('every illustration states what it shows', mute.length === 0, mute.slice(0, 4).join(' | '));
+  check('and the claim is a sentence, not the title repeated', thin.length === 0, thin.slice(0, 4).join(' | '));
+
+  // The timeline's whole point is the order of two events. Reading it in DOM
+  // order has to give the same order the picture draws, or an accrual reads
+  // as a deferral.
+  let flipped = [];
+  for (const h of ['#lo23-a1', '#lo23-a2', '#lo23-a3', '#lo23-a4', '#lo23-a5']) {
+    await v.goto(FILE + h);
+    await v.waitForTimeout(250);
+    const r = await v.evaluate(() => {
+      const m = [...document.querySelectorAll('.tl-mark')];
+      const dom = m.map(e => e.querySelector('b').textContent);
+      const vis = m.slice().sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left)
+        .map(e => e.querySelector('b').textContent);
+      return { kind: document.querySelector('.tl-verdict b').textContent, dom, vis };
+    });
+    if (JSON.stringify(r.dom) !== JSON.stringify(r.vis)) flipped.push(h + ' ' + r.kind + ' reads ' + r.dom.join('/') + ' but draws ' + r.vis.join('/'));
+  }
+  check('the timeline reads in the order it draws, on accruals as well as deferrals',
+    flipped.length === 0, flipped.join(' | '));
+
+  // And the claim has to name the right family, since that is the lesson.
+  let wrongFamily = [];
+  for (const h of ['#lo23-a1', '#lo23-a2', '#lo23-a5']) {
+    await v.goto(FILE + h);
+    await v.waitForTimeout(250);
+    const r = await v.evaluate(() => {
+      const fig = [...document.querySelectorAll('#guide .viz')].find(f => f.querySelector('.tl'));
+      return { claim: fig.querySelector('[role="img"]').getAttribute('aria-label'),
+               kind: document.querySelector('.tl-verdict b').textContent.toLowerCase() };
+    });
+    if (r.claim.toLowerCase().indexOf(r.kind) === -1) wrongFamily.push(h + ' says ' + r.kind + ' but the claim reads "' + r.claim + '"');
+  }
+  check('the timeline claim names the same family the picture does',
+    wrongFamily.length === 0, wrongFamily.join(' | '));
+
+  check('no console or page errors across the illustrations', vErr.length === 0, vErr.slice(0, 3).join(' | '));
+  await v.close();
+
+  // ---------------------------------------------------------------
   console.log('\nMOTION');
   // ---------------------------------------------------------------
   const reduced = await browser.newPage({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce' });
