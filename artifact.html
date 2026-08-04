@@ -1281,6 +1281,16 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   flex: 0 0 auto; font-family: var(--mono); font-size: 11px; font-weight: 700;
   color: var(--muted); font-variant-numeric: tabular-nums;
 }
+/* A row that is not one of the problem's instructions reads as an aside, not
+   as a task of equal standing — otherwise the panel misrepresents the problem
+   in the very place it is meant to state it. */
+.instr-row.extra { background: var(--surface-2); }
+.instr-row.extra .instr-k { color: var(--muted); }
+.instr-row.extra .instr-t { color: var(--muted); font-size: 12.5px; }
+.ws-sect.extra { color: var(--muted); }
+.ws-aside {
+  margin: 9px 0 4px; font-size: 12.5px; line-height: 1.55; color: var(--muted);
+}
 .instr-row.done { color: var(--good-deep); }
 .instr-row.done .instr-n { color: var(--good-deep); }
 
@@ -1905,6 +1915,16 @@ var WORK_HINTS = {
 /* Part 2: the five figures the three statements are built from.
    Each answer is a function of column totals, so it is checked
    against the ledger rather than against a typed-in constant. */
+/* The problem prints one instruction. The second row is not an instruction —
+   it is the extra practice this app adds, and it says so, because a learner
+   who cannot tell the two apart cannot tell what the exam would ask. */
+var INSTRUCTIONS21 = [
+  { id: 'a', kind: 'printed',
+    text: 'Prepare a tabular summary of the effects of these transactions on the accounting equation.' },
+  { id: 'x', kind: 'extra',
+    text: 'Beyond the problem: read the totals off as the figures the financial statements are built from.' }
+];
+
 var WORK_FIELDS = [
   { id: 'ni', label: 'Net income for July',
     answer: function (t) { return t.rev - t.exp; },
@@ -2493,8 +2513,8 @@ var METHOD3 = [
    ============================================================ */
 var MODULES = [
   { id: 'lo21', code: 'LO 2.1', name: 'The accounting equation',
-    co: 'Speedy Delivery Inc.', sub: 'Nine entries in a tabular summary',
-    blurb: 'Record seven July transactions in a tabular summary and turn the totals into three financial statements.',
+    co: 'Speedy Delivery Inc.', sub: 'Seven transactions, nine lines',
+    blurb: 'Record seven July transactions in a tabular summary, then see where the totals go in the three financial statements.',
     count: '13 screens' },
   { id: 'lo22', code: 'LO 2.2', name: 'Journalize, post, trial balance',
     co: 'Kleene Window Washing Inc.', sub: 'Eleven journal entries',
@@ -3100,9 +3120,40 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function scoreNow() {
-    var rows = 0;
-    LEDGER.forEach(function (r, ri) { if (rowRight(ri)) rows++; });
-    return { got: rows + WORK_FIELDS.filter(fieldRight).length, total: LEDGER.length + WORK_FIELDS.length };
+    var a = 0;
+    LEDGER.forEach(function (r, ri) { if (rowRight(ri)) a++; });
+    var x = WORK_FIELDS.filter(fieldRight).length;
+    return {
+      got: a + x, total: LEDGER.length + WORK_FIELDS.length,
+      parts: { a: a, x: x }, caps: { a: LEDGER.length, x: WORK_FIELDS.length }
+    };
+  }
+
+  function instrPanel21() {
+    var sc = scoreNow();
+    return '<div class="instr">' +
+      '<div class="instr-cap">Instructions</div>' +
+      INSTRUCTIONS21.map(function (i) {
+        var got = sc.parts[i.id], cap = sc.caps[i.id], done = cap > 0 && got === cap;
+        return '<div class="instr-row' + (done ? ' done' : '') + (i.kind === 'extra' ? ' extra' : '') + '">' +
+          '<span class="instr-k">' + (done ? ICON.check : (i.kind === 'extra' ? '+' : i.id + '.')) + '</span>' +
+          '<span class="instr-t">' + i.text + '</span>' +
+          '<span class="instr-n">' + got + '/' + cap + '</span></div>';
+      }).join('') +
+      '</div>';
+  }
+
+  function refreshInstr21() {
+    var host = $('solve').querySelector('.instr');
+    if (!host) return;
+    var sc = scoreNow();
+    Array.prototype.forEach.call(host.querySelectorAll('.instr-row'), function (row, i) {
+      var x = INSTRUCTIONS21[i], got = sc.parts[x.id], cap = sc.caps[x.id];
+      var done = cap > 0 && got === cap;
+      row.classList.toggle('done', done);
+      row.querySelector('.instr-k').innerHTML = done ? ICON.check : (x.kind === 'extra' ? '+' : x.id + '.');
+      row.querySelector('.instr-n').textContent = got + '/' + cap;
+    });
   }
 
   function renderSolve() {
@@ -3157,15 +3208,17 @@ document.getElementById('next-icon').innerHTML = ICON.next;
           '<span class="sw-bar-id"><h1>' + CO.name + '</h1><span>Tabular summary &middot; Jul 2025</span></span>' +
           '<span class="sw-counts"><span class="sw-count" id="wp-count"><b>0</b><u>of 9 lines</u></span></span>' +
         '</div>' +
+        instrPanel21() +
         '<div class="ws-sect">Source documents<i></i></div>' + srcs +
-        '<div class="ws-sect">The working paper<i></i></div>' +
+        '<div class="ws-sect">a &middot; The tabular summary<i></i></div>' +
         '<div class="sw-panel"><div class="sw-panel-hd"><b>Tabular summary</b><span>swipe to see every column</span></div>' +
           '<div class="wp-scroll"><table class="wp"><thead>' + grp + head + '</thead>' +
           '<tbody>' + body + '</tbody><tfoot>' + foot + '</tfoot></table></div>' +
           '<div class="sw-panel-bd" style="padding-top:0">' + proof + '</div>' +
         '</div>' +
         '<p class="wp-tip">' + ICON.bulb + 'Enter the amount in the column it belongs to. Type a minus sign for a decrease, and leave a cell empty when the transaction does not touch it.</p>' +
-        '<div class="ws-sect">Report the results<i></i></div>' +
+        '<div class="ws-sect extra">Beyond the problem &middot; Report the results<i></i></div>' +
+        '<p class="ws-aside">The problem stops at the summary above. These five figures are not part of it &mdash; they are where the totals go next, and each one is a line of a financial statement you have already met in the guide.</p>' +
         '<div class="ws-fields">' + fields + '</div>' +
         '<button type="button" class="ws-reset" id="ws-reset">Clear my work and start again</button>' +
       '</div>';
@@ -3177,8 +3230,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     refreshWp();
   }
 
-  /* Foot the columns and redraw the proof without rebuilding the grid. */
+  /* Foot the columns and redraw the proof without rebuilding the grid. The
+     instruction panel is refreshed here too, so it tracks the same keystrokes. */
   function refreshWp() {
+    refreshInstr21();
     var t = workTotals(), A = assetsOf(t), C = claimsOf(t);
     var cells = $('solve').querySelectorAll('tfoot td');
     COLS.forEach(function (c, i) {
@@ -3262,7 +3317,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       box.classList.remove('right', 'wrong');
       var bad = box.querySelector('.ws-note.bad');
       if (bad) bad.remove();
-      saveWork(); renderControls();
+      saveWork(); refreshInstr21(); renderControls();
     });
 
     host.addEventListener('click', function (e) {

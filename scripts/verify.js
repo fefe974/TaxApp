@@ -548,6 +548,84 @@ function check(name, ok, detail) {
   check('no working-paper console or page errors', wsErrors.length === 0, wsErrors.slice(0, 3).join(' | '));
   await ws.close();
   // ---------------------------------------------------------------
+  console.log('\nWHAT 2.1 ASKS FOR');
+  // ---------------------------------------------------------------
+  // LO 2.1 prints one instruction. The five reported figures are this app's
+  // own addition — useful, but a learner has to be able to tell which is
+  // which, or they cannot tell what the problem would actually ask them.
+  const w = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  const wErr = [];
+  w.on('pageerror', e => wErr.push('pageerror: ' + e.message));
+  w.on('console', m => { if (m.type() === 'error') wErr.push('console: ' + m.text()); });
+  await w.goto(FILE);
+  await w.evaluate(() => localStorage.clear());
+  await w.goto(FILE + '#lo21');
+  await w.waitForTimeout(400);
+  await w.click('#tab-solve');
+  await w.waitForTimeout(400);
+
+  const PRINTED = 'Prepare a tabular summary of the effects of these transactions on the accounting equation.';
+
+  const instr = await w.evaluate(() => {
+    const rows = [...document.querySelectorAll('#solve .instr-row')];
+    return {
+      count: rows.length,
+      texts: rows.map(r => r.querySelector('.instr-t').textContent.trim()),
+      keys: rows.map(r => r.querySelector('.instr-k').textContent.trim()),
+      caps: rows.map(r => r.querySelector('.instr-n').textContent.trim()),
+      extra: rows.map(r => r.classList.contains('extra')),
+      sections: [...document.querySelectorAll('#solve .ws-sect')].map(e => e.textContent.trim())
+    };
+  });
+  check('2.1 states the problem\'s printed instruction verbatim',
+    instr.texts[0] === PRINTED, instr.texts[0]);
+  check('the tabular summary carries all nine marks of that instruction',
+    instr.caps[0] === '0/9', instr.caps[0]);
+  check('the five reported figures are marked as beyond the problem, not as an instruction',
+    instr.count === 2 && instr.extra[0] === false && instr.extra[1] === true &&
+    instr.keys[1] === '+' && /Beyond the problem/i.test(instr.texts[1]),
+    JSON.stringify({ keys: instr.keys, extra: instr.extra }));
+  check('and they are worth their own five marks, kept apart from the instruction',
+    instr.caps[1] === '0/5', instr.caps[1]);
+  check('the section headings say the same thing the panel does',
+    instr.sections.some(x => /^a . The tabular summary/.test(x)) &&
+    instr.sections.some(x => /Beyond the problem/.test(x)),
+    instr.sections.join(' | '));
+
+  // The two halves have to move independently, or the split is cosmetic.
+  await w.fill('[data-cell="0.cash"]', '10000');
+  await w.fill('[data-cell="0.cs"]', '10000');
+  await w.waitForTimeout(250);
+  const afterRow = await w.evaluate(() =>
+    [...document.querySelectorAll('#solve .instr-n')].map(e => e.textContent.trim()));
+  check('a correct summary line advances the printed instruction and nothing else',
+    afterRow[0] === '1/9' && afterRow[1] === '0/5', afterRow.join(' '));
+
+  await w.fill('[data-fld="ni"]', '1800');
+  await w.waitForTimeout(250);
+  const afterFld = await w.evaluate(() =>
+    [...document.querySelectorAll('#solve .instr-n')].map(e => e.textContent.trim()));
+  check('a reported figure advances only the beyond-the-problem line',
+    afterFld[0] === '1/9' && afterFld[1] === '1/5', afterFld.join(' '));
+
+  // Reported figures are typed straight into fields, which do not go through
+  // refreshWp — the panel went stale on exactly the half it tracks.
+  check('the panel tracks figures typed into fields, not just grid cells',
+    afterFld[1] === '1/5', afterFld[1]);
+
+  const card = await w.evaluate(() => {
+    const m = MODULES[0];
+    return { sub: m.sub, blurb: m.blurb };
+  });
+  check('the module card does not claim the problem asks for financial statements',
+    !/turn the totals into three financial statements/.test(card.blurb), card.blurb);
+  check('and it counts the problem\'s seven transactions, not the nine lines they fill',
+    /[Ss]even/.test(card.sub) && /[Ss]even/.test(card.blurb), card.sub + ' | ' + card.blurb);
+
+  check('no console or page errors across module 2.1\'s worksheet', wErr.length === 0, wErr.slice(0, 3).join(' | '));
+  await w.close();
+
+  // ---------------------------------------------------------------
   console.log('\nMODULE 2.2 — JOURNALIZE, POST, TRIAL BALANCE');
   // ---------------------------------------------------------------
   const k = await browser.newPage({ viewport: { width: 390, height: 900 } });
