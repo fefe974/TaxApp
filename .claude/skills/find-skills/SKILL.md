@@ -62,8 +62,17 @@ partner correct a bad match before you've built on it.
 
 ## Beyond the filesystem
 
-The script only sees skills on disk. When the tools are available, these reach
-the rest:
+The script only sees skills on disk, and a good number are not there.
+
+**Read the harness's own available-skills listing too.** Skills served by the
+control plane — `dataviz`, `artifact-diagramming`, `artifact-design`,
+`claude-api` and others — are invocable by name through the Skill tool but have
+no `SKILL.md` anywhere on the machine, so this script cannot find them however
+you word the query. They appear only in the `<system-reminder>` listing of
+available skills. Scan that list by hand as a second pass; it is short, and the
+one you want may well be in it.
+
+When the tools are available, these reach further still:
 
 - `ListSkills` / `SearchSkills` — the user's claude.ai skill library
 - `SuggestSkills` — skills they could add but haven't
