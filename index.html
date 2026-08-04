@@ -1409,6 +1409,177 @@ table.wp tfoot .rowlab {
   .gl-hd, .gl-row, .gl-foot { grid-template-columns: 1fr 68px 68px; }
 }
 
+/* ---------- module 2.3: adjusting entries ---------- */
+
+/* The timeline. One idea carries the whole module: the cash and the
+   earning happen at different moments. The 54px side padding is what
+   keeps a centred label inside the card at 320px — the markers sit as
+   close as 8% and 82% along the bar. */
+.tl { position: relative; padding: 52px 54px 46px; }
+.tl-bar {
+  position: relative; height: 10px; border-radius: 5px;
+  background: linear-gradient(90deg, var(--brand-soft), var(--surface-2));
+  border: 1px solid var(--line-strong);
+}
+.tl-tick {
+  position: absolute; top: -6px; width: 2px; height: 20px;
+  background: var(--line-strong); margin-left: -1px;
+}
+.tl-mark {
+  position: absolute; top: 50%;
+  width: 104px; margin-left: -52px; text-align: center;
+}
+.tl-mark::before {
+  content: ''; position: absolute; left: 50%; top: -7px; margin-left: -7px;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 3px solid var(--surface);
+}
+.tl-mark b, .tl-mark u {
+  display: block; text-decoration: none;
+  white-space: normal; line-height: 1.3;
+}
+.tl-mark b { font-size: 11.5px; font-weight: 800; }
+.tl-mark u { font-size: 10.5px; color: var(--muted); font-weight: 600; margin-top: 1px; }
+.tl-mark.cash { transform: translateY(-100%); padding-bottom: 18px; }
+/* The cash label hangs above the bar, so its dot has to hang off its bottom. */
+.tl-mark.cash::before { top: auto; bottom: -7px; }
+.tl-mark.use { padding-top: 18px; }
+.tl-mark.cash::before { background: var(--amber); }
+.tl-mark.use::before { background: var(--brand); }
+.tl-mark.cash b { color: var(--amber-ink); }
+.tl-mark.use b { color: var(--brand-ink); }
+/* The end dates sit in the side padding, clear of both markers. */
+.tl-ends {
+  position: absolute; left: 0; right: 0; top: 51px;
+  display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 9.5px; line-height: 1; color: var(--muted);
+}
+.tl-verdict {
+  margin-top: 6px; padding: 11px 13px; border-radius: var(--r-md);
+  border: 1px solid;
+}
+.tl-verdict b { display: block; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+.tl-verdict span { display: block; font-size: 12.5px; line-height: 1.5; color: var(--text-dim); }
+.tl-verdict.def { background: var(--amber-soft); border-color: var(--amber-line); }
+.tl-verdict.acc { background: var(--brand-soft); border-color: var(--brand-line); }
+.tl-verdict.def b { color: var(--amber-ink); }
+.tl-verdict.acc b { color: var(--brand-ink); }
+
+/* One income statement account, one balance sheet account, never Cash. */
+.pair { display: grid; gap: 10px; }
+@media (min-width: 480px) { .pair { grid-template-columns: 1fr 1fr; } }
+.pair-col { border-radius: var(--r-md); border: 1px solid var(--line-strong); padding: 11px 12px; }
+.pair-col.i { background: var(--amber-soft); border-color: var(--amber-line); }
+.pair-col.b { background: var(--brand-soft); border-color: var(--brand-line); }
+.pair-cap {
+  display: block; font-size: 10px; font-weight: 800;
+  letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 7px;
+}
+.pair-col.i .pair-cap { color: var(--amber-ink); }
+.pair-col.b .pair-cap { color: var(--brand-ink); }
+.pair-acct b {
+  font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--muted);
+}
+.pair-acct span { display: block; font-size: 13px; font-weight: 700; margin-top: 2px; line-height: 1.35; }
+.pair-acct em {
+  font-style: normal; display: block; margin-top: 6px;
+  font-family: var(--mono); font-size: 12.5px; font-weight: 800;
+  font-variant-numeric: tabular-nums; color: var(--text);
+}
+
+/* A contra account: both figures stay on the books. */
+.contra { border-radius: var(--r-md); border: 1px solid var(--line-strong); overflow: hidden; }
+.contra-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 10px 12px; background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.contra-row span { font-size: 12.5px; color: var(--text-dim); }
+.contra-row b {
+  font-family: var(--mono); font-size: 13px; font-weight: 800;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.contra-row.less b { color: var(--bad); }
+.contra-row.net {
+  background: var(--good-soft); border-bottom: 0;
+}
+.contra-row.net span { color: var(--good-deep); font-weight: 700; }
+.contra-row.net b { color: var(--good-deep); }
+
+/* What one adjustment does to the rows it touches. */
+.rowfx-hd, .rowfx-row {
+  display: grid; grid-template-columns: 1fr 70px 70px 70px; gap: 6px;
+  align-items: baseline;
+}
+/* Lower case and unspaced: 'unadjusted' has to fit a 58px column at 320px. */
+.rowfx-hd {
+  font-size: 9.5px; font-weight: 700; color: var(--muted);
+  text-align: right; margin-bottom: 7px;
+}
+.rowfx { display: grid; gap: 7px; }
+.rowfx-row {
+  padding: 9px 10px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+}
+.rowfx-name { font-size: 12px; font-weight: 700; line-height: 1.3; min-width: 0; }
+.rowfx-name b { font-family: var(--mono); font-weight: 700; color: var(--muted); }
+.rowfx-n, .rowfx-op {
+  font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums;
+  text-align: right; white-space: nowrap;
+}
+.rowfx-n { color: var(--muted); }
+.rowfx-op { color: var(--brand-ink); font-weight: 800; }
+.rowfx-n.to { color: var(--good-deep); font-weight: 800; }
+@media (max-width: 400px) {
+  .rowfx-hd, .rowfx-row { grid-template-columns: 1fr 58px 58px 58px; }
+}
+
+/* The two kinds of gap. */
+.fam { display: grid; gap: 10px; }
+@media (min-width: 480px) { .fam { grid-template-columns: 1fr 1fr; } }
+.fam-col { border-radius: var(--r-md); border: 1px solid; padding: 12px 13px; }
+.fam-col.def { background: var(--amber-soft); border-color: var(--amber-line); }
+.fam-col.acc { background: var(--brand-soft); border-color: var(--brand-line); }
+.fam-cap { display: block; font-size: 13px; font-weight: 800; }
+.fam-col.def .fam-cap { color: var(--amber-ink); }
+.fam-col.acc .fam-cap { color: var(--brand-ink); }
+.fam-col p { font-size: 12.5px; line-height: 1.5; color: var(--text-dim); margin-top: 5px; }
+.fam-col ul { list-style: none; padding-left: 0; margin-top: 9px; display: grid; gap: 5px; }
+.fam-col li {
+  font-size: 12px; color: var(--text-dim); padding-left: 14px; position: relative;
+}
+.fam-col li::before {
+  content: ''; position: absolute; left: 0; top: 7px;
+  width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5;
+}
+
+/* The three-column-pair worksheet. Read-only cells have to match the
+   editable ones exactly or the columns stop lining up. */
+table.wp td.ro {
+  width: 78px; min-width: 78px; height: 40px; padding: 0 6px;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: var(--surface-2); color: var(--text-dim);
+  font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+table.wp td.ro.hit {
+  background: var(--brand-soft); color: var(--brand-ink); font-weight: 800;
+}
+table.wp td.ro.adj { background: var(--amber-soft); color: var(--amber-ink); font-weight: 700; }
+table.wp td.hcell {
+  width: 40px; min-width: 40px; padding: 0 4px;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+table.wp tr.notrow td { padding: 0; background: var(--surface); border-bottom: 1px solid var(--line); }
+table.wp tr.notrow td > div:empty { display: none; }
+/* A note row with nothing in it should not take up a row of height. */
+table.wp tr.notrow:not(:has(div:not(:empty))) { display: none; }
+table.wp tr.notrow td > div { padding: 0 8px 8px; position: sticky; left: 0; max-width: 92vw; }
+table.wp.w3 .rowlab { min-width: 132px; max-width: 132px; white-space: normal; line-height: 1.25; padding: 6px 8px; font-size: 10.5px; }
+table.wp.w3 tfoot td { height: auto; }
+table.wp.w3 tfoot .cell { background: var(--good-soft); color: var(--good-deep); font-weight: 800; }
+
 /* ---------- bottom controls ---------- */
 .controls {
   flex: 0 0 auto;
@@ -2177,10 +2348,165 @@ var METHOD2 = [
 ];
 
 /* ============================================================
+   MODULE 2.3 — Kleene Window Washing Inc.
+   Prepare adjusting entries and show their effects on the
+   trial balance.
+
+   The unadjusted trial balance is given by the problem. ADJ is
+   the only other place a figure is written down, so the
+   adjusted trial balance is derived rather than transcribed.
+   ============================================================ */
+
+/* Accumulated Depreciation is new here: a contra asset, sitting under
+   Equipment and carrying a credit balance. */
+var ACCT3 = [
+  { k: 'cash', no: '101', name: 'Cash',                          fam: 'Asset',        up: 'D', stmt: 'B' },
+  { k: 'ar',   no: '112', name: 'Accounts Receivable',           fam: 'Asset',        up: 'D', stmt: 'B' },
+  { k: 'sup',  no: '126', name: 'Supplies',                      fam: 'Asset',        up: 'D', stmt: 'B' },
+  { k: 'ppi',  no: '130', name: 'Prepaid Insurance',             fam: 'Asset',        up: 'D', stmt: 'B' },
+  { k: 'eqp',  no: '157', name: 'Equipment',                     fam: 'Asset',        up: 'D', stmt: 'B' },
+  { k: 'adep', no: '158', name: 'Accumulated Depreciation&mdash;Equipment', fam: 'Contra asset', up: 'C', stmt: 'B' },
+  { k: 'ap',   no: '201', name: 'Accounts Payable',              fam: 'Liability',    up: 'C', stmt: 'B' },
+  { k: 'swp',  no: '212', name: 'Salaries and Wages Payable',    fam: 'Liability',    up: 'C', stmt: 'B' },
+  { k: 'cs',   no: '311', name: 'Common Stock',                  fam: 'Equity',       up: 'C', stmt: 'B' },
+  { k: 'div',  no: '332', name: 'Dividends',                     fam: 'Dividends',    up: 'D', stmt: 'B' },
+  { k: 'rev',  no: '400', name: 'Service Revenue',               fam: 'Revenue',      up: 'C', stmt: 'I' },
+  { k: 'mre',  no: '729', name: 'Maintenance and Repairs Expense', fam: 'Expense',    up: 'D', stmt: 'I' },
+  { k: 'supx', no: '631', name: 'Supplies Expense',              fam: 'Expense',      up: 'D', stmt: 'I' },
+  { k: 'depx', no: '711', name: 'Depreciation Expense',          fam: 'Expense',      up: 'D', stmt: 'I' },
+  { k: 'insx', no: '722', name: 'Insurance Expense',             fam: 'Expense',      up: 'D', stmt: 'I' },
+  { k: 'swx',  no: '726', name: 'Salaries and Wages Expense',    fam: 'Expense',      up: 'D', stmt: 'I' }
+];
+function acct3(k) { return ACCT3.filter(function (a) { return a.k === k; })[0]; }
+
+/* Given by the problem: the trial balance module 2.2 produced. */
+var UNADJ = {
+  cash: 5410, ar: 4600, sup: 900, ppi: 1800, eqp: 8000, adep: 0, ap: 5400, swp: 0,
+  cs: 12000, div: 600, rev: 6200, mre: 290, supx: 0, depx: 0, insx: 0, swx: 2000
+};
+
+/* kind drives the timeline illustration: a deferral has the cash first and
+   the using-up later; an accrual has it the other way round. */
+var ADJ = [
+  { id: 'a1', n: 1, kind: 'accrual',
+    fact: 'Services performed but unbilled and uncollected at July 31 were $1,700.',
+    lines: [['ar', 1700, 0], ['rev', 0, 1700]] },
+  { id: 'a2', n: 2, kind: 'deferral',
+    fact: 'Depreciation on equipment for the month was $180.',
+    lines: [['depx', 180, 0], ['adep', 0, 180]] },
+  { id: 'a3', n: 3, kind: 'deferral',
+    fact: 'One-twelfth of the insurance expired.',
+    working: '$1,800 &times; 1/12',
+    lines: [['insx', 150, 0], ['ppi', 0, 150]] },
+  { id: 'a4', n: 4, kind: 'deferral',
+    fact: 'A count shows $320 of cleaning supplies on hand at July 31.',
+    working: '$900 &minus; $320',
+    lines: [['supx', 580, 0], ['sup', 0, 580]] },
+  { id: 'a5', n: 5, kind: 'accrual',
+    fact: 'Accrued but unpaid employee salaries were $400.',
+    lines: [['swx', 400, 0], ['swp', 0, 400]] }
+];
+
+function adjDebits(a)  { return a.lines.reduce(function (n, l) { return n + l[1]; }, 0); }
+function adjCredits(a) { return a.lines.reduce(function (n, l) { return n + l[2]; }, 0); }
+
+/* Balances after the adjustments through index `upto` (999 for all). */
+function adjustedThrough(upto) {
+  var t = {};
+  ACCT3.forEach(function (a) { t[a.k] = UNADJ[a.k] || 0; });
+  ADJ.slice(0, upto + 1).forEach(function (a) {
+    a.lines.forEach(function (l) {
+      var up = acct3(l[0]).up;
+      t[l[0]] += (up === 'D') ? (l[1] - l[2]) : (l[2] - l[1]);
+    });
+  });
+  return t;
+}
+/* What an adjustment does to one account's row, as a signed pair. */
+function adjOn(k, upto) {
+  var d = 0, c = 0;
+  ADJ.slice(0, upto === undefined ? ADJ.length : upto + 1).forEach(function (a) {
+    a.lines.forEach(function (l) { if (l[0] === k) { d += l[1]; c += l[2]; } });
+  });
+  return { d: d, c: c };
+}
+function tbTotals3(t) {
+  var d = 0, c = 0;
+  ACCT3.forEach(function (a) {
+    var v = t[a.k];
+    if (!v) return;
+    if (a.up === 'D') d += v; else c += v;
+  });
+  return { d: d, c: c };
+}
+
+var ENTRIES3 = [
+  { id: 'a1', short: 'Services performed but not billed',
+    concept: 'Revenue earned before anyone is invoiced',
+    rule: 'Revenue belongs to the period the work was done in, whether or not it has been billed.',
+    why: ['Cleaning was carried out before July 31 that has not been invoiced. Nothing has been recorded, so July&rsquo;s revenue is understated by $1,700 and so is the amount owed to the business.',
+          '<b>Accounts Receivable</b> is debited to record the right to collect, and <b>Service Revenue</b> is credited because the work is what earned it.'],
+    take: 'Without this entry the revenue would land in August, in the month it was invoiced rather than the month it was earned.' },
+
+  { id: 'a2', short: 'Depreciation for the month',
+    concept: 'Spreading the cost of something that lasts',
+    rule: 'Depreciation allocates a cost already paid. It is not a valuation and it moves no cash.',
+    why: ['The $8,000 truck was paid for on July 1 but will be used for years. July should carry only one month of that cost: <b>$180</b>.',
+          'The credit does not go to Equipment. It goes to <b>Accumulated Depreciation&mdash;Equipment</b>, a contra asset that sits under Equipment and is subtracted from it, so the original cost stays visible.'],
+    take: 'Equipment $8,000 less accumulated depreciation $180 gives a book value of $7,820 — and both figures are worth knowing.',
+    contra: true },
+
+  { id: 'a3', short: 'Insurance expired',
+    concept: 'An asset used up a month at a time',
+    rule: 'A prepayment becomes an expense as the benefit is consumed.',
+    why: ['The $1,800 policy bought twelve months of cover from July 1. One month of it has now been used, so one twelfth of the cost belongs to July: <b>$150</b>.',
+          '<b>Insurance Expense</b> is debited and <b>Prepaid Insurance</b> is credited, leaving $1,650 of cover still owned at July 31.'],
+    take: 'The same entry will be made in each of the eleven months that follow, until the asset is gone.' },
+
+  { id: 'a4', short: 'Supplies used',
+    concept: 'Counted, not calculated',
+    rule: 'What was used is what is missing: opening balance less what is still on the shelf.',
+    why: ['$900 of supplies was bought and never expensed. A count at July 31 finds <b>$320</b> still on hand, so <b>$580</b> was used during the month.',
+          '<b>Supplies Expense</b> is debited $580 and <b>Supplies</b> is credited, leaving the asset at what the count says it is.'],
+    take: 'This is the one adjustment that starts with a physical count rather than a calculation.' },
+
+  { id: 'a5', short: 'Salaries owed but unpaid',
+    concept: 'A cost incurred before it is paid',
+    rule: 'An expense belongs to the period the work was done in, not the period it is paid in.',
+    why: ['Employees worked days in July that fall before the next payday. The business owes <b>$400</b> for that work and has recorded none of it.',
+          '<b>Salaries and Wages Expense</b> is debited and <b>Salaries and Wages Payable</b> is credited, so July carries the cost and the balance sheet shows the debt.'],
+    take: 'When the wages are paid in August the entry will debit the payable, not the expense — the expense is already recorded.' }
+];
+
+var REPORTS3 = [
+  { id: 'why', short: 'Why any of this is needed', title: 'Why the books need adjusting',
+    concept: 'Cash moves on its own schedule; the period has to be reported on its own',
+    rule: 'Every adjusting entry touches one income statement account and one balance sheet account, and never Cash.',
+    why: ['A month has to be reported as a month. Revenue belongs to the period it was earned in and an expense to the period it was incurred in, and neither waits for the cash to move.',
+          'That leaves two gaps to close at period end. A <b>deferral</b> is cash that already moved and now has to be split between what has been used and what has not: prepaid insurance, supplies, the cost of the truck. An <b>accrual</b> is the reverse &mdash; work done or costs incurred that no cash has touched yet: unbilled services, unpaid wages.'],
+    families: true },
+  { id: 'atb', short: 'The adjusted trial balance', title: 'Show the effects and prove the ledger again',
+    concept: 'Unadjusted, plus the adjustments, gives the adjusted balances',
+    rule: 'Both columns have to agree again — the adjustments were balanced entries, so the ledger stays in balance.',
+    why: ['Each adjustment is carried onto the row of the account it touches, and the row is extended to a new balance.',
+          'The totals rise from <b>$23,600</b> to <b>$25,880</b>, because the five entries added $2,280 of debits and the same in credits. The adjusted figures are the ones the financial statements are built from.'],
+    worksheet: true,
+    result: 'Adjusted totals $25,880 = $25,880.' }
+];
+
+var METHOD3 = [
+  ['Ask what period the revenue or cost belongs to', 'July, or not July'],
+  ['Decide whether the cash has already moved', 'Deferral &middot; Accrual'],
+  ['Name the income statement account it changes', 'Revenue or an expense'],
+  ['Name the balance sheet account it changes', 'Never Cash']
+];
+
+/* ============================================================
    THE MODULES
-   Two problems from the same chapter. 2.1 records transactions in
+   Three problems from the same chapter. 2.1 records transactions in
    a tabular summary; 2.2 records the same kind of events in a
-   journal, posts them, and proves the ledger.
+   journal, posts them, and proves the ledger; 2.3 adjusts the
+   ledger 2.2 produced and proves it again.
    ============================================================ */
 var MODULES = [
   { id: 'lo21', code: 'LO 2.1', name: 'The accounting equation',
@@ -2190,7 +2516,11 @@ var MODULES = [
   { id: 'lo22', code: 'LO 2.2', name: 'Journalize, post, trial balance',
     co: 'Kleene Window Washing Inc.', sub: 'Eleven journal entries',
     blurb: 'Record eleven July transactions as journal entries, post them to the ledger, and prove it with a trial balance.',
-    count: '13 screens' }
+    count: '13 screens' },
+  { id: 'lo23', code: 'LO 2.3', name: 'Adjusting entries',
+    co: 'Kleene Window Washing Inc.', sub: 'Five adjustments at July 31',
+    blurb: 'Journalize the five adjustments the trial balance missed, and show their effects to prepare an adjusted trial balance.',
+    count: '7 screens' }
 ];
 
 /* Icons into the static chrome. */
@@ -2318,7 +2648,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   var GRAND = assetsOf(totalsUpTo(999));     // the scale every bar is drawn against
 
   /* The open module's screens, and its read-state. */
-  function flow() { return mod === 0 ? FLOW21 : FLOW2; }
+  function flowFor(i) { return i === 0 ? FLOW21 : (i === 1 ? FLOW2 : FLOW3); }
+  function flow() { return flowFor(mod); }
+  /* How many of the open module's screens are entries rather than reports. */
+  function entryCount() { return mod === 0 ? ENTRIES.length : (mod === 1 ? ENTRIES2.length : ENTRIES3.length); }
   function modId() { return MODULES[mod].id; }
   function readSet() {
     if (!read[modId()]) read[modId()] = {};
@@ -2587,8 +2920,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderGuide() {
-    if (mod === 0) { if (view === 'dash') renderDash(); else renderDetail(); }
-    else { if (view === 'dash') renderDash2(); else renderDetail2(); }
+    var dash = view === 'dash';
+    if (mod === 0) { if (dash) renderDash(); else renderDetail(); }
+    else if (mod === 1) { if (dash) renderDash2(); else renderDetail2(); }
+    else { if (dash) renderDash3(); else renderDetail3(); }
   }
 
   /* ---------- table pane ---------- */
@@ -2971,6 +3306,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* ---------- module 2.2: journalize, post, trial balance ---------- */
 
   var FLOW2 = ENTRIES2.concat(REPORTS2);
+  /* FLOW3 is declared with the rest of module 2.3, further down. */
 
   function money2(n) { return n.toLocaleString('en-US'); }
   function jIndex(id) { for (var i = 0; i < JOURNAL.length; i++) if (JOURNAL[i].id === id) return i; return -1; }
@@ -3933,6 +4269,790 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     });
   }
 
+  /* ---------- module 2.3: adjusting entries ---------- */
+
+  var FLOW3 = ENTRIES3.concat(REPORTS3);
+
+  /* ---------- illustration: where the cash sits on the timeline ----------
+     The whole of this module is one idea: the cash and the earning happen
+     at different moments, and the adjustment closes the gap. A deferral has
+     the cash first, an accrual has it last. */
+  function timeline(a) {
+    var deferral = a.kind === 'deferral';
+    var cashPct = deferral ? 8 : 82;
+    var usePct = deferral ? 52 : 40;
+    return '<div class="tl">' +
+        '<div class="tl-bar">' +
+          '<i class="tl-tick" style="left:0"></i>' +
+          '<i class="tl-tick" style="left:100%"></i>' +
+          '<span class="tl-mark cash" style="left:' + cashPct + '%">' +
+            '<b>Cash moves</b><u>' + (deferral ? 'already paid' : 'not yet') + '</u></span>' +
+          '<span class="tl-mark use" style="left:' + usePct + '%">' +
+            '<b>' + (a.lines[0][0] === 'ar' ? 'Service performed' : 'Benefit used') + '</b><u>during July</u></span>' +
+        '</div>' +
+        '<div class="tl-ends"><span>July 1</span><span>July 31</span></div>' +
+      '</div>' +
+      '<div class="tl-verdict ' + (deferral ? 'def' : 'acc') + '">' +
+        '<b>' + (deferral ? 'Deferral' : 'Accrual') + '</b>' +
+        '<span>' + (deferral
+          ? 'The cash moved first. The adjustment splits it between what has been used and what has not.'
+          : 'The cash has not moved. The adjustment records what has happened anyway.') + '</span>' +
+      '</div>';
+  }
+
+  /* ---------- illustration: one of each, and never Cash ---------- */
+  function pairViz(a) {
+    function slot(cls, cap, l) {
+      var ac = acct3(l[0]);
+      return '<div class="pair-col ' + cls + '">' +
+        '<span class="pair-cap">' + cap + '</span>' +
+        '<div class="pair-acct"><b>' + ac.no + '</b><span>' + ac.name + '</span>' +
+        '<em>' + (l[1] ? 'Dr ' : 'Cr ') + money2(l[1] || l[2]) + '</em></div>' +
+        '</div>';
+    }
+    var is = a.lines.filter(function (l) { return acct3(l[0]).stmt === 'I'; })[0];
+    var bs = a.lines.filter(function (l) { return acct3(l[0]).stmt === 'B'; })[0];
+    return '<div class="pair">' + slot('i', 'Income statement', is) + slot('b', 'Balance sheet', bs) + '</div>' +
+      '<div class="verdict ok">' + ICON.check + ' One of each, and Cash is untouched</div>';
+  }
+
+  /* ---------- illustration: a contra account ---------- */
+  function contraViz() {
+    var t = adjustedThrough(999);
+    return '<div class="contra">' +
+        '<div class="contra-row"><span>157 Equipment, at cost</span><b>' + dollars(t.eqp) + '</b></div>' +
+        '<div class="contra-row less"><span>158 Less: Accumulated Depreciation</span><b>&minus;' + money2(t.adep) + '</b></div>' +
+        '<div class="contra-row net"><span>Book value at July 31</span><b>' + dollars(t.eqp - t.adep) + '</b></div>' +
+      '</div>' +
+      '<p class="viz-sub">Crediting Equipment directly would lose the $8,000 the truck cost. The contra account keeps both figures on the books.</p>';
+  }
+
+  /* ---------- illustration: the row before and after ---------- */
+  function rowViz(a) {
+    var before = UNADJ, after = adjustedThrough(ADJ.indexOf(a));
+    return '<div class="rowfx-hd"><span></span><span>unadjusted</span><span>adjustment</span><span>adjusted</span></div>' +
+      '<div class="rowfx">' +
+      a.lines.map(function (l) {
+        var ac = acct3(l[0]);
+        var b = before[l[0]] || 0, af = after[l[0]] || 0;
+        return '<div class="rowfx-row">' +
+          '<span class="rowfx-name"><b>' + ac.no + '</b> ' + ac.name + '</span>' +
+          '<span class="rowfx-n">' + (b ? money2(b) : '&mdash;') + '</span>' +
+          '<span class="rowfx-op">' + (l[1] ? '+' : (ac.up === 'C' ? '+' : '&minus;')) + money2(l[1] || l[2]) + '</span>' +
+          '<span class="rowfx-n to">' + money2(af) + '</span>' +
+          '</div>';
+      }).join('') +
+      '</div>';
+  }
+
+  /* ---------- the two families ---------- */
+  function familiesViz() {
+    function col(cls, cap, sub, items) {
+      return '<div class="fam-col ' + cls + '"><span class="fam-cap">' + cap + '</span>' +
+        '<p>' + sub + '</p><ul>' + items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul></div>';
+    }
+    return '<div class="fam">' +
+      col('def', 'Deferral', 'The cash moved first. Split it between used and not yet used.',
+        ['Prepaid insurance expiring', 'Supplies consumed', 'Depreciation on equipment']) +
+      col('acc', 'Accrual', 'The cash has not moved. Record what has happened anyway.',
+        ['Services performed but unbilled', 'Salaries owed but unpaid']) +
+      '</div>';
+  }
+
+  /* ---------- the three-column worksheet ---------- */
+  function worksheet3(upto) {
+    var after = adjustedThrough(upto === undefined ? 999 : upto);
+    var ut = tbTotals3(UNADJ), at2 = tbTotals3(after);
+    var head = '<tr class="grp"><th class="rowlab"></th>' +
+      '<th colspan="2">Unadjusted</th><th colspan="2">Adjustments</th><th colspan="2">After adjustment</th></tr>';
+    var sub = '<tr class="acct"><th class="rowlab">Account</th>' +
+      '<th>Debit</th><th>Credit</th><th>Debit</th><th>Credit</th><th>Debit</th><th>Credit</th></tr>';
+    var body = ACCT3.map(function (a) {
+      var u = UNADJ[a.k] || 0, x = adjOn(a.k, upto), v = after[a.k] || 0;
+      function cell(val, on) { return '<td class="ro' + (on ? ' hit' : '') + '">' + (val ? money2(val) : '') + '</td>'; }
+      return '<tr><td class="rowlab">' + a.no + ' ' + a.name.replace('&mdash;Equipment', '&mdash;Eqp.') + '</td>' +
+        cell(a.up === 'D' ? u : 0) + cell(a.up === 'C' ? u : 0) +
+        cell(x.d, x.d) + cell(x.c, x.c) +
+        cell(a.up === 'D' ? v : 0) + cell(a.up === 'C' ? v : 0) +
+        '</tr>';
+    }).join('');
+    var foot = '<tr class="totals"><td class="rowlab">Totals</td>' +
+      '<td>' + money2(ut.d) + '</td><td>' + money2(ut.c) + '</td>' +
+      '<td></td><td></td>' +
+      '<td>' + money2(at2.d) + '</td><td>' + money2(at2.c) + '</td></tr>';
+    return '<div class="wp-scroll"><table class="wp w3"><thead>' + head + sub + '</thead>' +
+      '<tbody>' + body + '</tbody><tfoot>' + foot + '</tfoot></table></div>' +
+      '<p class="viz-sub">Swipe the table sideways to reach the adjustment and adjusted columns.</p>';
+  }
+
+  /* ---------- dashboard ---------- */
+  function renderDash3() {
+    var last = -1;
+    ENTRIES3.forEach(function (e, i) { if (isRead(e.id)) last = i; });
+    var t = adjustedThrough(last);
+    var tot = tbTotals3(t);
+
+    var cards = ENTRIES3.map(function (e, i) {
+      var a = ADJ[i];
+      return '<button class="card-e' + (isRead(e.id) ? ' read' : '') + '" data-open="' + i + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(e.id) ? ICON.check : a.n) + '</span>' +
+          '<b>' + e.short + '</b>' +
+          '<span class="card-go">' + ICON.next + '</span>' +
+        '</span>' +
+        '<p>' + a.fact + '</p>' +
+        '<span class="card-je">' + a.lines.map(function (l) {
+          return '<span class="' + (l[1] ? 'dr' : 'cr') + '"><i>' + (l[1] ? 'Dr' : 'Cr') + '</i> ' +
+            acct3(l[0]).name + '<b>' + money2(l[1] || l[2]) + '</b></span>';
+        }).join('') + '</span>' +
+        '<span class="card-run"><em>' + (a.kind === 'deferral' ? 'Deferral' : 'Accrual') + '</em></span>' +
+        '</button>';
+    }).join('');
+
+    var reports = REPORTS3.map(function (r, i) {
+      return '<button class="card-e' + (isRead(r.id) ? ' read' : '') + '" data-open="' + (ENTRIES3.length + i) + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(r.id) ? ICON.check : ICON.table) + '</span>' +
+          '<b>' + r.short + '</b><span class="card-go">' + ICON.next + '</span>' +
+        '</span><p>' + r.rule + '</p></button>';
+    }).join('');
+
+    $('guide').innerHTML =
+      '<div class="wrap fade">' +
+        '<div class="dash-head">' +
+          '<h1>Adjusting ' + CO2.name + '</h1>' +
+          '<p>The trial balance balances, and it is still not right. Five things happened in July that no transaction recorded. Open any one to see what was missed and what it does to the figures.</p>' +
+        '</div>' +
+        '<div class="state">' +
+          '<div class="state-cap">' + ICON.pulse + (last < 0 ? 'Before any adjustment' : 'After adjustment ' + ADJ[last].n) + '</div>' +
+          '<div class="bb">' +
+            '<div class="bb-side bb-a"><span class="bb-cap">Total debits</span>' +
+              '<b class="bb-num" data-from="' + tot.d + '" data-count="' + tot.d + '">' + dollars(tot.d) + '</b></div>' +
+            '<div class="bb-op">=</div>' +
+            '<div class="bb-side bb-c"><span class="bb-cap">Total credits</span>' +
+              '<b class="bb-num" data-from="' + tot.c + '" data-count="' + tot.c + '">' + dollars(tot.c) + '</b></div>' +
+          '</div>' +
+          '<div class="verdict ok">' + ICON.check + ' Still in balance &mdash; every adjustment has two sides too</div>' +
+        '</div>' +
+        '<div class="sect">The five adjustments<i></i></div>' +
+        '<div class="cards">' + cards + '</div>' +
+        '<div class="sect">Making sense of them<i></i></div>' +
+        '<div class="cards">' + reports + '</div>' +
+        '<div class="sect">How any adjustment is found<i></i></div>' +
+        '<div class="method">' + METHOD3.map(function (m, i) {
+          return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
+            '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
+        }).join('') + '</div>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = dashScroll;
+  }
+
+  function renderDetail3() {
+    var item = FLOW3[at], body;
+    if (at < ENTRIES3.length) {
+      var a = ADJ[at];
+      body =
+        '<div class="ex-eyebrow">Adjustment <i>' + a.n + '</i> &middot; ' + (at + 1) + ' of ' + FLOW3.length + '</div>' +
+        '<h1 class="ex-title">' + item.concept + '</h1>' +
+        '<div class="ex-fact">' + a.fact + '</div>' +
+        viz('When the cash moved, and when it counted', timeline(a)) +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        viz('The entry', journalEntry3(a)) +
+        viz('One of each, and never Cash', pairViz(a)) +
+        (item.contra ? viz('Why the credit does not go to Equipment', contraViz()) : '') +
+        viz('What it does to the trial balance', rowViz(a)) +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
+    } else {
+      body =
+        '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW3.length + '</div>' +
+        '<h1 class="ex-title">' + item.title + '</h1>' +
+        '<div class="ex-fact">' + item.concept + '</div>' +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        (item.families ? viz('The two kinds of gap', familiesViz()) : '') +
+        (item.worksheet ? viz('Unadjusted, adjustments, adjusted', worksheet3(999)) : '') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
+    }
+    $('guide').innerHTML = '<div class="wrap fade">' + body + '<div style="height:10px"></div></div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = 0;
+  }
+
+  function journalEntry3(a) {
+    var rows = a.lines.map(function (l, i) {
+      var ac = acct3(l[0]);
+      return '<div class="je-row ' + (l[1] ? 'dr' : 'cr') + '">' +
+        '<span>' + (i === 0 ? 'July 31' : '') + '</span>' +
+        '<span class="je-acct">' + ac.name + (i === 0 && a.working ? ' <em style="font-style:normal;color:var(--muted)">(' + a.working + ')</em>' : '') + '</span>' +
+        '<span class="je-amt">' + (l[1] ? money2(l[1]) : '') + '</span>' +
+        '<span class="je-amt">' + (l[2] ? money2(l[2]) : '') + '</span>' +
+        '</div>';
+    }).join('');
+    return '<div class="je"><div class="je-bar">General Journal &middot; Adjusting entry ' + a.n + '</div><div class="je-grid">' +
+      '<div class="je-head"><span>Date</span><span>Account Titles</span><span>Debit</span><span>Credit</span></div>' +
+      rows + '</div></div>';
+  }
+
+  /* ---------- reference ---------- */
+  function renderTable3() {
+    var ut = tbTotals3(UNADJ);
+    $('table-slot').innerHTML =
+      '<div class="card" style="padding:14px">' +
+        '<div class="ref-head"><h2>Unadjusted trial balance</h2>' +
+        '<p>Given by the problem. This is what the ledger says before anything is adjusted.</p></div>' +
+        '<div class="stmt" style="margin-top:11px"><div class="stmt-head"><b>' + CO2.name + '</b>' +
+          '<span>Trial Balance</span><i>July 31, 2025</i></div></div>' +
+        '<div class="tb">' +
+          '<div class="tb-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' +
+          ACCT3.map(function (a) {
+            var v = UNADJ[a.k] || 0;
+            return '<div class="tb-row' + (v ? '' : ' zero') + '"><span class="tb-name">' + a.no + ' ' + a.name + '</span>' +
+              '<span>' + (v && a.up === 'D' ? money2(v) : '') + '</span>' +
+              '<span>' + (v && a.up === 'C' ? money2(v) : '') + '</span></div>';
+          }).join('') +
+          '<div class="tb-tot"><span>Totals</span><span>' + money2(ut.d) + '</span><span>' + money2(ut.c) + '</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>Chart of accounts</h2>' +
+        '<p>Accumulated Depreciation is new: a contra asset, subtracted from Equipment rather than replacing it.</p></div>' +
+        '<div class="coa" style="margin-top:11px">' +
+          '<div class="coa-hd"><span>No.</span><span>Account</span><span>Family</span><span>Normal</span></div>' +
+          ACCT3.map(function (a) {
+            return '<div class="coa-row"><b>' + a.no + '</b>' +
+              '<span class="coa-name">' + a.name + '</span>' +
+              '<span class="coa-fam">' + a.fam + '</span>' +
+              '<span class="' + (a.up === 'D' ? 'coa-dr' : 'coa-cr') + '">' + (a.up === 'D' ? 'Dr' : 'Cr') + '</span></div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>What needs adjusting</h2>' +
+        '<p>The five facts to be journalized.</p></div>' +
+        '<div class="src" style="margin-top:11px">' +
+          ADJ.map(function (a) {
+            return '<div class="src-row"><u>' + a.n + '.</u><span>' + a.fact + '</span></div>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ---------- module 2.3 worksheet ----------
+     a. Journalize the following adjustments.
+     b. Show the effects on the trial balance to prepare an adjusted
+        trial balance.
+
+     Posting an adjustment carries it onto the worksheet's Adjustments
+     columns; extending each row to its new balance is the learner's. */
+
+  var INSTRUCTIONS3 = [
+    { id: 'a', text: 'Journalize the five adjustments.' },
+    { id: 'b', text: 'Show the effects on the trial balance to prepare an adjusted trial balance.' }
+  ];
+
+  var w3 = { fx: {}, hint: {}, shut: {}, posted: {}, adj: {}, tot: {}, at: 0, graded: 0 };
+
+  function loadWork3() {
+    try {
+      var w = JSON.parse(window.localStorage.getItem(STORE + '.work3') || '{}');
+      if (w && typeof w === 'object') {
+        w3.fx = w.fx || {}; w3.hint = w.hint || {}; w3.shut = w.shut || {};
+        w3.posted = w.posted || {}; w3.adj = w.adj || {}; w3.tot = w.tot || {};
+        w3.at = w.at || 0;
+      }
+    } catch (e) { /* private mode: run without persistence */ }
+  }
+  function saveWork3() {
+    try { window.localStorage.setItem(STORE + '.work3', JSON.stringify(w3)); } catch (e) {}
+  }
+
+  function c3(ai, li, col) { return w3.fx[ai + '.' + li + '.' + col]; }
+  function a3line(ai, li) {
+    var k = c3(ai, li, 'k'), d = amt2(c3(ai, li, 'd')), c = amt2(c3(ai, li, 'c'));
+    if (!k || (d && c) || (!d && !c)) return null;
+    return { k: k, s: d ? 'D' : 'C', n: d || c };
+  }
+  function a3totals(ai) {
+    var d = 0, c = 0, filled = 0;
+    for (var i = 0; i < 2; i++) {
+      d += amt2(c3(ai, i, 'd'));
+      c += amt2(c3(ai, i, 'c'));
+      if (c3(ai, i, 'k') || amt2(c3(ai, i, 'd')) || amt2(c3(ai, i, 'c'))) filled++;
+    }
+    return { d: d, c: c, off: d - c, filled: filled };
+  }
+  function canPost3(ai) {
+    var t = a3totals(ai);
+    if (!t.d || t.off !== 0) return false;
+    return !!(a3line(ai, 0) && a3line(ai, 1));
+  }
+  function isPosted3(ai) { return !!w3.posted[ai]; }
+
+  function a3Right(ai) {
+    var want = ADJ[ai].lines.map(function (l) {
+      return l[0] + ':' + (l[1] ? 'D' : 'C') + ':' + (l[1] || l[2]);
+    }).sort().join('|');
+    var got = [];
+    for (var i = 0; i < 2; i++) {
+      var l = a3line(ai, i);
+      if (!l) return false;
+      got.push(l.k + ':' + l.s + ':' + l.n);
+    }
+    return got.sort().join('|') === want;
+  }
+  function a3Touched(ai) { return a3totals(ai).filled > 0; }
+
+  function a3Diag(ai) {
+    var t = a3totals(ai), done = 0;
+    for (var i = 0; i < 2; i++) if (a3line(ai, i)) done++;
+    if (!t.filled) return 'Nothing entered yet. Every adjusting entry has two lines.';
+    if (done < 2) return 'Both lines need an account and one amount, in either column &mdash; ' + done + ' of 2 complete.';
+    if (t.off !== 0) return 'Out of balance by ' + dollars(Math.abs(t.off)) + '. Debits ' + dollars(t.d) + ', credits ' + dollars(t.c) + '.';
+    if (t.d !== adjDebits(ADJ[ai])) return 'It balances, but the amount is not right. Work out how much of the cost belongs to July.';
+    var mine = [], theirs = [];
+    for (var x = 0; x < 2; x++) { var q = a3line(ai, x); mine.push(q.k + q.s); }
+    ADJ[ai].lines.forEach(function (l) { theirs.push(l[0] + (l[1] ? 'D' : 'C')); });
+    var sameAccts = mine.map(function (m) { return m.slice(0, -1); }).sort().join() ===
+                    theirs.map(function (m) { return m.slice(0, -1); }).sort().join();
+    if (sameAccts) return 'The right accounts, on the wrong sides. Ask which one is the expense or revenue and which is the balance sheet account.';
+    // The two rules that catch most wrong-account attempts.
+    var used = mine.map(function (m) { return m.slice(0, -1); });
+    if (used.indexOf('cash') !== -1) return 'An adjusting entry never touches Cash. The cash either moved in an earlier month or has not moved at all.';
+    var isCount = used.filter(function (k) { return acct3(k) && acct3(k).stmt === 'I'; }).length;
+    if (isCount !== 1) return 'Every adjusting entry changes exactly one income statement account and one balance sheet account. This one changes ' + isCount + ' income statement accounts.';
+    return 'It balances and the amount is right, so one of the accounts is wrong.';
+  }
+
+  /* ---- (b) the learner's own adjusted column ---- */
+  function myAdjusted() {
+    var t = {};
+    ACCT3.forEach(function (a) { t[a.k] = UNADJ[a.k] || 0; });
+    ADJ.forEach(function (a, ai) {
+      if (!isPosted3(ai)) return;
+      for (var i = 0; i < 2; i++) {
+        var l = a3line(ai, i);
+        if (!l) continue;
+        t[l.k] += (acct3(l.k).up === 'D') ? (l.s === 'D' ? l.n : -l.n) : (l.s === 'C' ? l.n : -l.n);
+      }
+    });
+    return t;
+  }
+  function myAdjOn(k) {
+    var d = 0, c = 0;
+    ADJ.forEach(function (a, ai) {
+      if (!isPosted3(ai)) return;
+      for (var i = 0; i < 2; i++) {
+        var l = a3line(ai, i);
+        if (l && l.k === k) { if (l.s === 'D') d += l.n; else c += l.n; }
+      }
+    });
+    return { d: d, c: c };
+  }
+  function afterRight(k) { return amountOf(w3.adj[k]) === adjustedThrough(999)[k]; }
+  function afterTouched(k) { return String(w3.adj[k] === undefined ? '' : w3.adj[k]).trim() !== ''; }
+  function totRight(col) {
+    var want = tbTotals3(adjustedThrough(999));
+    return amountOf(w3.tot[col]) === (col === 'd' ? want.d : want.c);
+  }
+
+  function score3() {
+    var a = 0, b = 0;
+    ADJ.forEach(function (x, i) { if (a3Right(i)) a++; });
+    ACCT3.forEach(function (x) { if (afterRight(x.k)) b++; });
+    if (totRight('d')) b++;
+    if (totRight('c')) b++;
+    return {
+      got: a + b, total: ADJ.length + ACCT3.length + 2,
+      parts: { a: a, b: b }, caps: { a: ADJ.length, b: ACCT3.length + 2 }
+    };
+  }
+
+  function adjHints(ai) {
+    var a = ADJ[ai];
+    return [
+      a.kind === 'deferral'
+        ? 'The cash for this already moved. How much of what it bought has been used up by July 31?'
+        : 'No cash has moved. Something happened anyway &mdash; what, and who does it affect?',
+      'It changes one income statement account and one balance sheet account, and never Cash.',
+      'Debit ' + acct3(a.lines[0][0]).name + ' ' + money2(a.lines[0][1]) +
+        '. Credit ' + acct3(a.lines[1][0]).name + ' ' + money2(a.lines[1][2]) + '.'
+    ];
+  }
+  function afterHints(k) {
+    var a = acct3(k), u = UNADJ[k] || 0, x = myAdjOn(k);
+    return [
+      'Take the unadjusted balance and apply whatever the adjustments did to this account.',
+      'Unadjusted ' + dollars(u) + ', and your posted adjustments put ' + dollars(x.d) + ' on the debit side and ' + dollars(x.c) + ' on the credit side.',
+      a.up === 'D' ? dollars(u) + ' + ' + money2(x.d) + ' &minus; ' + money2(x.c) + '.'
+                   : dollars(u) + ' + ' + money2(x.c) + ' &minus; ' + money2(x.d) + '.'
+    ];
+  }
+
+  function paintHint3(key) {
+    var lvl = w3.hint[key];
+    if (!lvl) return;
+    var host = $('solve'), text, slot, btn, max = 3;
+    if (key.charAt(0) === 'r' && acct3(key.slice(1))) {
+      var rk = key.slice(1);
+      text = afterHints(rk)[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-rnote="' + rk + '"]');
+      btn = host.querySelector('[data-rhint="' + rk + '"]');
+    } else {
+      var ai = Number(key);
+      if (!ADJ[ai]) return;
+      text = adjHints(ai)[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-note3="' + ai + '"]');
+      btn = host.querySelector('[data-hint3="' + ai + '"]');
+    }
+    if (!slot || !text) return;
+    var shut = !!w3.shut[key];
+    slot.innerHTML = shut ? '' : tipHtml(key, text);
+    if (!btn) return;
+    btn.classList.toggle('on', !shut);
+    if (!btn.classList.contains('sm')) {
+      btn.innerHTML = ICON.bulb + (shut ? 'Show hint' : (lvl >= max ? 'No more hints' : 'Another hint'));
+    }
+    btn.disabled = !shut && lvl >= max;
+  }
+  function bump3(key, max) {
+    if (w3.shut[key]) delete w3.shut[key];
+    else w3.hint[key] = Math.min((w3.hint[key] || 0) + 1, max);
+    paintHint3(key);
+    saveWork3();
+  }
+
+  function instrPanel3() {
+    var sc = score3();
+    return '<div class="instr"><div class="instr-cap">Instructions</div>' +
+      INSTRUCTIONS3.map(function (x) {
+        var got = sc.parts[x.id], cap = sc.caps[x.id], done = cap > 0 && got === cap;
+        return '<div class="instr-row' + (done ? ' done' : '') + '">' +
+          '<span class="instr-k">' + (done ? ICON.check : x.id + '.') + '</span>' +
+          '<span class="instr-t">' + x.text + '</span>' +
+          '<span class="instr-n">' + got + '/' + cap + '</span></div>';
+      }).join('') + '</div>';
+  }
+
+  function vState3(ai) {
+    if (isPosted3(ai)) return 'posted';
+    var t = a3totals(ai);
+    if (!t.filled) return 'draft';
+    return (t.off === 0 && t.d) ? 'balanced' : 'off';
+  }
+
+  function renderSolve3() {
+    var opts = '<option value="">&mdash; select account &mdash;</option>' + ACCT3.map(function (a) {
+      return '<option value="' + a.k + '">' + a.no + '  ' + a.name.replace('&mdash;', '—') + '</option>';
+    }).join('');
+    var cur = Math.max(0, Math.min(ADJ.length - 1, w3.at || 0));
+    var posted = 0;
+    ADJ.forEach(function (a, i) { if (isPosted3(i)) posted++; });
+
+    var chips = ADJ.map(function (a, ai) {
+      var st = vState3(ai);
+      return '<button type="button" class="vchip' + (ai === cur ? ' now' : '') +
+        (st === 'posted' ? ' done' : (st === 'off' ? ' off' : '')) +
+        (w3.graded && a3Touched(ai) && !a3Right(ai) ? ' bad' : '') + '" data-v3="' + ai + '"' +
+        ' aria-label="Adjustment ' + a.n + ' of 5, ' + st + '"' + (ai === cur ? ' aria-current="true"' : '') + '>' +
+        (st === 'posted' ? ICON.check : a.n) + '</button>';
+    }).join('');
+
+    var a = ADJ[cur], t = a3totals(cur), locked = isPosted3(cur), st = vState3(cur);
+    var rows = '';
+    for (var i = 0; i < 2; i++) {
+      var dv = c3(cur, i, 'd') || '', cv = c3(cur, i, 'c') || '';
+      rows += '<div class="gl-row">' +
+        '<select class="gl-acct" data-a3="' + cur + '.' + i + '"' + (locked ? ' disabled' : '') +
+          ' aria-label="Account for line ' + (i + 1) + ' of adjustment ' + a.n + '">' + opts + '</select>' +
+        '<input class="gl-amt' + (cv ? ' muted' : '') + '" data-d3="' + cur + '.' + i + '" value="' + dv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
+          ' aria-label="Debit for line ' + (i + 1) + ' of adjustment ' + a.n + '" />' +
+        '<input class="gl-amt' + (dv ? ' muted' : '') + '" data-c3="' + cur + '.' + i + '" value="' + cv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
+          ' aria-label="Credit for line ' + (i + 1) + ' of adjustment ' + a.n + '" />' +
+        '</div>';
+    }
+    var pill = st === 'posted' ? '<span class="pill posted">' + ICON.check + 'Posted</span>'
+      : st === 'draft' ? '<span class="pill draft">Draft</span>'
+      : st === 'balanced' ? '<span class="pill ready">Balanced</span>'
+      : '<span class="pill off">Out of balance</span>';
+    var off = st === 'draft'
+      ? '<div class="gl-off idle"><span>Enter the debit and the credit</span><span>&mdash;</span></div>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<div class="gl-off ok"><span>In balance</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span></div>';
+
+    var doc = '<div class="doc-je' + (locked ? ' posted' : '') + '" data-tx3="' + cur + '">' +
+      '<div class="je-top"><span class="je-ref">ADJ-' + a.n + '</span>' +
+        '<span class="je-date">July 31, 2025</span>' + pill + '</div>' +
+      '<div class="je-memo"><u>What was found</u>' + a.fact + '</div>' +
+      '<div class="gl">' +
+        '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
+        '<div class="gl-foot"><span class="lbl">Totals</span><span>' + (t.d ? money2(t.d) : '&mdash;') + '</span><span>' + (t.c ? money2(t.c) : '&mdash;') + '</span></div>' + off +
+      '</div>' +
+      '<div class="je-acts">' +
+        '<button type="button" class="ws-hint" data-hint3="' + cur + '">' + ICON.bulb + 'Hint</button>' +
+        (locked ? '<button type="button" class="btn-post undo" data-unpost3="' + cur + '">Unpost</button>'
+                : '<button type="button" class="btn-post" data-post3="' + cur + '"' + (canPost3(cur) ? '' : ' disabled') + '>' + ICON.check + 'Post to worksheet</button>') +
+      '</div>' +
+      '<div data-note3="' + cur + '" style="padding:0 11px 11px"></div>' +
+      '</div>';
+
+    /* ---- (b) the worksheet the learner extends ---- */
+    var head = '<tr class="grp"><th class="rowlab"></th><th colspan="2">Unadjusted</th>' +
+      '<th colspan="2">Adjustments</th><th colspan="2">After adjustment</th><th></th></tr>' +
+      '<tr class="acct"><th class="rowlab">Account</th><th>Debit</th><th>Credit</th>' +
+      '<th>Debit</th><th>Credit</th><th>Debit</th><th>Credit</th><th></th></tr>';
+    var body = ACCT3.map(function (x) {
+      var u = UNADJ[x.k] || 0, m = myAdjOn(x.k);
+      var val = w3.adj[x.k] === undefined ? '' : w3.adj[x.k];
+      return '<tr class="wp-row" data-arow="' + x.k + '">' +
+        '<td class="rowlab">' + x.no + ' ' + x.name.replace('&mdash;Equipment', '&mdash;Eqp.') + '</td>' +
+        '<td class="ro">' + (u && x.up === 'D' ? money2(u) : '') + '</td>' +
+        '<td class="ro">' + (u && x.up === 'C' ? money2(u) : '') + '</td>' +
+        '<td class="ro adj">' + (m.d ? money2(m.d) : '') + '</td>' +
+        '<td class="ro adj">' + (m.c ? money2(m.c) : '') + '</td>' +
+        (x.up === 'D'
+          ? '<td><input class="cell" data-after="' + x.k + '" value="' + val + '" inputmode="decimal" autocomplete="off" aria-label="Adjusted debit balance of ' + x.name.replace('&mdash;', ' ') + '" /></td><td class="ro"></td>'
+          : '<td class="ro"></td><td><input class="cell" data-after="' + x.k + '" value="' + val + '" inputmode="decimal" autocomplete="off" aria-label="Adjusted credit balance of ' + x.name.replace('&mdash;', ' ') + '" /></td>') +
+        '<td class="hcell"><button type="button" class="ws-hint sm" data-rhint="' + x.k + '" aria-label="Hint for ' + x.name.replace('&mdash;', ' ') + '">' + ICON.bulb + '</button></td>' +
+        '</tr><tr class="notrow"><td colspan="8"><div data-rnote="' + x.k + '"></div></td></tr>';
+    }).join('');
+    var ut = tbTotals3(UNADJ);
+    var foot = '<tr><td class="rowlab">Totals</td>' +
+      '<td class="ro">' + money2(ut.d) + '</td><td class="ro">' + money2(ut.c) + '</td>' +
+      '<td class="ro"></td><td class="ro"></td>' +
+      '<td><input class="cell" data-tot3="d" value="' + (w3.tot.d || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the adjusted debit column" /></td>' +
+      '<td><input class="cell" data-tot3="c" value="' + (w3.tot.c || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the adjusted credit column" /></td>' +
+      '<td class="hcell"></td></tr>';
+
+    var mine = myAdjusted(), mt = tbTotals3(mine);
+    var typed = { d: amountOf(w3.tot.d), c: amountOf(w3.tot.c) };
+    var proof = (isNaN(typed.d) && isNaN(typed.c))
+      ? '<div class="gl-off idle"><span>Total both columns when the rows are extended</span><span>&mdash;</span></div>'
+      : (typed.d === typed.c
+        ? '<div class="gl-off ok"><span>Your columns agree at ' + dollars(typed.d || 0) + '</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Your columns are out by</span><span>' + dollars(Math.abs((typed.d || 0) - (typed.c || 0))) + '</span></div>');
+
+    $('solve').innerHTML =
+      '<div class="wrap">' +
+        '<div class="sw-bar">' +
+          '<span class="sw-bar-id"><h1>' + CO2.name + '</h1><span>Adjusting entries &middot; Jul 2025</span></span>' +
+          '<span class="sw-counts">' +
+            '<span class="sw-count"><b>' + (ADJ.length - posted) + '</b><u>unposted</u></span>' +
+            '<span class="sw-count' + (posted === ADJ.length ? ' done' : '') + '"><b>' + posted + '</b><u>posted</u></span>' +
+          '</span>' +
+        '</div>' +
+        instrPanel3() +
+        '<div class="ws-sect">a &middot; Journalize the adjustments<i></i></div>' +
+        '<div class="pager">' +
+          '<button type="button" class="pager-btn" data-v3prev' + (cur === 0 ? ' disabled' : '') + ' aria-label="Previous adjustment">' + ICON.prev + '</button>' +
+          '<span class="pager-now"><b>ADJ-' + a.n + '</b>' + (cur + 1) + ' of ' + ADJ.length + '</span>' +
+          '<button type="button" class="pager-btn" data-v3next' + (cur === ADJ.length - 1 ? ' disabled' : '') + ' aria-label="Next adjustment">' + ICON.next + '</button>' +
+        '</div>' +
+        '<div class="vchips">' + chips + '</div>' + doc +
+        '<div class="ws-sect">b &middot; Show the effects<i></i></div>' +
+        '<p class="wp-tip">' + ICON.bulb + 'Posting an adjustment carries it into the Adjustments columns. Extend each row to its adjusted balance, then total both columns.</p>' +
+        '<div class="sw-panel"><div class="sw-panel-hd"><b>Trial balances</b><span>swipe to see every column</span></div>' +
+          '<div class="wp-scroll"><table class="wp w3"><thead>' + head + '</thead><tbody>' + body + '</tbody><tfoot>' + foot + '</tfoot></table></div>' +
+          '<div class="sw-panel-bd" style="padding-top:0">' + proof + '</div>' +
+        '</div>' +
+        '<button type="button" class="ws-reset" id="ws-reset3">Clear my work and start again</button>' +
+      '</div>';
+
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-a3]'), function (el) {
+      var v = w3.fx[el.getAttribute('data-a3') + '.k'];
+      if (v) el.value = v;
+    });
+    Object.keys(w3.hint).forEach(paintHint3);
+  }
+
+  function refreshDoc3(ai) {
+    var t = a3totals(ai);
+    var doc = $('solve').querySelector('[data-tx3="' + ai + '"]');
+    if (!doc) return;
+    var foot = doc.querySelectorAll('.gl-foot span');
+    foot[1].innerHTML = t.d ? money2(t.d) : '&mdash;';
+    foot[2].innerHTML = t.c ? money2(t.c) : '&mdash;';
+    var st = vState3(ai);
+    var off = doc.querySelector('.gl-off');
+    off.className = 'gl-off ' + (st === 'draft' ? 'idle' : ((st === 'balanced' || st === 'posted') ? 'ok' : 'off'));
+    off.innerHTML = st === 'draft'
+      ? '<span>Enter the debit and the credit</span><span>&mdash;</span>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<span>In balance</span><span>' + ICON.check + '</span>'
+        : '<span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span>';
+    var pill = doc.querySelector('.pill');
+    if (!isPosted3(ai)) {
+      pill.className = 'pill ' + (st === 'draft' ? 'draft' : (st === 'balanced' ? 'ready' : 'off'));
+      pill.textContent = st === 'draft' ? 'Draft' : (st === 'balanced' ? 'Balanced' : 'Out of balance');
+    }
+    var post = doc.querySelector('[data-post3]');
+    if (post) post.disabled = !canPost3(ai);
+    doc.classList.remove('graded-bad');
+    var bad = doc.querySelector('.ws-note.bad');
+    if (bad) bad.remove();
+  }
+
+  function refreshProof3() {
+    var typed = { d: amountOf(w3.tot.d), c: amountOf(w3.tot.c) };
+    var p = $('solve').querySelector('.sw-panel-bd .gl-off');
+    if (!p) return;
+    var idle = isNaN(typed.d) && isNaN(typed.c);
+    p.className = 'gl-off ' + (idle ? 'idle' : (typed.d === typed.c ? 'ok' : 'off'));
+    p.innerHTML = idle
+      ? '<span>Total both columns when the rows are extended</span><span>&mdash;</span>'
+      : typed.d === typed.c
+        ? '<span>Your columns agree at ' + dollars(typed.d || 0) + '</span><span>' + ICON.check + '</span>'
+        : '<span>Your columns are out by</span><span>' + dollars(Math.abs((typed.d || 0) - (typed.c || 0))) + '</span>';
+  }
+
+  function refreshInstr3() {
+    var host = $('solve').querySelector('.instr');
+    if (!host) return;
+    var sc = score3();
+    Array.prototype.forEach.call(host.querySelectorAll('.instr-row'), function (row, i) {
+      var x = INSTRUCTIONS3[i], got = sc.parts[x.id], cap = sc.caps[x.id];
+      var done = cap > 0 && got === cap;
+      row.classList.toggle('done', done);
+      row.querySelector('.instr-k').innerHTML = done ? ICON.check : x.id + '.';
+      row.querySelector('.instr-n').textContent = got + '/' + cap;
+    });
+  }
+
+  function go3(n) {
+    w3.at = Math.max(0, Math.min(ADJ.length - 1, n));
+    saveWork3(); renderSolve3(); renderControls();
+  }
+
+  function gradeSolve3() {
+    w3.graded = 1;
+    ADJ.forEach(function (a, ai) {
+      var doc = $('solve').querySelector('[data-tx3="' + ai + '"]');
+      if (!doc) return;
+      var note = $('solve').querySelector('[data-note3="' + ai + '"]');
+      var ok = a3Right(ai), touched = a3Touched(ai);
+      doc.classList.toggle('graded-bad', !ok && touched);
+      if (ok || !touched) { var stale = doc.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
+      else if (!w3.hint[ai]) note.innerHTML = '<div class="ws-note bad">' + a3Diag(ai) + '</div>';
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-v3]'), function (c) {
+      var ai = Number(c.getAttribute('data-v3'));
+      c.classList.toggle('bad', a3Touched(ai) && !a3Right(ai));
+    });
+    var mine = myAdjusted();
+    ACCT3.forEach(function (x) {
+      var row = $('solve').querySelector('[data-arow="' + x.k + '"]');
+      if (!row) return;
+      var ok = afterRight(x.k), touched = afterTouched(x.k);
+      row.classList.toggle('right', ok);
+      row.classList.toggle('wrong', !ok && touched);
+      var note = $('solve').querySelector('[data-rnote="' + x.k + '"]');
+      if (!note) return;
+      var old = note.querySelector('.ws-note.bad');
+      if (old) old.remove();
+      if (ok || !touched || w3.hint['r' + x.k]) return;
+      note.innerHTML = '<div class="ws-note bad">' +
+        (amountOf(w3.adj[x.k]) === mine[x.k]
+          ? 'That follows from the adjustments you have posted, but they are not all right yet. Check part (a).'
+          : 'Not yet. Take the unadjusted balance and apply the adjustments on this row.') + '</div>';
+    });
+    refreshInstr3();
+    renderControls();
+    var first = $('solve').querySelector('.doc-je.graded-bad, .wp-row.wrong');
+    if (first) first.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+  }
+
+  function bindSolve3() {
+    var host = $('solve');
+
+    host.addEventListener('change', function (e) {
+      var sel = e.target.closest('[data-a3]');
+      if (!sel) return;
+      w3.fx[sel.getAttribute('data-a3') + '.k'] = sel.value;
+      refreshDoc3(sel.getAttribute('data-a3').split('.')[0]);
+      saveWork3(); refreshInstr3(); renderControls();
+    });
+
+    host.addEventListener('input', function (e) {
+      var d = e.target.closest('[data-d3]'), c = e.target.closest('[data-c3]');
+      if (d || c) {
+        var el = d || c, key = el.getAttribute(d ? 'data-d3' : 'data-c3');
+        var col = d ? 'd' : 'c', other = d ? 'c' : 'd';
+        w3.fx[key + '.' + col] = el.value;
+        var twin = host.querySelector('[data-' + other + '3="' + key + '"]');
+        if (el.value && twin && twin.value) { twin.value = ''; w3.fx[key + '.' + other] = ''; }
+        if (twin) twin.classList.toggle('muted', !!el.value);
+        el.classList.remove('muted');
+        refreshDoc3(key.split('.')[0]);
+        saveWork3(); refreshInstr3(); renderControls();
+        return;
+      }
+      var af = e.target.closest('[data-after]');
+      if (af) {
+        var k = af.getAttribute('data-after');
+        w3.adj[k] = af.value;
+        var row = host.querySelector('[data-arow="' + k + '"]');
+        if (row) row.classList.remove('right', 'wrong');
+        var note = host.querySelector('[data-rnote="' + k + '"] .ws-note.bad');
+        if (note) note.remove();
+        saveWork3(); refreshInstr3(); renderControls();
+        return;
+      }
+      var tt = e.target.closest('[data-tot3]');
+      if (tt) {
+        w3.tot[tt.getAttribute('data-tot3')] = tt.value;
+        refreshProof3(); saveWork3(); refreshInstr3(); renderControls();
+      }
+    });
+
+    host.addEventListener('click', function (e) {
+      var v = e.target.closest('[data-v3]');
+      if (v) { go3(Number(v.getAttribute('data-v3'))); return; }
+      if (e.target.closest('[data-v3prev]')) { go3((w3.at || 0) - 1); return; }
+      if (e.target.closest('[data-v3next]')) { go3((w3.at || 0) + 1); return; }
+      var p = e.target.closest('[data-post3]');
+      if (p) {
+        var ai = Number(p.getAttribute('data-post3'));
+        if (!canPost3(ai)) return;
+        w3.posted[ai] = 1;
+        var next = ai;
+        for (var n = 1; n <= ADJ.length; n++) {
+          var q = (ai + n) % ADJ.length;
+          if (!isPosted3(q)) { next = q; break; }
+        }
+        w3.at = next;
+        saveWork3(); renderSolve3(); renderControls();
+        return;
+      }
+      var u = e.target.closest('[data-unpost3]');
+      if (u) {
+        delete w3.posted[u.getAttribute('data-unpost3')];
+        saveWork3(); renderSolve3(); renderControls();
+        return;
+      }
+      var x = e.target.closest('[data-hclose]');
+      if (x) {
+        var hk = x.getAttribute('data-hclose');
+        w3.shut[hk] = 1; paintHint3(hk); saveWork3();
+        return;
+      }
+      var h = e.target.closest('[data-hint3]');
+      if (h) { bump3(h.getAttribute('data-hint3'), 3); return; }
+      var rh = e.target.closest('[data-rhint]');
+      if (rh) { bump3('r' + rh.getAttribute('data-rhint'), 3); return; }
+      if (e.target.closest('#ws-reset3')) {
+        if (!window.confirm('Clear every adjustment, posting and balance?')) return;
+        w3.fx = {}; w3.hint = {}; w3.shut = {}; w3.posted = {}; w3.adj = {}; w3.tot = {};
+        w3.at = 0; w3.graded = 0;
+        saveWork3(); renderSolve3(); renderControls();
+      }
+    });
+  }
+
   /* ---------- chrome ---------- */
   function renderModBtn() {
     var m = MODULES[mod];
@@ -3942,7 +5062,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   function renderSheet() {
     $('mod-list').innerHTML = MODULES.map(function (m, i) {
-      var f = i === 0 ? FLOW21 : FLOW2;
+      var f = flowFor(i);
       var n = f.filter(function (x) { return read[m.id] && read[m.id][x.id]; }).length;
       return '<button class="mod-card' + (i === mod ? ' on' : '') + '" data-mod="' + i + '">' +
         '<i>' + m.code + '</i><b>' + m.name + '</b>' +
@@ -3965,7 +5085,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     $('ws-score').hidden = !solving;
     $('btn-check').hidden = !solving;
     if (solving) {
-      var sc = mod === 0 ? scoreNow() : score2();
+      var sc = mod === 0 ? scoreNow() : (mod === 1 ? score2() : score3());
       $('ws-score').querySelector('b').innerHTML = sc.got + ' of ' + sc.total;
       $('ws-score').classList.toggle('done', sc.got === sc.total);
       $('btn-check').textContent = sc.got === sc.total ? 'All correct' : 'Check my work';
@@ -3982,7 +5102,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       $('prog-label').textContent = done + ' of ' + FLOW.length + ' explained';
       $('next-label').textContent = done === 0 ? 'Start' : (done === FLOW.length ? 'Review' : 'Continue');
     } else {
-      $('prog-label').textContent = (at < ENTRIES.length ? 'Entry ' : 'Report ') + (at + 1) + ' of ' + FLOW.length;
+      $('prog-label').textContent = (at < entryCount() ? 'Entry ' : 'Report ') + (at + 1) + ' of ' + FLOW.length;
       $('next-label').textContent = at === FLOW.length - 1 ? 'Finish' : 'Next';
     }
     $('rail').innerHTML = FLOW.map(function (f, i) {
@@ -4005,9 +5125,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     renderModBtn();
     if (tab === 'solve') $('guide').innerHTML = '';
     else renderGuide();
-    if (mod === 0) renderTable(); else renderTable2();
+    if (mod === 0) renderTable(); else if (mod === 1) renderTable2(); else renderTable3();
     if (tab !== 'solve') $('solve').innerHTML = '';
-    else if (mod === 0) renderSolve(); else renderSolve2();
+    else if (mod === 0) renderSolve(); else if (mod === 1) renderSolve2(); else renderSolve3();
     renderControls();
   }
 
@@ -4015,11 +5135,12 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function hashFor() { return MODULES[mod].id + (view === 'dash' ? '' : '-' + flow()[at].id); }
   function stateFromHash() {
     var h = (location.hash || '').replace('#', '');
-    var m = /^(lo2[12])(?:-(.+))?$/.exec(h);
+    var m = /^(lo2[123])(?:-(.+))?$/.exec(h);
     if (!m) return null;
-    var mi = MODULES[0].id === m[1] ? 0 : 1;
+    var mi = 0;
+    for (var q = 0; q < MODULES.length; q++) if (MODULES[q].id === m[1]) mi = q;
     if (!m[2]) return { mod: mi, view: 'dash', at: 0 };
-    var f = mi === 0 ? FLOW21 : FLOW2;
+    var f = flowFor(mi);
     for (var i = 0; i < f.length; i++) if (f[i].id === m[2]) return { mod: mi, view: 'detail', at: i };
     return { mod: mi, view: 'dash', at: 0 };
   }
@@ -4082,7 +5203,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   $('tab-guide').addEventListener('click', function () { tab = 'guide'; save(); render(); });
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
   $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });
-  $('btn-check').addEventListener('click', function () { if (mod === 0) gradeSolve(); else gradeSolve2(); });
+  $('btn-check').addEventListener('click', function () {
+    if (mod === 0) gradeSolve(); else if (mod === 1) gradeSolve2(); else gradeSolve3();
+  });
 
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input, textarea, select')) return;
@@ -4109,6 +5232,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   load();
   loadWork();
   loadWork2();
+  loadWork3();
   if (!theme) {
     theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
@@ -4118,6 +5242,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   render();
   bindSolve();
   bindSolve2();
+  bindSolve3();
   if (window.history && history.replaceState) {
     history.replaceState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
   }

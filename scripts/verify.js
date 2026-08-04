@@ -999,8 +999,8 @@ function check(name, ok, detail) {
     current: document.querySelectorAll('[data-mod].on').length,
     counts: [...document.querySelectorAll('[data-mod] em')].map(e => e.textContent)
   }));
-  check('the switcher lists both modules and marks the open one',
-    sheet.open && sheet.cards === 2 && sheet.current === 1, JSON.stringify(sheet));
+  check('the switcher lists all three modules and marks the open one',
+    sheet.open && sheet.cards === 3 && sheet.current === 1, JSON.stringify(sheet));
   check('the switcher reports progress per module',
     sheet.counts.some(c => /13 of 13|[1-9]\d* of 13/.test(c)), sheet.counts.join(' | '));
   await k.keyboard.press('Escape');
@@ -1018,6 +1018,333 @@ function check(name, ok, detail) {
   check('no console or page errors across module 2.2', kErr.length === 0, kErr.slice(0, 3).join(' | '));
   await k.close();
 
+  // ---------------------------------------------------------------
+  console.log('\nMODULE 2.3 — ADJUSTING ENTRIES');
+  // ---------------------------------------------------------------
+  const j = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  const jErr = [];
+  j.on('pageerror', e => jErr.push('pageerror: ' + e.message));
+  j.on('console', m => { if (m.type() === 'error') jErr.push('console: ' + m.text()); });
+  await j.goto(FILE);
+  await j.evaluate(() => localStorage.clear());
+  await j.goto(FILE + '#lo23');
+  await j.waitForTimeout(500);
+
+  // Arithmetic first. ADJ is the only place a 2.3 figure is written down, so
+  // if it does not hold together nothing derived from it can be trusted.
+  const adj = await j.evaluate(() => {
+    const bad = [];
+    ADJ.forEach(a => {
+      if (adjDebits(a) !== adjCredits(a)) bad.push(a.id + ' Dr ' + adjDebits(a) + ' Cr ' + adjCredits(a));
+      a.lines.forEach(l => {
+        if (!acct3(l[0])) bad.push(a.id + ' posts to unknown account ' + l[0]);
+        if (l[1] && l[2]) bad.push(a.id + ' has a line that is both a debit and a credit');
+      });
+    });
+    const cash = ADJ.filter(a => a.lines.some(l => l[0] === 'cash')).map(a => a.id);
+    const isCount = ADJ.map(a => ({
+      id: a.id,
+      n: a.lines.filter(l => acct3(l[0]).stmt === 'I').length
+    })).filter(x => x.n !== 1);
+    const after = adjustedThrough(999);
+    const t = tbTotals3(after);
+    const u = tbTotals3(UNADJ);
+    return {
+      bad, cash, isCount,
+      dr: t.d, cr: t.c, udr: u.d, ucr: u.c,
+      after,
+      unadj: UNADJ,
+      entries: ENTRIES3.length, reports: REPORTS3.length, adjs: ADJ.length,
+      // What module 2.2 actually produced, so 2.3's starting point can be
+      // checked against it rather than against a retyped copy.
+      from22: (function () {
+        const full = postedThrough(999);
+        const out = {};
+        ACCT.forEach(a => { out[a.k] = balOf(full, a.k); });
+        return out;
+      })()
+    };
+  });
+
+  check('every adjusting entry has equal debits and credits and real accounts',
+    adj.bad.length === 0, adj.bad.join('; '));
+  check('no adjusting entry touches Cash', adj.cash.length === 0, adj.cash.join(','));
+  check('every adjusting entry changes exactly one income statement account',
+    adj.isCount.length === 0, adj.isCount.map(x => x.id + ' touches ' + x.n).join(', '));
+  check('the unadjusted trial balance 2.3 starts from is the one 2.2 produced',
+    Object.keys(adj.from22).every(k => (adj.unadj[k] || 0) === adj.from22[k]),
+    Object.keys(adj.from22).filter(k => (adj.unadj[k] || 0) !== adj.from22[k])
+      .map(k => k + ' ' + adj.unadj[k] + ' vs ' + adj.from22[k]).join(', '));
+  check('the unadjusted columns both total 23,600', adj.udr === 23600 && adj.ucr === 23600,
+    adj.udr + ' / ' + adj.ucr);
+  check('the adjusted columns both total 25,880', adj.dr === 25880 && adj.cr === 25880,
+    adj.dr + ' / ' + adj.cr);
+
+  const WANT3 = { cash: 5410, ar: 6300, sup: 320, ppi: 1650, eqp: 8000, adep: 180,
+                  ap: 5400, swp: 400, cs: 12000, div: 600, rev: 7900, mre: 290,
+                  supx: 580, depx: 180, insx: 150, swx: 2400 };
+  const wrong3 = Object.keys(WANT3).filter(a => adj.after[a] !== WANT3[a]);
+  check('every adjusted balance matches the textbook solution', wrong3.length === 0,
+    wrong3.map(a => a + ' ' + adj.after[a] + ' vs ' + WANT3[a]).join(', '));
+  check('5 adjustments have 5 explanations and 2 reports',
+    adj.adjs === 5 && adj.entries === 5 && adj.reports === 2,
+    adj.adjs + '/' + adj.entries + '/' + adj.reports);
+
+  const jDash = await j.evaluate(() => {
+    const sc = document.querySelector('#pane-guide .scroll');
+    return {
+      cards: document.querySelectorAll('[data-open]').length,
+      x: sc.scrollWidth - sc.clientWidth,
+      d: document.documentElement.scrollWidth - window.innerWidth
+    };
+  });
+  check('the 2.3 dashboard lists 5 adjustments and 2 reports', jDash.cards === 7, 'cards=' + jDash.cards);
+  check('the 2.3 dashboard does not overflow at 390px', jDash.x <= 0 && jDash.d <= 0, `+${jDash.x} / +${jDash.d}`);
+
+  // The timeline is the illustration the whole module rests on. It has to
+  // put the cash before the benefit on a deferral and after it on an accrual,
+  // and it has to say which is which.
+  // timeline() lives inside the shell closure, so the assertion reads the
+  // rendered screens rather than calling it.
+  const tl = [];
+  for (let i = 0; i < 5; i++) {
+    await j.goto(FILE + '#lo23');
+    await j.waitForTimeout(120);
+    await j.evaluate(n => document.querySelector('[data-open="' + n + '"]').click(), i);
+    await j.waitForTimeout(200);
+    tl.push(await j.evaluate(n => {
+      const c = document.querySelector('.tl-mark.cash'), u = document.querySelector('.tl-mark.use');
+      const v = document.querySelector('.tl-verdict b');
+      return {
+        id: ADJ[n].id, kind: ADJ[n].kind,
+        cash: c ? parseFloat(c.style.left) : NaN,
+        use: u ? parseFloat(u.style.left) : NaN,
+        verdict: v ? v.textContent : ''
+      };
+    }, i));
+  }
+  check('a deferral puts the cash before the benefit, an accrual after it',
+    tl.every(x => x.kind === 'deferral' ? x.cash < x.use : x.cash > x.use),
+    tl.map(x => x.id + ' ' + x.kind + ' ' + x.cash + '/' + x.use).join(', '));
+  // Reading the family back out of a.kind would make the check agree with
+  // itself. Derive it from what the entry actually does: a deferral takes
+  // the cost out of an asset the cash already bought; an accrual creates
+  // the claim or the debt for the first time.
+  const fam = await j.evaluate(() => ADJ.map(a => {
+    const bs = a.lines.filter(l => acct3(l[0]).stmt === 'B')[0];
+    const A = acct3(bs[0]), credited = !!bs[2];
+    return {
+      id: a.id, kind: a.kind,
+      deferral: credited && (A.fam === 'Asset' || A.fam === 'Contra asset'),
+      accrual: (!credited && A.fam === 'Asset') || (credited && A.fam === 'Liability')
+    };
+  }));
+  check('each adjustment is filed as the kind its own entry makes it',
+    fam.every(x => x.deferral !== x.accrual && x.kind === (x.deferral ? 'deferral' : 'accrual')),
+    fam.filter(x => x.kind !== (x.deferral ? 'deferral' : 'accrual')).map(x => x.id + ' says ' + x.kind).join(', '));
+
+  check('the timeline names the family it is showing',
+    tl.every(x => x.verdict === (x.kind === 'deferral' ? 'Deferral' : 'Accrual')),
+    tl.map(x => x.id + ':' + x.verdict).join(', '));
+
+  // Walk all 7 screens at the narrowest supported width.
+  await j.setViewportSize({ width: 320, height: 800 });
+  let jBad = [];
+  for (let i = 0; i < 7; i++) {
+    await j.goto(FILE + '#lo23');
+    await j.waitForTimeout(120);
+    await j.evaluate(n => document.querySelector('[data-open="' + n + '"]').click(), i);
+    await j.waitForTimeout(220);
+    const o = await j.evaluate(() => {
+      const sc = document.querySelector('#pane-guide .scroll');
+      // Overflow to the left is not scrollable, so a timeline label hanging
+      // out of its card is invisible to scrollWidth. Measure it directly.
+      const spill = [];
+      const tl = document.querySelector('.tl');
+      if (tl) {
+        const card = tl.closest('.viz').getBoundingClientRect();
+        document.querySelectorAll('.tl-mark').forEach(e => {
+          const r = e.getBoundingClientRect();
+          if (r.left < card.left || r.right > card.right) spill.push(Math.round(r.left) + '..' + Math.round(r.right));
+        });
+      }
+      return {
+        d: document.documentElement.scrollWidth - window.innerWidth,
+        p: sc.scrollWidth - sc.clientWidth,
+        spill: spill,
+        h1: (document.querySelector('#guide h1') || {}).textContent,
+        viz: document.querySelectorAll('#guide .viz').length
+      };
+    });
+    if (o.d > 0 || o.p > 0) jBad.push('screen ' + i + ' overflows by ' + o.d + '/' + o.p);
+    if (o.spill.length) jBad.push('screen ' + i + ' has a timeline label outside its card at ' + o.spill.join(' and '));
+    if (!o.h1) jBad.push('screen ' + i + ' has no heading');
+    if (!o.viz) jBad.push('screen ' + i + ' has no illustration');
+  }
+  check('all 7 screens fit 320px, labels stay in their cards, and each has a heading and an illustration',
+    jBad.length === 0, jBad.join('; '));
+  await j.setViewportSize({ width: 390, height: 900 });
+
+  // The Reference is source material, not the answer key: it may print the
+  // unadjusted trial balance and the five facts, but no adjusted figure.
+  await j.goto(FILE + '#lo23');
+  await j.waitForTimeout(300);
+  await j.click('#tab-table');
+  await j.waitForTimeout(300);
+  const refText = await j.evaluate(() => document.getElementById('table-slot').textContent);
+  const leaked = ['6,300', '7,900', '2,400', '1,650', '25,880'].filter(v => refText.indexOf(v) !== -1);
+  check('the 2.3 Reference gives away no adjusted balance', leaked.length === 0, leaked.join(', '));
+  check('the 2.3 Reference does print the given unadjusted trial balance',
+    refText.indexOf('23,600') !== -1 && /Unadjusted trial balance/.test(refText));
+
+  // ---- the worksheet ----
+  await j.click('#tab-solve');
+  await j.waitForTimeout(400);
+
+  const jSolve = await j.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    instr: [...document.querySelectorAll('.instr-row .instr-t')].map(e => e.textContent),
+    chips: document.querySelectorAll('[data-v3]').length,
+    shown: document.querySelectorAll('[data-tx3]').length,
+    rows: document.querySelectorAll('.wp-row').length,
+    h1: !!document.querySelector('#solve h1'),
+    unlabelled: [...document.querySelectorAll('#solve input, #solve select')]
+      .filter(e => !e.getAttribute('aria-label') && !e.id).length
+  }));
+  check('the 2.3 worksheet asks for both printed instructions',
+    jSolve.instr.length === 2 && /Journalize/.test(jSolve.instr[0]) && /adjusted trial balance/.test(jSolve.instr[1]),
+    jSolve.instr.join(' | '));
+  check('the 2.3 worksheet is scored out of 23 (5 entries + 16 balances + 2 totals)',
+    jSolve.score === '0 of 23', jSolve.score);
+  check('the 2.3 worksheet shows one adjustment at a time out of five',
+    jSolve.chips === 5 && jSolve.shown === 1, jSolve.chips + ' chips, ' + jSolve.shown + ' shown');
+  check('the 2.3 worksheet extends all 16 trial balance rows', jSolve.rows === 16, String(jSolve.rows));
+  check('the 2.3 worksheet keeps a heading and labels every field',
+    jSolve.h1 && jSolve.unlabelled === 0, 'unlabelled=' + jSolve.unlabelled);
+
+  // Posting is refused until the entry is both complete and balanced. The
+  // two are separate gates, so they need separate tests: a half-filled entry
+  // is blocked for being half-filled whatever the amounts say.
+  await j.selectOption('[data-a3="0.0"]', 'ar');
+  await j.fill('[data-d3="0.0"]', '1700');
+  await j.waitForTimeout(150);
+  check('a half-entered adjustment cannot be posted',
+    await j.evaluate(() => document.querySelector('[data-post3]').disabled));
+  await j.selectOption('[data-a3="0.1"]', 'rev');
+  await j.fill('[data-c3="0.1"]', '1600');
+  await j.waitForTimeout(200);
+  check('a complete but unbalanced adjustment cannot be posted',
+    await j.evaluate(() => document.querySelector('[data-post3]').disabled));
+  check('and it says how far out it is',
+    /100/.test(await j.evaluate(() => document.querySelector('.gl-off.off').textContent)),
+    await j.evaluate(() => document.querySelector('.gl-off').textContent));
+  await j.fill('[data-c3="0.1"]', '1700');
+  await j.waitForTimeout(200);
+  check('a balanced adjustment can be posted',
+    await j.evaluate(() => !document.querySelector('[data-post3]').disabled));
+
+  await j.click('[data-post3="0"]');
+  await j.waitForTimeout(300);
+  const posted = await j.evaluate(() => ({
+    pager: document.querySelector('.pager-now b').textContent,
+    ar: [...document.querySelectorAll('[data-arow="ar"] td.ro.adj')].map(e => e.textContent),
+    rev: [...document.querySelectorAll('[data-arow="rev"] td.ro.adj')].map(e => e.textContent),
+    score: document.querySelector('#ws-score b').textContent
+  }));
+  check('posting an adjustment carries it onto both rows of the worksheet',
+    posted.ar.join('') === '1,700' && posted.rev.join('') === '1,700',
+    'ar=' + posted.ar.join('|') + ' rev=' + posted.rev.join('|'));
+  check('posting advances to the next unposted adjustment', posted.pager === 'ADJ-2', posted.pager);
+  check('a correct adjustment scores', posted.score === '1 of 23', posted.score);
+
+  // The two diagnoses this module exists to teach.
+  await j.click('[data-v3="1"]');
+  await j.waitForTimeout(200);
+  await j.selectOption('[data-a3="1.0"]', 'depx');
+  await j.fill('[data-d3="1.0"]', '180');
+  await j.selectOption('[data-a3="1.1"]', 'cash');
+  await j.fill('[data-c3="1.1"]', '180');
+  await j.waitForTimeout(150);
+  await j.click('#btn-check');
+  await j.waitForTimeout(300);
+  check('crediting Cash is diagnosed as something an adjusting entry never does',
+    /never touches Cash/.test(await j.evaluate(() => (document.querySelector('[data-note3="1"]') || {}).textContent || '')));
+
+  await j.selectOption('[data-a3="1.1"]', 'insx');
+  await j.waitForTimeout(150);
+  await j.click('#btn-check');
+  await j.waitForTimeout(300);
+  check('two income statement accounts in one entry is diagnosed as such',
+    /one income statement account and one balance sheet account/.test(
+      await j.evaluate(() => (document.querySelector('[data-note3="1"]') || {}).textContent || '')));
+
+  // Hints open, close, and reopen.
+  await j.click('[data-hint3="1"]');
+  await j.waitForTimeout(200);
+  check('a 2.3 hint opens', await j.evaluate(() => !!document.querySelector('[data-note3="1"] .ws-note.tip')));
+  await j.click('[data-hclose]');
+  await j.waitForTimeout(200);
+  check('a 2.3 hint closes', await j.evaluate(() => !document.querySelector('[data-note3="1"] .ws-note.tip')));
+  await j.click('[data-hint3="1"]');
+  await j.waitForTimeout(200);
+  check('a closed 2.3 hint reopens', await j.evaluate(() => !!document.querySelector('[data-note3="1"] .ws-note.tip')));
+
+  // Fill the whole thing correctly, one adjustment at a time.
+  // Start part (a) again through the control the learner actually has.
+  j.once('dialog', d => d.accept());
+  await j.click('#ws-reset3');
+  await j.waitForTimeout(250);
+  const plan3 = await j.evaluate(() => ADJ.map(a => a.lines.map(l => [l[0], l[1], l[2]])));
+  for (let i = 0; i < plan3.length; i++) {
+    await j.click('[data-v3="' + i + '"]');
+    await j.waitForTimeout(120);
+    for (let li = 0; li < 2; li++) {
+      const [k, d, c] = plan3[i][li];
+      await j.selectOption('[data-a3="' + i + '.' + li + '"]', k);
+      if (d) await j.fill('[data-d3="' + i + '.' + li + '"]', String(d));
+      else await j.fill('[data-c3="' + i + '.' + li + '"]', String(c));
+    }
+    await j.waitForTimeout(120);
+    await j.click('[data-post3="' + i + '"]');
+    await j.waitForTimeout(160);
+  }
+  const partA = await j.evaluate(() => document.querySelector('#ws-score b').textContent);
+  check('journalizing all five adjustments scores part (a) in full', partA === '5 of 23', partA);
+
+  // Typed from the textbook, not from adjustedThrough(): filling the form
+  // with the app's own answer would score full marks whatever it computed.
+  for (const k of Object.keys(WANT3)) await j.fill('[data-after="' + k + '"]', String(WANT3[k]));
+  await j.fill('[data-tot3="d"]', '25880');
+  await j.fill('[data-tot3="c"]', '25880');
+  await j.waitForTimeout(300);
+  const full3 = await j.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    btn: document.getElementById('btn-check').textContent,
+    proof: document.querySelector('.sw-panel-bd .gl-off').className,
+    instr: [...document.querySelectorAll('.instr-row')].map(r => r.className)
+  }));
+  check('a correct adjusted trial balance scores the worksheet in full',
+    full3.score === '23 of 23', full3.score);
+  check('a full 2.3 worksheet reports itself finished',
+    /All correct/.test(full3.btn) && /ok/.test(full3.proof) && full3.instr.every(c => /done/.test(c)),
+    full3.btn + ' | ' + full3.proof + ' | ' + full3.instr.join(','));
+
+  // Reload: everything typed has to still be there.
+  await j.reload();
+  await j.waitForTimeout(500);
+  await j.click('#tab-solve');
+  await j.waitForTimeout(400);
+  const kept = await j.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    cell: document.querySelector('[data-after="ar"]').value,
+    sel: document.querySelector('[data-a3="0.0"]') ? document.querySelector('[data-a3="0.0"]').value : null,
+    posted: document.querySelectorAll('.vchip.done').length
+  }));
+  check('2.3 work survives a reload', kept.score === '23 of 23' && kept.cell === '6300' && kept.posted === 5,
+    JSON.stringify(kept));
+
+  check('no console or page errors across module 2.3', jErr.length === 0, jErr.slice(0, 3).join(' | '));
+  await j.close();
   // ---------------------------------------------------------------
   console.log('\nMOTION');
   // ---------------------------------------------------------------
