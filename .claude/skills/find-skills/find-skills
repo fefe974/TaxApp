@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+# find-skills - Find and list skills with their trigger guidance
+# Shows all skills by default, filters by pattern if provided
+#
+# Adapted from obra/superpowers-skills skills/using-skills/find-skills.
+# Two changes from upstream, both because upstream assumes its own layout:
+#
+#   1. Upstream reads only `when_to_use:` from frontmatter. Skills installed
+#      through the plugin marketplace carry `description:` instead, so on a
+#      normal machine upstream prints a bare path list with no guidance —
+#      which defeats the point. This reads `when_to_use:` and falls back to
+#      `description:`, folded YAML blocks included.
+#   2. Upstream searches one directory ($SCRIPT_DIR/../..). Skills actually
+#      live in several roots at once — project, personal, and bundled — so
+#      this walks all of them and labels which is which.
+
+set -euo pipefail
+
+if [[ "${1:-}" == "--help" ]] || [[ "${1:-}" == "-h" ]]; then
+    cat <<'EOF'
+find-skills - Find and list skills with their trigger guidance
+
+USAGE:
+  find-skills              Show all skills with their trigger guidance
+  find-skills PATTERN      Filter skills by grep pattern (searches whole SKILL.md)
+  find-skills --desc PAT   Match only the frontmatter trigger line — use this for
+                           broad queries, where whole-file search returns everything
+  find-skills --help       Show this help
+
+EXAMPLES:
+  find-skills                        # All skills
+  find-skills test                   # Skills matching "test"
+  find-skills 'test.*driven|TDD'     # Regex pattern
+  find-skills 'accessib|contrast'    # Skills about accessibility
+
+OUTPUT:
+  [root] skill-path/SKILL.md
+         when [trigger]
+  Paths are absolute, for direct use with the Read tool.
+
+SEARCH:
+  Matches against skill content AND path names, so a skill whose name says
+  nothing useful (ponytail, impeccable) is still found by what it does.
+
+ROOTS:
+  Set SKILL_ROOTS to a colon-separated list to override. By default:
+    ./.claude/skills          project
+    $HOME/.claude/skills      personal
+    /mnt/skills/public        bundled
+    /mnt/skills/examples      bundled examples
+    $SUPERPOWERS_SKILLS_ROOT  if set
+EOF
+    exit 0
+fi
+
+# Content search matches any word anywhere in a SKILL.md, so a broad query
+# ('plan', 'interface') returns nearly every skill and tells you nothing.
+# --desc restricts matching to the frontmatter trigger line, which is what you
+# actually want when casting a wide net.
+DESC_ONLY=0
+if [[ "${1:-}" == "--desc" ]] || [[ "${1:-}" == "-d" ]]; then
+    DESC_ONLY=1
+    shift
+fi
+
+PATTERN="${1:-}"
+
+# Roots, in priority order. Missing ones are skipped silently — most machines
+# will not have all of these.
+#
+# The script's own parent is included as well as $PWD's, so running it by
+# absolute path from somewhere else still finds the skills it ships beside.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [[ -n "${SKILL_ROOTS:-}" ]]; then
+    IFS=':' read -r -a RAW <<< "$SKILL_ROOTS"
+else
+    RAW=(
+        "$(cd "$SCRIPT_DIR/.." && pwd)"
+        "$PWD/.claude/skills"
+        "$HOME/.claude/skills"
+        "/mnt/skills/public"
+        "/mnt/skills/examples"
+    )
+    [[ -n "${SUPERPOWERS_SKILLS_ROOT:-}" ]] && RAW+=("${SUPERPOWERS_SKILLS_ROOT}/skills")
+fi
+
+# Those two project entries collapse to the same path in the common case.
+ROOTS=()
+for r in "${RAW[@]}"; do
+    seen=0
+    for k in ${ROOTS[@]+"${ROOTS[@]}"}; do [[ "$k" == "$r" ]] && seen=1; done
+    [[ $seen -eq 0 ]] && ROOTS+=("$r")
+done
+
+label_for() {
+    case "$1" in
+        "$HOME/.claude/skills") echo "personal" ;;
+        */.claude/skills) echo "project" ;;
+        /mnt/skills/examples) echo "examples" ;;
+        /mnt/skills/public) echo "bundled" ;;
+        *) echo "other" ;;
+    esac
+}
+
+# Pull the trigger line out of YAML frontmatter. `when_to_use` wins when it is
+# there; otherwise `description`, which is what the marketplace format uses.
+# Both may be folded across lines (`description: >`), so continuation lines are
+# joined until the next key or the closing ---.
+get_trigger() {
+    awk '
+        NR == 1 && $0 != "---" { exit }
+        NR == 1 { infm = 1; next }
+        infm && $0 == "---" { exit }
+        !infm { next }
+        /^[a-zA-Z_-]+:/ {
+            key = $0; sub(/:.*/, "", key)
+            collecting = (key == "when_to_use" || key == "description")
+            if (collecting) {
+                val = $0; sub(/^[a-zA-Z_-]+: */, "", val)
+                if (val == ">" || val == "|" || val == ">-" || val == "|-") val = ""
+                store[key] = val
+            }
+            next
+        }
+        collecting {
+            line = $0; gsub(/^[ \t]+|[ \t]+$/, "", line)
+            if (line != "") store[key] = (store[key] == "" ? line : store[key] " " line)
+        }
+        END {
+            print (store["when_to_use"] != "" ? store["when_to_use"] : store["description"])
+        }
+    ' "$1" 2>/dev/null || true
+}
+
+found=0
+
+for root in "${ROOTS[@]}"; do
+    [[ -d "$root" ]] || continue
+    tag="$(label_for "$root")"
+
+    while IFS= read -r file; do
+        [[ -z "$file" ]] && continue
+        found=1
+        trigger="$(get_trigger "$file")"
+        printf '[%s] %s\n' "$tag" "$file"
+        if [[ -n "$trigger" ]]; then
+            # Wrap to keep long descriptions readable in a terminal.
+            printf '%s\n' "$trigger" | fold -s -w 88 | sed 's/^/       /'
+        fi
+        echo
+    done < <(
+        if [[ -n "$PATTERN" && $DESC_ONLY -eq 1 ]]; then
+            while IFS= read -r f; do
+                if get_trigger "$f" | grep -q -E -i -e "$PATTERN" \
+                   || printf '%s' "$f" | grep -q -E -i -e "$PATTERN"; then
+                    echo "$f"
+                fi
+            done < <(find "$root/" -name "SKILL.md" -type f 2>/dev/null | sort || true)
+        elif [[ -n "$PATTERN" ]]; then
+            # Options must precede `--`, or grep reads `--include` and `-l` as
+            # filenames: it then searches every file and prints matching lines
+            # instead of paths. `-e` keeps a pattern starting with `-` safe.
+            {
+                grep -r -E -i -l --include="SKILL.md" -e "$PATTERN" "$root/" 2>/dev/null || true
+                find "$root/" -name "SKILL.md" -type f 2>/dev/null | grep -E -i -e "$PATTERN" 2>/dev/null || true
+            } | sort -u
+        else
+            find "$root/" -name "SKILL.md" -type f 2>/dev/null | sort || true
+        fi
+    )
+done
+
+if [[ $found -eq 0 ]]; then
+    if [[ -n "$PATTERN" ]]; then
+        echo "No skills found matching: $PATTERN"
+        echo
+        echo "If a skill should exist for this, consider writing it."
+    else
+        echo "No skills found. Checked:"
+        printf '  %s\n' "${ROOTS[@]}"
+    fi
+fi
+
+exit 0
