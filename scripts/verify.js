@@ -296,7 +296,7 @@ function check(name, ok, detail) {
   check('every button has an accessible name', a11y.unnamed.length === 0, a11y.unnamed.join(','));
   check('no interactive target under 44px', a11y.small.length === 0, a11y.small.join(','));
   check('exactly one h1', a11y.h1 === 1, 'found ' + a11y.h1);
-  check('changing content is announced (aria-live)', a11y.live);
+  check('the score is a live region', a11y.live);
   check('skip link present', a11y.skip);
   check('touch-action manipulation on buttons', a11y.touch === 'manipulation', a11y.touch);
   check('color-scheme declared', a11y.scheme === 'light' || a11y.scheme === 'dark', a11y.scheme);
@@ -1423,6 +1423,115 @@ function check(name, ok, detail) {
 
   check('no console or page errors across module 2.3', jErr.length === 0, jErr.slice(0, 3).join(' | '));
   await j.close();
+  // ---------------------------------------------------------------
+  console.log('\nCONTRAST AND ANNOUNCEMENT');
+  // ---------------------------------------------------------------
+  const c = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await c.goto(FILE + '#lo23');
+  await c.waitForTimeout(400);
+
+  // Every text colour measured against the background actually behind it, on
+  // a screen from each module in both themes. Token maths alone missed that
+  // .pill.draft and a disabled .btn-post sit on --surface-3, and that white
+  // on dark --good is 2.17:1.
+  const SWEEP = () => {
+    function lum(col) {
+      const m = col.match(/[\d.]+/g).map(Number);
+      const f = m.slice(0, 3).map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+    }
+    function ratio(a, b) { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); }
+    function bgOf(el) {
+      let n = el;
+      while (n && n !== document.documentElement) {
+        const col = getComputedStyle(n).backgroundColor;
+        if (col && !/rgba\(0, 0, 0, 0\)|transparent/.test(col)) {
+          const a = col.match(/[\d.]+/g).map(Number);
+          if (a.length < 4 || a[3] >= 0.95) return col;
+        }
+        n = n.parentElement;
+      }
+      return getComputedStyle(document.body).backgroundColor;
+    }
+    const bad = [];
+    document.querySelectorAll('body *').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const own = [...el.childNodes].filter(n => n.nodeType === 3 && n.textContent.trim());
+      if (!own.length) return;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === 'hidden' || cs.opacity === '0') return;
+      const fs = parseFloat(cs.fontSize), fw = Number(cs.fontWeight) || 400;
+      const need = (fs >= 24 || (fs >= 18.66 && fw >= 700)) ? 3 : 4.5;
+      let cr;
+      try { cr = ratio(cs.color, bgOf(el)); } catch (e) { return; }
+      if (cr < need) bad.push((el.className && typeof el.className === 'string'
+        ? '.' + el.className.trim().split(/\s+/).join('.') : el.tagName.toLowerCase()) +
+        ' ' + Math.round(cr * 100) / 100 + '<' + need + ' "' + own.map(n => n.textContent.trim()).join('').slice(0, 24) + '"');
+    });
+    return [...new Set(bad)];
+  };
+
+  const failures = [];
+  for (const dark of [false, true]) {
+    for (const [hash, tab] of [['#lo21', 'guide'], ['#lo21', 'solve'], ['#lo22', 'solve'],
+                               ['#lo23', 'guide'], ['#lo23-atb', 'guide'], ['#lo23', 'solve']]) {
+      await c.goto(FILE + hash);
+      await c.waitForTimeout(200);
+      // The theme is saved, so clicking the toggle on every screen alternates
+      // it instead of setting it. Click only when it is not already right.
+      const now = await c.evaluate(() => document.documentElement.getAttribute('data-theme'));
+      if ((now === 'dark') !== dark) { await c.click('#btn-theme'); await c.waitForTimeout(150); }
+      await c.waitForTimeout(150);
+      // The open tab is saved too, so a screen visited after a solve screen
+      // would still be showing Solve — and the guide pane is emptied in that
+      // state, so half these screens were measuring the same thing twice.
+      await c.click('#tab-' + tab);
+      await c.waitForTimeout(350);
+      (await c.evaluate(SWEEP)).forEach(x => failures.push((dark ? 'dark ' : 'light ') + hash + '/' + tab + ' ' + x));
+    }
+  }
+  check('every piece of text meets WCAG AA against what is behind it, in both themes',
+    failures.length === 0, failures.slice(0, 6).join(' | ') + (failures.length > 6 ? ' (+' + (failures.length - 6) + ')' : ''));
+
+  // The guide pane is replaced wholesale on every navigation. As a live region
+  // that made a screen reader re-read the entire screen each time; the new
+  // heading takes focus instead.
+  // A goto that changes only the hash does not reload, so the sweep's last
+  // click would still own focus. Take a fresh page.
+  await c.close();
+  const cc = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await cc.goto(FILE + '#lo23');
+  await cc.waitForTimeout(400);
+  const live = await cc.evaluate(() => ({
+    guide: document.getElementById('guide').getAttribute('aria-live'),
+    score: document.getElementById('ws-score').getAttribute('aria-live'),
+    boot: document.activeElement === document.body
+  }));
+  check('the guide pane is not a live region', live.guide === null, 'aria-live=' + live.guide);
+  check('the score still is', live.score === 'polite', 'aria-live=' + live.score);
+  check('loading the page does not steal focus', live.boot);
+
+  await cc.click('#btn-next');
+  await cc.waitForTimeout(350);
+  const moved = await cc.evaluate(() => {
+    const a = document.activeElement;
+    return { tag: a.tagName, inGuide: !!a.closest('#guide'), text: a.textContent.trim().slice(0, 30) };
+  });
+  check('navigating moves focus to the new screen\'s heading',
+    moved.tag === 'H1' && moved.inGuide, JSON.stringify(moved));
+
+  await cc.goBack();
+  await cc.waitForTimeout(350);
+  const back = await cc.evaluate(() => document.activeElement.tagName + '/' + !!document.activeElement.closest('#guide'));
+  check('going back moves focus too', back === 'H1/true', back);
+
+  await cc.click('#tab-solve');
+  await cc.waitForTimeout(350);
+  check('switching tabs leaves focus on the tab the user pressed',
+    (await cc.evaluate(() => document.activeElement.id)) === 'tab-solve');
+  await cc.close();
+
   // ---------------------------------------------------------------
   console.log('\nMOTION');
   // ---------------------------------------------------------------

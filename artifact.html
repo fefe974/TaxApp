@@ -36,7 +36,7 @@
   --line-strong: #cfc7b6;
   --text: #191d24;
   --text-dim: #4a5260;
-  --muted: #79808d;
+  --muted: #646b78;
 
   /* Scholarly navy, not default-blue. */
   --brand: #1e3a5f;
@@ -94,7 +94,7 @@ html[data-theme="dark"] {
   --line-strong: rgba(255, 255, 255, 0.19);
   --text: #ece9e2;
   --text-dim: #b8b6ae;
-  --muted: #8b8a83;
+  --muted: #989791;
 
   --brand: #8fb4e0;
   --brand-deep: #6f9bd0;
@@ -470,6 +470,8 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 
 /* The proof bar reads like a stamp on the page. */
 .proof { letter-spacing: 0.01em; }
+/* Dark --good is a bright mint; white on it is 2.17:1. Invert the ink. */
+html[data-theme="dark"] .proof { color: var(--bg); }
 .verdict { font-family: var(--font); }
 
 /* Buttons: quieter chrome, firmer press. */
@@ -1091,7 +1093,7 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   border: 1px solid;
 }
 .pill svg { width: 11px; height: 11px; }
-.pill.draft   { background: var(--surface-3); border-color: var(--line-strong); color: var(--muted); }
+.pill.draft   { background: var(--surface-3); border-color: var(--line-strong); color: var(--text-dim); }
 .pill.ready   { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
 .pill.posted  { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
 .pill.off     { background: var(--bad-soft); border-color: var(--bad-line); color: var(--bad); }
@@ -1164,7 +1166,7 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
 }
 .btn-post svg { width: 15px; height: 15px; }
-.btn-post[disabled] { background: var(--surface-3); color: var(--muted); pointer-events: none; }
+.btn-post[disabled] { background: var(--surface-3); color: var(--text-dim); pointer-events: none; }
 .btn-post.undo { background: var(--surface); color: var(--text-dim); border: 1px solid var(--line-strong); }
 
 /* ---------- the live ledger the learner's own postings build ---------- */
@@ -1664,7 +1666,7 @@ table.wp.w3 tfoot .cell { background: var(--good-soft); color: var(--good-deep);
   </nav>
 
   <section class="pane on" id="pane-guide">
-    <div class="scroll"><main id="guide" tabindex="-1" aria-live="polite" aria-atomic="false"></main></div>
+    <div class="scroll"><main id="guide" tabindex="-1"></main></div>
   </section>
 
   <section class="pane" id="pane-table">
@@ -5193,10 +5195,23 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (view === 'detail') readSet()[flow()[at].id] = 1;
     save();
     render();
+    if (tab === 'guide') focusGuideHeading();
     if (!fromHistory && window.history && history.pushState) {
       history.pushState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
     }
   }
+  /* Navigation replaces the whole pane, so the new heading takes focus and a
+     screen reader reads from there. Announcing the pane as a live region
+     instead made every Next press re-read the entire screen. Focus is moved
+     only on a real navigation — never on boot or a tab switch, where the user
+     already knows where they are and stealing focus would be rude. */
+  function focusGuideHeading() {
+    var h = $('guide').querySelector('h1');
+    if (!h) return;
+    h.setAttribute('tabindex', '-1');
+    h.focus({ preventScroll: true });
+  }
+
   function openAt(n) { apply({ view: 'detail', at: Math.max(0, Math.min(flow().length - 1, n)) }); }
   function toDash() { apply({ view: 'dash', at: at }); }
 
@@ -5207,6 +5222,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     mod = st.mod; view = st.view; at = st.at;
     if (view === 'detail') readSet()[flow()[at].id] = 1;
     save(); render();
+    if (tab === 'guide') focusGuideHeading();
   });
 
   /* Opening an entry from the dashboard. */
