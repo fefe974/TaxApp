@@ -1196,6 +1196,77 @@ table.led td.hit { box-shadow: inset 0 0 0 1.5px var(--brand); border-radius: 4p
 .sw-panel-bd { padding: 10px 11px 11px; }
 .sw-empty { font-size: 12.5px; color: var(--muted); text-align: center; padding: 12px 4px; line-height: 1.5; }
 
+/* ---------- one voucher at a time ---------- */
+.pager {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 9px;
+}
+.pager-btn {
+  flex: 0 0 auto; width: 44px; height: 44px; border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--text-dim);
+}
+.pager-btn svg { width: 17px; height: 17px; }
+.pager-btn[disabled] { opacity: 0.35; pointer-events: none; }
+.pager-now {
+  flex: 1; min-width: 0; text-align: center;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text-dim);
+}
+.pager-now b { display: block; font-size: 13px; color: var(--text); }
+.vchips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 11px; }
+.vchip {
+  min-width: 44px; height: 44px; padding: 0 6px;
+  border-radius: var(--r-sm); border: 1px solid var(--line-strong);
+  background: var(--surface); color: var(--muted);
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+}
+.vchip.now { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); color: var(--brand-ink); }
+.vchip.done { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.vchip.off  { background: var(--bad-soft); border-color: var(--bad-line); color: var(--bad); }
+.vchip.bad::after { content: "!"; font-weight: 800; color: var(--bad); }
+.vchip svg { width: 12px; height: 12px; }
+
+/* ---------- reference ---------- */
+.ref-head { margin-bottom: 4px; }
+.ref-head h2 {
+  font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ref-head p { font-size: 13px; color: var(--text-dim); line-height: 1.5; margin-top: 6px; }
+.coa { font-family: var(--mono); font-size: 12px; }
+.coa-hd, .coa-row {
+  display: grid; grid-template-columns: 42px 1fr 74px 52px; gap: 6px;
+  padding: 5px 0; align-items: baseline;
+}
+.coa-hd {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1.5px solid var(--line-strong);
+}
+.coa-row { border-bottom: 1px solid var(--line); color: var(--text-dim); }
+.coa-row:last-child { border-bottom: 0; }
+.coa-row b { color: var(--text); font-weight: 700; }
+.coa-name { font-family: var(--font); font-size: 12px; line-height: 1.3; }
+.coa-fam { font-size: 10.5px; color: var(--muted); }
+.coa-dr, .coa-cr {
+  justify-self: end; padding: 1px 7px; border-radius: 999px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.04em;
+}
+.coa-dr { background: var(--brand-soft); color: var(--brand-ink); }
+.coa-cr { background: var(--good-soft); color: var(--good-deep); }
+.src { display: grid; gap: 7px; }
+.src-row {
+  display: flex; gap: 10px; align-items: baseline;
+  padding: 8px 10px; border-radius: var(--r-sm);
+  border: 1px solid var(--line); background: var(--surface);
+  font-size: 13px; line-height: 1.45; color: var(--text-dim);
+}
+.src-row u {
+  flex: 0 0 auto; text-decoration: none;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--brand);
+  min-width: 52px;
+}
+
 /* ---------- the problem's instructions, kept in view ---------- */
 .instr {
   margin-top: 14px; border-radius: var(--r-md);
@@ -2127,7 +2198,7 @@ document.getElementById('mark').innerHTML = ICON.badge;
 document.getElementById('mod-caret').innerHTML = ICON.chev;
 document.getElementById('btn-theme').innerHTML = ICON.sun;
 document.getElementById('tab-guide').innerHTML = ICON.book + ' Guide';
-document.getElementById('tab-table').innerHTML = ICON.table + ' Data';
+document.getElementById('tab-table').innerHTML = ICON.table + ' Reference';
 document.getElementById('tab-solve').innerHTML = ICON.pencil + ' Solve';
 document.getElementById('prev-icon').innerHTML = ICON.prev;
 document.getElementById('next-icon').innerHTML = ICON.next;
@@ -2521,18 +2592,44 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   /* ---------- table pane ---------- */
+  /* ---------- reference ----------
+     Everything a learner would have on the desk beside them, and none of
+     the figures they are being asked to produce. The worked summary lives
+     in the guide, where it is being taught. */
   function renderTable() {
-    var open = (view === 'detail' && at < ENTRIES.length) ? at : null;
-    var hits = open === null ? [] : effectsOf(LEDGER[open]).map(function (e) { return e.k; });
-    $('table-slot').innerHTML = ledgerTable(99, hits, { totals: true, mark: open });
-    if (open === null) return;
-    var sc = $('table-scroll');
-    var row = $('table-slot').querySelector('tr.fresh');
-    if (!row) return;
-    window.setTimeout(function () {
-      /* Honour the reduced-motion preference for programmatic scrolling too. */
-      sc.scrollTo({ top: Math.max(0, row.offsetTop - sc.clientHeight / 2), behavior: reduceMotion() ? 'auto' : 'smooth' });
-    }, 90);
+    $('table-slot').innerHTML =
+      '<div class="card" style="padding:14px">' +
+        '<div class="ref-head"><h2>The transactions</h2>' +
+        '<p>' + CO.name + ' during its first month. These are the events to be recorded.</p></div>' +
+        '<div class="src" style="margin-top:11px">' +
+          LEDGER.map(function (r) {
+            return '<div class="src-row"><u>(' + r.id + ')</u><span>' + WORK_TX[r.id] + '</span></div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>The columns of the summary</h2>' +
+        '<p>Each account gets a column, grouped by the side of the equation it sits on.</p></div>' +
+        '<div class="coa" style="margin-top:11px">' +
+          '<div class="coa-hd"><span></span><span>Account</span><span>Group</span><span></span></div>' +
+          COLS.map(function (c) {
+            var grp = c.grp === 'a' ? 'Asset' : (c.grp === 'l' ? 'Liability' : 'Equity');
+            var down = (c.k === 'exp' || c.k === 'div');
+            return '<div class="coa-row"><span></span>' +
+              '<span class="coa-name">' + ACCOUNT[c.k] + '</span>' +
+              '<span class="coa-fam">' + grp + '</span>' +
+              '<span class="' + (down ? 'coa-cr' : 'coa-dr') + '">' + (down ? '&minus;' : '+') + '</span></div>';
+          }).join('') +
+        '</div>' +
+        '<p class="viz-sub">Expenses and dividends sit inside equity but reduce it, which is why they are subtracted rather than added.</p>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>The equation</h2></div>' +
+        '<div class="rule-b" style="margin-top:10px">' +
+          '<div class="rule-col d"><div class="rule-hd"><b>Assets</b><span>what the business controls</span></div></div>' +
+          '<div class="rule-col c"><div class="rule-hd"><b>Liabilities + Equity</b><span>who has a claim on it</span></div></div>' +
+        '</div>' +
+      '</div>';
   }
 
 
@@ -3095,18 +3192,33 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   /* ---------- data tab: the whole ledger and the trial balance ---------- */
   function renderTable2() {
-    var open = (view === 'detail' && at < ENTRIES2.length) ? JOURNAL[at] : null;
-    var full = postedThrough(999);
     $('table-slot').innerHTML =
       '<div class="card" style="padding:14px">' +
-        '<div class="viz-cap">General journal</div>' +
-        JOURNAL.map(function (j) {
-          return '<div style="margin-bottom:8px">' + journalEntry(j, { live: open && open.id === j.id }) + '</div>';
-        }).join('') +
+        '<div class="ref-head"><h2>Chart of accounts</h2>' +
+        '<p>The accounts ' + CO2.name + ' keeps, and the side each one increases on.</p></div>' +
+        '<div class="coa" style="margin-top:11px">' +
+          '<div class="coa-hd"><span>No.</span><span>Account</span><span>Family</span><span>Normal</span></div>' +
+          ACCT.map(function (a) {
+            return '<div class="coa-row"><b>' + a.no + '</b>' +
+              '<span class="coa-name">' + a.name + '</span>' +
+              '<span class="coa-fam">' + a.fam + '</span>' +
+              '<span class="' + (a.up === 'D' ? 'coa-dr' : 'coa-cr') + '">' + (a.up === 'D' ? 'Dr' : 'Cr') + '</span></div>';
+          }).join('') +
+        '</div>' +
       '</div>' +
       '<div class="card" style="padding:14px;margin-top:12px">' +
-        '<div class="viz-cap">Trial balance &middot; ' + CO2.asAt + '</div>' +
-        trialBalance(full, open ? open.lines.map(function (l) { return l[0]; }) : []) +
+        '<div class="ref-head"><h2>Debit and credit rules</h2>' +
+        '<p>Which side of an account an increase lands on.</p></div>' +
+        '<div style="margin-top:11px">' + ruleBoard(null) + '</div>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>July transactions</h2>' +
+        '<p>The source documents to be journalized.</p></div>' +
+        '<div class="src" style="margin-top:11px">' +
+          JOURNAL.map(function (j) {
+            return '<div class="src-row"><u>' + j.date.replace('July ', 'Jul ') + '</u><span>' + FACTS2[j.id] + '</span></div>';
+          }).join('') +
+        '</div>' +
       '</div>';
   }
 
@@ -3151,7 +3263,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
           'Debit Dividends 600. Credit Cash 600.']
   };
 
-  var w2 = { fx: {}, hint: {}, shut: {}, posted: {}, bal: {}, tb: {}, tbt: {} };
+  var w2 = { fx: {}, hint: {}, shut: {}, posted: {}, bal: {}, tb: {}, tbt: {}, at: 0, graded: 0 };
 
   function loadWork2() {
     try {
@@ -3159,6 +3271,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       if (w && typeof w === 'object') {
         w2.fx = w.fx || {}; w2.hint = w.hint || {}; w2.shut = w.shut || {}; w2.posted = w.posted || {};
         w2.bal = w.bal || {}; w2.tb = w.tb || {}; w2.tbt = w.tbt || {};
+        w2.at = w.at || 0;
       }
     } catch (e) { /* private mode: run without persistence */ }
   }
@@ -3425,51 +3538,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var posted = 0;
     JOURNAL.forEach(function (j, i) { if (isPosted(i)) posted++; });
 
-    /* ---- (a) the general journal ---- */
-    var docs = JOURNAL.map(function (j, ji) {
-      var t = jtotals(ji), locked = isPosted(ji);
-      var rows = '';
-      for (var i = 0; i < slots2(ji); i++) {
-        var dv = cell2(ji, i, 'd') || '', cv = cell2(ji, i, 'c') || '';
-        rows += '<div class="gl-row">' +
-          '<select class="gl-acct" data-a2="' + ji + '.' + i + '"' + (locked ? ' disabled' : '') +
-            ' aria-label="Account for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '">' + opts + '</select>' +
-          '<input class="gl-amt' + (cv ? ' muted' : '') + '" data-d2="' + ji + '.' + i + '" value="' + dv + '"' +
-            (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
-            ' aria-label="Debit for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '" />' +
-          '<input class="gl-amt' + (dv ? ' muted' : '') + '" data-c2="' + ji + '.' + i + '" value="' + cv + '"' +
-            (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
-            ' aria-label="Credit for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '" />' +
-          '</div>';
-      }
-      var pill = locked ? '<span class="pill posted">' + ICON.check + 'Posted</span>'
-        : !t.filled ? '<span class="pill draft">Draft</span>'
-        : t.off === 0 && t.d ? '<span class="pill ready">Balanced</span>'
-        : '<span class="pill off">Out of balance</span>';
-      var off = !t.filled
-        ? '<div class="gl-off idle"><span>Enter the debit and the credit</span><span>&mdash;</span></div>'
-        : t.off === 0 && t.d
-          ? '<div class="gl-off ok"><span>In balance</span><span>' + ICON.check + '</span></div>'
-          : '<div class="gl-off off"><span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span></div>';
-
-      return '<div class="doc-je' + (locked ? ' posted' : '') + '" data-tx2="' + ji + '">' +
-        '<div class="je-top"><span class="je-ref">' + jeRef(ji) + '</span>' +
-          '<span class="je-date">' + j.date + ', 2025</span>' + pill + '</div>' +
-        '<div class="je-memo"><u>Source document</u>' + FACTS2[j.id] + '</div>' +
-        '<div class="gl">' +
-          '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
-          '<div class="gl-foot"><span class="lbl">Totals</span><span>' + (t.d ? money2(t.d) : '&mdash;') + '</span><span>' + (t.c ? money2(t.c) : '&mdash;') + '</span></div>' +
-          off +
-        '</div>' +
-        '<div class="je-acts">' +
-          '<button type="button" class="ws-hint" data-hint2="' + ji + '">' + ICON.bulb + 'Hint</button>' +
-          (locked
-            ? '<button type="button" class="btn-post undo" data-unpost="' + ji + '">Unpost</button>'
-            : '<button type="button" class="btn-post" data-post="' + ji + '"' + (canPost(ji) ? '' : ' disabled') + '>' + ICON.check + 'Post to ledger</button>') +
-        '</div>' +
-        '<div data-note2="' + ji + '" style="padding:0 11px 11px"></div>' +
-        '</div>';
-    }).join('');
+    /* ---- (a) the general journal, one voucher at a time ---- */
+    var cur = Math.max(0, Math.min(JOURNAL.length - 1, w2.at || 0));
+    var docs = voucherPager(cur, opts) + voucherHtml(cur, opts);
 
     /* ---- (b) the ledger: postings arrive, the learner foots each account ---- */
     var led = myLedger();
@@ -3559,6 +3630,92 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     Object.keys(w2.hint).forEach(paintHint2);
   }
 
+  /* A voucher's state, for the chip strip and the pill. */
+  function vState(ji) {
+    if (isPosted(ji)) return 'posted';
+    var t = jtotals(ji);
+    if (!t.filled) return 'draft';
+    return (t.off === 0 && t.d) ? 'balanced' : 'off';
+  }
+
+  function voucherPager(cur, opts) {
+    var chips = JOURNAL.map(function (j, ji) {
+      var st = vState(ji);
+      var cls = 'vchip' + (ji === cur ? ' now' : '') +
+        (st === 'posted' ? ' done' : (st === 'off' ? ' off' : '')) +
+        (w2.graded && entryTouched2(ji) && !entryRight2(ji) ? ' bad' : '');
+      return '<button type="button" class="' + cls + '" data-vgo="' + ji + '"' +
+        ' aria-label="Voucher ' + (ji + 1) + ' of ' + JOURNAL.length + ', ' + st + '"' +
+        (ji === cur ? ' aria-current="true"' : '') + '>' +
+        (st === 'posted' ? ICON.check : (ji + 1)) + '</button>';
+    }).join('');
+    return '<div class="pager">' +
+        '<button type="button" class="pager-btn" data-vprev' + (cur === 0 ? ' disabled' : '') +
+          ' aria-label="Previous voucher">' + ICON.prev + '</button>' +
+        '<span class="pager-now"><b>' + jeRef(cur) + '</b>' + (cur + 1) + ' of ' + JOURNAL.length + '</span>' +
+        '<button type="button" class="pager-btn" data-vnext' + (cur === JOURNAL.length - 1 ? ' disabled' : '') +
+          ' aria-label="Next voucher">' + ICON.next + '</button>' +
+      '</div>' +
+      '<div class="vchips">' + chips + '</div>';
+  }
+
+  function voucherHtml(ji, opts) {
+    var j = JOURNAL[ji];
+    var t = jtotals(ji), locked = isPosted(ji);
+    var rows = '';
+    for (var i = 0; i < slots2(ji); i++) {
+      var dv = cell2(ji, i, 'd') || '', cv = cell2(ji, i, 'c') || '';
+      rows += '<div class="gl-row">' +
+        '<select class="gl-acct" data-a2="' + ji + '.' + i + '"' + (locked ? ' disabled' : '') +
+          ' aria-label="Account for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '">' + opts + '</select>' +
+        '<input class="gl-amt' + (cv ? ' muted' : '') + '" data-d2="' + ji + '.' + i + '" value="' + dv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
+          ' aria-label="Debit for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '" />' +
+        '<input class="gl-amt' + (dv ? ' muted' : '') + '" data-c2="' + ji + '.' + i + '" value="' + cv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
+          ' aria-label="Credit for line ' + (i + 1) + ' of voucher ' + (ji + 1) + '" />' +
+        '</div>';
+    }
+    var st = vState(ji);
+    var pill = st === 'posted' ? '<span class="pill posted">' + ICON.check + 'Posted</span>'
+      : st === 'draft' ? '<span class="pill draft">Draft</span>'
+      : st === 'balanced' ? '<span class="pill ready">Balanced</span>'
+      : '<span class="pill off">Out of balance</span>';
+    var off = st === 'draft'
+      ? '<div class="gl-off idle"><span>Enter the debit and the credit</span><span>&mdash;</span></div>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<div class="gl-off ok"><span>In balance</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span></div>';
+
+    return '<div class="doc-je' + (locked ? ' posted' : '') + '" data-tx2="' + ji + '">' +
+      '<div class="je-top"><span class="je-ref">' + jeRef(ji) + '</span>' +
+        '<span class="je-date">' + j.date + ', 2025</span>' + pill + '</div>' +
+      '<div class="je-memo"><u>Source document</u>' + FACTS2[j.id] + '</div>' +
+      '<div class="gl">' +
+        '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
+        '<div class="gl-foot"><span class="lbl">Totals</span><span>' + (t.d ? money2(t.d) : '&mdash;') + '</span><span>' + (t.c ? money2(t.c) : '&mdash;') + '</span></div>' +
+        off +
+      '</div>' +
+      '<div class="je-acts">' +
+        '<button type="button" class="ws-hint" data-hint2="' + ji + '">' + ICON.bulb + 'Hint</button>' +
+        (locked
+          ? '<button type="button" class="btn-post undo" data-unpost="' + ji + '">Unpost</button>'
+          : '<button type="button" class="btn-post" data-post="' + ji + '"' + (canPost(ji) ? '' : ' disabled') + '>' + ICON.check + 'Post to ledger</button>') +
+      '</div>' +
+      '<div data-note2="' + ji + '" style="padding:0 11px 11px"></div>' +
+      '</div>';
+  }
+
+  /* Move to a voucher, remembering where we were. */
+  function goVoucher(n) {
+    w2.at = Math.max(0, Math.min(JOURNAL.length - 1, n));
+    saveWork2();
+    renderSolve2();
+    renderControls();
+    var doc = $('solve').querySelector('.doc-je');
+    if (doc) doc.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'nearest' });
+  }
+
   function refreshDoc(ji) {
     var t = jtotals(ji);
     var doc = $('solve').querySelector('[data-tx2="' + ji + '"]');
@@ -3612,13 +3769,20 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function gradeSolve2() {
+    w2.graded = 1;
     JOURNAL.forEach(function (j, ji) {
       var doc = $('solve').querySelector('[data-tx2="' + ji + '"]');
+      if (!doc) return;                       // only the open voucher is on screen
       var note = $('solve').querySelector('[data-note2="' + ji + '"]');
       var ok = entryRight2(ji), touched = entryTouched2(ji);
       doc.classList.toggle('graded-bad', !ok && touched);
       if (ok || !touched) { var stale = doc.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
       else if (!w2.hint[ji]) note.innerHTML = '<div class="ws-note bad">' + entryDiag2(ji) + '</div>';
+    });
+    // The chip strip carries the verdict for the vouchers that are not open.
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-vgo]'), function (c) {
+      var ji = Number(c.getAttribute('data-vgo'));
+      c.classList.toggle('bad', entryTouched2(ji) && !entryRight2(ji));
     });
 
     var led = myLedger(), key = postedThrough(999);
@@ -3722,11 +3886,23 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     });
 
     host.addEventListener('click', function (e) {
+      var v = e.target.closest('[data-vgo]');
+      if (v) { goVoucher(Number(v.getAttribute('data-vgo'))); return; }
+      if (e.target.closest('[data-vprev]')) { goVoucher((w2.at || 0) - 1); return; }
+      if (e.target.closest('[data-vnext]')) { goVoucher((w2.at || 0) + 1); return; }
       var p = e.target.closest('[data-post]');
       if (p) {
-        var ji = p.getAttribute('data-post');
+        var ji = Number(p.getAttribute('data-post'));
         if (!canPost(ji)) return;
         w2.posted[ji] = 1;
+        // Carry on to the next voucher still waiting, the way a run of data
+        // entry does, rather than leaving the finished one on screen.
+        var next = ji;
+        for (var n = 1; n <= JOURNAL.length; n++) {
+          var c = (ji + n) % JOURNAL.length;
+          if (!isPosted(c)) { next = c; break; }
+        }
+        w2.at = next;
         saveWork2(); renderSolve2(); renderControls();
         return;
       }
@@ -3751,6 +3927,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       if (e.target.closest('#ws-reset2')) {
         if (!window.confirm('Clear every voucher, posting, balance and hint?')) return;
         w2.fx = {}; w2.hint = {}; w2.shut = {}; w2.posted = {}; w2.bal = {}; w2.tb = {}; w2.tbt = {};
+        w2.at = 0; w2.graded = 0;
         saveWork2(); renderSolve2(); renderControls();
       }
     });

@@ -521,6 +521,30 @@ function check(name, ok, detail) {
   check('every working-paper control has an accessible name',
     wsLayout.unnamed.length === 0 && wsLayout.noLabel === 0,
     wsLayout.unnamed.join(',') + ' unlabelled inputs=' + wsLayout.noLabel);
+  // Module 2.1's reference had the same hole: it was the finished summary.
+  await ws.click('#tab-table');
+  await ws.waitForTimeout(400);
+  const ref1 = await ws.evaluate(() => {
+    const slot = document.getElementById('table-slot');
+    const text = slot.textContent.replace(/\s+/g, ' ');
+    const t = totalsUpTo(999);
+    // Same rule: a column fed by one transaction just repeats its amount.
+    const answers = COLS.filter(c => t[c.k] && LEDGER.filter(r => r[c.k]).length > 1)
+      .map(c => t[c.k].toLocaleString('en-US'))
+      .concat([assetsOf(t).toLocaleString('en-US')]);
+    return {
+      leaked: [...new Set(answers.filter(v => text.indexOf(v) !== -1))],
+      tables: slot.querySelectorAll('table.led, table.wp').length,
+      sources: slot.querySelectorAll('.src-row').length
+    };
+  });
+  check("module 2.1's reference carries no column total either",
+    ref1.leaked.length === 0, 'leaked: ' + ref1.leaked.join(', '));
+  check('and no completed summary table',
+    ref1.tables === 0 && ref1.sources === 9, `tables=${ref1.tables} sources=${ref1.sources}`);
+  await ws.click('#tab-solve');
+  await ws.waitForTimeout(300);
+
   check('no working-paper console or page errors', wsErrors.length === 0, wsErrors.slice(0, 3).join(' | '));
   await ws.close();
   // ---------------------------------------------------------------
@@ -652,6 +676,8 @@ function check(name, ok, detail) {
       n: r.querySelector('.instr-n').textContent.trim()
     })),
     vouchers: document.querySelectorAll('.doc-je').length,
+    chips: document.querySelectorAll('[data-vgo]').length,
+    pager: document.querySelector('.pager-now').textContent.replace(/\s+/g, ' ').trim(),
     lines: document.querySelectorAll('[data-a2]').length,
     tbRows: document.querySelectorAll('[data-tbrow]').length,
     ledger: document.querySelectorAll('[data-acct]').length,
@@ -669,8 +695,10 @@ function check(name, ok, detail) {
   check('each instruction carries its own progress, all starting at zero',
     ws2.instr.map(i => i.n).join(' ') === '0/11 0/11 0/13',
     ws2.instr.map(i => i.n).join(' '));
-  check('(a) has a voucher per transaction and a line per posting',
-    ws2.vouchers === 11 && ws2.lines === 23, `vouchers=${ws2.vouchers} lines=${ws2.lines}`);
+  check('(a) shows one voucher at a time, not a stack of eleven',
+    ws2.vouchers === 1 && ws2.lines === 2, `vouchers=${ws2.vouchers} lines=${ws2.lines}`);
+  check('every voucher is reachable from the strip, starting on the first',
+    ws2.chips === 11 && /JE-01\s*1 of 11/.test(ws2.pager), ws2.chips + ' | ' + ws2.pager);
   check('(b) starts with an empty ledger — nothing is posted for the learner',
     ws2.ledger === 0, 'accounts=' + ws2.ledger);
   check('(c) is a full trial balance form over the whole chart of accounts',
@@ -678,6 +706,26 @@ function check(name, ok, detail) {
   check('accounts are addressed by number', ws2.numbered);
   check('the whole problem is worth 35 marks', /0 of 35/.test(ws2.score), ws2.score);
   check('the worksheet does not overflow at 390px', ws2.x <= 0, '+' + ws2.x);
+
+  // Moving between vouchers, and posting carrying on to the next one still
+  // waiting rather than leaving a finished voucher on screen.
+  await k.click('[data-vnext]');
+  await k.waitForTimeout(150);
+  const paged = await k.evaluate(() => ({
+    now: document.querySelector('.pager-now').textContent.replace(/\s+/g, ' ').trim(),
+    open: document.querySelector('.doc-je').getAttribute('data-tx2'),
+    count: document.querySelectorAll('.doc-je').length,
+    current: document.querySelectorAll('[data-vgo][aria-current]').length
+  }));
+  check('Next moves to the following voucher and only it is on screen',
+    /JE-02\s*2 of 11/.test(paged.now) && paged.open === '1' && paged.count === 1 && paged.current === 1,
+    JSON.stringify(paged));
+  await k.click('[data-vgo="4"]');
+  await k.waitForTimeout(150);
+  check('the strip jumps straight to any voucher',
+    /JE-05\s*5 of 11/.test(await k.evaluate(() => document.querySelector('.pager-now').textContent.replace(/\s+/g, ' ').trim())));
+  await k.click('[data-vgo="0"]');
+  await k.waitForTimeout(150);
 
   // (a) Post is gated on balance, and only on balance.
   await k.selectOption('[data-a2="0.0"]', 'cash');
@@ -713,6 +761,14 @@ function check(name, ok, detail) {
   // (b) Posting is what puts amounts in the ledger, on the side the entry set.
   await k.click('[data-post="0"]');
   await k.waitForTimeout(300);
+  const advanced = await k.evaluate(() => ({
+    now: document.querySelector('.pager-now').textContent.replace(/\s+/g, ' ').trim(),
+    chip0: document.querySelector('[data-vgo="0"]').className
+  }));
+  check('posting carries on to the next voucher still to be entered',
+    /JE-02\s*2 of 11/.test(advanced.now) && /done/.test(advanced.chip0), JSON.stringify(advanced));
+  await k.click('[data-vgo="0"]');
+  await k.waitForTimeout(200);
   const led = await k.evaluate(() => {
     const boxes = [...document.querySelectorAll('[data-acct]')];
     const cash = document.querySelector('[data-acct="cash"]');
@@ -776,7 +832,12 @@ function check(name, ok, detail) {
     /Liability/.test(th) && /credit/.test(th), th.trim().slice(0, 90));
 
   // Every hint surface in 2.2 closes too: vouchers, ledger balances and
-  // trial balance rows.
+  // trial balance rows. Come back to a voucher first — posting advances the
+  // pager, so voucher 0 is no longer the one on screen.
+  await k.click('[data-vgo="0"]');
+  await k.waitForTimeout(150);
+  await k.click('[data-hint2="0"]');
+  await k.waitForTimeout(150);
   const closable = await k.evaluate(() => {
     const shut = sel => {
       const x = document.querySelector(sel + ' [data-hclose]') ||
@@ -810,8 +871,10 @@ function check(name, ok, detail) {
     ji, lines: j.lines.map(l => ({ k: l[0], col: l[1] ? 'd' : 'c', n: l[1] || l[2] }))
   })));
   for (const e of plan2) {
+    await k.click(`[data-vgo="${e.ji}"]`);
+    await k.waitForTimeout(50);
     const locked = await k.evaluate(ji => !!document.querySelector('[data-unpost="' + ji + '"]'), e.ji);
-    if (locked) await k.click(`[data-unpost="${e.ji}"]`);
+    if (locked) { await k.click(`[data-unpost="${e.ji}"]`); await k.waitForTimeout(50); }
     for (let i = 0; i < e.lines.length; i++) {
       await k.selectOption(`[data-a2="${e.ji}.${i}"]`, e.lines[i].k);
       await k.fill(`[data-d2="${e.ji}.${i}"]`, '');
@@ -844,7 +907,7 @@ function check(name, ok, detail) {
     instr: [...document.querySelectorAll('.instr-n')].map(e => e.textContent.trim()),
     allDone: document.querySelectorAll('.instr-row.done').length,
     bad: document.querySelectorAll('.doc-je.graded-bad, .ta-box.wrong, .tbf-row.wrong').length,
-    posted: document.querySelectorAll('[data-unpost]').length
+    posted: document.querySelectorAll('[data-vgo].done').length
   }));
   check('working the problem through scores 35 of 35', /35 of 35/.test(done2.score), done2.score);
   check('all three instructions read as complete',
@@ -864,6 +927,38 @@ function check(name, ok, detail) {
       .filter(e => !e.getAttribute('aria-label') && !(e.labels && e.labels.length)).length;
     return { small, unnamed, noLabel, h1: document.querySelectorAll('h1').length };
   });
+  // The Reference tab sits one tap from the worksheet, so it must not carry
+  // any figure the learner is being asked to produce.
+  await k.click('#tab-table');
+  await k.waitForTimeout(400);
+  const ref2 = await k.evaluate(() => {
+    const slot = document.getElementById('table-slot');
+    const text = slot.textContent.replace(/\s+/g, ' ');
+    const key = postedThrough(999);
+    // An account touched by a single transaction has a balance equal to a
+    // figure the problem already states, so only balances that have to be
+    // worked out count as given away.
+    const answers = ACCT.filter(a => balOf(key, a.k) && key[a.k].lines.length > 1)
+      .map(a => balOf(key, a.k).toLocaleString('en-US'))
+      .concat([trialTotals(key).dr.toLocaleString('en-US')]);
+    return {
+      leaked: [...new Set(answers.filter(v => text.indexOf(v) !== -1))],
+      worked: slot.querySelectorAll('.je, .tb, .tbf, .ta').length,
+      accounts: slot.querySelectorAll('.coa-row').length,
+      sources: slot.querySelectorAll('.src-row').length,
+      label: document.getElementById('tab-table').textContent.trim()
+    };
+  });
+  check('the reference carries no balance and no trial balance figure',
+    ref2.leaked.length === 0, 'leaked: ' + ref2.leaked.join(', '));
+  check('and no worked journal, ledger or trial balance at all',
+    ref2.worked === 0, 'found ' + ref2.worked + ' worked artefacts');
+  check('what it does carry is the chart of accounts and the source documents',
+    ref2.accounts === 16 && ref2.sources === 11 && /Reference/.test(ref2.label),
+    `accounts=${ref2.accounts} sources=${ref2.sources} label=${ref2.label}`);
+  await k.click('#tab-solve');
+  await k.waitForTimeout(300);
+
   check('no worksheet control is under 44px', l2.small.length === 0, l2.small.join(','));
   check('every worksheet control has an accessible name',
     l2.unnamed.length === 0 && l2.noLabel === 0, l2.unnamed.join(',') + ' unlabelled=' + l2.noLabel);
