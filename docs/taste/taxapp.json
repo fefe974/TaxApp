@@ -1,0 +1,198 @@
+{
+  "source": {
+    "name": "Financial Accounting · Chapter 2",
+    "captures": [
+      "#lo23",
+      "#lo23-a2"
+    ],
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "surfaceKind": "operate"
+  },
+  "tokens": {
+    "color": {
+      "ground": {
+        "light": "#faf8f4",
+        "dark": "#12141a"
+      },
+      "surface": {
+        "light": "#ffffff",
+        "dark": "#1a1d25"
+      },
+      "surface2": {
+        "light": "#f4f1ea",
+        "dark": "#21252f"
+      },
+      "surface3": {
+        "light": "#e8e3d8",
+        "dark": "#2c313d"
+      },
+      "text": {
+        "light": "#191d24",
+        "dark": "#ece9e2"
+      },
+      "textDim": {
+        "light": "#4a5260",
+        "dark": "#b8b6ae"
+      },
+      "muted": {
+        "light": "#646b78",
+        "dark": "#989791"
+      },
+      "brand": {
+        "light": "#1e3a5f",
+        "dark": "#8fb4e0"
+      },
+      "good": {
+        "light": "#0f7b5a",
+        "dark": "#4ec49b"
+      },
+      "bad": {
+        "light": "#b4232a"
+      },
+      "amber": {
+        "light": "#8a5a12",
+        "dark": "#e0b464"
+      }
+    },
+    "type": {
+      "display": "Literata",
+      "ui": "system-sans",
+      "mono": "IBM Plex Mono",
+      "h1": {
+        "size": "32px",
+        "weight": "600",
+        "lineHeight": "34.56px",
+        "letterSpacing": "-0.48px",
+        "family": "Literata"
+      },
+      "body": {
+        "size": "15px",
+        "weight": "400",
+        "lineHeight": "24px",
+        "family": "-apple-system",
+        "maxWidth": "591.694px"
+      },
+      "sizesInUse": [
+        "11px",
+        "14.5px",
+        "13px",
+        "11.5px",
+        "12.5px",
+        "12px",
+        "13.5px",
+        "10px",
+        "19px",
+        "14px",
+        "18px",
+        "32px"
+      ],
+      "weightsInUse": [
+        "700",
+        "400",
+        "800",
+        "600",
+        "500",
+        "750"
+      ],
+      "measurePx": 640,
+      "tabularNumsDeclarations": 28
+    },
+    "radius": {
+      "scale": {
+        "sm": "6px",
+        "md": "10px",
+        "lg": "14px",
+        "xl": "18px"
+      },
+      "hardcodedCount": 23,
+      "hardcoded": [
+        "4px",
+        "999px",
+        "50%",
+        "5px",
+        "2px",
+        "8px",
+        "6px",
+        "12px"
+      ]
+    },
+    "shadow": {
+      "light": [
+        "0 1px 2px rgba(37,30,18,.05)",
+        "0 6px 18px -8px rgba(37,30,18,.16)",
+        "0 18px 40px -18px rgba(37,30,18,.26)"
+      ],
+      "dark": [
+        "0 1px 2px rgba(0,0,0,.45)",
+        "0 18px 40px -18px rgba(0,0,0,.8)"
+      ],
+      "tint": "rgba(37,30,18)"
+    },
+    "spacing": {
+      "observed": [
+        "10px",
+        "8px",
+        "13px",
+        "12px",
+        "9px",
+        "7px",
+        "1px",
+        "11px",
+        "3px",
+        "2px",
+        "26px",
+        "14px",
+        "30px",
+        "40px"
+      ],
+      "baseUnit": null
+    }
+  },
+  "taste": [
+    {
+      "name": "One serif, spent once per screen",
+      "type": "restraint",
+      "trigger": "A textbook-derived teaching tool that must not read like a corporate dashboard, on a phone where vertical space is scarce.",
+      "decision": "Load a display serif and use it on exactly one element per screen (the h1), rather than on the whole heading hierarchy.",
+      "reason": "A learner needs one anchor telling them where they are; a page of serif headings buries the task.",
+      "evidence": "Literata on 2 elements per capture vs 134-136 for the system sans. Every h2 falls back to the interface font."
+    },
+    {
+      "name": "Figures get their own alphabet",
+      "type": "craft",
+      "trigger": "Screens mixing prose with columns of money that must line up down a scrolling table.",
+      "decision": "Partition type by role - sans for prose, mono with tabular figures for every number - rather than one family throughout.",
+      "reason": "A column that does not line up is a reading error, not an aesthetic complaint.",
+      "evidence": "Plex Mono on 68 elements (dashboard) and 34 (entry); 28 tabular-nums declarations."
+    },
+    {
+      "name": "Shadows tinted to the paper, not to black",
+      "type": "craft",
+      "trigger": "Elevation for cards and vouchers on a cream ground rather than white.",
+      "decision": "Warm brown-black rgba(37,30,18) over neutral black, and three fixed depths over per-component values.",
+      "reason": "Black shadow on cream reads as a smudge; tinted to the paper hue it reads as light.",
+      "evidence": "All three light tokens share rgba(37,30,18); dark swaps to pure black because the ground changed."
+    },
+    {
+      "name": "Nothing is a picture",
+      "type": "restraint",
+      "trigger": "Teaching inherently abstract relationships - a timeline, the accounting equation, a contra account.",
+      "decision": "Draw every figure from DOM and CSS rather than shipping illustrations or an icon font.",
+      "reason": "A drawn figure carries live numbers and re-themes itself; a stale figure in a teaching tool is a wrong answer.",
+      "evidence": "images: 0 on both captures. The balance board animates from the same data that scores the worksheet."
+    }
+  ],
+  "leaks": [
+    {
+      "name": "Radius scale bypassed",
+      "detail": "4 tokens used 49 times alongside 23 hardcoded radii; 4px/5px/8px/12px are off-scale and 6px duplicates --r-sm."
+    },
+    {
+      "name": "Spacing is ad hoc",
+      "detail": "Observed 7, 9, 11, 13px with no 4px or 8px base unit; consistent by proximity rather than by rule."
+    }
+  ]
+}
