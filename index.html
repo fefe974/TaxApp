@@ -1597,6 +1597,81 @@ table.wp.w3 .rowlab { min-width: 132px; max-width: 132px; white-space: normal; l
 table.wp.w3 tfoot td { height: auto; }
 table.wp.w3 tfoot .cell { background: var(--good-soft); color: var(--good-deep); font-weight: 800; }
 
+/* ---------- module 2.4: the closing process ---------- */
+
+/* The closing funnel. Inline SVG so the arrows are real arrows: currentColor
+   inherits the theme, and the one path that matters — dividends going straight
+   past Income Summary — is the only thing drawn in an accent. */
+.viz-svg { display: block; }
+.fn { width: 100%; max-width: 100%; height: auto; color: var(--text-dim); }
+.fn rect { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1; }
+.fn path { stroke: currentColor; stroke-width: 1.5; }
+.fn text { font-family: var(--font); fill: currentColor; }
+.fn .fn-name { font-size: 12px; font-weight: 700; }
+.fn .fn-num {
+  font-family: var(--mono); font-size: 11px; font-weight: 800;
+  font-variant-numeric: tabular-nums; fill: var(--text);
+}
+.fn .fn-lbl { font-size: 10.5px; font-weight: 600; fill: var(--muted); }
+.fn .fn-temp rect { fill: var(--amber-soft); stroke: var(--amber-line); }
+.fn .fn-hold rect { fill: var(--brand-soft); stroke: var(--brand-line); }
+.fn .fn-perm rect { fill: var(--good-soft); stroke: var(--good-line); }
+.fn .fn-accent rect { stroke-width: 2; stroke: var(--bad-line); }
+.fn .fn-accentline { stroke: var(--bad); stroke-dasharray: 4 3; }
+.fn .fn-accentfill { fill: var(--bad); }
+.fn .fn-accenttext { fill: var(--bad); font-weight: 700; }
+.fn .fn-bypass { fill: var(--bad); font-weight: 700; font-size: 9px; }
+
+/* What empties and what carries forward. */
+.tp { display: grid; gap: 12px; }
+@media (min-width: 520px) { .tp { grid-template-columns: 1fr 1fr; align-items: start; } }
+.tp-col { border-radius: var(--r-md); border: 1px solid; padding: 11px 12px; }
+.tp-col.temp { background: var(--amber-soft); border-color: var(--amber-line); }
+.tp-col.perm { background: var(--good-soft); border-color: var(--good-line); }
+.tp-cap {
+  display: block; font-size: 10px; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px;
+}
+.tp-col.temp .tp-cap { color: var(--amber-ink); }
+.tp-col.perm .tp-cap { color: var(--good-deep); }
+.tp-row {
+  display: grid; grid-template-columns: 1fr 56px 16px 56px; gap: 5px;
+  align-items: baseline; padding: 4px 0;
+}
+.tp-name { font-size: 11.5px; line-height: 1.3; min-width: 0; }
+.tp-name b { font-family: var(--mono); font-weight: 700; color: var(--muted); }
+.tp-was, .tp-now {
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  text-align: right; white-space: nowrap;
+}
+.tp-was { color: var(--muted); }
+.tp-now { font-weight: 800; color: var(--text); }
+.tp-now.zero { color: var(--muted); font-weight: 700; }
+.tp-arrow { display: inline-flex; align-items: center; color: var(--muted); }
+.tp-arrow svg { width: 11px; height: 11px; }
+
+/* A subtracted line on a statement, and the zeroed side of a row effect. */
+.stmt-line.less .amt { color: var(--bad); }
+.rowfx-n.to.zero { color: var(--muted); }
+
+/* The document a group of statement figures belongs to. */
+.ws-doc {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin: 4px 0 -4px;
+}
+.ws-fields .ws-doc:first-child { margin-top: 0; }
+
+.card-more { font-size: 11px; color: var(--muted); align-self: center; }
+.coa-row.temp b { color: var(--amber-ink); }
+
+/* The post-closing trial balance form: three columns and a hint cell. */
+table.wp.w4 .rowlab {
+  min-width: 150px; max-width: 150px; white-space: normal;
+  line-height: 1.25; padding: 6px 8px; font-size: 11px;
+}
+table.wp.w4 tfoot td { height: auto; }
+table.wp.w4 tfoot .cell { background: var(--good-soft); color: var(--good-deep); font-weight: 800; }
+
 /* ---------- bottom controls ---------- */
 .controls {
   flex: 0 0 auto;
@@ -2529,11 +2604,218 @@ var METHOD3 = [
 ];
 
 /* ============================================================
+   MODULE 2.4 — Kleene Window Washing Inc.
+   Complete the closing process.
+
+   The opening position is module 2.3's adjusted trial balance,
+   taken from adjustedThrough(999) rather than retyped, so 2.4
+   cannot drift from what 2.3 taught. Two accounts are new:
+   Retained Earnings, which has been sitting at zero all month,
+   and Income Summary, which exists only during closing.
+
+   Even the closing entries are derived. Their amounts are read
+   off the adjusted balances, so an entry cannot disagree with
+   the trial balance it is closing.
+   ============================================================ */
+
+var ACCT4 = ACCT3.concat([
+  { k: 're',   no: '320', name: 'Retained Earnings', fam: 'Equity',         up: 'C', stmt: 'B' },
+  { k: 'isum', no: '350', name: 'Income Summary',    fam: 'Income Summary', up: 'C', stmt: 'I' }
+]);
+function acct4(k) { return ACCT4.filter(function (a) { return a.k === k; })[0]; }
+
+/* Where July stands before anything is closed. */
+function preClose() {
+  var t = adjustedThrough(999);
+  t.re = 0;      /* incorporated on July 1, so it opens the month at nothing */
+  t.isum = 0;
+  return t;
+}
+
+function expenseAccts() {
+  return ACCT4.filter(function (a) { return a.stmt === 'I' && a.up === 'D' && a.k !== 'isum'; });
+}
+function totalExpenses() {
+  var t = preClose();
+  return expenseAccts().reduce(function (n, a) { return n + t[a.k]; }, 0);
+}
+function netIncome() { return preClose().rev - totalExpenses(); }
+function endingRE() { return preClose().re + netIncome() - preClose().div; }
+
+/* The four closing entries, built from the balances they close. */
+function closingEntries() {
+  var t = preClose(), exp = expenseAccts(), te = totalExpenses(), ni = netIncome();
+  return [
+    { id: 'c1', n: 1, short: 'Close revenue',
+      lines: [['rev', t.rev, 0], ['isum', 0, t.rev]] },
+    { id: 'c2', n: 2, short: 'Close the expenses',
+      lines: [['isum', te, 0]].concat(exp.map(function (a) { return [a.k, 0, t[a.k]]; })) },
+    { id: 'c3', n: 3, short: 'Close Income Summary',
+      lines: [['isum', ni, 0], ['re', 0, ni]] },
+    { id: 'c4', n: 4, short: 'Close dividends',
+      lines: [['re', t.div, 0], ['div', 0, t.div]] }
+  ];
+}
+var CLOSE = closingEntries();
+
+function closeDebits(e)  { return e.lines.reduce(function (n, l) { return n + l[1]; }, 0); }
+function closeCredits(e) { return e.lines.reduce(function (n, l) { return n + l[2]; }, 0); }
+
+/* Balances after the closing entries through index `upto` (999 for all). */
+function closedThrough(upto) {
+  var t = preClose();
+  CLOSE.slice(0, upto + 1).forEach(function (e) {
+    e.lines.forEach(function (l) {
+      var up = acct4(l[0]).up;
+      t[l[0]] += (up === 'D') ? (l[1] - l[2]) : (l[2] - l[1]);
+    });
+  });
+  return t;
+}
+
+/* Permanent accounts are what survives closing; temporary accounts are what
+   the closing process exists to empty. Dividends is temporary without being
+   an income statement account, which is the case learners most often miss. */
+function isTemporary(k) { return k === 'div' || k === 'isum' || acct4(k).stmt === 'I'; }
+function permanentAccts() { return ACCT4.filter(function (a) { return !isTemporary(a.k); }); }
+function tbTotals4(t, accts) {
+  var d = 0, c = 0;
+  (accts || ACCT4).forEach(function (a) {
+    var v = t[a.k];
+    if (!v) return;
+    if (a.up === 'D') d += v; else c += v;
+  });
+  return { d: d, c: c };
+}
+
+/* ---------- the three statements, every line derived ---------- */
+function incomeStatement() {
+  var t = preClose();
+  return {
+    revenue: t.rev,
+    expenses: expenseAccts().map(function (a) { return { k: a.k, name: a.name, amount: t[a.k] }; })
+      .sort(function (x, y) { return y.amount - x.amount; }),
+    totalExpenses: totalExpenses(),
+    netIncome: netIncome()
+  };
+}
+function retainedStatement() {
+  var open = preClose().re;
+  return { open: open, add: netIncome(), less: preClose().div, close: open + netIncome() - preClose().div };
+}
+function balanceSheet() {
+  var t = preClose();
+  var current = [
+    { k: 'cash', name: 'Cash', amount: t.cash },
+    { k: 'ar', name: 'Accounts receivable', amount: t.ar },
+    { k: 'sup', name: 'Supplies', amount: t.sup },
+    { k: 'ppi', name: 'Prepaid insurance', amount: t.ppi }
+  ];
+  var currentTotal = current.reduce(function (n, x) { return n + x.amount; }, 0);
+  var bookValue = t.eqp - t.adep;
+  var liab = [
+    { k: 'ap', name: 'Accounts payable', amount: t.ap },
+    { k: 'swp', name: 'Salaries and wages payable', amount: t.swp }
+  ];
+  var liabTotal = liab.reduce(function (n, x) { return n + x.amount; }, 0);
+  return {
+    current: current, currentTotal: currentTotal,
+    equipment: t.eqp, accumulated: t.adep, bookValue: bookValue,
+    totalAssets: currentTotal + bookValue,
+    liabilities: liab, liabTotal: liabTotal,
+    commonStock: t.cs, retained: endingRE(),
+    equityTotal: t.cs + endingRE(),
+    totalClaims: liabTotal + t.cs + endingRE()
+  };
+}
+
+var ENTRIES4 = [
+  { id: 'c1', kind: 'close', short: 'Close revenue',
+    concept: 'Revenue empties into a holding account',
+    rule: 'A revenue account carries a credit balance, so it is closed with a debit of exactly that size.',
+    why: ['Service Revenue has done its job: it counted every dollar earned in July. To start August at zero it has to be emptied, and the balancing credit goes to <b>Income Summary</b> &mdash; a temporary account that exists only during closing.',
+          'The debit is not a guess. It is whatever the adjusted trial balance says the account holds.'],
+    take: 'Income Summary now holds the revenue side of the month and nothing else.' },
+
+  { id: 'c2', kind: 'close', short: 'Close the expenses',
+    concept: 'Five expenses leave in one entry',
+    rule: 'Expenses carry debit balances, so each is closed with a credit, and one debit to Income Summary covers them all.',
+    why: ['Every expense account is emptied the same way, and they can share a single compound entry because they all land in the same place.',
+          'The debit to <b>Income Summary</b> is the total of the five &mdash; the same total the income statement printed.'],
+    take: 'Income Summary now holds revenue on one side and expenses on the other. The difference between them is net income.' },
+
+  { id: 'c3', kind: 'close', short: 'Close Income Summary',
+    concept: 'The month’s result moves into equity',
+    rule: 'Income Summary is closed to Retained Earnings, and its balance before closing is net income.',
+    why: ['Income Summary has served its purpose. Its balance &mdash; revenue less expenses &mdash; is <b>net income</b>, and that belongs to the owners.',
+          'A credit to <b>Retained Earnings</b> is what actually connects a month of trading to the balance sheet.'],
+    take: 'Income Summary is now empty and will not be seen again until the next period ends.' },
+
+  { id: 'c4', kind: 'close', short: 'Close dividends',
+    concept: 'What the owners took out',
+    rule: 'Dividends are closed directly to Retained Earnings, never through Income Summary.',
+    why: ['Dividends are not an expense. They are a distribution of profit, so they never touch the income statement and never pass through Income Summary.',
+          'They reduce what the business has kept, so <b>Retained Earnings</b> is debited and <b>Dividends</b> is credited to empty it.'],
+    take: 'This is the entry most often got wrong: routing dividends through Income Summary would understate net income by the amount paid out.',
+    trap: true }
+];
+
+var STMT4 = [
+  { id: 's1', kind: 'stmt', which: 'income', short: 'The income statement',
+    title: 'What July earned', concept: 'Revenue less expenses, and nothing else',
+    rule: 'The income statement uses only the accounts that will be closed.',
+    why: ['Every figure comes straight off the adjusted trial balance, and only the income statement accounts appear &mdash; no cash, no payables, no dividends.',
+          'Expenses are listed largest first, which is convention rather than arithmetic, and totalled before the result is struck.'],
+    result: 'Net income for July: $4,300.' },
+
+  { id: 's2', kind: 'stmt', which: 'retained', short: 'The retained earnings statement',
+    title: 'What the business kept', concept: 'Opening balance, plus what was earned, less what was paid out',
+    rule: 'Net income arrives here from the income statement; the ending balance leaves for the balance sheet.',
+    why: ['Kleene was incorporated on July 1, so retained earnings opened at <b>zero</b>. That will not be true again &mdash; in August this statement starts at $3,700.',
+          'Dividends are subtracted here, which is the only place they appear on any statement.'],
+    result: 'Retained earnings at July 31: $3,700.' },
+
+  { id: 's3', kind: 'stmt', which: 'balance', short: 'The classified balance sheet',
+    title: 'What the business is worth on the last day', concept: 'Assets grouped by how soon they turn to cash',
+    rule: 'Classified means grouped: current assets before long-lived ones, current liabilities before equity.',
+    why: ['<b>Current assets</b> are the ones expected to be used or collected within a year, listed in the order they convert to cash. Equipment sits below them, shown at cost less the depreciation taken against it.',
+          'Retained earnings arrives from the statement before it, which is why these three are prepared in this order and not any other.'],
+    result: 'Total assets $21,500 = total liabilities and stockholders&rsquo; equity $21,500.' }
+];
+
+var REPORTS4 = [
+  { id: 'why', kind: 'note', short: 'Why close at all', title: 'Temporary and permanent',
+    concept: 'Some accounts measure a period; others measure a position',
+    rule: 'Revenues, expenses, dividends and Income Summary are temporary. Everything on the balance sheet is permanent.',
+    why: ['A revenue account answers &ldquo;how much did we earn <i>this month</i>?&rdquo; If August opened with July&rsquo;s $7,900 still sitting there, the question could never be answered again.',
+          'A cash account answers &ldquo;how much do we have?&rdquo; That question has no period attached, so the balance carries forward untouched.'],
+    families: true },
+
+  { id: 'pctb', kind: 'note', short: 'The post-closing trial balance', title: 'Prove it one last time',
+    concept: 'Only permanent accounts should be left standing',
+    rule: 'If a revenue, expense or dividend account appears here, the closing process was not finished.',
+    why: ['The post-closing trial balance is the opening balance sheet of the next period, in trial balance form.',
+          'It totals <b>$21,680</b> rather than $25,880 because the temporary accounts are gone, and it carries Retained Earnings at $3,700 &mdash; a figure that did not exist on any earlier trial balance.'],
+    pctb: true,
+    result: 'Post-closing totals $21,680 = $21,680.' }
+];
+
+var FLOW4DATA = STMT4.concat(ENTRIES4).concat(REPORTS4);
+
+var METHOD4 = [
+  ['Ask whether the account measures a period', 'Temporary &middot; Permanent'],
+  ['Close it against its own balance', 'Debit what is credited'],
+  ['Send the result to Retained Earnings', 'Through Income Summary'],
+  ['Send dividends there too', 'But not through Income Summary']
+];
+
+/* ============================================================
    THE MODULES
-   Three problems from the same chapter. 2.1 records transactions in
-   a tabular summary; 2.2 records the same kind of events in a
-   journal, posts them, and proves the ledger; 2.3 adjusts the
-   ledger 2.2 produced and proves it again.
+   Four problems from the same chapter, each starting where the last
+   finished. 2.1 records transactions in a tabular summary; 2.2
+   records the same kind of events in a journal, posts them, and
+   proves the ledger; 2.3 adjusts the ledger 2.2 produced and proves
+   it again; 2.4 reports on it and closes the month.
    ============================================================ */
 var MODULES = [
   { id: 'lo21', code: 'LO 2.1', name: 'The accounting equation',
@@ -2547,7 +2829,11 @@ var MODULES = [
   { id: 'lo23', code: 'LO 2.3', name: 'Adjusting entries',
     co: 'Kleene Window Washing Inc.', sub: 'Five adjustments at July 31',
     blurb: 'Journalize the five adjustments the trial balance missed, and show their effects to prepare an adjusted trial balance.',
-    count: '7 screens' }
+    count: '7 screens' },
+  { id: 'lo24', code: 'LO 2.4', name: 'The closing process',
+    co: 'Kleene Window Washing Inc.', sub: 'Three statements, four closing entries',
+    blurb: 'Turn the adjusted trial balance into three financial statements, close every account that measured July, and prove what is left.',
+    count: '9 screens' }
 ];
 
 /* Icons into the static chrome. */
@@ -2675,10 +2961,12 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   var GRAND = assetsOf(totalsUpTo(999));     // the scale every bar is drawn against
 
   /* The open module's screens, and its read-state. */
-  function flowFor(i) { return i === 0 ? FLOW21 : (i === 1 ? FLOW2 : FLOW3); }
+  function flowFor(i) { return [FLOW21, FLOW2, FLOW3, FLOW4][i]; }
   function flow() { return flowFor(mod); }
   /* How many of the open module's screens are entries rather than reports. */
-  function entryCount() { return mod === 0 ? ENTRIES.length : (mod === 1 ? ENTRIES2.length : ENTRIES3.length); }
+  /* 2.4 opens with statements rather than entries, so its 'Entry n of m'
+     label would be wrong from the first screen; it uses the item's own kind. */
+  function entryCount() { return [ENTRIES.length, ENTRIES2.length, ENTRIES3.length, STMT4.length][mod]; }
   function modId() { return MODULES[mod].id; }
   function readSet() {
     if (!read[modId()]) read[modId()] = {};
@@ -2968,7 +3256,8 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var dash = view === 'dash';
     if (mod === 0) { if (dash) renderDash(); else renderDetail(); }
     else if (mod === 1) { if (dash) renderDash2(); else renderDetail2(); }
-    else { if (dash) renderDash3(); else renderDetail3(); }
+    else if (mod === 2) { if (dash) renderDash3(); else renderDetail3(); }
+    else { if (dash) renderDash4(); else renderDetail4(); }
   }
 
   /* ---------- table pane ---------- */
@@ -5161,6 +5450,926 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     });
   }
 
+  /* ---------- module 2.4: the closing process ---------- */
+
+  var FLOW4 = FLOW4DATA;
+
+  /* ---------- the closing funnel ----------
+     The one diagram the module turns on. Revenue and the expenses drain into
+     Income Summary, whose balance moves to Retained Earnings — and Dividends
+     goes straight there, bypassing Income Summary entirely. That bypass is the
+     mistake learners make, so it is the one path drawn in an accent colour with
+     its own label. Inline SVG in currentColor, so it themes itself. */
+  function closeFunnel() {
+    var t = preClose(), ni = netIncome(), te = totalExpenses();
+    function box(x, y, w, h, no, name, amt, cls) {
+      return '<g class="' + (cls || '') + '">' +
+        '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="6" />' +
+        '<text x="' + (x + w / 2) + '" y="' + (y + 15) + '" text-anchor="middle" class="fn-name">' + name + '</text>' +
+        '<text x="' + (x + w / 2) + '" y="' + (y + 28) + '" text-anchor="middle" class="fn-num">' + money2(amt) + '</text>' +
+        '</g>';
+    }
+    return '<div class="viz-svg"><svg viewBox="0 0 302 232" class="fn" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs><marker id="fnArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+        '<path d="M0 0 L8 4 L0 8 z" fill="currentColor" /></marker>' +
+      '<marker id="fnArrowA" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+        '<path d="M0 0 L8 4 L0 8 z" class="fn-accentfill" /></marker></defs>' +
+
+      /* Dividends sits on the Income Summary row rather than above it, so its
+         bypass label has clear ground to the right of Retained Earnings
+         instead of landing on top of the box it is meant to be skipping. */
+      box(6, 6, 96, 34, '400', 'Revenue', t.rev, 'fn-temp') +
+      box(114, 6, 96, 34, '', 'Expenses', te, 'fn-temp') +
+
+      '<path d="M54 40 L54 66 L104 66 L104 96" fill="none" marker-end="url(#fnArrow)" />' +
+      '<path d="M162 40 L162 66 L136 66 L136 96" fill="none" marker-end="url(#fnArrow)" />' +
+      '<text x="58" y="61" class="fn-lbl">Dr ' + money2(t.rev) + '</text>' +
+      '<text x="210" y="61" class="fn-lbl" text-anchor="end">Cr ' + money2(te) + '</text>' +
+
+      box(56, 98, 128, 36, '350', 'Income Summary', ni, 'fn-hold') +
+      box(206, 98, 90, 36, '332', 'Dividends', t.div, 'fn-temp fn-accent') +
+
+      '<path d="M120 134 L120 186" fill="none" marker-end="url(#fnArrow)" />' +
+      '<text x="128" y="164" class="fn-lbl">net income ' + money2(ni) + '</text>' +
+
+      '<path d="M251 134 L251 206 L216 206" fill="none" class="fn-accentline" marker-end="url(#fnArrowA)" />' +
+      /* One line, below the net-income label rather than beside it: measured,
+         the two-line version was 103px wide and sat on top of it. */
+      '<text x="296" y="180" class="fn-lbl fn-bypass" text-anchor="end">never through Income Summary</text>' +
+
+      box(56, 188, 156, 36, '320', 'Retained Earnings', endingRE(), 'fn-perm') +
+      '</svg></div>';
+  }
+
+  /* ---------- what empties and what carries forward ---------- */
+  function tempPermViz() {
+    var t = preClose(), after = closedThrough(999);
+    function row(a) {
+      var was = t[a.k] || 0, now = after[a.k] || 0;
+      return '<div class="tp-row"><span class="tp-name"><b>' + a.no + '</b> ' + a.name.replace('&mdash;Equipment', '&mdash;Eqp.') + '</span>' +
+        '<span class="tp-was">' + (was ? money2(was) : '&mdash;') + '</span>' +
+        '<span class="tp-arrow">' + ICON.next + '</span>' +
+        '<span class="tp-now' + (now ? '' : ' zero') + '">' + (now ? money2(now) : '0') + '</span></div>';
+    }
+    var temp = ACCT4.filter(function (a) { return isTemporary(a.k) && (t[a.k] || a.k === 'isum'); });
+    return '<div class="tp">' +
+        '<div class="tp-col temp"><span class="tp-cap">Temporary &mdash; emptied</span>' + temp.map(row).join('') + '</div>' +
+        '<div class="tp-col perm"><span class="tp-cap">Permanent &mdash; carried forward</span>' +
+          permanentAccts().filter(function (a) { return after[a.k]; }).map(row).join('') + '</div>' +
+      '</div>';
+  }
+
+  /* ---------- the three statements ---------- */
+  function line(lbl, amt, cls) {
+    return '<div class="stmt-line' + (cls ? ' ' + cls : '') + '"><span class="lbl">' + lbl + '</span>' +
+      '<span class="amt">' + (amt === null ? '' : money2(amt)) + '</span></div>';
+  }
+  function stmtIncome(hi) {
+    var s = incomeStatement();
+    return '<div class="stmt"><div class="stmt-head"><b>' + CO2.name + '</b><span>Income Statement</span><i>' + CO2.period + '</i></div>' +
+      line('Revenues', null, 'hd') + line('Service revenue', s.revenue, 'ind' + (hi === 'rev' ? ' hit' : '')) +
+      '<div class="stmt-gap"></div>' + line('Expenses', null, 'hd') +
+      s.expenses.map(function (e) { return line(e.name, e.amount, 'ind'); }).join('') +
+      line('Total expenses', s.totalExpenses, 'ind tot' + (hi === 'te' ? ' hit' : '')) +
+      line('Net income', s.netIncome, 'grand' + (hi === 'ni' ? ' hit' : '')) + '</div>';
+  }
+  function stmtRetained(hi) {
+    var s = retainedStatement();
+    return '<div class="stmt"><div class="stmt-head"><b>' + CO2.name + '</b><span>Retained Earnings Statement</span><i>' + CO2.period + '</i></div>' +
+      line('Retained earnings, July 1', s.open) +
+      line('Add: Net income', s.add, hi === 'ni' ? 'hit' : '') +
+      line('', s.open + s.add, 'tot') +
+      line('Less: Dividends', s.less) +
+      line('Retained earnings, July 31', s.close, 'grand' + (hi === 're' ? ' hit' : '')) + '</div>';
+  }
+  function stmtBalance(hi) {
+    var s = balanceSheet();
+    return '<div class="stmt"><div class="stmt-head"><b>' + CO2.name + '</b><span>Balance Sheet</span><i>' + CO2.asAt + '</i></div>' +
+      line('Assets', null, 'hd') + line('Current assets', null, 'hd') +
+      s.current.map(function (x) { return line(x.name, x.amount, 'ind'); }).join('') +
+      line('Total current assets', s.currentTotal, 'ind tot' + (hi === 'ca' ? ' hit' : '')) +
+      '<div class="stmt-gap"></div>' + line('Property, plant, and equipment', null, 'hd') +
+      line('Equipment', s.equipment, 'ind') +
+      line('Less: Accumulated depreciation', s.accumulated, 'ind less') +
+      line('', s.bookValue, 'ind tot' + (hi === 'bv' ? ' hit' : '')) +
+      line('Total assets', s.totalAssets, 'grand' + (hi === 'ta' ? ' hit' : '')) +
+      '<div class="stmt-gap"></div>' + line('Liabilities and Stockholders&rsquo; Equity', null, 'hd') +
+      line('Current liabilities', null, 'hd') +
+      s.liabilities.map(function (x) { return line(x.name, x.amount, 'ind'); }).join('') +
+      line('Total current liabilities', s.liabTotal, 'ind tot' + (hi === 'cl' ? ' hit' : '')) +
+      '<div class="stmt-gap"></div>' + line('Stockholders&rsquo; equity', null, 'hd') +
+      line('Common stock', s.commonStock, 'ind') +
+      line('Retained earnings', s.retained, 'ind' + (hi === 're' ? ' hit' : '')) +
+      line('Total stockholders&rsquo; equity', s.equityTotal, 'ind tot' + (hi === 'eq' ? ' hit' : '')) +
+      line('Total liabilities and stockholders&rsquo; equity', s.totalClaims, 'grand' + (hi === 'tc' ? ' hit' : '')) + '</div>';
+  }
+
+  /* ---------- the entry, and what it does to its accounts ---------- */
+  function journalEntry4(e) {
+    var rows = e.lines.map(function (l, i) {
+      var ac = acct4(l[0]);
+      return '<div class="je-row ' + (l[1] ? 'dr' : 'cr') + '">' +
+        '<span>' + (i === 0 ? 'July 31' : '') + '</span>' +
+        '<span class="je-acct">' + ac.name + '</span>' +
+        '<span class="je-amt">' + (l[1] ? money2(l[1]) : '') + '</span>' +
+        '<span class="je-amt">' + (l[2] ? money2(l[2]) : '') + '</span>' +
+        '</div>';
+    }).join('');
+    return '<div class="je"><div class="je-bar">General Journal &middot; Closing entry ' + e.n + '</div><div class="je-grid">' +
+      '<div class="je-head"><span>Date</span><span>Account Titles</span><span>Debit</span><span>Credit</span></div>' +
+      rows + '</div></div>';
+  }
+  function closeRowViz(e) {
+    var i = CLOSE.map(function (x) { return x.id; }).indexOf(e.id);
+    var before = closedThrough(i - 1), after = closedThrough(i);
+    return '<div class="rowfx-hd"><span></span><span>before</span><span>entry</span><span>after</span></div>' +
+      '<div class="rowfx">' + e.lines.map(function (l) {
+        var ac = acct4(l[0]), b = before[l[0]] || 0, af = after[l[0]] || 0;
+        return '<div class="rowfx-row">' +
+          '<span class="rowfx-name"><b>' + ac.no + '</b> ' + ac.name + '</span>' +
+          '<span class="rowfx-n">' + (b ? money2(b) : '&mdash;') + '</span>' +
+          '<span class="rowfx-op">' + (l[1] ? 'Dr ' : 'Cr ') + money2(l[1] || l[2]) + '</span>' +
+          '<span class="rowfx-n to' + (af ? '' : ' zero') + '">' + (af ? money2(af) : '0') + '</span>' +
+          '</div>';
+      }).join('') + '</div>';
+  }
+
+  /* ---------- the post-closing trial balance ---------- */
+  function pctbTable() {
+    var t = closedThrough(999), perm = permanentAccts(), tot = tbTotals4(t, perm);
+    return '<div class="tb">' +
+      '<div class="tb-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' +
+      perm.map(function (a) {
+        var v = t[a.k] || 0;
+        return '<div class="tb-row"><span class="tb-name">' + a.no + ' ' + a.name + '</span>' +
+          '<span>' + (v && a.up === 'D' ? money2(v) : '') + '</span>' +
+          '<span>' + (v && a.up === 'C' ? money2(v) : '') + '</span></div>';
+      }).join('') +
+      '<div class="tb-tot"><span>Totals</span><span>' + money2(tot.d) + '</span><span>' + money2(tot.c) + '</span></div>' +
+      '</div>';
+  }
+
+  /* ---------- dashboard ---------- */
+  function renderDash4() {
+    var done = FLOW4.filter(function (f) { return isRead(f.id); }).length;
+    var closed = CLOSE.filter(function (e, i) { return isRead(ENTRIES4[i].id); }).length;
+    var t = closedThrough(closed - 1);
+    var tot = tbTotals4(t, permanentAccts());
+
+    function card(f, i) {
+      var extra = '';
+      if (f.kind === 'close') {
+        var e = CLOSE[ENTRIES4.map(function (x) { return x.id; }).indexOf(f.id)];
+        extra = '<span class="card-je">' + e.lines.slice(0, 2).map(function (l) {
+          return '<span class="' + (l[1] ? 'dr' : 'cr') + '"><i>' + (l[1] ? 'Dr' : 'Cr') + '</i> ' +
+            acct4(l[0]).name + '<b>' + money2(l[1] || l[2]) + '</b></span>';
+        }).join('') + (e.lines.length > 2 ? '<span class="card-more">and ' + (e.lines.length - 2) + ' more</span>' : '') + '</span>';
+      }
+      return '<button class="card-e' + (isRead(f.id) ? ' read' : '') + '" data-open="' + i + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(f.id) ? ICON.check : (f.kind === 'close' ? CLOSE[ENTRIES4.map(function (x) { return x.id; }).indexOf(f.id)].n : ICON.table)) + '</span>' +
+          '<b>' + f.short + '</b><span class="card-go">' + ICON.next + '</span>' +
+        '</span><p>' + (f.concept || f.rule) + '</p>' + extra + '</button>';
+    }
+
+    $('guide').innerHTML =
+      '<div class="wrap fade">' +
+        '<div class="dash-head">' +
+          '<h1>Closing ' + CO2.name + '&rsquo;s July</h1>' +
+          '<p>The adjusted trial balance is right, and July is over. Three statements come out of it, four entries empty every account that measured the month, and one last trial balance proves what is left.</p>' +
+        '</div>' +
+        '<div class="state">' +
+          '<div class="state-cap">' + ICON.pulse + (closed === 0 ? 'Before closing' : (closed === CLOSE.length ? 'Fully closed' : 'After closing entry ' + closed)) + '</div>' +
+          '<div class="bb">' +
+            '<div class="bb-side bb-a"><span class="bb-cap">Permanent debits</span>' +
+              '<b class="bb-num" data-from="' + tot.d + '" data-count="' + tot.d + '">' + dollars(tot.d) + '</b></div>' +
+            '<div class="bb-op">' + (tot.d === tot.c ? '=' : '&ne;') + '</div>' +
+            '<div class="bb-side bb-c"><span class="bb-cap">Permanent credits</span>' +
+              '<b class="bb-num" data-from="' + tot.c + '" data-count="' + tot.c + '">' + dollars(tot.c) + '</b></div>' +
+          '</div>' +
+          /* The permanent accounts do not balance until closing is done, and the
+             gap is exactly the result July has not yet handed to equity. Saying
+             so is the point of the board; an = between unequal figures is a lie. */
+          '<div class="verdict ' + (tot.d === tot.c ? 'ok' : 'idle') + '">' + (tot.d === tot.c ? ICON.check : '') +
+            (tot.d === tot.c
+              ? ' Every temporary account is at zero, and what is left balances'
+              : ' Out by ' + dollars(Math.abs(tot.d - tot.c)) + ' &mdash; the month&rsquo;s result has not reached Retained Earnings yet') + '</div>' +
+        '</div>' +
+        '<div class="sect">a &middot; The financial statements<i></i></div>' +
+        '<div class="cards">' + STMT4.map(function (f, i) { return card(f, i); }).join('') + '</div>' +
+        '<div class="sect">b &middot; The four closing entries<i></i></div>' +
+        '<div class="cards">' + ENTRIES4.map(function (f, i) { return card(f, STMT4.length + i); }).join('') + '</div>' +
+        '<div class="sect">c &middot; And prove it<i></i></div>' +
+        '<div class="cards">' + REPORTS4.map(function (f, i) { return card(f, STMT4.length + ENTRIES4.length + i); }).join('') + '</div>' +
+        '<div class="sect">How any account is closed<i></i></div>' +
+        '<div class="method">' + METHOD4.map(function (m, i) {
+          return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
+            '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
+        }).join('') + '</div>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = dashScroll;
+  }
+
+  function renderDetail4() {
+    var item = FLOW4[at], body;
+    if (item.kind === 'close') {
+      var idx = ENTRIES4.map(function (x) { return x.id; }).indexOf(item.id);
+      var e = CLOSE[idx];
+      body =
+        '<div class="ex-eyebrow">Closing entry <i>' + e.n + '</i> &middot; ' + (at + 1) + ' of ' + FLOW4.length + '</div>' +
+        '<h1 class="ex-title">' + item.concept + '</h1>' +
+        '<div class="ex-fact">' + item.short + ' &mdash; ' + money2(closeDebits(e)) + ' each side.</div>' +
+        viz('Where the balance goes', closeFunnel(),
+          'Revenue and the expenses drain into Income Summary; its balance, ' + dollars(netIncome()) +
+          ' of net income, moves to Retained Earnings. Dividends of ' + dollars(preClose().div) +
+          ' goes straight to Retained Earnings without passing through Income Summary.') +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        viz('The entry', journalEntry4(e), 'The closing entry as it is written.', true) +
+        viz('What it leaves behind', closeRowViz(e),
+          e.lines.map(function (l) {
+            var af = closedThrough(idx)[l[0]] || 0;
+            return acct4(l[0]).name + (af ? ' stands at ' + dollars(af) : ' is emptied to zero');
+          }).join(', and ') + '.') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
+    } else if (item.kind === 'stmt') {
+      var pic = item.which === 'income' ? stmtIncome() : item.which === 'retained' ? stmtRetained() : stmtBalance();
+      var claim = item.which === 'income'
+        ? 'Service revenue of ' + dollars(incomeStatement().revenue) + ' less total expenses of ' +
+          dollars(incomeStatement().totalExpenses) + ' leaves net income of ' + dollars(netIncome()) + '.'
+        : item.which === 'retained'
+          ? 'Retained earnings opens at nothing, takes in net income of ' + dollars(netIncome()) +
+            ', gives up dividends of ' + dollars(preClose().div) + ', and closes at ' + dollars(endingRE()) + '.'
+          : 'Total assets of ' + dollars(balanceSheet().totalAssets) + ' equal total liabilities and equity of ' +
+            dollars(balanceSheet().totalClaims) + '.';
+      body =
+        '<div class="ex-eyebrow">Statement &middot; ' + (at + 1) + ' of ' + FLOW4.length + '</div>' +
+        '<h1 class="ex-title">' + item.title + '</h1>' +
+        '<div class="ex-fact">' + item.concept + '</div>' +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        viz(item.short, pic, claim, true) +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
+    } else {
+      body =
+        '<div class="ex-eyebrow">Report &middot; ' + (at + 1) + ' of ' + FLOW4.length + '</div>' +
+        '<h1 class="ex-title">' + item.title + '</h1>' +
+        '<div class="ex-fact">' + item.concept + '</div>' +
+        '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        (item.families ? viz('What empties, what carries forward', tempPermViz(),
+          'Every revenue, expense and dividend account falls to zero; every balance sheet account keeps its balance into August.') : '') +
+        (item.pctb ? viz('The post-closing trial balance', pctbTable(),
+          'Only permanent accounts remain, totalling ' + dollars(tbTotals4(closedThrough(999), permanentAccts()).d) + ' on each side.', true) : '') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+        (item.result ? '<div class="proof" style="border-radius:12px">' + ICON.check + '<span>' + item.result + '</span></div>' : '');
+    }
+    $('guide').innerHTML = '<div class="wrap fade">' + body + '<div style="height:10px"></div></div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = 0;
+  }
+
+  /* ---------- reference ---------- */
+  function renderTable4() {
+    var t = preClose(), tot = tbTotals4(t, ACCT3);
+    $('table-slot').innerHTML =
+      '<div class="card" style="padding:14px">' +
+        '<div class="ref-head"><h2>Adjusted trial balance</h2>' +
+        '<p>Where module 2.3 finished. This is the starting point, given.</p></div>' +
+        '<div class="stmt" style="margin-top:11px"><div class="stmt-head"><b>' + CO2.name + '</b>' +
+          '<span>Adjusted Trial Balance</span><i>' + CO2.asAt + '</i></div></div>' +
+        '<div class="tb">' +
+          '<div class="tb-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' +
+          ACCT3.map(function (a) {
+            var v = t[a.k] || 0;
+            return '<div class="tb-row' + (v ? '' : ' zero') + '"><span class="tb-name">' + a.no + ' ' + a.name + '</span>' +
+              '<span>' + (v && a.up === 'D' ? money2(v) : '') + '</span>' +
+              '<span>' + (v && a.up === 'C' ? money2(v) : '') + '</span></div>';
+          }).join('') +
+          '<div class="tb-tot"><span>Totals</span><span>' + money2(tot.d) + '</span><span>' + money2(tot.c) + '</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>Chart of accounts</h2>' +
+        '<p>Two accounts are new to this module: Retained Earnings, which has sat at zero all month, and Income Summary, which exists only while closing.</p></div>' +
+        '<div class="coa" style="margin-top:11px">' +
+          '<div class="coa-hd"><span>No.</span><span>Account</span><span>Family</span><span>Normal</span></div>' +
+          ACCT4.map(function (a) {
+            return '<div class="coa-row' + (isTemporary(a.k) ? ' temp' : '') + '"><b>' + a.no + '</b>' +
+              '<span class="coa-name">' + a.name + '</span>' +
+              '<span class="coa-fam">' + a.fam + (isTemporary(a.k) ? ' &middot; temporary' : '') + '</span>' +
+              '<span class="' + (a.up === 'D' ? 'coa-dr' : 'coa-cr') + '">' + (a.up === 'D' ? 'Dr' : 'Cr') + '</span></div>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ---------- module 2.4 worksheet ----------
+     a. Prepare the income statement, a retained earnings statement and a
+        classified balance sheet.
+     b. Journalize and post closing entries and complete the closing process.
+     c. Prepare a post-closing trial balance at July 31. */
+
+  var INSTRUCTIONS4 = [
+    { id: 'a', text: 'Prepare the income statement and a retained earnings statement for July and a classified balance sheet at July 31.' },
+    { id: 'b', text: 'Journalize and post closing entries and complete the closing process.' },
+    { id: 'c', text: 'Prepare a post-closing trial balance at July 31.' }
+  ];
+
+  /* The figures each statement turns on. Every one is derived, so the form
+     cannot ask for something the guide did not produce. */
+  var STMT_FIELDS = [
+    { id: 'rev', doc: 'Income statement', label: 'Service revenue',
+      answer: function () { return incomeStatement().revenue; },
+      hints: ['It comes straight off the adjusted trial balance — no arithmetic.',
+              'Service Revenue after the adjustments, not before.',
+              'The adjusted balance is ' + '$7,900' + '.'] },
+    { id: 'te', doc: 'Income statement', label: 'Total expenses',
+      answer: function () { return incomeStatement().totalExpenses; },
+      hints: ['Add every expense account, and only the expense accounts.',
+              'Five of them: salaries and wages, supplies, maintenance and repairs, depreciation, insurance.',
+              'Dividends is not one of them.'] },
+    { id: 'ni', doc: 'Income statement', label: 'Net income',
+      answer: function () { return netIncome(); },
+      hints: ['Revenue less expenses.', 'Nothing the owners put in or took out belongs here.',
+              'Service revenue less the total you just found.'] },
+    { id: 're', doc: 'Retained earnings statement', label: 'Retained earnings, July 31',
+      answer: function () { return endingRE(); },
+      hints: ['Opening balance, plus net income, less dividends.',
+              'Kleene was incorporated on July 1, so what did retained earnings open at?',
+              'Zero, plus net income, less the dividends paid.'] },
+    { id: 'ca', doc: 'Balance sheet', label: 'Total current assets',
+      answer: function () { return balanceSheet().currentTotal; },
+      hints: ['The assets expected to be used or collected within a year.',
+              'Cash, accounts receivable, supplies, prepaid insurance.',
+              'Equipment is not current.'] },
+    { id: 'bv', doc: 'Balance sheet', label: 'Equipment, less accumulated depreciation',
+      answer: function () { return balanceSheet().bookValue; },
+      hints: ['The cost stays on the books; the depreciation is subtracted from it.',
+              'Equipment at cost less the accumulated depreciation taken so far.',
+              '$8,000 less $180.'] },
+    { id: 'ta', doc: 'Balance sheet', label: 'Total assets',
+      answer: function () { return balanceSheet().totalAssets; },
+      hints: ['Current assets plus what is left of the equipment.',
+              'Add the two subtotals you have already worked out.',
+              'Total current assets plus the book value.'] },
+    { id: 'cl', doc: 'Balance sheet', label: 'Total current liabilities',
+      answer: function () { return balanceSheet().liabTotal; },
+      hints: ['What is owed and falls due within a year.',
+              'Accounts payable and salaries and wages payable.',
+              'One of those two only appeared after the adjustments.'] },
+    { id: 'eq', doc: 'Balance sheet', label: 'Total stockholders&rsquo; equity',
+      answer: function () { return balanceSheet().equityTotal; },
+      hints: ['What the owners put in, plus what the business has kept.',
+              'Common stock plus retained earnings.',
+              'Use the retained earnings figure from the statement before.'] },
+    { id: 'tc', doc: 'Balance sheet', label: 'Total liabilities and stockholders&rsquo; equity',
+      answer: function () { return balanceSheet().totalClaims; },
+      hints: ['Liabilities plus equity.',
+              'If it does not equal total assets, one of the earlier figures is wrong.',
+              'It has to come to the same number as total assets.'] }
+  ];
+
+  var w4 = { fld: {}, fx: {}, hint: {}, shut: {}, posted: {}, tb: {}, tot: {}, at: 0, graded: 0 };
+
+  function loadWork4() {
+    try {
+      var w = JSON.parse(window.localStorage.getItem(STORE + '.work4') || '{}');
+      if (w && typeof w === 'object') {
+        w4.fld = w.fld || {}; w4.fx = w.fx || {}; w4.hint = w.hint || {}; w4.shut = w.shut || {};
+        w4.posted = w.posted || {}; w4.tb = w.tb || {}; w4.tot = w.tot || {}; w4.at = w.at || 0;
+      }
+    } catch (e) { /* private mode: run without persistence */ }
+  }
+  function saveWork4() {
+    try { window.localStorage.setItem(STORE + '.work4', JSON.stringify(w4)); } catch (e) {}
+  }
+
+  function maxLines4(ci) { return Math.max(2, CLOSE[ci].lines.length); }
+  function c4(ci, li, col) { return w4.fx[ci + '.' + li + '.' + col]; }
+  function c4line(ci, li) {
+    var k = c4(ci, li, 'k'), d = amt2(c4(ci, li, 'd')), c = amt2(c4(ci, li, 'c'));
+    if (!k || (d && c) || (!d && !c)) return null;
+    return { k: k, s: d ? 'D' : 'C', n: d || c };
+  }
+  function c4totals(ci) {
+    var d = 0, c = 0, filled = 0, n = maxLines4(ci);
+    for (var i = 0; i < n; i++) {
+      d += amt2(c4(ci, i, 'd'));
+      c += amt2(c4(ci, i, 'c'));
+      if (c4(ci, i, 'k') || amt2(c4(ci, i, 'd')) || amt2(c4(ci, i, 'c'))) filled++;
+    }
+    return { d: d, c: c, off: d - c, filled: filled };
+  }
+  function canPost4(ci) {
+    var t = c4totals(ci);
+    if (!t.d || t.off !== 0) return false;
+    /* every filled row has to be a complete line, and there must be at least two */
+    var n = maxLines4(ci), done = 0;
+    for (var i = 0; i < n; i++) {
+      var any = c4(ci, i, 'k') || amt2(c4(ci, i, 'd')) || amt2(c4(ci, i, 'c'));
+      if (!any) continue;
+      if (!c4line(ci, i)) return false;
+      done++;
+    }
+    return done >= 2;
+  }
+  function isPosted4(ci) { return !!w4.posted[ci]; }
+
+  function c4Right(ci) {
+    var want = CLOSE[ci].lines.map(function (l) {
+      return l[0] + ':' + (l[1] ? 'D' : 'C') + ':' + (l[1] || l[2]);
+    }).sort().join('|');
+    var got = [], n = maxLines4(ci);
+    for (var i = 0; i < n; i++) {
+      var any = c4(ci, i, 'k') || amt2(c4(ci, i, 'd')) || amt2(c4(ci, i, 'c'));
+      if (!any) continue;
+      var l = c4line(ci, i);
+      if (!l) return false;
+      got.push(l.k + ':' + l.s + ':' + l.n);
+    }
+    return got.sort().join('|') === want;
+  }
+  function c4Touched(ci) { return c4totals(ci).filled > 0; }
+
+  function c4Diag(ci) {
+    var t = c4totals(ci), e = CLOSE[ci], n = maxLines4(ci);
+    var mine = [];
+    for (var i = 0; i < n; i++) { var l = c4line(ci, i); if (l) mine.push(l); }
+    if (!t.filled) return 'Nothing entered yet. This entry closes ' + e.short.toLowerCase() + '.';
+    if (mine.length < 2) return 'Every closing entry needs at least two complete lines — an account and one amount, in either column.';
+    if (t.off !== 0) return 'Out of balance by ' + dollars(Math.abs(t.off)) + '. Debits ' + dollars(t.d) + ', credits ' + dollars(t.c) + '.';
+    var used = mine.map(function (m) { return m.k; });
+    /* The mistake this module exists to prevent. */
+    if (e.id === 'c4' && used.indexOf('isum') !== -1)
+      return 'Dividends never pass through Income Summary. They are a distribution of profit, not an expense, so they close straight to Retained Earnings.';
+    if (e.id !== 'c4' && used.indexOf('div') !== -1)
+      return 'Dividends does not belong in this entry. It is closed on its own, directly to Retained Earnings.';
+    if (used.indexOf('cash') !== -1)
+      return 'Closing moves balances between accounts that are already on the books. No cash changes hands, so Cash is never touched.';
+    var right = e.lines.map(function (l) { return l[0]; }).sort().join();
+    if (used.slice().sort().join() === right)
+      return 'The right accounts, on the wrong sides. A credit balance is closed with a debit of the same size, and the other way round.';
+    if (t.d !== closeDebits(e))
+      return 'It balances, but not at the right size. A closing entry is exactly as large as the balance it is emptying.';
+    return 'It balances and the amount is right, so one of the accounts is wrong.';
+  }
+
+  /* ---- (c) the learner's post-closing trial balance ---- */
+  function tbVal4(k, col) { var v = w4.tb[k + '.' + col]; return v === undefined ? '' : v; }
+  function tbRight4(k) {
+    var t = closedThrough(999), a = acct4(k), want = t[k] || 0;
+    var d = amountOf(tbVal4(k, 'd')), c = amountOf(tbVal4(k, 'c'));
+    if (a.up === 'D') return d === want && isNaN(c);
+    return c === want && isNaN(d);
+  }
+  function tbTouched4(k) {
+    return String(tbVal4(k, 'd')).trim() !== '' || String(tbVal4(k, 'c')).trim() !== '';
+  }
+  function totRight4(col) {
+    var want = tbTotals4(closedThrough(999), permanentAccts());
+    return amountOf(w4.tot[col]) === (col === 'd' ? want.d : want.c);
+  }
+  function fldRight4(f) { return amountOf(w4.fld[f.id]) === f.answer(); }
+
+  function score4() {
+    var a = STMT_FIELDS.filter(fldRight4).length;
+    var b = 0; CLOSE.forEach(function (e, i) { if (c4Right(i)) b++; });
+    var c = permanentAccts().filter(function (x) { return tbRight4(x.k); }).length;
+    if (totRight4('d')) c++;
+    if (totRight4('c')) c++;
+    return {
+      got: a + b + c, total: STMT_FIELDS.length + CLOSE.length + permanentAccts().length + 2,
+      parts: { a: a, b: b, c: c },
+      caps: { a: STMT_FIELDS.length, b: CLOSE.length, c: permanentAccts().length + 2 }
+    };
+  }
+
+  function closeHints(ci) {
+    var e = CLOSE[ci];
+    return [
+      'What kind of balance does the account being closed carry? Empty it with the opposite.',
+      e.id === 'c4' ? 'Dividends is temporary but it is not an expense, so it does not go through Income Summary.'
+                    : 'The amount is whatever the adjusted trial balance says that account holds.',
+      e.lines.map(function (l) { return (l[1] ? 'Debit ' : 'Credit ') + acct4(l[0]).name + ' ' + money2(l[1] || l[2]); }).join('; ') + '.'
+    ];
+  }
+  function tbHints4(k) {
+    var a = acct4(k), t = closedThrough(999);
+    return [
+      'Only permanent accounts appear, each at the balance closing left it with.',
+      a.fam + ' accounts carry a ' + (a.up === 'D' ? 'debit' : 'credit') + ' balance, so it goes in the ' + (a.up === 'D' ? 'debit' : 'credit') + ' column.',
+      'This one stands at ' + dollars(t[k] || 0) + '.'
+    ];
+  }
+  function fldHints4(fi) { return STMT_FIELDS[fi].hints; }
+
+  function paintHint4(key) {
+    var lvl = w4.hint[key];
+    if (!lvl) return;
+    var host = $('solve'), text, slot, btn, max = 3;
+    if (key.charAt(0) === 'f') {
+      var fi = Number(key.slice(1));
+      if (!STMT_FIELDS[fi]) return;
+      text = fldHints4(fi)[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-fnote4="' + STMT_FIELDS[fi].id + '"]');
+      btn = host.querySelector('[data-fhint4="' + fi + '"]');
+    } else if (key.charAt(0) === 't') {
+      var tk = key.slice(1);
+      if (!acct4(tk)) return;
+      text = tbHints4(tk)[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-tnote4="' + tk + '"]');
+      btn = host.querySelector('[data-thint4="' + tk + '"]');
+    } else {
+      var ci = Number(key);
+      if (!CLOSE[ci]) return;
+      text = closeHints(ci)[Math.min(lvl, max) - 1];
+      slot = host.querySelector('[data-note4="' + ci + '"]');
+      btn = host.querySelector('[data-hint4="' + ci + '"]');
+    }
+    if (!slot || !text) return;
+    var shut = !!w4.shut[key];
+    slot.innerHTML = shut ? '' : tipHtml(key, text);
+    if (!btn) return;
+    btn.classList.toggle('on', !shut);
+    if (!btn.classList.contains('sm')) {
+      btn.innerHTML = ICON.bulb + (shut ? 'Show hint' : (lvl >= max ? 'No more hints' : 'Another hint'));
+    }
+    btn.disabled = !shut && lvl >= max;
+  }
+  function bump4(key, max) {
+    if (w4.shut[key]) delete w4.shut[key];
+    else w4.hint[key] = Math.min((w4.hint[key] || 0) + 1, max);
+    paintHint4(key);
+    saveWork4();
+  }
+
+  function instrPanel4() {
+    var sc = score4();
+    return '<div class="instr"><div class="instr-cap">Instructions</div>' +
+      INSTRUCTIONS4.map(function (x) {
+        var got = sc.parts[x.id], cap = sc.caps[x.id], done = cap > 0 && got === cap;
+        return '<div class="instr-row' + (done ? ' done' : '') + '">' +
+          '<span class="instr-k">' + (done ? ICON.check : x.id + '.') + '</span>' +
+          '<span class="instr-t">' + x.text + '</span>' +
+          '<span class="instr-n">' + got + '/' + cap + '</span></div>';
+      }).join('') + '</div>';
+  }
+
+  function vState4(ci) {
+    if (isPosted4(ci)) return 'posted';
+    var t = c4totals(ci);
+    if (!t.filled) return 'draft';
+    return (t.off === 0 && t.d && canPost4(ci)) ? 'balanced' : 'off';
+  }
+
+  function renderSolve4() {
+    var opts = '<option value="">&mdash; select account &mdash;</option>' + ACCT4.map(function (a) {
+      return '<option value="' + a.k + '">' + a.no + '  ' + a.name.replace('&mdash;', '—') + '</option>';
+    }).join('');
+    var cur = Math.max(0, Math.min(CLOSE.length - 1, w4.at || 0));
+    var posted = 0;
+    CLOSE.forEach(function (e, i) { if (isPosted4(i)) posted++; });
+
+    /* ---- (a) the statement figures ---- */
+    var lastDoc = '';
+    var fields = STMT_FIELDS.map(function (f, fi) {
+      var head = f.doc !== lastDoc ? '<div class="ws-doc">' + f.doc + '</div>' : '';
+      lastDoc = f.doc;
+      return head + '<div class="ws-field" data-field4="' + f.id + '">' +
+        '<label for="w4-' + f.id + '">' + f.label + '</label>' +
+        '<div class="ws-line"><div class="ws-amt"><input id="w4-' + f.id + '" data-fld4="' + f.id + '" inputmode="decimal" autocomplete="off" /></div>' +
+        '<button type="button" class="ws-hint" data-fhint4="' + fi + '">' + ICON.bulb + 'Hint</button></div>' +
+        '<div data-fnote4="' + f.id + '"></div></div>';
+    }).join('');
+
+    /* ---- (b) one closing entry at a time ---- */
+    var chips = CLOSE.map(function (e, ci) {
+      var st = vState4(ci);
+      return '<button type="button" class="vchip' + (ci === cur ? ' now' : '') +
+        (st === 'posted' ? ' done' : (st === 'off' ? ' off' : '')) +
+        (w4.graded && c4Touched(ci) && !c4Right(ci) ? ' bad' : '') + '" data-v4="' + ci + '"' +
+        ' aria-label="Closing entry ' + e.n + ' of 4, ' + st + '"' + (ci === cur ? ' aria-current="true"' : '') + '>' +
+        (st === 'posted' ? ICON.check : e.n) + '</button>';
+    }).join('');
+
+    var e = CLOSE[cur], t = c4totals(cur), locked = isPosted4(cur), st = vState4(cur);
+    var rows = '';
+    for (var i = 0; i < maxLines4(cur); i++) {
+      var dv = c4(cur, i, 'd') || '', cv = c4(cur, i, 'c') || '';
+      rows += '<div class="gl-row">' +
+        '<select class="gl-acct" data-a4="' + cur + '.' + i + '"' + (locked ? ' disabled' : '') +
+          ' aria-label="Account for line ' + (i + 1) + ' of closing entry ' + e.n + '">' + opts + '</select>' +
+        '<input class="gl-amt' + (cv ? ' muted' : '') + '" data-d4="' + cur + '.' + i + '" value="' + dv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
+          ' aria-label="Debit for line ' + (i + 1) + ' of closing entry ' + e.n + '" />' +
+        '<input class="gl-amt' + (dv ? ' muted' : '') + '" data-c4="' + cur + '.' + i + '" value="' + cv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off"' +
+          ' aria-label="Credit for line ' + (i + 1) + ' of closing entry ' + e.n + '" />' +
+        '</div>';
+    }
+    var pill = st === 'posted' ? '<span class="pill posted">' + ICON.check + 'Posted</span>'
+      : st === 'draft' ? '<span class="pill draft">Draft</span>'
+      : st === 'balanced' ? '<span class="pill ready">Balanced</span>'
+      : '<span class="pill off">Out of balance</span>';
+    var off = st === 'draft'
+      ? '<div class="gl-off idle"><span>Enter the debit and the credit</span><span>&mdash;</span></div>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<div class="gl-off ok"><span>In balance</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span></div>';
+
+    var doc = '<div class="doc-je' + (locked ? ' posted' : '') + '" data-tx4="' + cur + '">' +
+      '<div class="je-top"><span class="je-ref">CLOSE-' + e.n + '</span>' +
+        '<span class="je-date">July 31, 2025</span>' + pill + '</div>' +
+      '<div class="je-memo"><u>What to close</u>' + e.short + '</div>' +
+      '<div class="gl">' +
+        '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
+        '<div class="gl-foot"><span class="lbl">Totals</span><span>' + (t.d ? money2(t.d) : '&mdash;') + '</span><span>' + (t.c ? money2(t.c) : '&mdash;') + '</span></div>' + off +
+      '</div>' +
+      '<div class="je-acts">' +
+        '<button type="button" class="ws-hint" data-hint4="' + cur + '">' + ICON.bulb + 'Hint</button>' +
+        (locked ? '<button type="button" class="btn-post undo" data-unpost4="' + cur + '">Unpost</button>'
+                : '<button type="button" class="btn-post" data-post4="' + cur + '"' + (canPost4(cur) ? '' : ' disabled') + '>' + ICON.check + 'Post</button>') +
+      '</div>' +
+      '<div data-note4="' + cur + '" style="padding:0 11px 11px"></div>' +
+      '</div>';
+
+    /* ---- (c) the post-closing trial balance ---- */
+    var perm = permanentAccts();
+    var tbRows = perm.map(function (a) {
+      return '<tr class="wp-row" data-trow4="' + a.k + '">' +
+        '<td class="rowlab">' + a.no + ' ' + a.name.replace('&mdash;Equipment', '&mdash;Eqp.') + '</td>' +
+        '<td><input class="cell" data-tb4="' + a.k + '.d" value="' + tbVal4(a.k, 'd') + '" inputmode="decimal" autocomplete="off" aria-label="Debit balance of ' + a.name.replace('&mdash;', ' ') + '" /></td>' +
+        '<td><input class="cell" data-tb4="' + a.k + '.c" value="' + tbVal4(a.k, 'c') + '" inputmode="decimal" autocomplete="off" aria-label="Credit balance of ' + a.name.replace('&mdash;', ' ') + '" /></td>' +
+        '<td class="hcell"><button type="button" class="ws-hint sm" data-thint4="' + a.k + '" aria-label="Hint for ' + a.name.replace('&mdash;', ' ') + '">' + ICON.bulb + '</button></td>' +
+        '</tr><tr class="notrow"><td colspan="4"><div data-tnote4="' + a.k + '"></div></td></tr>';
+    }).join('');
+    var mine = { d: 0, c: 0 };
+    perm.forEach(function (a) {
+      var d = amountOf(tbVal4(a.k, 'd')), c = amountOf(tbVal4(a.k, 'c'));
+      if (!isNaN(d)) mine.d += d;
+      if (!isNaN(c)) mine.c += c;
+    });
+    var typed = { d: amountOf(w4.tot.d), c: amountOf(w4.tot.c) };
+    var proof = (isNaN(typed.d) && isNaN(typed.c))
+      ? '<div class="gl-off idle"><span>Total both columns when every row is entered</span><span>&mdash;</span></div>'
+      : (typed.d === typed.c
+        ? '<div class="gl-off ok"><span>Your columns agree at ' + dollars(typed.d || 0) + '</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Your columns are out by</span><span>' + dollars(Math.abs((typed.d || 0) - (typed.c || 0))) + '</span></div>');
+
+    $('solve').innerHTML =
+      '<div class="wrap">' +
+        '<div class="sw-bar">' +
+          '<span class="sw-bar-id"><h1>' + CO2.name + '</h1><span>Closing the books &middot; Jul 2025</span></span>' +
+          '<span class="sw-counts">' +
+            '<span class="sw-count"><b>' + (CLOSE.length - posted) + '</b><u>to close</u></span>' +
+            '<span class="sw-count' + (posted === CLOSE.length ? ' done' : '') + '"><b>' + posted + '</b><u>closed</u></span>' +
+          '</span>' +
+        '</div>' +
+        instrPanel4() +
+        '<div class="ws-sect">a &middot; Prepare the statements<i></i></div>' +
+        '<p class="ws-aside">Every figure below comes from the adjusted trial balance in the Reference tab. Work down in order &mdash; the later ones depend on the earlier ones.</p>' +
+        '<div class="ws-fields">' + fields + '</div>' +
+        '<div class="ws-sect">b &middot; Journalize the closing entries<i></i></div>' +
+        '<div class="pager">' +
+          '<button type="button" class="pager-btn" data-v4prev' + (cur === 0 ? ' disabled' : '') + ' aria-label="Previous closing entry">' + ICON.prev + '</button>' +
+          '<span class="pager-now"><b>CLOSE-' + e.n + '</b>' + (cur + 1) + ' of ' + CLOSE.length + '</span>' +
+          '<button type="button" class="pager-btn" data-v4next' + (cur === CLOSE.length - 1 ? ' disabled' : '') + ' aria-label="Next closing entry">' + ICON.next + '</button>' +
+        '</div>' +
+        '<div class="vchips">' + chips + '</div>' + doc +
+        '<div class="ws-sect">c &middot; The post-closing trial balance<i></i></div>' +
+        '<p class="wp-tip">' + ICON.bulb + 'Only permanent accounts belong here. If a revenue, expense or dividend account has a balance left, part (b) is not finished.</p>' +
+        '<div class="sw-panel"><div class="sw-panel-hd"><b>Post-Closing Trial Balance</b><span>July 31, 2025</span></div>' +
+          '<div class="wp-scroll"><table class="wp w4"><thead>' +
+            '<tr class="acct"><th class="rowlab">Account</th><th>Debit</th><th>Credit</th><th></th></tr></thead>' +
+            '<tbody>' + tbRows + '</tbody><tfoot><tr><td class="rowlab">Totals</td>' +
+            '<td><input class="cell" data-tot4="d" value="' + (w4.tot.d || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the debit column" /></td>' +
+            '<td><input class="cell" data-tot4="c" value="' + (w4.tot.c || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the credit column" /></td>' +
+            '<td class="hcell"></td></tr></tfoot></table></div>' +
+          '<div class="sw-panel-bd" style="padding-top:0">' + proof + '</div>' +
+        '</div>' +
+        '<button type="button" class="ws-reset" id="ws-reset4">Clear my work and start again</button>' +
+      '</div>';
+
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-a4]'), function (el) {
+      var v = w4.fx[el.getAttribute('data-a4') + '.k'];
+      if (v) el.value = v;
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-fld4]'), function (el) {
+      var v = w4.fld[el.getAttribute('data-fld4')];
+      if (v !== undefined) el.value = v;
+    });
+    Object.keys(w4.hint).forEach(paintHint4);
+  }
+
+  function refreshDoc4(ci) {
+    var t = c4totals(ci);
+    var doc = $('solve').querySelector('[data-tx4="' + ci + '"]');
+    if (!doc) return;
+    var foot = doc.querySelectorAll('.gl-foot span');
+    foot[1].innerHTML = t.d ? money2(t.d) : '&mdash;';
+    foot[2].innerHTML = t.c ? money2(t.c) : '&mdash;';
+    var st = vState4(ci);
+    var off = doc.querySelector('.gl-off');
+    off.className = 'gl-off ' + (st === 'draft' ? 'idle' : ((st === 'balanced' || st === 'posted') ? 'ok' : 'off'));
+    off.innerHTML = st === 'draft'
+      ? '<span>Enter the debit and the credit</span><span>&mdash;</span>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<span>In balance</span><span>' + ICON.check + '</span>'
+        : '<span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span>';
+    var pill = doc.querySelector('.pill');
+    if (!isPosted4(ci)) {
+      pill.className = 'pill ' + (st === 'draft' ? 'draft' : (st === 'balanced' ? 'ready' : 'off'));
+      pill.textContent = st === 'draft' ? 'Draft' : (st === 'balanced' ? 'Balanced' : 'Out of balance');
+    }
+    var post = doc.querySelector('[data-post4]');
+    if (post) post.disabled = !canPost4(ci);
+    doc.classList.remove('graded-bad');
+    var bad = doc.querySelector('.ws-note.bad');
+    if (bad) bad.remove();
+  }
+
+  function refreshProof4() {
+    var typed = { d: amountOf(w4.tot.d), c: amountOf(w4.tot.c) };
+    var p = $('solve').querySelector('.sw-panel-bd .gl-off');
+    if (!p) return;
+    var idle = isNaN(typed.d) && isNaN(typed.c);
+    p.className = 'gl-off ' + (idle ? 'idle' : (typed.d === typed.c ? 'ok' : 'off'));
+    p.innerHTML = idle
+      ? '<span>Total both columns when every row is entered</span><span>&mdash;</span>'
+      : typed.d === typed.c
+        ? '<span>Your columns agree at ' + dollars(typed.d || 0) + '</span><span>' + ICON.check + '</span>'
+        : '<span>Your columns are out by</span><span>' + dollars(Math.abs((typed.d || 0) - (typed.c || 0))) + '</span>';
+  }
+
+  function refreshInstr4() {
+    var host = $('solve').querySelector('.instr');
+    if (!host) return;
+    var sc = score4();
+    Array.prototype.forEach.call(host.querySelectorAll('.instr-row'), function (row, i) {
+      var x = INSTRUCTIONS4[i], got = sc.parts[x.id], cap = sc.caps[x.id];
+      var done = cap > 0 && got === cap;
+      row.classList.toggle('done', done);
+      row.querySelector('.instr-k').innerHTML = done ? ICON.check : x.id + '.';
+      row.querySelector('.instr-n').textContent = got + '/' + cap;
+    });
+  }
+
+  function go4(n) {
+    w4.at = Math.max(0, Math.min(CLOSE.length - 1, n));
+    saveWork4(); renderSolve4(); renderControls();
+  }
+
+  function gradeSolve4() {
+    w4.graded = 1;
+    STMT_FIELDS.forEach(function (f, fi) {
+      var box = $('solve').querySelector('[data-field4="' + f.id + '"]');
+      if (!box) return;
+      var ok = fldRight4(f), touched = String(w4.fld[f.id] === undefined ? '' : w4.fld[f.id]).trim() !== '';
+      box.classList.toggle('right', ok);
+      box.classList.toggle('wrong', !ok && touched);
+      var note = $('solve').querySelector('[data-fnote4="' + f.id + '"]');
+      var old = note.querySelector('.ws-note.bad');
+      if (old) old.remove();
+      if (ok || !touched || w4.hint['f' + fi]) return;
+      note.innerHTML = '<div class="ws-note bad">Not yet. ' + f.hints[0] + '</div>';
+    });
+    CLOSE.forEach(function (e, ci) {
+      var doc = $('solve').querySelector('[data-tx4="' + ci + '"]');
+      if (!doc) return;
+      var note = $('solve').querySelector('[data-note4="' + ci + '"]');
+      var ok = c4Right(ci), touched = c4Touched(ci);
+      doc.classList.toggle('graded-bad', !ok && touched);
+      if (ok || !touched) { var stale = doc.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
+      else if (!w4.hint[ci]) note.innerHTML = '<div class="ws-note bad">' + c4Diag(ci) + '</div>';
+    });
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-v4]'), function (c) {
+      var ci = Number(c.getAttribute('data-v4'));
+      c.classList.toggle('bad', c4Touched(ci) && !c4Right(ci));
+    });
+    permanentAccts().forEach(function (a) {
+      var row = $('solve').querySelector('[data-trow4="' + a.k + '"]');
+      if (!row) return;
+      var ok = tbRight4(a.k), touched = tbTouched4(a.k);
+      row.classList.toggle('right', ok);
+      row.classList.toggle('wrong', !ok && touched);
+      var note = $('solve').querySelector('[data-tnote4="' + a.k + '"]');
+      if (!note) return;
+      var old = note.querySelector('.ws-note.bad');
+      if (old) old.remove();
+      if (ok || !touched || w4.hint['t' + a.k]) return;
+      var wrongCol = (a.up === 'D' && String(tbVal4(a.k, 'c')).trim() !== '') ||
+                     (a.up === 'C' && String(tbVal4(a.k, 'd')).trim() !== '');
+      note.innerHTML = '<div class="ws-note bad">' + (wrongCol
+        ? 'Right idea, wrong column. ' + a.fam + ' accounts carry a ' + (a.up === 'D' ? 'debit' : 'credit') + ' balance.'
+        : 'Not the balance closing left this account with.') + '</div>';
+    });
+    refreshInstr4();
+    renderControls();
+    var first = $('solve').querySelector('.ws-field.wrong, .doc-je.graded-bad, .wp-row.wrong');
+    if (first) first.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+  }
+
+  function bindSolve4() {
+    var host = $('solve');
+
+    host.addEventListener('change', function (e) {
+      var sel = e.target.closest('[data-a4]');
+      if (!sel) return;
+      w4.fx[sel.getAttribute('data-a4') + '.k'] = sel.value;
+      refreshDoc4(sel.getAttribute('data-a4').split('.')[0]);
+      saveWork4(); refreshInstr4(); renderControls();
+    });
+
+    host.addEventListener('input', function (e) {
+      var d = e.target.closest('[data-d4]'), c = e.target.closest('[data-c4]');
+      if (d || c) {
+        var el = d || c, key = el.getAttribute(d ? 'data-d4' : 'data-c4');
+        var col = d ? 'd' : 'c', other = d ? 'c' : 'd';
+        w4.fx[key + '.' + col] = el.value;
+        var twin = host.querySelector('[data-' + other + '4="' + key + '"]');
+        if (el.value && twin && twin.value) { twin.value = ''; w4.fx[key + '.' + other] = ''; }
+        if (twin) twin.classList.toggle('muted', !!el.value);
+        el.classList.remove('muted');
+        refreshDoc4(key.split('.')[0]);
+        saveWork4(); refreshInstr4(); renderControls();
+        return;
+      }
+      var f = e.target.closest('[data-fld4]');
+      if (f) {
+        w4.fld[f.getAttribute('data-fld4')] = f.value;
+        var box = f.closest('.ws-field');
+        box.classList.remove('right', 'wrong');
+        var bad = box.querySelector('.ws-note.bad');
+        if (bad) bad.remove();
+        saveWork4(); refreshInstr4(); renderControls();
+        return;
+      }
+      var tb = e.target.closest('[data-tb4]');
+      if (tb) {
+        var parts = tb.getAttribute('data-tb4').split('.');
+        w4.tb[parts[0] + '.' + parts[1]] = tb.value;
+        var row = host.querySelector('[data-trow4="' + parts[0] + '"]');
+        if (row) row.classList.remove('right', 'wrong');
+        var n = host.querySelector('[data-tnote4="' + parts[0] + '"] .ws-note.bad');
+        if (n) n.remove();
+        saveWork4(); refreshInstr4(); renderControls();
+        return;
+      }
+      var tt = e.target.closest('[data-tot4]');
+      if (tt) {
+        w4.tot[tt.getAttribute('data-tot4')] = tt.value;
+        refreshProof4(); saveWork4(); refreshInstr4(); renderControls();
+      }
+    });
+
+    host.addEventListener('click', function (e) {
+      var v = e.target.closest('[data-v4]');
+      if (v) { go4(Number(v.getAttribute('data-v4'))); return; }
+      if (e.target.closest('[data-v4prev]')) { go4((w4.at || 0) - 1); return; }
+      if (e.target.closest('[data-v4next]')) { go4((w4.at || 0) + 1); return; }
+      var p = e.target.closest('[data-post4]');
+      if (p) {
+        var ci = Number(p.getAttribute('data-post4'));
+        if (!canPost4(ci)) return;
+        w4.posted[ci] = 1;
+        var next = ci;
+        for (var n = 1; n <= CLOSE.length; n++) {
+          var q = (ci + n) % CLOSE.length;
+          if (!isPosted4(q)) { next = q; break; }
+        }
+        w4.at = next;
+        saveWork4(); renderSolve4(); renderControls();
+        return;
+      }
+      var u = e.target.closest('[data-unpost4]');
+      if (u) {
+        delete w4.posted[u.getAttribute('data-unpost4')];
+        saveWork4(); renderSolve4(); renderControls();
+        return;
+      }
+      var x = e.target.closest('[data-hclose]');
+      if (x) {
+        var hk = x.getAttribute('data-hclose');
+        w4.shut[hk] = 1; paintHint4(hk); saveWork4();
+        return;
+      }
+      var h = e.target.closest('[data-hint4]');
+      if (h) { bump4(h.getAttribute('data-hint4'), 3); return; }
+      var fh = e.target.closest('[data-fhint4]');
+      if (fh) { bump4('f' + fh.getAttribute('data-fhint4'), 3); return; }
+      var th = e.target.closest('[data-thint4]');
+      if (th) { bump4('t' + th.getAttribute('data-thint4'), 3); return; }
+      if (e.target.closest('#ws-reset4')) {
+        if (!window.confirm('Clear every statement figure, closing entry and balance?')) return;
+        w4.fld = {}; w4.fx = {}; w4.hint = {}; w4.shut = {}; w4.posted = {}; w4.tb = {}; w4.tot = {};
+        w4.at = 0; w4.graded = 0;
+        saveWork4(); renderSolve4(); renderControls();
+      }
+    });
+  }
+
   /* ---------- chrome ---------- */
   function renderModBtn() {
     var m = MODULES[mod];
@@ -5193,7 +6402,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     $('ws-score').hidden = !solving;
     $('btn-check').hidden = !solving;
     if (solving) {
-      var sc = mod === 0 ? scoreNow() : (mod === 1 ? score2() : score3());
+      var sc = [scoreNow, score2, score3, score4][mod]();
       $('ws-score').querySelector('b').innerHTML = sc.got + ' of ' + sc.total;
       $('ws-score').classList.toggle('done', sc.got === sc.total);
       $('btn-check').textContent = sc.got === sc.total ? 'All correct' : 'Check my work';
@@ -5233,9 +6442,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     renderModBtn();
     if (tab === 'solve') $('guide').innerHTML = '';
     else renderGuide();
-    if (mod === 0) renderTable(); else if (mod === 1) renderTable2(); else renderTable3();
+    [renderTable, renderTable2, renderTable3, renderTable4][mod]();
     if (tab !== 'solve') $('solve').innerHTML = '';
-    else if (mod === 0) renderSolve(); else if (mod === 1) renderSolve2(); else renderSolve3();
+    else [renderSolve, renderSolve2, renderSolve3, renderSolve4][mod]();
     renderControls();
   }
 
@@ -5243,7 +6452,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function hashFor() { return MODULES[mod].id + (view === 'dash' ? '' : '-' + flow()[at].id); }
   function stateFromHash() {
     var h = (location.hash || '').replace('#', '');
-    var m = /^(lo2[123])(?:-(.+))?$/.exec(h);
+    var m = /^(lo2[1234])(?:-(.+))?$/.exec(h);
     if (!m) return null;
     var mi = 0;
     for (var q = 0; q < MODULES.length; q++) if (MODULES[q].id === m[1]) mi = q;
@@ -5326,7 +6535,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
   $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });
   $('btn-check').addEventListener('click', function () {
-    if (mod === 0) gradeSolve(); else if (mod === 1) gradeSolve2(); else gradeSolve3();
+    [gradeSolve, gradeSolve2, gradeSolve3, gradeSolve4][mod]();
   });
 
   document.addEventListener('keydown', function (e) {
@@ -5355,6 +6564,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   loadWork();
   loadWork2();
   loadWork3();
+  loadWork4();
   if (!theme) {
     theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
@@ -5365,6 +6575,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   bindSolve();
   bindSolve2();
   bindSolve3();
+  bindSolve4();
   if (window.history && history.replaceState) {
     history.replaceState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
   }

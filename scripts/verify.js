@@ -1077,8 +1077,8 @@ function check(name, ok, detail) {
     current: document.querySelectorAll('[data-mod].on').length,
     counts: [...document.querySelectorAll('[data-mod] em')].map(e => e.textContent)
   }));
-  check('the switcher lists all three modules and marks the open one',
-    sheet.open && sheet.cards === 3 && sheet.current === 1, JSON.stringify(sheet));
+  check('the switcher lists all four modules and marks the open one',
+    sheet.open && sheet.cards === 4 && sheet.current === 1, JSON.stringify(sheet));
   check('the switcher reports progress per module',
     sheet.counts.some(c => /13 of 13|[1-9]\d* of 13/.test(c)), sheet.counts.join(' | '));
   await k.keyboard.press('Escape');
@@ -1531,6 +1531,250 @@ function check(name, ok, detail) {
   check('switching tabs leaves focus on the tab the user pressed',
     (await cc.evaluate(() => document.activeElement.id)) === 'tab-solve');
   await cc.close();
+
+  // ---------------------------------------------------------------
+  console.log('\nMODULE 2.4 — THE CLOSING PROCESS');
+  // ---------------------------------------------------------------
+  const z = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  const zErr = [];
+  z.on('pageerror', e => zErr.push('pageerror: ' + e.message));
+  z.on('console', m => { if (m.type() === 'error') zErr.push('console: ' + m.text()); });
+  await z.goto(FILE);
+  await z.evaluate(() => localStorage.clear());
+  await z.goto(FILE + '#lo24');
+  await z.waitForTimeout(500);
+
+  const clo = await z.evaluate(() => {
+    const bad = [];
+    CLOSE.forEach(e => {
+      if (closeDebits(e) !== closeCredits(e)) bad.push(e.id + ' Dr ' + closeDebits(e) + ' Cr ' + closeCredits(e));
+      e.lines.forEach(l => {
+        if (!acct4(l[0])) bad.push(e.id + ' uses unknown account ' + l[0]);
+        if (l[1] && l[2]) bad.push(e.id + ' has a line that is both a debit and a credit');
+      });
+    });
+    const after = closedThrough(999);
+    const left = ACCT4.filter(a => isTemporary(a.k) && after[a.k]).map(a => a.k + '=' + after[a.k]);
+    const perm = permanentAccts();
+    return {
+      bad, left,
+      open: preClose(), after,
+      fromAdj: adjustedThrough(999),
+      is: incomeStatement(), re: retainedStatement(), bs: balanceSheet(),
+      pc: tbTotals4(after, perm), permCount: perm.length,
+      permHasTemp: perm.filter(a => isTemporary(a.k)).map(a => a.k),
+      cash: CLOSE.filter(e => e.lines.some(l => l[0] === 'cash')).map(e => e.id),
+      divThroughIsum: CLOSE.filter(e => e.lines.some(l => l[0] === 'div') && e.lines.some(l => l[0] === 'isum')).map(e => e.id),
+      flow: FLOW4DATA.length
+    };
+  });
+
+  check('every closing entry balances and uses real accounts', clo.bad.length === 0, clo.bad.join('; '));
+  check('2.4 opens from the adjusted trial balance 2.3 derives, not a retyped copy',
+    Object.keys(clo.fromAdj).every(k => clo.open[k] === clo.fromAdj[k]),
+    Object.keys(clo.fromAdj).filter(k => clo.open[k] !== clo.fromAdj[k]).join(','));
+  check('no closing entry touches Cash', clo.cash.length === 0, clo.cash.join(','));
+  check('dividends never pass through Income Summary', clo.divThroughIsum.length === 0, clo.divThroughIsum.join(','));
+
+  check('the income statement reads 7,900 less 3,600 leaving 4,300',
+    clo.is.revenue === 7900 && clo.is.totalExpenses === 3600 && clo.is.netIncome === 4300,
+    JSON.stringify({ r: clo.is.revenue, e: clo.is.totalExpenses, n: clo.is.netIncome }));
+  check('retained earnings runs 0 + 4,300 - 600 to 3,700',
+    clo.re.open === 0 && clo.re.add === 4300 && clo.re.less === 600 && clo.re.close === 3700,
+    JSON.stringify(clo.re));
+  check('the balance sheet balances at 21,500',
+    clo.bs.totalAssets === 21500 && clo.bs.totalClaims === 21500 && clo.bs.currentTotal === 13680 && clo.bs.bookValue === 7820,
+    JSON.stringify({ ta: clo.bs.totalAssets, tc: clo.bs.totalClaims, ca: clo.bs.currentTotal, bv: clo.bs.bookValue }));
+
+  check('closing empties every temporary account', clo.left.length === 0, clo.left.join(', '));
+  check('and leaves retained earnings at 3,700', clo.after.re === 3700, String(clo.after.re));
+  check('the post-closing trial balance totals 21,680 on both sides',
+    clo.pc.d === 21680 && clo.pc.c === 21680, clo.pc.d + ' / ' + clo.pc.c);
+  check('it carries only the ten permanent accounts',
+    clo.permCount === 10 && clo.permHasTemp.length === 0, clo.permCount + ' accounts, temporary: ' + clo.permHasTemp.join(','));
+  check('the module runs to nine screens', clo.flow === 9, String(clo.flow));
+
+  // The dashboard board states the gap rather than asserting equality it
+  // does not have: before closing the permanent accounts are out by exactly
+  // the result equity has not been given yet.
+  const board0 = await z.evaluate(() => ({
+    nums: [...document.querySelectorAll('#guide .bb-num')].map(e => e.textContent),
+    op: document.querySelector('#guide .bb-op').textContent,
+    verdict: document.querySelector('#guide .verdict').textContent.trim()
+  }));
+  check('before closing the board shows the accounts out of balance, and by how much',
+    board0.op !== '=' && /3,700/.test(board0.verdict), JSON.stringify(board0));
+
+  for (let i = 3; i < 7; i++) {
+    await z.goto(FILE + '#lo24'); await z.waitForTimeout(120);
+    await z.evaluate(n => document.querySelector('[data-open="' + n + '"]').click(), i);
+    await z.waitForTimeout(180);
+  }
+  await z.goto(FILE + '#lo24'); await z.waitForTimeout(350);
+  const board1 = await z.evaluate(() => ({
+    nums: [...document.querySelectorAll('#guide .bb-num')].map(e => e.textContent),
+    op: document.querySelector('#guide .bb-op').textContent
+  }));
+  check('and once all four are read it balances at 21,680',
+    board1.op === '=' && board1.nums[0] === board1.nums[1] && /21,680/.test(board1.nums[0]),
+    JSON.stringify(board1));
+
+  // The funnel is a real diagram: arrows with heads, and nothing written on
+  // top of anything else.
+  await z.goto(FILE + '#lo24-c1'); await z.waitForTimeout(350);
+  const fn = await z.evaluate(() => {
+    const svg = document.querySelector('svg.fn');
+    if (!svg) return { missing: true };
+    const items = [];
+    svg.querySelectorAll('text').forEach(t => { const b = t.getBBox(); items.push({ t: t.textContent, x: b.x, x2: b.x + b.width, y: b.y, y2: b.y + b.height }); });
+    const hits = [];
+    for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+      const a = items[i], c = items[j];
+      if (Math.min(a.x2, c.x2) - Math.max(a.x, c.x) > 1 && Math.min(a.y2, c.y2) - Math.max(a.y, c.y) > 1)
+        hits.push(a.t.slice(0, 16) + ' over ' + c.t.slice(0, 16));
+    }
+    return {
+      arrows: svg.querySelectorAll('path[marker-end]').length,
+      markers: svg.querySelectorAll('marker').length,
+      labelled: [...svg.querySelectorAll('text')].filter(t => /Dr |Cr |net income|never through/.test(t.textContent)).length,
+      overlaps: hits,
+      raster: svg.querySelectorAll('image').length,
+      colour: getComputedStyle(svg).color
+    };
+  });
+  check('the closing funnel draws four arrows, each with a head', fn.arrows === 4 && fn.markers === 2, JSON.stringify(fn));
+  check('every arrow carries a label', fn.labelled >= 4, 'labelled=' + fn.labelled);
+  check('and no label sits on top of another', fn.overlaps.length === 0, fn.overlaps.join(' | '));
+  check('the funnel is drawn, not an image', fn.raster === 0);
+
+  // Nine screens at the narrowest width.
+  await z.setViewportSize({ width: 320, height: 800 });
+  let zBad = [];
+  for (let i = 0; i < 9; i++) {
+    await z.goto(FILE + '#lo24'); await z.waitForTimeout(120);
+    await z.evaluate(n => document.querySelector('[data-open="' + n + '"]').click(), i);
+    await z.waitForTimeout(220);
+    const o = await z.evaluate(() => {
+      const sc = document.querySelector('#pane-guide .scroll');
+      const figs = [...document.querySelectorAll('#guide .viz')];
+      return {
+        d: document.documentElement.scrollWidth - window.innerWidth,
+        p: sc.scrollWidth - sc.clientWidth,
+        h1: !!document.querySelector('#guide h1'),
+        figs: figs.length,
+        unclaimed: figs.filter(f => !f.querySelector('[role="img"][aria-label]') && !f.querySelector('.sr-only')).length
+      };
+    });
+    if (o.d > 0 || o.p > 0) zBad.push('screen ' + i + ' overflows ' + o.d + '/' + o.p);
+    if (!o.h1) zBad.push('screen ' + i + ' has no heading');
+    if (!o.figs) zBad.push('screen ' + i + ' has no illustration');
+    if (o.unclaimed) zBad.push('screen ' + i + ' has ' + o.unclaimed + ' figures with no claim');
+  }
+  check('all nine 2.4 screens fit 320px with a heading and figures that state their claim',
+    zBad.length === 0, zBad.join('; '));
+  await z.setViewportSize({ width: 390, height: 900 });
+
+  // The Reference gives the starting point, never the destination.
+  await z.goto(FILE + '#lo24'); await z.waitForTimeout(300);
+  await z.click('#tab-table'); await z.waitForTimeout(350);
+  const ref4 = await z.evaluate(() => document.getElementById('table-slot').textContent);
+  const leak4 = ['3,700', '21,680', '4,300', '13,680', '7,820'].filter(v => ref4.indexOf(v) !== -1);
+  check('the 2.4 Reference gives away no figure the learner has to produce', leak4.length === 0, leak4.join(', '));
+  check('but it does carry the adjusted trial balance it starts from',
+    /25,880/.test(ref4) && /Adjusted trial balance/.test(ref4));
+
+  // ---- the worksheet ----
+  await z.click('#tab-solve'); await z.waitForTimeout(450);
+  const w4v = await z.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    instr: [...document.querySelectorAll('.instr-row .instr-t')].map(e => e.textContent),
+    caps: [...document.querySelectorAll('.instr-row .instr-n')].map(e => e.textContent),
+    fields: document.querySelectorAll('[data-fld4]').length,
+    chips: document.querySelectorAll('[data-v4]').length,
+    shown: document.querySelectorAll('[data-tx4]').length,
+    rows: document.querySelectorAll('[data-trow4]').length,
+    h1: !!document.querySelector('#solve h1'),
+    unlabelled: [...document.querySelectorAll('#solve input, #solve select')].filter(e => !e.getAttribute('aria-label') && !e.id).length
+  }));
+  check('2.4 asks all three of the printed instructions',
+    w4v.instr.length === 3 && /income statement/.test(w4v.instr[0]) && /closing entries/.test(w4v.instr[1]) && /post-closing/.test(w4v.instr[2]),
+    w4v.instr.join(' | '));
+  check('scored out of 26 — ten figures, four entries, twelve balances',
+    w4v.score === '0 of 26' && w4v.caps.join() === '0/10,0/4,0/12', w4v.score + ' ' + w4v.caps.join());
+  check('one closing entry on screen at a time out of four', w4v.chips === 4 && w4v.shown === 1, w4v.chips + '/' + w4v.shown);
+  check('the post-closing form has a row for each permanent account', w4v.rows === 10, String(w4v.rows));
+  check('the 2.4 worksheet keeps a heading and labels every field',
+    w4v.h1 && w4v.unlabelled === 0, 'unlabelled=' + w4v.unlabelled);
+
+  // The compound entry needs six lines, not two.
+  await z.click('[data-v4="1"]'); await z.waitForTimeout(250);
+  check('the expense entry offers all six of its lines',
+    (await z.evaluate(() => document.querySelectorAll('.gl-row').length)) === 6);
+
+  // The mistake the module exists to prevent.
+  await z.click('[data-v4="3"]'); await z.waitForTimeout(250);
+  await z.selectOption('[data-a4="3.0"]', 'isum');
+  await z.fill('[data-d4="3.0"]', '600');
+  await z.selectOption('[data-a4="3.1"]', 'div');
+  await z.fill('[data-c4="3.1"]', '600');
+  await z.waitForTimeout(200);
+  await z.click('#btn-check'); await z.waitForTimeout(350);
+  check('closing dividends through Income Summary is diagnosed as such',
+    /never pass through Income Summary/.test(await z.evaluate(() => (document.querySelector('[data-note4="3"]') || {}).textContent || '')));
+
+  // Work the whole problem, typing the textbook's figures rather than the app's.
+  z.once('dialog', d => d.accept());
+  await z.click('#ws-reset4'); await z.waitForTimeout(350);
+
+  const FIG = { rev: 7900, te: 3600, ni: 4300, re: 3700, ca: 13680, bv: 7820, ta: 21500, cl: 5800, eq: 15700, tc: 21500 };
+  for (const k of Object.keys(FIG)) await z.fill('[data-fld4="' + k + '"]', String(FIG[k]));
+  await z.waitForTimeout(300);
+  check('the ten statement figures score part (a) in full',
+    (await z.evaluate(() => document.querySelector('#ws-score b').textContent)) === '10 of 26');
+
+  const ENTRIES = [
+    [['rev', 7900, 0], ['isum', 0, 7900]],
+    [['isum', 3600, 0], ['swx', 0, 2400], ['supx', 0, 580], ['mre', 0, 290], ['depx', 0, 180], ['insx', 0, 150]],
+    [['isum', 4300, 0], ['re', 0, 4300]],
+    [['re', 600, 0], ['div', 0, 600]]
+  ];
+  for (let ci = 0; ci < ENTRIES.length; ci++) {
+    await z.click('[data-v4="' + ci + '"]'); await z.waitForTimeout(160);
+    for (let li = 0; li < ENTRIES[ci].length; li++) {
+      const [k, d, c] = ENTRIES[ci][li];
+      await z.selectOption('[data-a4="' + ci + '.' + li + '"]', k);
+      if (d) await z.fill('[data-d4="' + ci + '.' + li + '"]', String(d));
+      else await z.fill('[data-c4="' + ci + '.' + li + '"]', String(c));
+    }
+    await z.waitForTimeout(140);
+    await z.click('[data-post4="' + ci + '"]'); await z.waitForTimeout(180);
+  }
+  check('journalizing all four closing entries scores part (b) in full',
+    (await z.evaluate(() => document.querySelector('#ws-score b').textContent)) === '14 of 26');
+
+  const PC = { cash: ['d', 5410], ar: ['d', 6300], sup: ['d', 320], ppi: ['d', 1650], eqp: ['d', 8000],
+               adep: ['c', 180], ap: ['c', 5400], swp: ['c', 400], cs: ['c', 12000], re: ['c', 3700] };
+  for (const k of Object.keys(PC)) await z.fill('[data-tb4="' + k + '.' + PC[k][0] + '"]', String(PC[k][1]));
+  await z.fill('[data-tot4="d"]', '21680');
+  await z.fill('[data-tot4="c"]', '21680');
+  await z.waitForTimeout(350);
+  const full4 = await z.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    btn: document.getElementById('btn-check').textContent,
+    instr: [...document.querySelectorAll('.instr-row')].map(r => r.className)
+  }));
+  check('working the whole problem through scores 26 of 26', full4.score === '26 of 26', full4.score);
+  check('and all three instructions read as complete',
+    /All correct/.test(full4.btn) && full4.instr.every(c => /done/.test(c)),
+    full4.btn + ' | ' + full4.instr.join(','));
+
+  await z.reload(); await z.waitForTimeout(500);
+  await z.click('#tab-solve'); await z.waitForTimeout(450);
+  check('2.4 work survives a reload',
+    (await z.evaluate(() => document.querySelector('#ws-score b').textContent)) === '26 of 26');
+
+  check('no console or page errors across module 2.4', zErr.length === 0, zErr.slice(0, 3).join(' | '));
+  await z.close();
 
   // ---------------------------------------------------------------
   console.log('\nILLUSTRATIONS SAY WHAT THEY SHOW');

@@ -8,9 +8,11 @@ step, no runtime dependencies. `artifact.html` is derived from it by
 ## How the app is put together
 
 - **One source of truth per module.** `LEDGER` (2.1), `JOURNAL` (2.2),
-  `UNADJ` + `ADJ` (2.3). Every downstream figure — dashboards, illustrations,
+  `UNADJ` + `ADJ` (2.3), `CLOSE` (2.4). Every downstream figure — dashboards, illustrations,
   worksheets, hints, grading — is derived from it, so they cannot disagree.
-  A figure written down twice is a bug waiting to happen.
+  A figure written down twice is a bug waiting to happen. Each module also
+  starts from the one before it — 2.3 from 2.2’s ledger, 2.4 from 2.3’s
+  adjusted trial balance — by deriving it, never by retyping it.
 - **Modules follow the printed problem.** Solve asks exactly what the textbook's
   INSTRUCTIONS ask, quoted verbatim, scored per instruction. Anything the app
   adds beyond the problem is labelled as such and scored separately.
