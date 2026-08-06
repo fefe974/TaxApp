@@ -8,15 +8,25 @@ step, no runtime dependencies. `artifact.html` is derived from it by
 ## How the app is put together
 
 - **One source of truth per module.** `LEDGER` (2.1), `JOURNAL` (2.2),
-  `UNADJ` + `ADJ` (2.3), `CLOSE` (2.4). Every downstream figure — dashboards, illustrations,
-  worksheets, hints, grading — is derived from it, so they cannot disagree.
-  A figure written down twice is a bug waiting to happen. Each module also
-  starts from the one before it — 2.3 from 2.2’s ledger, 2.4 from 2.3’s
-  adjusted trial balance — by deriving it, never by retyping it.
+  `UNADJ` + `ADJ` (2.3), `CLOSE` (2.4), `TB5` + `ATB5` (P2.12). Every downstream
+  figure — dashboards, illustrations, worksheets, hints, grading — is derived
+  from it, so they cannot disagree. A figure written down twice is a bug
+  waiting to happen. Each module also starts from the one before it — 2.3 from
+  2.2’s ledger, 2.4 from 2.3’s adjusted trial balance — by deriving it, never
+  by retyping it. The capstone is the one module that types two columns rather
+  than one, because the printed problem hands over both trial balances; the six
+  adjustments between them are still derived, as their difference.
 - **Modules follow the printed problem.** Solve asks exactly what the textbook's
   INSTRUCTIONS ask, quoted verbatim, scored per instruction. Anything the app
   adds beyond the problem is labelled as such and scored separately.
-- **The Reference tab is source material, never the answer key.**
+- **The Reference tab is source material, never the answer key.** In the
+  capstone the guide is held to the same rule: a briefing may use a figure the
+  problem prints, and no other. `verify.js` sweeps both for the fourteen
+  figures that appear in neither given column.
+- **Names are global.** The data script shares one scope across all five
+  modules and the shell IIFE shares another, so a helper named for one module
+  can shadow another module's. `adjOn` did exactly that and broke 2.3 silently.
+  Suffix new helpers with the module they belong to, and check before adding.
 - `scripts/verify.js` drives a real browser. Every assertion in it was checked
   by breaking the thing it watches — an assertion that has never failed proves
   nothing. Add new ones the same way.

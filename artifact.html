@@ -1720,6 +1720,340 @@ table.wp.w4 tfoot .cell { background: var(--good-soft); color: var(--good-deep);
   .dash-head h1 { font-size: 24px; }
   .nav-btn span { display: none; }
 }
+
+/* ============================================================
+   THE CAPSTONE — P2.12
+   A workbook of five sheets, one per printed instruction, and a
+   real spreadsheet for the ten-column worksheet the problem is
+   itself printed as.
+   ============================================================ */
+
+/* ---- briefing illustrations ---- */
+.ordv { display: flex; align-items: stretch; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
+.ordv-step {
+  flex: 0 0 auto; display: flex; flex-direction: column; gap: 2px;
+  padding: 9px 10px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+  min-width: 96px;
+}
+.ordv-step i {
+  font-style: normal; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  color: var(--brand);
+}
+.ordv-step b { font-size: 12px; font-weight: 650; color: var(--text); }
+.ordv-step u { text-decoration: none; font-size: 10.5px; color: var(--muted); }
+.ordv-arr { flex: 0 0 auto; align-self: center; color: var(--line-strong); display: grid; place-items: center; }
+.ordv-arr svg { width: 14px; height: 14px; }
+
+.shv { display: grid; gap: 9px; }
+.shv > * { min-width: 0; }
+.shv-head { display: flex; flex-wrap: wrap; gap: 4px; }
+.shv-pair {
+  flex: 1 1 68px; min-width: 0; padding: 7px 6px; border-radius: var(--r-sm);
+  display: grid; gap: 3px; text-align: center;
+  border: 1px solid var(--line);
+}
+.shv-pair.given { background: var(--surface-2); }
+.shv-pair.mine { background: var(--brand-soft); border-color: var(--brand-line); }
+.shv-pair b { font-size: 10px; font-weight: 700; line-height: 1.25; color: var(--text-dim); }
+.shv-dc { display: flex; gap: 2px; justify-content: center; }
+.shv-dc i {
+  font-style: normal; flex: 1 1 0; font-family: var(--mono); font-size: 9px;
+  color: var(--muted); background: var(--surface); border-radius: 3px; padding: 1px 0;
+}
+.shv-pair u { text-decoration: none; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.shv-pair.mine u { color: var(--brand); font-weight: 700; }
+.shv-row { display: flex; align-items: center; gap: 8px; }
+.shv-lab { flex: 0 0 34px; font-size: 11.5px; font-weight: 650; color: var(--text-dim); }
+.shv-trip { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.shv-step {
+  flex: 1 1 66px; min-width: 0; display: grid; gap: 1px; padding: 5px 7px;
+  border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line);
+}
+.shv-step u {
+  text-decoration: none; font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--muted); line-height: 1.2;
+}
+.shv-step b {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  font-variant-numeric: tabular-nums; color: var(--text);
+}
+.shv-step.dim b { color: var(--muted); font-weight: 400; }
+.shv-step.land { background: var(--good-soft); border-color: var(--good-line); }
+.shv-step.land u, .shv-step.land b { color: var(--good-deep); }
+.shv-arr { flex: 0 0 auto; color: var(--line-strong); display: grid; place-items: center; }
+.shv-arr svg { width: 12px; height: 12px; }
+.shv-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0; }
+
+.niv { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.niv-pair { flex: 1 1 190px; min-width: 0; }
+.niv-pair > b { display: block; font-size: 11px; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; }
+.niv-cols { display: flex; gap: 5px; }
+.niv-col {
+  flex: 1 1 0; min-width: 0; border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 7px 6px; background: var(--surface-2); text-align: center;
+}
+.niv-col u { display: block; text-decoration: none; font-family: var(--mono); font-size: 9.5px; color: var(--muted); }
+.niv-col i { display: block; font-style: normal; font-size: 10.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.3; }
+.niv-col.short { background: var(--amber-soft); border-color: var(--amber-line); border-style: dashed; }
+.niv-col em {
+  display: block; margin-top: 6px; padding-top: 5px; border-top: 1px dashed var(--amber-line);
+  font-style: normal; font-size: 10px; font-weight: 700; color: var(--amber-ink);
+}
+.niv-link {
+  flex: 0 0 auto; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--amber-ink); background: var(--amber-soft);
+  border: 1px dashed var(--amber-line); border-radius: 999px; padding: 4px 9px;
+}
+
+.splv { display: grid; gap: 7px; margin-top: 11px; }
+.splv-bar { display: flex; gap: 3px; }
+.splv-bar > span {
+  padding: 9px 8px; border-radius: var(--r-sm); display: grid; gap: 1px; min-width: 0;
+}
+.splv-bar b { font-family: var(--mono); font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.splv-bar u { text-decoration: none; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+.splv-cur { background: var(--amber-soft); border: 1px solid var(--amber-line); color: var(--amber-ink); }
+.splv-lng { background: var(--brand-soft); border: 1px solid var(--brand-line); color: var(--brand-ink); }
+.splv-foot {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 11.5px; color: var(--muted);
+}
+.splv-foot b { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--text-dim); }
+
+/* ---- the given worksheet, in the Reference tab ---- */
+.gw-scroll { overflow-x: auto; margin-top: 11px; }
+.gw { border-collapse: collapse; width: 100%; min-width: 420px; }
+.gw th, .gw td { padding: 4px 6px; }
+.gw-grp th {
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); text-align: center; border-bottom: 1px solid var(--line);
+}
+.gw-dc th {
+  font-family: var(--mono); font-size: 10px; color: var(--muted); text-align: right;
+  border-bottom: 1px solid var(--line-strong);
+}
+.gw-dc th.gw-name { text-align: left; font-family: var(--font); font-weight: 700; }
+.gw-n { width: 20px; font-family: var(--mono); font-size: 9.5px; color: var(--muted); text-align: right; }
+.gw-name { font-size: 11.5px; color: var(--text-dim); line-height: 1.3; }
+.gw-amt {
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  text-align: right; color: var(--text); white-space: nowrap;
+}
+.gw-edge { border-right: 1px solid var(--line); }
+.gw-row:nth-child(even) td { background: var(--surface-2); }
+.gw-tot td { border-top: 2px solid var(--line-strong); font-weight: 700; padding-top: 6px; }
+.gw-tot .gw-name { font-weight: 700; color: var(--text); }
+
+/* ---- the workbook ---- */
+.instr-row {
+  width: 100%; text-align: left; background: none;
+}
+button.instr-row.now { background: var(--brand-soft); }
+button.instr-row:hover { background: var(--surface-2); }
+button.instr-row.now:hover { background: var(--brand-soft); }
+
+.wbk {
+  display: flex; gap: 2px; margin-top: 14px; overflow-x: auto;
+  padding: 0 0 0 2px; border-bottom: 2px solid var(--line-strong);
+  background: var(--bg);
+}
+.wbk-t {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 6px;
+  padding: 9px 12px; border-radius: var(--r-sm) var(--r-sm) 0 0;
+  border: 1px solid var(--line); border-bottom: 0;
+  background: var(--surface-2); color: var(--muted);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+  position: relative; top: 1px;
+}
+.wbk-t i {
+  font-style: normal; font-family: var(--mono); font-size: 10.5px; font-weight: 800;
+}
+.wbk-t.on {
+  background: var(--surface); color: var(--text); border-color: var(--line-strong);
+  box-shadow: 0 -2px 0 var(--brand) inset;
+}
+.wbk-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line-strong); }
+.wbk-t.part .wbk-dot { background: var(--amber); }
+.wbk-t.done .wbk-dot { background: var(--good); }
+.wbk-body {
+  border: 1px solid var(--line-strong); border-top: 0; border-radius: 0 0 var(--r-md) var(--r-md);
+  background: var(--surface); padding: 12px 11px 14px;
+}
+.wbk-cap {
+  font-size: 12.5px; color: var(--text-dim); line-height: 1.45;
+  padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--line);
+}
+.wbk-cap b { font-family: var(--mono); font-weight: 800; color: var(--brand); }
+
+.p5-open {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin-top: 12px; padding: 12px;
+  border-radius: var(--r-md); background: var(--brand); color: var(--on-brand);
+  font-size: 13.5px; font-weight: 650; box-shadow: var(--shadow-sm);
+}
+.p5-open svg { width: 16px; height: 16px; }
+
+/* ---- the spreadsheet ---- */
+.xl-bar {
+  display: flex; align-items: stretch; gap: 6px; margin-bottom: 8px;
+}
+.xl-name {
+  flex: 0 0 54px; display: grid; place-items: center;
+  border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  background: var(--surface-2);
+  font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: var(--brand);
+}
+.xl-fx {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px;
+  padding: 7px 9px; border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  background: var(--surface-2);
+}
+.xl-fx i {
+  font-style: italic; font-family: var(--display); font-size: 12px; font-weight: 600;
+  color: var(--muted); flex: 0 0 auto;
+}
+.xl-fx em {
+  font-style: normal; font-size: 11px; color: var(--text-dim);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.xl-jump { display: flex; gap: 4px; overflow-x: auto; margin-bottom: 8px; }
+.xl-jb {
+  flex: 0 0 auto; padding: 6px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--surface-2);
+  font-size: 11px; font-weight: 600; color: var(--text-dim); white-space: nowrap;
+}
+.xl-wrap {
+  overflow-x: auto; border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  background: var(--surface);
+}
+.xl-grid { display: inline-block; min-width: 100%; }
+.xl-row { display: flex; align-items: stretch; }
+.xl-h {
+  position: sticky; left: 0; z-index: 2;
+  flex: 0 0 134px; padding: 6px 7px; display: flex; align-items: center; gap: 5px;
+  background: var(--surface); border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+  font-size: 11px; line-height: 1.2; color: var(--text-dim);
+}
+.xl-h i {
+  font-style: normal; flex: 0 0 14px; text-align: right;
+  font-family: var(--mono); font-size: 9px; color: var(--muted);
+}
+.xl-c {
+  flex: 0 0 68px; min-height: 36px; padding: 6px 7px;
+  display: flex; align-items: center; justify-content: flex-end;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  color: var(--text); background: var(--surface);
+}
+.xl-c.given { background: var(--surface-2); color: var(--text-dim); }
+.xl-c.dead { background: var(--surface-3); }
+.xl-c.xl-w { padding: 0; }
+.xl-in {
+  width: 100%; height: 100%; min-height: 36px; border: 0; background: transparent;
+  padding: 0 7px; text-align: right; color: var(--text);
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+}
+.xl-in:focus { outline: 2px solid var(--brand); outline-offset: -2px; background: var(--brand-soft); }
+.xl-in.wrong { background: var(--bad-soft); color: var(--bad); }
+.xl-in.tot, .xl-in.ni { font-weight: 700; }
+.xl-x {
+  width: 100%; min-height: 36px; padding: 0 7px; text-align: right;
+  font-family: var(--mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  color: var(--text); background: transparent;
+  display: flex; align-items: center; justify-content: flex-end;
+}
+.xl-x::before {
+  content: ''; width: 9px; height: 9px; border: 1px dashed var(--line-strong);
+  border-radius: 2px; opacity: 0.9;
+}
+.xl-x.on::before { display: none; }
+.xl-x.on { background: var(--good-soft); color: var(--good-deep); font-weight: 700; }
+.xl-x.bad { background: var(--bad-soft); color: var(--bad); }
+.xl-row.bad .xl-h { background: var(--bad-soft); }
+/* The two extension pairs are a different job from the columns before them. */
+.xl-row > .xl-c:nth-child(8) { border-left: 2px solid var(--line-strong); }
+.xl-row > .xl-c:nth-child(10) { border-left: 1px solid var(--line-strong); }
+.xl-grp .xl-g {
+  min-height: 26px; flex: 0 0 calc(var(--n) * 68px);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  border-right: 1px solid var(--line-strong); border-bottom: 1px solid var(--line);
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+  line-height: 1.15; padding: 3px 4px;
+}
+.xl-g.given { background: var(--surface-2); color: var(--muted); }
+.xl-g.mine { background: var(--brand-soft); color: var(--brand-ink); }
+.xl-grp .xl-h { background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.xl-hd .xl-c {
+  min-height: 24px; background: var(--surface-2); color: var(--muted);
+  font-size: 10px; justify-content: space-between; align-items: center;
+}
+.xl-hd .xl-c u { text-decoration: none; font-weight: 800; color: var(--text-dim); }
+.xl-hd .xl-h { font-weight: 700; color: var(--text-dim); background: var(--surface-2); }
+.xl-row:nth-of-type(even) .xl-c:not(.given):not(.dead) { background: var(--surface); }
+.xl-foot .xl-c, .xl-foot .xl-h { border-top: 2px solid var(--line-strong); font-weight: 700; }
+.xl-ni .xl-h { font-weight: 700; color: var(--brand); }
+.xl-c.auto { background: var(--surface-2); color: var(--muted); }
+.xl-c.auto.ok { color: var(--good-deep); background: var(--good-soft); }
+.xl-c.auto.off { color: var(--bad); background: var(--bad-soft); }
+
+.xl-legend {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  margin-top: 9px; font-size: 11px; color: var(--muted);
+}
+.xl-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.xl-legend b { font-family: var(--mono); font-weight: 700; color: var(--text-dim); }
+.lg { width: 10px; height: 10px; border-radius: 3px; border: 1px solid var(--line-strong); }
+.lg.given { background: var(--surface-2); }
+.lg.mine { background: var(--brand-soft); border-color: var(--brand-line); }
+
+.xl-help { margin-top: 12px; display: grid; gap: 4px; }
+.xl-help-row {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 9px; border-radius: var(--r-sm); background: var(--surface-2);
+}
+.xl-help-row b { flex: 1; font-size: 12px; font-weight: 650; color: var(--text-dim); }
+
+/* ---- the balance sheet form ---- */
+.bsf { padding: 4px 0 2px; }
+.bsf-sect {
+  padding: 8px 11px 6px; font-size: 11px; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand);
+  border-bottom: 1px solid var(--line);
+}
+.bsf-sub {
+  padding: 9px 11px 3px; font-size: 12px; font-weight: 700; color: var(--text-dim);
+}
+.bsf-line {
+  display: flex; align-items: center; gap: 9px; padding: 4px 11px;
+  font-size: 12.5px; color: var(--text-dim);
+}
+.bsf-line.in { padding-left: 22px; }
+.bsf-line b {
+  margin-left: auto; font-family: var(--mono); font-size: 12px;
+  font-variant-numeric: tabular-nums; color: var(--text);
+}
+.bsf-line.sum { padding-top: 6px; padding-bottom: 6px; border-top: 1px solid var(--line); }
+.bsf-line.sum label { flex: 1; min-width: 0; font-size: 12.5px; font-weight: 650; color: var(--text); }
+.bsf-in { flex: 0 0 104px; }
+.bsf-in input {
+  width: 100%; padding: 8px 9px; text-align: right;
+  border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--text);
+  font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums;
+}
+.bsf-field.right .bsf-in input { border-color: var(--good-line); background: var(--good-soft); }
+.bsf-field.wrong .bsf-in input { border-color: var(--bad-line); background: var(--bad-soft); }
+.bsf-field [data-note5] { padding: 0 11px 4px; }
+
+@media (max-width: 340px) {
+  .xl-h { flex-basis: 112px; }
+  .xl-c { flex-basis: 62px; }
+  .xl-grp .xl-g { flex-basis: calc(var(--n) * 62px); }
+  .bsf-in { flex-basis: 92px; }
+}
+
 </style>
 <a class="skip" href="#guide">Skip to content</a>
 <div class="app">
@@ -2792,6 +3126,258 @@ var METHOD4 = [
   ['Send dividends there too', 'But not through Income Summary']
 ];
 
+
+/* ============================================================
+   CAPSTONE — P2.12, Cooke Company
+   Worksheet, balance sheet, adjusting and closing entries.
+
+   Two columns are given by the problem and typed here because the
+   problem prints them: the trial balance and the adjusted trial
+   balance. Nothing else is typed. The six adjustments are the
+   difference between those two columns; the extensions, the
+   statements, the closing entries and the post-closing trial
+   balance are all derived from the adjusted column.
+
+   That is the whole point of the printed problem: everything after
+   the worksheet's first four columns is arithmetic on what is
+   already there, and a learner who believes otherwise is the one
+   this module is for.
+   ============================================================ */
+
+var CO5 = {
+  name: 'Cooke Company',
+  period: 'For the Month Ended September 30, 2025',
+  date: 'September 30, 2025',
+  short: 'Sept 30, 2025'
+};
+
+/* Worksheet order is the printed order. `grp` places the account on the
+   classified balance sheet; `stmt` decides which pair of worksheet columns
+   its adjusted balance is extended to. */
+var ACCT5 = [
+  { k: 'cash',  name: 'Cash',                               up: 'D', stmt: 'B', grp: 'ca' },
+  { k: 'sup',   name: 'Supplies',                           up: 'D', stmt: 'B', grp: 'ca' },
+  { k: 'ppi',   name: 'Prepaid Insurance',                  up: 'D', stmt: 'B', grp: 'ca' },
+  { k: 'land',  name: 'Land',                               up: 'D', stmt: 'B', grp: 'ppe' },
+  { k: 'eqp',   name: 'Equipment',                          up: 'D', stmt: 'B', grp: 'ppe' },
+  { k: 'adep',  name: 'Accumulated Depreciation&mdash;Equipment', up: 'C', stmt: 'B', grp: 'ppe' },
+  { k: 'ap',    name: 'Accounts Payable',                   up: 'C', stmt: 'B', grp: 'cl' },
+  { k: 'unrev', name: 'Unearned Service Revenue',           up: 'C', stmt: 'B', grp: 'cl' },
+  { k: 'mort',  name: 'Mortgage Payable',                   up: 'C', stmt: 'B', grp: 'split' },
+  { k: 'cs',    name: 'Common Stock',                       up: 'C', stmt: 'B', grp: 'eq' },
+  { k: 're',    name: 'Retained Earnings, Sept. 1, 2025',   up: 'C', stmt: 'B', grp: 'eq' },
+  { k: 'div',   name: 'Dividends',                          up: 'D', stmt: 'B', grp: 'none' },
+  { k: 'rev',   name: 'Service Revenue',                    up: 'C', stmt: 'I', grp: 'none' },
+  { k: 'salx',  name: 'Salaries and Wages Expense',         up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'mrx',   name: 'Maintenance and Repairs Expense',    up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'adx',   name: 'Advertising Expense',                up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'utx',   name: 'Utilities Expenses',                 up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'ptx',   name: 'Property Tax Expense',               up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'intx',  name: 'Interest Expense',                   up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'insx',  name: 'Insurance Expense',                  up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'supx',  name: 'Supplies Expense',                   up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'intp',  name: 'Interest Payable',                   up: 'C', stmt: 'B', grp: 'cl' },
+  { k: 'depx',  name: 'Depreciation Expense',               up: 'D', stmt: 'I', grp: 'none' },
+  { k: 'ptp',   name: 'Property Taxes Payable',             up: 'C', stmt: 'B', grp: 'cl' }
+];
+function acct5(k) { return ACCT5.filter(function (a) { return a.k === k; })[0]; }
+
+/* Income Summary exists only while the books are being closed, so it is
+   not a worksheet row. It is still an account the closing entries need. */
+var ISUM5 = { k: 'isum', name: 'Income Summary', up: 'C', stmt: 'I', grp: 'none' };
+function acct5all(k) { return k === 'isum' ? ISUM5 : acct5(k); }
+function ACCT5ALL() { return ACCT5.concat([ISUM5]); }
+
+/* ---- the two columns the problem prints ---- */
+var TB5 = {
+  cash: 37400, sup: 18600, ppi: 31900, land: 80000, eqp: 120000,
+  adep: 36200, ap: 14600, unrev: 2700, mort: 50000, cs: 107700, re: 2000,
+  div: 14000, rev: 278500,
+  salx: 109000, mrx: 30500, adx: 9400, utx: 16900, ptx: 18000, intx: 6000
+};
+var ATB5 = {
+  cash: 37400, sup: 4200, ppi: 3900, land: 80000, eqp: 120000,
+  adep: 42000, ap: 14600, unrev: 700, mort: 50000, cs: 107700, re: 2000,
+  div: 14000, rev: 280500,
+  salx: 109000, mrx: 30500, adx: 9400, utx: 16900, ptx: 21000, intx: 12000,
+  insx: 28000, supx: 14400, intp: 6000, depx: 5800, ptp: 3000
+};
+/* The note printed against instruction b. */
+var MORT_CURRENT = 10000;
+
+function tb5(k)  { return TB5[k] || 0; }
+function atb5(k) { return ATB5[k] || 0; }
+
+/* Column totals, over whichever balances are handed in. */
+function foot5(bal, accts) {
+  var d = 0, c = 0;
+  (accts || ACCT5).forEach(function (a) {
+    var v = bal(a.k);
+    if (!v) return;
+    if (a.up === 'D') d += v; else c += v;
+  });
+  return { d: d, c: c };
+}
+
+/* ---- the six adjustments, derived ----
+   Which account pairs with which is structure the problem states by
+   printing a worksheet; how much is the difference between the two
+   columns, so an adjustment cannot disagree with the trial balances
+   it sits between. */
+var ADJ5 = [
+  { id: 'a', d: 'supx',  c: 'sup',   short: 'Supplies used',            why: 'Supplies fell from what was bought to what is left on the shelf.' },
+  { id: 'b', d: 'insx',  c: 'ppi',   short: 'Insurance expired',        why: 'Part of the premium paid in advance has now been used up.' },
+  { id: 'c', d: 'depx',  c: 'adep',  short: 'Depreciation',             why: 'The equipment was used, so a share of its cost becomes expense.' },
+  { id: 'd', d: 'unrev', c: 'rev',   short: 'Unearned revenue earned',  why: 'Service owed to a customer has now been performed.' },
+  { id: 'e', d: 'ptx',   c: 'ptp',   short: 'Property taxes accrued',   why: 'Taxes belong to this period whether or not the bill has arrived.' },
+  { id: 'f', d: 'intx',  c: 'intp',  short: 'Interest accrued',         why: 'The mortgage ran all period, so interest is owed for it.' }
+];
+function adjAmount(p) { return Math.abs(atb5(p.d) - tb5(p.d)); }
+function adjTotal() { return ADJ5.reduce(function (n, p) { return n + adjAmount(p); }, 0); }
+/* Which adjustment, if any, touches this account and on which side. */
+function adjPairOn(k, col) {
+  for (var i = 0; i < ADJ5.length; i++) {
+    if (ADJ5[i][col === 'd' ? 'd' : 'c'] === k) return ADJ5[i];
+  }
+  return null;
+}
+function adjCell(k, col) { var p = adjPairOn(k, col); return p ? adjAmount(p) : 0; }
+
+/* ---- extension: which of the last four columns a row travels to ---- */
+function extCol(k) {
+  var a = acct5(k);
+  return (a.stmt === 'I' ? 'i' : 'b') + (a.up === 'D' ? 'd' : 'c');
+}
+function extAmount(k) { return atb5(k); }
+function isAccts() { return ACCT5.filter(function (a) { return a.stmt === 'I'; }); }
+function bsAccts() { return ACCT5.filter(function (a) { return a.stmt === 'B'; }); }
+
+/* The four extension column totals, before net income is written in. */
+function extTotals() {
+  var t = { id: 0, ic: 0, bd: 0, bc: 0 };
+  ACCT5.forEach(function (a) {
+    var col = extCol(a.k);
+    t[col === 'id' ? 'id' : col === 'ic' ? 'ic' : col === 'bd' ? 'bd' : 'bc'] += atb5(a.k);
+  });
+  return t;
+}
+function totalRevenue()  { return extTotals().ic; }
+function totalExpenses5() { return extTotals().id; }
+function netIncome5()    { return totalRevenue() - totalExpenses5(); }
+
+/* ---- b. the classified balance sheet ---- */
+function inGrp(g) { return ACCT5.filter(function (a) { return a.grp === g; }); }
+function sumGrp(g) { return inGrp(g).reduce(function (n, a) { return n + atb5(a.k); }, 0); }
+function endingRE5() { return atb5('re') + netIncome5() - atb5('div'); }
+function mortLong() { return atb5('mort') - MORT_CURRENT; }
+function balanceSheet5() {
+  var currentAssets = sumGrp('ca');
+  var ppe = atb5('land') + atb5('eqp') - atb5('adep');
+  var currentLiab = sumGrp('cl') + MORT_CURRENT;
+  var longLiab = mortLong();
+  var equity = atb5('cs') + endingRE5();
+  return {
+    currentAssets: currentAssets,
+    land: atb5('land'), equipment: atb5('eqp'), accumulated: atb5('adep'),
+    bookValue: atb5('eqp') - atb5('adep'),
+    ppe: ppe,
+    totalAssets: currentAssets + ppe,
+    currentLiab: currentLiab, mortCurrent: MORT_CURRENT,
+    longLiab: longLiab,
+    totalLiab: currentLiab + longLiab,
+    commonStock: atb5('cs'), retained: endingRE5(), equity: equity,
+    totalClaims: currentLiab + longLiab + equity
+  };
+}
+
+/* ---- d. the closing entries, derived from the adjusted balances ---- */
+function closingEntries5() {
+  var exp = isAccts().filter(function (a) { return a.up === 'D'; });
+  var te = totalExpenses5(), ni = netIncome5();
+  return [
+    { id: 'd1', n: 1, short: 'Close revenue to Income Summary',
+      lines: [['rev', atb5('rev'), 0], ['isum', 0, atb5('rev')]] },
+    { id: 'd2', n: 2, short: 'Close the expenses to Income Summary',
+      lines: [['isum', te, 0]].concat(exp.map(function (a) { return [a.k, 0, atb5(a.k)]; })) },
+    { id: 'd3', n: 3, short: 'Close Income Summary to Retained Earnings',
+      lines: [['isum', ni, 0], ['re', 0, ni]] },
+    { id: 'd4', n: 4, short: 'Close dividends to Retained Earnings',
+      lines: [['re', atb5('div'), 0], ['div', 0, atb5('div')]] }
+  ];
+}
+var CLOSE5 = closingEntries5();
+
+/* ---- e. what is left standing ---- */
+function isTemporary5(k) { return k === 'div' || k === 'isum' || acct5(k).stmt === 'I'; }
+function permanent5() { return ACCT5.filter(function (a) { return !isTemporary5(a.k); }); }
+function postClosing(k) { return k === 're' ? endingRE5() : atb5(k); }
+function pctbTotals() { return foot5(postClosing, permanent5()); }
+
+/* ---- c. the adjusting entries, the same six pairs as journal entries ---- */
+function adjustingEntries5() {
+  return ADJ5.map(function (p, i) {
+    return { id: 'c' + (i + 1), n: i + 1, key: p.id, short: p.short, why: p.why,
+      lines: [[p.d, adjAmount(p), 0], [p.c, 0, adjAmount(p)]] };
+  });
+}
+var ADJE5 = adjustingEntries5();
+
+/* ---- the briefing ----
+   A capstone should not re-teach what four modules already taught, and it
+   must not print a figure the learner is being asked to produce. These five
+   screens explain the one tool that is new — the ten-column worksheet —
+   and the order the five instructions have to be worked in. Every Cooke
+   figure they use is one the problem itself prints. */
+var FLOW5DATA = [
+  { id: 'job', short: 'The job', title: 'Five instructions, one order',
+    concept: 'Each instruction hands the next one its figures',
+    rule: 'Work them in the printed order. Any other order asks for a figure that does not exist yet.',
+    why: ['A worksheet is not a report. It is the sheet accountants fill in <i>before</i> writing anything up, so that the statements, the entries and the proof all come from one place.',
+          'That is why the order is forced: the balance sheet needs the net income the worksheet strikes; the adjusting entries are journalized from the adjustment columns; closing needs the adjusted balances; and the post-closing trial balance proves the lot.'],
+    order: true,
+    take: 'Nothing in this problem is new except the worksheet. Everything else you have already done twice.' },
+
+  { id: 'sheet', short: 'The ten columns', title: 'What the worksheet is for',
+    concept: 'Five pairs of columns, each a debit and a credit',
+    rule: 'A row travels left to right: its trial balance, what changed, what it became, and then to exactly one of the last four columns.',
+    why: ['Cooke has handed you the first two pairs already: the <b>trial balance</b> as the books stood, and the <b>adjusted trial balance</b> after the period-end work. Both foot, so both are trustworthy.',
+          'The <b>adjustments</b> pair between them is blank, and it is the difference between the two &mdash; that is the whole trick of this problem. Find what moved and you have found the adjusting entries as well.'],
+    sheet: true,
+    take: 'Six columns are yours to produce. Not one of them needs a figure from outside the sheet.' },
+
+  { id: 'ni', short: 'The balancing figure', title: 'Why net income is written twice',
+    concept: 'The two column pairs are out by the same amount, in opposite directions',
+    rule: 'Net income is entered in the income statement debit column and the balance sheet credit column, and then all four columns foot.',
+    why: ['Total the income statement pair and it will not balance: revenue is larger than the expenses beside it. Total the balance sheet pair and it will not balance either &mdash; and it will be out by exactly the same amount.',
+          'That is not a coincidence. It is the same figure seen twice: what the period earned, and what the owners now have a claim on. Writing it into both pairs is what proves the sheet.'],
+    ni: true,
+    take: 'If your two gaps are not the same number, something above them is wrong. Do not write in a plug.' },
+
+  { id: 'class', short: 'Classified', title: 'The debt that sits in two places',
+    concept: 'Current means due within the year, and one liability is only partly current',
+    rule: 'Split the mortgage: the part due next year is a current liability, the rest is long-term.',
+    why: ['A classified balance sheet groups what it reports &mdash; current assets before the long-lived ones, current liabilities before the long-term ones &mdash; so a reader can see at a glance whether the business can pay what falls due soon.',
+          'Cooke&rsquo;s note is the whole of instruction b&rsquo;s difficulty: of the mortgage payable, <b>' + dollars(MORT_CURRENT) + '</b> falls due in the next fiscal year. That much is current. The remainder is long-term, and the two together still add back to what the trial balance shows.'],
+    split: true,
+    take: 'Every other line on the balance sheet comes off the worksheet unchanged.' },
+
+  { id: 'back', short: 'What you already know', title: 'Adjusting, closing, proving',
+    concept: 'Instructions c, d and e are modules 2.3 and 2.4 again, on a bigger set of accounts',
+    rule: 'Adjusting entries come out of the adjustment columns; closing empties every temporary account; the post-closing trial balance shows what survived.',
+    why: ['Instruction c asks you to journalize the adjustments you have already found. Written on the worksheet they are two columns of figures; written in the journal they are six entries with dates and accounts.',
+          'Instruction d closes the books. Revenue and the expenses go through Income Summary; the result goes to Retained Earnings; dividends go there directly, never through Income Summary. Instruction e is the proof that nothing temporary is left standing.'],
+    method: true,
+    take: 'The five instructions are five sheets of one workbook. Open the Solve tab and they are waiting in order.' }
+];
+
+var METHOD5 = [
+  ['Find what moved between the two trial balances', 'The adjustments'],
+  ['Extend every adjusted balance to one column', 'Income statement &middot; Balance sheet'],
+  ['Strike net income and write it in both pairs', 'The balancing figure'],
+  ['Journalize what the worksheet already shows', 'Adjusting, then closing'],
+  ['Prove that only permanent accounts are left', 'The post-closing trial balance']
+];
+
 /* ============================================================
    THE MODULES
    Four problems from the same chapter, each starting where the last
@@ -2816,7 +3402,11 @@ var MODULES = [
   { id: 'lo24', code: 'LO 2.4', name: 'The closing process',
     co: 'Kleene Window Washing Inc.', sub: 'Three statements, four closing entries',
     blurb: 'Turn the adjusted trial balance into three financial statements, close every account that measured July, and prove what is left.',
-    count: '9 screens' }
+    count: '9 screens' },
+  { id: 'p212', code: 'P2.12', name: 'Put it all together',
+    co: 'Cooke Company', sub: 'One workbook, five instructions',
+    blurb: 'The whole cycle on one problem: complete a ten-column worksheet, then the balance sheet, the adjusting and closing entries, and the proof.',
+    count: '5 briefings', unit: 'Briefing ' }
 ];
 
 /* Icons into the static chrome. */
@@ -2944,12 +3534,12 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   var GRAND = assetsOf(totalsUpTo(999));     // the scale every bar is drawn against
 
   /* The open module's screens, and its read-state. */
-  function flowFor(i) { return [FLOW21, FLOW2, FLOW3, FLOW4][i]; }
+  function flowFor(i) { return [FLOW21, FLOW2, FLOW3, FLOW4, FLOW5][i]; }
   function flow() { return flowFor(mod); }
   /* How many of the open module's screens are entries rather than reports. */
   /* 2.4 opens with statements rather than entries, so its 'Entry n of m'
      label would be wrong from the first screen; it uses the item's own kind. */
-  function entryCount() { return [ENTRIES.length, ENTRIES2.length, ENTRIES3.length, STMT4.length][mod]; }
+  function entryCount() { return [ENTRIES.length, ENTRIES2.length, ENTRIES3.length, STMT4.length, FLOW5.length][mod]; }
   function modId() { return MODULES[mod].id; }
   function readSet() {
     if (!read[modId()]) read[modId()] = {};
@@ -3240,7 +3830,8 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (mod === 0) { if (dash) renderDash(); else renderDetail(); }
     else if (mod === 1) { if (dash) renderDash2(); else renderDetail2(); }
     else if (mod === 2) { if (dash) renderDash3(); else renderDetail3(); }
-    else { if (dash) renderDash4(); else renderDetail4(); }
+    else if (mod === 3) { if (dash) renderDash4(); else renderDetail4(); }
+    else { if (dash) renderDash5(); else renderDetail5(); }
   }
 
   /* ---------- table pane ---------- */
@@ -5436,6 +6027,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* ---------- module 2.4: the closing process ---------- */
 
   var FLOW4 = FLOW4DATA;
+  var FLOW5 = FLOW5DATA;
 
   /* ---------- the closing funnel ----------
      The one diagram the module turns on. Revenue and the expenses drain into
@@ -6353,6 +6945,1262 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     });
   }
 
+
+  /* ---------- capstone illustrations ----------
+     None of these prints a figure the learner is asked to produce. The
+     amounts they do show are ones the problem itself prints. */
+
+  /* The five instructions, and what each one hands the next. */
+  function orderViz() {
+    var steps = [
+      ['a', 'Worksheet', 'net income'],
+      ['b', 'Balance sheet', 'nothing further'],
+      ['c', 'Adjusting entries', 'the ledger'],
+      ['d', 'Closing entries', 'retained earnings'],
+      ['e', 'Post-closing', 'the proof']
+    ];
+    return '<div class="ordv">' + steps.map(function (s, i) {
+      return (i ? '<span class="ordv-arr">' + ICON.next + '</span>' : '') +
+        '<span class="ordv-step"><i>' + s[0] + '</i><b>' + s[1] + '</b><u>hands on ' + s[2] + '</u></span>';
+    }).join('') + '</div>';
+  }
+
+  /* The ten columns, and one row travelling across them. Cash is the worked
+     example precisely because nothing happens to it: the shape of the journey
+     is visible without giving away a single answer. */
+  function sheetViz() {
+    var pairs = [
+      ['Trial Balance', 'given'],
+      ['Adjustments', 'yours'],
+      ['Adjusted Trial Balance', 'given'],
+      ['Income Statement', 'yours'],
+      ['Balance Sheet', 'yours']
+    ];
+    var head = pairs.map(function (p) {
+      return '<div class="shv-pair ' + (p[1] === 'given' ? 'given' : 'mine') + '">' +
+        '<b>' + p[0] + '</b>' +
+        '<span class="shv-dc"><i>Dr</i><i>Cr</i></span>' +
+        '<u>' + p[1] + '</u></div>';
+    }).join('');
+    var trip = [
+      ['Trial balance Dr', money2(tb5('cash')), ''],
+      ['Adjustments', 'none', ' dim'],
+      ['Adjusted Dr', money2(atb5('cash')), ''],
+      ['Balance sheet Dr', money2(atb5('cash')), ' land']
+    ];
+    var row = trip.map(function (t, i) {
+      return (i ? '<span class="shv-arr">' + ICON.next + '</span>' : '') +
+        '<span class="shv-step' + t[2] + '"><u>' + t[0] + '</u><b>' + t[1] + '</b></span>';
+    }).join('');
+    return '<div class="shv">' +
+      '<div class="shv-head">' + head + '</div>' +
+      '<div class="shv-row"><span class="shv-lab">Cash</span><span class="shv-trip">' + row + '</span></div>' +
+      '<p class="shv-note">Cash is the easy row: nothing adjusted it, so it arrives in the balance sheet debit column at the figure it started with. The other twenty-three are the work.</p>' +
+      '</div>';
+  }
+
+  /* Why the balancing figure is written into both pairs. Deliberately
+     without amounts — the amount is instruction a's answer. */
+  function niViz() {
+    function pair(cap, big, small, bigLab, smallLab, gapSide) {
+      return '<div class="niv-pair"><b>' + cap + '</b>' +
+        '<div class="niv-cols">' +
+          '<span class="niv-col' + (gapSide === 'd' ? ' short' : '') + '"><u>Dr</u><i>' + bigLab + '</i>' +
+            (gapSide === 'd' ? '<em>net income</em>' : '') + '</span>' +
+          '<span class="niv-col' + (gapSide === 'c' ? ' short' : '') + '"><u>Cr</u><i>' + smallLab + '</i>' +
+            (gapSide === 'c' ? '<em>net income</em>' : '') + '</span>' +
+        '</div></div>';
+    }
+    return '<div class="niv">' +
+      pair('Income statement', 0, 0, 'expenses', 'revenue', 'd') +
+      '<span class="niv-link">the same figure</span>' +
+      pair('Balance sheet', 0, 0, 'assets and dividends', 'liabilities and equity', 'c') +
+      '</div>';
+  }
+
+  /* The one liability that is in two places at once. Both figures are the
+     problem's own: the balance is printed, the split is printed in the note. */
+  function splitViz() {
+    var total = atb5('mort'), cur = MORT_CURRENT, lng = mortLong();
+    return '<div class="splv">' +
+      '<div class="splv-bar">' +
+        '<span class="splv-cur" style="flex:' + cur + '"><b>' + money2(cur) + '</b><u>current</u></span>' +
+        '<span class="splv-lng" style="flex:' + lng + '"><b>' + money2(lng) + '</b><u>long-term</u></span>' +
+      '</div>' +
+      '<div class="splv-foot"><span>Mortgage Payable</span><b>' + money2(total) + '</b></div>' +
+      '</div>';
+  }
+
+  /* ---------- capstone dashboard ---------- */
+  function renderDash5() {
+    var tb = foot5(tb5), atb = foot5(atb5);
+
+    function card(f, i) {
+      return '<button class="card-e' + (isRead(f.id) ? ' read' : '') + '" data-open="' + i + '">' +
+        '<span class="card-e-top">' +
+          '<span class="card-n">' + (isRead(f.id) ? ICON.check : (i + 1)) + '</span>' +
+          '<b>' + f.short + '</b><span class="card-go">' + ICON.next + '</span>' +
+        '</span><p>' + f.concept + '</p></button>';
+    }
+
+    $('guide').innerHTML =
+      '<div class="wrap fade">' +
+        '<div class="dash-head">' +
+          '<h1>Everything, on one problem</h1>' +
+          '<p>' + CO5.name + ' has closed its fiscal year. You are handed a part-built worksheet and five instructions, and nothing else in this module is explained twice &mdash; you have done the adjusting and the closing already. What is new is the sheet they are all written on.</p>' +
+        '</div>' +
+        '<div class="state">' +
+          '<div class="state-cap">' + ICON.pulse + 'What you have been given</div>' +
+          '<div class="bb">' +
+            '<div class="bb-side bb-a"><span class="bb-cap">Trial balance</span>' +
+              '<b class="bb-num" data-from="' + tb.d + '" data-count="' + tb.d + '">' + dollars(tb.d) + '</b></div>' +
+            '<div class="bb-op">&rarr;</div>' +
+            '<div class="bb-side bb-c"><span class="bb-cap">Adjusted trial balance</span>' +
+              '<b class="bb-num" data-from="' + atb.d + '" data-count="' + atb.d + '">' + dollars(atb.d) + '</b></div>' +
+          '</div>' +
+          '<div class="verdict ok">' + ICON.check + ' Both columns foot, so both are sound. What is missing is everything between and after them</div>' +
+        '</div>' +
+        '<div class="sect">The briefing<i></i></div>' +
+        '<div class="cards">' + FLOW5.map(card).join('') + '</div>' +
+        '<div class="sect">The five instructions<i></i></div>' +
+        '<div class="instr" style="margin:0">' +
+          INSTRUCTIONS5.map(function (x) {
+            return '<div class="instr-row"><span class="instr-k">' + x.id + '.</span>' +
+              '<span class="instr-t">' + x.text + '</span></div>';
+          }).join('') +
+        '</div>' +
+        '<button type="button" class="p5-open" data-gotab="solve">' + ICON.pencil +
+          'Open the workbook &mdash; five sheets, one per instruction</button>' +
+        '<div class="sect">The order of work<i></i></div>' +
+        '<div class="method">' + METHOD5.map(function (m, i) {
+          return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
+            '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
+        }).join('') + '</div>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = dashScroll;
+  }
+
+  function renderDetail5() {
+    var item = FLOW5[at], pic = '';
+    if (item.order) pic = viz('The order the instructions run in', orderViz(),
+      'Instruction a produces the worksheet, which hands net income to b; c and d journalize what the worksheet already shows; e proves the result.');
+    if (item.sheet) pic = viz('Ten columns, five pairs', sheetViz(),
+      'The worksheet runs left to right in five pairs of debit and credit columns: trial balance and adjusted trial balance are given, the adjustments between them and the income statement and balance sheet extensions are yours to fill. Cash travels straight across at ' +
+      dollars(atb5('cash')) + ' because nothing adjusted it.', true);
+    if (item.ni) pic = viz('Two pairs, one gap each', niViz(),
+      'The income statement pair is short on the debit side and the balance sheet pair is short on the credit side, by the same amount. That amount is net income, and it is written into both.');
+    if (item.split) pic = viz('One balance, two classifications', splitViz(),
+      'Of the ' + dollars(atb5('mort')) + ' mortgage payable, ' + dollars(MORT_CURRENT) +
+      ' is a current liability and ' + dollars(mortLong()) + ' is long-term.');
+
+    var body =
+      '<div class="ex-eyebrow">Briefing &middot; ' + (at + 1) + ' of ' + FLOW5.length + '</div>' +
+      '<h1 class="ex-title">' + item.title + '</h1>' +
+      '<div class="ex-fact">' + item.concept + '</div>' +
+      '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+      pic +
+      (item.method ? '<div class="method" style="margin-top:12px">' + METHOD5.map(function (m, i) {
+        return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
+          '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
+      }).join('') + '</div>' : '') +
+      '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
+      (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
+
+    $('guide').innerHTML = '<div class="wrap fade">' + body + '<div style="height:10px"></div></div>';
+    animateViz($('guide'));
+    $('guide').parentNode.scrollTop = 0;
+  }
+
+  /* ---------- capstone reference ----------
+     Exactly what the problem prints, and nothing further. The adjustment
+     columns are blank here because filling them in is instruction a. */
+  function renderTable5() {
+    var tb = foot5(tb5), atb = foot5(atb5);
+    var rows = ACCT5.map(function (a, i) {
+      var t = tb5(a.k), b = atb5(a.k);
+      return '<tr class="gw-row"><td class="gw-n">' + (i + 1) + '</td>' +
+        '<td class="gw-name">' + a.name + '</td>' +
+        '<td class="gw-amt">' + (t && a.up === 'D' ? money2(t) : '') + '</td>' +
+        '<td class="gw-amt gw-edge">' + (t && a.up === 'C' ? money2(t) : '') + '</td>' +
+        '<td class="gw-amt">' + (b && a.up === 'D' ? money2(b) : '') + '</td>' +
+        '<td class="gw-amt">' + (b && a.up === 'C' ? money2(b) : '') + '</td></tr>';
+    }).join('');
+
+    $('table-slot').innerHTML =
+      '<div class="card" style="padding:14px">' +
+        '<div class="ref-head"><h2>The worksheet you were handed</h2>' +
+        '<p>Selected data from the September 30 worksheet, as the problem prints them. The four columns between and after these are what the module asks you to produce.</p></div>' +
+        '<div class="stmt" style="margin-top:11px"><div class="stmt-head"><b>' + CO5.name + '</b>' +
+          '<span>Worksheet</span><i>' + CO5.period + '</i></div></div>' +
+        '<div class="gw-scroll"><table class="gw">' +
+          '<thead><tr class="gw-grp"><th class="gw-n"></th><th class="gw-name"></th>' +
+            '<th colspan="2">Trial Balance</th><th colspan="2">Adjusted Trial Balance</th></tr>' +
+            '<tr class="gw-dc"><th class="gw-n"></th><th class="gw-name">Account Titles</th>' +
+            '<th>Dr.</th><th class="gw-edge">Cr.</th><th>Dr.</th><th>Cr.</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+          '<tfoot><tr class="gw-tot"><td class="gw-n"></td><td class="gw-name">Totals</td>' +
+            '<td class="gw-amt">' + money2(tb.d) + '</td><td class="gw-amt gw-edge">' + money2(tb.c) + '</td>' +
+            '<td class="gw-amt">' + money2(atb.d) + '</td><td class="gw-amt">' + money2(atb.c) + '</td></tr></tfoot>' +
+        '</table></div>' +
+      '</div>' +
+      '<div class="card" style="padding:14px;margin-top:12px">' +
+        '<div class="ref-head"><h2>The note against instruction b</h2>' +
+        '<p>Printed with the problem, and easy to read past: <b>' + dollars(MORT_CURRENT) +
+        '</b> of the mortgage payable is due for payment in the next fiscal year.</p></div>' +
+        splitViz() +
+      '</div>';
+  }
+
+  /* ---------- the capstone workbook ----------
+     a. Prepare a complete worksheet.
+     b. Prepare a classified balance sheet.
+     c. Journalize the adjusting entries using the worksheet as a basis.
+     d. Journalize the closing entries using the worksheet as a basis.
+     e. Prepare a post-closing trial balance.
+
+     Five instructions, five sheets of one workbook, in the printed order.
+     The worksheet sheet is a spreadsheet because the problem is printed as
+     one: ten amount columns lettered B to K, a name box and a formula bar
+     that says what the selected cell is and where its figure came from. */
+
+  var INSTRUCTIONS5 = [
+    { id: 'a', text: 'Prepare a complete worksheet.', sheet: 'Worksheet' },
+    { id: 'b', text: 'Prepare a classified balance sheet. (Note: $10,000 of the mortgage payable is due for payment in the next fiscal year.)', sheet: 'Balance Sheet' },
+    { id: 'c', text: 'Journalize the adjusting entries using the worksheet as a basis.', sheet: 'Adjusting' },
+    { id: 'd', text: 'Journalize the closing entries using the worksheet as a basis.', sheet: 'Closing' },
+    { id: 'e', text: 'Prepare a post-closing trial balance.', sheet: 'Post-Closing' }
+  ];
+
+  /* Column letters, so a cell can be named the way a spreadsheet names it. */
+  var XLCOL = { tbd: 'B', tbc: 'C', ajd: 'D', ajc: 'E', atd: 'F', atc: 'G', id: 'H', ic: 'I', bd: 'J', bc: 'K' };
+  var XLNAME = {
+    tbd: 'Trial Balance Dr', tbc: 'Trial Balance Cr',
+    ajd: 'Adjustments Dr', ajc: 'Adjustments Cr',
+    atd: 'Adjusted Trial Balance Dr', atc: 'Adjusted Trial Balance Cr',
+    id: 'Income Statement Dr', ic: 'Income Statement Cr',
+    bd: 'Balance Sheet Dr', bc: 'Balance Sheet Cr'
+  };
+  var EXTCOLS = ['id', 'ic', 'bd', 'bc'];
+
+  /* ---- b. the figures the classified balance sheet turns on ---- */
+  var BS_FIELDS = [
+    { id: 'ca', doc: 'Assets', label: 'Total current assets',
+      answer: function () { return balanceSheet5().currentAssets; },
+      hints: ['Cash, supplies and prepaid insurance — the things used or collected within the year.',
+              'Land and equipment are not current, however easily they could be sold.',
+              'Three balances off the adjusted trial balance, added together.'] },
+    { id: 'bv', doc: 'Assets', label: 'Equipment, less accumulated depreciation',
+      answer: function () { return balanceSheet5().bookValue; },
+      hints: ['Cost stays on the books; the depreciation taken so far is subtracted from it.',
+              'Use the adjusted balance of the accumulated depreciation account, not the trial balance one.',
+              'Equipment at cost less accumulated depreciation of ' + '$42,000' + '.'] },
+    { id: 'ppe', doc: 'Assets', label: 'Total property, plant, and equipment',
+      answer: function () { return balanceSheet5().ppe; },
+      hints: ['Land is carried here too, and it is never depreciated.',
+              'Land plus the equipment figure you have just worked out.',
+              'Two lines: land at cost, and equipment net of its depreciation.'] },
+    { id: 'ta', doc: 'Assets', label: 'Total assets',
+      answer: function () { return balanceSheet5().totalAssets; },
+      hints: ['The two subtotals above, added.', 'Nothing else belongs in assets.',
+              'Current assets plus property, plant, and equipment.'] },
+    { id: 'mc', doc: 'Liabilities', label: 'Mortgage payable, current portion',
+      answer: function () { return balanceSheet5().mortCurrent; },
+      hints: ['The problem prints this figure in the note against instruction b.',
+              'It is the part due for payment in the next fiscal year.',
+              'It is not derived from anything — read it off the note.'] },
+    { id: 'cl', doc: 'Liabilities', label: 'Total current liabilities',
+      answer: function () { return balanceSheet5().currentLiab; },
+      hints: ['Everything owed within the year, including the current slice of the mortgage.',
+              'Accounts payable, interest payable, property taxes payable, unearned service revenue, and the current portion of the mortgage.',
+              'Unearned service revenue is a liability: the service is still owed.'] },
+    { id: 'ml', doc: 'Liabilities', label: 'Mortgage payable, long-term portion',
+      answer: function () { return balanceSheet5().longLiab; },
+      hints: ['What is left of the mortgage once the current portion is taken out.',
+              'The two portions have to add back to the balance on the trial balance.',
+              'The mortgage balance less the current portion.'] },
+    { id: 'tl', doc: 'Liabilities', label: 'Total liabilities',
+      answer: function () { return balanceSheet5().totalLiab; },
+      hints: ['Current plus long-term.', 'The mortgage is counted once in total, not twice.',
+              'Total current liabilities plus the long-term portion.'] },
+    { id: 're', doc: 'Stockholders&rsquo; equity', label: 'Retained earnings, Sept. 30',
+      answer: function () { return balanceSheet5().retained; },
+      hints: ['Opening balance, plus what the period earned, less what was paid out.',
+              'The opening balance is on the trial balance already, at Sept. 1.',
+              'Opening retained earnings plus net income less dividends.'] },
+    { id: 'tc', doc: 'Stockholders&rsquo; equity', label: 'Total liabilities and stockholders&rsquo; equity',
+      answer: function () { return balanceSheet5().totalClaims; },
+      hints: ['Liabilities plus common stock plus retained earnings.',
+              'If it does not equal total assets, one figure above it is wrong.',
+              'It has to come to the same number as total assets.'] }
+  ];
+
+  var w5 = {
+    sheet: 'a', adj: {}, ext: {}, tot: {}, ni: {}, bs: {},
+    fx: {}, posted: {}, atC: 0, atD: 0, tb: {}, ttot: {},
+    hint: {}, shut: {}, graded: 0
+  };
+  var cur5 = 'A1';    /* the selected cell — a view detail, not saved work */
+
+  function loadWork5() {
+    try {
+      var w = JSON.parse(window.localStorage.getItem(STORE + '.work5') || '{}');
+      if (w && typeof w === 'object') {
+        w5.sheet = w.sheet || 'a';
+        w5.adj = w.adj || {}; w5.ext = w.ext || {}; w5.tot = w.tot || {}; w5.ni = w.ni || {};
+        w5.bs = w.bs || {}; w5.fx = w.fx || {}; w5.posted = w.posted || {};
+        w5.atC = w.atC || 0; w5.atD = w.atD || 0;
+        w5.tb = w.tb || {}; w5.ttot = w.ttot || {};
+        w5.hint = w.hint || {}; w5.shut = w.shut || {};
+      }
+    } catch (e) { /* private mode: run without persistence */ }
+  }
+  function saveWork5() {
+    try { window.localStorage.setItem(STORE + '.work5', JSON.stringify(w5)); } catch (e) {}
+  }
+
+  /* ---- a. the worksheet ---- */
+  function adjVal(k, col) { var v = w5.adj[k + '.' + col]; return v === undefined ? '' : v; }
+  function adjRight(p) {
+    return amountOf(adjVal(p.d, 'd')) === adjAmount(p) && amountOf(adjVal(p.c, 'c')) === adjAmount(p);
+  }
+  /* What the learner's adjustment columns actually foot to, strays included. */
+  function adjFoot() {
+    var d = 0, c = 0;
+    ACCT5.forEach(function (a) {
+      var x = amountOf(adjVal(a.k, 'd')), y = amountOf(adjVal(a.k, 'c'));
+      if (!isNaN(x)) d += x;
+      if (!isNaN(y)) c += y;
+    });
+    return { d: d, c: c };
+  }
+  function extRight(k) { return w5.ext[k] === extCol(k); }
+  function extCount() { return ACCT5.filter(function (a) { return extRight(a.k); }).length; }
+  function totRight5(col) { return amountOf(w5.tot[col]) === extTotals()[col]; }
+  /* Net income belongs in two of the four cells, and in neither of the others. */
+  function niRight(col) {
+    var other = col === 'id' ? 'ic' : 'bd';
+    var blank = String(w5.ni[other] === undefined ? '' : w5.ni[other]).trim() === '';
+    return amountOf(w5.ni[col]) === netIncome5() && blank;
+  }
+  /* Once the columns are totalled and net income written in, does it prove? */
+  function sheetProof() {
+    var t = {}, n = {};
+    EXTCOLS.forEach(function (c) { t[c] = amountOf(w5.tot[c]); n[c] = amountOf(w5.ni[c]); });
+    var any = EXTCOLS.some(function (c) { return !isNaN(t[c]); });
+    function col(c) { return (isNaN(t[c]) ? 0 : t[c]) + (isNaN(n[c]) ? 0 : n[c]); }
+    return { any: any, is: col('id') - col('ic'), bs: col('bd') - col('bc'),
+      isTot: col('id'), bsTot: col('bd') };
+  }
+
+  /* ---- c and d. the journal sheets ---- */
+  function entries5(kind) { return kind === 'c' ? ADJE5 : CLOSE5; }
+  function atOf(kind) { return kind === 'c' ? (w5.atC || 0) : (w5.atD || 0); }
+  function maxLines5(kind, ei) { return Math.max(2, entries5(kind)[ei].lines.length); }
+  function j5(kind, ei, li, col) { return w5.fx[kind + '.' + ei + '.' + li + '.' + col]; }
+  function j5line(kind, ei, li) {
+    var k = j5(kind, ei, li, 'k'), d = amt2(j5(kind, ei, li, 'd')), c = amt2(j5(kind, ei, li, 'c'));
+    if (!k || (d && c) || (!d && !c)) return null;
+    return { k: k, s: d ? 'D' : 'C', n: d || c };
+  }
+  function j5totals(kind, ei) {
+    var d = 0, c = 0, filled = 0, n = maxLines5(kind, ei);
+    for (var i = 0; i < n; i++) {
+      d += amt2(j5(kind, ei, i, 'd'));
+      c += amt2(j5(kind, ei, i, 'c'));
+      if (j5(kind, ei, i, 'k') || amt2(j5(kind, ei, i, 'd')) || amt2(j5(kind, ei, i, 'c'))) filled++;
+    }
+    return { d: d, c: c, off: d - c, filled: filled };
+  }
+  function sig(lines) {
+    return lines.map(function (l) { return l.k + ':' + l.s + ':' + l.n; }).sort().join('|');
+  }
+  function wantSig(e) {
+    return sig(e.lines.map(function (l) { return { k: l[0], s: l[1] ? 'D' : 'C', n: l[1] || l[2] }; }));
+  }
+  function mySig(kind, ei) {
+    var out = [], n = maxLines5(kind, ei);
+    for (var i = 0; i < n; i++) {
+      var any = j5(kind, ei, i, 'k') || amt2(j5(kind, ei, i, 'd')) || amt2(j5(kind, ei, i, 'c'));
+      if (!any) continue;
+      var l = j5line(kind, ei, i);
+      if (!l) return null;
+      out.push(l);
+    }
+    return out.length >= 2 ? sig(out) : null;
+  }
+  function canPost5(kind, ei) {
+    var t = j5totals(kind, ei);
+    return !!t.d && t.off === 0 && mySig(kind, ei) !== null;
+  }
+  function isPosted5(kind, ei) { return !!w5.posted[kind + '.' + ei]; }
+  function j5Touched(kind, ei) { return j5totals(kind, ei).filled > 0; }
+
+  /* The six adjusting entries may be journalized in any order, so a slot is
+     right when it matches one of the six and no earlier slot already did. */
+  function adjSlotRight(ei) {
+    var s = mySig('c', ei);
+    if (!s) return false;
+    var wants = ADJE5.map(wantSig);
+    if (wants.indexOf(s) === -1) return false;
+    for (var i = 0; i < ei; i++) if (mySig('c', i) === s) return false;
+    return true;
+  }
+  function closeSlotRight(ei) { return mySig('d', ei) === wantSig(CLOSE5[ei]); }
+  function j5Right(kind, ei) { return kind === 'c' ? adjSlotRight(ei) : closeSlotRight(ei); }
+
+  function j5Diag(kind, ei) {
+    var t = j5totals(kind, ei);
+    if (!t.filled) return kind === 'c'
+      ? 'Nothing entered yet. Any of the six adjustments can go in any slot.'
+      : 'Nothing entered yet. This entry ' + CLOSE5[ei].short.toLowerCase().replace(/^close /, 'closes ') + '.';
+    var mine = [], n = maxLines5(kind, ei);
+    for (var i = 0; i < n; i++) { var l = j5line(kind, ei, i); if (l) mine.push(l); }
+    if (mine.length < 2) return 'Every entry needs at least two complete lines — an account and one amount, in either column.';
+    if (t.off !== 0) return 'Out of balance by ' + dollars(Math.abs(t.off)) + '. Debits ' + dollars(t.d) + ', credits ' + dollars(t.c) + '.';
+    var used = mine.map(function (m) { return m.k; });
+    if (used.indexOf('cash') !== -1) return kind === 'c'
+      ? 'No adjusting entry ever touches Cash. Cash is recorded when it moves; adjusting entries record what was used or earned without it moving.'
+      : 'Closing moves balances between accounts already on the books. No cash changes hands.';
+    if (kind === 'd') {
+      var e = CLOSE5[ei];
+      if (e.id === 'd4' && used.indexOf('isum') !== -1)
+        return 'Dividends never pass through Income Summary. They are a distribution of profit, not an expense, so they close straight to Retained Earnings.';
+      if (e.id !== 'd4' && used.indexOf('div') !== -1)
+        return 'Dividends does not belong in this entry. It is closed on its own, directly to Retained Earnings.';
+      var right = e.lines.map(function (l) { return l[0]; }).sort().join();
+      if (used.slice().sort().join() === right)
+        return 'The right accounts, on the wrong sides. A credit balance is closed with a debit of the same size, and the other way round.';
+      return 'It balances, but it is not the entry this slot is for. Read the memo again.';
+    }
+    /* adjusting */
+    var s = mySig('c', ei);
+    for (var q = 0; q < ei; q++) if (mySig('c', q) === s) return 'That is the same adjustment you entered in slot ' + (q + 1) + '. Each of the six appears once.';
+    if (used.indexOf('isum') !== -1) return 'Income Summary belongs to closing, not adjusting. It does not exist until instruction d.';
+    var amounts = mine.map(function (m) { return m.n; })[0];
+    var sizes = ADJ5.map(adjAmount);
+    if (sizes.indexOf(amounts) === -1)
+      return 'That amount is not the difference between the two trial balances on any row. Compare the columns again.';
+    return 'The amount is one of the six, so an account or a side is wrong. Every adjustment debits one account and credits another by the same figure.';
+  }
+
+  /* ---- e. the post-closing trial balance ---- */
+  function tbVal5(k, col) { var v = w5.tb[k + '.' + col]; return v === undefined ? '' : v; }
+  function tbRight5(k) {
+    var a = acct5(k), want = postClosing(k);
+    var d = amountOf(tbVal5(k, 'd')), c = amountOf(tbVal5(k, 'c'));
+    if (a.up === 'D') return d === want && isNaN(c);
+    return c === want && isNaN(d);
+  }
+  function tbTouched5(k) {
+    return String(tbVal5(k, 'd')).trim() !== '' || String(tbVal5(k, 'c')).trim() !== '';
+  }
+  function ttotRight5(col) {
+    var want = pctbTotals();
+    return amountOf(w5.ttot[col]) === (col === 'd' ? want.d : want.c);
+  }
+  function bsRight(f) { return amountOf(w5.bs[f.id]) === f.answer(); }
+
+  function score5() {
+    var a = ADJ5.filter(adjRight).length + extCount() +
+      EXTCOLS.filter(totRight5).length + (niRight('id') ? 1 : 0) + (niRight('bc') ? 1 : 0);
+    var b = BS_FIELDS.filter(bsRight).length;
+    var c = 0; ADJE5.forEach(function (e, i) { if (adjSlotRight(i)) c++; });
+    var d = 0; CLOSE5.forEach(function (e, i) { if (closeSlotRight(i)) d++; });
+    var ee = permanent5().filter(function (x) { return tbRight5(x.k); }).length;
+    if (ttotRight5('d')) ee++;
+    if (ttotRight5('c')) ee++;
+    var caps = {
+      a: ADJ5.length + ACCT5.length + EXTCOLS.length + 2,
+      b: BS_FIELDS.length, c: ADJE5.length, d: CLOSE5.length,
+      e: permanent5().length + 2
+    };
+    var total = caps.a + caps.b + caps.c + caps.d + caps.e;
+    return { got: a + b + c + d + ee, total: total,
+      parts: { a: a, b: b, c: c, d: d, e: ee }, caps: caps };
+  }
+
+  /* ---- hints ---- */
+  var SHEET_HINTS = {
+    'a-adj': ['Every adjustment is the difference between the two trial balance columns on one row. Find the rows where the figure changed.',
+              'Six rows changed and six rows appeared out of nothing. Each change on a debit account pairs with a change somewhere else of the same size.',
+              'The six differences are ' + [14400, 28000, 5800, 2000, 3000, 6000].map(function (n) { return money2(n); }).join(', ') + ' — but which row takes which is still yours to work out.'],
+    'a-ext': ['Every adjusted balance moves to exactly one of the last four columns, on the same side it already sits on.',
+              'Revenues and expenses go to the income statement pair. Everything else — including dividends — goes to the balance sheet pair.',
+              'Dividends is the one that catches people. It is temporary, but it is not on the income statement.'],
+    'a-ni': ['Total each of the four columns first. Two of them will not agree with their partner.',
+             'The income statement pair is short on the debit side; the balance sheet pair is short on the credit side; both by the same figure.',
+             'Net income is revenue less expenses. Write it in the income statement debit column and the balance sheet credit column, and leave the other two blank.']
+  };
+  function hintsFor5(key) {
+    if (SHEET_HINTS[key]) return SHEET_HINTS[key];
+    if (key.charAt(0) === 'b') {
+      var f = BS_FIELDS.filter(function (x) { return x.id === key.slice(1); })[0];
+      return f ? f.hints : null;
+    }
+    if (key.charAt(0) === 't') {
+      var a = acct5(key.slice(1));
+      if (!a) return null;
+      return ['Only permanent accounts appear, each at the balance closing left it with.',
+        'This one carries a ' + (a.up === 'D' ? 'debit' : 'credit') + ' balance, so it belongs in the ' + (a.up === 'D' ? 'debit' : 'credit') + ' column.',
+        a.k === 're' ? 'Retained earnings is the one figure closing changed. It stands at ' + dollars(postClosing('re')) + '.'
+                     : 'Closing does not touch this account, so it stands where the adjusted trial balance left it.'];
+    }
+    var m = /^([cd])(\d+)$/.exec(key);
+    if (m) {
+      var kind = m[1], ei = Number(m[2]), e = entries5(kind)[ei];
+      if (!e) return null;
+      if (kind === 'c') return [
+        'Look for a row whose figure changed between the two trial balance columns, and find the row that changed with it.',
+        'One account is debited and one is credited, by the difference between the columns.',
+        'Any of the six will do in this slot. The six are: ' + ADJ5.map(function (p) { return p.short.toLowerCase(); }).join(', ') + '.'];
+      return [
+        'What kind of balance does the account being closed carry? Empty it with the opposite.',
+        e.id === 'd4' ? 'Dividends is temporary but it is not an expense, so it does not go through Income Summary.'
+                      : 'The amount is whatever the adjusted trial balance says that account holds.',
+        e.lines.map(function (l) { return (l[1] ? 'Debit ' : 'Credit ') + acct5all(l[0]).name.replace('&mdash;', '—') + ' ' + money2(l[1] || l[2]); }).join('; ') + '.'];
+    }
+    return null;
+  }
+
+  function paintHint5(key) {
+    var lvl = w5.hint[key];
+    if (!lvl) return;
+    var list = hintsFor5(key);
+    if (!list) return;
+    var host = $('solve');
+    var slot = host.querySelector('[data-note5="' + key + '"]');
+    var btn = host.querySelector('[data-hint5="' + key + '"]');
+    if (!slot) return;
+    var shut = !!w5.shut[key];
+    slot.innerHTML = shut ? '' : tipHtml(key, list[Math.min(lvl, 3) - 1]);
+    if (!btn) return;
+    btn.classList.toggle('on', !shut);
+    if (!btn.classList.contains('sm')) {
+      btn.innerHTML = ICON.bulb + (shut ? 'Show hint' : (lvl >= 3 ? 'No more hints' : 'Another hint'));
+    }
+    btn.disabled = !shut && lvl >= 3;
+  }
+  function bump5(key) {
+    if (w5.shut[key]) delete w5.shut[key];
+    else w5.hint[key] = Math.min((w5.hint[key] || 0) + 1, 3);
+    paintHint5(key);
+    saveWork5();
+  }
+  function hintBtn5(key, small) {
+    return '<button type="button" class="ws-hint' + (small ? ' sm' : '') + '" data-hint5="' + key + '"' +
+      (small ? ' aria-label="Hint"' : '') + '>' + ICON.bulb + (small ? '' : 'Hint') + '</button>';
+  }
+
+  /* ---------- sheet a: the spreadsheet ---------- */
+  function xlCell(ref, desc, formula, inner, cls) {
+    return '<span class="xl-c ' + (cls || '') + '" data-ref5="' + ref + '" data-desc5="' + attr(desc) +
+      '" data-formula5="' + attr(formula) + '">' + inner + '</span>';
+  }
+
+  /* What the row header shows. The full name is still on the account
+     select in the journal sheets and in the Reference. */
+  var SHORT5 = {
+    adep: 'Accum. Depr.—Equip.', unrev: 'Unearned Service Rev.',
+    re: 'Retained Earnings, Sep. 1', mrx: 'Maintenance & Repairs Exp.',
+    salx: 'Salaries & Wages Expense', ptp: 'Property Taxes Payable'
+  };
+  function gridName(a) { return SHORT5[a.k] || a.name.replace('&mdash;', '—'); }
+
+  function worksheetGrid() {
+    var rows = ACCT5.map(function (a, i) {
+      var r = i + 1, name = gridName(a);
+      function given(col, v) {
+        return '<span class="xl-c given" data-ref5="' + XLCOL[col] + r + '" data-desc5="' + attr(XLNAME[col] + ' · ' + name) +
+          '" data-formula5="' + (v ? money2(v) + '  (given)' : '(empty)') + '">' + (v ? money2(v) : '') + '</span>';
+      }
+      function adjIn(col) {
+        var key = a.k + '.' + (col === 'ajd' ? 'd' : 'c');
+        return '<span class="xl-c xl-w"><input class="xl-in" data-adj5="' + key + '" value="' + adjVal(a.k, col === 'ajd' ? 'd' : 'c') +
+          '" inputmode="decimal" autocomplete="off" data-ref5="' + XLCOL[col] + r + '" data-desc5="' + attr(XLNAME[col] + ' · ' + name) +
+          '" data-formula5="' + attr('enter the adjustment, if this row has one') +
+          '" aria-label="' + attr(XLNAME[col] + ' for ' + name) + '" /></span>';
+      }
+      function extBtn(col) {
+        var on = w5.ext[a.k] === col;
+        var bad = w5.graded && w5.ext[a.k] && !extRight(a.k) && on;
+        return '<span class="xl-c xl-w"><button type="button" class="xl-x' + (on ? ' on' : '') + (bad ? ' bad' : '') +
+          '" data-ext5="' + a.k + '.' + col + '" data-ref5="' + XLCOL[col] + r +
+          '" data-desc5="' + attr(XLNAME[col] + ' · ' + name) +
+          '" data-formula5="' + attr(on ? '=' + XLCOL[a.up === 'D' ? 'atd' : 'atc'] + r + '   the adjusted balance, extended' : 'tap to extend the adjusted balance here') +
+          '" aria-pressed="' + (on ? 'true' : 'false') +
+          '" aria-label="' + attr('Extend ' + name + ' to ' + XLNAME[col]) + '">' +
+          (on ? money2(atb5(a.k)) : '') + '</button></span>';
+      }
+      var ext = w5.ext[a.k];
+      return '<div class="xl-row' + (w5.graded && ext && !extRight(a.k) ? ' bad' : '') + '" data-xrow="' + a.k + '">' +
+        '<span class="xl-h"><i>' + r + '</i>' + name + '</span>' +
+        given('tbd', a.up === 'D' ? tb5(a.k) : 0) + given('tbc', a.up === 'C' ? tb5(a.k) : 0) +
+        adjIn('ajd') + adjIn('ajc') +
+        given('atd', a.up === 'D' ? atb5(a.k) : 0) + given('atc', a.up === 'C' ? atb5(a.k) : 0) +
+        extBtn('id') + extBtn('ic') + extBtn('bd') + extBtn('bc') +
+        '</div>';
+    }).join('');
+
+    var tb = foot5(tb5), atb = foot5(atb5), af = adjFoot();
+    var R = ACCT5.length + 1;
+    function totIn(col) {
+      return '<span class="xl-c xl-w"><input class="xl-in tot" data-tot5="' + col + '" value="' + (w5.tot[col] || '') +
+        '" inputmode="decimal" autocomplete="off" data-ref5="' + XLCOL[col] + R + '" data-desc5="' + attr('Total of the ' + XLNAME[col] + ' column') +
+        '" data-formula5="' + attr('total the column above') + '" aria-label="' + attr('Total of the ' + XLNAME[col] + ' column') + '" /></span>';
+    }
+    function niIn(col) {
+      return '<span class="xl-c xl-w"><input class="xl-in ni" data-ni5="' + col + '" value="' + (w5.ni[col] || '') +
+        '" inputmode="decimal" autocomplete="off" data-ref5="' + XLCOL[col] + (R + 1) + '" data-desc5="' + attr('Net income · ' + XLNAME[col]) +
+        '" data-formula5="' + attr('the balancing figure, if it belongs in this column') + '" aria-label="' + attr('Net income in the ' + XLNAME[col] + ' column') + '" /></span>';
+    }
+    var totRow = '<div class="xl-row xl-foot"><span class="xl-h"><i>' + R + '</i>Totals</span>' +
+      '<span class="xl-c given">' + money2(tb.d) + '</span><span class="xl-c given">' + money2(tb.c) + '</span>' +
+      '<span class="xl-c auto' + (af.d && af.d === af.c ? ' ok' : (af.d || af.c ? ' off' : '')) + '">' + (af.d ? money2(af.d) : '') + '</span>' +
+      '<span class="xl-c auto' + (af.c && af.d === af.c ? ' ok' : (af.d || af.c ? ' off' : '')) + '">' + (af.c ? money2(af.c) : '') + '</span>' +
+      '<span class="xl-c given">' + money2(atb.d) + '</span><span class="xl-c given">' + money2(atb.c) + '</span>' +
+      totIn('id') + totIn('ic') + totIn('bd') + totIn('bc') + '</div>';
+
+    var niRow = '<div class="xl-row xl-ni"><span class="xl-h"><i>' + (R + 1) + '</i>Net income</span>' +
+      '<span class="xl-c dead"></span><span class="xl-c dead"></span>' +
+      '<span class="xl-c dead"></span><span class="xl-c dead"></span>' +
+      '<span class="xl-c dead"></span><span class="xl-c dead"></span>' +
+      niIn('id') + niIn('ic') + niIn('bd') + niIn('bc') + '</div>';
+
+    return '<div class="xl-grid">' +
+      '<div class="xl-row xl-grp"><span class="xl-h"></span>' +
+        '<span class="xl-g given" style="--n:2">Trial Balance</span>' +
+        '<span class="xl-g mine" style="--n:2">Adjustments</span>' +
+        '<span class="xl-g given" style="--n:2">Adjusted Trial Balance</span>' +
+        '<span class="xl-g mine" style="--n:2">Income Statement</span>' +
+        '<span class="xl-g mine" style="--n:2">Balance Sheet</span></div>' +
+      '<div class="xl-row xl-hd"><span class="xl-h">Account Titles</span>' +
+        ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'].map(function (L, i) {
+          return '<span class="xl-c">' + (i % 2 ? 'Cr.' : 'Dr.') + '<u>' + L + '</u></span>';
+        }).join('') + '</div>' +
+      rows + totRow + niRow + '</div>';
+  }
+
+  function sheetAProof() {
+    var p = sheetProof(), af = adjFoot();
+    var lines = [];
+    lines.push(af.d || af.c
+      ? (af.d === af.c
+        ? { k: 'ok', a: 'Your adjustment columns agree', b: money2(af.d) }
+        : { k: 'off', a: 'Your adjustment columns are out by', b: money2(Math.abs(af.d - af.c)) })
+      : { k: 'idle', a: 'Adjustments not entered yet', b: '&mdash;' });
+    lines.push(!p.any
+      ? { k: 'idle', a: 'Total the four extension columns to prove the sheet', b: '&mdash;' }
+      : (p.is === 0 && p.bs === 0
+        ? { k: 'ok', a: 'Both pairs foot &mdash; the worksheet proves', b: money2(p.isTot) + ' / ' + money2(p.bsTot) }
+        : { k: 'off', a: 'Income statement out by ' + money2(Math.abs(p.is)) + ', balance sheet out by', b: money2(Math.abs(p.bs)) }));
+    return lines.map(function (l) {
+      return '<div class="gl-off ' + l.k + '"><span>' + l.a + '</span><span>' + (l.k === 'ok' ? ICON.check + ' ' : '') + l.b + '</span></div>';
+    }).join('');
+  }
+
+  function sheetA() {
+    var done = extCount();
+    return '<div class="xl-bar">' +
+        '<span class="xl-name" id="xl-name">' + cur5 + '</span>' +
+        '<span class="xl-fx" id="xl-fx"><i>fx</i><em id="xl-fx-t">Select a cell</em></span>' +
+      '</div>' +
+      '<div class="xl-jump">' + [['B', 'Trial balance'], ['D', 'Adjustments'], ['F', 'Adjusted'], ['H', 'Income st.'], ['J', 'Balance sh.']]
+        .map(function (j) { return '<button type="button" class="xl-jb" data-jump5="' + j[0] + '">' + j[1] + '</button>'; }).join('') +
+      '</div>' +
+      '<div class="xl-wrap" id="xl-wrap">' + worksheetGrid() + '</div>' +
+      '<div class="xl-legend"><span><i class="lg given"></i>given by the problem</span>' +
+        '<span><i class="lg mine"></i>yours to fill</span>' +
+        '<span><b>' + done + '</b> of ' + ACCT5.length + ' rows extended</span></div>' +
+      sheetAProof() +
+      '<div class="xl-help">' +
+        '<div class="xl-help-row"><b>Find the adjustments</b>' + hintBtn5('a-adj') + '</div><div data-note5="a-adj"></div>' +
+        '<div class="xl-help-row"><b>Extend every row</b>' + hintBtn5('a-ext') + '</div><div data-note5="a-ext"></div>' +
+        '<div class="xl-help-row"><b>Strike net income</b>' + hintBtn5('a-ni') + '</div><div data-note5="a-ni"></div>' +
+      '</div>';
+  }
+
+  /* ---------- sheet b: the classified balance sheet ---------- */
+  function sheetB() {
+    var b = balanceSheet5();
+    function given(label, v, ind, neg) {
+      return '<div class="bsf-line' + (ind ? ' in' : '') + '"><span>' + label + '</span><b>' +
+        (neg ? '(' + money2(v) + ')' : money2(v)) + '</b></div>';
+    }
+    function field(id) {
+      var f = BS_FIELDS.filter(function (x) { return x.id === id; })[0];
+      return '<div class="bsf-field" data-bsf="' + f.id + '">' +
+        '<div class="bsf-line sum"><label for="b5-' + f.id + '">' + f.label + '</label>' +
+        '<span class="bsf-in"><input id="b5-' + f.id + '" data-bs5="' + f.id + '" inputmode="decimal" autocomplete="off" value="' +
+          (w5.bs[f.id] === undefined ? '' : w5.bs[f.id]) + '" /></span>' +
+        hintBtn5('b' + f.id, true) + '</div><div data-note5="b' + f.id + '"></div></div>';
+    }
+    return '<div class="sw-panel"><div class="sw-panel-hd"><b>' + CO5.name + '</b><span>Balance Sheet &middot; ' + CO5.date + '</span></div>' +
+      '<div class="bsf">' +
+        '<div class="bsf-sect">Assets</div>' +
+        '<div class="bsf-sub">Current assets</div>' +
+        given('Cash', atb5('cash'), 1) + given('Supplies', atb5('sup'), 1) + given('Prepaid insurance', atb5('ppi'), 1) +
+        field('ca') +
+        '<div class="bsf-sub">Property, plant, and equipment</div>' +
+        given('Land', atb5('land'), 1) +
+        given('Equipment', atb5('eqp'), 1) +
+        given('Less: Accumulated depreciation', atb5('adep'), 1, 1) +
+        field('bv') + field('ppe') + field('ta') +
+        '<div class="bsf-sect">Liabilities and Stockholders&rsquo; Equity</div>' +
+        '<div class="bsf-sub">Current liabilities</div>' +
+        given('Accounts payable', atb5('ap'), 1) +
+        given('Interest payable', atb5('intp'), 1) +
+        given('Property taxes payable', atb5('ptp'), 1) +
+        given('Unearned service revenue', atb5('unrev'), 1) +
+        field('mc') + field('cl') +
+        '<div class="bsf-sub">Long-term liabilities</div>' +
+        field('ml') + field('tl') +
+        '<div class="bsf-sub">Stockholders&rsquo; equity</div>' +
+        given('Common stock', atb5('cs'), 1) +
+        field('re') + field('tc') +
+      '</div>' +
+      '<div class="sw-panel-bd" style="padding-top:0">' +
+        (function () {
+          var ta = amountOf(w5.bs.ta), tc = amountOf(w5.bs.tc);
+          if (isNaN(ta) || isNaN(tc)) return '<div class="gl-off idle"><span>Fill in both totals to prove the statement</span><span>&mdash;</span></div>';
+          return ta === tc
+            ? '<div class="gl-off ok"><span>Your balance sheet balances at ' + money2(ta) + '</span><span>' + ICON.check + '</span></div>'
+            : '<div class="gl-off off"><span>Your two totals are out by</span><span>' + money2(Math.abs(ta - tc)) + '</span></div>';
+        })() +
+      '</div></div>' +
+      '<p class="wp-tip">' + ICON.bulb + 'Every line already printed comes straight off the adjusted trial balance. The blanks are the ones that need working out &mdash; and one of them is not derived at all, but read off the note against instruction b.</p>';
+  }
+
+  /* ---------- sheets c and d: the journal ---------- */
+  function jState5(kind, ei) {
+    if (isPosted5(kind, ei)) return 'posted';
+    var t = j5totals(kind, ei);
+    if (!t.filled) return 'draft';
+    return (t.off === 0 && t.d && canPost5(kind, ei)) ? 'balanced' : 'off';
+  }
+
+  function journalSheet(kind) {
+    var list = entries5(kind), cur = Math.max(0, Math.min(list.length - 1, atOf(kind)));
+    var opts = '<option value="">&mdash; select account &mdash;</option>' + ACCT5ALL().map(function (a) {
+      return '<option value="' + a.k + '">' + a.name.replace('&mdash;', '—') + '</option>';
+    }).join('');
+    var posted = 0;
+    list.forEach(function (e, i) { if (isPosted5(kind, i)) posted++; });
+
+    var chips = list.map(function (e, ei) {
+      var st = jState5(kind, ei);
+      return '<button type="button" class="vchip' + (ei === cur ? ' now' : '') +
+        (st === 'posted' ? ' done' : (st === 'off' ? ' off' : '')) +
+        (w5.graded && j5Touched(kind, ei) && !j5Right(kind, ei) ? ' bad' : '') + '" data-j5="' + kind + '.' + ei + '"' +
+        ' aria-label="' + (kind === 'c' ? 'Adjusting' : 'Closing') + ' entry ' + (ei + 1) + ' of ' + list.length + ', ' + st + '"' +
+        (ei === cur ? ' aria-current="true"' : '') + '>' + (st === 'posted' ? ICON.check : (ei + 1)) + '</button>';
+    }).join('');
+
+    var e = list[cur], t = j5totals(kind, cur), locked = isPosted5(kind, cur), st = jState5(kind, cur);
+    var rows = '';
+    for (var i = 0; i < maxLines5(kind, cur); i++) {
+      var dv = j5(kind, cur, i, 'd') || '', cv = j5(kind, cur, i, 'c') || '';
+      var lab = ' of ' + (kind === 'c' ? 'adjusting' : 'closing') + ' entry ' + (cur + 1);
+      rows += '<div class="gl-row">' +
+        '<select class="gl-acct" data-ja5="' + kind + '.' + cur + '.' + i + '"' + (locked ? ' disabled' : '') +
+          ' aria-label="Account for line ' + (i + 1) + lab + '">' + opts + '</select>' +
+        '<input class="gl-amt' + (cv ? ' muted' : '') + '" data-jd5="' + kind + '.' + cur + '.' + i + '" value="' + dv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off" aria-label="Debit for line ' + (i + 1) + lab + '" />' +
+        '<input class="gl-amt' + (dv ? ' muted' : '') + '" data-jc5="' + kind + '.' + cur + '.' + i + '" value="' + cv + '"' +
+          (locked ? ' readonly' : '') + ' inputmode="decimal" autocomplete="off" aria-label="Credit for line ' + (i + 1) + lab + '" />' +
+        '</div>';
+    }
+    var pill = st === 'posted' ? '<span class="pill posted">' + ICON.check + 'Posted</span>'
+      : st === 'draft' ? '<span class="pill draft">Draft</span>'
+      : st === 'balanced' ? '<span class="pill ready">Balanced</span>'
+      : '<span class="pill off">Out of balance</span>';
+    var off = st === 'draft'
+      ? '<div class="gl-off idle"><span>Enter the debit and the credit</span><span>&mdash;</span></div>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<div class="gl-off ok"><span>In balance</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span></div>';
+
+    var memo = kind === 'c'
+      ? '<u>Which adjustment</u>Any one of the six, in any slot &mdash; each appears once'
+      : '<u>What to close</u>' + e.short;
+
+    var doc = '<div class="doc-je' + (locked ? ' posted' : '') + '" data-j5doc="' + kind + '.' + cur + '">' +
+      '<div class="je-top"><span class="je-ref">' + (kind === 'c' ? 'ADJ' : 'CLOSE') + '-' + (cur + 1) + '</span>' +
+        '<span class="je-date">' + CO5.short + '</span>' + pill + '</div>' +
+      '<div class="je-memo">' + memo + '</div>' +
+      '<div class="gl">' +
+        '<div class="gl-hd"><span>Account</span><span>Debit</span><span>Credit</span></div>' + rows +
+        '<div class="gl-foot"><span class="lbl">Totals</span><span>' + (t.d ? money2(t.d) : '&mdash;') + '</span><span>' + (t.c ? money2(t.c) : '&mdash;') + '</span></div>' + off +
+      '</div>' +
+      '<div class="je-acts">' + hintBtn5(kind + cur) +
+        (locked ? '<button type="button" class="btn-post undo" data-junp5="' + kind + '.' + cur + '">Unpost</button>'
+                : '<button type="button" class="btn-post" data-jpost5="' + kind + '.' + cur + '"' + (canPost5(kind, cur) ? '' : ' disabled') + '>' + ICON.check + 'Post</button>') +
+      '</div>' +
+      '<div data-note5="' + kind + cur + '" style="padding:0 11px 11px"></div>' +
+      '</div>';
+
+    return '<p class="ws-aside">' + (kind === 'c'
+        ? 'Six adjusting entries, journalized from the adjustment columns of your worksheet. The slots are not in any particular order &mdash; put each adjustment wherever you like, once.'
+        : 'Four closing entries, in the order they have to be made. Their amounts are on the worksheet already.') + '</p>' +
+      '<div class="pager">' +
+        '<button type="button" class="pager-btn" data-jprev5="' + kind + '"' + (cur === 0 ? ' disabled' : '') + ' aria-label="Previous entry">' + ICON.prev + '</button>' +
+        '<span class="pager-now"><b>' + (kind === 'c' ? 'ADJ' : 'CLOSE') + '-' + (cur + 1) + '</b>' + (cur + 1) + ' of ' + list.length + '</span>' +
+        '<button type="button" class="pager-btn" data-jnext5="' + kind + '"' + (cur === list.length - 1 ? ' disabled' : '') + ' aria-label="Next entry">' + ICON.next + '</button>' +
+      '</div>' +
+      '<div class="vchips">' + chips + '</div>' + doc;
+  }
+
+  /* ---------- sheet e: the post-closing trial balance ---------- */
+  function sheetE() {
+    var perm = permanent5();
+    var rows = perm.map(function (a) {
+      var nm = a.name.replace('&mdash;Equipment', '—Eqp.').replace('&mdash;', '—').replace(', Sept. 1, 2025', '');
+      return '<tr class="wp-row" data-trow5="' + a.k + '">' +
+        '<td class="rowlab">' + nm + '</td>' +
+        '<td><input class="cell" data-tb5="' + a.k + '.d" value="' + tbVal5(a.k, 'd') + '" inputmode="decimal" autocomplete="off" aria-label="' + attr('Debit balance of ' + nm) + '" /></td>' +
+        '<td><input class="cell" data-tb5="' + a.k + '.c" value="' + tbVal5(a.k, 'c') + '" inputmode="decimal" autocomplete="off" aria-label="' + attr('Credit balance of ' + nm) + '" /></td>' +
+        '<td class="hcell">' + hintBtn5('t' + a.k, true) + '</td>' +
+        '</tr><tr class="notrow"><td colspan="4"><div data-note5="t' + a.k + '"></div></td></tr>';
+    }).join('');
+    var typed = { d: amountOf(w5.ttot.d), c: amountOf(w5.ttot.c) };
+    var proof = (isNaN(typed.d) && isNaN(typed.c))
+      ? '<div class="gl-off idle"><span>Total both columns when every row is entered</span><span>&mdash;</span></div>'
+      : (typed.d === typed.c
+        ? '<div class="gl-off ok"><span>Your columns agree at ' + dollars(typed.d || 0) + '</span><span>' + ICON.check + '</span></div>'
+        : '<div class="gl-off off"><span>Your columns are out by</span><span>' + dollars(Math.abs((typed.d || 0) - (typed.c || 0))) + '</span></div>');
+
+    return '<p class="wp-tip">' + ICON.bulb + 'Thirteen accounts survive closing. If a revenue, expense or dividend account has a balance left, instruction d is not finished.</p>' +
+      '<div class="sw-panel"><div class="sw-panel-hd"><b>Post-Closing Trial Balance</b><span>' + CO5.date + '</span></div>' +
+        '<div class="wp-scroll"><table class="wp w4"><thead>' +
+          '<tr class="acct"><th class="rowlab">Account</th><th>Debit</th><th>Credit</th><th></th></tr></thead>' +
+          '<tbody>' + rows + '</tbody><tfoot><tr><td class="rowlab">Totals</td>' +
+          '<td><input class="cell" data-ttot5="d" value="' + (w5.ttot.d || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the debit column" /></td>' +
+          '<td><input class="cell" data-ttot5="c" value="' + (w5.ttot.c || '') + '" inputmode="decimal" autocomplete="off" aria-label="Total of the credit column" /></td>' +
+          '<td class="hcell"></td></tr></tfoot></table></div>' +
+        '<div class="sw-panel-bd" style="padding-top:0">' + proof + '</div>' +
+      '</div>';
+  }
+
+  /* ---------- the workbook ---------- */
+  function instrPanel5() {
+    var sc = score5();
+    return '<div class="instr"><div class="instr-cap">Instructions</div>' +
+      INSTRUCTIONS5.map(function (x) {
+        var got = sc.parts[x.id], cap = sc.caps[x.id], done = cap > 0 && got === cap;
+        return '<button type="button" class="instr-row' + (done ? ' done' : '') + (w5.sheet === x.id ? ' now' : '') + '" data-sheet5="' + x.id + '">' +
+          '<span class="instr-k">' + (done ? ICON.check : x.id + '.') + '</span>' +
+          '<span class="instr-t">' + x.text + '</span>' +
+          '<span class="instr-n">' + got + '/' + cap + '</span></button>';
+      }).join('') + '</div>';
+  }
+
+  function sheetTabs5() {
+    var sc = score5();
+    return '<div class="wbk" role="tablist" aria-label="Workbook sheets">' +
+      INSTRUCTIONS5.map(function (x) {
+        var got = sc.parts[x.id], cap = sc.caps[x.id], done = cap > 0 && got === cap;
+        return '<button type="button" role="tab" class="wbk-t' + (w5.sheet === x.id ? ' on' : '') + (done ? ' done' : (got ? ' part' : '')) +
+          '" data-sheet5="' + x.id + '" aria-selected="' + (w5.sheet === x.id ? 'true' : 'false') + '">' +
+          '<i>' + x.id + '</i>' + x.sheet + '<b class="wbk-dot"></b></button>';
+      }).join('') + '</div>';
+  }
+
+  function renderSolve5() {
+    var sc = score5();
+    var body = w5.sheet === 'a' ? sheetA()
+      : w5.sheet === 'b' ? sheetB()
+      : w5.sheet === 'c' ? journalSheet('c')
+      : w5.sheet === 'd' ? journalSheet('d')
+      : sheetE();
+    var x = INSTRUCTIONS5.filter(function (i) { return i.id === w5.sheet; })[0];
+
+    $('solve').innerHTML =
+      '<div class="wrap">' +
+        '<div class="sw-bar">' +
+          '<span class="sw-bar-id"><h1>' + CO5.name + '</h1><span>' + CO5.period.replace('For the ', '') + '</span></span>' +
+          '<span class="sw-counts">' +
+            '<span class="sw-count"><b>' + (sc.total - sc.got) + '</b><u>to go</u></span>' +
+            '<span class="sw-count' + (sc.got === sc.total ? ' done' : '') + '"><b>' + sc.got + '</b><u>done</u></span>' +
+          '</span>' +
+        '</div>' +
+        instrPanel5() +
+        sheetTabs5() +
+        '<div class="wbk-body">' +
+          '<div class="wbk-cap"><b>' + x.id + '.</b> ' + x.text + '</div>' +
+          body +
+        '</div>' +
+        '<button type="button" class="ws-reset" id="ws-reset5">Clear my work and start again</button>' +
+      '</div>';
+
+    Array.prototype.forEach.call($('solve').querySelectorAll('[data-ja5]'), function (el) {
+      var v = w5.fx[el.getAttribute('data-ja5') + '.k'];
+      if (v) el.value = v;
+    });
+    Object.keys(w5.hint).forEach(paintHint5);
+  }
+
+  /* ---- live refreshes, so typing never rebuilds the sheet under the cursor ---- */
+  function refreshProof5() {
+    var host = $('solve');
+    if (w5.sheet === 'a') {
+      var slot = host.querySelector('.xl-legend');
+      if (slot) {
+        var b = slot.querySelector('b');
+        if (b) b.textContent = extCount();
+        var offs = [];
+        var n = slot.nextSibling;
+        while (n && n.classList && n.classList.contains('gl-off')) { offs.push(n); n = n.nextSibling; }
+        if (offs.length) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = sheetAProof();
+          offs.forEach(function (o, i) { if (tmp.children[i]) o.outerHTML = tmp.children[i].outerHTML; });
+        }
+      }
+      var af = adjFoot();
+      var foot = host.querySelector('.xl-foot');
+      if (foot) {
+        var autos = foot.querySelectorAll('.xl-c.auto');
+        if (autos.length === 2) {
+          autos[0].textContent = af.d ? money2(af.d) : '';
+          autos[1].textContent = af.c ? money2(af.c) : '';
+          var cls = af.d && af.d === af.c ? ' ok' : (af.d || af.c ? ' off' : '');
+          autos[0].className = 'xl-c auto' + cls;
+          autos[1].className = 'xl-c auto' + cls;
+        }
+      }
+    }
+  }
+
+  function refreshInstr5() {
+    var host = $('solve').querySelector('.instr');
+    var sc = score5();
+    if (host) {
+      Array.prototype.forEach.call(host.querySelectorAll('.instr-row'), function (row, i) {
+        var x = INSTRUCTIONS5[i], got = sc.parts[x.id], cap = sc.caps[x.id];
+        var done = cap > 0 && got === cap;
+        row.classList.toggle('done', done);
+        row.querySelector('.instr-k').innerHTML = done ? ICON.check : x.id + '.';
+        row.querySelector('.instr-n').textContent = got + '/' + cap;
+      });
+    }
+    Array.prototype.forEach.call($('solve').querySelectorAll('.wbk-t'), function (t, i) {
+      var x = INSTRUCTIONS5[i], got = sc.parts[x.id], cap = sc.caps[x.id];
+      t.classList.toggle('done', cap > 0 && got === cap);
+      t.classList.toggle('part', got > 0 && got < cap);
+    });
+    var counts = $('solve').querySelectorAll('.sw-count b');
+    if (counts.length === 2) { counts[0].textContent = sc.total - sc.got; counts[1].textContent = sc.got; }
+  }
+
+  function refreshJdoc5(kind, ei) {
+    var t = j5totals(kind, ei);
+    var doc = $('solve').querySelector('[data-j5doc="' + kind + '.' + ei + '"]');
+    if (!doc) return;
+    var foot = doc.querySelectorAll('.gl-foot span');
+    foot[1].innerHTML = t.d ? money2(t.d) : '&mdash;';
+    foot[2].innerHTML = t.c ? money2(t.c) : '&mdash;';
+    var st = jState5(kind, ei);
+    var off = doc.querySelector('.gl-off');
+    off.className = 'gl-off ' + (st === 'draft' ? 'idle' : ((st === 'balanced' || st === 'posted') ? 'ok' : 'off'));
+    off.innerHTML = st === 'draft'
+      ? '<span>Enter the debit and the credit</span><span>&mdash;</span>'
+      : (st === 'balanced' || st === 'posted')
+        ? '<span>In balance</span><span>' + ICON.check + '</span>'
+        : '<span>Out of balance</span><span>' + dollars(Math.abs(t.off)) + '</span>';
+    var pill = doc.querySelector('.pill');
+    if (!isPosted5(kind, ei)) {
+      pill.className = 'pill ' + (st === 'draft' ? 'draft' : (st === 'balanced' ? 'ready' : 'off'));
+      pill.textContent = st === 'draft' ? 'Draft' : (st === 'balanced' ? 'Balanced' : 'Out of balance');
+    }
+    var post = doc.querySelector('[data-jpost5]');
+    if (post) post.disabled = !canPost5(kind, ei);
+    doc.classList.remove('graded-bad');
+    var bad = doc.querySelector('.ws-note.bad');
+    if (bad) bad.remove();
+  }
+
+  function goSheet5(id) {
+    w5.sheet = id;
+    saveWork5(); renderSolve5(); renderControls();
+    var h = $('solve').querySelector('.wbk');
+    if (h) h.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+  }
+  function goEntry5(kind, n) {
+    var list = entries5(kind), v = Math.max(0, Math.min(list.length - 1, n));
+    if (kind === 'c') w5.atC = v; else w5.atD = v;
+    saveWork5(); renderSolve5(); renderControls();
+  }
+
+  function gradeSolve5() {
+    w5.graded = 1;
+    var host = $('solve');
+    if (w5.sheet === 'a') {
+      renderSolve5();
+      host = $('solve');
+      ADJ5.forEach(function (p) {
+        ['d', 'c'].forEach(function (side) {
+          var el = host.querySelector('[data-adj5="' + p[side] + '.' + side + '"]');
+          if (el) el.classList.toggle('wrong', String(adjVal(p[side], side)).trim() !== '' && !adjRight(p));
+        });
+      });
+      EXTCOLS.forEach(function (c) {
+        var el = host.querySelector('[data-tot5="' + c + '"]');
+        if (el) el.classList.toggle('wrong', String(w5.tot[c] || '').trim() !== '' && !totRight5(c));
+        var ne = host.querySelector('[data-ni5="' + c + '"]');
+        var wantHere = c === 'id' || c === 'bc';
+        var typedHere = String(w5.ni[c] || '').trim() !== '';
+        if (ne) ne.classList.toggle('wrong', typedHere && !(wantHere && niRight(c)));
+      });
+    }
+    if (w5.sheet === 'b') {
+      BS_FIELDS.forEach(function (f) {
+        var box = host.querySelector('[data-bsf="' + f.id + '"]');
+        if (!box) return;
+        var ok = bsRight(f), touched = String(w5.bs[f.id] === undefined ? '' : w5.bs[f.id]).trim() !== '';
+        box.classList.toggle('right', ok);
+        box.classList.toggle('wrong', !ok && touched);
+        var note = host.querySelector('[data-note5="b' + f.id + '"]');
+        var old = note.querySelector('.ws-note.bad');
+        if (old) old.remove();
+        if (ok || !touched || w5.hint['b' + f.id]) return;
+        note.innerHTML = '<div class="ws-note bad">Not yet. ' + f.hints[0] + '</div>';
+      });
+    }
+    if (w5.sheet === 'c' || w5.sheet === 'd') {
+      var kind = w5.sheet;
+      entries5(kind).forEach(function (e, ei) {
+        var doc = host.querySelector('[data-j5doc="' + kind + '.' + ei + '"]');
+        if (!doc) return;
+        var note = host.querySelector('[data-note5="' + kind + ei + '"]');
+        var ok = j5Right(kind, ei), touched = j5Touched(kind, ei);
+        doc.classList.toggle('graded-bad', !ok && touched);
+        if (ok || !touched) { var stale = doc.querySelector('.ws-note.bad'); if (stale) stale.remove(); }
+        else if (!w5.hint[kind + ei]) note.innerHTML = '<div class="ws-note bad">' + j5Diag(kind, ei) + '</div>';
+      });
+      Array.prototype.forEach.call(host.querySelectorAll('[data-j5]'), function (c) {
+        var parts = c.getAttribute('data-j5').split('.');
+        c.classList.toggle('bad', j5Touched(parts[0], Number(parts[1])) && !j5Right(parts[0], Number(parts[1])));
+      });
+    }
+    if (w5.sheet === 'e') {
+      permanent5().forEach(function (a) {
+        var row = host.querySelector('[data-trow5="' + a.k + '"]');
+        if (!row) return;
+        var ok = tbRight5(a.k), touched = tbTouched5(a.k);
+        row.classList.toggle('right', ok);
+        row.classList.toggle('wrong', !ok && touched);
+        var note = host.querySelector('[data-note5="t' + a.k + '"]');
+        if (!note) return;
+        var old = note.querySelector('.ws-note.bad');
+        if (old) old.remove();
+        if (ok || !touched || w5.hint['t' + a.k]) return;
+        var wrongCol = (a.up === 'D' && String(tbVal5(a.k, 'c')).trim() !== '') ||
+                       (a.up === 'C' && String(tbVal5(a.k, 'd')).trim() !== '');
+        note.innerHTML = '<div class="ws-note bad">' + (wrongCol
+          ? 'Right idea, wrong column. This account carries a ' + (a.up === 'D' ? 'debit' : 'credit') + ' balance.'
+          : 'Not the balance closing left this account with.') + '</div>';
+      });
+    }
+    refreshInstr5();
+    renderControls();
+    var first = $('solve').querySelector('.bsf-field.wrong, .doc-je.graded-bad, .wp-row.wrong, .xl-row.bad, .xl-in.wrong');
+    if (first) first.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+  }
+
+  /* The name box and formula bar follow the selection without a re-render. */
+  function selectCell5(el) {
+    var ref = el.getAttribute('data-ref5');
+    if (!ref) return;
+    cur5 = ref;
+    var n = $('solve').querySelector('#xl-name'), f = $('solve').querySelector('#xl-fx-t');
+    if (n) n.textContent = ref;
+    if (f) f.textContent = el.getAttribute('data-desc5') + '   ·   ' + el.getAttribute('data-formula5');
+  }
+
+  function bindSolve5() {
+    var host = $('solve');
+
+    host.addEventListener('change', function (e) {
+      var sel = e.target.closest('[data-ja5]');
+      if (!sel) return;
+      var parts = sel.getAttribute('data-ja5').split('.');
+      w5.fx[sel.getAttribute('data-ja5') + '.k'] = sel.value;
+      refreshJdoc5(parts[0], Number(parts[1]));
+      saveWork5(); refreshInstr5(); renderControls();
+    });
+
+    host.addEventListener('input', function (e) {
+      var t = e.target;
+      var jd = t.closest('[data-jd5]'), jc = t.closest('[data-jc5]');
+      if (jd || jc) {
+        var el = jd || jc, key = el.getAttribute(jd ? 'data-jd5' : 'data-jc5');
+        var col = jd ? 'd' : 'c', other = jd ? 'c' : 'd';
+        w5.fx[key + '.' + col] = el.value;
+        var twin = host.querySelector('[data-j' + other + '5="' + key + '"]');
+        if (el.value && twin && twin.value) { twin.value = ''; w5.fx[key + '.' + other] = ''; }
+        if (twin) twin.classList.toggle('muted', !!el.value);
+        el.classList.remove('muted');
+        var p = key.split('.');
+        refreshJdoc5(p[0], Number(p[1]));
+        saveWork5(); refreshInstr5(); renderControls();
+        return;
+      }
+      var aj = t.closest('[data-adj5]');
+      if (aj) {
+        w5.adj[aj.getAttribute('data-adj5')] = t.value;
+        aj.classList.remove('wrong');
+        refreshProof5(); saveWork5(); refreshInstr5(); renderControls();
+        return;
+      }
+      var to = t.closest('[data-tot5]');
+      if (to) {
+        w5.tot[to.getAttribute('data-tot5')] = t.value;
+        to.classList.remove('wrong');
+        refreshProof5(); saveWork5(); refreshInstr5(); renderControls();
+        return;
+      }
+      var ni = t.closest('[data-ni5]');
+      if (ni) {
+        w5.ni[ni.getAttribute('data-ni5')] = t.value;
+        ni.classList.remove('wrong');
+        refreshProof5(); saveWork5(); refreshInstr5(); renderControls();
+        return;
+      }
+      var bs = t.closest('[data-bs5]');
+      if (bs) {
+        w5.bs[bs.getAttribute('data-bs5')] = t.value;
+        var box = bs.closest('.bsf-field');
+        box.classList.remove('right', 'wrong');
+        var bad = box.querySelector('.ws-note.bad');
+        if (bad) bad.remove();
+        var pr = host.querySelector('.sw-panel-bd .gl-off');
+        if (pr) {
+          var ta = amountOf(w5.bs.ta), tc = amountOf(w5.bs.tc);
+          var idle = isNaN(ta) || isNaN(tc);
+          pr.className = 'gl-off ' + (idle ? 'idle' : (ta === tc ? 'ok' : 'off'));
+          pr.innerHTML = idle
+            ? '<span>Fill in both totals to prove the statement</span><span>&mdash;</span>'
+            : ta === tc
+              ? '<span>Your balance sheet balances at ' + money2(ta) + '</span><span>' + ICON.check + '</span>'
+              : '<span>Your two totals are out by</span><span>' + money2(Math.abs(ta - tc)) + '</span>';
+        }
+        saveWork5(); refreshInstr5(); renderControls();
+        return;
+      }
+      var tb = t.closest('[data-tb5]');
+      if (tb) {
+        var pp = tb.getAttribute('data-tb5').split('.');
+        w5.tb[pp[0] + '.' + pp[1]] = tb.value;
+        var row = host.querySelector('[data-trow5="' + pp[0] + '"]');
+        if (row) row.classList.remove('right', 'wrong');
+        var nb = host.querySelector('[data-note5="t' + pp[0] + '"] .ws-note.bad');
+        if (nb) nb.remove();
+        saveWork5(); refreshInstr5(); renderControls();
+        return;
+      }
+      var tt = t.closest('[data-ttot5]');
+      if (tt) {
+        w5.ttot[tt.getAttribute('data-ttot5')] = tt.value;
+        var p2 = host.querySelector('.sw-panel-bd .gl-off');
+        if (p2) {
+          var td = amountOf(w5.ttot.d), tc2 = amountOf(w5.ttot.c);
+          var idle2 = isNaN(td) && isNaN(tc2);
+          p2.className = 'gl-off ' + (idle2 ? 'idle' : (td === tc2 ? 'ok' : 'off'));
+          p2.innerHTML = idle2
+            ? '<span>Total both columns when every row is entered</span><span>&mdash;</span>'
+            : td === tc2
+              ? '<span>Your columns agree at ' + dollars(td || 0) + '</span><span>' + ICON.check + '</span>'
+              : '<span>Your columns are out by</span><span>' + dollars(Math.abs((td || 0) - (tc2 || 0))) + '</span>';
+        }
+        saveWork5(); refreshInstr5(); renderControls();
+      }
+    });
+
+    /* Selecting a cell is a focus event as often as a click. */
+    host.addEventListener('focusin', function (e) {
+      var c = e.target.closest('[data-ref5]');
+      if (c) selectCell5(c);
+    });
+
+    host.addEventListener('click', function (e) {
+      var cell = e.target.closest('[data-ref5]');
+      if (cell) selectCell5(cell);
+
+      var sh = e.target.closest('[data-sheet5]');
+      if (sh) { goSheet5(sh.getAttribute('data-sheet5')); return; }
+
+      var jump = e.target.closest('[data-jump5]');
+      if (jump) {
+        var L = jump.getAttribute('data-jump5');
+        var target = host.querySelector('[data-ref5^="' + L + '"]');
+        var wrap = host.querySelector('#xl-wrap');
+        if (target && wrap) {
+          wrap.scrollTo({ left: target.offsetLeft - wrap.querySelector('.xl-h').offsetWidth - 4,
+            behavior: reduceMotion() ? 'auto' : 'smooth' });
+        }
+        return;
+      }
+
+      var ex = e.target.closest('[data-ext5]');
+      if (ex) {
+        var bits = ex.getAttribute('data-ext5').split('.');
+        if (w5.ext[bits[0]] === bits[1]) delete w5.ext[bits[0]];
+        else w5.ext[bits[0]] = bits[1];
+        saveWork5();
+        renderSolve5(); renderControls();
+        var again = host.querySelector('[data-ext5="' + bits[0] + '.' + bits[1] + '"]');
+        if (again) { again.focus(); selectCell5(again); }
+        return;
+      }
+
+      var j = e.target.closest('[data-j5]');
+      if (j) { var b = j.getAttribute('data-j5').split('.'); goEntry5(b[0], Number(b[1])); return; }
+      var jp = e.target.closest('[data-jprev5]');
+      if (jp) { var kk = jp.getAttribute('data-jprev5'); goEntry5(kk, atOf(kk) - 1); return; }
+      var jn = e.target.closest('[data-jnext5]');
+      if (jn) { var kk2 = jn.getAttribute('data-jnext5'); goEntry5(kk2, atOf(kk2) + 1); return; }
+
+      var po = e.target.closest('[data-jpost5]');
+      if (po) {
+        var pb = po.getAttribute('data-jpost5').split('.'), kind = pb[0], ei = Number(pb[1]);
+        if (!canPost5(kind, ei)) return;
+        w5.posted[kind + '.' + ei] = 1;
+        var list = entries5(kind), next = ei;
+        for (var n = 1; n <= list.length; n++) {
+          var q = (ei + n) % list.length;
+          if (!isPosted5(kind, q)) { next = q; break; }
+        }
+        if (kind === 'c') w5.atC = next; else w5.atD = next;
+        saveWork5(); renderSolve5(); renderControls();
+        return;
+      }
+      var un = e.target.closest('[data-junp5]');
+      if (un) {
+        delete w5.posted[un.getAttribute('data-junp5')];
+        saveWork5(); renderSolve5(); renderControls();
+        return;
+      }
+
+      var x = e.target.closest('[data-hclose]');
+      if (x) {
+        var hk = x.getAttribute('data-hclose');
+        w5.shut[hk] = 1; paintHint5(hk); saveWork5();
+        return;
+      }
+      var h = e.target.closest('[data-hint5]');
+      if (h) { bump5(h.getAttribute('data-hint5')); return; }
+
+      if (e.target.closest('#ws-reset5')) {
+        if (!window.confirm('Clear the whole workbook — worksheet, balance sheet, both journals and the trial balance?')) return;
+        w5.adj = {}; w5.ext = {}; w5.tot = {}; w5.ni = {}; w5.bs = {};
+        w5.fx = {}; w5.posted = {}; w5.tb = {}; w5.ttot = {};
+        w5.hint = {}; w5.shut = {}; w5.atC = 0; w5.atD = 0; w5.graded = 0;
+        saveWork5(); renderSolve5(); renderControls();
+      }
+    });
+  }
+
   /* ---------- chrome ---------- */
   function renderModBtn() {
     var m = MODULES[mod];
@@ -6385,7 +8233,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     $('ws-score').hidden = !solving;
     $('btn-check').hidden = !solving;
     if (solving) {
-      var sc = [scoreNow, score2, score3, score4][mod]();
+      var sc = [scoreNow, score2, score3, score4, score5][mod]();
       $('ws-score').querySelector('b').innerHTML = sc.got + ' of ' + sc.total;
       $('ws-score').classList.toggle('done', sc.got === sc.total);
       $('btn-check').textContent = sc.got === sc.total ? 'All correct' : 'Check my work';
@@ -6402,7 +8250,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       $('prog-label').textContent = done + ' of ' + FLOW.length + ' explained';
       $('next-label').textContent = done === 0 ? 'Start' : (done === FLOW.length ? 'Review' : 'Continue');
     } else {
-      $('prog-label').textContent = (at < entryCount() ? 'Entry ' : 'Report ') + (at + 1) + ' of ' + FLOW.length;
+      $('prog-label').textContent = (at < entryCount() ? (MODULES[mod].unit || 'Entry ') : 'Report ') + (at + 1) + ' of ' + FLOW.length;
       $('next-label').textContent = at === FLOW.length - 1 ? 'Finish' : 'Next';
     }
     $('rail').innerHTML = FLOW.map(function (f, i) {
@@ -6425,9 +8273,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     renderModBtn();
     if (tab === 'solve') $('guide').innerHTML = '';
     else renderGuide();
-    [renderTable, renderTable2, renderTable3, renderTable4][mod]();
+    [renderTable, renderTable2, renderTable3, renderTable4, renderTable5][mod]();
     if (tab !== 'solve') $('solve').innerHTML = '';
-    else [renderSolve, renderSolve2, renderSolve3, renderSolve4][mod]();
+    else [renderSolve, renderSolve2, renderSolve3, renderSolve4, renderSolve5][mod]();
     renderControls();
   }
 
@@ -6435,7 +8283,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function hashFor() { return MODULES[mod].id + (view === 'dash' ? '' : '-' + flow()[at].id); }
   function stateFromHash() {
     var h = (location.hash || '').replace('#', '');
-    var m = /^(lo2[1234])(?:-(.+))?$/.exec(h);
+    var m = /^(lo2[1234]|p212)(?:-(.+))?$/.exec(h);
     if (!m) return null;
     var mi = 0;
     for (var q = 0; q < MODULES.length; q++) if (MODULES[q].id === m[1]) mi = q;
@@ -6488,7 +8336,9 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* Opening an entry from the dashboard. */
   $('guide').addEventListener('click', function (e) {
     var card = e.target.closest('[data-open]');
-    if (card) openAt(Number(card.getAttribute('data-open')));
+    if (card) { openAt(Number(card.getAttribute('data-open'))); return; }
+    var go = e.target.closest('[data-gotab]');
+    if (go) { tab = go.getAttribute('data-gotab'); save(); render(); }
   });
 
   $('mod-btn').addEventListener('click', function () { openSheet(true); });
@@ -6518,7 +8368,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
   $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });
   $('btn-check').addEventListener('click', function () {
-    [gradeSolve, gradeSolve2, gradeSolve3, gradeSolve4][mod]();
+    [gradeSolve, gradeSolve2, gradeSolve3, gradeSolve4, gradeSolve5][mod]();
   });
 
   document.addEventListener('keydown', function (e) {
@@ -6548,6 +8398,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   loadWork2();
   loadWork3();
   loadWork4();
+  loadWork5();
   if (!theme) {
     theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
   }
@@ -6559,6 +8410,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   bindSolve2();
   bindSolve3();
   bindSolve4();
+  bindSolve5();
   if (window.history && history.replaceState) {
     history.replaceState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
   }

@@ -1077,8 +1077,8 @@ function check(name, ok, detail) {
     current: document.querySelectorAll('[data-mod].on').length,
     counts: [...document.querySelectorAll('[data-mod] em')].map(e => e.textContent)
   }));
-  check('the switcher lists all four modules and marks the open one',
-    sheet.open && sheet.cards === 4 && sheet.current === 1, JSON.stringify(sheet));
+  check('the switcher lists all five modules and marks the open one',
+    sheet.open && sheet.cards === 5 && sheet.current === 1, JSON.stringify(sheet));
   check('the switcher reports progress per module',
     sheet.counts.some(c => /13 of 13|[1-9]\d* of 13/.test(c)), sheet.counts.join(' | '));
   await k.keyboard.press('Escape');
@@ -1423,6 +1423,418 @@ function check(name, ok, detail) {
 
   check('no console or page errors across module 2.3', jErr.length === 0, jErr.slice(0, 3).join(' | '));
   await j.close();
+
+
+  // ---------------------------------------------------------------
+  console.log('\nTHE CAPSTONE — P2.12');
+  // ---------------------------------------------------------------
+  const cap = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  cap.on('pageerror', e => errors.push('p212: ' + e));
+  cap.on('console', m => { if (m.type() === 'error') errors.push('p212 console: ' + m.text()); });
+  await cap.goto(FILE + '#p212');
+  await cap.waitForTimeout(500);
+
+  // Arithmetic, read out of the module's own derivations.
+  const sums = await cap.evaluate(() => ({
+    tb: foot5(tb5), atb: foot5(atb5),
+    adj: ADJ5.map(p => ({ id: p.id, n: adjAmount(p), moved: Math.abs(atb5(p.c) - tb5(p.c)) })),
+    adjTotal: adjTotal(),
+    rebuild: ACCT5.every(a => tb5(a.k) + (a.up === 'D' ? 1 : -1) * (adjCell(a.k, 'd') - adjCell(a.k, 'c')) === atb5(a.k)),
+    ext: extTotals(), ni: netIncome5(),
+    divTo: extCol('div'),
+    bs: balanceSheet5(),
+    close: CLOSE5.map(e => ({ id: e.id, d: e.lines.reduce((n, l) => n + l[1], 0), lines: e.lines.length,
+      isum: e.lines.filter(l => l[0] === 'isum').length })),
+    perm: permanent5().length, pctb: pctbTotals(), re: postClosing('re'),
+    accts: ACCT5.length
+  }));
+
+  check('the capstone reproduces both trial balances the problem prints',
+    sums.tb.d === 491700 && sums.tb.c === 491700 && sums.atb.d === 506500 && sums.atb.c === 506500,
+    JSON.stringify([sums.tb, sums.atb]));
+  check('the six adjustments are the difference between those two columns',
+    sums.adj.length === 6 && sums.adj.every(a => a.n === a.moved) &&
+    sums.adj.map(a => a.n).join() === '14400,28000,5800,2000,3000,6000',
+    JSON.stringify(sums.adj));
+  check('and they total 5,9200 across both columns'.replace('5,9200', '59,200'),
+    sums.adjTotal === 59200, String(sums.adjTotal));
+  check('the trial balance plus the adjustments rebuilds the adjusted column on every row',
+    sums.rebuild === true);
+  check('the income statement columns carry 247,000 against 280,500',
+    sums.ext.id === 247000 && sums.ext.ic === 280500, JSON.stringify(sums.ext));
+  check('the balance sheet columns carry 259,500 against 226,000',
+    sums.ext.bd === 259500 && sums.ext.bc === 226000, JSON.stringify(sums.ext));
+  check('net income of 33,500 is the gap in both pairs',
+    sums.ni === 33500 && sums.ext.id + sums.ni === sums.ext.ic && sums.ext.bc + sums.ni === sums.ext.bd,
+    String(sums.ni));
+  check('dividends extends to the balance sheet, not the income statement',
+    sums.divTo === 'bd', sums.divTo);
+  check('the classified balance sheet balances at 203,500',
+    sums.bs.totalAssets === 203500 && sums.bs.totalClaims === 203500, JSON.stringify([sums.bs.totalAssets, sums.bs.totalClaims]));
+  check('with current assets 45,500, plant 158,000, current liabilities 34,300 and equity 129,200',
+    sums.bs.currentAssets === 45500 && sums.bs.ppe === 158000 &&
+    sums.bs.currentLiab === 34300 && sums.bs.equity === 129200,
+    JSON.stringify([sums.bs.currentAssets, sums.bs.ppe, sums.bs.currentLiab, sums.bs.equity]));
+  check('the mortgage splits 10,000 current and 40,000 long-term, and adds back to 50,000',
+    sums.bs.mortCurrent === 10000 && sums.bs.longLiab === 40000 &&
+    sums.bs.mortCurrent + sums.bs.longLiab === 50000, JSON.stringify(sums.bs));
+  check('the expense closing entry credits all nine expenses in one compound entry',
+    sums.close[1].lines === 10 && sums.close[1].d === 247000, JSON.stringify(sums.close[1]));
+  check('and dividends closes to retained earnings without touching Income Summary',
+    sums.close[3].isum === 0 && sums.close[3].d === 14000, JSON.stringify(sums.close[3]));
+  check('thirteen permanent accounts survive, footing 245,500 with retained earnings at 21,500',
+    sums.perm === 13 && sums.pctb.d === 245500 && sums.pctb.c === 245500 && sums.re === 21500,
+    JSON.stringify([sums.perm, sums.pctb, sums.re]));
+
+  // The briefing.
+  const brief = await cap.evaluate(() => ({
+    cards: document.querySelectorAll('#guide .card-e').length,
+    instr: [...document.querySelectorAll('#guide .instr-row .instr-t')].map(e => e.textContent),
+    open: document.querySelectorAll('#guide [data-gotab="solve"]').length
+  }));
+  check('the capstone dashboard lists five briefings and the five printed instructions',
+    brief.cards === 5 && brief.instr.length === 5, JSON.stringify([brief.cards, brief.instr.length]));
+  check('the instructions are the ones the problem prints, verbatim',
+    brief.instr[0] === 'Prepare a complete worksheet.' &&
+    brief.instr[1] === 'Prepare a classified balance sheet. (Note: $10,000 of the mortgage payable is due for payment in the next fiscal year.)' &&
+    brief.instr[2] === 'Journalize the adjusting entries using the worksheet as a basis.' &&
+    brief.instr[3] === 'Journalize the closing entries using the worksheet as a basis.' &&
+    brief.instr[4] === 'Prepare a post-closing trial balance.',
+    JSON.stringify(brief.instr));
+  check('and the dashboard opens the workbook', brief.open === 1);
+
+  const screens = [];
+  for (const id of ['job', 'sheet', 'ni', 'class', 'back']) {
+    await cap.goto(FILE + '#p212-' + id);
+    await cap.waitForTimeout(280);
+    screens.push(await cap.evaluate(() => ({
+      h1: document.querySelectorAll('#guide h1').length,
+      figs: document.querySelectorAll('#guide figure.viz').length,
+      claim: [...document.querySelectorAll('#guide figure.viz [role="img"], #guide figure.viz .sr-only')].length,
+      text: document.getElementById('guide').textContent,
+      wide: document.querySelector('#pane-guide .scroll').scrollWidth -
+            document.querySelector('#pane-guide .scroll').clientWidth
+    })));
+  }
+  check('every briefing has exactly one heading and no sideways scroll',
+    screens.every(s => s.h1 === 1 && s.wide <= 0), JSON.stringify(screens.map(s => [s.h1, s.wide])));
+  check('four of the five carry an illustration, and each states what it shows',
+    screens.filter(s => s.figs === 1).length === 4 && screens.every(s => s.figs === s.claim),
+    JSON.stringify(screens.map(s => [s.figs, s.claim])));
+
+  // A capstone that prints its own answers is not a capstone. These are the
+  // figures that appear in neither column the problem hands over.
+  const ANSWERS = ['33,500', '203,500', '245,500', '21,500', '247,000', '45,500',
+                   '158,000', '34,300', '74,300', '129,200', '226,000', '259,500', '78,000', '59,200'];
+  const leaked212 = [];
+  screens.forEach((s, i) => ANSWERS.forEach(a => { if (s.text.indexOf(a) !== -1) leaked212.push('briefing ' + i + ': ' + a); }));
+  await cap.goto(FILE + '#p212');
+  await cap.waitForTimeout(250);
+  await cap.click('#tab-table');
+  await cap.waitForTimeout(350);
+  const ref = await cap.evaluate(() => ({
+    rows: document.querySelectorAll('#table-slot .gw-row').length,
+    tot: [...document.querySelectorAll('#table-slot .gw-tot .gw-amt')].map(e => e.textContent),
+    text: document.getElementById('table-slot').textContent,
+    note: /10,000/.test(document.getElementById('table-slot').textContent)
+  }));
+  ANSWERS.forEach(a => { if (ref.text.indexOf(a) !== -1) leaked212.push('reference: ' + a); });
+  check('the briefing and the Reference give away no figure the learner has to produce',
+    leaked212.length === 0, leaked212.join(' | '));
+  check('the Reference prints the given worksheet, all 24 rows, footing both ways',
+    ref.rows === 24 && ref.tot.join() === '491,700,491,700,506,500,506,500', JSON.stringify(ref.tot));
+  check('and carries the note about the mortgage', ref.note === true);
+
+  // The workbook.
+  await cap.click('#tab-solve');
+  await cap.waitForTimeout(450);
+  const wb = await cap.evaluate(() => ({
+    tabs: [...document.querySelectorAll('.wbk-t')].map(e => e.textContent),
+    score: document.querySelector('#ws-score b').textContent,
+    rows: document.querySelectorAll('.xl-grid .xl-row').length,
+    cells: document.querySelectorAll('.xl-row[data-xrow="cash"] .xl-c').length,
+    given: document.querySelectorAll('.xl-row[data-xrow="cash"] .xl-c.given').length,
+    inputs: document.querySelectorAll('.xl-row[data-xrow="cash"] input').length,
+    ext: document.querySelectorAll('.xl-row[data-xrow="cash"] .xl-x').length,
+    name: document.getElementById('xl-name').textContent
+  }));
+  check('the workbook has one sheet per instruction, lettered a to e',
+    wb.tabs.length === 5 && wb.tabs.map(t => t.charAt(0)).join('') === 'abcde', JSON.stringify(wb.tabs));
+  check('the whole problem is worth 71 marks', /of 71/.test(wb.score), wb.score);
+  check('the worksheet is 24 account rows plus a header pair, a total and net income',
+    wb.rows === 28, String(wb.rows));
+  check('each row has ten amount columns: four given, two to type in, four to extend to',
+    wb.cells === 10 && wb.given === 4 && wb.inputs === 2 && wb.ext === 4, JSON.stringify(wb));
+
+  // The name box and formula bar.
+  await cap.click('[data-ref5="F2"]');
+  await cap.waitForTimeout(180);
+  const fx = await cap.evaluate(() => ({
+    name: document.getElementById('xl-name').textContent,
+    fx: document.getElementById('xl-fx-t').textContent
+  }));
+  check('selecting a cell names it and says where its figure came from',
+    fx.name === 'F2' && /Adjusted Trial Balance Dr/.test(fx.fx) && /given/.test(fx.fx),
+    JSON.stringify(fx));
+
+  // Extending.
+  await cap.click('[data-ext5="sup.bd"]');
+  await cap.waitForTimeout(300);
+  const extended = await cap.evaluate(() => ({
+    text: document.querySelector('[data-ext5="sup.bd"]').textContent,
+    fx: document.getElementById('xl-fx-t').textContent,
+    count: document.querySelector('.xl-legend b').textContent
+  }));
+  check('extending a row writes the adjusted balance into the cell, not the unadjusted one',
+    extended.text === '4,200' && /=F2\b/.test(extended.fx) && extended.count === '1',
+    JSON.stringify(extended));
+
+  // Extending to the wrong column has to be possible, or the decision is fake.
+  await cap.click('[data-ext5="rev.id"]');
+  await cap.waitForTimeout(300);
+  const wrongExt = await cap.evaluate(() => ({
+    filled: document.querySelector('[data-ext5="rev.id"]').textContent,
+    score: document.querySelector('#ws-score b').textContent
+  }));
+  check('extending to the wrong column is allowed, and scores nothing',
+    wrongExt.filled === '280,500' && wrongExt.score === '1 of 71', JSON.stringify(wrongExt));
+  await cap.click('[data-ext5="rev.id"]');
+  await cap.waitForTimeout(250);
+
+  // The adjustment columns foot themselves.
+  await cap.fill('[data-adj5="supx.d"]', '14400');
+  await cap.waitForTimeout(220);
+  const half = await cap.evaluate(() => [...document.querySelectorAll('.xl-foot .xl-c.auto')].map(e => e.className + '|' + e.textContent));
+  await cap.fill('[data-adj5="sup.c"]', '14400');
+  await cap.waitForTimeout(250);
+  const both = await cap.evaluate(() => [...document.querySelectorAll('.xl-foot .xl-c.auto')].map(e => e.className + '|' + e.textContent));
+  check('the adjustment columns foot themselves and flag a one-sided entry',
+    /off/.test(half[0]) && half[1] === 'xl-c auto off|' && /ok\|14,400/.test(both[0]) && /ok\|14,400/.test(both[1]),
+    JSON.stringify([half, both]));
+
+  // Net income in the wrong column.
+  await cap.fill('[data-ni5="id"]', '33500');
+  await cap.waitForTimeout(200);
+  await cap.fill('[data-ni5="ic"]', '33500');
+  await cap.waitForTimeout(250);
+  const niBoth = await cap.evaluate(() => document.querySelector('#ws-score b').textContent);
+  await cap.fill('[data-ni5="ic"]', '');
+  await cap.waitForTimeout(250);
+  const niRightScore = await cap.evaluate(() => document.querySelector('#ws-score b').textContent);
+  check('net income hedged into both income statement columns scores nothing; the debit column alone scores',
+    niBoth === '2 of 71' && niRightScore === '3 of 71', JSON.stringify([niBoth, niRightScore]));
+
+  // Hints stay behind a button.
+  const hintsShut = await cap.evaluate(() => ({
+    buttons: document.querySelectorAll('.ws-hint').length,
+    open: document.querySelectorAll('.ws-note.tip').length
+  }));
+  await cap.click('[data-hint5="a-ext"]');
+  await cap.waitForTimeout(250);
+  const hintOpen = await cap.evaluate(() => {
+    const t = document.querySelector('[data-note5="a-ext"] .ws-note.tip');
+    return { text: t ? t.textContent : '', closable: !!document.querySelector('[data-hclose="a-ext"]') };
+  });
+  check('worksheet hints stay behind a button until asked for, and can be put away',
+    hintsShut.open === 0 && hintsShut.buttons === 3 && /one of the last four columns/.test(hintOpen.text) && hintOpen.closable,
+    JSON.stringify([hintsShut, hintOpen.text.slice(0, 40)]));
+
+  // Sheet b asks for the split the note describes.
+  await cap.click('[data-sheet5="b"]');
+  await cap.waitForTimeout(400);
+  const sheetB = await cap.evaluate(() => ({
+    fields: [...document.querySelectorAll('.bsf-field label')].map(e => e.textContent),
+    deduction: [...document.querySelectorAll('.bsf-line')].some(e => /\(42,000\)/.test(e.textContent)),
+    hints: document.querySelectorAll('.bsf-field .ws-hint').length
+  }));
+  check('the balance sheet asks for both halves of the mortgage and shows depreciation as a deduction',
+    sheetB.fields.length === 10 &&
+    sheetB.fields.some(f => /current portion/.test(f)) &&
+    sheetB.fields.some(f => /long-term portion/.test(f)) &&
+    sheetB.deduction && sheetB.hints === 10,
+    JSON.stringify([sheetB.fields.length, sheetB.deduction, sheetB.hints]));
+
+  // Adjusting entries in any order; the same one twice is caught.
+  await cap.click('[data-sheet5="c"]');
+  await cap.waitForTimeout(400);
+  await cap.evaluate(() => {
+    function pick(s, v) { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event('change', { bubbles: true })); }
+    function put(s, v) { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    pick('[data-ja5="c.0.0"]', 'intx'); put('[data-jd5="c.0.0"]', '6000');
+    pick('[data-ja5="c.0.1"]', 'intp'); put('[data-jc5="c.0.1"]', '6000');
+  });
+  await cap.waitForTimeout(300);
+  const anyOrder = await cap.evaluate(() => document.querySelector('#ws-score b').textContent);
+  check('any of the six adjustments may be journalized in any slot',
+    anyOrder === '4 of 71', anyOrder);
+
+  await cap.click('[data-j5="c.1"]');
+  await cap.waitForTimeout(300);
+  await cap.evaluate(() => {
+    function pick(s, v) { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event('change', { bubbles: true })); }
+    function put(s, v) { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    pick('[data-ja5="c.1.0"]', 'intx'); put('[data-jd5="c.1.0"]', '6000');
+    pick('[data-ja5="c.1.1"]', 'intp'); put('[data-jc5="c.1.1"]', '6000');
+  });
+  await cap.waitForTimeout(250);
+  await cap.click('#btn-check');
+  await cap.waitForTimeout(400);
+  const dupe = await cap.evaluate(() => {
+    const n = document.querySelector('[data-note5="c1"] .ws-note.bad');
+    return { text: n ? n.textContent : '', score: document.querySelector('#ws-score b').textContent };
+  });
+  check('journalizing the same adjustment twice is diagnosed and scored once',
+    /same adjustment you entered in slot 1/.test(dupe.text) && dupe.score === '4 of 71', JSON.stringify(dupe));
+
+  // The closing trap.
+  await cap.click('[data-sheet5="d"]');
+  await cap.waitForTimeout(400);
+  await cap.click('[data-j5="d.3"]');
+  await cap.waitForTimeout(300);
+  await cap.evaluate(() => {
+    function pick(s, v) { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event('change', { bubbles: true })); }
+    function put(s, v) { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    pick('[data-ja5="d.3.0"]', 'isum'); put('[data-jd5="d.3.0"]', '14000');
+    pick('[data-ja5="d.3.1"]', 'div'); put('[data-jc5="d.3.1"]', '14000');
+  });
+  await cap.waitForTimeout(250);
+  await cap.click('#btn-check');
+  await cap.waitForTimeout(400);
+  const trap = await cap.evaluate(() => {
+    const n = document.querySelector('[data-note5="d3"] .ws-note.bad');
+    return n ? n.textContent : '';
+  });
+  check('closing dividends through Income Summary is diagnosed as such',
+    /never pass through Income Summary/.test(trap), trap.slice(0, 60));
+
+  // Working the whole problem through. Every answer is read from the module's
+  // own derivations, so this cannot pass by agreeing with a typo.
+  await cap.goto(FILE + '#p212');
+  await cap.waitForTimeout(400);
+  await cap.evaluate(() => {
+    try { localStorage.removeItem('accounting.course.v4.work5'); } catch (e) {}
+  });
+  await cap.reload();
+  await cap.waitForTimeout(500);
+  await cap.click('#tab-solve');
+  await cap.waitForTimeout(450);
+
+  const fresh = await cap.evaluate(() => document.querySelector('#ws-score b').textContent);
+
+  // a — adjustments, then every extension, then the totals and net income.
+  await cap.evaluate(() => {
+    function put(s, v) { const e = document.querySelector(s); if (!e) throw new Error('no ' + s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    ADJ5.forEach(p => { put('[data-adj5="' + p.d + '.d"]', adjAmount(p)); put('[data-adj5="' + p.c + '.c"]', adjAmount(p)); });
+  });
+  await cap.waitForTimeout(250);
+  for (const k of await cap.evaluate(() => ACCT5.map(a => a.k))) {
+    await cap.evaluate(key => {
+      const want = extCol(key);
+      const el = document.querySelector('[data-ext5="' + key + '.' + want + '"]');
+      if (!el) throw new Error('no ext cell for ' + key);
+      el.click();
+    }, k);
+  }
+  await cap.waitForTimeout(300);
+  await cap.evaluate(() => {
+    function put(s, v) { const e = document.querySelector(s); if (!e) throw new Error('no ' + s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    const t = extTotals();
+    put('[data-tot5="id"]', t.id); put('[data-tot5="ic"]', t.ic);
+    put('[data-tot5="bd"]', t.bd); put('[data-tot5="bc"]', t.bc);
+    put('[data-ni5="id"]', netIncome5()); put('[data-ni5="bc"]', netIncome5());
+  });
+  await cap.waitForTimeout(300);
+  const partA212 = await cap.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    row: [...document.querySelectorAll('.instr-row')][0].querySelector('.instr-n').textContent,
+    proof: [...document.querySelectorAll('.gl-off')].map(e => e.className)
+  }));
+  check('a completed worksheet scores all 36 of instruction a and proves itself',
+    partA212.row === '36/36' && partA212.proof.every(c => /ok/.test(c)), JSON.stringify(partA212));
+
+  // b
+  await cap.click('[data-sheet5="b"]');
+  await cap.waitForTimeout(400);
+  await cap.evaluate(() => {
+    function put(s, v) { const e = document.querySelector(s); if (!e) throw new Error('no ' + s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    const b = balanceSheet5();
+    put('[data-bs5="ca"]', b.currentAssets); put('[data-bs5="bv"]', b.bookValue);
+    put('[data-bs5="ppe"]', b.ppe); put('[data-bs5="ta"]', b.totalAssets);
+    put('[data-bs5="mc"]', b.mortCurrent); put('[data-bs5="cl"]', b.currentLiab);
+    put('[data-bs5="ml"]', b.longLiab); put('[data-bs5="tl"]', b.totalLiab);
+    put('[data-bs5="re"]', b.retained); put('[data-bs5="tc"]', b.totalClaims);
+  });
+  await cap.waitForTimeout(300);
+
+  // c and d
+  for (const kind of ['c', 'd']) {
+    await cap.click('[data-sheet5="' + kind + '"]');
+    await cap.waitForTimeout(350);
+    const howMany = await cap.evaluate(k => (k === 'c' ? ADJE5 : CLOSE5).length, kind);
+    for (let i = 0; i < howMany; i++) {
+      await cap.click('[data-j5="' + kind + '.' + i + '"]');
+      await cap.waitForTimeout(200);
+      await cap.evaluate(([k, ei]) => {
+        const e = (k === 'c' ? ADJE5 : CLOSE5)[ei];
+        e.lines.forEach((l, li) => {
+          const sel = document.querySelector('[data-ja5="' + k + '.' + ei + '.' + li + '"]');
+          sel.value = l[0]; sel.dispatchEvent(new Event('change', { bubbles: true }));
+          const amt = document.querySelector('[data-j' + (l[1] ? 'd' : 'c') + '5="' + k + '.' + ei + '.' + li + '"]');
+          amt.value = l[1] || l[2]; amt.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+      }, [kind, i]);
+      await cap.waitForTimeout(120);
+    }
+  }
+  await cap.waitForTimeout(250);
+
+  // e
+  await cap.click('[data-sheet5="e"]');
+  await cap.waitForTimeout(400);
+  await cap.evaluate(() => {
+    function put(s, v) { const e = document.querySelector(s); if (!e) throw new Error('no ' + s); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }
+    permanent5().forEach(a => put('[data-tb5="' + a.k + '.' + (a.up === 'D' ? 'd' : 'c') + '"]', postClosing(a.k)));
+    put('[data-ttot5="d"]', pctbTotals().d);
+    put('[data-ttot5="c"]', pctbTotals().c);
+  });
+  await cap.waitForTimeout(350);
+
+  const finished212 = await cap.evaluate(() => ({
+    score: document.querySelector('#ws-score b').textContent,
+    done: document.querySelector('#ws-score').classList.contains('done'),
+    rows: [...document.querySelectorAll('.instr-row')].map(r => r.querySelector('.instr-n').textContent),
+    tabs: [...document.querySelectorAll('.wbk-t')].map(t => t.classList.contains('done'))
+  }));
+  check('an empty workbook starts at nothing', fresh === '0 of 71', fresh);
+  check('working the whole problem through scores 71 of 71',
+    finished212.score === '71 of 71' && finished212.done === true, JSON.stringify(finished212.score));
+  check('and every one of the five instructions reads as complete',
+    finished212.rows.join(' ') === '36/36 10/10 6/6 4/4 15/15' && finished212.tabs.every(Boolean),
+    JSON.stringify(finished212.rows));
+
+  await cap.reload();
+  await cap.waitForTimeout(600);
+  const kept212 = await cap.evaluate(() => document.querySelector('#ws-score b').textContent);
+  check('and the whole workbook survives a reload', kept212 === '71 of 71', kept212);
+
+  const wide212 = [];
+  for (const w of [320, 390]) {
+    await cap.setViewportSize({ width: w, height: 800 });
+    for (const sh of ['a', 'b', 'c', 'd', 'e']) {
+      await cap.click('[data-sheet5="' + sh + '"]');
+      await cap.waitForTimeout(280);
+      const o = await cap.evaluate(() => {
+        const s = document.querySelector('#pane-solve .scroll');
+        return (document.documentElement.scrollWidth - window.innerWidth) + (s ? s.scrollWidth - s.clientWidth : 0);
+      });
+      if (o > 0) wide212.push(w + '/' + sh + ' by ' + o);
+    }
+  }
+  check('no sheet of the workbook pushes the page sideways at 320 or 390',
+    wide212.length === 0, wide212.join(' | '));
+
+  await cap.close();
+
   // ---------------------------------------------------------------
   console.log('\nCONTRAST AND ANNOUNCEMENT');
   // ---------------------------------------------------------------
@@ -1472,10 +1884,12 @@ function check(name, ok, detail) {
     return [...new Set(bad)];
   };
 
-  const failures = [];
+  const contrastBad = [];
   for (const dark of [false, true]) {
     for (const [hash, tab] of [['#lo21', 'guide'], ['#lo21', 'solve'], ['#lo22', 'solve'],
-                               ['#lo23', 'guide'], ['#lo23-atb', 'guide'], ['#lo23', 'solve']]) {
+                               ['#lo23', 'guide'], ['#lo23-atb', 'guide'], ['#lo23', 'solve'],
+                               ['#p212', 'guide'], ['#p212-sheet', 'guide'], ['#p212-ni', 'guide'],
+                               ['#p212-class', 'guide'], ['#p212', 'table']]) {
       await c.goto(FILE + hash);
       await c.waitForTimeout(200);
       // The theme is saved, so clicking the toggle on every screen alternates
@@ -1488,11 +1902,33 @@ function check(name, ok, detail) {
       // state, so half these screens were measuring the same thing twice.
       await c.click('#tab-' + tab);
       await c.waitForTimeout(350);
-      (await c.evaluate(SWEEP)).forEach(x => failures.push((dark ? 'dark ' : 'light ') + hash + '/' + tab + ' ' + x));
+      (await c.evaluate(SWEEP)).forEach(x => contrastBad.push((dark ? 'dark ' : 'light ') + hash + '/' + tab + ' ' + x));
+    }
+  }
+  for (const dark of [false, true]) {
+    await c.goto(FILE + '#p212');
+    await c.waitForTimeout(250);
+    const now5 = await c.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    if ((now5 === 'dark') !== dark) { await c.click('#btn-theme'); await c.waitForTimeout(150); }
+    await c.click('#tab-solve');
+    await c.waitForTimeout(400);
+    for (const sh of ['a', 'b', 'c', 'd', 'e']) {
+      await c.click('[data-sheet5="' + sh + '"]');
+      await c.waitForTimeout(350);
+      if (sh === 'a') {
+        // An untouched worksheet shows none of the states a learner creates.
+        await c.click('[data-ext5="cash.bd"]');
+        await c.waitForTimeout(200);
+        await c.fill('[data-adj5="supx.d"]', '14400');
+        await c.waitForTimeout(200);
+        await c.click('[data-hint5="a-adj"]');
+        await c.waitForTimeout(250);
+      }
+      (await c.evaluate(SWEEP)).forEach(x => contrastBad.push((dark ? 'dark ' : 'light ') + 'p212/sheet ' + sh + ' ' + x));
     }
   }
   check('every piece of text meets WCAG AA against what is behind it, in both themes',
-    failures.length === 0, failures.slice(0, 6).join(' | ') + (failures.length > 6 ? ' (+' + (failures.length - 6) + ')' : ''));
+    contrastBad.length === 0, contrastBad.slice(0, 6).join(' | ') + (contrastBad.length > 6 ? ' (+' + (contrastBad.length - 6) + ')' : ''));
 
   // The guide pane is replaced wholesale on every navigation. As a live region
   // that made a screen reader re-read the entire screen each time; the new
