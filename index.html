@@ -1742,83 +1742,6 @@ table.wp.w4 tfoot .cell { background: var(--good-soft); color: var(--good-deep);
    itself printed as.
    ============================================================ */
 
-/* ---- briefing illustrations ---- */
-.ordv { display: flex; align-items: stretch; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
-.ordv-step {
-  flex: 0 0 auto; display: flex; flex-direction: column; gap: 2px;
-  padding: 9px 10px; border-radius: var(--r-sm);
-  background: var(--surface-2); border: 1px solid var(--line);
-  min-width: 96px;
-}
-.ordv-step i {
-  font-style: normal; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
-  color: var(--brand);
-}
-.ordv-step b { font-size: 12px; font-weight: 650; color: var(--text); }
-.ordv-step u { text-decoration: none; font-size: 10.5px; color: var(--muted); }
-.ordv-arr { flex: 0 0 auto; align-self: center; color: var(--line-strong); display: grid; place-items: center; }
-.ordv-arr svg { width: 14px; height: 14px; }
-
-.shv { display: grid; gap: 9px; }
-.shv > * { min-width: 0; }
-.shv-head { display: flex; flex-wrap: wrap; gap: 4px; }
-.shv-pair {
-  flex: 1 1 68px; min-width: 0; padding: 7px 6px; border-radius: var(--r-sm);
-  display: grid; gap: 3px; text-align: center;
-  border: 1px solid var(--line);
-}
-.shv-pair.given { background: var(--surface-2); }
-.shv-pair.mine { background: var(--brand-soft); border-color: var(--brand-line); }
-.shv-pair b { font-size: 10px; font-weight: 700; line-height: 1.25; color: var(--text-dim); }
-.shv-dc { display: flex; gap: 2px; justify-content: center; }
-.shv-dc i {
-  font-style: normal; flex: 1 1 0; font-family: var(--mono); font-size: 9px;
-  color: var(--muted); background: var(--surface); border-radius: 3px; padding: 1px 0;
-}
-.shv-pair u { text-decoration: none; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.shv-pair.mine u { color: var(--brand); font-weight: 700; }
-.shv-row { display: flex; align-items: center; gap: 8px; }
-.shv-lab { flex: 0 0 34px; font-size: 11.5px; font-weight: 650; color: var(--text-dim); }
-.shv-trip { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-.shv-step {
-  flex: 1 1 66px; min-width: 0; display: grid; gap: 1px; padding: 5px 7px;
-  border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line);
-}
-.shv-step u {
-  text-decoration: none; font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--muted); line-height: 1.2;
-}
-.shv-step b {
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  font-variant-numeric: tabular-nums; color: var(--text);
-}
-.shv-step.dim b { color: var(--muted); font-weight: 400; }
-.shv-step.land { background: var(--good-soft); border-color: var(--good-line); }
-.shv-step.land u, .shv-step.land b { color: var(--good-deep); }
-.shv-arr { flex: 0 0 auto; color: var(--line-strong); display: grid; place-items: center; }
-.shv-arr svg { width: 12px; height: 12px; }
-.shv-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0; }
-
-.niv { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.niv-pair { flex: 1 1 190px; min-width: 0; }
-.niv-pair > b { display: block; font-size: 11px; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; }
-.niv-cols { display: flex; gap: 5px; }
-.niv-col {
-  flex: 1 1 0; min-width: 0; border: 1px solid var(--line); border-radius: var(--r-sm);
-  padding: 7px 6px; background: var(--surface-2); text-align: center;
-}
-.niv-col u { display: block; text-decoration: none; font-family: var(--mono); font-size: 9.5px; color: var(--muted); }
-.niv-col i { display: block; font-style: normal; font-size: 10.5px; color: var(--text-dim); margin-top: 4px; line-height: 1.3; }
-.niv-col.short { background: var(--amber-soft); border-color: var(--amber-line); border-style: dashed; }
-.niv-col em {
-  display: block; margin-top: 6px; padding-top: 5px; border-top: 1px dashed var(--amber-line);
-  font-style: normal; font-size: 10px; font-weight: 700; color: var(--amber-ink);
-}
-.niv-link {
-  flex: 0 0 auto; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--amber-ink); background: var(--amber-soft);
-  border: 1px dashed var(--amber-line); border-radius: 999px; padding: 4px 9px;
-}
 
 .splv { display: grid; gap: 7px; margin-top: 11px; }
 .splv-bar { display: flex; gap: 3px; }
@@ -1834,6 +1757,26 @@ table.wp.w4 tfoot .cell { background: var(--good-soft); color: var(--good-deep);
   font-size: 11.5px; color: var(--muted);
 }
 .splv-foot b { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--text-dim); }
+
+/* ---- the problem statement ---- */
+.pr-head { margin-bottom: 14px; }
+.pr-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.pr-head h1 {
+  font-family: var(--display); font-size: 22px; font-weight: 600;
+  line-height: 1.2; letter-spacing: -0.01em; color: var(--text);
+}
+.pr-facts { margin-top: 11px; font-size: 13.5px; line-height: 1.55; color: var(--text-dim); }
+.pr-facts b { color: var(--text); }
+.pr-note {
+  border-radius: var(--r-md); border: 1px solid var(--line);
+  background: var(--surface-2); padding: 11px 13px;
+}
+.pr-note p { font-size: 12.5px; line-height: 1.55; color: var(--text-dim); }
+.pr-note p + p { margin-top: 9px; }
+.pr-note b { color: var(--text); }
 
 /* ---- the given worksheet, in the Reference tab ---- */
 .gw-scroll { overflow-x: auto; margin-top: 11px; }
@@ -3339,62 +3282,6 @@ function adjustingEntries5() {
 }
 var ADJE5 = adjustingEntries5();
 
-/* ---- the briefing ----
-   A capstone should not re-teach what four modules already taught, and it
-   must not print a figure the learner is being asked to produce. These five
-   screens explain the one tool that is new — the ten-column worksheet —
-   and the order the five instructions have to be worked in. Every Cooke
-   figure they use is one the problem itself prints. */
-var FLOW5DATA = [
-  { id: 'job', short: 'The job', title: 'Five instructions, one order',
-    concept: 'Each instruction hands the next one its figures',
-    rule: 'Work them in the printed order. Any other order asks for a figure that does not exist yet.',
-    why: ['A worksheet is not a report. It is the sheet accountants fill in <i>before</i> writing anything up, so that the statements, the entries and the proof all come from one place.',
-          'That is why the order is forced: the balance sheet needs the net income the worksheet strikes; the adjusting entries are journalized from the adjustment columns; closing needs the adjusted balances; and the post-closing trial balance proves the lot.'],
-    order: true,
-    take: 'Nothing in this problem is new except the worksheet. Everything else you have already done twice.' },
-
-  { id: 'sheet', short: 'The ten columns', title: 'What the worksheet is for',
-    concept: 'Five pairs of columns, each a debit and a credit',
-    rule: 'A row travels left to right: its trial balance, what changed, what it became, and then to exactly one of the last four columns.',
-    why: ['Cooke has handed you the first two pairs already: the <b>trial balance</b> as the books stood, and the <b>adjusted trial balance</b> after the period-end work. Both foot, so both are trustworthy.',
-          'The <b>adjustments</b> pair between them is blank, and it is the difference between the two &mdash; that is the whole trick of this problem. Find what moved and you have found the adjusting entries as well.'],
-    sheet: true,
-    take: 'Six columns are yours to produce. Not one of them needs a figure from outside the sheet.' },
-
-  { id: 'ni', short: 'The balancing figure', title: 'Why net income is written twice',
-    concept: 'The two column pairs are out by the same amount, in opposite directions',
-    rule: 'Net income is entered in the income statement debit column and the balance sheet credit column, and then all four columns foot.',
-    why: ['Total the income statement pair and it will not balance: revenue is larger than the expenses beside it. Total the balance sheet pair and it will not balance either &mdash; and it will be out by exactly the same amount.',
-          'That is not a coincidence. It is the same figure seen twice: what the period earned, and what the owners now have a claim on. Writing it into both pairs is what proves the sheet.'],
-    ni: true,
-    take: 'If your two gaps are not the same number, something above them is wrong. Do not write in a plug.' },
-
-  { id: 'class', short: 'Classified', title: 'The debt that sits in two places',
-    concept: 'Current means due within the year, and one liability is only partly current',
-    rule: 'Split the mortgage: the part due next year is a current liability, the rest is long-term.',
-    why: ['A classified balance sheet groups what it reports &mdash; current assets before the long-lived ones, current liabilities before the long-term ones &mdash; so a reader can see at a glance whether the business can pay what falls due soon.',
-          'Cooke&rsquo;s note is the whole of instruction b&rsquo;s difficulty: of the mortgage payable, <b>' + dollars(MORT_CURRENT) + '</b> falls due in the next fiscal year. That much is current. The remainder is long-term, and the two together still add back to what the trial balance shows.'],
-    split: true,
-    take: 'Every other line on the balance sheet comes off the worksheet unchanged.' },
-
-  { id: 'back', short: 'What you already know', title: 'Adjusting, closing, proving',
-    concept: 'Instructions c, d and e are modules 2.3 and 2.4 again, on a bigger set of accounts',
-    rule: 'Adjusting entries come out of the adjustment columns; closing empties every temporary account; the post-closing trial balance shows what survived.',
-    why: ['Instruction c asks you to journalize the adjustments you have already found. Written on the worksheet they are two columns of figures; written in the journal they are six entries with dates and accounts.',
-          'Instruction d closes the books. Revenue and the expenses go through Income Summary; the result goes to Retained Earnings; dividends go there directly, never through Income Summary. Instruction e is the proof that nothing temporary is left standing.'],
-    method: true,
-    take: 'The five instructions are five sheets of one workbook. Open the Solve tab and they are waiting in order.' }
-];
-
-var METHOD5 = [
-  ['Find what moved between the two trial balances', 'The adjustments'],
-  ['Extend every adjusted balance to one column', 'Income statement &middot; Balance sheet'],
-  ['Strike net income and write it in both pairs', 'The balancing figure'],
-  ['Journalize what the worksheet already shows', 'Adjusting, then closing'],
-  ['Prove that only permanent accounts are left', 'The post-closing trial balance']
-];
-
 /* ============================================================
    THE MODULES
    Four problems from the same chapter, each starting where the last
@@ -3420,10 +3307,10 @@ var MODULES = [
     co: 'Kleene Window Washing Inc.', sub: 'Three statements, four closing entries',
     blurb: 'Turn the adjusted trial balance into three financial statements, close every account that measured July, and prove what is left.',
     count: '9 screens' },
-  { id: 'p212', code: 'P2.12', name: 'Put it all together',
+  { id: 'p212', code: 'P2.12', name: 'Work it yourself',
     co: 'Cooke Company', sub: 'One workbook, five instructions',
-    blurb: 'The whole cycle on one problem: complete a ten-column worksheet, then the balance sheet, the adjusting and closing entries, and the proof.',
-    count: '5 briefings', unit: 'Briefing ' }
+    blurb: 'A problem, not a lesson. Complete a ten-column worksheet, then the classified balance sheet, the adjusting and closing entries, and the post-closing trial balance — unaided.',
+    count: '5 instructions to work' }
 ];
 
 /* Icons into the static chrome. */
@@ -3556,7 +3443,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* How many of the open module's screens are entries rather than reports. */
   /* 2.4 opens with statements rather than entries, so its 'Entry n of m'
      label would be wrong from the first screen; it uses the item's own kind. */
-  function entryCount() { return [ENTRIES.length, ENTRIES2.length, ENTRIES3.length, STMT4.length, FLOW5.length][mod]; }
+  function entryCount() { return [ENTRIES.length, ENTRIES2.length, ENTRIES3.length, STMT4.length, 0][mod]; }
   function modId() { return MODULES[mod].id; }
   function readSet() {
     if (!read[modId()]) read[modId()] = {};
@@ -3848,7 +3735,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     else if (mod === 1) { if (dash) renderDash2(); else renderDetail2(); }
     else if (mod === 2) { if (dash) renderDash3(); else renderDetail3(); }
     else if (mod === 3) { if (dash) renderDash4(); else renderDetail4(); }
-    else { if (dash) renderDash5(); else renderDetail5(); }
+    else renderDash5();          /* the capstone has one screen: the problem */
   }
 
   /* ---------- table pane ---------- */
@@ -6044,7 +5931,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   /* ---------- module 2.4: the closing process ---------- */
 
   var FLOW4 = FLOW4DATA;
-  var FLOW5 = FLOW5DATA;
+  var FLOW5 = [];   /* P2.12 is a problem, not a walkthrough: nothing to page through */
 
   /* ---------- the closing funnel ----------
      The one diagram the module turns on. Revenue and the expenses drain into
@@ -6963,78 +6850,6 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
 
-  /* ---------- capstone illustrations ----------
-     None of these prints a figure the learner is asked to produce. The
-     amounts they do show are ones the problem itself prints. */
-
-  /* The five instructions, and what each one hands the next. */
-  function orderViz() {
-    var steps = [
-      ['a', 'Worksheet', 'net income'],
-      ['b', 'Balance sheet', 'nothing further'],
-      ['c', 'Adjusting entries', 'the ledger'],
-      ['d', 'Closing entries', 'retained earnings'],
-      ['e', 'Post-closing', 'the proof']
-    ];
-    return '<div class="ordv">' + steps.map(function (s, i) {
-      return (i ? '<span class="ordv-arr">' + ICON.next + '</span>' : '') +
-        '<span class="ordv-step"><i>' + s[0] + '</i><b>' + s[1] + '</b><u>hands on ' + s[2] + '</u></span>';
-    }).join('') + '</div>';
-  }
-
-  /* The ten columns, and one row travelling across them. Cash is the worked
-     example precisely because nothing happens to it: the shape of the journey
-     is visible without giving away a single answer. */
-  function sheetViz() {
-    var pairs = [
-      ['Trial Balance', 'given'],
-      ['Adjustments', 'yours'],
-      ['Adjusted Trial Balance', 'given'],
-      ['Income Statement', 'yours'],
-      ['Balance Sheet', 'yours']
-    ];
-    var head = pairs.map(function (p) {
-      return '<div class="shv-pair ' + (p[1] === 'given' ? 'given' : 'mine') + '">' +
-        '<b>' + p[0] + '</b>' +
-        '<span class="shv-dc"><i>Dr</i><i>Cr</i></span>' +
-        '<u>' + p[1] + '</u></div>';
-    }).join('');
-    var trip = [
-      ['Trial balance Dr', money2(tb5('cash')), ''],
-      ['Adjustments', 'none', ' dim'],
-      ['Adjusted Dr', money2(atb5('cash')), ''],
-      ['Balance sheet Dr', money2(atb5('cash')), ' land']
-    ];
-    var row = trip.map(function (t, i) {
-      return (i ? '<span class="shv-arr">' + ICON.next + '</span>' : '') +
-        '<span class="shv-step' + t[2] + '"><u>' + t[0] + '</u><b>' + t[1] + '</b></span>';
-    }).join('');
-    return '<div class="shv">' +
-      '<div class="shv-head">' + head + '</div>' +
-      '<div class="shv-row"><span class="shv-lab">Cash</span><span class="shv-trip">' + row + '</span></div>' +
-      '<p class="shv-note">Cash is the easy row: nothing adjusted it, so it arrives in the balance sheet debit column at the figure it started with. The other twenty-three are the work.</p>' +
-      '</div>';
-  }
-
-  /* Why the balancing figure is written into both pairs. Deliberately
-     without amounts — the amount is instruction a's answer. */
-  function niViz() {
-    function pair(cap, big, small, bigLab, smallLab, gapSide) {
-      return '<div class="niv-pair"><b>' + cap + '</b>' +
-        '<div class="niv-cols">' +
-          '<span class="niv-col' + (gapSide === 'd' ? ' short' : '') + '"><u>Dr</u><i>' + bigLab + '</i>' +
-            (gapSide === 'd' ? '<em>net income</em>' : '') + '</span>' +
-          '<span class="niv-col' + (gapSide === 'c' ? ' short' : '') + '"><u>Cr</u><i>' + smallLab + '</i>' +
-            (gapSide === 'c' ? '<em>net income</em>' : '') + '</span>' +
-        '</div></div>';
-    }
-    return '<div class="niv">' +
-      pair('Income statement', 0, 0, 'expenses', 'revenue', 'd') +
-      '<span class="niv-link">the same figure</span>' +
-      pair('Balance sheet', 0, 0, 'assets and dividends', 'liabilities and equity', 'c') +
-      '</div>';
-  }
-
   /* The one liability that is in two places at once. Both figures are the
      problem's own: the balance is printed, the split is printed in the note. */
   function splitViz() {
@@ -7048,23 +6863,24 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       '</div>';
   }
 
-  /* ---------- capstone dashboard ---------- */
+  /* ---------- the problem ----------
+     A problem module states the problem and gets out of the way. No worked
+     example, no method, no figure explaining what a worksheet is for: four
+     modules taught that, and this is where the learner finds out whether it
+     took. The only thing here that is not the printed problem is the note on
+     how the workbook is laid out, which is about the tool and not the
+     accounting. */
   function renderDash5() {
     var tb = foot5(tb5), atb = foot5(atb5);
-
-    function card(f, i) {
-      return '<button class="card-e' + (isRead(f.id) ? ' read' : '') + '" data-open="' + i + '">' +
-        '<span class="card-e-top">' +
-          '<span class="card-n">' + (isRead(f.id) ? ICON.check : (i + 1)) + '</span>' +
-          '<b>' + f.short + '</b><span class="card-go">' + ICON.next + '</span>' +
-        '</span><p>' + f.concept + '</p></button>';
-    }
-
-    $('guide').innerHTML =
+    var sc = score5();
+    return $('guide').innerHTML =
       '<div class="wrap fade">' +
-        '<div class="dash-head">' +
-          '<h1>Everything, on one problem</h1>' +
-          '<p>' + CO5.name + ' has closed its fiscal year. You are handed a part-built worksheet and five instructions, and nothing else in this module is explained twice &mdash; you have done the adjusting and the closing already. What is new is the sheet they are all written on.</p>' +
+        '<div class="pr-head">' +
+          '<div class="pr-eyebrow">P2.12 &middot; ' + CO5.name + '</div>' +
+          '<h1>Worksheet, Balance Sheet, Adjusting and Closing Entries</h1>' +
+          '<p class="pr-facts"><b>Facts.</b> ' + CO5.name + ' has a fiscal year ending on September 30. ' +
+            'Selected data from the September 30 worksheet are in the Reference tab: the trial balance ' +
+            'as the books stood, and the adjusted trial balance after the period-end work.</p>' +
         '</div>' +
         '<div class="state">' +
           '<div class="state-cap">' + ICON.pulse + 'What you have been given</div>' +
@@ -7075,59 +6891,31 @@ document.getElementById('next-icon').innerHTML = ICON.next;
             '<div class="bb-side bb-c"><span class="bb-cap">Adjusted trial balance</span>' +
               '<b class="bb-num" data-from="' + atb.d + '" data-count="' + atb.d + '">' + dollars(atb.d) + '</b></div>' +
           '</div>' +
-          '<div class="verdict ok">' + ICON.check + ' Both columns foot, so both are sound. What is missing is everything between and after them</div>' +
+          '<div class="verdict ok">' + ICON.check + ' Both columns foot. Everything between and after them is yours to produce</div>' +
         '</div>' +
-        '<div class="sect">The briefing<i></i></div>' +
-        '<div class="cards">' + FLOW5.map(card).join('') + '</div>' +
-        '<div class="sect">The five instructions<i></i></div>' +
+        '<div class="sect">Instructions<i></i></div>' +
         '<div class="instr" style="margin:0">' +
           INSTRUCTIONS5.map(function (x) {
-            return '<div class="instr-row"><span class="instr-k">' + x.id + '.</span>' +
-              '<span class="instr-t">' + x.text + '</span></div>';
+            var got = sc.parts[x.id], cap = sc.caps[x.id], done = cap > 0 && got === cap;
+            return '<div class="instr-row' + (done ? ' done' : '') + '">' +
+              '<span class="instr-k">' + (done ? ICON.check : x.id + '.') + '</span>' +
+              '<span class="instr-t">' + x.text + '</span>' +
+              '<span class="instr-n">' + got + '/' + cap + '</span></div>';
           }).join('') +
         '</div>' +
         '<button type="button" class="p5-open" data-gotab="solve">' + ICON.pencil +
-          'Open the workbook &mdash; five sheets, one per instruction</button>' +
-        '<div class="sect">The order of work<i></i></div>' +
-        '<div class="method">' + METHOD5.map(function (m, i) {
-          return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
-            '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
-        }).join('') + '</div>' +
+          (sc.got ? 'Back to the workbook' : 'Start &mdash; open the workbook') + '</button>' +
+        '<div class="sect">How the workbook is laid out<i></i></div>' +
+        '<div class="pr-note">' +
+          '<p>Five sheets, one for each instruction, in the printed order. The worksheet sheet is a ' +
+            'spreadsheet: the trial balance and adjusted trial balance columns are locked because the ' +
+            'problem gives them, and the six columns between and after them are yours. Tap a cell to see ' +
+            'what it is and where its figure came from.</p>' +
+          '<p>Nothing is marked until you ask. <b>Check my work</b> grades what you have done and says what ' +
+            'is wrong with it; every item has a hint behind a button if you want one.</p>' +
+        '</div>' +
         '<div style="height:10px"></div>' +
       '</div>';
-    animateViz($('guide'));
-    $('guide').parentNode.scrollTop = dashScroll;
-  }
-
-  function renderDetail5() {
-    var item = FLOW5[at], pic = '';
-    if (item.order) pic = viz('The order the instructions run in', orderViz(),
-      'Instruction a produces the worksheet, which hands net income to b; c and d journalize what the worksheet already shows; e proves the result.');
-    if (item.sheet) pic = viz('Ten columns, five pairs', sheetViz(),
-      'The worksheet runs left to right in five pairs of debit and credit columns: trial balance and adjusted trial balance are given, the adjustments between them and the income statement and balance sheet extensions are yours to fill. Cash travels straight across at ' +
-      dollars(atb5('cash')) + ' because nothing adjusted it.', true);
-    if (item.ni) pic = viz('Two pairs, one gap each', niViz(),
-      'The income statement pair is short on the debit side and the balance sheet pair is short on the credit side, by the same amount. That amount is net income, and it is written into both.');
-    if (item.split) pic = viz('One balance, two classifications', splitViz(),
-      'Of the ' + dollars(atb5('mort')) + ' mortgage payable, ' + dollars(MORT_CURRENT) +
-      ' is a current liability and ' + dollars(mortLong()) + ' is long-term.');
-
-    var body =
-      '<div class="ex-eyebrow">Briefing &middot; ' + (at + 1) + ' of ' + FLOW5.length + '</div>' +
-      '<h1 class="ex-title">' + item.title + '</h1>' +
-      '<div class="ex-fact">' + item.concept + '</div>' +
-      '<div class="ex-why">' + item.why.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
-      pic +
-      (item.method ? '<div class="method" style="margin-top:12px">' + METHOD5.map(function (m, i) {
-        return '<div class="method-row"><span class="method-n">' + (i + 1) + '</span>' +
-          '<span>' + m[0] + '</span><em>' + m[1] + '</em></div>';
-      }).join('') + '</div>' : '') +
-      '<div class="ex-rule">' + ICON.bulb + '<p>' + item.rule + '</p></div>' +
-      (item.take ? '<div class="ex-why"><p>' + item.take + '</p></div>' : '');
-
-    $('guide').innerHTML = '<div class="wrap fade">' + body + '<div style="height:10px"></div></div>';
-    animateViz($('guide'));
-    $('guide').parentNode.scrollTop = 0;
   }
 
   /* ---------- capstone reference ----------
@@ -8229,10 +8017,11 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     $('mod-list').innerHTML = MODULES.map(function (m, i) {
       var f = flowFor(i);
       var n = f.filter(function (x) { return read[m.id] && read[m.id][x.id]; }).length;
+      var line = f.length ? n + ' of ' + f.length + ' explained' : m.count;
       return '<button class="mod-card' + (i === mod ? ' on' : '') + '" data-mod="' + i + '">' +
         '<i>' + m.code + '</i><b>' + m.name + '</b>' +
         '<span>' + m.blurb + '</span>' +
-        '<em>' + m.co + ' &middot; ' + n + ' of ' + f.length + ' explained</em>' +
+        '<em>' + m.co + ' &middot; ' + line + '</em>' +
         '</button>';
     }).join('');
   }
@@ -8259,6 +8048,15 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     var dash = view === 'dash';
     var done = readCount();
     var FLOW = flow();
+    if (!FLOW.length) {
+      /* A problem module has one screen. Nothing to advance to, so the pager
+         and the progress rail would both be lying. */
+      $('btn-prev').hidden = true;
+      $('btn-next').hidden = true;
+      $('prog-label').parentNode.hidden = true;
+      $('rail').innerHTML = '';
+      return;
+    }
     $('btn-prev').hidden = dash;
     $('btn-prev').disabled = false;
     $('btn-next').disabled = false;
@@ -8372,6 +8170,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
 
   $('btn-prev').addEventListener('click', toDash);
   $('btn-next').addEventListener('click', function () {
+    if (!flow().length) return;
     if (view === 'dash') {
       var f = flow(), next = 0;
       while (next < f.length && isRead(f[next].id)) next++;

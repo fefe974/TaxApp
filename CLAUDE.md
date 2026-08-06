@@ -16,6 +16,12 @@ step, no runtime dependencies. `artifact.html` is derived from it by
   by retyping it. The capstone is the one module that types two columns rather
   than one, because the printed problem hands over both trial balances; the six
   adjustments between them are still derived, as their difference.
+- **Lesson modules teach; the problem module does not.** 2.1 to 2.4 explain,
+  illustrate and walk a worked example. P2.12 states the problem, hands over
+  the given data and the tools, and explains nothing — its guide pane has no
+  walkthrough cards, no explanatory figure and no method list, and
+  `verify.js` asserts all three stay absent. Scaffolding for it lives where
+  a learner asks for it: hints behind buttons, and diagnosis on Check my work.
 - **Modules follow the printed problem.** Solve asks exactly what the textbook's
   INSTRUCTIONS ask, quoted verbatim, scored per instruction. Anything the app
   adds beyond the problem is labelled as such and scored separately.

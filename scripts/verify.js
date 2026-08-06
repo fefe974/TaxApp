@@ -1488,12 +1488,29 @@ function check(name, ok, detail) {
 
   // The briefing.
   const brief = await cap.evaluate(() => ({
+    h1: document.querySelectorAll('#guide h1').length,
     cards: document.querySelectorAll('#guide .card-e').length,
+    figs: document.querySelectorAll('#guide figure.viz').length,
+    method: document.querySelectorAll('#guide .method-row').length,
     instr: [...document.querySelectorAll('#guide .instr-row .instr-t')].map(e => e.textContent),
-    open: document.querySelectorAll('#guide [data-gotab="solve"]').length
+    open: document.querySelectorAll('#guide [data-gotab="solve"]').length,
+    text: document.getElementById('guide').textContent,
+    wide: document.querySelector('#pane-guide .scroll').scrollWidth -
+          document.querySelector('#pane-guide .scroll').clientWidth,
+    prev: document.getElementById('btn-prev').hidden,
+    next: document.getElementById('btn-next').hidden,
+    rail: document.querySelectorAll('#rail i').length
   }));
-  check('the capstone dashboard lists five briefings and the five printed instructions',
-    brief.cards === 5 && brief.instr.length === 5, JSON.stringify([brief.cards, brief.instr.length]));
+  check('the capstone states the problem under one heading, and fits',
+    brief.h1 === 1 && brief.instr.length === 5 && brief.wide <= 0,
+    JSON.stringify([brief.h1, brief.instr.length, brief.wide]));
+  // This is a problem, not a lesson. Nothing in the guide pane may teach.
+  check('and it teaches nothing: no walkthrough cards, no explanatory figure, no method list',
+    brief.cards === 0 && brief.figs === 0 && brief.method === 0,
+    JSON.stringify([brief.cards, brief.figs, brief.method]));
+  check('there is nothing to page through, and the pager and rail say so',
+    brief.prev === true && brief.next === true && brief.rail === 0,
+    JSON.stringify([brief.prev, brief.next, brief.rail]));
   check('the instructions are the ones the problem prints, verbatim',
     brief.instr[0] === 'Prepare a complete worksheet.' &&
     brief.instr[1] === 'Prepare a classified balance sheet. (Note: $10,000 of the mortgage payable is due for payment in the next fiscal year.)' &&
@@ -1503,31 +1520,21 @@ function check(name, ok, detail) {
     JSON.stringify(brief.instr));
   check('and the dashboard opens the workbook', brief.open === 1);
 
-  const screens = [];
-  for (const id of ['job', 'sheet', 'ni', 'class', 'back']) {
-    await cap.goto(FILE + '#p212-' + id);
-    await cap.waitForTimeout(280);
-    screens.push(await cap.evaluate(() => ({
-      h1: document.querySelectorAll('#guide h1').length,
-      figs: document.querySelectorAll('#guide figure.viz').length,
-      claim: [...document.querySelectorAll('#guide figure.viz [role="img"], #guide figure.viz .sr-only')].length,
-      text: document.getElementById('guide').textContent,
-      wide: document.querySelector('#pane-guide .scroll').scrollWidth -
-            document.querySelector('#pane-guide .scroll').clientWidth
-    })));
-  }
-  check('every briefing has exactly one heading and no sideways scroll',
-    screens.every(s => s.h1 === 1 && s.wide <= 0), JSON.stringify(screens.map(s => [s.h1, s.wide])));
-  check('four of the five carry an illustration, and each states what it shows',
-    screens.filter(s => s.figs === 1).length === 4 && screens.every(s => s.figs === s.claim),
-    JSON.stringify(screens.map(s => [s.figs, s.claim])));
+  // A hash left over from when this module had screens must not strand anyone.
+  await cap.goto(FILE + '#p212-sheet');
+  await cap.waitForTimeout(320);
+  const stale = await cap.evaluate(() => document.querySelector('#guide h1').textContent);
+  await cap.goto(FILE + '#p212');
+  await cap.waitForTimeout(300);
+  check('a hash that names no screen lands on the problem rather than nothing',
+    /Worksheet, Balance Sheet/.test(stale), stale.slice(0, 40));
 
   // A capstone that prints its own answers is not a capstone. These are the
   // figures that appear in neither column the problem hands over.
   const ANSWERS = ['33,500', '203,500', '245,500', '21,500', '247,000', '45,500',
                    '158,000', '34,300', '74,300', '129,200', '226,000', '259,500', '78,000', '59,200'];
   const leaked212 = [];
-  screens.forEach((s, i) => ANSWERS.forEach(a => { if (s.text.indexOf(a) !== -1) leaked212.push('briefing ' + i + ': ' + a); }));
+  ANSWERS.forEach(a => { if (brief.text.indexOf(a) !== -1) leaked212.push('problem statement: ' + a); });
   await cap.goto(FILE + '#p212');
   await cap.waitForTimeout(250);
   await cap.click('#tab-table');
@@ -1539,7 +1546,7 @@ function check(name, ok, detail) {
     note: /10,000/.test(document.getElementById('table-slot').textContent)
   }));
   ANSWERS.forEach(a => { if (ref.text.indexOf(a) !== -1) leaked212.push('reference: ' + a); });
-  check('the briefing and the Reference give away no figure the learner has to produce',
+  check('the problem statement and the Reference give away no figure the learner has to produce',
     leaked212.length === 0, leaked212.join(' | '));
   check('the Reference prints the given worksheet, all 24 rows, footing both ways',
     ref.rows === 24 && ref.tot.join() === '491,700,491,700,506,500,506,500', JSON.stringify(ref.tot));
@@ -1888,8 +1895,7 @@ function check(name, ok, detail) {
   for (const dark of [false, true]) {
     for (const [hash, tab] of [['#lo21', 'guide'], ['#lo21', 'solve'], ['#lo22', 'solve'],
                                ['#lo23', 'guide'], ['#lo23-atb', 'guide'], ['#lo23', 'solve'],
-                               ['#p212', 'guide'], ['#p212-sheet', 'guide'], ['#p212-ni', 'guide'],
-                               ['#p212-class', 'guide'], ['#p212', 'table']]) {
+                               ['#p212', 'guide'], ['#p212', 'table']]) {
       await c.goto(FILE + hash);
       await c.waitForTimeout(200);
       // The theme is saved, so clicking the toggle on every screen alternates
