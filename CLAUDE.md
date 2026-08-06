@@ -25,10 +25,10 @@ step, no runtime dependencies. `artifact.html` is derived from it by
 - **Modules follow the printed problem.** Solve asks exactly what the textbook's
   INSTRUCTIONS ask, quoted verbatim, scored per instruction. Anything the app
   adds beyond the problem is labelled as such and scored separately.
-- **The Reference tab is source material, never the answer key.** In the
-  capstone the guide is held to the same rule: a briefing may use a figure the
-  problem prints, and no other. `verify.js` sweeps both for the fourteen
-  figures that appear in neither given column.
+- **The Reference tab is source material, never the answer key.** In P2.12 the
+  problem statement is held to the same rule: it may use a figure the problem
+  prints, and no other. `verify.js` sweeps both panes for the fourteen figures
+  that appear in neither given column.
 - **Names are global.** The data script shares one scope across all five
   modules and the shell IIFE shares another, so a helper named for one module
   can shadow another module's. `adjOn` did exactly that and broke 2.3 silently.
