@@ -2011,6 +2011,298 @@ button.instr-row.now:hover { background: var(--brand-soft); }
   .bsf-in { flex-basis: 92px; }
 }
 
+
+/* ============================================================
+   THE LECTURE PANE
+   Read straight through, so it is one page rather than a paged
+   flow. Topics are numbered, each names the one it builds on, and
+   the figures are schematic — the guide supplies the real numbers.
+   ============================================================ */
+
+#pane-lecture .scroll { padding: 22px 18px 34px; }
+#pane-lecture .wrap { max-width: 640px; }
+@media (min-width: 720px) { #pane-lecture .scroll { padding: 30px 24px 44px; } }
+@media (max-width: 360px) { #pane-lecture .scroll { padding: 20px 16px 30px; } }
+
+.lec-head { margin-bottom: 16px; }
+.lec-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.lec-head h1 {
+  font-family: var(--display); font-size: 22px; font-weight: 600;
+  line-height: 1.2; letter-spacing: -0.01em; color: var(--text);
+}
+.lec-thesis { margin-top: 11px; font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+.lec-thesis.sm { margin-top: 0; margin-bottom: 12px; font-size: 13px; }
+
+.lec-map { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.lec-map a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 11px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-size: 12.5px; font-weight: 600; color: var(--text-dim); text-decoration: none;
+}
+.lec-map a:hover { background: var(--surface-3); }
+.lec-map i {
+  flex: 0 0 auto; width: 19px; height: 19px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--brand); color: var(--on-brand);
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; font-style: normal;
+}
+
+.lec-topic { margin-top: 26px; scroll-margin-top: 12px; }
+.lec-topic h2 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text);
+}
+.lec-n {
+  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--brand-soft); color: var(--brand); border: 1px solid var(--brand-line);
+  font-family: var(--mono); font-size: 11.5px; font-weight: 700;
+}
+.lec-builds {
+  margin-top: 8px; display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-size: 11px; color: var(--muted);
+}
+.lec-builds b { font-weight: 700; color: var(--text-dim); }
+.lec-topic .ex-rule { margin-top: 10px; }
+.lec-topic .ex-why { margin-top: 11px; }
+.lec-topic .viz { margin-top: 14px; }
+
+.lec-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.lec-steps li {
+  display: grid; grid-template-columns: 19px 1fr; gap: 3px 10px;
+  padding: 9px 11px; border-radius: var(--r-sm);
+  background: var(--surface); border: 1px solid var(--line);
+}
+.lec-steps b, .lec-steps u { grid-column: 2; }
+.lec-step-n {
+  grid-row: 1 / span 2; width: 19px; height: 19px; border-radius: 50%;
+  display: grid; place-items: center; align-self: center;
+  background: var(--surface-3); color: var(--text-dim);
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+}
+.lec-steps b { font-size: 12.5px; font-weight: 650; color: var(--text); }
+.lec-steps u { text-decoration: none; font-size: 11.5px; color: var(--muted); }
+
+/* ---- shared figure primitives ---- */
+.lec-box {
+  display: inline-grid; gap: 1px; padding: 8px 11px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-size: 12px; font-weight: 650; color: var(--text-dim); text-align: center;
+}
+.lec-box i { font-style: normal; font-size: 10px; font-weight: 400; color: var(--muted); }
+.lec-box.wide { min-width: 60%; }
+.lec-box.up { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+.lec-box.up i { color: var(--good-deep); opacity: 0.85; }
+.lec-box.down { background: var(--amber-soft); border-color: var(--amber-line); color: var(--amber-ink); }
+.lec-box.down i { color: var(--amber-ink); opacity: 0.85; }
+.lec-box.hold { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand-ink); }
+.lec-box.by { background: var(--bad-soft); border-color: var(--bad-line); color: var(--bad); }
+.lec-arr {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  color: var(--muted); padding: 3px 0;
+}
+.lec-arr svg { width: 14px; height: 14px; transform: rotate(90deg); }
+.lec-arr u { text-decoration: none; font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; }
+.lec-flow { display: grid; gap: 2px; }
+.lec-card {
+  display: grid; gap: 3px; padding: 10px 12px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+}
+.lec-card b { font-size: 12.5px; font-weight: 700; color: var(--text); }
+.lec-card u { text-decoration: none; font-size: 11.5px; line-height: 1.4; color: var(--muted); }
+.lec-foot {
+  display: flex; align-items: center; gap: 7px; margin-top: 10px;
+  padding: 7px 10px; border-radius: var(--r-sm);
+  background: var(--good-soft); color: var(--good-deep);
+  font-size: 11.5px; font-weight: 600;
+}
+.lec-foot svg { width: 13px; height: 13px; flex: 0 0 auto; }
+.lec-note { margin-top: 11px; font-size: 11.5px; line-height: 1.5; color: var(--muted); }
+
+/* ---- 2.1 dual effect ---- */
+.lec-dual { display: grid; gap: 5px; }
+.lec-dual-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.lec-mv {
+  flex: 0 0 auto; display: inline-flex; align-items: baseline; gap: 5px;
+  padding: 5px 9px; border-radius: var(--r-sm); font-size: 11.5px; font-weight: 650;
+}
+.lec-mv i { font-style: normal; font-size: 12px; }
+.lec-mv.up { background: var(--good-soft); color: var(--good-deep); border: 1px solid var(--good-line); }
+.lec-mv.down { background: var(--amber-soft); color: var(--amber-ink); border: 1px solid var(--amber-line); }
+.lec-dual-why { flex: 1 1 100%; font-size: 11px; color: var(--muted); padding-left: 2px; }
+
+/* ---- 2.1 equity tree ---- */
+.lec-tree { display: grid; gap: 0; justify-items: center; }
+.lec-tier { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; width: 100%; }
+.lec-tier.two > *, .lec-tier.three > * { flex: 1 1 0; min-width: 84px; }
+.lec-stem { width: 1px; height: 14px; background: var(--line-strong); }
+.lec-stem.right { margin-left: 25%; }
+
+/* ---- 2.2 normal balances ---- */
+.lec-normal { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.lec-side { display: grid; gap: 3px; padding: 10px; border-radius: var(--r-sm); border: 1px solid var(--line); }
+.lec-side b { font-family: var(--mono); font-size: 12px; font-weight: 700; }
+.lec-side u { text-decoration: none; font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+.lec-side span { font-size: 11.5px; color: var(--text-dim); line-height: 1.35; }
+.lec-side.dr { background: var(--brand-soft); border-color: var(--brand-line); }
+.lec-side.dr b { color: var(--brand-ink); }
+.lec-side.cr { background: var(--amber-soft); border-color: var(--amber-line); }
+.lec-side.cr b { color: var(--amber-ink); }
+.lec-normal .lec-note { grid-column: 1 / -1; margin-top: 2px; }
+
+/* ---- 2.2 journal anatomy ---- */
+.lec-je { font-size: 11.5px; }
+.lec-je-row {
+  display: grid; grid-template-columns: 52px 1fr 58px 58px; gap: 6px;
+  padding: 6px 4px; border-bottom: 1px solid var(--line); align-items: baseline;
+}
+.lec-je-row.head {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--muted); border-bottom-color: var(--line-strong);
+}
+.lec-je-row span { color: var(--text-dim); }
+.lec-je-row .in { padding-left: 16px; }
+.lec-je-row .memo { font-style: italic; color: var(--muted); }
+.lec-je-d, .lec-je-a { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.lec-je-a { text-align: right; }
+
+/* ---- 2.2 what the proof misses ---- */
+.lec-blind { display: grid; gap: 5px; }
+.lec-blind-row {
+  display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+  padding: 8px 10px; border-radius: var(--r-sm);
+  background: var(--bad-soft); border: 1px solid var(--bad-line);
+  font-size: 12px; color: var(--text-dim);
+}
+.lec-blind-x { flex: 0 0 auto; display: grid; place-items: center; color: var(--bad); }
+.lec-blind-x svg { width: 14px; height: 14px; }
+.lec-blind-row span:not(.lec-blind-x) { flex: 1 1 130px; }
+.lec-blind-row u {
+  flex: 0 0 auto; text-decoration: none; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--bad);
+}
+
+/* ---- 2.3 cash against accrual ---- */
+.lec-two { display: grid; gap: 12px; }
+.lec-two.cols { grid-template-columns: 1fr 1fr; }
+.lec-tl b { display: block; font-size: 12px; font-weight: 700; color: var(--text-dim); margin-bottom: 20px; }
+.lec-tl-bar {
+  position: relative; height: 4px; border-radius: 2px; background: var(--surface-3);
+  margin: 0 4px 26px;
+}
+.lec-tl-end {
+  position: absolute; top: 9px; font-style: normal; font-size: 9.5px; color: var(--text-dim);
+  white-space: nowrap;
+}
+.lec-tl-end.left { left: 0; }
+.lec-tl-end.right { right: 0; }
+.lec-tl-bar::before, .lec-tl-bar::after {
+  content: ''; position: absolute; top: -4px; width: 2px; height: 12px;
+  background: var(--line-strong); border-radius: 1px;
+}
+.lec-tl-bar::before { left: 0; }
+.lec-tl-bar::after { right: 0; }
+.lec-tl-mark { position: absolute; top: -22px; transform: translateX(-50%); }
+.lec-tl-mark u {
+  text-decoration: none; font-size: 10px; font-weight: 700; white-space: nowrap;
+  padding: 2px 7px; border-radius: 999px; display: inline-block;
+}
+.lec-tl-mark::after {
+  content: ''; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%);
+  width: 7px; height: 7px; border-radius: 50%;
+}
+.lec-tl.cash .lec-tl-mark u { background: var(--amber-soft); color: var(--amber-ink); border: 1px solid var(--amber-line); }
+.lec-tl.cash .lec-tl-mark::after { background: var(--amber); }
+.lec-tl.accr .lec-tl-mark u { background: var(--good-soft); color: var(--good-deep); border: 1px solid var(--good-line); }
+.lec-tl.accr .lec-tl-mark::after { background: var(--good); }
+.lec-tl-note { display: block; text-decoration: none; font-size: 11px; color: var(--muted); }
+
+/* ---- 2.3 the four kinds ---- */
+.lec-matrix { display: grid; grid-template-columns: 62px 1fr 1fr; gap: 4px; align-items: stretch; }
+.lec-mx-h {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--muted); align-self: end; padding-bottom: 3px;
+}
+.lec-mx-r {
+  display: grid; align-content: center; gap: 1px;
+  font-size: 11.5px; font-weight: 700; color: var(--text-dim);
+}
+.lec-mx-r u { text-decoration: none; font-size: 9.5px; font-weight: 400; color: var(--muted); line-height: 1.25; }
+.lec-mx-c {
+  display: grid; gap: 2px; padding: 8px 9px; border-radius: var(--r-sm); border: 1px solid var(--line);
+}
+.lec-mx-c b { font-size: 11.5px; font-weight: 700; }
+.lec-mx-c u { text-decoration: none; font-size: 10px; color: var(--muted); line-height: 1.3; }
+.lec-mx-c.def { background: var(--brand-soft); border-color: var(--brand-line); }
+.lec-mx-c.def b { color: var(--brand-ink); }
+.lec-mx-c.acc { background: var(--amber-soft); border-color: var(--amber-line); }
+.lec-mx-c.acc b { color: var(--amber-ink); }
+
+/* ---- 2.3 the shape of the entry ---- */
+.lec-shape { display: grid; gap: 5px; }
+.lec-shape-row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.lec-tag {
+  flex: 0 0 auto; padding: 5px 9px; border-radius: var(--r-sm);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em;
+}
+.lec-tag.bs { background: var(--brand-soft); color: var(--brand-ink); border: 1px solid var(--brand-line); }
+.lec-tag.is { background: var(--good-soft); color: var(--good-deep); border: 1px solid var(--good-line); }
+.lec-tag.no { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-line); text-decoration: line-through; }
+.lec-shape-line { flex: 1 1 120px; font-size: 11.5px; color: var(--muted); }
+.lec-shape-row.out .lec-shape-line { color: var(--bad); }
+
+/* ---- 2.4 temporary and permanent ---- */
+.lec-col {
+  display: grid; gap: 3px; padding: 11px; border-radius: var(--r-sm);
+  border: 1px solid var(--line); align-content: start;
+}
+.lec-col b { font-size: 12.5px; font-weight: 700; }
+.lec-col u { text-decoration: none; font-size: 10px; color: var(--muted); margin-bottom: 5px; }
+.lec-col span { font-size: 11.5px; color: var(--text-dim); }
+.lec-col em {
+  font-style: normal; margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--line);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+}
+.lec-col.temp { background: var(--amber-soft); border-color: var(--amber-line); }
+.lec-col.temp b, .lec-col.temp em { color: var(--amber-ink); }
+.lec-col.perm { background: var(--good-soft); border-color: var(--good-line); }
+.lec-col.perm b, .lec-col.perm em { color: var(--good-deep); }
+
+/* ---- 2.4 closing ---- */
+.lec-close { display: grid; gap: 0; justify-items: center; }
+.lec-close-top { display: flex; gap: 6px; width: 100%; }
+.lec-close-top > * { flex: 1 1 0; }
+.lec-close-stem { display: grid; justify-items: center; gap: 2px; padding: 5px 0; }
+.lec-close-stem i { width: 1px; height: 12px; background: var(--line-strong); }
+.lec-close-stem u {
+  text-decoration: none; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--muted);
+}
+.lec-close-mid { width: 100%; display: flex; justify-content: center; }
+.lec-close-mid > * { flex: 1 1 auto; }
+.lec-close-by {
+  margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--bad-line);
+  width: 100%; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+}
+.lec-close-by u {
+  flex: 1 1 130px; text-decoration: none; font-size: 11px; color: var(--bad);
+}
+
+/* ---- four tabs have less room than three ---- */
+@media (max-width: 430px) {
+  .tab { font-size: 11.5px; gap: 5px; }
+  .tab svg { width: 16px; height: 16px; }
+}
+@media (max-width: 355px) {
+  .tab { font-size: 11px; gap: 4px; }
+  .tab svg { width: 15px; height: 15px; }
+}
+
 </style>
 </head>
 
@@ -2031,6 +2323,8 @@ button.instr-row.now:hover { background: var(--brand-soft); }
 
   <nav class="tabs">
     <div class="tabs-inner">
+      <button class="tab" id="tab-lecture"></button>
+      <div class="tab-sep" id="tab-sep-lecture"></div>
       <button class="tab on" id="tab-guide"></button>
       <div class="tab-sep"></div>
       <button class="tab" id="tab-table"></button>
@@ -2038,6 +2332,10 @@ button.instr-row.now:hover { background: var(--brand-soft); }
       <button class="tab" id="tab-solve"></button>
     </div>
   </nav>
+
+  <section class="pane" id="pane-lecture">
+    <div class="scroll"><main id="lecture" tabindex="-1"></main></div>
+  </section>
 
   <section class="pane on" id="pane-guide">
     <div class="scroll"><main id="guide" tabindex="-1"></main></div>
@@ -2127,6 +2425,7 @@ function dollars(n) { return '$' + Math.abs(n).toLocaleString('en-US'); }
 var ICON = {
   check:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>',
   badge:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-4.9"/></svg>',
+  lecture: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="12" rx="2"/><path d="M12 15v6M8.5 21h7M7.5 7.5h6M7.5 11h4"/></svg>',
   book:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>',
   table:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>',
   pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.4 3.6a2.1 2.1 0 1 1 3 3L7.5 18.5 3 20l1.5-4.5z"/></svg>',
@@ -3282,6 +3581,236 @@ function adjustingEntries5() {
 }
 var ADJE5 = adjustingEntries5();
 
+
+/* ============================================================
+   THE LECTURES
+   One per learning objective, read before the worked example.
+
+   A lecture is theory only: no Speedy Delivery, no Kleene, no
+   figure either problem prints. Its illustrations are schematic
+   for the same reason — they show the shape of a process, and the
+   guide that follows fills that shape with the month's real
+   numbers.
+
+   Every topic after the first names the one it builds on, and the
+   chain those references form is drawn at the top of the lecture.
+   The closing section puts the topics back together in the order
+   the work is actually done, which is the order the guide and the
+   worksheet then follow.
+   ============================================================ */
+
+var LECTURES = {
+
+  /* ---------------- LO 2.1 ---------------- */
+  lo21: {
+    eyebrow: 'LO 2.1 &middot; Lecture',
+    title: 'One equation, and why nothing a business does can break it',
+    thesis: 'Every figure in accounting hangs off a single equation. This lecture builds it up a piece at a time, shows why a correctly recorded transaction always leaves it true, and ends at the tool this module uses to record a month of them.',
+    topics: [
+      { id: 'eq', head: 'The accounting equation',
+        rule: 'Assets = Liabilities + Stockholders&rsquo; Equity.',
+        body: ['<b>Assets</b> are the resources a business controls. <b>Liabilities</b> and <b>stockholders&rsquo; equity</b> are the claims on those resources: what creditors are owed, and what is left over for the owners.',
+               'The two sides are not separate quantities being compared. They are the same pile of resources described twice &mdash; once by what it is, once by who has a claim on it. That is why they are equal at every moment, and why a set of books that does not balance is not a disagreement about value. It is a mistake in the record.'] },
+
+      { id: 'tx', head: 'What counts as a transaction', builds: 'eq',
+        rule: 'Record an event only when it changes assets, liabilities or equity.',
+        body: ['Most of what happens in a business is not recorded. Hiring someone, negotiating a contract, answering a customer &mdash; none of these move an item in the equation, so none of them are transactions.',
+               'Paying that person, delivering under the contract, collecting from that customer: those do. The test is not whether something important happened. It is whether something in the equation moved.'] },
+
+      { id: 'dual', head: 'Every transaction has at least two effects', builds: 'tx',
+        rule: 'A transaction changes at least two items, and the equation stays equal.',
+        body: ['If a transaction changed only one item, the equation would break &mdash; so it never does. An asset that goes up is matched either by another asset going down, or by a claim going up.',
+               'Buying supplies for cash raises one asset and lowers another. Buying them on account raises an asset and raises a liability. Both keep the sides level. This is what makes bookkeeping self-checking: an entry that moves one item alone is wrong before anyone looks at the amount.'],
+        viz: 'dual' },
+
+      { id: 'eqty', head: 'Equity is not one thing', builds: 'eq',
+        rule: 'Common stock plus retained earnings; and retained earnings is revenues less expenses less dividends.',
+        body: ['&ldquo;What the owners have a claim on&rdquo; is too coarse to run a business on. <b>Common stock</b> is what the owners put in. <b>Retained earnings</b> is what the business has earned and kept.',
+               'Revenues increase retained earnings, expenses decrease it, and <b>dividends</b> &mdash; a distribution of what was earned, not a cost of earning it &mdash; decrease it as well. Splitting equity this way is what lets a set of records answer &ldquo;how did we do this period?&rdquo; and not only &ldquo;what are we worth?&rdquo;'],
+        viz: 'equity' },
+
+      { id: 'tab', head: 'Recording it in columns', builds: 'dual',
+        rule: 'One column for each item, one row for each transaction, and every row leaves the two sides equal.',
+        body: ['The equation can be recorded directly: give every asset, liability and equity item a column, and write each transaction as a row of changes across them. Total the columns at any point and the equation is there.',
+               'This is not how real books are kept &mdash; the next module gets to journals and ledgers &mdash; but it makes the dual effect visible in a way a journal does not. Every row is a transaction you can see balancing.'] },
+
+      { id: 'rep', head: 'The same record, read three ways', builds: 'tab',
+        rule: 'Each statement reads particular columns, and they are prepared in a fixed order.',
+        body: ['The revenue and expense columns make the <b>income statement</b>. Its result, with the dividends column, makes the <b>retained earnings statement</b>. That statement&rsquo;s closing figure, with the remaining columns, makes the <b>balance sheet</b>.',
+               'The order is forced rather than conventional: each statement needs a figure the one before it produced. Three statements, one record.'],
+        viz: 'toStatements' }
+    ],
+    together: {
+      head: 'How it is applied',
+      body: 'In the guide that follows, each of a month&rsquo;s transactions is worked through these steps in turn, and the summary fills in a row at a time. In Solve you do it unaided.',
+      steps: [
+        ['Read the event', 'and decide whether it moves the equation at all'],
+        ['Name the items that change', 'at least two of them'],
+        ['Write the row', 'so that both sides move by the same amount'],
+        ['Total the columns', 'the equation should hold at every point'],
+        ['Read off the statements', 'income, then retained earnings, then balance sheet']
+      ]
+    }
+  },
+
+  /* ---------------- LO 2.2 ---------------- */
+  lo22: {
+    eyebrow: 'LO 2.2 &middot; Lecture',
+    title: 'Accounts, debits and credits, and the three steps of a real ledger',
+    thesis: 'Columns across a page stop working after a dozen transactions. Real books use accounts, and a vocabulary of debits and credits that turns the previous module&rsquo;s dual effect into an arithmetic rule you can check.',
+    topics: [
+      { id: 'acct', head: 'The account',
+        rule: 'A record of the increases and decreases in one item, with a left side and a right side.',
+        body: ['An account is opened for each thing worth following separately: cash, each kind of receivable, each expense. In its simplest form it has three parts &mdash; a title, a left side and a right side.',
+               'The left side is called the <b>debit</b> side and the right the <b>credit</b> side. The words carry no meaning beyond left and right. A debit is not good news and a credit is not bad news; they are positions on a page.'] },
+
+      { id: 'norm', head: 'Which side an account increases on', builds: 'acct',
+        rule: 'Assets, expenses and dividends increase on the debit side; liabilities, equity and revenues on the credit side.',
+        body: ['This follows from the equation rather than from convention. Assets sit on its left, so they increase on the left of their account. Liabilities and equity sit on its right, so they increase on the right.',
+               'Revenues increase equity, so they take equity&rsquo;s side. Expenses and dividends decrease equity, so they take the opposite one. The side an account increases on is its <b>normal balance</b>, and it is the side you should expect to find its balance on.'],
+        viz: 'normal' },
+
+      { id: 'de', head: 'Debits equal credits', builds: 'norm',
+        rule: 'In every entry, and therefore in the whole ledger, total debits equal total credits.',
+        body: ['The dual effect becomes arithmetic here. Because the two sides of the equation must move together, and because accounts on opposite sides of it increase on opposite sides of their own record, a correctly recorded transaction always puts the same total on the left as on the right.',
+               'That equality holds for one entry, for a day of them, and for every account in the ledger at once. The last of those is what makes the proof at the end of this module possible.'] },
+
+      { id: 'jrn', head: 'The journal', builds: 'de',
+        rule: 'Every transaction is recorded first in the journal, in date order, debits before credits.',
+        body: ['The journal is the book of original entry. Each entry carries the date, the accounts debited and credited, the amounts, and a short explanation. Debits are written first and credits indented under them.',
+               'Recording chronologically and in one place means the complete effect of a transaction sits together, and the history can be read in the order it happened.'],
+        viz: 'journal' },
+
+      { id: 'post', head: 'Posting', builds: 'jrn',
+        rule: 'Posting copies each amount into the account the entry names, and changes nothing.',
+        body: ['The journal is organised by time; the ledger is organised by account. Posting carries each debit and each credit across to the right side of the right account.',
+               'No judgement is exercised at this step and no figure is altered &mdash; if posting changed an amount the two records would disagree, and there would be no way to tell which was right. Once posted, an account&rsquo;s balance is simply the difference between its two sides.'],
+        viz: 'post' },
+
+      { id: 'tb', head: 'The trial balance, and what it cannot see', builds: 'post',
+        rule: 'It proves that debits equal credits. It does not prove the entries were right.',
+        body: ['A trial balance lists every account&rsquo;s balance in its normal column and totals both. Equal totals prove the arithmetic of posting.',
+               'They prove nothing else. A transaction left out entirely, one recorded twice, one posted to the wrong account, and one with the right amounts on the wrong sides all leave the totals equal. It is a necessary test, not a sufficient one.'],
+        viz: 'blind' }
+    ],
+    together: {
+      head: 'How it is applied',
+      body: 'The instructions in this module are these three steps, in this order, and Solve gives you a journal, a ledger and a working paper to do them in.',
+      steps: [
+        ['Journalize', 'each transaction, debits before credits'],
+        ['Post', 'every amount to the account it names'],
+        ['Balance each account', 'the difference between its two sides'],
+        ['Prepare the trial balance', 'and check the two totals agree'],
+        ['Remember what it missed', 'agreement is not correctness']
+      ]
+    }
+  },
+
+  /* ---------------- LO 2.3 ---------------- */
+  lo23: {
+    eyebrow: 'LO 2.3 &middot; Lecture',
+    title: 'Why a ledger is not finished when the transactions are',
+    thesis: 'A trial balance that balances can still be wrong about the period, because some things change without any transaction to record them. This lecture explains why, and gives the four shapes every correction takes.',
+    topics: [
+      { id: 'per', head: 'Periodicity',
+        rule: 'A business&rsquo;s life is divided into artificial time periods.',
+        body: ['A company&rsquo;s true result is known only when it finally closes. Nobody can wait that long, so its life is cut into months, quarters and years and each is reported on as though it were complete.',
+               'Everything difficult about this module follows from that one decision. The boundary falls in the middle of things that are still going on.'] },
+
+      { id: 'acc', head: 'Accrual basis', builds: 'per',
+        rule: 'Record revenue when it is earned and expense when it is incurred, not when cash moves.',
+        body: ['On a cash basis a period&rsquo;s result is whatever came in less whatever went out. That is simple and it misleads: a business looks profitable because a customer paid early, or unprofitable because it prepaid a year of insurance.',
+               'Accrual accounting puts each revenue in the period the work was done and each expense in the period it helped to earn something, whatever the cash did. When cash moves and when value moves are two different questions.'],
+        viz: 'cashaccrual' },
+
+      { id: 'silent', head: 'The events nothing triggers', builds: 'acc',
+        rule: 'Some changes happen through the passage of time, so no document arrives to prompt an entry.',
+        body: ['Supplies are used. Insurance expires. Equipment wears. Interest accumulates. Work paid for in advance gets done.',
+               'Every one of those changes an asset, a liability, a revenue or an expense &mdash; and not one of them involves a receipt, an invoice or a payment on the day it happens. Nothing prompts the bookkeeper, so nothing is recorded, so at the end of the period the ledger is out of date in ways that balance perfectly.'] },
+
+      { id: 'four', head: 'Four shapes, and only four', builds: 'silent',
+        rule: 'A deferral moves an amount already recorded into the right period. An accrual records an amount that is in the books nowhere.',
+        body: ['<b>Deferrals</b> come first in cash and later in substance. A <i>prepaid expense</i> was paid before it was used; <i>unearned revenue</i> was collected before the work was done. The amount is on the books already &mdash; in the wrong account.',
+               '<b>Accruals</b> come first in substance and later in cash. An <i>accrued revenue</i> was earned but not yet billed or collected; an <i>accrued expense</i> was incurred but not yet paid. The amount is not on the books at all.'],
+        viz: 'matrix' },
+
+      { id: 'shape', head: 'What every adjusting entry has in common', builds: 'four',
+        rule: 'Exactly one balance sheet account, exactly one income statement account, and never cash.',
+        body: ['Whichever of the four it is, an adjusting entry moves an amount between a position and a period &mdash; so it touches one account from each statement, every time.',
+               'And it never touches Cash. Cash is recorded when cash actually moves, which either already happened or has not happened yet. An adjusting entry with Cash in it is wrong without anyone having to check the amount.'],
+        viz: 'shape' },
+
+      { id: 'contra', head: 'Recording wear without losing the cost', builds: 'shape',
+        rule: 'Depreciation is credited to a contra asset, not to the asset itself.',
+        body: ['Equipment stays on the books at what was paid for it. The wear is collected in a separate account &mdash; <b>Accumulated Depreciation</b> &mdash; which is subtracted from the asset rather than reducing it.',
+               'Keeping the two apart preserves both facts a reader needs: what the thing cost, and how much of it has been used up. The difference between them is its book value.'] }
+    ],
+    together: {
+      head: 'How it is applied',
+      body: 'The guide walks each adjustment of the month in turn; Solve asks you to journalize them and prove the ledger again afterwards.',
+      steps: [
+        ['Ask what has changed since the trial balance', 'without anything being recorded'],
+        ['Decide which of the four it is', 'deferral or accrual, revenue or expense'],
+        ['Work out the amount', 'what was used, earned, incurred or owed'],
+        ['Write the entry', 'one balance sheet account, one income statement account, no cash'],
+        ['Prepare an adjusted trial balance', 'and prove the ledger again']
+      ]
+    }
+  },
+
+  /* ---------------- LO 2.4 ---------------- */
+  lo24: {
+    eyebrow: 'LO 2.4 &middot; Lecture',
+    title: 'Reporting the period, then clearing the counters',
+    thesis: 'An adjusted trial balance is the raw material for three statements. Once those are out, the accounts that measured the period have to be emptied so the next one can be measured too.',
+    topics: [
+      { id: 'tp', head: 'Two kinds of account',
+        rule: 'Revenues, expenses and dividends are temporary. Everything on the balance sheet is permanent.',
+        body: ['A revenue account answers &ldquo;how much did we earn <i>this period</i>?&rdquo; A cash account answers &ldquo;how much do we have?&rdquo; &mdash; a question with no period attached.',
+               'The first kind measures a stretch of time and has to start each period at nothing. The second measures a position at a moment and carries straight on. Which kind an account is decides everything that happens to it at period end.'],
+        viz: 'tempperm' },
+
+      { id: 'ord', head: 'Three statements, in one possible order', builds: 'tp',
+        rule: 'Income statement, then retained earnings statement, then balance sheet.',
+        body: ['The <b>income statement</b> uses the temporary accounts only, and produces net income. The <b>retained earnings statement</b> takes that figure, adds it to the opening balance and subtracts dividends.',
+               'The <b>balance sheet</b> takes the closing retained earnings from that statement and reports it with the permanent accounts. Each one needs a figure the previous one produced, which is why the order is not a matter of taste.'],
+        viz: 'stmtorder' },
+
+      { id: 'cls', head: 'Classified', builds: 'ord',
+        rule: 'Group assets and liabilities by how soon they turn into cash or fall due.',
+        body: ['A classified balance sheet separates <b>current</b> items &mdash; used, collected or payable within a year &mdash; from long-lived assets and long-term debts.',
+               'The grouping is what lets a reader see at a glance whether the business can pay what is about to fall due. A single liability can be split across both groups when part of it is due soon and the rest is not.'] },
+
+      { id: 'why', head: 'Why the temporary accounts are closed', builds: 'tp',
+        rule: 'A period account that is not emptied can never answer its question again.',
+        body: ['If a revenue account opened the new period with the old period&rsquo;s balance still in it, no later reading of that account could say what was earned in either period.',
+               'Closing sets every temporary account to zero and transfers what was in them to <b>Retained Earnings</b>, which is where a period&rsquo;s result belongs once the period is over.'] },
+
+      { id: 'isum', head: 'Income Summary, and the four entries', builds: 'why',
+        rule: 'Revenues and expenses are closed through a holding account; dividends are not.',
+        body: ['<b>Income Summary</b> exists only while the books are being closed. Revenue is closed into it, the expenses are closed into it, and its balance is then net income &mdash; which is closed to Retained Earnings.',
+               'Dividends are closed to Retained Earnings as well, but <i>directly</i>. They are a distribution of profit, not a cost of earning it, so they never pass through Income Summary and never touch the income statement. This is the step most often got wrong.'],
+        viz: 'close' },
+
+      { id: 'pc', head: 'The post-closing trial balance', builds: 'isum',
+        rule: 'Only permanent accounts should be left standing.',
+        body: ['One last proof. It lists what survived closing and checks that debits still equal credits.',
+               'It is also the opening balance sheet of the next period in trial balance form. If any revenue, expense or dividend account still shows a balance, closing was not finished.'] }
+    ],
+    together: {
+      head: 'How it is applied',
+      body: 'The guide prepares the three statements and then the four entries; Solve asks for the same, and ends with the proof.',
+      steps: [
+        ['Sort the adjusted trial balance', 'temporary from permanent'],
+        ['Prepare the three statements', 'in the order each one feeds the next'],
+        ['Close revenue and the expenses', 'both into Income Summary'],
+        ['Close Income Summary, then dividends', 'both to Retained Earnings, dividends directly'],
+        ['Prove what is left', 'the post-closing trial balance']
+      ]
+    }
+  }
+};
+
 /* ============================================================
    THE MODULES
    Four problems from the same chapter, each starting where the last
@@ -3317,6 +3846,7 @@ var MODULES = [
 document.getElementById('mark').innerHTML = ICON.badge;
 document.getElementById('mod-caret').innerHTML = ICON.chev;
 document.getElementById('btn-theme').innerHTML = ICON.sun;
+document.getElementById('tab-lecture').innerHTML = ICON.lecture + ' Lecture';
 document.getElementById('tab-guide').innerHTML = ICON.book + ' Guide';
 document.getElementById('tab-table').innerHTML = ICON.table + ' Reference';
 document.getElementById('tab-solve').innerHTML = ICON.pencil + ' Solve';
@@ -6863,6 +7393,270 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       '</div>';
   }
 
+
+  /* ---------- lecture illustrations ----------
+     Schematic on purpose. A lecture figure shows the shape of a process;
+     the guide that follows puts the month's real numbers into that shape.
+     None of these carries an amount from either problem. */
+
+  function lbox(t, cls) { return '<span class="lec-box' + (cls ? ' ' + cls : '') + '">' + t + '</span>'; }
+  function larrow(lab) {
+    return '<span class="lec-arr">' + ICON.next + (lab ? '<u>' + lab + '</u>' : '') + '</span>';
+  }
+
+  /* 2.1 — the four ways a transaction can leave the equation level */
+  function lecDual() {
+    var pairs = [
+      ['Asset', 'up', 'Asset', 'down', 'one side, both ways'],
+      ['Asset', 'up', 'Liability', 'up', 'both sides, same way'],
+      ['Asset', 'up', 'Equity', 'up', 'both sides, same way'],
+      ['Asset', 'down', 'Liability', 'down', 'both sides, same way']
+    ];
+    return '<div class="lec-dual">' + pairs.map(function (p) {
+      return '<div class="lec-dual-row">' +
+        '<span class="lec-mv ' + p[1] + '">' + p[0] + '<i>' + (p[1] === 'up' ? '&uarr;' : '&darr;') + '</i></span>' +
+        '<span class="lec-mv ' + p[3] + '">' + p[2] + '<i>' + (p[3] === 'up' ? '&uarr;' : '&darr;') + '</i></span>' +
+        '<span class="lec-dual-why">' + p[4] + '</span>' +
+        '</div>';
+    }).join('') +
+    '<div class="lec-foot">' + ICON.check + 'In every one of them, assets still equal liabilities plus equity</div></div>';
+  }
+
+  /* 2.1 — what the right-hand side is made of */
+  function lecEquity() {
+    return '<div class="lec-tree">' +
+      '<div class="lec-tier">' + lbox('Stockholders&rsquo; Equity', 'wide') + '</div>' +
+      '<div class="lec-stem"></div>' +
+      '<div class="lec-tier two">' + lbox('Common Stock') + lbox('Retained Earnings') + '</div>' +
+      '<div class="lec-stem right"></div>' +
+      '<div class="lec-tier three">' +
+        '<span class="lec-box up">Revenues<i>increase it</i></span>' +
+        '<span class="lec-box down">Expenses<i>decrease it</i></span>' +
+        '<span class="lec-box down">Dividends<i>decrease it</i></span>' +
+      '</div>' +
+      '<p class="lec-note">Dividends reduce what has been kept, but they are not a cost of earning it &mdash; which is why they never reach the income statement.</p>' +
+      '</div>';
+  }
+
+  /* 2.1 — one record, read three ways */
+  function lecToStatements() {
+    return '<div class="lec-flow down">' +
+      '<div class="lec-card"><b>Income statement</b><u>revenue and expense columns</u></div>' +
+      larrow('net income') +
+      '<div class="lec-card"><b>Retained earnings statement</b><u>opening balance, net income, dividends</u></div>' +
+      larrow('closing retained earnings') +
+      '<div class="lec-card"><b>Balance sheet</b><u>assets, liabilities, equity</u></div>' +
+      '</div>';
+  }
+
+  /* 2.2 — which side each family increases on */
+  function lecNormal() {
+    function side(cap, note, list, kind) {
+      return '<div class="lec-side ' + kind + '"><b>' + cap + '</b><u>' + note + '</u>' +
+        list.map(function (x) { return '<span>' + x + '</span>'; }).join('') + '</div>';
+    }
+    return '<div class="lec-normal">' +
+      side('Debit', 'left of the account', ['Assets', 'Expenses', 'Dividends'], 'dr') +
+      side('Credit', 'right of the account', ['Liabilities', 'Common stock &amp; retained earnings', 'Revenues'], 'cr') +
+      '<p class="lec-note">Assets sit on the left of the equation and increase on the left of their account. Expenses and dividends reduce equity, so they take the side opposite to it.</p>' +
+      '</div>';
+  }
+
+  /* 2.2 — the parts of a journal entry */
+  function lecJournal() {
+    return '<div class="lec-je">' +
+      '<div class="lec-je-row head"><span>Date</span><span>Account titles and explanation</span><span>Debit</span><span>Credit</span></div>' +
+      '<div class="lec-je-row"><span class="lec-je-d">the date</span><span>Account debited</span><span class="lec-je-a">amount</span><span></span></div>' +
+      '<div class="lec-je-row"><span></span><span class="in">Account credited</span><span></span><span class="lec-je-a">same amount</span></div>' +
+      '<div class="lec-je-row"><span></span><span class="memo">A short explanation of what happened</span><span></span><span></span></div>' +
+      '<div class="lec-foot">' + ICON.check + 'Debits first, credits indented beneath them, and the two amounts agree</div>' +
+      '</div>';
+  }
+
+  /* 2.2 — the three steps, and what each one is organised by */
+  function lecPost() {
+    return '<div class="lec-flow down">' +
+      '<div class="lec-card"><b>Journal</b><u>organised by date &mdash; every transaction in one place</u></div>' +
+      larrow('post each amount') +
+      '<div class="lec-card"><b>Ledger</b><u>organised by account &mdash; every amount for one item together</u></div>' +
+      larrow('balance each account') +
+      '<div class="lec-card"><b>Trial balance</b><u>every balance in its normal column, both totals compared</u></div>' +
+      '</div>';
+  }
+
+  /* 2.2 — four mistakes the proof cannot see */
+  function lecBlind() {
+    var errs = ['A transaction left out entirely', 'A transaction recorded twice',
+                'An amount posted to the wrong account', 'The right amounts on the wrong sides'];
+    return '<div class="lec-blind">' + errs.map(function (e) {
+      return '<div class="lec-blind-row"><span class="lec-blind-x">' + ICON.warn + '</span>' +
+        '<span>' + e + '</span><u>totals still agree</u></div>';
+    }).join('') + '</div>';
+  }
+
+  /* 2.3 — the same event, dated two different ways */
+  function lecCashAccrual() {
+    function line(cap, cls, markPct, markLab, note) {
+      return '<div class="lec-tl ' + cls + '"><b>' + cap + '</b>' +
+        '<div class="lec-tl-bar"><i class="lec-tl-end left">period starts</i><i class="lec-tl-end right">period ends</i>' +
+          '<span class="lec-tl-mark" style="left:' + markPct + '%"><u>' + markLab + '</u></span></div>' +
+        '<u class="lec-tl-note">' + note + '</u></div>';
+    }
+    return '<div class="lec-two">' +
+      line('Cash basis', 'cash', 68, 'cash arrives', 'counted in the period the money moved') +
+      line('Accrual basis', 'accr', 32, 'work is done', 'counted in the period the work was done') +
+      '<p class="lec-note">Only one of these answers &ldquo;what did this period earn?&rdquo; The other answers &ldquo;what did this period collect?&rdquo;</p>' +
+      '</div>';
+  }
+
+  /* 2.3 — the four shapes, on two axes */
+  function lecMatrix() {
+    var cells = [
+      ['Prepaid expense', 'paid first, used later'],
+      ['Unearned revenue', 'collected first, earned later'],
+      ['Accrued revenue', 'earned first, collected later'],
+      ['Accrued expense', 'incurred first, paid later']
+    ];
+    return '<div class="lec-matrix">' +
+      '<span class="lec-mx-h"></span><span class="lec-mx-h">Expense side</span><span class="lec-mx-h">Revenue side</span>' +
+      '<span class="lec-mx-r">Deferral<u>already in the books</u></span>' +
+      '<span class="lec-mx-c def"><b>' + cells[0][0] + '</b><u>' + cells[0][1] + '</u></span>' +
+      '<span class="lec-mx-c def"><b>' + cells[1][0] + '</b><u>' + cells[1][1] + '</u></span>' +
+      '<span class="lec-mx-r">Accrual<u>in the books nowhere</u></span>' +
+      '<span class="lec-mx-c acc"><b>' + cells[3][0] + '</b><u>' + cells[3][1] + '</u></span>' +
+      '<span class="lec-mx-c acc"><b>' + cells[2][0] + '</b><u>' + cells[2][1] + '</u></span>' +
+      '</div>';
+  }
+
+  /* 2.3 — the shape every adjusting entry takes */
+  function lecShape() {
+    return '<div class="lec-shape">' +
+      '<div class="lec-shape-row"><span class="lec-tag bs">Balance sheet account</span>' +
+        '<span class="lec-shape-line">an asset or a liability, corrected</span></div>' +
+      '<div class="lec-shape-row"><span class="lec-tag is">Income statement account</span>' +
+        '<span class="lec-shape-line">a revenue or an expense, recognised</span></div>' +
+      '<div class="lec-shape-row out"><span class="lec-tag no">Cash</span>' +
+        '<span class="lec-shape-line">never &mdash; cash is recorded when it moves</span></div>' +
+      '</div>';
+  }
+
+  /* 2.4 — what empties and what carries on */
+  function lecTempPerm() {
+    return '<div class="lec-two cols">' +
+      '<div class="lec-col temp"><b>Temporary</b><u>measures a period</u>' +
+        ['Revenues', 'Expenses', 'Dividends', 'Income Summary'].map(function (x) { return '<span>' + x + '</span>'; }).join('') +
+        '<em>closed to zero</em></div>' +
+      '<div class="lec-col perm"><b>Permanent</b><u>measures a position</u>' +
+        ['Assets', 'Liabilities', 'Common stock', 'Retained earnings'].map(function (x) { return '<span>' + x + '</span>'; }).join('') +
+        '<em>carries forward</em></div>' +
+      '</div>';
+  }
+
+  /* 2.4 — each statement needs the one before it */
+  function lecStmtOrder() {
+    return '<div class="lec-flow down">' +
+      '<div class="lec-card"><b>Income statement</b><u>revenues less expenses</u></div>' +
+      larrow('net income') +
+      '<div class="lec-card"><b>Retained earnings statement</b><u>opening, plus net income, less dividends</u></div>' +
+      larrow('closing retained earnings') +
+      '<div class="lec-card"><b>Classified balance sheet</b><u>grouped by how soon items turn to cash or fall due</u></div>' +
+      '</div>';
+  }
+
+  /* 2.4 — where each temporary balance goes */
+  function lecClose() {
+    return '<div class="lec-close">' +
+      '<div class="lec-close-top">' + lbox('Revenues') + lbox('Expenses') + '</div>' +
+      '<div class="lec-close-stem"><i></i><u>closed into</u></div>' +
+      '<div class="lec-close-mid">' + lbox('Income Summary', 'hold') + '</div>' +
+      '<div class="lec-close-stem"><i></i><u>its balance is net income</u></div>' +
+      '<div class="lec-close-mid">' + lbox('Retained Earnings', 'wide') + '</div>' +
+      '<div class="lec-close-by">' + lbox('Dividends', 'by') +
+        '<u>straight there &mdash; never through Income Summary</u></div>' +
+      '</div>';
+  }
+
+  var LECVIZ = {
+    dual: { fn: lecDual, cap: 'Four ways to stay level',
+      claim: 'A transaction either moves two items on the same side of the equation in opposite directions, or one item on each side in the same direction. Either way the two sides stay equal.' },
+    equity: { fn: lecEquity, cap: 'What stockholders&rsquo; equity is made of',
+      claim: 'Stockholders&rsquo; equity divides into common stock and retained earnings; retained earnings is increased by revenues and decreased by expenses and dividends.' },
+    toStatements: { fn: lecToStatements, cap: 'One record, three statements',
+      claim: 'The income statement produces net income, which the retained earnings statement uses to produce closing retained earnings, which the balance sheet reports.' },
+    normal: { fn: lecNormal, cap: 'The side each family increases on',
+      claim: 'Assets, expenses and dividends increase on the debit side; liabilities, common stock, retained earnings and revenues increase on the credit side.' },
+    journal: { fn: lecJournal, cap: 'The parts of a journal entry',
+      claim: 'A journal entry carries the date, the account debited with its amount, the account credited indented beneath with the same amount, and a short explanation.', keep: true },
+    post: { fn: lecPost, cap: 'Three records, three ways of organising the same amounts',
+      claim: 'The journal is organised by date, the ledger by account, and the trial balance lists every ledger balance in its normal column to compare the two totals.' },
+    blind: { fn: lecBlind, cap: 'Four errors a trial balance cannot catch',
+      claim: 'A transaction omitted, one recorded twice, an amount posted to the wrong account, and correct amounts entered on the wrong sides all leave the two totals equal.', keep: true },
+    cashaccrual: { fn: lecCashAccrual, cap: 'The same event, dated two ways',
+      claim: 'On the cash basis an event counts in the period the money moves; on the accrual basis it counts in the period the work is done, and those are often different periods.' },
+    matrix: { fn: lecMatrix, cap: 'The four kinds of adjustment',
+      claim: 'Deferrals are prepaid expenses and unearned revenues, already recorded in the wrong account. Accruals are accrued revenues and accrued expenses, not recorded at all.', keep: true },
+    shape: { fn: lecShape, cap: 'The shape of every adjusting entry',
+      claim: 'Every adjusting entry touches exactly one balance sheet account and one income statement account, and never touches cash.' },
+    tempperm: { fn: lecTempPerm, cap: 'What empties, and what carries on',
+      claim: 'Revenues, expenses, dividends and Income Summary measure a period and are closed to zero. Assets, liabilities, common stock and retained earnings measure a position and carry forward.', keep: true },
+    stmtorder: { fn: lecStmtOrder, cap: 'Each statement needs the one before it',
+      claim: 'The income statement produces net income for the retained earnings statement, which produces closing retained earnings for the classified balance sheet.' },
+    close: { fn: lecClose, cap: 'Where each temporary balance goes',
+      claim: 'Revenues and expenses are closed into Income Summary, whose balance is net income and is closed to Retained Earnings. Dividends are closed to Retained Earnings directly, without passing through Income Summary.' }
+  };
+
+  /* ---------- the lecture ---------- */
+  function lectureFor() { return LECTURES[modId()]; }
+
+  function renderLecture() {
+    var L = lectureFor();
+    if (!L) { $('lecture').innerHTML = ''; return; }
+    var byId = {};
+    L.topics.forEach(function (t, i) { byId[t.id] = { t: t, n: i + 1 }; });
+
+    var map = '<ol class="lec-map">' + L.topics.map(function (t, i) {
+      return '<li><a href="#" data-lec="' + t.id + '"><i>' + (i + 1) + '</i>' + t.head + '</a></li>';
+    }).join('') + '</ol>';
+
+    var body = L.topics.map(function (t, i) {
+      var from = t.builds ? byId[t.builds] : null;
+      var pic = '';
+      if (t.viz && LECVIZ[t.viz]) {
+        var v = LECVIZ[t.viz];
+        pic = viz(v.cap, v.fn(), v.claim, !!v.keep);
+      }
+      return '<section class="lec-topic" id="lec-' + t.id + '" tabindex="-1">' +
+        '<h2><span class="lec-n">' + (i + 1) + '</span>' + t.head + '</h2>' +
+        (from ? '<p class="lec-builds">Builds on <b>' + from.n + '. ' + from.t.head + '</b></p>' : '') +
+        '<div class="ex-rule">' + ICON.bulb + '<p>' + t.rule + '</p></div>' +
+        '<div class="ex-why">' + t.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>' +
+        pic +
+        '</section>';
+    }).join('');
+
+    var steps = '<ol class="lec-steps">' + L.together.steps.map(function (s, i) {
+      return '<li><span class="lec-step-n">' + (i + 1) + '</span><b>' + s[0] + '</b><u>' + s[1] + '</u></li>';
+    }).join('') + '</ol>';
+
+    $('lecture').innerHTML =
+      '<div class="wrap fade">' +
+        '<div class="lec-head">' +
+          '<div class="lec-eyebrow">' + L.eyebrow + '</div>' +
+          '<h1>' + L.title + '</h1>' +
+          '<p class="lec-thesis">' + L.thesis + '</p>' +
+        '</div>' +
+        '<div class="sect">What this covers<i></i></div>' + map +
+        body +
+        '<div class="sect">' + L.together.head + '<i></i></div>' +
+        '<p class="lec-thesis sm">' + L.together.body + '</p>' +
+        steps +
+        '<button type="button" class="p5-open" data-gotab="guide">' + ICON.book +
+          'Now watch it worked through</button>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('lecture'));
+  }
+
   /* ---------- the problem ----------
      A problem module states the problem and gets out of the way. No worked
      example, no method, no figure explaining what a worksheet is for: four
@@ -8032,6 +8826,16 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderControls() {
+    if (tab === 'lecture') {
+      /* One page, read top to bottom. Nothing to advance and nothing to score. */
+      $('btn-prev').hidden = true;
+      $('btn-next').hidden = true;
+      $('prog-label').parentNode.hidden = true;
+      $('ws-score').hidden = true;
+      $('btn-check').hidden = true;
+      $('rail').innerHTML = '';
+      return;
+    }
     var solving = tab === 'solve';
     $('btn-prev').hidden = solving;
     $('btn-next').hidden = solving;
@@ -8074,7 +8878,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderTabs() {
-    ['guide', 'table', 'solve'].forEach(function (t) {
+    ['lecture', 'guide', 'table', 'solve'].forEach(function (t) {
       $('tab-' + t).classList.toggle('on', tab === t);
       $('pane-' + t).classList.toggle('on', tab === t);
       // aria-selected needs role="tab"; aria-current is valid on a plain button.
@@ -8084,9 +8888,17 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function render() {
+    /* P2.12 has no lecture: it is a problem, not a topic. Falling back rather
+       than showing an empty pane, in case the tab was saved from a module
+       that does have one. */
+    var hasLec = !!LECTURES[modId()];
+    $('tab-lecture').hidden = !hasLec;
+    $('tab-sep-lecture').hidden = !hasLec;
+    if (tab === 'lecture' && !hasLec) tab = 'guide';
     renderTabs();
     renderModBtn();
-    if (tab === 'solve') $('guide').innerHTML = '';
+    if (tab === 'lecture') renderLecture(); else $('lecture').innerHTML = '';
+    if (tab === 'solve' || tab === 'lecture') $('guide').innerHTML = '';
     else renderGuide();
     [renderTable, renderTable2, renderTable3, renderTable4, renderTable5][mod]();
     if (tab !== 'solve') $('solve').innerHTML = '';
@@ -8149,6 +8961,21 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   });
 
   /* Opening an entry from the dashboard. */
+  $('lecture').addEventListener('click', function (e) {
+    var jump = e.target.closest('[data-lec]');
+    if (jump) {
+      e.preventDefault();
+      var sec = document.getElementById('lec-' + jump.getAttribute('data-lec'));
+      if (sec) {
+        sec.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+        sec.focus({ preventScroll: true });
+      }
+      return;
+    }
+    var go = e.target.closest('[data-gotab]');
+    if (go) { tab = go.getAttribute('data-gotab'); save(); render(); }
+  });
+
   $('guide').addEventListener('click', function (e) {
     var card = e.target.closest('[data-open]');
     if (card) { openAt(Number(card.getAttribute('data-open'))); return; }
@@ -8180,6 +9007,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (at === flow().length - 1) toDash();
     else openAt(at + 1);
   });
+  $('tab-lecture').addEventListener('click', function () { tab = 'lecture'; save(); render(); });
   $('tab-guide').addEventListener('click', function () { tab = 'guide'; save(); render(); });
   $('tab-table').addEventListener('click', function () { tab = 'table'; save(); render(); });
   $('tab-solve').addEventListener('click', function () { tab = 'solve'; save(); render(); });

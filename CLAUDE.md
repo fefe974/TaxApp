@@ -16,6 +16,12 @@ step, no runtime dependencies. `artifact.html` is derived from it by
   by retyping it. The capstone is the one module that types two columns rather
   than one, because the printed problem hands over both trial balances; the six
   adjustments between them are still derived, as their difference.
+- **Each LO runs Lecture, Guide, Solve.** The lecture is theory: six numbered
+  topics, each naming the earlier one it builds on, schematic figures for the
+  processes, and a closing sequence that puts the topics back in the order the
+  work is done. It prints no figure from either problem — `verify.js` sweeps
+  all four for money amounts — because the guide's job is to put real numbers
+  into the shapes the lecture drew. P2.12 has no lecture and hides the tab.
 - **Lesson modules teach; the problem module does not.** 2.1 to 2.4 explain,
   illustrate and walk a worked example. P2.12 states the problem, hands over
   the given data and the tools, and explains nothing — its guide pane has no

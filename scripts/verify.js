@@ -1842,6 +1842,153 @@ function check(name, ok, detail) {
 
   await cap.close();
 
+
+  // ---------------------------------------------------------------
+  console.log('\nTHE LECTURES');
+  // ---------------------------------------------------------------
+  const lec = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  lec.on('pageerror', e => errors.push('lecture: ' + e));
+  lec.on('console', m => { if (m.type() === 'error') errors.push('lecture console: ' + m.text()); });
+
+  await lec.goto(FILE + '#lo21');
+  await lec.waitForTimeout(400);
+  const lecShape = await lec.evaluate(() => ({
+    keys: Object.keys(LECTURES),
+    p212: !!LECTURES.p212,
+    /* every topic that builds on another names one that exists and comes before it */
+    chain: Object.keys(LECTURES).map(k => {
+      const t = LECTURES[k].topics, ids = t.map(x => x.id);
+      return {
+        k: k,
+        n: t.length,
+        firstFree: !t[0].builds,
+        laterAllBuild: t.slice(1).every(x => !!x.builds),
+        backwards: t.every((x, i) => !x.builds || ids.indexOf(x.builds) < i),
+        known: t.every(x => !x.builds || ids.indexOf(x.builds) !== -1),
+        steps: LECTURES[k].together.steps.length
+      };
+    })
+  }));
+  check('every learning objective has a lecture, and the problem module has none',
+    lecShape.keys.sort().join() === 'lo21,lo22,lo23,lo24' && lecShape.p212 === false,
+    JSON.stringify(lecShape.keys));
+  check('each lecture opens with a topic that stands alone, and every later one builds on an earlier one',
+    lecShape.chain.every(c => c.firstFree && c.laterAllBuild && c.known && c.backwards),
+    JSON.stringify(lecShape.chain));
+  check('and each ends by putting the topics back together as a sequence of steps',
+    lecShape.chain.every(c => c.steps >= 4), JSON.stringify(lecShape.chain.map(c => c.steps)));
+
+  const lecs = [];
+  for (const m of ['lo21', 'lo22', 'lo23', 'lo24']) {
+    await lec.goto(FILE + '#' + m);
+    await lec.waitForTimeout(300);
+    await lec.click('#tab-lecture');
+    await lec.waitForTimeout(420);
+    lecs.push(await lec.evaluate(mod => {
+      const sc = document.querySelector('#pane-lecture .scroll');
+      const bar = document.querySelector('.tabs-inner');
+      const figs = [...document.querySelectorAll('#lecture figure.viz')];
+      return {
+        mod: mod,
+        h1: document.querySelectorAll('#lecture h1').length,
+        topics: document.querySelectorAll('#lecture .lec-topic').length,
+        map: document.querySelectorAll('#lecture .lec-map a').length,
+        heads: document.querySelectorAll('#lecture .lec-topic h2').length,
+        builds: document.querySelectorAll('#lecture .lec-builds').length,
+        rules: document.querySelectorAll('#lecture .lec-topic .ex-rule').length,
+        figs: figs.length,
+        capped: figs.filter(f => f.querySelector('figcaption')).length,
+        claimed: figs.filter(f => f.querySelector('[role="img"][aria-label], .sr-only')).length,
+        onward: document.querySelectorAll('#lecture [data-gotab="guide"]').length,
+        words: document.getElementById('lecture').textContent.trim().split(/\s+/).length,
+        money: (document.getElementById('lecture').textContent.match(/\$|\d{1,3},\d{3}/g) || []),
+        wide: (document.documentElement.scrollWidth - window.innerWidth) + (sc.scrollWidth - sc.clientWidth),
+        tabWide: bar.scrollWidth - bar.clientWidth,
+        pager: document.getElementById('btn-prev').hidden && document.getElementById('btn-next').hidden,
+        score: document.getElementById('ws-score').hidden
+      };
+    }, m));
+  }
+  check('every lecture has one heading, six topics, and a contents map that matches them',
+    lecs.every(l => l.h1 === 1 && l.topics === 6 && l.map === 6 && l.heads === 6),
+    JSON.stringify(lecs.map(l => [l.mod, l.h1, l.topics, l.map])));
+  check('every topic states a rule, and five of the six say what they build on',
+    lecs.every(l => l.rules === 6 && l.builds === 5),
+    JSON.stringify(lecs.map(l => [l.mod, l.rules, l.builds])));
+  check('every lecture illustrates at least three of its topics, each with a caption and a stated claim',
+    lecs.every(l => l.figs >= 3 && l.capped === l.figs && l.claimed === l.figs),
+    JSON.stringify(lecs.map(l => [l.mod, l.figs, l.capped, l.claimed])));
+  /* A lecture is theory. The moment it prints a figure from the problem it has
+     started doing the guide's job, and the worked example loses its point. */
+  check('no lecture prints a money figure: the theory is separate from the problem',
+    lecs.every(l => l.money.length === 0),
+    JSON.stringify(lecs.map(l => [l.mod, l.money.slice(0, 3)])));
+  check('and each is a short read rather than a chapter',
+    lecs.every(l => l.words > 350 && l.words < 1200),
+    JSON.stringify(lecs.map(l => [l.mod, l.words])));
+  check('the lecture is one page: no pager and no score beneath it',
+    lecs.every(l => l.pager && l.score), JSON.stringify(lecs.map(l => [l.mod, l.pager, l.score])));
+  check('every lecture fits, and four tabs still fit the bar',
+    lecs.every(l => l.wide <= 0 && l.tabWide <= 0),
+    JSON.stringify(lecs.map(l => [l.mod, l.wide, l.tabWide])));
+  check('and each one ends with the way through to the worked example',
+    lecs.every(l => l.onward === 1), JSON.stringify(lecs.map(l => [l.mod, l.onward])));
+
+  // The contents map is navigation, so it has to move focus like navigation.
+  await lec.goto(FILE + '#lo23');
+  await lec.waitForTimeout(300);
+  await lec.click('#tab-lecture');
+  await lec.waitForTimeout(400);
+  await lec.click('[data-lec="four"]');
+  await lec.waitForTimeout(650);
+  const jumped = await lec.evaluate(() => ({
+    focus: document.activeElement.id,
+    seen: (() => {
+      const r = document.getElementById('lec-four').getBoundingClientRect();
+      return r.top > -20 && r.top < window.innerHeight;
+    })()
+  }));
+  check('jumping from the contents map scrolls to the topic and takes focus with it',
+    jumped.focus === 'lec-four' && jumped.seen, JSON.stringify(jumped));
+
+  // 320px is where four tabs are most likely to give out.
+  await lec.setViewportSize({ width: 320, height: 800 });
+  await lec.goto(FILE + '#lo22');
+  await lec.waitForTimeout(300);
+  await lec.click('#tab-lecture');
+  await lec.waitForTimeout(400);
+  const narrow = await lec.evaluate(() => {
+    const bar = document.querySelector('.tabs-inner');
+    const sc = document.querySelector('#pane-lecture .scroll');
+    return {
+      tabs: bar.scrollWidth - bar.clientWidth,
+      labels: [...document.querySelectorAll('.tab')].filter(t => !t.hidden).map(t => t.textContent.trim()),
+      wide: (document.documentElement.scrollWidth - window.innerWidth) + (sc.scrollWidth - sc.clientWidth)
+    };
+  });
+  check('at 320px all four tabs keep their labels and nothing spills',
+    narrow.tabs <= 0 && narrow.wide <= 0 && narrow.labels.join('|') === 'Lecture|Guide|Reference|Solve',
+    JSON.stringify(narrow));
+  await lec.setViewportSize({ width: 390, height: 900 });
+
+  // The problem module has no lecture, and a saved lecture tab must not strand it.
+  await lec.goto(FILE + '#lo21');
+  await lec.waitForTimeout(300);
+  await lec.click('#tab-lecture');
+  await lec.waitForTimeout(300);
+  await lec.goto(FILE + '#p212');
+  await lec.waitForTimeout(450);
+  const fell = await lec.evaluate(() => ({
+    hidden: document.getElementById('tab-lecture').hidden,
+    guideOn: document.getElementById('pane-guide').classList.contains('on'),
+    lectureOn: document.getElementById('pane-lecture').classList.contains('on'),
+    tabs: [...document.querySelectorAll('.tab')].filter(t => !t.hidden).length
+  }));
+  check('the problem module hides the lecture tab and falls back to the problem',
+    fell.hidden && fell.guideOn && !fell.lectureOn && fell.tabs === 3, JSON.stringify(fell));
+
+  await lec.close();
+
   // ---------------------------------------------------------------
   console.log('\nCONTRAST AND ANNOUNCEMENT');
   // ---------------------------------------------------------------
@@ -1895,7 +2042,9 @@ function check(name, ok, detail) {
   for (const dark of [false, true]) {
     for (const [hash, tab] of [['#lo21', 'guide'], ['#lo21', 'solve'], ['#lo22', 'solve'],
                                ['#lo23', 'guide'], ['#lo23-atb', 'guide'], ['#lo23', 'solve'],
-                               ['#p212', 'guide'], ['#p212', 'table']]) {
+                               ['#p212', 'guide'], ['#p212', 'table'],
+                               ['#lo21', 'lecture'], ['#lo22', 'lecture'],
+                               ['#lo23', 'lecture'], ['#lo24', 'lecture']]) {
       await c.goto(FILE + hash);
       await c.waitForTimeout(200);
       // The theme is saved, so clicking the toggle on every screen alternates
