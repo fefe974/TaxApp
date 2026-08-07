@@ -163,7 +163,7 @@ button { font: inherit; color: inherit; cursor: pointer; border: 0; background: 
 html[data-theme="dark"] .appbar { background: var(--surface); border-bottom: 1px solid var(--line); color: var(--text); }
 .appbar-inner { display: flex; align-items: center; gap: 12px; max-width: 720px; margin: 0 auto; }
 .mark {
-  flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
+  flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center;
   background: #fff; color: var(--brand);
   box-shadow: var(--shadow-sm);
@@ -2289,13 +2289,132 @@ button.instr-row.now:hover { background: var(--brand-soft); }
   .tab svg { width: 15px; height: 15px; }
 }
 
+
+
+/* ============================================================
+   THE COURSE HOME
+   The app's front door. No tabs and no pager here: there is one
+   thing on this screen, which is the course and its modules.
+   ============================================================ */
+
+#pane-home .scroll { padding: 22px 18px 34px; }
+#pane-home .wrap { max-width: 640px; }
+@media (min-width: 720px) { #pane-home .scroll { padding: 30px 24px 44px; } }
+@media (max-width: 360px) { #pane-home .scroll { padding: 20px 16px 30px; } }
+
+.hm-head { margin-bottom: 16px; }
+.hm-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 7px;
+}
+.hm-head h1 {
+  font-family: var(--display); font-size: 26px; font-weight: 600;
+  line-height: 1.15; letter-spacing: -0.015em; color: var(--text);
+}
+.hm-sub { margin-top: 6px; font-size: 12.5px; font-weight: 600; color: var(--brand); }
+.hm-blurb-lg { margin-top: 11px; font-size: 13.5px; line-height: 1.6; color: var(--text-dim); }
+
+.hm-stats { display: flex; gap: 8px; }
+.hm-stat {
+  flex: 1 1 0; min-width: 0; display: grid; gap: 1px;
+  padding: 10px 11px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line);
+}
+.hm-stat b {
+  font-family: var(--mono); font-size: 20px; font-weight: 700;
+  font-variant-numeric: tabular-nums; color: var(--text); line-height: 1.1;
+}
+.hm-stat u { text-decoration: none; font-size: 11px; color: var(--muted); line-height: 1.3; }
+.hm-meter {
+  margin-top: 9px; height: 6px; border-radius: 3px;
+  background: var(--surface-3); overflow: hidden;
+}
+.hm-meter i { display: block; height: 100%; background: var(--good); border-radius: 3px; }
+
+/* ---- the cycle ---- */
+.cyc { list-style: none; margin: 0; padding: 0 0 0 3px; display: grid; gap: 3px; }
+.cyc li {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 8px 10px 8px 0; position: relative;
+}
+.cyc li::before {
+  content: ''; position: absolute; left: 11px; top: 0; bottom: 0; width: 1px;
+  background: var(--line-strong);
+}
+.cyc li:first-child::before { top: 50%; }
+.cyc li:last-child::before { bottom: 50%; }
+.cyc i {
+  position: relative; z-index: 1; flex: 0 0 auto;
+  width: 23px; height: 23px; border-radius: 50%;
+  display: grid; place-items: center; font-style: normal;
+  background: var(--surface); border: 1px solid var(--line-strong);
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700; color: var(--text-dim);
+}
+.cyc b { flex: 1 1 130px; font-size: 12.5px; font-weight: 600; color: var(--text-dim); line-height: 1.35; }
+.cyc-tag {
+  flex: 0 0 auto; font-style: normal;
+  padding: 3px 8px; border-radius: 999px;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+}
+.cyc-loop {
+  display: flex; align-items: center; gap: 7px; margin: 8px 0 0 3px;
+  font-size: 11.5px; color: var(--muted);
+}
+.cyc-loop svg { width: 13px; height: 13px; transform: rotate(90deg); }
+
+/* One colour per module, used by the cycle tags and the module cards so the
+   two read as the same thing. */
+.m0 { background: var(--brand-soft); color: var(--brand-ink); border: 1px solid var(--brand-line); }
+.m1 { background: var(--good-soft); color: var(--good-deep); border: 1px solid var(--good-line); }
+.m2 { background: var(--amber-soft); color: var(--amber-ink); border: 1px solid var(--amber-line); }
+.m3 { background: var(--surface-3); color: var(--text-dim); border: 1px solid var(--line-strong); }
+.m4 { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad-line); }
+
+/* ---- module cards ---- */
+.hm-mods { display: grid; gap: 8px; }
+.hm-mod {
+  display: grid; gap: 6px; width: 100%; text-align: left;
+  padding: 13px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-sm);
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.hm-mod:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.hm-mod.done { border-color: var(--good-line); }
+.hm-mod-top { display: flex; align-items: center; gap: 9px; }
+.hm-code {
+  flex: 0 0 auto; padding: 3px 8px; border-radius: 999px;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+}
+.hm-mod-top b { flex: 1; min-width: 0; font-size: 14.5px; font-weight: 650; color: var(--text); }
+.hm-go { flex: 0 0 auto; display: grid; place-items: center; color: var(--muted); }
+.hm-go svg { width: 16px; height: 16px; }
+.hm-mod.done .hm-go { color: var(--good-deep); }
+.hm-co { font-size: 11.5px; font-weight: 600; color: var(--muted); }
+.hm-blurb { font-size: 12.5px; line-height: 1.45; color: var(--text-dim); }
+.hm-bits { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.hm-bit {
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-size: 10.5px; font-weight: 600; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.hm-bit.on { background: var(--good-soft); border-color: var(--good-line); color: var(--good-deep); }
+
+/* ---- the app bar at home ---- */
+.mark {
+  border: 0; padding: 0;
+}
+.mod-btn.flat { pointer-events: none; }
+.mod-btn.flat #mod-caret { display: none; }
+
 </style>
 <a class="skip" href="#guide">Skip to content</a>
 <div class="app">
 
   <header class="appbar">
     <div class="appbar-inner">
-      <span class="mark" id="mark"></span>
+      <button class="mark" id="mark" aria-label="Course home"></button>
       <button class="mod-btn" id="mod-btn" aria-haspopup="dialog">
         <span class="mod-txt"><b id="mod-name">&nbsp;</b><span id="mod-sub">&nbsp;</span></span>
         <span id="mod-caret"></span>
@@ -2315,6 +2434,10 @@ button.instr-row.now:hover { background: var(--brand-soft); }
       <button class="tab" id="tab-solve"></button>
     </div>
   </nav>
+
+  <section class="pane" id="pane-home">
+    <div class="scroll"><main id="home" tabindex="-1"></main></div>
+  </section>
 
   <section class="pane" id="pane-lecture">
     <div class="scroll"><main id="lecture" tabindex="-1"></main></div>
@@ -2340,7 +2463,7 @@ button.instr-row.now:hover { background: var(--brand-soft); }
     </div>
   </div>
 
-  <div class="controls">
+  <div class="controls" id="controls">
     <div class="controls-inner">
       <button class="nav-btn" id="btn-prev"><span id="prev-icon"></span><span id="prev-label">All entries</span></button>
       <div class="progress-wrap">
@@ -3825,6 +3948,33 @@ var MODULES = [
     count: '5 instructions to work' }
 ];
 
+/* ============================================================
+   THE COURSE
+   One course, and the app's front door. The nine steps below are
+   the accounting cycle the course is named after; each names the
+   module that works it, by id, so a module renamed or reordered
+   cannot leave the home page describing a course that is not
+   there. P2.12 works all nine at once, which is why it is the
+   last thing rather than a tenth step.
+   ============================================================ */
+var COURSE = {
+  name: 'Accounting Cycle',
+  sub: 'Weygandt &middot; Chapter 2, The Accounting Information System',
+  blurb: 'The full cycle a set of books goes through in one period: recording what happened, proving it, correcting it for the period boundary, reporting it, and clearing the counters for the next one. Four learning objectives, each with a lecture, a worked example and a worksheet &mdash; then one comprehensive problem to work unaided.',
+  steps: [
+    ['Analyse each transaction', 'lo21'],
+    ['Journalize it', 'lo22'],
+    ['Post to the ledger', 'lo22'],
+    ['Prepare a trial balance', 'lo22'],
+    ['Journalize and post the adjustments', 'lo23'],
+    ['Prepare an adjusted trial balance', 'lo23'],
+    ['Prepare the financial statements', 'lo24'],
+    ['Journalize and post the closing entries', 'lo24'],
+    ['Prepare a post-closing trial balance', 'lo24']
+  ]
+};
+
+
 /* Icons into the static chrome. */
 document.getElementById('mark').innerHTML = ICON.badge;
 document.getElementById('mod-caret').innerHTML = ICON.chev;
@@ -3844,6 +3994,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
    ============================================================ */
 (function () {
   var STORE = 'accounting.course.v4';
+  var atHome = true;                 // the course home is the front door
   var mod = 0;                       // which module of the chapter is open
   var view = 'dash';                 // 'dash' the entry list, 'detail' one entry
   var at = 0;                        // index into the open module's flow
@@ -3861,12 +4012,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
       if (typeof p.at === 'number' && p.at >= 0 && p.at < flow().length) at = p.at;
       if (p.view === 'detail') view = 'detail';
       if (p.read && typeof p.read === 'object') read = p.read;
-      if (p.tab === 'table' || p.tab === 'guide' || p.tab === 'solve') tab = p.tab;
+      if (['lecture', 'table', 'guide', 'solve'].indexOf(p.tab) !== -1) tab = p.tab;
+      if (p.home === false) atHome = false;
       theme = p.theme || '';
     } catch (e) { /* private mode: run without persistence */ }
   }
   function save() {
-    try { window.localStorage.setItem(STORE, JSON.stringify({ mod: mod, view: view, at: at, read: read, tab: tab, theme: theme })); } catch (e) {}
+    try { window.localStorage.setItem(STORE, JSON.stringify({ home: atHome, mod: mod, view: view, at: at, read: read, tab: tab, theme: theme })); } catch (e) {}
   }
 
   /* ---------- the ledger table ----------
@@ -8783,6 +8935,111 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     });
   }
 
+
+  /* ---------- the course home ----------
+     Everything on this page is read off the modules themselves: how many
+     screens each has, how many have been opened, and what the worksheet
+     scores. Nothing about the course is written down twice. */
+
+  function scoreOf(i) { return [scoreNow, score2, score3, score4, score5][i](); }
+  function progressOf(i) {
+    var m = MODULES[i], f = flowFor(i);
+    var seen = f.filter(function (x) { return read[m.id] && read[m.id][x.id]; }).length;
+    var sc = scoreOf(i);
+    return { seen: seen, of: f.length, got: sc.got, total: sc.total,
+      started: seen > 0 || sc.got > 0, done: (f.length === 0 || seen === f.length) && sc.got === sc.total };
+  }
+  function courseTotals() {
+    var got = 0, total = 0, started = 0, done = 0;
+    MODULES.forEach(function (m, i) {
+      var p = progressOf(i);
+      got += p.got; total += p.total;
+      if (p.started) started++;
+      if (p.done) done++;
+    });
+    return { got: got, total: total, started: started, done: done };
+  }
+  /* Where "continue" should land: the first module not yet finished. */
+  function nextModule() {
+    for (var i = 0; i < MODULES.length; i++) if (!progressOf(i).done) return i;
+    return 0;
+  }
+
+  /* The cycle the course is named after, and the module that works each step. */
+  function cycleViz() {
+    var byId = {};
+    MODULES.forEach(function (m, i) { byId[m.id] = { m: m, i: i }; });
+    return '<ol class="cyc">' + COURSE.steps.map(function (s, i) {
+      var owner = byId[s[1]];
+      return '<li><i>' + (i + 1) + '</i><b>' + s[0] + '</b>' +
+        '<em class="cyc-tag m' + owner.i + '">' + owner.m.code + '</em></li>';
+    }).join('') + '</ol>' +
+    '<p class="cyc-loop">' + ICON.next + 'and the next period starts again at one</p>';
+  }
+
+  function renderHome() {
+    var t = courseTotals();
+    var next = nextModule();
+    var anyWork = t.got > 0 || t.started > 0;
+
+    var cards = MODULES.map(function (m, i) {
+      var p = progressOf(i);
+      var bits = [];
+      if (LECTURES[m.id]) bits.push('<span class="hm-bit">Lecture</span>');
+      if (p.of) bits.push('<span class="hm-bit' + (p.seen === p.of ? ' on' : '') + '">' +
+        p.seen + ' of ' + p.of + ' explained</span>');
+      bits.push('<span class="hm-bit' + (p.got === p.total ? ' on' : '') + '">' +
+        p.got + ' of ' + p.total + ' correct</span>');
+      return '<button type="button" class="hm-mod' + (p.done ? ' done' : '') + '" data-open-mod="' + i + '">' +
+        '<span class="hm-mod-top">' +
+          '<span class="hm-code m' + i + '">' + m.code + '</span>' +
+          '<b>' + m.name + '</b>' +
+          '<span class="hm-go">' + (p.done ? ICON.check : ICON.next) + '</span>' +
+        '</span>' +
+        '<span class="hm-co">' + m.co + ' &middot; ' + m.sub + '</span>' +
+        '<span class="hm-blurb">' + m.blurb + '</span>' +
+        '<span class="hm-bits">' + bits.join('') + '</span>' +
+        '</button>';
+    }).join('');
+
+    $('home').innerHTML =
+      '<div class="wrap fade">' +
+        '<div class="hm-head">' +
+          '<div class="hm-eyebrow">Course</div>' +
+          '<h1>' + COURSE.name + '</h1>' +
+          '<p class="hm-sub">' + COURSE.sub + '</p>' +
+          '<p class="hm-blurb-lg">' + COURSE.blurb + '</p>' +
+        '</div>' +
+        '<div class="state">' +
+          '<div class="state-cap">' + ICON.pulse + (anyWork ? 'Where you are' : 'Not started yet') + '</div>' +
+          '<div class="hm-stats">' +
+            '<span class="hm-stat"><b>' + t.done + '</b><u>of ' + MODULES.length + ' modules finished</u></span>' +
+            '<span class="hm-stat"><b>' + t.got + '</b><u>of ' + t.total + ' marks earned</u></span>' +
+          '</div>' +
+          '<div class="hm-meter"><i style="width:' + (t.total ? (t.got / t.total * 100).toFixed(1) : 0) + '%"></i></div>' +
+        '</div>' +
+        '<button type="button" class="p5-open" data-open-mod="' + next + '">' + ICON.next +
+          (anyWork ? 'Continue &mdash; ' + MODULES[next].code + ' ' + MODULES[next].name
+                   : 'Start the course &mdash; ' + MODULES[0].code) + '</button>' +
+        '<div class="sect">The cycle, and where each step is worked<i></i></div>' +
+        viz('The accounting cycle', cycleViz(),
+          'The nine steps of the accounting cycle in order, each labelled with the module that works it: analysing transactions in LO 2.1, journalizing, posting and the trial balance in LO 2.2, the adjustments and the adjusted trial balance in LO 2.3, and the statements, closing entries and post-closing trial balance in LO 2.4.', true) +
+        '<div class="sect">Modules<i></i></div>' +
+        '<div class="hm-mods">' + cards + '</div>' +
+        '<div class="sect">How a module works<i></i></div>' +
+        '<div class="pr-note">' +
+          '<p><b>Lecture</b> is the theory, in six topics that build on one another. ' +
+            '<b>Guide</b> works the problem one step at a time with the theory applied. ' +
+            '<b>Reference</b> holds the source material, never the answers. ' +
+            '<b>Solve</b> asks the printed instructions and marks what you do.</p>' +
+          '<p>The last module is a problem rather than a lesson: it has no lecture and explains nothing, ' +
+            'because by then you have met all of it.</p>' +
+        '</div>' +
+        '<div style="height:10px"></div>' +
+      '</div>';
+    animateViz($('home'));
+  }
+
   /* ---------- chrome ---------- */
   function renderModBtn() {
     var m = MODULES[mod];
@@ -8791,7 +9048,10 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function renderSheet() {
-    $('mod-list').innerHTML = MODULES.map(function (m, i) {
+    $('mod-list').innerHTML =
+      '<button class="mod-card home" data-gohome><i>Course</i><b>' + COURSE.name + '</b>' +
+      '<span>Back to the module list, the cycle and where you have got to.</span></button>' +
+      MODULES.map(function (m, i) {
       var f = flowFor(i);
       var n = f.filter(function (x) { return read[m.id] && read[m.id][x.id]; }).length;
       var line = f.length ? n + ' of ' + f.length + ' explained' : m.count;
@@ -8863,7 +9123,7 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   function renderTabs() {
     ['lecture', 'guide', 'table', 'solve'].forEach(function (t) {
       $('tab-' + t).classList.toggle('on', tab === t);
-      $('pane-' + t).classList.toggle('on', tab === t);
+      $('pane-' + t).classList.toggle('on', !atHome && tab === t);
       // aria-selected needs role="tab"; aria-current is valid on a plain button.
       if (tab === t) $('tab-' + t).setAttribute('aria-current', 'true');
       else $('tab-' + t).removeAttribute('aria-current');
@@ -8871,6 +9131,25 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   function render() {
+    /* At home there is no module open, so the tabs and the pager have nothing
+       to point at. Hiding them is the difference between a front door and a
+       screen with three dead controls on it. */
+    document.querySelector('.tabs').hidden = atHome;
+    $('controls').hidden = atHome;
+    $('pane-home').classList.toggle('on', atHome);
+    $('mark').classList.toggle('on', atHome);
+    if (atHome) {
+      renderHome();
+      renderTabs();
+      $('mod-name').textContent = COURSE.name;
+      $('mod-sub').innerHTML = COURSE.sub;
+      $('mod-btn').classList.add('flat');
+      $('mod-btn').setAttribute('aria-disabled', 'true');
+      return;
+    }
+    $('home').innerHTML = '';
+    $('mod-btn').classList.remove('flat');
+    $('mod-btn').removeAttribute('aria-disabled');
     /* P2.12 has no lecture: it is a problem, not a topic. Falling back rather
        than showing an empty pane, in case the tab was saved from a module
        that does have one. */
@@ -8890,9 +9169,13 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
 
   /* ---------- navigation ---------- */
-  function hashFor() { return MODULES[mod].id + (view === 'dash' ? '' : '-' + flow()[at].id); }
+  function hashFor() {
+    if (atHome) return 'home';
+    return MODULES[mod].id + (view === 'dash' ? '' : '-' + flow()[at].id);
+  }
   function stateFromHash() {
     var h = (location.hash || '').replace('#', '');
+    if (h === 'home') return { home: true };
     var m = /^(lo2[1234]|p212)(?:-(.+))?$/.exec(h);
     if (!m) return null;
     var mi = 0;
@@ -8904,8 +9187,21 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
   function apply(st, fromHistory) {
     if (!st) return;
+    if (st.home) {
+      if (atHome) return;
+      if (view === 'dash') dashScroll = $('guide').parentNode.scrollTop;
+      atHome = true;
+      save(); render();
+      focusPane($('home'));
+      if (!fromHistory && window.history && history.pushState) {
+        history.pushState({ home: true }, '', '#home');
+      }
+      return;
+    }
     if (st.mod === undefined) st.mod = mod;
-    if (st.mod === mod && st.view === view && st.at === at) return;
+    var leavingHome = atHome;
+    atHome = false;
+    if (!leavingHome && st.mod === mod && st.view === view && st.at === at) return;
     if (view === 'dash') dashScroll = $('guide').parentNode.scrollTop;
     if (st.mod !== mod) { mod = st.mod; dashScroll = 0; }
     view = st.view;
@@ -8913,10 +9209,19 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (view === 'detail') readSet()[flow()[at].id] = 1;
     save();
     render();
-    if (tab === 'guide') focusGuideHeading();
+    if (leavingHome) focusPane($(tab === 'lecture' ? 'lecture' : 'guide'));
+    else if (tab === 'guide') focusGuideHeading();
     if (!fromHistory && window.history && history.pushState) {
       history.pushState({ mod: mod, view: view, at: at }, '', '#' + hashFor());
     }
+  }
+
+  /* Arriving on a whole new screen, the heading is where a reader starts. */
+  function focusPane(el) {
+    var h = el.querySelector('h1');
+    if (!h) return;
+    h.setAttribute('tabindex', '-1');
+    h.focus({ preventScroll: true });
   }
   /* Navigation replaces the whole pane, so the new heading takes focus and a
      screen reader reads from there. Announcing the pane as a live region
@@ -8936,7 +9241,14 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   window.addEventListener('popstate', function () {
     var st = stateFromHash();
     if (!st) return;
-    if (st.mod === mod && st.view === view && st.at === at) return;
+    if (st.home) {
+      if (atHome) return;
+      atHome = true; save(); render(); focusPane($('home'));
+      return;
+    }
+    var wasHome = atHome;
+    atHome = false;
+    if (!wasHome && st.mod === mod && st.view === view && st.at === at) return;
     mod = st.mod; view = st.view; at = st.at;
     if (view === 'detail') readSet()[flow()[at].id] = 1;
     save(); render();
@@ -8966,8 +9278,24 @@ document.getElementById('next-icon').innerHTML = ICON.next;
     if (go) { tab = go.getAttribute('data-gotab'); save(); render(); }
   });
 
-  $('mod-btn').addEventListener('click', function () { openSheet(true); });
+  $('mark').addEventListener('click', function () { apply({ home: true }); });
+  $('home').addEventListener('click', function (e) {
+    var card = e.target.closest('[data-open-mod]');
+    if (!card) return;
+    var i = Number(card.getAttribute('data-open-mod'));
+    /* A module nobody has touched opens on its lecture; one already under way
+       opens where the work is. P2.12 has no lecture, so it always opens on
+       the problem. */
+    var p = progressOf(i);
+    tab = (LECTURES[MODULES[i].id] && !p.started) ? 'lecture' : 'guide';
+    apply({ mod: i, view: 'dash', at: 0 });
+  });
+  $('mod-btn').addEventListener('click', function () {
+    if (atHome) return;
+    openSheet(true);
+  });
   $('sheet').addEventListener('click', function (e) {
+    if (e.target.closest('[data-gohome]')) { openSheet(false); apply({ home: true }); return; }
     var card = e.target.closest('[data-mod]');
     if (card) {
       var n = Number(card.getAttribute('data-mod'));
@@ -9031,7 +9359,12 @@ document.getElementById('next-icon').innerHTML = ICON.next;
   }
   applyTheme(theme);
   var fromUrl = stateFromHash();
-  if (fromUrl) { mod = fromUrl.mod; view = fromUrl.view; at = fromUrl.at; if (view === 'detail') readSet()[flow()[at].id] = 1; }
+  if (fromUrl && fromUrl.home) { atHome = true; }
+  else if (fromUrl) {
+    atHome = false;
+    mod = fromUrl.mod; view = fromUrl.view; at = fromUrl.at;
+    if (view === 'detail') readSet()[flow()[at].id] = 1;
+  }
   render();
   bindSolve();
   bindSolve2();

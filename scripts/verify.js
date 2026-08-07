@@ -31,8 +31,13 @@ function check(name, ok, detail) {
   const page = await browser.newPage({ viewport: { width: 390, height: 900 } });
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
-  await page.goto(FILE);
+  await page.goto(FILE + '#lo21');
   await page.waitForTimeout(500);
+
+  check('a module address opens that module, not the course home',
+    await page.evaluate(() => location.hash === '#lo21' &&
+      document.querySelector('.tabs').hidden === false &&
+      !document.getElementById('pane-home').classList.contains('on')));
 
   const acct = await page.evaluate(() => {
     const t = totalsUpTo(999);
@@ -124,7 +129,7 @@ function check(name, ok, detail) {
   console.log('\nDASHBOARD');
   // ---------------------------------------------------------------
   await page.evaluate(() => localStorage.clear());
-  await page.goto(FILE);
+  await page.goto(FILE + '#lo21');
   await page.waitForTimeout(500);
 
   const dash = await page.evaluate(() => {
@@ -311,7 +316,7 @@ function check(name, ok, detail) {
   const wsErrors = [];
   ws.on('pageerror', e => wsErrors.push('pageerror: ' + e.message));
   ws.on('console', m => { if (m.type() === 'error') wsErrors.push('console: ' + m.text()); });
-  await ws.goto(FILE);
+  await ws.goto(FILE + '#lo21');
   await ws.evaluate(() => localStorage.clear());
   await ws.goto(FILE + '#lo21');
   await ws.waitForTimeout(400);
@@ -557,7 +562,7 @@ function check(name, ok, detail) {
   const wErr = [];
   w.on('pageerror', e => wErr.push('pageerror: ' + e.message));
   w.on('console', m => { if (m.type() === 'error') wErr.push('console: ' + m.text()); });
-  await w.goto(FILE);
+  await w.goto(FILE + '#lo21');
   await w.evaluate(() => localStorage.clear());
   await w.goto(FILE + '#lo21');
   await w.waitForTimeout(400);
@@ -632,7 +637,7 @@ function check(name, ok, detail) {
   const kErr = [];
   k.on('pageerror', e => kErr.push('pageerror: ' + e.message));
   k.on('console', m => { if (m.type() === 'error') kErr.push('console: ' + m.text()); });
-  await k.goto(FILE);
+  await k.goto(FILE + '#lo21');
   await k.evaluate(() => localStorage.clear());
   await k.goto(FILE + '#lo22');
   await k.waitForTimeout(500);
@@ -1103,7 +1108,7 @@ function check(name, ok, detail) {
   const jErr = [];
   j.on('pageerror', e => jErr.push('pageerror: ' + e.message));
   j.on('console', m => { if (m.type() === 'error') jErr.push('console: ' + m.text()); });
-  await j.goto(FILE);
+  await j.goto(FILE + '#lo21');
   await j.evaluate(() => localStorage.clear());
   await j.goto(FILE + '#lo23');
   await j.waitForTimeout(500);
@@ -1989,6 +1994,202 @@ function check(name, ok, detail) {
 
   await lec.close();
 
+
+  // ---------------------------------------------------------------
+  console.log('\nTHE COURSE HOME');
+  // ---------------------------------------------------------------
+  const hm = await browser.newPage({ viewport: { width: 390, height: 900 } });
+  hm.on('pageerror', e => errors.push('home: ' + e));
+  hm.on('console', m => { if (m.type() === 'error') errors.push('home console: ' + m.text()); });
+
+  await hm.goto(FILE);
+  await hm.waitForTimeout(600);
+  const front = await hm.evaluate(() => {
+    const sc = document.querySelector('#pane-home .scroll');
+    const pane = document.getElementById('pane-home');
+    const txt = sel => { const e = document.querySelector(sel); return e ? e.textContent : ''; };
+    return {
+      hash: location.hash,
+      on: !!pane && pane.classList.contains('on'),
+      h1: txt('#home h1'),
+      h1count: document.querySelectorAll('#home h1').length,
+      sub: txt('#home .hm-sub'),
+      bar: document.getElementById('mod-name').textContent,
+      tabs: document.querySelector('.tabs').hidden,
+      controls: document.getElementById('controls').hidden,
+      cards: [...document.querySelectorAll('#home .hm-mod')].length,
+      names: [...document.querySelectorAll('#home .hm-mod b')].map(e => e.textContent),
+      codes: [...document.querySelectorAll('#home .hm-code')].map(e => e.textContent),
+      modCodes: MODULES.map(m => m.code),
+      modNames: MODULES.map(m => m.name),
+      steps: [...document.querySelectorAll('#home .cyc li')].length,
+      tags: [...document.querySelectorAll('#home .cyc-tag')].map(e => e.textContent),
+      stepIds: COURSE.steps.map(s => s[1]),
+      known: MODULES.map(m => m.id),
+      figs: document.querySelectorAll('#home figure.viz').length,
+      claimed: document.querySelectorAll('#home figure.viz .sr-only, #home figure.viz [role="img"][aria-label]').length,
+      wide: sc ? (document.documentElement.scrollWidth - window.innerWidth) + (sc.scrollWidth - sc.clientWidth) : 999
+    };
+  });
+  check('the app opens on the course home',
+    front.hash === '#home' && front.on && front.tabs === true && front.controls === true,
+    JSON.stringify([front.hash, front.on, front.tabs, front.controls]));
+  check('it names the course and where the course comes from',
+    front.h1 === 'Accounting Cycle' && front.h1count === 1 &&
+    /Weygandt/.test(front.sub) && /Chapter 2/.test(front.sub) && front.bar === 'Accounting Cycle',
+    JSON.stringify([front.h1, front.sub, front.bar]));
+  check('and lists every module the app actually has, by its own code and name',
+    front.cards === front.modCodes.length &&
+    front.codes.join('|') === front.modCodes.join('|') &&
+    front.names.join('|') === front.modNames.join('|'),
+    JSON.stringify([front.codes, front.modCodes]));
+  check('the cycle runs nine steps, and every step is worked by a module that exists',
+    front.steps === 9 && front.tags.length === 9 &&
+    front.stepIds.every(id => front.known.indexOf(id) !== -1),
+    JSON.stringify([front.steps, front.stepIds]));
+  check('and every learning objective is named by at least one step',
+    ['LO 2.1', 'LO 2.2', 'LO 2.3', 'LO 2.4'].every(c => front.tags.indexOf(c) !== -1),
+    JSON.stringify(front.tags));
+  check('the home figure says what it shows, and the page fits',
+    front.figs === 1 && front.claimed === 1 && front.wide <= 0,
+    JSON.stringify([front.figs, front.claimed, front.wide]));
+
+  /* The home page reports progress, so it has to read it rather than hold it. */
+  const before = await hm.evaluate(() => {
+    const nth = (sel, i) => { const e = document.querySelectorAll(sel)[i]; return e ? e.textContent : ''; };
+    return { marks: nth('#home .hm-stat b', 1), total: nth('#home .hm-stat u', 1), cta: nth('#home .p5-open', 0) };
+  });
+  let sumH = 0;
+  for (const h of ['#lo21', '#lo22', '#lo23', '#lo24', '#p212']) {
+    await hm.goto(FILE + h);
+    await hm.waitForTimeout(350);
+    await hm.click('#tab-solve');
+    await hm.waitForTimeout(400);
+    sumH += Number((await hm.textContent('#ws-score b')).split(' of ')[1]);
+  }
+  await hm.goto(FILE + '#home');
+  await hm.waitForTimeout(400);
+  check('the marks on offer are the five modules own totals added up',
+    before.marks === '0' && before.total === 'of ' + sumH + ' marks earned',
+    JSON.stringify([before, sumH]));
+  check('and with nothing done it offers to start rather than to continue',
+    /Start the course/.test(before.cta), before.cta.trim());
+
+  /* A module nobody has touched opens on its lecture. */
+  if (await hm.locator('[data-open-mod="1"]').count()) {
+    await hm.click('[data-open-mod="1"]');
+    await hm.waitForTimeout(500);
+  }
+  const opened = await hm.evaluate(() => ({
+    hash: location.hash,
+    tab: document.querySelector('.tab.on').textContent.trim(),
+    tabs: document.querySelector('.tabs').hidden,
+    focus: document.activeElement.tagName
+  }));
+  check('opening an untouched module lands on its lecture, with the heading focused',
+    opened.hash === '#lo22' && /Lecture/.test(opened.tab) && opened.tabs === false && opened.focus === 'H1',
+    JSON.stringify(opened));
+
+  /* The mark is the way back, and the browser's back button still works. */
+  if (await hm.locator('#mark').count()) { await hm.click('#mark'); await hm.waitForTimeout(450); }
+  const backHome = await hm.evaluate(() => ({ hash: location.hash, on: document.getElementById('pane-home').classList.contains('on') }));
+  await hm.goBack();
+  await hm.waitForTimeout(450);
+  const wentBack = await hm.evaluate(() => ({ hash: location.hash, tabs: document.querySelector('.tabs').hidden }));
+  check('the mark returns to the course, and the back button returns to the module',
+    backHome.hash === '#home' && backHome.on && wentBack.hash === '#lo22' && wentBack.tabs === false,
+    JSON.stringify([backHome, wentBack]));
+
+  /* Work done anywhere shows up on the home page. */
+  await hm.goto(FILE + '#p212');
+  await hm.waitForTimeout(450);
+  if (await hm.locator('#tab-solve:visible').count()) {
+    await hm.click('#tab-solve');
+    await hm.waitForTimeout(450);
+    await hm.fill('[data-adj5="supx.d"]', '14400');
+    await hm.waitForTimeout(180);
+    await hm.fill('[data-adj5="sup.c"]', '14400');
+    await hm.waitForTimeout(250);
+  }
+  if (await hm.locator('#mark').count()) { await hm.click('#mark'); await hm.waitForTimeout(500); }
+  const after = await hm.evaluate(() => {
+    const nth = (sel, i) => { const e = document.querySelectorAll(sel)[i]; return e ? e.textContent : ''; };
+    const last = [...document.querySelectorAll('#home .hm-mod')].pop();
+    const meter = document.querySelector('#home .hm-meter i');
+    return { marks: nth('#home .hm-stat b', 1), meter: meter ? meter.getAttribute('style') : '',
+      cta: nth('#home .p5-open', 0), bits: last ? last.querySelectorAll('.hm-bit').length : -1 };
+  });
+  check('work done in a module shows on the home page',
+    after.marks === '1' && /width:0\.[0-9]/.test(after.meter) && /Continue/.test(after.cta),
+    JSON.stringify(after));
+  check('and the problem module offers no lecture and nothing to explain',
+    after.bits === 1, String(after.bits));
+
+  /* Anyone who found the switcher first should also find the way home. */
+  await hm.goto(FILE + '#lo24');
+  await hm.waitForTimeout(400);
+  if (await hm.locator('#mod-btn:not([aria-disabled])').count()) {
+    await hm.click('#mod-btn');
+    await hm.waitForTimeout(300);
+  }
+  const sheetHome = await hm.evaluate(() => ({
+    home: document.querySelectorAll('[data-gohome]').length,
+    mods: document.querySelectorAll('[data-mod]').length
+  }));
+  if (sheetHome.home) { await hm.click('[data-gohome]'); await hm.waitForTimeout(450); }
+  else { await hm.keyboard.press('Escape'); await hm.waitForTimeout(200); }
+  const viaSheet = await hm.evaluate(() => location.hash);
+  check('the module switcher carries a way back to the course',
+    sheetHome.home === 1 && sheetHome.mods === 5 && viaSheet === '#home',
+    JSON.stringify([sheetHome, viaSheet]));
+
+  /* A link into a module still goes straight there. */
+  await hm.goto(FILE + '#lo23-atb');
+  await hm.waitForTimeout(500);
+  const deep = await hm.evaluate(() => ({
+    hash: location.hash,
+    tabs: document.querySelector('.tabs').hidden,
+    home: document.getElementById('pane-home').classList.contains('on')
+  }));
+  check('a link into a module still opens the module, not the home page',
+    deep.hash === '#lo23-atb' && deep.tabs === false && deep.home === false, JSON.stringify(deep));
+
+  await hm.goto(FILE + '#lo23');
+  await hm.waitForTimeout(450);
+  await hm.goto(FILE);
+  await hm.waitForTimeout(550);
+  const resumed = await hm.evaluate(() => {
+    const pane = document.getElementById('pane-home');
+    return { hash: location.hash, home: !!pane && pane.classList.contains('on') };
+  });
+  check('reopening with no address resumes the module you were last in',
+    resumed.hash === '#lo23' && resumed.home === false, JSON.stringify(resumed));
+  await hm.goto(FILE + '#home');
+  await hm.waitForTimeout(450);
+  await hm.goto(FILE);
+  await hm.waitForTimeout(550);
+  const stayed = await hm.evaluate(() => {
+    const pane = document.getElementById('pane-home');
+    return { hash: location.hash, home: !!pane && pane.classList.contains('on') };
+  });
+  check('and reopening after leaving off at the course home returns to the course',
+    stayed.hash === '#home' && stayed.home === true, JSON.stringify(stayed));
+
+  const wideHome = [];
+  for (const w of [320, 390, 900]) {
+    await hm.setViewportSize({ width: w, height: 800 });
+    await hm.goto(FILE + '#home');
+    await hm.waitForTimeout(320);
+    const o = await hm.evaluate(() => {
+      const sc = document.querySelector('#pane-home .scroll');
+      return (document.documentElement.scrollWidth - window.innerWidth) + (sc.scrollWidth - sc.clientWidth);
+    });
+    if (o > 0) wideHome.push(w + ' by ' + o);
+  }
+  check('the course home fits at 320, 390 and 900', wideHome.length === 0, wideHome.join(' | '));
+
+  await hm.close();
+
   // ---------------------------------------------------------------
   console.log('\nCONTRAST AND ANNOUNCEMENT');
   // ---------------------------------------------------------------
@@ -2082,6 +2283,14 @@ function check(name, ok, detail) {
       (await c.evaluate(SWEEP)).forEach(x => contrastBad.push((dark ? 'dark ' : 'light ') + 'p212/sheet ' + sh + ' ' + x));
     }
   }
+  for (const dark of [false, true]) {
+    await c.goto(FILE + '#home');
+    await c.waitForTimeout(300);
+    const nowH = await c.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    if ((nowH === 'dark') !== dark) { await c.click('#btn-theme'); await c.waitForTimeout(150); }
+    await c.waitForTimeout(200);
+    (await c.evaluate(SWEEP)).forEach(x => contrastBad.push((dark ? 'dark ' : 'light ') + 'home ' + x));
+  }
   check('every piece of text meets WCAG AA against what is behind it, in both themes',
     contrastBad.length === 0, contrastBad.slice(0, 6).join(' | ') + (contrastBad.length > 6 ? ' (+' + (contrastBad.length - 6) + ')' : ''));
 
@@ -2130,7 +2339,7 @@ function check(name, ok, detail) {
   const zErr = [];
   z.on('pageerror', e => zErr.push('pageerror: ' + e.message));
   z.on('console', m => { if (m.type() === 'error') zErr.push('console: ' + m.text()); });
-  await z.goto(FILE);
+  await z.goto(FILE + '#lo21');
   await z.evaluate(() => localStorage.clear());
   await z.goto(FILE + '#lo24');
   await z.waitForTimeout(500);
@@ -2445,7 +2654,7 @@ function check(name, ok, detail) {
   console.log('\nMOTION');
   // ---------------------------------------------------------------
   const reduced = await browser.newPage({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce' });
-  await reduced.goto(FILE);
+  await reduced.goto(FILE + '#lo21');
   await reduced.waitForTimeout(400);
   await reduced.evaluate(() => document.getElementById('btn-next').click());
   await reduced.waitForTimeout(150);

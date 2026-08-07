@@ -16,6 +16,12 @@ step, no runtime dependencies. `artifact.html` is derived from it by
   by retyping it. The capstone is the one module that types two columns rather
   than one, because the printed problem hands over both trial balances; the six
   adjustments between them are still derived, as their difference.
+- **The course is the front door.** `COURSE` names it and lists the nine
+  steps of the accounting cycle, each pointing at the module that works it by
+  id. The home page reads everything else off the modules — their codes,
+  names, screen counts and worksheet scores — so a module added, renamed or
+  reordered updates the course rather than contradicting it. At home the tabs
+  and the pager hide: there is no module open for them to point at.
 - **Each LO runs Lecture, Guide, Solve.** The lecture is theory: six numbered
   topics, each naming the earlier one it builds on, schematic figures for the
   processes, and a closing sequence that puts the topics back in the order the
