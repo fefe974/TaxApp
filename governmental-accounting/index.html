@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Governmental Accounting — an example-first course. Lesson 1: Distinguishing Government and Not-for-Profit Organizations.">
+<title>Governmental Accounting — Lesson 1</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --ink: #22302a;
+    --ink-soft: #55655d;
+    --paper: #f6f4ee;
+    --card: #ffffff;
+    --line: #dfe3da;
+    --green: #1b4332;
+    --green-mid: #2d6a4f;
+    --green-soft: #e9f1ec;
+    --gold: #b8860b;
+    --gold-deep: #8a6508;
+    --gold-soft: #faf3dd;
+    --blue: #2b5d8a;
+    --blue-soft: #e8eff6;
+    --red: #a4423b;
+    --red-soft: #f9e8e6;
+    --radius: 14px;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ---------- Header ---------- */
+  .ga-header {
+    background: var(--green);
+    color: #f2efe6;
+    padding: 20px 20px 18px;
+    border-bottom: 4px solid var(--gold);
+  }
+  .ga-header-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .ga-brand { cursor: pointer; user-select: none; }
+  .ga-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #cfae5a;
+    margin: 0 0 2px;
+  }
+  .ga-course-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .ga-header-chip {
+    font-size: 12px;
+    border: 1px solid rgba(242, 239, 230, 0.35);
+    border-radius: 999px;
+    padding: 4px 12px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Progress bar ---------- */
+  .ga-progress-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .ga-progress-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ga-progress-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .ga-progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .ga-progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--green-mid), var(--gold));
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+
+  /* ---------- Layout ---------- */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 28px 20px 72px;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.25;
+    margin: 0 0 6px;
+    color: var(--green);
+  }
+  h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin: 28px 0 8px;
+    color: var(--green);
+  }
+  p { margin: 0 0 14px; }
+  .ga-section-kicker {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .ga-lead {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+  }
+
+  /* ---------- Callouts ---------- */
+  .ga-example, .ga-note, .ga-takeaway {
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin: 18px 0;
+  }
+  .ga-example {
+    background: var(--gold-soft);
+    border: 1px solid #ecd9a8;
+  }
+  .ga-note {
+    background: var(--blue-soft);
+    border: 1px solid #cddcec;
+  }
+  .ga-takeaway {
+    background: var(--green-soft);
+    border-left: 5px solid var(--green-mid);
+    border-radius: 6px 14px 14px 6px;
+  }
+  .ga-callout-tag {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ga-example .ga-callout-tag { color: var(--gold-deep); }
+  .ga-note .ga-callout-tag { color: var(--blue); }
+  .ga-takeaway .ga-callout-tag { color: var(--green-mid); }
+  .ga-example p:last-child, .ga-note p:last-child, .ga-takeaway p:last-child { margin-bottom: 0; }
+
+  /* ---------- Figures ---------- */
+  .ga-figure {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .ga-figure-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  /* two compare cards (hook, scoreboards) */
+  .ga-compare-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .ga-cc {
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 14px;
+  }
+  .ga-cc strong { display: block; font-size: 15px; margin-bottom: 8px; }
+  .ga-cc p { margin: 10px 0 0; color: var(--ink-soft); }
+  .ga-cc ul { margin: 10px 0 0; padding-left: 18px; color: var(--ink-soft); }
+  .ga-cc li { margin-bottom: 4px; }
+  .ga-cc-biz { background: var(--blue-soft); border: 1px solid #cddcec; }
+  .ga-cc-biz strong { color: var(--blue); }
+  .ga-cc-gov { background: var(--green-soft); border: 1px solid #cfdfd5; }
+  .ga-cc-gov strong { color: var(--green-mid); }
+  .ga-cc-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+  .ga-cc-flow span {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    padding: 5px 9px;
+  }
+  .ga-cc-flow .ga-arrow {
+    background: none;
+    padding: 0;
+    color: var(--ink-soft);
+  }
+  .ga-board-line {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-weight: 600;
+  }
+  .ga-yes { color: var(--green-mid); }
+  .ga-no { color: var(--red); }
+
+  /* stat strip */
+  .ga-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .ga-stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .ga-stat strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 26px;
+    color: var(--green);
+  }
+  .ga-stat span { font-size: 12.5px; color: var(--ink-soft); line-height: 1.35; display: inline-block; }
+
+  /* entity tree */
+  .ga-tree { text-align: center; }
+  .ga-tree-root {
+    display: inline-block;
+    background: var(--green);
+    color: #f2efe6;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 14.5px;
+  }
+  .ga-tree-stem {
+    width: 2px;
+    height: 16px;
+    background: var(--line);
+    margin: 0 auto;
+  }
+  .ga-tree-branches {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 14px;
+    text-align: left;
+  }
+  .ga-tree-node {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    background: #fbfaf6;
+  }
+  .ga-tree-node > strong { display: block; font-size: 15px; color: var(--green); }
+  .ga-tree-node > small { display: block; color: var(--ink-soft); margin: 2px 0 10px; }
+  .ga-tree-leaves { display: grid; gap: 8px; }
+  .ga-leaf {
+    background: var(--green-soft);
+    border-radius: 8px;
+    padding: 9px 11px;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .ga-leaf strong { display: block; color: var(--green-mid); }
+  .ga-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ga-chips span {
+    background: var(--gold-soft);
+    border: 1px solid #ecd9a8;
+    border-radius: 999px;
+    padding: 4px 11px;
+    font-size: 12.5px;
+    color: var(--gold-deep);
+    font-weight: 600;
+  }
+
+  /* comparison table */
+  .ga-table-wrap { overflow-x: auto; }
+  table.ga-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    min-width: 520px;
+  }
+  .ga-table th, .ga-table td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .ga-table th { font-size: 13px; }
+  .ga-table td:first-child, .ga-table th:first-child {
+    background: #fbfaf6;
+    font-weight: 700;
+    width: 21%;
+  }
+  .ga-th-biz { background: var(--blue-soft); color: var(--blue); }
+  .ga-th-gov { background: var(--green-soft); color: var(--green-mid); }
+  .ga-th-nfp { background: var(--gold-soft); color: var(--gold-deep); }
+
+  /* GASB flow diagram */
+  .ga-flow { text-align: center; }
+  .ga-flow-node {
+    display: inline-block;
+    background: #fbfaf6;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--green);
+  }
+  .ga-flow-node small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 12px; }
+  .ga-flow-people { background: var(--green); color: #f2efe6; border-color: var(--green); }
+  .ga-flow-people small { color: #cfae5a; }
+  .ga-flow-arrow {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 6px 0;
+    font-weight: 600;
+  }
+  .ga-flow-branches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 0 auto;
+    max-width: 620px;
+  }
+  .ga-flow-branches .ga-flow-node { display: block; padding: 9px 8px; }
+  .ga-grant-strip {
+    margin-top: 16px;
+    background: var(--gold-soft);
+    border: 1px dashed #d9bd77;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: var(--gold-deep);
+    font-weight: 600;
+  }
+
+  /* recap list */
+  .ga-five {
+    counter-reset: five;
+    list-style: none;
+    padding: 0;
+    margin: 18px 0;
+    display: grid;
+    gap: 10px;
+  }
+  .ga-five li {
+    counter-increment: five;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px 12px 52px;
+    position: relative;
+  }
+  .ga-five li::before {
+    content: counter(five);
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #f2efe6;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------- Home / lesson cards ---------- */
+  .ga-home-intro { margin-bottom: 26px; }
+  .ga-lesson-card {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .ga-lesson-card:hover { border-color: var(--green-mid); transform: translateY(-1px); }
+  .ga-lesson-card .ga-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    align-items: center;
+  }
+  .ga-card-lo {
+    background: var(--green-soft);
+    color: var(--green-mid);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-weight: 700;
+  }
+  .ga-lesson-card h2 { font-size: 21px; margin: 0 0 6px; }
+  .ga-lesson-card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+  .ga-card-status { margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--green-mid); }
+  .ga-lesson-card.ga-locked {
+    opacity: 0.6;
+    cursor: default;
+    background: #fbfaf6;
+  }
+  .ga-lesson-card.ga-locked:hover { border-color: var(--line); transform: none; }
+
+  /* ---------- Section navigation ---------- */
+  .ga-section-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 34px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  .ga-btn {
+    font: inherit;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 11px 20px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--green);
+    transition: background 0.15s ease;
+  }
+  .ga-btn:hover { background: var(--green-soft); }
+  .ga-btn-primary {
+    background: var(--green);
+    border-color: var(--green);
+    color: #f2efe6;
+  }
+  .ga-btn-primary:hover { background: var(--green-mid); }
+  .ga-btn:disabled { opacity: 0.45; cursor: default; }
+  .ga-btn:disabled:hover { background: var(--card); }
+  .ga-btn-primary:disabled:hover { background: var(--green); }
+
+  /* ---------- Quiz ---------- */
+  .ga-quiz-progress { font-size: 13px; color: var(--ink-soft); margin-bottom: 14px; font-weight: 600; }
+  .ga-quiz-question {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--green);
+    margin: 0 0 16px;
+    line-height: 1.4;
+  }
+  .ga-choice {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    font-size: 15px;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 13px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: var(--ink);
+    line-height: 1.45;
+    transition: border-color 0.15s ease;
+  }
+  .ga-choice:hover:not(:disabled) { border-color: var(--green-mid); }
+  .ga-choice:disabled { cursor: default; }
+  .ga-choice.ga-correct { border-color: var(--green-mid); background: var(--green-soft); font-weight: 700; }
+  .ga-choice.ga-wrong { border-color: var(--red); background: var(--red-soft); }
+  .ga-quiz-feedback {
+    border-radius: 10px;
+    padding: 13px 16px;
+    margin: 16px 0;
+    font-size: 14.5px;
+  }
+  .ga-quiz-feedback.ga-fb-right { background: var(--green-soft); border: 1px solid #bcd6c6; }
+  .ga-quiz-feedback.ga-fb-wrong { background: var(--red-soft); border: 1px solid #e5bfbb; }
+  .ga-quiz-feedback strong { display: block; margin-bottom: 2px; }
+  .ga-fb-right strong { color: var(--green-mid); }
+  .ga-fb-wrong strong { color: var(--red); }
+  .ga-quiz-score {
+    text-align: center;
+    padding: 26px 0 8px;
+  }
+  .ga-quiz-score .ga-score-big {
+    font-family: var(--serif);
+    font-size: 46px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.1;
+  }
+  .ga-quiz-score p { color: var(--ink-soft); }
+  .ga-score-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  /* ---------- Footer ---------- */
+  .ga-footer {
+    border-top: 1px solid var(--line);
+    padding: 18px 20px 34px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px) {
+    .ga-course-title { font-size: 20px; }
+    h2 { font-size: 24px; }
+    .ga-compare-cards { grid-template-columns: 1fr; }
+    .ga-tree-branches { grid-template-columns: 1fr; }
+    .ga-stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .ga-stat strong { font-size: 19px; }
+    .ga-flow-branches { grid-template-columns: 1fr; max-width: 280px; }
+    .ga-header-chip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="ga-header">
+  <div class="ga-header-inner">
+    <div class="ga-brand" id="ga-brand" title="Back to lessons">
+      <p class="ga-eyebrow">Civic Ledger Classroom</p>
+      <h1 class="ga-course-title">Governmental Accounting</h1>
+    </div>
+    <span class="ga-header-chip">Example-first course</span>
+  </div>
+</header>
+
+<div class="ga-progress-wrap" id="ga-progress-wrap" hidden>
+  <div class="ga-progress-inner">
+    <span class="ga-progress-label" id="ga-progress-label"></span>
+    <div class="ga-progress-track"><div class="ga-progress-fill" id="ga-progress-fill"></div></div>
+  </div>
+</div>
+
+<main id="app"></main>
+
+<footer class="ga-footer">
+  Governmental Accounting · An example-first course inspired by classroom-style lectures ·
+  Lesson 1 aligns with LO 1-1, “Distinguishing Government and Not-for-Profit Organizations.”
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =====================================================================
+     Course data. To add Lesson 2 later: append one object to LESSONS.
+     Each section is { id, title, kicker, html }. The knowledge check is
+     rendered automatically as the final step of every lesson.
+     ===================================================================== */
+
+  var LESSONS = [
+    {
+      id: 1,
+      slug: 'distinguishing-gov-and-nfp',
+      title: 'Distinguishing Government and Not-for-Profit Organizations',
+      lo: 'LO 1-1',
+      minutes: 20,
+      blurb: 'Why governments and not-for-profits are a different world from business — who they are, what makes them different, and why “net income” cannot tell you how your city is doing.',
+      sections: [
+
+        /* ---------------- Section 1: Hook ---------------- */
+        {
+          id: 'welcome',
+          title: 'Welcome: a different kind of accounting',
+          kicker: 'Setting the stage',
+          html: [
+            '<p class="ga-lead">You have spent your accounting life so far in the world of business — Apple, Walmart, the corner coffee shop. Before we open a single journal entry in this course, I want you to see why that world will not work here.</p>',
+            '<p>Think about the last thing you bought. You handed over money, and you walked away with something you chose, at a price you agreed to. Every number in business accounting is built on that voluntary exchange. Now let me ask you a question: when you pay your property tax bill, what exactly do you walk away with?</p>',
+            '<div class="ga-figure">',
+            '  <div class="ga-figure-label">The exchange you know vs. the one you are about to study</div>',
+            '  <div class="ga-compare-cards">',
+            '    <div class="ga-cc ga-cc-biz">',
+            '      <strong>The business world</strong>',
+            '      <div class="ga-cc-flow"><span>You pay Apple $999</span><span class="ga-arrow">&rarr;</span><span>You get an iPhone</span></div>',
+            '      <p>A voluntary exchange. You knew the price, you wanted the product, and you received exactly what you paid for.</p>',
+            '    </div>',
+            '    <div class="ga-cc ga-cc-gov">',
+            '      <strong>The government world</strong>',
+            '      <div class="ga-cc-flow"><span>You pay $4,000 in property tax</span><span class="ga-arrow">&rarr;</span><span>You get&hellip; what, exactly?</span></div>',
+            '      <p>Streets you may never drive, schools you may not use, a fire department you hope you never call. And you must pay either way.</p>',
+            '    </div>',
+            '  </div>',
+            '</div>',
+            '<p>Here is another one: you can buy a share of Ford and sell it tomorrow. Can you sell your share of the fire department? Of course not — there is no share to sell. Nobody <em>owns</em> the fire department the way shareholders own Ford.</p>',
+            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>Whenever you feel lost this semester, come back to two simple questions: <em>Who owns this organization?</em> and <em>What do the people who fund it get back?</em> For a business, the answers are easy. For a government or a not-for-profit, those answers change everything about the accounting.</p></div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Governments and not-for-profits are not just businesses with a different logo. The exchange between the organization and the people who fund it is fundamentally different — so the accounting must be different too.</p></div>'
+          ].join('\n')
+        },
+
+        /* ---------------- Section 2: The landscape ---------------- */
+        {
+          id: 'landscape',
+          title: 'The landscape: who are these organizations?',
+          kicker: 'Meet the players',
+          html: [
+            '<p class="ga-lead">Before we classify anything, let us appreciate how big this world is. This is not a niche topic — it is a huge slice of the economy.</p>',
+            '<div class="ga-stats">',
+            '  <div class="ga-stat"><strong>50</strong><span>state governments<br>(plus the federal government)</span></div>',
+            '  <div class="ga-stat"><strong>90,056</strong><span>local governments<br>per the census of governments</span></div>',
+            '  <div class="ga-stat"><strong>&asymp;1.6M</strong><span>tax-exempt not-for-profit organizations</span></div>',
+            '</div>',
+            '<p>Those 90,056 local governments include 3,031 counties, 19,519 municipalities, 16,360 towns and townships, 12,880 independent school districts, and 38,266 special district governments. Now, we do not memorize a phone book — we organize it. Governments come in two flavors:</p>',
+            '<h3>General purpose governments</h3>',
+            '<p>These are states, counties, municipalities (cities, towns, villages), and townships. The key word is <strong>general</strong>: they provide a <em>wide range</em> of services to their residents — police and fire protection, sanitation, streets, roads and bridges, parks, culture and recreation.</p>',
+            '<h3>Special purpose governments</h3>',
+            '<p>These are independent school districts, public colleges and universities, and special districts. The key word is <strong>special</strong>: they exist to do <em>one job</em> (or a limited number of jobs) — education, drainage and flood control, irrigation, fire protection, water supply. And here is the part students miss: state law still gives them real governmental power, including the power to levy and collect taxes.</p>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>Think about one address in Chicago. The <strong>City of Chicago</strong> sends police when you call 911, fixes the street, and runs the parks — that is a general purpose government doing many jobs. The <strong>school district</strong> serving that same address does exactly one thing: educate children. Same house, two governments, and both of them can show up on your property tax bill.</p></div>',
+            '<h3>And the not-for-profits?</h3>',
+            '<p>Not-for-profit organizations are private, not governmental — but they are not businesses either. Private colleges and universities, community service and health care organizations, certain libraries and museums, professional and trade associations, fraternal and social organizations, religious organizations. Nearly 1.6 million of them hold tax-exempt status.</p>',
+            '<div class="ga-figure">',
+            '  <div class="ga-figure-label">The map of the territory</div>',
+            '  <div class="ga-tree" role="img" aria-label="Tree diagram: government and not-for-profit organizations split into governments (general purpose and special purpose) and not-for-profits">',
+            '    <div class="ga-tree-root">Government &amp; not-for-profit organizations</div>',
+            '    <div class="ga-tree-stem"></div>',
+            '    <div class="ga-tree-branches">',
+            '      <div class="ga-tree-node">',
+            '        <strong>Governments</strong>',
+            '        <small>1 federal &middot; 50 states &middot; 90,056 local</small>',
+            '        <div class="ga-tree-leaves">',
+            '          <div class="ga-leaf"><strong>General purpose</strong>States, counties, municipalities, townships &mdash; a wide range of services</div>',
+            '          <div class="ga-leaf"><strong>Special purpose</strong>School districts, public universities, special districts &mdash; one job or a few</div>',
+            '        </div>',
+            '      </div>',
+            '      <div class="ga-tree-node">',
+            '        <strong>Not-for-profits</strong>',
+            '        <small>&asymp;1.6 million tax-exempt organizations</small>',
+            '        <div class="ga-chips"><span>Private colleges</span><span>Hospitals</span><span>Museums</span><span>Charities</span><span>Religious organizations</span><span>Trade associations</span></div>',
+            '      </div>',
+            '    </div>',
+            '  </div>',
+            '</div>',
+            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>Ask yourself: is your school district a business? It has employees, buildings, payroll, a budget&hellip; so why doesn&rsquo;t it report like Walmart? Hold that question — the next section answers it.</p></div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p><strong>General purpose</strong> governments do many jobs; <strong>special purpose</strong> governments do one job — but both are real governments with the power to tax. Not-for-profits are private organizations that also do not exist to earn a profit.</p></div>'
+          ].join('\n')
+        },
+
+        /* ---------------- Section 3: FASB three characteristics ---------------- */
+        {
+          id: 'fasb',
+          title: 'The FASB&rsquo;s three distinguishing characteristics',
+          kicker: 'What makes them different',
+          html: [
+            '<p class="ga-lead">In its <em>Statement of Financial Accounting Concepts No. 4</em>, the FASB named three characteristics that separate governments and not-for-profits from business organizations. Let us take them one at a time — with an example for each, because a rule without an example is just words.</p>',
+            '<h3>(a) Resource providers do not expect a proportionate return</h3>',
+            '<p>Significant resources come from people who expect neither repayment nor economic benefits proportionate to what they gave.</p>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>Give a food bank $10,000 and you expect&hellip; nothing back. Not the money, not $10,000 worth of groceries. Now lend a corporation $10,000 by buying its bond, and you expect every penny back <em>plus interest</em>. Same $10,000, completely different expectation — that is characteristic (a).</p></div>',
+            '<h3>(b) The operating purpose is something other than profit</h3>',
+            '<p>These organizations exist to provide services, not to sell goods or services at a profit or a profit equivalent.</p>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>An art museum runs a free school-visit program it <em>knows</em> loses money — and it keeps running it, on purpose, because educating students <strong>is the mission</strong>. If Walmart found a store that reliably lost money, how long would that store stay open?</p></div>',
+            '<h3>(c) There are no ownership interests</h3>',
+            '<p>There are no defined ownership interests that can be sold, transferred, or redeemed, and none that entitle anyone to a share of the leftovers if the organization ever liquidates.</p>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>You can buy a share of Ford this afternoon and sell it tomorrow. You cannot buy a share of the American Red Cross, and you cannot buy a share of the State of Ohio. And if a city ever dissolved, no &ldquo;shareholder&rdquo; would line up for a slice of the city hall — because there are no shareholders.</p></div>',
+            '<div class="ga-figure">',
+            '  <div class="ga-figure-label">Three questions, three worlds</div>',
+            '  <div class="ga-table-wrap">',
+            '  <table class="ga-table">',
+            '    <thead><tr><th></th><th class="ga-th-biz">Business</th><th class="ga-th-gov">Government</th><th class="ga-th-nfp">Not-for-profit</th></tr></thead>',
+            '    <tbody>',
+            '      <tr><td>Who provides resources, and what do they get back?</td><td>Customers and investors — goods, repayment, dividends in proportion to what they paid</td><td>Taxpayers — services, with no link between the tax paid and the benefit received</td><td>Donors — nothing back except the mission being carried out</td></tr>',
+            '      <tr><td>What is the goal?</td><td>Earn a profit for the owners</td><td>Provide public services</td><td>Carry out a charitable, educational, or social mission</td></tr>',
+            '      <tr><td>Who owns it?</td><td>Shareholders or proprietors, with interests they can sell</td><td>No one — no ownership interests exist</td><td>No one — no ownership interests exist</td></tr>',
+            '    </tbody>',
+            '  </table>',
+            '  </div>',
+            '</div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Three tests: no proportionate return for resource providers, no profit motive, no ownership interests. Fail all three the way a city or a charity does, and business-style accounting stops making sense.</p></div>'
+          ].join('\n')
+        },
+
+        /* ---------------- Section 4: GASB ---------------- */
+        {
+          id: 'gasb',
+          title: 'The GASB&rsquo;s view: what makes a government a government?',
+          kicker: 'Power and accountability',
+          html: [
+            '<p class="ga-lead">The FASB told us how governments and not-for-profits differ from businesses. The GASB — the standard setter for state and local governments — goes one step further and separates governments from <em>everyone</em> else, including not-for-profits. Its answer comes down to one word: <strong>power</strong>.</p>',
+            '<p>Governments exist in an environment where the power ultimately rests in the hands of the people. Voters delegate that power to public officials through elections. The power is then divided among the executive, legislative, and judicial branches, so that what a government executive can do — financially and otherwise — is constrained by the legislature, and both are subject to judicial review.</p>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>Unhappy with Ford&rsquo;s CEO? You would need enough shares to win a proxy fight. Unhappy with your mayor? You fire them <em>with a ballot</em> — one person, one vote, no shares required. And before that mayor spends a dollar on a new bridge, the city council must approve the budget line. That is the separation of powers acting as a financial control.</p></div>',
+            '<div class="ga-figure">',
+            '  <div class="ga-figure-label">Where the power flows in government</div>',
+            '  <div class="ga-flow" role="img" aria-label="Flow diagram: the people elect officials, power is split among legislative, executive, and judicial branches, which deliver services and answer back to the people">',
+            '    <div class="ga-flow-node ga-flow-people">The People<small>hold the ultimate power</small></div>',
+            '    <div class="ga-flow-arrow">elect and delegate &darr;</div>',
+            '    <div class="ga-flow-branches">',
+            '      <div class="ga-flow-node">Legislative<small>approves budgets and laws</small></div>',
+            '      <div class="ga-flow-node">Executive<small>spends within those limits</small></div>',
+            '      <div class="ga-flow-node">Judicial<small>reviews both</small></div>',
+            '    </div>',
+            '    <div class="ga-flow-arrow">deliver services and answer back &darr;</div>',
+            '    <div class="ga-flow-node ga-flow-people">The People</div>',
+            '    <div class="ga-grant-strip">One more layer: higher-level government &mdash; grant + conditions &rarr; lower-level government &mdash; accountability reports &rarr; back up</div>',
+            '  </div>',
+            '</div>',
+            '<p>That last strip matters more than it looks. In the United States, higher levels of government encourage — or outright dictate — activities of lower levels, and they finance some of those activities through an extensive system of intergovernmental grants and subsidies. Grants come with strings attached.</p>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>A state accepts a federal highway grant. That money is not a gift with no questions asked — the state must spend it on eligible highway projects and report back to Washington on how every dollar was used. So the state is now accountable in two directions: <em>up</em> to the federal government that provided the resources, and <em>out</em> to its own citizens.</p></div>',
+            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>Notice what is happening: in business, accountability points one way — to the owners. In government, it points up, down, and sideways at the same time. Keep that picture in mind; it explains most of what we will do in this course.</p></div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Per the GASB, a government is defined by its environment: power rests with the people, is delegated through elections, is checked across three branches, and is layered by grants that make lower governments accountable to higher ones.</p></div>'
+          ].join('\n')
+        },
+
+        /* ---------------- Section 5: Why net income fails ---------------- */
+        {
+          id: 'net-income',
+          title: 'Why &ldquo;net income&rdquo; cannot measure a government',
+          kicker: 'The scoreboard problem',
+          html: [
+            '<p class="ga-lead">In business accounting, one number rules them all: net income. Revenues minus expenses — did we win or lose this year? Here is the uncomfortable truth of this course: for a government, that number does not mean anything. Let me show you why.</p>',
+            '<h3>Taxpayers are involuntary resource providers</h3>',
+            '<p>Nobody chooses to pay taxes the way you choose to buy a coffee. Revenues raised by every level of government come, ultimately, from taxpayers — and taxpayers must pay, whether or not they like the services they get. As involuntary contributors, they often have little choice over the <em>level</em> of services they receive, too.</p>',
+            '<h3>Governments are monopolies</h3>',
+            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>If Starbucks makes bad coffee, you walk across the street — and Starbucks feels it in its revenue line. If the DMV gives terrible service&hellip; where is the other DMV? There is one police department, one water system, one DMV. No competitor, no market price, no signal.</p></div>',
+            '<h3>So the bottom line tells you nothing</h3>',
+            '<p>Put those together: the money coming in is disconnected from the services going out. There is no competitive market linking what taxpayers pay to what they receive. So a city that collects more than it spends has not &ldquo;performed well&rdquo; — maybe it just overtaxed people, or quietly let the streets crumble. A &ldquo;net income&rdquo; figure simply cannot be used to assess government performance.</p>',
+            '<div class="ga-figure">',
+            '  <div class="ga-figure-label">Two very different scoreboards</div>',
+            '  <div class="ga-compare-cards">',
+            '    <div class="ga-cc ga-cc-biz">',
+            '      <strong>Business scoreboard</strong>',
+            '      <div class="ga-board-line">Revenues &minus; Expenses = <span class="ga-yes">Net income &#10003;</span></div>',
+            '      <p>One number captures performance, because every revenue dollar was earned in a voluntary, competitive exchange.</p>',
+            '    </div>',
+            '    <div class="ga-cc ga-cc-gov">',
+            '      <strong>Government scoreboard</strong>',
+            '      <div class="ga-board-line">Net income? <span class="ga-no">&#10007; No single number exists</span></div>',
+            '      <ul>',
+            '        <li>Did they follow the budget the people&rsquo;s representatives approved?</li>',
+            '        <li>Were restricted resources used as promised?</li>',
+            '        <li>What services were delivered, and at what cost?</li>',
+            '      </ul>',
+            '    </div>',
+            '  </div>',
+            '</div>',
+            '<p>And that is the punchline of this whole lesson: because no single &ldquo;net income&rdquo; figure can capture overall government efficiency and effectiveness, there is a great need for <strong>public accountability</strong> in financial reporting. Accountability is to governmental accounting what profit is to business accounting — the reason the whole system exists.</p>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Involuntary taxpayers + monopoly services + no market prices = no meaningful bottom line. So governmental financial reporting replaces the profit question with the accountability question: <em>did the government do what it promised with the public&rsquo;s money?</em></p></div>'
+          ].join('\n')
+        },
+
+        /* ---------------- Section 6: Recap ---------------- */
+        {
+          id: 'recap',
+          title: 'The big picture, one more time',
+          kicker: 'Recap',
+          html: [
+            '<p class="ga-lead">Repetition is how this material sticks, so let us walk the whole road once more — fast.</p>',
+            '<div class="ga-figure">',
+            '  <div class="ga-figure-label">The master comparison &mdash; condensed</div>',
+            '  <div class="ga-table-wrap">',
+            '  <table class="ga-table">',
+            '    <thead><tr><th></th><th class="ga-th-biz">Business</th><th class="ga-th-gov">Government</th><th class="ga-th-nfp">Not-for-profit</th></tr></thead>',
+            '    <tbody>',
+            '      <tr><td>Funded by</td><td>Voluntary customers &amp; investors</td><td>Involuntary taxpayers</td><td>Voluntary donors</td></tr>',
+            '      <tr><td>Goal</td><td>Profit</td><td>Public services</td><td>Mission</td></tr>',
+            '      <tr><td>Owners</td><td>Shareholders</td><td>None</td><td>None</td></tr>',
+            '      <tr><td>Scoreboard</td><td>Net income</td><td>Public accountability</td><td>Mission &amp; stewardship</td></tr>',
+            '      <tr><td>Standard setter</td><td>FASB</td><td>GASB (state &amp; local)</td><td>FASB</td></tr>',
+            '    </tbody>',
+            '  </table>',
+            '  </div>',
+            '</div>',
+            '<h3>If you remember only five things</h3>',
+            '<ol class="ga-five">',
+            '  <li><strong>The territory is huge:</strong> 50 states, 90,056 local governments, and about 1.6 million tax-exempt not-for-profits.</li>',
+            '  <li><strong>Two kinds of governments:</strong> general purpose (many services — cities, counties, states) and special purpose (one job — school districts, special districts); both can levy taxes.</li>',
+            '  <li><strong>The FASB&rsquo;s three tests:</strong> no proportionate return for resource providers, no profit purpose, no ownership interests.</li>',
+            '  <li><strong>The GASB&rsquo;s addition:</strong> governments are defined by power resting with the people — elections, separation of powers, and grants that create accountability to higher levels of government.</li>',
+            '  <li><strong>No bottom line:</strong> taxes are involuntary and services are monopolies, so net income means nothing — <em>public accountability</em> is the scoreboard.</li>',
+            '</ol>',
+            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>This overview is the foundation for everything ahead. In the coming lessons we roll up our sleeves and start <em>applying</em> it — funds, budgets, and the journal entries that make governmental accounting famous. For now, prove to yourself you own these ideas: take the short knowledge check on the next page.</p></div>'
+          ].join('\n')
+        }
+      ],
+
+      quiz: [
+        {
+          question: 'Which of these is a general purpose government?',
+          choices: [
+            'An independent school district',
+            'The City of Riverside',
+            'A mosquito abatement district',
+            'A public state university'
+          ],
+          answer: 1,
+          explain: 'A city provides a wide range of services — police, fire, streets, sanitation, parks. The school district, mosquito district, and public university each exist for one job, which makes them special purpose governments.'
+        },
+        {
+          question: 'Which of the following is NOT one of the FASB’s three characteristics distinguishing governments and not-for-profits from businesses?',
+          choices: [
+            'Resource providers do not expect a proportionate return',
+            'Operating purposes other than earning a profit',
+            'Exemption from preparing any financial statements',
+            'No ownership interests that can be sold, transferred, or redeemed'
+          ],
+          answer: 2,
+          explain: 'Governments and not-for-profits absolutely prepare financial statements — arguably with more scrutiny, not less. The three real characteristics are the other three choices.'
+        },
+        {
+          question: 'According to the GASB, where does power ultimately rest in the environment in which governments operate?',
+          choices: [
+            'With the executive branch',
+            'With the largest taxpayers',
+            'With the GASB itself',
+            'With the people, who delegate it to officials through elections'
+          ],
+          answer: 3,
+          explain: 'The GASB stresses that governments exist in an environment where power ultimately rests in the hands of the people, who delegate it to public officials through the election process.'
+        },
+        {
+          question: 'A state accepts a federal highway grant that comes with spending conditions. To whom is the state now accountable for those resources?',
+          choices: [
+            'To the federal government that provided them, as well as to its own citizens',
+            'To no one — a grant is free money',
+            'Only to its own citizens',
+            'Only to the contractors who build the highway'
+          ],
+          answer: 0,
+          explain: 'Intergovernmental grants require lower levels of government to be accountable to the entity providing the resources and to the citizenry — accountability points up and out at the same time.'
+        },
+        {
+          question: 'Why can a “net income” figure not be used to assess how well a city performed?',
+          choices: [
+            'Because cities are prohibited from recording revenues',
+            'Because taxes are involuntary and no competitive market links what taxpayers pay to the services they receive',
+            'Because cities have too many transactions to total reliably',
+            'Because net income can only be computed in the private sector by law'
+          ],
+          answer: 1,
+          explain: 'Taxpayers are involuntary resource providers and governments hold monopoly power, so revenues are disconnected from services delivered — the bottom line measures nothing, and public accountability takes its place.'
+        }
+      ]
+    }
+  ];
+
+  /* =====================================================================
+     State & persistence
+     ===================================================================== */
+
+  var STORAGE_KEY = 'govacct:v1';
+  var app = document.getElementById('app');
+  var progressWrap = document.getElementById('ga-progress-wrap');
+  var progressLabel = document.getElementById('ga-progress-label');
+  var progressFill = document.getElementById('ga-progress-fill');
+
+  var state = loadState();
+  var quizRun = null; // in-memory state for the current quiz attempt
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) { return JSON.parse(raw); }
+    } catch (err) { /* private mode etc. — run without persistence */ }
+    return { furthest: {}, bestScore: {} };
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (err) { /* ignore */ }
+  }
+
+  /* =====================================================================
+     Router: '' or '#/' -> home, '#/lesson/1/3' -> lesson 1, step 3.
+     Steps 0..sections.length-1 are content; step sections.length is the quiz.
+     ===================================================================== */
+
+  function parseHash() {
+    var hash = location.hash.replace(/^#\/?/, '');
+    var parts = hash.split('/').filter(Boolean);
+    if (parts[0] === 'lesson' && parts[1]) {
+      var id = parseInt(parts[1], 10);
+      var step = parseInt(parts[2], 10);
+      return { view: 'lesson', id: id, step: isNaN(step) ? 0 : step };
+    }
+    return { view: 'home' };
+  }
+
+  function go(hash) { location.hash = hash; }
+
+  function render() {
+    var route = parseHash();
+    if (route.view === 'lesson') {
+      var lesson = null;
+      for (var i = 0; i < LESSONS.length; i++) {
+        if (LESSONS[i].id === route.id) { lesson = LESSONS[i]; }
+      }
+      if (lesson) {
+        var totalSteps = lesson.sections.length + 1;
+        var step = Math.min(Math.max(route.step, 0), totalSteps - 1);
+        renderLesson(lesson, step);
+        return;
+      }
+    }
+    renderHome();
+  }
+
+  /* =====================================================================
+     Home view
+     ===================================================================== */
+
+  function renderHome() {
+    progressWrap.hidden = true;
+    document.title = 'Governmental Accounting — Lessons';
+
+    var html = [
+      '<div class="ga-home-intro">',
+      '  <p class="ga-section-kicker">Course home</p>',
+      '  <h2>Learn it the way a professor teaches it</h2>',
+      '  <p class="ga-lead">Plain language, a concrete example for every concept, and side-by-side comparisons of business, government, and not-for-profit. Pick a lesson to begin.</p>',
+      '</div>'
+    ];
+
+    LESSONS.forEach(function (lesson) {
+      var furthest = state.furthest[lesson.id] || 0;
+      var best = state.bestScore[lesson.id];
+      var status;
+      if (typeof best === 'number') {
+        status = 'Knowledge check best score: ' + best + ' / ' + lesson.quiz.length + ' &middot; Revisit any time';
+      } else if (furthest > 0) {
+        status = 'In progress &mdash; resume where you left off';
+      } else {
+        status = 'Start lesson &rarr;';
+      }
+      html.push(
+        '<button type="button" class="ga-lesson-card" data-lesson="' + lesson.id + '">' +
+        '  <span class="ga-card-meta"><span class="ga-card-lo">' + lesson.lo + '</span><span>Lesson ' + lesson.id + '</span><span>&middot;</span><span>About ' + lesson.minutes + ' minutes</span></span>' +
+        '  <h2>' + lesson.title + '</h2>' +
+        '  <p>' + lesson.blurb + '</p>' +
+        '  <span class="ga-card-status">' + status + '</span>' +
+        '</button>'
+      );
+    });
+
+    html.push(
+      '<div class="ga-lesson-card ga-locked">' +
+      '  <span class="ga-card-meta"><span class="ga-card-lo">Coming soon</span><span>Lesson 2</span></span>' +
+      '  <h2>Applying the foundations</h2>' +
+      '  <p>The next lessons dig deep into application — funds, budgets, and journal entries built on the overview you learn here.</p>' +
+      '</div>'
+    );
+
+    app.innerHTML = html.join('\n');
+
+    var cards = app.querySelectorAll('.ga-lesson-card[data-lesson]');
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].addEventListener('click', function () {
+        var id = parseInt(this.getAttribute('data-lesson'), 10);
+        var resume = state.furthest[id] || 0;
+        go('#/lesson/' + id + '/' + resume);
+      });
+    }
+    window.scrollTo(0, 0);
+  }
+
+  /* =====================================================================
+     Lesson view
+     ===================================================================== */
+
+  function renderLesson(lesson, step) {
+    var totalSteps = lesson.sections.length + 1;
+    var isQuiz = step === lesson.sections.length;
+
+    // track furthest step reached
+    if ((state.furthest[lesson.id] || 0) < step) {
+      state.furthest[lesson.id] = step;
+      saveState();
+    }
+
+    progressWrap.hidden = false;
+    progressLabel.textContent = isQuiz
+      ? 'Knowledge check'
+      : 'Section ' + (step + 1) + ' of ' + lesson.sections.length;
+    progressFill.style.width = Math.round(((step + 1) / totalSteps) * 100) + '%';
+
+    if (isQuiz) {
+      renderQuiz(lesson);
+      return;
+    }
+
+    var section = lesson.sections[step];
+    document.title = lesson.title + ' — ' + 'Section ' + (step + 1);
+
+    var nextLabel = step === lesson.sections.length - 1
+      ? 'Knowledge check &rarr;'
+      : 'Next section &rarr;';
+
+    app.innerHTML = [
+      '<p class="ga-section-kicker">' + lesson.lo + ' &middot; ' + section.kicker + '</p>',
+      '<h2>' + section.title + '</h2>',
+      section.html,
+      '<div class="ga-section-nav">',
+      '  <button type="button" class="ga-btn" id="ga-prev">' + (step === 0 ? '&larr; All lessons' : '&larr; Previous') + '</button>',
+      '  <button type="button" class="ga-btn ga-btn-primary" id="ga-next">' + nextLabel + '</button>',
+      '</div>'
+    ].join('\n');
+
+    document.getElementById('ga-prev').addEventListener('click', function () {
+      if (step === 0) { go('#/'); } else { go('#/lesson/' + lesson.id + '/' + (step - 1)); }
+    });
+    document.getElementById('ga-next').addEventListener('click', function () {
+      go('#/lesson/' + lesson.id + '/' + (step + 1));
+    });
+    window.scrollTo(0, 0);
+  }
+
+  /* =====================================================================
+     Knowledge check
+     ===================================================================== */
+
+  function renderQuiz(lesson) {
+    document.title = lesson.title + ' — Knowledge check';
+    if (!quizRun || quizRun.lessonId !== lesson.id) {
+      quizRun = { lessonId: lesson.id, index: 0, correct: 0, answered: false };
+    }
+
+    if (quizRun.index >= lesson.quiz.length) {
+      renderQuizScore(lesson);
+      return;
+    }
+
+    var q = lesson.quiz[quizRun.index];
+    var html = [
+      '<p class="ga-section-kicker">' + lesson.lo + ' &middot; Knowledge check</p>',
+      '<h2>Prove you own it</h2>',
+      '<p class="ga-quiz-progress">Question ' + (quizRun.index + 1) + ' of ' + lesson.quiz.length + '</p>',
+      '<p class="ga-quiz-question">' + q.question + '</p>'
+    ];
+    q.choices.forEach(function (choice, i) {
+      html.push('<button type="button" class="ga-choice" data-choice="' + i + '">' + choice + '</button>');
+    });
+    html.push('<div id="ga-quiz-feedback"></div>');
+    html.push(
+      '<div class="ga-section-nav">' +
+      '  <button type="button" class="ga-btn" id="ga-quiz-back">&larr; Back to lesson</button>' +
+      '  <button type="button" class="ga-btn ga-btn-primary" id="ga-quiz-next" disabled>' +
+      (quizRun.index === lesson.quiz.length - 1 ? 'See my score &rarr;' : 'Next question &rarr;') +
+      '  </button>' +
+      '</div>'
+    );
+
+    app.innerHTML = html.join('\n');
+
+    var choices = app.querySelectorAll('.ga-choice');
+    var nextBtn = document.getElementById('ga-quiz-next');
+    var feedbackBox = document.getElementById('ga-quiz-feedback');
+
+    for (var i = 0; i < choices.length; i++) {
+      choices[i].addEventListener('click', function () {
+        if (quizRun.answered) { return; }
+        quizRun.answered = true;
+        var picked = parseInt(this.getAttribute('data-choice'), 10);
+        var right = picked === q.answer;
+        if (right) { quizRun.correct += 1; }
+
+        for (var j = 0; j < choices.length; j++) {
+          choices[j].disabled = true;
+          var idx = parseInt(choices[j].getAttribute('data-choice'), 10);
+          if (idx === q.answer) { choices[j].classList.add('ga-correct'); }
+          else if (idx === picked && !right) { choices[j].classList.add('ga-wrong'); }
+        }
+
+        feedbackBox.innerHTML =
+          '<div class="ga-quiz-feedback ' + (right ? 'ga-fb-right' : 'ga-fb-wrong') + '">' +
+          '<strong>' + (right ? 'Correct.' : 'Not quite.') + '</strong>' +
+          q.explain +
+          '</div>';
+        nextBtn.disabled = false;
+      });
+    }
+
+    nextBtn.addEventListener('click', function () {
+      quizRun.index += 1;
+      quizRun.answered = false;
+      renderQuiz(lesson);
+    });
+    document.getElementById('ga-quiz-back').addEventListener('click', function () {
+      go('#/lesson/' + lesson.id + '/' + (lesson.sections.length - 1));
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function renderQuizScore(lesson) {
+    var total = lesson.quiz.length;
+    var score = quizRun.correct;
+    var prevBest = state.bestScore[lesson.id];
+    if (typeof prevBest !== 'number' || score > prevBest) {
+      state.bestScore[lesson.id] = score;
+      saveState();
+    }
+
+    var message;
+    if (score === total) {
+      message = 'Perfect. You own this lesson — the foundations are set for the applied lessons ahead.';
+    } else if (score >= Math.ceil(total * 0.6)) {
+      message = 'Solid work. Skim the sections behind the questions you missed, and these ideas will lock in.';
+    } else {
+      message = 'This lesson is the foundation for the whole course, so it is worth another pass. Review the sections and try again — repetition is how it sticks.';
+    }
+
+    app.innerHTML = [
+      '<p class="ga-section-kicker">' + lesson.lo + ' &middot; Knowledge check</p>',
+      '<div class="ga-quiz-score">',
+      '  <div class="ga-score-big">' + score + ' / ' + total + '</div>',
+      '  <p>' + message + '</p>',
+      '  <div class="ga-score-actions">',
+      '    <button type="button" class="ga-btn" id="ga-review">Review lesson</button>',
+      '    <button type="button" class="ga-btn" id="ga-retake">Retake quiz</button>',
+      '    <button type="button" class="ga-btn ga-btn-primary" id="ga-home">Back to lessons</button>',
+      '  </div>',
+      '</div>'
+    ].join('\n');
+
+    document.getElementById('ga-review').addEventListener('click', function () {
+      quizRun = null;
+      go('#/lesson/' + lesson.id + '/0');
+    });
+    document.getElementById('ga-retake').addEventListener('click', function () {
+      quizRun = { lessonId: lesson.id, index: 0, correct: 0, answered: false };
+      renderQuiz(lesson);
+    });
+    document.getElementById('ga-home').addEventListener('click', function () {
+      quizRun = null;
+      go('#/');
+    });
+    window.scrollTo(0, 0);
+  }
+
+  /* =====================================================================
+     Boot
+     ===================================================================== */
+
+  document.getElementById('ga-brand').addEventListener('click', function () { go('#/'); });
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
+</body>
+</html>
