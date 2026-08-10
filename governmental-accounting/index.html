@@ -24,7 +24,7 @@
 
     --ink: #0f1a16;
     --ink-2: #556259;
-    --ink-3: #82918a;
+    --ink-3: #606d67;
     --line: #e2e8e5;
     --line-2: #ccd6d1;
 
@@ -52,9 +52,10 @@
 
     --ok: #0b8159;
     --ok-soft: #e7f6ef;
-    --bad: #cf4b45;
+    --bad: #c0413b;
     --bad-soft: #fdecec;
 
+    --topbar-h: 66px;
     --r-xs: 8px;
     --r-sm: 12px;
     --r: 16px;
@@ -76,7 +77,7 @@
       --surface-3: #232f2a;
       --ink: #e9f0ec;
       --ink-2: #9aaba3;
-      --ink-3: #74857d;
+      --ink-3: #83968d;
       --line: #212d28;
       --line-2: #32423b;
       --accent: #2fd39a;
@@ -116,7 +117,7 @@
     --surface-3: #232f2a;
     --ink: #e9f0ec;
     --ink-2: #9aaba3;
-    --ink-3: #74857d;
+    --ink-3: #83968d;
     --line: #212d28;
     --line-2: #32423b;
     --accent: #2fd39a;
@@ -224,9 +225,9 @@
   .ga-brand-sub { display: block; color: var(--ink-3); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
   .ga-icon-btn {
     flex: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
+    width: 44px;   /* 44x44 minimum touch target */
+    height: 44px;
+    border-radius: 12px;
     border: 1px solid var(--line);
     background: var(--surface);
     color: var(--ink-2);
@@ -248,19 +249,20 @@
   /* ---------------- Mobile stepper ---------------- */
   .ga-stepper {
     position: sticky;
-    top: 59px;
+    top: var(--topbar-h);
     z-index: 50;
     background: var(--bar);
     backdrop-filter: saturate(1.6) blur(14px);
     -webkit-backdrop-filter: saturate(1.6) blur(14px);
     border-bottom: 1px solid var(--line);
   }
-  .ga-stepper-inner { max-width: 1140px; margin: 0 auto; padding: 10px 20px 11px; }
+  .ga-stepper-inner { max-width: 1140px; margin: 0 auto; padding: 0 20px 9px; }
   .ga-seg { display: flex; gap: 4px; }
+  /* Bar reads as 4px but the tap target is a full 44px tall. */
   .ga-seg button {
     flex: 1;
-    height: 4px;
-    padding: 8px 0;
+    height: 44px;
+    padding: 0;
     background: none;
     border: 0;
     cursor: pointer;
@@ -269,7 +271,10 @@
   .ga-seg button::after {
     content: "";
     position: absolute;
-    inset: 8px 0;
+    top: 20px;
+    bottom: 20px;
+    left: 0;
+    right: 0;
     border-radius: 999px;
     background: var(--surface-3);
     transition: background 0.2s ease;
@@ -306,7 +311,7 @@
     .ga-rail {
       display: block;
       position: sticky;
-      top: 84px;
+      top: calc(var(--topbar-h) + 22px);
       align-self: start;
       padding: 42px 0 40px;
     }
@@ -812,6 +817,69 @@
   .ga-quiz-score p { color: var(--ink-2); max-width: 42ch; margin: 0 auto; }
   .ga-score-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 
+  /* ---------------- Active-learning beats ---------------- */
+  /* One processing beat per input segment (lesson anatomy: INPUT → PROCESSING). */
+  .ga-turn {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--r);
+    padding: 16px 18px;
+    margin: 26px 0;
+    box-shadow: var(--shadow-1);
+  }
+  .ga-turn-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .ga-turn-head .ga-turn-tag { color: var(--accent-ink); }
+  .ga-turn-head .ga-turn-time { color: var(--ink-3); }
+  .ga-turn-q { font-size: 15.5px; font-weight: 600; margin: 0 0 13px; line-height: 1.45; }
+  .ga-turn-opts { display: grid; gap: 8px; }
+  .ga-turn .ga-choice { margin-bottom: 0; padding: 11px 13px; font-size: 14.5px; box-shadow: none; }
+  .ga-turn .ga-choice-letter { width: 24px; height: 24px; border-radius: 8px; font-size: 11px; }
+  .ga-turn-fb { font-size: 14.5px; line-height: 1.55; }
+  .ga-turn-fb:not(:empty) { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--line); }
+  .ga-turn-fb b { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+  .ga-turn-fb .ga-fb-y { color: var(--ok); }
+  .ga-turn-fb .ga-fb-n { color: var(--bad); }
+
+  /* Closure segment — never skipped (lesson anatomy §5) */
+  .ga-closure {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    margin-top: 28px;
+    text-align: left;
+    box-shadow: var(--shadow-1);
+  }
+  .ga-closure h3 { margin: 0 0 6px; font-size: 17px; }
+  .ga-closure p { color: var(--ink-2); font-size: 14.5px; }
+  .ga-closure textarea {
+    width: 100%;
+    min-height: 84px;
+    resize: vertical;
+    font: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-sm);
+    padding: 11px 13px;
+    margin-top: 4px;
+  }
+  .ga-closure label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 14.5px; }
+  .ga-closure-saved { color: var(--accent-ink); min-height: 18px; display: block; margin-top: 8px; }
+  .ga-next-up {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-2);
+    font-size: 14.5px;
+  }
+  .ga-next-up span:first-child { color: var(--accent-ink); flex: none; }
+
   /* ---------------- Footer ---------------- */
   .ga-footer { border-top: 1px solid var(--line); margin-top: 20px; }
   .ga-footer-inner {
@@ -866,7 +934,7 @@
 </div>
 
 <div class="ga-shell ga-centered" id="ga-shell">
-  <aside class="ga-rail" id="ga-rail" hidden></aside>
+  <nav class="ga-rail" id="ga-rail" aria-label="Lesson sections" hidden></nav>
   <main id="app"></main>
 </div>
 
@@ -904,6 +972,19 @@
           short: 'Welcome',
           title: 'Welcome: a different kind of accounting',
           kicker: 'Setting the stage',
+          // Activation: a prediction the session resolves (catalog #1, adapted for solo study).
+          activation: {
+            tag: 'Predict first',
+            time: '30 sec',
+            prompt: 'Commit to an answer before you read. A city collects $10 million in taxes and spends $9 million. Did the city have a good year?',
+            choices: [
+              'Yes — a $1 million surplus means it performed well',
+              'No — a surplus means it overtaxed its residents',
+              'You cannot tell from those two numbers alone'
+            ],
+            answer: 2,
+            explain: 'Hold onto that. By the last section you will be able to say exactly why — and why a government has no bottom line to be judged by in the first place.'
+          },
           html: [
             '<p class="ga-lead">You have spent your accounting life so far in the world of business — Apple, Walmart, the corner coffee shop. Before we open a single journal entry in this course, I want you to see why that world will not work here.</p>',
             '<p>Think about the last thing you bought. You handed over money, and you walked away with something you chose, at a price you agreed to. Every number in business accounting is built on that voluntary exchange. Now let me ask you a question: when you pay your property tax bill, what exactly do you walk away with?</p>',
@@ -934,6 +1015,18 @@
           short: 'The landscape',
           title: 'The landscape: who are these organizations?',
           kicker: 'Meet the players',
+          check: {
+            tag: 'Your turn',
+            time: '30 sec',
+            prompt: 'A regional transit authority runs buses and commuter trains across three counties — and does nothing else. Which is it?',
+            choices: [
+              'A general purpose government',
+              'A special purpose government',
+              'Not a government at all — it is a not-for-profit'
+            ],
+            answer: 1,
+            explain: 'One function, however large its budget, makes it special purpose. Size is not the test — breadth of services is.'
+          },
           html: [
             '<p class="ga-lead">Before we classify anything, let us appreciate how big this world is. This is not a niche topic — it is a huge slice of the economy.</p>',
             '<div class="ga-stats">',
@@ -982,6 +1075,19 @@
           short: 'FASB’s three tests',
           title: 'The FASB&rsquo;s three distinguishing characteristics',
           kicker: 'What makes them different',
+          // Statement correction (catalog #15) — aimed at the surplus-means-profit misconception.
+          check: {
+            tag: 'Statement correction',
+            time: '45 sec',
+            prompt: 'Find the flaw: “A not-for-profit hospital charges its patients and often ends the year with more revenue than expenses. So it fails the FASB’s second characteristic and should be accounted for as a business.”',
+            choices: [
+              'No flaw — charging patients makes it a business',
+              'The flaw: a surplus is not the same thing as a profit purpose',
+              'The flaw: hospitals are governments, not not-for-profits'
+            ],
+            answer: 1,
+            explain: 'Characteristic (b) is about <em>purpose</em>, not outcome. A not-for-profit may run a surplus and plough it back into the mission; what it may not do is exist in order to earn one for owners.'
+          },
           html: [
             '<p class="ga-lead">In its <em>Statement of Financial Accounting Concepts No. 4</em>, the FASB named three characteristics that separate governments and not-for-profits from business organizations. Let us take them one at a time — with an example for each, because a rule without an example is just words.</p>',
             '<h3>(a) Resource providers do not expect a proportionate return</h3>',
@@ -1014,6 +1120,18 @@
           short: 'The GASB view',
           title: 'The GASB&rsquo;s view: what makes a government a government?',
           kicker: 'Power and accountability',
+          check: {
+            tag: 'Your turn',
+            time: '30 sec',
+            prompt: 'A private university and a state university each receive a federal research grant with conditions attached. Which statement is true?',
+            choices: [
+              'Only the state university has to account for the grant conditions',
+              'Both must account to the grantor, but only the state university is also accountable to voters',
+              'Neither is accountable to anyone except its own board'
+            ],
+            answer: 1,
+            explain: 'Grant conditions bind any recipient. What the GASB adds for the public university is the second line of accountability — to the citizens whose delegated power created it.'
+          },
           html: [
             '<p class="ga-lead">The FASB told us how governments and not-for-profits differ from businesses. The GASB — the standard setter for state and local governments — goes one step further and separates governments from <em>everyone</em> else, including not-for-profits. Its answer comes down to one word: <strong>power</strong>.</p>',
             '<p>Governments exist in an environment where the power ultimately rests in the hands of the people. Voters delegate that power to public officials through elections. The power is then divided among the executive, legislative, and judicial branches, so that what a government executive can do — financially and otherwise — is constrained by the legislature, and both are subject to judicial review.</p>',
@@ -1046,6 +1164,19 @@
           short: 'The scoreboard problem',
           title: 'Why &ldquo;net income&rdquo; cannot measure a government',
           kicker: 'The scoreboard problem',
+          // Resolves the activation prediction from section 1.
+          check: {
+            tag: 'Statement correction',
+            time: '45 sec',
+            prompt: 'Find the flaw: “City A ended the year with a $5 million surplus and City B broke even, so City A was managed better.”',
+            choices: [
+              'No flaw — the surplus proves better management',
+              'The flaw: a surplus may mean overtaxing or deferred maintenance, so on its own it measures nothing',
+              'The flaw: cities are not permitted to report a surplus'
+            ],
+            answer: 1,
+            explain: 'This is the prediction you made at the start of the lesson. Without a market linking taxes to services, the bottom line carries no performance information — which is exactly why accountability reporting has to replace it.'
+          },
           html: [
             '<p class="ga-lead">In business accounting, one number rules them all: net income. Revenues minus expenses — did we win or lose this year? Here is the uncomfortable truth of this course: for a government, that number does not mean anything. Let me show you why.</p>',
             '<h3>Taxpayers are involuntary resource providers</h3>',
@@ -1383,6 +1514,57 @@
   }
 
   /* =====================================================================
+     Active-learning beat: a short processing task inside a section, so the
+     lesson is not pure input end to end. Never gates navigation.
+     ===================================================================== */
+
+  function beatHtml(spec, slot) {
+    var opts = spec.choices.map(function (choice, i) {
+      return '<button type="button" class="ga-choice" data-c="' + i + '">' +
+        '<span class="ga-choice-letter" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
+        '<span class="ga-choice-text">' + choice + '</span>' +
+        '<span class="ga-choice-mark" aria-hidden="true"></span>' +
+        '</button>';
+    }).join('');
+    return '<div class="ga-turn" data-beat="' + slot + '">' +
+      '<div class="ga-turn-head"><span class="ga-turn-tag ga-mono">' + spec.tag + '</span>' +
+      '<span class="ga-turn-time ga-mono">' + spec.time + '</span></div>' +
+      '<p class="ga-turn-q">' + spec.prompt + '</p>' +
+      '<div class="ga-turn-opts">' + opts + '</div>' +
+      '<div class="ga-turn-fb" role="status"></div></div>';
+  }
+
+  function bindBeat(spec, slot) {
+    var root = app.querySelector('[data-beat="' + slot + '"]');
+    if (!root) { return; }
+    var opts = root.querySelectorAll('.ga-choice');
+    var fb = root.querySelector('.ga-turn-fb');
+    var answered = false;
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].addEventListener('click', function () {
+        if (answered) { return; }
+        answered = true;
+        var picked = parseInt(this.getAttribute('data-c'), 10);
+        var right = picked === spec.answer;
+        for (var j = 0; j < opts.length; j++) {
+          opts[j].disabled = true;
+          var idx = parseInt(opts[j].getAttribute('data-c'), 10);
+          var mark = opts[j].querySelector('.ga-choice-mark');
+          if (idx === spec.answer) {
+            opts[j].classList.add('ga-correct');
+            mark.innerHTML = '&#10003;';
+          } else if (idx === picked) {
+            opts[j].classList.add('ga-wrong');
+            mark.innerHTML = '&#10007;';
+          }
+        }
+        fb.innerHTML = '<b class="' + (right ? 'ga-fb-y' : 'ga-fb-n') + '">' +
+          (right ? 'That is it.' : 'Not quite.') + '</b>' + spec.explain;
+      });
+    }
+  }
+
+  /* =====================================================================
      Lesson view
      ===================================================================== */
 
@@ -1406,9 +1588,13 @@
 
     app.innerHTML = [
       '<div class="ga-view">',
+      '<article>',
       '<p class="ga-section-kicker ga-mono">' + lesson.lo + ' &middot; ' + section.kicker + '</p>',
       '<h2>' + section.title + '</h2>',
+      section.activation ? beatHtml(section.activation, 'activation') : '',
       section.html,
+      section.check ? beatHtml(section.check, 'check') : '',
+      '</article>',
       '<div class="ga-section-nav">',
       '  <button type="button" class="ga-btn" id="ga-prev">' + (step === 0 ? '&larr; All lessons' : '&larr; Previous') + '</button>',
       '  <button type="button" class="ga-btn ga-btn-primary" id="ga-next">' +
@@ -1417,6 +1603,9 @@
       '</div>',
       '</div>'
     ].join('\n');
+
+    if (section.activation) { bindBeat(section.activation, 'activation'); }
+    if (section.check) { bindBeat(section.check, 'check'); }
 
     document.getElementById('ga-prev').addEventListener('click', function () {
       if (step === 0) { go('#/'); } else { go('#/lesson/' + lesson.id + '/' + (step - 1)); }
@@ -1553,8 +1742,27 @@
       '    <button type="button" class="ga-btn ga-btn-primary" id="ga-home">Back to lessons</button>',
       '  </div>',
       '</div>',
+      '<div class="ga-closure">',
+      '  <p class="ga-section-kicker ga-mono">Closure &middot; minute paper</p>',
+      '  <h3>Before you close the tab</h3>',
+      '  <p>Thirty seconds, for you and nobody else. Writing it down is what moves it from “I read that” to “I have that.”</p>',
+      '  <label for="ga-muddiest">In one sentence: what is still muddiest for you?</label>',
+      '  <textarea id="ga-muddiest" placeholder="e.g. I still mix up special purpose governments and not-for-profits…"></textarea>',
+      '  <span class="ga-closure-saved ga-mono" id="ga-saved"></span>',
+      '  <p class="ga-next-up"><span>Next up &rarr;</span><span><strong>Funds:</strong> why a single city keeps many separate sets of books &mdash; and why that is the answer to the accountability problem you just met.</span></p>',
+      '</div>',
       '</div>'
     ].join('\n');
+
+    var muddiest = document.getElementById('ga-muddiest');
+    var savedNote = document.getElementById('ga-saved');
+    state.muddiest = state.muddiest || {};
+    if (state.muddiest[lesson.id]) { muddiest.value = state.muddiest[lesson.id]; }
+    muddiest.addEventListener('input', function () {
+      state.muddiest[lesson.id] = muddiest.value;
+      saveState();
+      savedNote.textContent = muddiest.value.trim() ? 'Saved on this device' : '';
+    });
 
     document.getElementById('ga-review').addEventListener('click', function () {
       quizRun = null;
