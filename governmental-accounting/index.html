@@ -2,94 +2,148 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="Governmental Accounting — an example-first course. Lesson 1: Distinguishing Government and Not-for-Profit Organizations.">
 <title>Governmental Accounting — Lesson 1</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <style>
   /* =====================================================================
-     Design tokens — "ledger paper meets civic engraving".
-     Light palette lives on bare :root; dark redefines tokens only.
+     Tokens. Light lives on bare :root so the un-stamped (system) state
+     always resolves; dark is redefined twice — once for the OS preference,
+     once for the explicit toggle — so both directions win.
      ===================================================================== */
   :root {
     color-scheme: light;
 
-    --paper: #f3f5f0;
-    --card: #fcfdfb;
-    --panel: #ecefe8;
-    --ink: #1d2823;
-    --ink-soft: #5c6b62;
-    --line: #d8ded2;
-    --line-strong: #aeb9ac;
+    --bg: #f4f6f5;
+    --bar: rgba(244, 246, 245, 0.82);
+    --surface: #ffffff;
+    --surface-2: #eaeeec;
+    --surface-3: #dfe5e2;
 
-    --pine: #17453b;
-    --pine-hover: #1d5747;
-    --pine-ink: #eef3ec;
-    --pine-glow: #c8dbd2;
-    --heading: #17453b;
+    --ink: #0f1a16;
+    --ink-2: #556259;
+    --ink-3: #82918a;
+    --line: #e2e8e5;
+    --line-2: #ccd6d1;
 
-    --brass: #9a7827;
-    --brass-ink: #7c5f1c;
-    --brass-ground: #f5efdd;
-    --brass-line: #ddd0a4;
+    --accent: #0e9f6e;
+    --accent-ink: #07724c;
+    --accent-btn: #0b8159;
+    --accent-btn-hover: #096f4c;
+    --on-accent: #ffffff;
+    --accent-soft: #e7f6ef;
+    --accent-glow: rgba(11, 129, 89, 0.26);
 
-    --biz-ground: #e7eef5;
-    --biz-ink: #2b5d8a;
-    --gov-ground: #e6efe9;
-    --gov-ink: #1f6a55;
-    --nfp-ground: #f5efdd;
-    --nfp-ink: #7c5f1c;
+    --takeaway-bg: linear-gradient(135deg, #0b8159, #065f43);
+    --takeaway-ink: #e8faf2;
+    --takeaway-tag: #8fd9bd;
 
-    --ok: #2c6e49;
-    --ok-ground: #e4efe7;
-    --ok-line: #b7d2c1;
-    --err: #b0413e;
-    --err-ground: #f7e9e8;
-    --err-line: #e3c0bd;
+    --biz: #2f6fed;
+    --biz-ink: #1f56c4;
+    --biz-soft: #eaf1fe;
+    --gov: #0e9f6e;
+    --gov-ink: #07724c;
+    --gov-soft: #e7f6ef;
+    --nfp: #b5730a;
+    --nfp-ink: #92590a;
+    --nfp-soft: #fdf3e2;
 
-    --radius: 8px;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-    --sans: "Avenir Next", Avenir, "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    --ok: #0b8159;
+    --ok-soft: #e7f6ef;
+    --bad: #cf4b45;
+    --bad-soft: #fdecec;
+
+    --r-xs: 8px;
+    --r-sm: 12px;
+    --r: 16px;
+    --r-lg: 22px;
+    --shadow-1: 0 1px 2px rgba(15, 26, 22, 0.05), 0 4px 14px rgba(15, 26, 22, 0.05);
+    --shadow-2: 0 2px 6px rgba(15, 26, 22, 0.07), 0 16px 36px rgba(15, 26, 22, 0.10);
+
+    --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-
-      --paper: #131a16;
-      --card: #1a231e;
-      --panel: #212c26;
-      --ink: #e2e9e2;
-      --ink-soft: #a2b1a6;
-      --line: #2d3a32;
-      --line-strong: #4a5a50;
-
-      --pine: #1e4a3e;
-      --pine-hover: #276050;
-      --pine-ink: #e9f1ea;
-      --pine-glow: #93c3ac;
-      --heading: #b6d8c6;
-
-      --brass: #c8a548;
-      --brass-ink: #d8bb6b;
-      --brass-ground: #292319;
-      --brass-line: #4c4126;
-
-      --biz-ground: #1d2b38;
-      --biz-ink: #8ab5dc;
-      --gov-ground: #1d3229;
-      --gov-ink: #8cc9ab;
-      --nfp-ground: #292319;
-      --nfp-ink: #d8bb6b;
-
-      --ok: #7cc79a;
-      --ok-ground: #1d3229;
-      --ok-line: #315a47;
-      --err: #e08a83;
-      --err-ground: #392220;
-      --err-line: #5d3532;
+      --bg: #0a0f0d;
+      --bar: rgba(10, 15, 13, 0.82);
+      --surface: #121a17;
+      --surface-2: #1a2420;
+      --surface-3: #232f2a;
+      --ink: #e9f0ec;
+      --ink-2: #9aaba3;
+      --ink-3: #74857d;
+      --line: #212d28;
+      --line-2: #32423b;
+      --accent: #2fd39a;
+      --accent-ink: #5ee0ab;
+      --accent-btn: #2fd39a;
+      --accent-btn-hover: #4ade9e;
+      --on-accent: #04231a;
+      --accent-soft: #11291f;
+      --accent-glow: rgba(47, 211, 154, 0.22);
+      --takeaway-bg: linear-gradient(135deg, #15382c, #0e2620);
+      --takeaway-ink: #dcf5e9;
+      --takeaway-tag: #61c69f;
+      --biz: #7fadf5;
+      --biz-ink: #9cc2f8;
+      --biz-soft: #131f2e;
+      --gov: #2fd39a;
+      --gov-ink: #5ee0ab;
+      --gov-soft: #11291f;
+      --nfp: #e0b25e;
+      --nfp-ink: #e8c581;
+      --nfp-soft: #272013;
+      --ok: #3ddb9f;
+      --ok-soft: #11291f;
+      --bad: #f28b84;
+      --bad-soft: #2c1817;
+      --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+      --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.45), 0 18px 40px rgba(0, 0, 0, 0.4);
     }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0a0f0d;
+    --bar: rgba(10, 15, 13, 0.82);
+    --surface: #121a17;
+    --surface-2: #1a2420;
+    --surface-3: #232f2a;
+    --ink: #e9f0ec;
+    --ink-2: #9aaba3;
+    --ink-3: #74857d;
+    --line: #212d28;
+    --line-2: #32423b;
+    --accent: #2fd39a;
+    --accent-ink: #5ee0ab;
+    --accent-btn: #2fd39a;
+    --accent-btn-hover: #4ade9e;
+    --on-accent: #04231a;
+    --accent-soft: #11291f;
+    --accent-glow: rgba(47, 211, 154, 0.22);
+    --takeaway-bg: linear-gradient(135deg, #15382c, #0e2620);
+    --takeaway-ink: #dcf5e9;
+    --takeaway-tag: #61c69f;
+    --biz: #7fadf5;
+    --biz-ink: #9cc2f8;
+    --biz-soft: #131f2e;
+    --gov: #2fd39a;
+    --gov-ink: #5ee0ab;
+    --gov-soft: #11291f;
+    --nfp: #e0b25e;
+    --nfp-ink: #e8c581;
+    --nfp-soft: #272013;
+    --ok: #3ddb9f;
+    --ok-soft: #11291f;
+    --bad: #f28b84;
+    --bad-soft: #2c1817;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.45), 0 18px 40px rgba(0, 0, 0, 0.4);
   }
 
   * { box-sizing: border-box; }
@@ -97,683 +151,724 @@
   html, body {
     margin: 0;
     padding: 0;
-    background: var(--paper);
+    background: var(--bg);
     color: var(--ink);
     font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
   }
 
-  :focus-visible {
-    outline: 2px solid var(--brass);
-    outline-offset: 2px;
-  }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition: none !important; animation: none !important; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   }
 
-  /* ---------- Header ---------- */
-  .ga-header {
-    background: var(--pine);
-    color: var(--pine-ink);
-    border-bottom: 3px solid var(--brass);
-  }
-  .ga-header-inner {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 20px 20px 18px;
-  }
-  .ga-brand {
-    cursor: pointer;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: fit-content;
-  }
-  .ga-seal {
-    flex: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1.5px solid var(--brass);
-    box-shadow: inset 0 0 0 3.5px var(--pine), inset 0 0 0 4.5px rgba(200, 165, 72, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--serif);
-    font-size: 17px;
-    letter-spacing: 0.04em;
-    color: #d8bb6b;
-  }
-  .ga-eyebrow {
+  .ga-mono {
+    font-family: var(--mono);
     font-size: 11px;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #cfae5a;
-    margin: 0 0 1px;
-    font-weight: 600;
-  }
-  .ga-course-title {
-    font-family: var(--serif);
-    font-size: 25px;
-    font-weight: 600;
-    margin: 0;
-    line-height: 1.15;
-    letter-spacing: 0.01em;
+    font-weight: 500;
   }
 
-  /* ---------- Progress bar ---------- */
-  .ga-progress-wrap {
+  /* ---------------- Top bar ---------------- */
+  .ga-topbar {
     position: sticky;
     top: 0;
-    z-index: 20;
-    background: var(--paper);
+    z-index: 60;
+    background: var(--bar);
+    backdrop-filter: saturate(1.6) blur(14px);
+    -webkit-backdrop-filter: saturate(1.6) blur(14px);
     border-bottom: 1px solid var(--line);
   }
-  .ga-progress-inner {
-    max-width: 760px;
+  .ga-topbar-inner {
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 9px 20px;
+    padding: 11px 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 14px;
   }
-  .ga-progress-label {
-    font-size: 11px;
+  .ga-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    background: none;
+    border: 0;
+    padding: 4px;
+    margin: -4px;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+  }
+  .ga-mark {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--accent-btn);
+    color: var(--on-accent);
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 12.5px;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    white-space: nowrap;
+    letter-spacing: -0.02em;
   }
-  .ga-progress-track {
-    flex: 1;
-    height: 4px;
-    background: var(--line);
-    border-radius: 999px;
-    overflow: hidden;
+  .ga-brand-text { display: block; font-size: 15px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; }
+  .ga-brand-sub { display: block; color: var(--ink-3); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ga-icon-btn {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-2);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
   }
-  .ga-progress-fill {
-    height: 100%;
-    width: 0;
-    background: var(--brass);
-    border-radius: 999px;
-    transition: width 0.35s ease;
+  .ga-icon-btn:hover { border-color: var(--line-2); color: var(--ink); }
+  .ga-icon-btn svg { width: 17px; height: 17px; display: block; }
+  .ga-sun { display: none; }
+  :root[data-theme="dark"] .ga-sun { display: block; }
+  :root[data-theme="dark"] .ga-moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .ga-sun { display: block; }
+    :root:not([data-theme="light"]) .ga-moon { display: none; }
   }
 
-  /* ---------- Layout & type scale ---------- */
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 34px 20px 80px;
+  /* ---------------- Mobile stepper ---------------- */
+  .ga-stepper {
+    position: sticky;
+    top: 59px;
+    z-index: 50;
+    background: var(--bar);
+    backdrop-filter: saturate(1.6) blur(14px);
+    -webkit-backdrop-filter: saturate(1.6) blur(14px);
+    border-bottom: 1px solid var(--line);
   }
-  h2 {
-    font-family: var(--serif);
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: 0.005em;
+  .ga-stepper-inner { max-width: 1140px; margin: 0 auto; padding: 10px 20px 11px; }
+  .ga-seg { display: flex; gap: 4px; }
+  .ga-seg button {
+    flex: 1;
+    height: 4px;
+    padding: 8px 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+  }
+  .ga-seg button::after {
+    content: "";
+    position: absolute;
+    inset: 8px 0;
+    border-radius: 999px;
+    background: var(--surface-3);
+    transition: background 0.2s ease;
+  }
+  .ga-seg button[data-state="done"]::after { background: var(--accent); opacity: 0.45; }
+  .ga-seg button[data-state="current"]::after { background: var(--accent); }
+  .ga-step-label { display: flex; justify-content: space-between; gap: 12px; margin-top: 7px; color: var(--ink-3); }
+  .ga-step-label b { color: var(--ink-2); font-weight: 500; }
+  @media (min-width: 980px) { .ga-stepper { display: none; } }
+
+  /* ---------------- Shell ---------------- */
+  .ga-shell {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  main { max-width: 720px; width: 100%; padding: 30px 0 40px; }
+  .ga-shell.ga-centered main { margin: 0 auto; }
+
+  @media (min-width: 980px) {
+    .ga-shell.ga-with-rail { grid-template-columns: 248px minmax(0, 1fr); gap: 48px; }
+    main { padding: 40px 0 80px; }
+  }
+
+  /* ---------------- Rail ---------------- */
+  /* Wins over the display rules below, which would otherwise beat the UA
+     [hidden] rule and leak lesson chrome onto the home screen. */
+  .ga-rail[hidden], .ga-stepper[hidden] { display: none; }
+  .ga-rail { display: none; }
+  @media (min-width: 980px) {
+    .ga-rail {
+      display: block;
+      position: sticky;
+      top: 84px;
+      align-self: start;
+      padding: 42px 0 40px;
+    }
+  }
+  .ga-rail-lo { color: var(--accent-ink); margin-bottom: 6px; }
+  .ga-rail-title {
+    font-size: 14.5px;
+    font-weight: 650;
+    line-height: 1.35;
+    letter-spacing: -0.012em;
+    margin: 0 0 14px;
+    color: var(--ink);
     text-wrap: balance;
-    margin: 0 0 10px;
-    color: var(--heading);
+  }
+  .ga-rail-meter {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ga-rail-track { flex: 1; height: 4px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+  .ga-rail-fill { height: 100%; width: 0; border-radius: 999px; background: var(--accent); transition: width 0.4s cubic-bezier(0.2, 0.7, 0.3, 1); }
+  .ga-rail-pct { font-family: var(--mono); font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .ga-rail-list { display: grid; gap: 1px; }
+  .ga-rail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: 0;
+    border-radius: var(--r-sm);
+    padding: 7px 10px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    transition: background 0.14s ease, color 0.14s ease;
+  }
+  .ga-rail-item:hover { background: var(--surface-2); color: var(--ink); }
+  .ga-rail-num {
+    flex: none;
+    width: 19px;
+    height: 19px;
+    margin-top: 1px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    display: grid;
+    place-items: center;
+  }
+  .ga-rail-item[data-state="done"] .ga-rail-num { background: var(--accent-soft); color: var(--accent-ink); }
+  .ga-rail-item[data-state="current"] { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+  .ga-rail-item[data-state="current"] .ga-rail-num { background: var(--accent-btn); color: var(--on-accent); }
+
+  /* ---------------- Type ---------------- */
+  h2 {
+    font-size: 31px;
+    font-weight: 680;
+    line-height: 1.18;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+    margin: 0 0 12px;
+    color: var(--ink);
   }
   h3 {
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 30px 0 8px;
-    color: var(--heading);
+    font-size: 19px;
+    font-weight: 650;
+    letter-spacing: -0.018em;
+    margin: 32px 0 8px;
+    color: var(--ink);
     text-wrap: balance;
   }
   p { margin: 0 0 15px; }
-  .ga-section-kicker {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--brass-ink);
-    font-weight: 700;
-    margin: 0 0 8px;
-  }
+  .ga-section-kicker { color: var(--accent-ink); margin: 0 0 9px; }
   .ga-lead {
-    font-size: 18.5px;
+    font-size: 18px;
     line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 0 12px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.006em;
+    color: var(--ink-2);
+    margin: 0 0 26px;
   }
 
-  /* ---------- Callouts: three distinct voices ---------- */
+  /* ---------------- Callouts ---------------- */
+  .ga-callout-tag { display: block; margin-bottom: 6px; }
 
-  /* Real-world example — brass-framed panel */
   .ga-example {
-    background: var(--brass-ground);
-    border: 1px solid var(--brass-line);
-    border-radius: var(--radius);
-    padding: 15px 18px;
-    margin: 20px 0;
+    background: var(--nfp-soft);
+    border-radius: var(--r);
+    padding: 16px 18px;
+    margin: 22px 0;
   }
-  .ga-example .ga-callout-tag { color: var(--brass-ink); }
+  .ga-example .ga-callout-tag { color: var(--nfp-ink); }
 
-  /* Professor's note — serif marginalia with a double rule, no fill */
   .ga-note {
-    border-left: 7px double var(--line-strong);
-    padding: 2px 0 2px 18px;
-    margin: 22px 0;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 17px;
-    color: var(--ink);
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 16px;
+    margin: 24px 0;
+    color: var(--ink-2);
   }
-  .ga-note .ga-callout-tag {
-    font-family: var(--sans);
-    font-style: normal;
-    color: var(--ink-soft);
-  }
+  .ga-note .ga-callout-tag { color: var(--accent-ink); }
 
-  /* Key takeaway — the section's one bold moment: solid pine */
   .ga-takeaway {
-    background: var(--pine);
-    color: var(--pine-ink);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    margin: 22px 0;
+    background: var(--takeaway-bg);
+    color: var(--takeaway-ink);
+    border-radius: var(--r-lg);
+    padding: 18px 22px;
+    margin: 24px 0;
+    box-shadow: 0 10px 30px var(--accent-glow);
   }
-  .ga-takeaway .ga-callout-tag { color: var(--pine-glow); }
+  .ga-takeaway .ga-callout-tag { color: var(--takeaway-tag); }
   .ga-takeaway strong, .ga-takeaway em { color: #fff; }
 
-  .ga-callout-tag {
-    display: block;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
   .ga-example p:last-child, .ga-note p:last-child, .ga-takeaway p:last-child { margin-bottom: 0; }
 
-  /* ---------- Figures ---------- */
+  /* ---------------- Figures ---------------- */
   .ga-figure {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 18px;
-    margin: 22px 0;
+    border-radius: var(--r-lg);
+    padding: 20px;
+    margin: 24px 0;
+    box-shadow: var(--shadow-1);
   }
   .ga-figure-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    text-align: center;
-    margin: 0 auto 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--line);
-  }
-
-  /* two compare cards (hook, scoreboards) */
-  .ga-compare-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .ga-cc {
-    border-radius: var(--radius);
-    padding: 14px;
-    font-size: 14px;
-  }
-  .ga-cc strong { display: block; font-size: 15px; margin-bottom: 8px; }
-  .ga-cc p { margin: 10px 0 0; color: var(--ink-soft); }
-  .ga-cc ul { margin: 10px 0 0; padding-left: 18px; color: var(--ink-soft); }
-  .ga-cc li { margin-bottom: 4px; }
-  .ga-cc-biz { background: var(--biz-ground); }
-  .ga-cc-biz strong { color: var(--biz-ink); }
-  .ga-cc-gov { background: var(--gov-ground); }
-  .ga-cc-gov strong { color: var(--gov-ink); }
-  .ga-cc-flow {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 6px;
-    font-weight: 600;
+    gap: 8px;
+    color: var(--ink-3);
+    margin-bottom: 16px;
   }
-  .ga-cc-flow span {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 5px 9px;
+  .ga-figure-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--accent);
+    flex: none;
   }
-  .ga-cc-flow .ga-arrow {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--ink-soft);
-  }
-  .ga-board-line {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 8px 10px;
-    font-weight: 600;
-  }
-  .ga-yes { color: var(--ok); }
-  .ga-no { color: var(--err); }
 
-  /* stat strip */
-  .ga-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
-    margin: 20px 0;
-  }
+  .ga-compare-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ga-cc { border-radius: var(--r); padding: 15px 16px; font-size: 14.5px; }
+  .ga-cc > strong { display: block; font-size: 14px; font-weight: 650; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .ga-cc p { margin: 11px 0 0; color: var(--ink-2); font-size: 13.5px; }
+  .ga-cc ul { margin: 11px 0 0; padding-left: 17px; color: var(--ink-2); font-size: 13.5px; }
+  .ga-cc li { margin-bottom: 5px; }
+  .ga-cc-biz { background: var(--biz-soft); }
+  .ga-cc-biz > strong { color: var(--biz-ink); }
+  .ga-cc-gov { background: var(--gov-soft); }
+  .ga-cc-gov > strong { color: var(--gov-ink); }
+  .ga-cc-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 550; }
+  .ga-cc-flow span { background: var(--surface); border-radius: var(--r-xs); padding: 6px 10px; }
+  .ga-cc-flow .ga-arrow { background: none; padding: 0; color: var(--ink-3); }
+  .ga-board-line { background: var(--surface); border-radius: var(--r-xs); padding: 9px 11px; font-size: 13.5px; font-weight: 600; }
+  .ga-yes { color: var(--ok); }
+  .ga-no { color: var(--bad); }
+
+  .ga-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 12px; margin: 24px 0; }
   .ga-stat {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-top: 3px solid var(--brass);
-    border-radius: var(--radius);
-    padding: 14px 12px 12px;
-    text-align: center;
+    border-radius: var(--r);
+    padding: 16px;
+    box-shadow: var(--shadow-1);
   }
   .ga-stat strong {
     display: block;
-    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
     font-variant-numeric: tabular-nums;
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 1.15;
-    color: var(--heading);
+    color: var(--ink);
   }
-  .ga-stat span {
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    line-height: 1.4;
-    display: inline-block;
-    margin-top: 3px;
+  .ga-stat i {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--accent);
+    margin: 10px 0 9px;
   }
+  .ga-stat span { font-size: 13px; line-height: 1.4; color: var(--ink-2); }
 
-  /* entity tree */
   .ga-tree { text-align: center; }
   .ga-tree-root {
     display: inline-block;
-    background: var(--pine);
-    color: var(--pine-ink);
+    background: var(--accent-btn);
+    color: var(--on-accent);
     font-weight: 600;
-    border-radius: 6px;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    border-radius: 999px;
     padding: 9px 18px;
-    font-size: 14.5px;
   }
-  .ga-tree-stem {
-    width: 1px;
-    height: 16px;
-    background: var(--line-strong);
-    margin: 0 auto;
-  }
-  .ga-tree-branches {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 14px;
-    text-align: left;
-  }
-  .ga-tree-node {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 12px;
-    background: var(--panel);
-  }
-  .ga-tree-node > strong { display: block; font-size: 15px; color: var(--heading); font-family: var(--serif); }
-  .ga-tree-node > small { display: block; color: var(--ink-soft); margin: 2px 0 10px; font-variant-numeric: tabular-nums; }
+  .ga-tree-stem { width: 1px; height: 18px; background: var(--line-2); margin: 0 auto; }
+  .ga-tree-branches { display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; text-align: left; }
+  .ga-tree-node { background: var(--surface-2); border-radius: var(--r); padding: 14px; }
+  .ga-tree-node > strong { display: block; font-size: 14.5px; font-weight: 650; letter-spacing: -0.012em; color: var(--ink); }
+  .ga-tree-node > small { display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin: 3px 0 11px; }
   .ga-tree-leaves { display: grid; gap: 8px; }
-  .ga-leaf {
-    background: var(--gov-ground);
-    border-radius: 6px;
-    padding: 9px 11px;
-    font-size: 13.5px;
-    line-height: 1.5;
-  }
-  .ga-leaf strong { display: block; color: var(--gov-ink); }
+  .ga-leaf { background: var(--surface); border-radius: var(--r-sm); padding: 10px 12px; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .ga-leaf strong { display: block; color: var(--gov-ink); font-weight: 650; }
   .ga-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .ga-chips span {
-    background: var(--brass-ground);
-    border: 1px solid var(--brass-line);
+    background: var(--surface);
     border-radius: 999px;
-    padding: 4px 11px;
+    padding: 5px 11px;
     font-size: 12.5px;
-    color: var(--brass-ink);
-    font-weight: 600;
+    color: var(--ink-2);
+    font-weight: 500;
   }
 
-  /* comparison table */
-  .ga-table-wrap { overflow-x: auto; }
-  table.ga-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-    min-width: 520px;
-  }
-  .ga-table th, .ga-table td {
-    border: 1px solid var(--line);
-    padding: 10px 12px;
-    text-align: left;
-    vertical-align: top;
-    line-height: 1.55;
-  }
-  .ga-table th { font-size: 13px; }
-  .ga-table td:first-child, .ga-table th:first-child {
-    background: var(--panel);
-    font-weight: 700;
-    width: 21%;
-  }
-  .ga-th-biz { background: var(--biz-ground); color: var(--biz-ink); }
-  .ga-th-gov { background: var(--gov-ground); color: var(--gov-ink); }
-  .ga-th-nfp { background: var(--nfp-ground); color: var(--nfp-ink); }
+  /* comparison table → stacked cards on phones */
+  table.ga-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .ga-table th, .ga-table td { padding: 11px 13px; text-align: left; vertical-align: top; line-height: 1.5; border-bottom: 1px solid var(--line); }
+  .ga-table tbody tr:last-child td { border-bottom: 0; }
+  .ga-table thead th { padding-top: 0; border-bottom: 1px solid var(--line-2); }
+  .ga-table th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+  .ga-table td:first-child { font-weight: 600; color: var(--ink); width: 22%; }
+  .ga-th-biz { color: var(--biz-ink); }
+  .ga-th-gov { color: var(--gov-ink); }
+  .ga-th-nfp { color: var(--nfp-ink); }
 
-  /* GASB flow diagram */
+  @media (max-width: 719px) {
+    .ga-table, .ga-table tbody, .ga-table tr, .ga-table td { display: block; }
+    .ga-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .ga-table tr { background: var(--surface-2); border-radius: var(--r); padding: 4px 0; margin-bottom: 10px; }
+    .ga-table tr:last-child { margin-bottom: 0; }
+    .ga-table td { border-bottom: 0; padding: 7px 14px; }
+    .ga-table td:first-child {
+      width: auto;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink-3);
+      padding-top: 11px;
+    }
+    .ga-table td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 1px;
+    }
+    .ga-table td[data-label="Business"]::before { color: var(--biz-ink); }
+    .ga-table td[data-label="Government"]::before { color: var(--gov-ink); }
+    .ga-table td[data-label="Not-for-profit"]::before { color: var(--nfp-ink); }
+  }
+
   .ga-flow { text-align: center; }
   .ga-flow-node {
     display: inline-block;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 9px 16px;
+    background: var(--surface-2);
+    border-radius: var(--r-sm);
+    padding: 10px 16px;
     font-weight: 600;
     font-size: 14px;
-    color: var(--heading);
+    letter-spacing: -0.01em;
+    color: var(--ink);
   }
-  .ga-flow-node small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 12px; }
-  .ga-flow-people { background: var(--pine); color: var(--pine-ink); border-color: var(--pine); }
-  .ga-flow-people small { color: var(--pine-glow); }
-  .ga-flow-arrow {
-    font-size: 11.5px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin: 7px 0;
-    font-weight: 700;
-  }
-  .ga-flow-branches {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 0 auto;
-    max-width: 620px;
-  }
-  .ga-flow-branches .ga-flow-node { display: block; padding: 9px 8px; }
+  .ga-flow-node small { display: block; font-weight: 400; color: var(--ink-2); font-size: 12px; letter-spacing: 0; }
+  .ga-flow-people { background: var(--accent-btn); color: var(--on-accent); }
+  .ga-flow-people small { color: var(--on-accent); opacity: 0.75; }
+  .ga-flow-arrow { display: block; color: var(--ink-3); margin: 9px 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ga-flow-branches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 auto; max-width: 600px; }
+  .ga-flow-branches .ga-flow-node { display: block; padding: 10px 8px; }
   .ga-grant-strip {
-    margin-top: 16px;
-    background: var(--brass-ground);
-    border: 1px dashed var(--brass-line);
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 13.5px;
-    color: var(--brass-ink);
-    font-weight: 600;
+    margin-top: 18px;
+    background: var(--nfp-soft);
+    border-radius: var(--r-sm);
+    padding: 11px 14px;
+    font-size: 13px;
+    color: var(--nfp-ink);
+    font-weight: 550;
+    line-height: 1.5;
   }
 
-  /* recap list */
-  .ga-five {
-    counter-reset: five;
-    list-style: none;
-    padding: 0;
-    margin: 18px 0;
-    display: grid;
-    gap: 10px;
-  }
+  .ga-five { counter-reset: five; list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 9px; }
   .ga-five li {
     counter-increment: five;
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 12px 14px 12px 54px;
+    border-radius: var(--r);
+    padding: 14px 16px 14px 52px;
     position: relative;
+    font-size: 15px;
   }
   .ga-five li::before {
     content: counter(five);
     position: absolute;
-    left: 14px;
-    top: 13px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: var(--pine);
-    color: var(--pine-ink);
-    font-family: var(--serif);
+    left: 16px;
+    top: 14px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-family: var(--mono);
+    font-size: 11.5px;
     font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
   }
 
-  /* ---------- Home / lesson cards ---------- */
-  .ga-home-intro { margin-bottom: 28px; }
-  .ga-home-intro h2 { font-size: 32px; }
+  /* ---------------- Home ---------------- */
+  .ga-hero { padding: 8px 0 30px; }
+  .ga-hero h2 { font-size: 40px; letter-spacing: -0.035em; margin-bottom: 14px; }
+  .ga-hero .ga-lead { margin-bottom: 0; max-width: 34em; }
+
   .ga-lesson-card {
     display: block;
     width: 100%;
     text-align: left;
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 20px 22px;
-    margin-bottom: 14px;
+    border-radius: var(--r-lg);
+    padding: 22px;
+    margin-bottom: 12px;
     cursor: pointer;
     font: inherit;
-    line-height: inherit;
     color: inherit;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.16s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.16s ease, border-color 0.16s ease;
   }
-  .ga-lesson-card:hover {
-    border-color: var(--line-strong);
-    box-shadow: 0 2px 10px rgba(23, 69, 59, 0.08);
-  }
-  .ga-lesson-card .ga-card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin-bottom: 8px;
-    align-items: center;
-  }
+  .ga-lesson-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); border-color: var(--line-2); }
+  .ga-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--ink-3); }
   .ga-card-lo {
-    background: var(--gov-ground);
-    color: var(--gov-ink);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
     border-radius: 999px;
-    padding: 2px 10px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
   }
-  .ga-lesson-card h2 { font-size: 22px; margin: 0 0 6px; }
-  .ga-lesson-card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
-  .ga-card-status {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--gov-ink);
+  .ga-lesson-card h2 { font-size: 22px; letter-spacing: -0.022em; margin: 0 0 8px; }
+  .ga-lesson-card > p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+  .ga-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
   }
-  .ga-lesson-card.ga-locked {
-    cursor: default;
-    background: transparent;
-    border-style: dashed;
+  .ga-card-status { font-size: 13.5px; font-weight: 600; color: var(--accent-ink); }
+  .ga-card-go {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    transition: background 0.16s ease, color 0.16s ease;
   }
-  .ga-lesson-card.ga-locked:hover { border-color: var(--line); box-shadow: none; }
-  .ga-lesson-card.ga-locked h2, .ga-lesson-card.ga-locked p { color: var(--ink-soft); }
-  .ga-lesson-card.ga-locked .ga-card-lo { background: var(--panel); color: var(--ink-soft); }
+  .ga-lesson-card:hover .ga-card-go { background: var(--accent-btn); color: var(--on-accent); }
+  .ga-lesson-card.ga-locked { cursor: default; background: none; border-style: dashed; box-shadow: none; }
+  .ga-lesson-card.ga-locked:hover { transform: none; box-shadow: none; border-color: var(--line); }
+  .ga-lesson-card.ga-locked h2, .ga-lesson-card.ga-locked > p { color: var(--ink-3); }
+  .ga-lesson-card.ga-locked .ga-card-lo { background: var(--surface-2); color: var(--ink-3); }
 
-  /* ---------- Section navigation ---------- */
+  /* ---------------- Buttons & nav ---------------- */
   .ga-section-nav {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    margin-top: 36px;
-    border-top: 1px solid var(--line);
+    margin-top: 40px;
     padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 979px) {
+    .ga-section-nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 40;
+      margin: 40px -20px 0;
+      padding: 11px 20px calc(11px + env(safe-area-inset-bottom));
+      background: var(--bar);
+      backdrop-filter: saturate(1.6) blur(14px);
+      -webkit-backdrop-filter: saturate(1.6) blur(14px);
+      border-top: 1px solid var(--line);
+    }
   }
   .ga-btn {
     font: inherit;
+    font-size: 14.5px;
     font-weight: 600;
-    font-size: 15px;
-    border-radius: var(--radius);
-    padding: 11px 20px;
+    letter-spacing: -0.01em;
+    border-radius: var(--r-sm);
+    padding: 11px 18px;
     cursor: pointer;
-    border: 1px solid var(--line-strong);
-    background: var(--card);
-    color: var(--heading);
-    transition: background 0.15s ease, border-color 0.15s ease;
+    border: 1px solid var(--line-2);
+    background: var(--surface);
+    color: var(--ink);
+    transition: background 0.14s ease, border-color 0.14s ease, transform 0.1s ease, box-shadow 0.14s ease;
   }
-  .ga-btn:hover { background: var(--panel); }
+  .ga-btn:hover { background: var(--surface-2); }
+  .ga-btn:active { transform: translateY(1px); }
   .ga-btn-primary {
-    background: var(--pine);
-    border-color: var(--pine);
-    color: var(--pine-ink);
+    background: var(--accent-btn);
+    border-color: transparent;
+    color: var(--on-accent);
+    box-shadow: 0 2px 12px var(--accent-glow);
   }
-  .ga-btn-primary:hover { background: var(--pine-hover); border-color: var(--pine-hover); }
-  .ga-btn:disabled { opacity: 0.45; cursor: default; }
-  .ga-btn:disabled:hover { background: var(--card); }
-  .ga-btn-primary:disabled:hover { background: var(--pine); }
+  .ga-btn-primary:hover { background: var(--accent-btn-hover); }
+  .ga-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+  .ga-btn:disabled:hover { background: var(--surface); }
+  .ga-btn-primary:disabled:hover { background: var(--accent-btn); }
 
-  /* ---------- Quiz ---------- */
-  .ga-quiz-progress {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 16px;
-  }
-  .ga-quiz-question {
-    font-family: var(--serif);
-    font-size: 21px;
-    color: var(--heading);
-    margin: 0 0 18px;
-    line-height: 1.4;
-    text-wrap: balance;
-  }
+  /* ---------------- Quiz ---------------- */
+  .ga-quiz-progress { color: var(--ink-3); margin-bottom: 18px; }
+  .ga-quiz-question { font-size: 22px; font-weight: 650; letter-spacing: -0.022em; line-height: 1.35; margin: 0 0 20px; text-wrap: balance; }
   .ga-choice {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 13px;
     width: 100%;
     text-align: left;
     font: inherit;
     font-size: 15px;
-    line-height: 1.5;
-    background: var(--card);
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    margin-bottom: 10px;
+    line-height: 1.45;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 14px 16px;
+    margin-bottom: 9px;
     cursor: pointer;
     color: var(--ink);
-    transition: border-color 0.15s ease;
+    box-shadow: var(--shadow-1);
+    transition: transform 0.14s cubic-bezier(0.2, 0.7, 0.3, 1), border-color 0.14s ease, box-shadow 0.14s ease;
   }
-  .ga-choice:hover:not(:disabled) { border-color: var(--line-strong); }
-  .ga-choice:disabled { cursor: default; }
+  .ga-choice:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--line-2); box-shadow: var(--shadow-2); }
+  .ga-choice:disabled { cursor: default; box-shadow: none; }
   .ga-choice-letter {
     flex: none;
-    width: 26px;
-    height: 26px;
-    margin-top: 1px;
-    border-radius: 50%;
-    border: 1px solid var(--line-strong);
-    background: var(--panel);
-    color: var(--ink-soft);
-    font-family: var(--serif);
-    font-size: 13.5px;
+    width: 27px;
+    height: 27px;
+    border-radius: 9px;
+    background: var(--surface-2);
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 12px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
   }
-  .ga-choice.ga-correct { border-color: var(--ok); background: var(--ok-ground); font-weight: 600; }
-  .ga-choice.ga-correct .ga-choice-letter { background: var(--ok); border-color: var(--ok); color: var(--paper); }
-  .ga-choice.ga-wrong { border-color: var(--err); background: var(--err-ground); }
-  .ga-choice.ga-wrong .ga-choice-letter { background: var(--err); border-color: var(--err); color: var(--paper); }
-  .ga-quiz-feedback {
-    border-radius: var(--radius);
-    padding: 13px 16px;
-    margin: 16px 0;
-    font-size: 14.5px;
-  }
-  .ga-quiz-feedback.ga-fb-right { background: var(--ok-ground); border: 1px solid var(--ok-line); }
-  .ga-quiz-feedback.ga-fb-wrong { background: var(--err-ground); border: 1px solid var(--err-line); }
-  .ga-quiz-feedback strong { display: block; margin-bottom: 2px; }
+  .ga-choice-text { flex: 1; }
+  .ga-choice-mark { flex: none; font-size: 15px; font-weight: 700; opacity: 0; }
+  .ga-choice.ga-correct { border-color: var(--ok); background: var(--ok-soft); }
+  .ga-choice.ga-correct .ga-choice-letter { background: var(--ok); color: var(--on-accent); }
+  .ga-choice.ga-correct .ga-choice-mark { opacity: 1; color: var(--ok); }
+  .ga-choice.ga-wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .ga-choice.ga-wrong .ga-choice-letter { background: var(--bad); color: #fff; }
+  .ga-choice.ga-wrong .ga-choice-mark { opacity: 1; color: var(--bad); }
+
+  .ga-quiz-feedback { border-radius: var(--r); padding: 14px 16px; margin: 18px 0 0; font-size: 14.5px; line-height: 1.55; }
+  .ga-quiz-feedback.ga-fb-right { background: var(--ok-soft); }
+  .ga-quiz-feedback.ga-fb-wrong { background: var(--bad-soft); }
+  .ga-quiz-feedback strong { display: block; margin-bottom: 3px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
   .ga-fb-right strong { color: var(--ok); }
-  .ga-fb-wrong strong { color: var(--err); }
-  .ga-quiz-score { text-align: center; padding: 28px 0 8px; }
-  .ga-quiz-score .ga-score-big {
-    font-family: var(--serif);
-    font-variant-numeric: tabular-nums;
-    font-size: 52px;
-    font-weight: 600;
-    color: var(--heading);
-    line-height: 1.1;
+  .ga-fb-wrong strong { color: var(--bad); }
+
+  .ga-quiz-score { text-align: center; padding: 24px 0 8px; }
+  .ga-ring {
+    width: 136px;
+    height: 136px;
+    border-radius: 50%;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--surface-3) 0);
   }
-  .ga-quiz-score p {
-    color: var(--ink-soft);
-    max-width: 46ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .ga-score-actions {
+  .ga-ring-inner {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background: var(--bg);
     display: flex;
+    align-items: baseline;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 18px;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
   }
+  .ga-ring-inner span { font-size: 17px; font-weight: 500; color: var(--ink-3); }
+  .ga-quiz-score h2 { font-size: 26px; }
+  .ga-quiz-score p { color: var(--ink-2); max-width: 42ch; margin: 0 auto; }
+  .ga-score-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 
-  /* ---------- Footer ---------- */
-  .ga-footer {
-    border-top: 1px solid var(--line);
-    padding: 20px 20px 40px;
-    text-align: center;
+  /* ---------------- Footer ---------------- */
+  .ga-footer { border-top: 1px solid var(--line); margin-top: 20px; }
+  .ga-footer-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 22px 20px calc(34px + env(safe-area-inset-bottom));
+    color: var(--ink-3);
     font-size: 12.5px;
-    line-height: 1.7;
-    color: var(--ink-soft);
+    line-height: 1.65;
   }
-  .ga-footer-inner { max-width: 560px; margin: 0 auto; }
 
-  /* ---------- Responsive ---------- */
-  @media (max-width: 640px) {
-    .ga-course-title { font-size: 21px; }
-    .ga-seal { width: 40px; height: 40px; font-size: 15px; }
-    h2 { font-size: 25px; }
-    .ga-home-intro h2 { font-size: 27px; }
+  /* ---------------- Motion ---------------- */
+  @keyframes gaFade { from { opacity: 0; } to { opacity: 1; } }
+  .ga-view { animation: gaFade 0.26s ease both; }
+
+  @media (max-width: 979px) {
+    h2 { font-size: 27px; }
+    .ga-hero h2 { font-size: 32px; }
     .ga-lead { font-size: 17px; }
     .ga-compare-cards { grid-template-columns: 1fr; }
     .ga-tree-branches { grid-template-columns: 1fr; }
-    .ga-flow-branches { grid-template-columns: 1fr; max-width: 280px; }
+    .ga-flow-branches { grid-template-columns: 1fr; max-width: 300px; }
   }
 </style>
 </head>
 <body>
 
-<header class="ga-header">
-  <div class="ga-header-inner">
-    <div class="ga-brand" id="ga-brand" title="Back to lessons">
-      <span class="ga-seal" aria-hidden="true">GA</span>
+<header class="ga-topbar">
+  <div class="ga-topbar-inner">
+    <button type="button" class="ga-brand" id="ga-brand">
+      <span class="ga-mark" aria-hidden="true">GA</span>
       <span>
-        <span class="ga-eyebrow">Civic Ledger Classroom</span>
-        <h1 class="ga-course-title">Governmental Accounting</h1>
+        <span class="ga-brand-text">Governmental Accounting</span>
+        <span class="ga-brand-sub">Example-first course</span>
       </span>
-    </div>
+    </button>
+    <button type="button" class="ga-icon-btn" id="ga-theme" aria-label="Switch between light and dark theme">
+      <svg class="ga-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ga-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
   </div>
 </header>
 
-<div class="ga-progress-wrap" id="ga-progress-wrap" hidden>
-  <div class="ga-progress-inner">
-    <span class="ga-progress-label" id="ga-progress-label"></span>
-    <div class="ga-progress-track"><div class="ga-progress-fill" id="ga-progress-fill"></div></div>
+<div class="ga-stepper" id="ga-stepper" hidden>
+  <div class="ga-stepper-inner">
+    <div class="ga-seg" id="ga-seg"></div>
+    <div class="ga-step-label ga-mono">
+      <b id="ga-step-name"></b>
+      <span id="ga-step-count"></span>
+    </div>
   </div>
 </div>
 
-<main id="app"></main>
+<div class="ga-shell ga-centered" id="ga-shell">
+  <aside class="ga-rail" id="ga-rail" hidden></aside>
+  <main id="app"></main>
+</div>
 
 <footer class="ga-footer">
   <div class="ga-footer-inner">
@@ -788,8 +883,9 @@
 
   /* =====================================================================
      Course data. To add Lesson 2 later: append one object to LESSONS.
-     Each section is { id, title, kicker, html }. The knowledge check is
-     rendered automatically as the final step of every lesson.
+     Each section is { id, short, title, kicker, html }; `short` labels the
+     section in the rail and stepper. The knowledge check is rendered
+     automatically as the final step of every lesson.
      ===================================================================== */
 
   var LESSONS = [
@@ -805,13 +901,14 @@
         /* ---------------- Section 1: Hook ---------------- */
         {
           id: 'welcome',
+          short: 'Welcome',
           title: 'Welcome: a different kind of accounting',
           kicker: 'Setting the stage',
           html: [
             '<p class="ga-lead">You have spent your accounting life so far in the world of business — Apple, Walmart, the corner coffee shop. Before we open a single journal entry in this course, I want you to see why that world will not work here.</p>',
             '<p>Think about the last thing you bought. You handed over money, and you walked away with something you chose, at a price you agreed to. Every number in business accounting is built on that voluntary exchange. Now let me ask you a question: when you pay your property tax bill, what exactly do you walk away with?</p>',
             '<div class="ga-figure">',
-            '  <div class="ga-figure-label">The exchange you know vs. the one you are about to study</div>',
+            '  <div class="ga-figure-label ga-mono">The exchange you know vs. the one you are about to study</div>',
             '  <div class="ga-compare-cards">',
             '    <div class="ga-cc ga-cc-biz">',
             '      <strong>The business world</strong>',
@@ -826,33 +923,34 @@
             '  </div>',
             '</div>',
             '<p>Here is another one: you can buy a share of Ford and sell it tomorrow. Can you sell your share of the fire department? Of course not — there is no share to sell. Nobody <em>owns</em> the fire department the way shareholders own Ford.</p>',
-            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>Whenever you feel lost this semester, come back to two simple questions: <em>Who owns this organization?</em> and <em>What do the people who fund it get back?</em> For a business, the answers are easy. For a government or a not-for-profit, those answers change everything about the accounting.</p></div>',
-            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Governments and not-for-profits are not just businesses with a different logo. The exchange between the organization and the people who fund it is fundamentally different — so the accounting must be different too.</p></div>'
+            '<div class="ga-note"><span class="ga-callout-tag ga-mono">Professor&rsquo;s note</span><p>Whenever you feel lost this semester, come back to two simple questions: <em>Who owns this organization?</em> and <em>What do the people who fund it get back?</em> For a business, the answers are easy. For a government or a not-for-profit, those answers change everything about the accounting.</p></div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag ga-mono">Key takeaway</span><p>Governments and not-for-profits are not just businesses with a different logo. The exchange between the organization and the people who fund it is fundamentally different — so the accounting must be different too.</p></div>'
           ].join('\n')
         },
 
         /* ---------------- Section 2: The landscape ---------------- */
         {
           id: 'landscape',
+          short: 'The landscape',
           title: 'The landscape: who are these organizations?',
           kicker: 'Meet the players',
           html: [
             '<p class="ga-lead">Before we classify anything, let us appreciate how big this world is. This is not a niche topic — it is a huge slice of the economy.</p>',
             '<div class="ga-stats">',
-            '  <div class="ga-stat"><strong>50</strong><span>state governments, plus the federal government</span></div>',
-            '  <div class="ga-stat"><strong>90,056</strong><span>local governments per the census of governments</span></div>',
-            '  <div class="ga-stat"><strong>&asymp;1.6M</strong><span>tax-exempt not-for-profit organizations</span></div>',
+            '  <div class="ga-stat"><strong>50</strong><i></i><span>state governments, plus the federal government</span></div>',
+            '  <div class="ga-stat"><strong>90,056</strong><i></i><span>local governments per the census of governments</span></div>',
+            '  <div class="ga-stat"><strong>&asymp;1.6M</strong><i></i><span>tax-exempt not-for-profit organizations</span></div>',
             '</div>',
             '<p>Those 90,056 local governments include 3,031 counties, 19,519 municipalities, 16,360 towns and townships, 12,880 independent school districts, and 38,266 special district governments. Now, we do not memorize a phone book — we organize it. Governments come in two flavors:</p>',
             '<h3>General purpose governments</h3>',
             '<p>These are states, counties, municipalities (cities, towns, villages), and townships. The key word is <strong>general</strong>: they provide a <em>wide range</em> of services to their residents — police and fire protection, sanitation, streets, roads and bridges, parks, culture and recreation.</p>',
             '<h3>Special purpose governments</h3>',
             '<p>These are independent school districts, public colleges and universities, and special districts. The key word is <strong>special</strong>: they exist to do <em>one job</em> (or a limited number of jobs) — education, drainage and flood control, irrigation, fire protection, water supply. And here is the part students miss: state law still gives them real governmental power, including the power to levy and collect taxes.</p>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>Think about one address in Chicago. The <strong>City of Chicago</strong> sends police when you call 911, fixes the street, and runs the parks — that is a general purpose government doing many jobs. The <strong>school district</strong> serving that same address does exactly one thing: educate children. Same house, two governments, and both of them can show up on your property tax bill.</p></div>',
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>Think about one address in Chicago. The <strong>City of Chicago</strong> sends police when you call 911, fixes the street, and runs the parks — that is a general purpose government doing many jobs. The <strong>school district</strong> serving that same address does exactly one thing: educate children. Same house, two governments, and both of them can show up on your property tax bill.</p></div>',
             '<h3>And the not-for-profits?</h3>',
             '<p>Not-for-profit organizations are private, not governmental — but they are not businesses either. Private colleges and universities, community service and health care organizations, certain libraries and museums, professional and trade associations, fraternal and social organizations, religious organizations. Nearly 1.6 million of them hold tax-exempt status.</p>',
             '<div class="ga-figure">',
-            '  <div class="ga-figure-label">The map of the territory</div>',
+            '  <div class="ga-figure-label ga-mono">The map of the territory</div>',
             '  <div class="ga-tree" role="img" aria-label="Tree diagram: government and not-for-profit organizations split into governments (general purpose and special purpose) and not-for-profits">',
             '    <div class="ga-tree-root">Government &amp; not-for-profit organizations</div>',
             '    <div class="ga-tree-stem"></div>',
@@ -867,84 +965,85 @@
             '      </div>',
             '      <div class="ga-tree-node">',
             '        <strong>Not-for-profits</strong>',
-            '        <small>&asymp;1.6 million tax-exempt organizations</small>',
+            '        <small>&asymp;1.6 million tax-exempt</small>',
             '        <div class="ga-chips"><span>Private colleges</span><span>Hospitals</span><span>Museums</span><span>Charities</span><span>Religious organizations</span><span>Trade associations</span></div>',
             '      </div>',
             '    </div>',
             '  </div>',
             '</div>',
-            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>Ask yourself: is your school district a business? It has employees, buildings, payroll, a budget&hellip; so why doesn&rsquo;t it report like Walmart? Hold that question — the next section answers it.</p></div>',
-            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p><strong>General purpose</strong> governments do many jobs; <strong>special purpose</strong> governments do one job — but both are real governments with the power to tax. Not-for-profits are private organizations that also do not exist to earn a profit.</p></div>'
+            '<div class="ga-note"><span class="ga-callout-tag ga-mono">Professor&rsquo;s note</span><p>Ask yourself: is your school district a business? It has employees, buildings, payroll, a budget&hellip; so why doesn&rsquo;t it report like Walmart? Hold that question — the next section answers it.</p></div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag ga-mono">Key takeaway</span><p><strong>General purpose</strong> governments do many jobs; <strong>special purpose</strong> governments do one job — but both are real governments with the power to tax. Not-for-profits are private organizations that also do not exist to earn a profit.</p></div>'
           ].join('\n')
         },
 
         /* ---------------- Section 3: FASB three characteristics ---------------- */
         {
           id: 'fasb',
+          short: 'FASB’s three tests',
           title: 'The FASB&rsquo;s three distinguishing characteristics',
           kicker: 'What makes them different',
           html: [
             '<p class="ga-lead">In its <em>Statement of Financial Accounting Concepts No. 4</em>, the FASB named three characteristics that separate governments and not-for-profits from business organizations. Let us take them one at a time — with an example for each, because a rule without an example is just words.</p>',
             '<h3>(a) Resource providers do not expect a proportionate return</h3>',
             '<p>Significant resources come from people who expect neither repayment nor economic benefits proportionate to what they gave.</p>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>Give a food bank $10,000 and you expect&hellip; nothing back. Not the money, not $10,000 worth of groceries. Now lend a corporation $10,000 by buying its bond, and you expect every penny back <em>plus interest</em>. Same $10,000, completely different expectation — that is characteristic (a).</p></div>',
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>Give a food bank $10,000 and you expect&hellip; nothing back. Not the money, not $10,000 worth of groceries. Now lend a corporation $10,000 by buying its bond, and you expect every penny back <em>plus interest</em>. Same $10,000, completely different expectation — that is characteristic (a).</p></div>',
             '<h3>(b) The operating purpose is something other than profit</h3>',
             '<p>These organizations exist to provide services, not to sell goods or services at a profit or a profit equivalent.</p>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>An art museum runs a free school-visit program it <em>knows</em> loses money — and it keeps running it, on purpose, because educating students <strong>is the mission</strong>. If Walmart found a store that reliably lost money, how long would that store stay open?</p></div>',
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>An art museum runs a free school-visit program it <em>knows</em> loses money — and it keeps running it, on purpose, because educating students <strong>is the mission</strong>. If Walmart found a store that reliably lost money, how long would that store stay open?</p></div>',
             '<h3>(c) There are no ownership interests</h3>',
             '<p>There are no defined ownership interests that can be sold, transferred, or redeemed, and none that entitle anyone to a share of the leftovers if the organization ever liquidates.</p>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>You can buy a share of Ford this afternoon and sell it tomorrow. You cannot buy a share of the American Red Cross, and you cannot buy a share of the State of Ohio. And if a city ever dissolved, no &ldquo;shareholder&rdquo; would line up for a slice of the city hall — because there are no shareholders.</p></div>',
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>You can buy a share of Ford this afternoon and sell it tomorrow. You cannot buy a share of the American Red Cross, and you cannot buy a share of the State of Ohio. And if a city ever dissolved, no &ldquo;shareholder&rdquo; would line up for a slice of the city hall — because there are no shareholders.</p></div>',
             '<div class="ga-figure">',
-            '  <div class="ga-figure-label">Three questions, three worlds</div>',
-            '  <div class="ga-table-wrap">',
+            '  <div class="ga-figure-label ga-mono">Three questions, three worlds</div>',
             '  <table class="ga-table">',
             '    <thead><tr><th></th><th class="ga-th-biz">Business</th><th class="ga-th-gov">Government</th><th class="ga-th-nfp">Not-for-profit</th></tr></thead>',
             '    <tbody>',
-            '      <tr><td>Who provides resources, and what do they get back?</td><td>Customers and investors — goods, repayment, dividends in proportion to what they paid</td><td>Taxpayers — services, with no link between the tax paid and the benefit received</td><td>Donors — nothing back except the mission being carried out</td></tr>',
-            '      <tr><td>What is the goal?</td><td>Earn a profit for the owners</td><td>Provide public services</td><td>Carry out a charitable, educational, or social mission</td></tr>',
-            '      <tr><td>Who owns it?</td><td>Shareholders or proprietors, with interests they can sell</td><td>No one — no ownership interests exist</td><td>No one — no ownership interests exist</td></tr>',
+            '      <tr><td>Who provides resources, and what do they get back?</td><td data-label="Business">Customers and investors — goods, repayment, dividends in proportion to what they paid</td><td data-label="Government">Taxpayers — services, with no link between the tax paid and the benefit received</td><td data-label="Not-for-profit">Donors — nothing back except the mission being carried out</td></tr>',
+            '      <tr><td>What is the goal?</td><td data-label="Business">Earn a profit for the owners</td><td data-label="Government">Provide public services</td><td data-label="Not-for-profit">Carry out a charitable, educational, or social mission</td></tr>',
+            '      <tr><td>Who owns it?</td><td data-label="Business">Shareholders or proprietors, with interests they can sell</td><td data-label="Government">No one — no ownership interests exist</td><td data-label="Not-for-profit">No one — no ownership interests exist</td></tr>',
             '    </tbody>',
             '  </table>',
-            '  </div>',
             '</div>',
-            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Three tests: no proportionate return for resource providers, no profit motive, no ownership interests. Fail all three the way a city or a charity does, and business-style accounting stops making sense.</p></div>'
+            '<div class="ga-takeaway"><span class="ga-callout-tag ga-mono">Key takeaway</span><p>Three tests: no proportionate return for resource providers, no profit motive, no ownership interests. Fail all three the way a city or a charity does, and business-style accounting stops making sense.</p></div>'
           ].join('\n')
         },
 
         /* ---------------- Section 4: GASB ---------------- */
         {
           id: 'gasb',
+          short: 'The GASB view',
           title: 'The GASB&rsquo;s view: what makes a government a government?',
           kicker: 'Power and accountability',
           html: [
             '<p class="ga-lead">The FASB told us how governments and not-for-profits differ from businesses. The GASB — the standard setter for state and local governments — goes one step further and separates governments from <em>everyone</em> else, including not-for-profits. Its answer comes down to one word: <strong>power</strong>.</p>',
             '<p>Governments exist in an environment where the power ultimately rests in the hands of the people. Voters delegate that power to public officials through elections. The power is then divided among the executive, legislative, and judicial branches, so that what a government executive can do — financially and otherwise — is constrained by the legislature, and both are subject to judicial review.</p>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>Unhappy with Ford&rsquo;s CEO? You would need enough shares to win a proxy fight. Unhappy with your mayor? You fire them <em>with a ballot</em> — one person, one vote, no shares required. And before that mayor spends a dollar on a new bridge, the city council must approve the budget line. That is the separation of powers acting as a financial control.</p></div>',
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>Unhappy with Ford&rsquo;s CEO? You would need enough shares to win a proxy fight. Unhappy with your mayor? You fire them <em>with a ballot</em> — one person, one vote, no shares required. And before that mayor spends a dollar on a new bridge, the city council must approve the budget line. That is the separation of powers acting as a financial control.</p></div>',
             '<div class="ga-figure">',
-            '  <div class="ga-figure-label">Where the power flows in government</div>',
+            '  <div class="ga-figure-label ga-mono">Where the power flows in government</div>',
             '  <div class="ga-flow" role="img" aria-label="Flow diagram: the people elect officials, power is split among legislative, executive, and judicial branches, which deliver services and answer back to the people">',
             '    <div class="ga-flow-node ga-flow-people">The People<small>hold the ultimate power</small></div>',
-            '    <div class="ga-flow-arrow">elect and delegate &darr;</div>',
+            '    <span class="ga-flow-arrow">elect and delegate &darr;</span>',
             '    <div class="ga-flow-branches">',
             '      <div class="ga-flow-node">Legislative<small>approves budgets and laws</small></div>',
             '      <div class="ga-flow-node">Executive<small>spends within those limits</small></div>',
             '      <div class="ga-flow-node">Judicial<small>reviews both</small></div>',
             '    </div>',
-            '    <div class="ga-flow-arrow">deliver services and answer back &darr;</div>',
+            '    <span class="ga-flow-arrow">deliver services and answer back &darr;</span>',
             '    <div class="ga-flow-node ga-flow-people">The People</div>',
             '    <div class="ga-grant-strip">One more layer: higher-level government &mdash; grant + conditions &rarr; lower-level government &mdash; accountability reports &rarr; back up</div>',
             '  </div>',
             '</div>',
             '<p>That last strip matters more than it looks. In the United States, higher levels of government encourage — or outright dictate — activities of lower levels, and they finance some of those activities through an extensive system of intergovernmental grants and subsidies. Grants come with strings attached.</p>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>A state accepts a federal highway grant. That money is not a gift with no questions asked — the state must spend it on eligible highway projects and report back to Washington on how every dollar was used. So the state is now accountable in two directions: <em>up</em> to the federal government that provided the resources, and <em>out</em> to its own citizens.</p></div>',
-            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>Notice what is happening: in business, accountability points one way — to the owners. In government, it points up, down, and sideways at the same time. Keep that picture in mind; it explains most of what we will do in this course.</p></div>',
-            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Per the GASB, a government is defined by its environment: power rests with the people, is delegated through elections, is checked across three branches, and is layered by grants that make lower governments accountable to higher ones.</p></div>'
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>A state accepts a federal highway grant. That money is not a gift with no questions asked — the state must spend it on eligible highway projects and report back to Washington on how every dollar was used. So the state is now accountable in two directions: <em>up</em> to the federal government that provided the resources, and <em>out</em> to its own citizens.</p></div>',
+            '<div class="ga-note"><span class="ga-callout-tag ga-mono">Professor&rsquo;s note</span><p>Notice what is happening: in business, accountability points one way — to the owners. In government, it points up, down, and sideways at the same time. Keep that picture in mind; it explains most of what we will do in this course.</p></div>',
+            '<div class="ga-takeaway"><span class="ga-callout-tag ga-mono">Key takeaway</span><p>Per the GASB, a government is defined by its environment: power rests with the people, is delegated through elections, is checked across three branches, and is layered by grants that make lower governments accountable to higher ones.</p></div>'
           ].join('\n')
         },
 
         /* ---------------- Section 5: Why net income fails ---------------- */
         {
           id: 'net-income',
+          short: 'The scoreboard problem',
           title: 'Why &ldquo;net income&rdquo; cannot measure a government',
           kicker: 'The scoreboard problem',
           html: [
@@ -952,11 +1051,11 @@
             '<h3>Taxpayers are involuntary resource providers</h3>',
             '<p>Nobody chooses to pay taxes the way you choose to buy a coffee. Revenues raised by every level of government come, ultimately, from taxpayers — and taxpayers must pay, whether or not they like the services they get. As involuntary contributors, they often have little choice over the <em>level</em> of services they receive, too.</p>',
             '<h3>Governments are monopolies</h3>',
-            '<div class="ga-example"><span class="ga-callout-tag">Real-world example</span><p>If Starbucks makes bad coffee, you walk across the street — and Starbucks feels it in its revenue line. If the DMV gives terrible service&hellip; where is the other DMV? There is one police department, one water system, one DMV. No competitor, no market price, no signal.</p></div>',
+            '<div class="ga-example"><span class="ga-callout-tag ga-mono">Real-world example</span><p>If Starbucks makes bad coffee, you walk across the street — and Starbucks feels it in its revenue line. If the DMV gives terrible service&hellip; where is the other DMV? There is one police department, one water system, one DMV. No competitor, no market price, no signal.</p></div>',
             '<h3>So the bottom line tells you nothing</h3>',
             '<p>Put those together: the money coming in is disconnected from the services going out. There is no competitive market linking what taxpayers pay to what they receive. So a city that collects more than it spends has not &ldquo;performed well&rdquo; — maybe it just overtaxed people, or quietly let the streets crumble. A &ldquo;net income&rdquo; figure simply cannot be used to assess government performance.</p>',
             '<div class="ga-figure">',
-            '  <div class="ga-figure-label">Two very different scoreboards</div>',
+            '  <div class="ga-figure-label ga-mono">Two very different scoreboards</div>',
             '  <div class="ga-compare-cards">',
             '    <div class="ga-cc ga-cc-biz">',
             '      <strong>Business scoreboard</strong>',
@@ -975,31 +1074,30 @@
             '  </div>',
             '</div>',
             '<p>And that is the punchline of this whole lesson: because no single &ldquo;net income&rdquo; figure can capture overall government efficiency and effectiveness, there is a great need for <strong>public accountability</strong> in financial reporting. Accountability is to governmental accounting what profit is to business accounting — the reason the whole system exists.</p>',
-            '<div class="ga-takeaway"><span class="ga-callout-tag">Key takeaway</span><p>Involuntary taxpayers + monopoly services + no market prices = no meaningful bottom line. So governmental financial reporting replaces the profit question with the accountability question: <em>did the government do what it promised with the public&rsquo;s money?</em></p></div>'
+            '<div class="ga-takeaway"><span class="ga-callout-tag ga-mono">Key takeaway</span><p>Involuntary taxpayers + monopoly services + no market prices = no meaningful bottom line. So governmental financial reporting replaces the profit question with the accountability question: <em>did the government do what it promised with the public&rsquo;s money?</em></p></div>'
           ].join('\n')
         },
 
         /* ---------------- Section 6: Recap ---------------- */
         {
           id: 'recap',
+          short: 'Recap',
           title: 'The big picture, one more time',
           kicker: 'Recap',
           html: [
             '<p class="ga-lead">Repetition is how this material sticks, so let us walk the whole road once more — fast.</p>',
             '<div class="ga-figure">',
-            '  <div class="ga-figure-label">The master comparison &mdash; condensed</div>',
-            '  <div class="ga-table-wrap">',
+            '  <div class="ga-figure-label ga-mono">The master comparison &mdash; condensed</div>',
             '  <table class="ga-table">',
             '    <thead><tr><th></th><th class="ga-th-biz">Business</th><th class="ga-th-gov">Government</th><th class="ga-th-nfp">Not-for-profit</th></tr></thead>',
             '    <tbody>',
-            '      <tr><td>Funded by</td><td>Voluntary customers &amp; investors</td><td>Involuntary taxpayers</td><td>Voluntary donors</td></tr>',
-            '      <tr><td>Goal</td><td>Profit</td><td>Public services</td><td>Mission</td></tr>',
-            '      <tr><td>Owners</td><td>Shareholders</td><td>None</td><td>None</td></tr>',
-            '      <tr><td>Scoreboard</td><td>Net income</td><td>Public accountability</td><td>Mission &amp; stewardship</td></tr>',
-            '      <tr><td>Standard setter</td><td>FASB</td><td>GASB (state &amp; local)</td><td>FASB</td></tr>',
+            '      <tr><td>Funded by</td><td data-label="Business">Voluntary customers &amp; investors</td><td data-label="Government">Involuntary taxpayers</td><td data-label="Not-for-profit">Voluntary donors</td></tr>',
+            '      <tr><td>Goal</td><td data-label="Business">Profit</td><td data-label="Government">Public services</td><td data-label="Not-for-profit">Mission</td></tr>',
+            '      <tr><td>Owners</td><td data-label="Business">Shareholders</td><td data-label="Government">None</td><td data-label="Not-for-profit">None</td></tr>',
+            '      <tr><td>Scoreboard</td><td data-label="Business">Net income</td><td data-label="Government">Public accountability</td><td data-label="Not-for-profit">Mission &amp; stewardship</td></tr>',
+            '      <tr><td>Standard setter</td><td data-label="Business">FASB</td><td data-label="Government">GASB (state &amp; local)</td><td data-label="Not-for-profit">FASB</td></tr>',
             '    </tbody>',
             '  </table>',
-            '  </div>',
             '</div>',
             '<h3>If you remember only five things</h3>',
             '<ol class="ga-five">',
@@ -1009,7 +1107,7 @@
             '  <li><strong>The GASB&rsquo;s addition:</strong> governments are defined by power resting with the people — elections, separation of powers, and grants that create accountability to higher levels of government.</li>',
             '  <li><strong>No bottom line:</strong> taxes are involuntary and services are monopolies, so net income means nothing — <em>public accountability</em> is the scoreboard.</li>',
             '</ol>',
-            '<div class="ga-note"><span class="ga-callout-tag">Professor&rsquo;s note</span><p>This overview is the foundation for everything ahead. In the coming lessons we roll up our sleeves and start <em>applying</em> it — funds, budgets, and the journal entries that make governmental accounting famous. For now, prove to yourself you own these ideas: take the short knowledge check on the next page.</p></div>'
+            '<div class="ga-note"><span class="ga-callout-tag ga-mono">Professor&rsquo;s note</span><p>This overview is the foundation for everything ahead. In the coming lessons we roll up our sleeves and start <em>applying</em> it — funds, budgets, and the journal entries that make governmental accounting famous. For now, prove to yourself you own these ideas: take the short knowledge check on the next page.</p></div>'
           ].join('\n')
         }
       ],
@@ -1080,9 +1178,12 @@
 
   var STORAGE_KEY = 'govacct:v1';
   var app = document.getElementById('app');
-  var progressWrap = document.getElementById('ga-progress-wrap');
-  var progressLabel = document.getElementById('ga-progress-label');
-  var progressFill = document.getElementById('ga-progress-fill');
+  var shell = document.getElementById('ga-shell');
+  var rail = document.getElementById('ga-rail');
+  var stepper = document.getElementById('ga-stepper');
+  var seg = document.getElementById('ga-seg');
+  var stepName = document.getElementById('ga-step-name');
+  var stepCount = document.getElementById('ga-step-count');
 
   var state = loadState();
   var quizRun = null; // in-memory state for the current quiz attempt
@@ -1090,7 +1191,12 @@
   function loadState() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) { return JSON.parse(raw); }
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        parsed.furthest = parsed.furthest || {};
+        parsed.bestScore = parsed.bestScore || {};
+        return parsed;
+      }
     } catch (err) { /* private mode etc. — run without persistence */ }
     return { furthest: {}, bestScore: {} };
   }
@@ -1099,10 +1205,36 @@
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (err) { /* ignore */ }
   }
 
+  /* ---------------- Theme ---------------- */
+
+  if (state.theme === 'light' || state.theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', state.theme);
+  }
+
+  function currentTheme() {
+    var stamped = document.documentElement.getAttribute('data-theme');
+    if (stamped) { return stamped; }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  document.getElementById('ga-theme').addEventListener('click', function () {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    state.theme = next;
+    saveState();
+  });
+
   /* =====================================================================
      Router: '' or '#/' -> home, '#/lesson/1/3' -> lesson 1, step 3.
      Steps 0..sections.length-1 are content; step sections.length is the quiz.
      ===================================================================== */
+
+  function findLesson(id) {
+    for (var i = 0; i < LESSONS.length; i++) {
+      if (LESSONS[i].id === id) { return LESSONS[i]; }
+    }
+    return null;
+  }
 
   function parseHash() {
     var hash = location.hash.replace(/^#\/?/, '');
@@ -1117,21 +1249,18 @@
 
   function go(hash) { location.hash = hash; }
 
-  function render() {
+  function currentPosition() {
     var route = parseHash();
-    if (route.view === 'lesson') {
-      var lesson = null;
-      for (var i = 0; i < LESSONS.length; i++) {
-        if (LESSONS[i].id === route.id) { lesson = LESSONS[i]; }
-      }
-      if (lesson) {
-        var totalSteps = lesson.sections.length + 1;
-        var step = Math.min(Math.max(route.step, 0), totalSteps - 1);
-        renderLesson(lesson, step);
-        return;
-      }
-    }
-    renderHome();
+    if (route.view !== 'lesson') { return null; }
+    var lesson = findLesson(route.id);
+    if (!lesson) { return null; }
+    var total = lesson.sections.length + 1;
+    return { lesson: lesson, step: Math.min(Math.max(route.step, 0), total - 1), total: total };
+  }
+
+  function render() {
+    var pos = currentPosition();
+    if (pos) { renderLesson(pos.lesson, pos.step); } else { renderHome(); }
   }
 
   /* =====================================================================
@@ -1139,12 +1268,16 @@
      ===================================================================== */
 
   function renderHome() {
-    progressWrap.hidden = true;
+    shell.classList.add('ga-centered');
+    shell.classList.remove('ga-with-rail');
+    rail.hidden = true;
+    stepper.hidden = true;
     document.title = 'Governmental Accounting — Lessons';
 
     var html = [
-      '<div class="ga-home-intro">',
-      '  <p class="ga-section-kicker">Course home</p>',
+      '<div class="ga-view">',
+      '<div class="ga-hero">',
+      '  <p class="ga-section-kicker ga-mono">Course home</p>',
       '  <h2>Learn it the way a professor teaches it</h2>',
       '  <p class="ga-lead">Plain language, a concrete example for every concept, and side-by-side comparisons of business, government, and not-for-profit. Pick a lesson to begin.</p>',
       '</div>'
@@ -1155,27 +1288,28 @@
       var best = state.bestScore[lesson.id];
       var status;
       if (typeof best === 'number') {
-        status = 'Knowledge check best score: ' + best + ' / ' + lesson.quiz.length + ' &middot; Revisit any time';
+        status = 'Best score ' + best + ' / ' + lesson.quiz.length + ' &middot; Revisit any time';
       } else if (furthest > 0) {
         status = 'In progress &mdash; resume where you left off';
       } else {
-        status = 'Start lesson &rarr;';
+        status = 'Start lesson';
       }
       html.push(
         '<button type="button" class="ga-lesson-card" data-lesson="' + lesson.id + '">' +
-        '  <span class="ga-card-meta"><span class="ga-card-lo">' + lesson.lo + '</span><span>Lesson ' + lesson.id + '</span><span>&middot;</span><span>About ' + lesson.minutes + ' minutes</span></span>' +
+        '  <span class="ga-card-meta ga-mono"><span class="ga-card-lo">' + lesson.lo + '</span><span>Lesson ' + lesson.id + '</span><span>&middot;</span><span>' + lesson.sections.length + ' sections</span><span>&middot;</span><span>' + lesson.minutes + ' min</span></span>' +
         '  <h2>' + lesson.title + '</h2>' +
         '  <p>' + lesson.blurb + '</p>' +
-        '  <span class="ga-card-status">' + status + '</span>' +
+        '  <span class="ga-card-foot"><span class="ga-card-status">' + status + '</span><span class="ga-card-go" aria-hidden="true">&rarr;</span></span>' +
         '</button>'
       );
     });
 
     html.push(
       '<div class="ga-lesson-card ga-locked">' +
-      '  <span class="ga-card-meta"><span class="ga-card-lo">Coming soon</span><span>Lesson 2</span></span>' +
+      '  <span class="ga-card-meta ga-mono"><span class="ga-card-lo">Coming soon</span><span>Lesson 2</span></span>' +
       '  <h2>Applying the foundations</h2>' +
       '  <p>The next lessons dig deep into application — funds, budgets, and journal entries built on the overview you learn here.</p>' +
+      '</div>',
       '</div>'
     );
 
@@ -1185,11 +1319,67 @@
     for (var i = 0; i < cards.length; i++) {
       cards[i].addEventListener('click', function () {
         var id = parseInt(this.getAttribute('data-lesson'), 10);
-        var resume = state.furthest[id] || 0;
-        go('#/lesson/' + id + '/' + resume);
+        go('#/lesson/' + id + '/' + (state.furthest[id] || 0));
       });
     }
     window.scrollTo(0, 0);
+  }
+
+  /* =====================================================================
+     Progress chrome: desktop rail + mobile stepper
+     ===================================================================== */
+
+  function stepState(step, current) {
+    if (step === current) { return 'current'; }
+    return step < current ? 'done' : 'todo';
+  }
+
+  function renderChrome(lesson, step) {
+    var total = lesson.sections.length + 1;
+    var pct = Math.round(((step + 1) / total) * 100);
+
+    var railHtml = [
+      '<p class="ga-rail-lo ga-mono">' + lesson.lo + ' &middot; Lesson ' + lesson.id + '</p>',
+      '<p class="ga-rail-title">' + lesson.title + '</p>',
+      '<div class="ga-rail-meter">',
+      '  <span class="ga-rail-track"><span class="ga-rail-fill" style="width:' + pct + '%"></span></span>',
+      '  <span class="ga-rail-pct">' + pct + '%</span>',
+      '</div>',
+      '<div class="ga-rail-list">'
+    ];
+    lesson.sections.forEach(function (section, i) {
+      railHtml.push(
+        '<button type="button" class="ga-rail-item" data-step="' + i + '" data-state="' + stepState(i, step) + '">' +
+        '<span class="ga-rail-num">' + (i < step ? '&#10003;' : (i + 1)) + '</span>' +
+        '<span>' + section.short + '</span>' +
+        '</button>'
+      );
+    });
+    railHtml.push(
+      '<button type="button" class="ga-rail-item" data-step="' + lesson.sections.length + '" data-state="' + stepState(lesson.sections.length, step) + '">' +
+      '<span class="ga-rail-num">&#9733;</span><span>Knowledge check</span></button>',
+      '</div>'
+    );
+    rail.innerHTML = railHtml.join('\n');
+    rail.hidden = false;
+
+    var segHtml = [];
+    for (var i = 0; i < total; i++) {
+      var label = i < lesson.sections.length ? lesson.sections[i].short : 'Knowledge check';
+      segHtml.push('<button type="button" data-step="' + i + '" data-state="' + stepState(i, step) + '" aria-label="Go to ' + label + '"></button>');
+    }
+    seg.innerHTML = segHtml.join('');
+    stepName.textContent = step < lesson.sections.length ? lesson.sections[step].short : 'Knowledge check';
+    stepCount.textContent = step < lesson.sections.length
+      ? (step + 1) + ' / ' + lesson.sections.length
+      : 'Final step';
+    stepper.hidden = false;
+
+    var jump = function () { go('#/lesson/' + lesson.id + '/' + this.getAttribute('data-step')); };
+    var targets = rail.querySelectorAll('[data-step]');
+    for (var j = 0; j < targets.length; j++) { targets[j].addEventListener('click', jump); }
+    var segs = seg.querySelectorAll('[data-step]');
+    for (var k = 0; k < segs.length; k++) { segs[k].addEventListener('click', jump); }
   }
 
   /* =====================================================================
@@ -1197,40 +1387,34 @@
      ===================================================================== */
 
   function renderLesson(lesson, step) {
-    var totalSteps = lesson.sections.length + 1;
-    var isQuiz = step === lesson.sections.length;
-
-    // track furthest step reached
     if ((state.furthest[lesson.id] || 0) < step) {
       state.furthest[lesson.id] = step;
       saveState();
     }
 
-    progressWrap.hidden = false;
-    progressLabel.textContent = isQuiz
-      ? 'Knowledge check'
-      : 'Section ' + (step + 1) + ' of ' + lesson.sections.length;
-    progressFill.style.width = Math.round(((step + 1) / totalSteps) * 100) + '%';
+    shell.classList.remove('ga-centered');
+    shell.classList.add('ga-with-rail');
+    renderChrome(lesson, step);
 
-    if (isQuiz) {
+    if (step === lesson.sections.length) {
       renderQuiz(lesson);
       return;
     }
 
     var section = lesson.sections[step];
-    document.title = lesson.title + ' — ' + 'Section ' + (step + 1);
-
-    var nextLabel = step === lesson.sections.length - 1
-      ? 'Knowledge check &rarr;'
-      : 'Next section &rarr;';
+    document.title = lesson.title + ' — ' + section.short;
 
     app.innerHTML = [
-      '<p class="ga-section-kicker">' + lesson.lo + ' &middot; ' + section.kicker + '</p>',
+      '<div class="ga-view">',
+      '<p class="ga-section-kicker ga-mono">' + lesson.lo + ' &middot; ' + section.kicker + '</p>',
       '<h2>' + section.title + '</h2>',
       section.html,
       '<div class="ga-section-nav">',
       '  <button type="button" class="ga-btn" id="ga-prev">' + (step === 0 ? '&larr; All lessons' : '&larr; Previous') + '</button>',
-      '  <button type="button" class="ga-btn ga-btn-primary" id="ga-next">' + nextLabel + '</button>',
+      '  <button type="button" class="ga-btn ga-btn-primary" id="ga-next">' +
+      (step === lesson.sections.length - 1 ? 'Knowledge check &rarr;' : 'Next section &rarr;') +
+      '</button>',
+      '</div>',
       '</div>'
     ].join('\n');
 
@@ -1260,26 +1444,28 @@
 
     var q = lesson.quiz[quizRun.index];
     var html = [
-      '<p class="ga-section-kicker">' + lesson.lo + ' &middot; Knowledge check</p>',
-      '<h2>Prove you own it</h2>',
-      '<p class="ga-quiz-progress">Question ' + (quizRun.index + 1) + ' of ' + lesson.quiz.length + '</p>',
+      '<div class="ga-view">',
+      '<p class="ga-section-kicker ga-mono">' + lesson.lo + ' &middot; Knowledge check</p>',
+      '<p class="ga-quiz-progress ga-mono">Question ' + (quizRun.index + 1) + ' of ' + lesson.quiz.length + '</p>',
       '<p class="ga-quiz-question">' + q.question + '</p>'
     ];
     q.choices.forEach(function (choice, i) {
       html.push(
         '<button type="button" class="ga-choice" data-choice="' + i + '">' +
         '<span class="ga-choice-letter" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
-        '<span>' + choice + '</span>' +
+        '<span class="ga-choice-text">' + choice + '</span>' +
+        '<span class="ga-choice-mark" aria-hidden="true"></span>' +
         '</button>'
       );
     });
-    html.push('<div id="ga-quiz-feedback"></div>');
     html.push(
-      '<div class="ga-section-nav">' +
-      '  <button type="button" class="ga-btn" id="ga-quiz-back">&larr; Back to lesson</button>' +
+      '<div id="ga-quiz-feedback"></div>',
+      '<div class="ga-section-nav">',
+      '  <button type="button" class="ga-btn" id="ga-quiz-back">&larr; Back to lesson</button>',
       '  <button type="button" class="ga-btn ga-btn-primary" id="ga-quiz-next" disabled>' +
       (quizRun.index === lesson.quiz.length - 1 ? 'See my score &rarr;' : 'Next question &rarr;') +
-      '  </button>' +
+      '</button>',
+      '</div>',
       '</div>'
     );
 
@@ -1300,8 +1486,14 @@
         for (var j = 0; j < choices.length; j++) {
           choices[j].disabled = true;
           var idx = parseInt(choices[j].getAttribute('data-choice'), 10);
-          if (idx === q.answer) { choices[j].classList.add('ga-correct'); }
-          else if (idx === picked && !right) { choices[j].classList.add('ga-wrong'); }
+          var mark = choices[j].querySelector('.ga-choice-mark');
+          if (idx === q.answer) {
+            choices[j].classList.add('ga-correct');
+            mark.innerHTML = '&#10003;';
+          } else if (idx === picked && !right) {
+            choices[j].classList.add('ga-wrong');
+            mark.innerHTML = '&#10007;';
+          }
         }
 
         feedbackBox.innerHTML =
@@ -1310,6 +1502,7 @@
           q.explain +
           '</div>';
         nextBtn.disabled = false;
+        nextBtn.focus();
       });
     }
 
@@ -1333,25 +1526,33 @@
       saveState();
     }
 
-    var message;
+    var heading, message;
     if (score === total) {
-      message = 'Perfect. You own this lesson — the foundations are set for the applied lessons ahead.';
+      heading = 'You own this lesson';
+      message = 'Perfect score. The foundations are set for the applied lessons ahead.';
     } else if (score >= Math.ceil(total * 0.6)) {
-      message = 'Solid work. Skim the sections behind the questions you missed, and these ideas will lock in.';
+      heading = 'Solid work';
+      message = 'Skim the sections behind the questions you missed, and these ideas will lock in.';
     } else {
-      message = 'This lesson is the foundation for the whole course, so it is worth another pass. Review the sections and try again — repetition is how it sticks.';
+      heading = 'Worth another pass';
+      message = 'This lesson is the foundation for the whole course. Review the sections and try again — repetition is how it sticks.';
     }
 
     app.innerHTML = [
-      '<p class="ga-section-kicker">' + lesson.lo + ' &middot; Knowledge check</p>',
+      '<div class="ga-view">',
+      '<p class="ga-section-kicker ga-mono">' + lesson.lo + ' &middot; Knowledge check</p>',
       '<div class="ga-quiz-score">',
-      '  <div class="ga-score-big">' + score + ' / ' + total + '</div>',
+      '  <div class="ga-ring" style="--pct:' + Math.round((score / total) * 100) + '" role="img" aria-label="Score ' + score + ' out of ' + total + '">',
+      '    <div class="ga-ring-inner">' + score + '<span>/' + total + '</span></div>',
+      '  </div>',
+      '  <h2>' + heading + '</h2>',
       '  <p>' + message + '</p>',
       '  <div class="ga-score-actions">',
       '    <button type="button" class="ga-btn" id="ga-review">Review lesson</button>',
       '    <button type="button" class="ga-btn" id="ga-retake">Retake quiz</button>',
       '    <button type="button" class="ga-btn ga-btn-primary" id="ga-home">Back to lessons</button>',
       '  </div>',
+      '</div>',
       '</div>'
     ].join('\n');
 
@@ -1375,6 +1576,20 @@
      ===================================================================== */
 
   document.getElementById('ga-brand').addEventListener('click', function () { go('#/'); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) { return; }
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') { return; }
+    var pos = currentPosition();
+    if (!pos) { return; }
+    if (e.key === 'ArrowRight' && pos.step < pos.total - 1) {
+      go('#/lesson/' + pos.lesson.id + '/' + (pos.step + 1));
+    } else if (e.key === 'ArrowLeft' && pos.step > 0) {
+      go('#/lesson/' + pos.lesson.id + '/' + (pos.step - 1));
+    }
+  });
+
   window.addEventListener('hashchange', render);
   render();
 })();
