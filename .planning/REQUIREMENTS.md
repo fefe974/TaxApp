@@ -65,13 +65,30 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated by roadmap) | | |
+| LESN-01 | Phase 1 | Pending |
+| LESN-02 | Phase 1 | Pending |
+| LESN-03 | Phase 4 | Pending |
+| LESN-04 | Phase 1 | Pending |
+| PRAC-01 | Phase 1 | Pending |
+| PRAC-02 | Phase 2 | Pending |
+| PRAC-03 | Phase 2 | Pending |
+| PRAC-04 | Phase 2 | Pending |
+| PRAC-05 | Phase 1 | Pending |
+| PRAC-06 | Phase 2 | Pending |
+| JOB-01 | Phase 3 | Pending |
+| JOB-02 | Phase 3 | Pending |
+| PROG-01 | Phase 1 | Pending |
+| PROG-02 | Phase 3 | Pending |
+| PLAT-01 | Phase 1 | Pending |
+| PLAT-02 | Phase 3 | Pending |
+| PLAT-03 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17 ⚠️
+- Mapped to phases: 17
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-08-11*
-*Last updated: 2026-08-11 after initial definition*
+*Last updated: 2026-08-11 after roadmap creation*
+</content>
