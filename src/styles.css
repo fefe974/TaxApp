@@ -1,0 +1,9 @@
+/* Placeholder — design tokens ported from the validated Lesson 1 artifact
+   land with the app shell. */
+:root {
+  color-scheme: light dark;
+}
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
