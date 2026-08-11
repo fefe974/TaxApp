@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 ## Phase Details
 
-### Phase 1: Vertical Slice — Chapter 1 Live
+### Phase 1: Vertical Slice — Chapter 1 Live ✓ COMPLETE (2026-08-11)
 **Goal**: Learner can complete Chapter 1 end-to-end today — read the lesson, answer knowledge checks, solve journal-entry problems with tolerant grading, and return later to find their place saved — on a live, mobile-friendly site. The content schema is designed against the full 12-chapter curriculum before any further chapter is authored.
 **Mode:** mvp
 **Depends on**: Nothing (first phase)
@@ -30,7 +30,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Learner works Chapter 1 journal-entry practice problems (dropdown/typeahead account picker, debit/credit entry) and receives line-by-line graded feedback that tolerates equivalent account names, order differences, and minor numeric formatting.
   4. Closing the browser and reopening later resumes exactly where the learner left off, with prior knowledge-check and problem scores intact.
   5. The chapter content file format is proven able to represent journal-entry, classification, reconciliation, and multi-part problem data for the full Ch1-12 curriculum, confirmed before Chapter 2 authoring begins.
-**Plans**: TBD
+**Plans**: 2/2 complete — see .planning/phases/01-vertical-slice/
 **UI hint**: yes
 
 ### Phase 2: Practice Engine Expansion — Chapters 2-4

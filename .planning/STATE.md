@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** The learner finishes able to confidently perform every duty in the target county Accountant I job description — GL reconciliation, journal entries, budget/appropriation review, grant reporting, fixed assets, invoicing, year-end close, and financial reports under GAAP/GASB.
-**Current focus:** Phase 1 — Vertical Slice — Chapter 1 Live
+**Current focus:** Phase 2 — Practice Engine Expansion — Chapters 2-4
 
 ## Current Position
 
-Phase: 1 of 4 (Vertical Slice — Chapter 1 Live)
+Phase: 2 of 4 (Practice Engine Expansion — Chapters 2-4)
 Plan: Not yet planned
-Status: Ready to plan
-Last activity: 2026-08-11 — Roadmap created
+Status: Phase 1 COMPLETE (verified 5/5 automated; human device-check pending) — ready to plan Phase 2
+Last activity: 2026-08-11 — Phase 1 executed, verified, deployed to GitHub Pages
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
+- Total plans completed: 2 (Phase 1: engine+shell, chapter 1 content)
 - Average duration: - min
 - Total execution time: 0 hours
 
